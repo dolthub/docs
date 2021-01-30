@@ -11,7 +11,6 @@ Some stuff on getting started
 * [DoltHub](getting-started/dolthub.md)
 
 ## Guides
-Guides
 
 * [SQL Sync](guides/sql-sync.md)
 
