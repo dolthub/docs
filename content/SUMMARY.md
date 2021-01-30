@@ -13,14 +13,14 @@ Some stuff on getting started
 ## Guides
 Guides
 
-* [Installation](guides/sql-sync.md)
+* [SQL Sync](guides/sql-sync.md)
 
 
 ## Integration
 
-* [programmatic-clients](integrations/programmatic-clients.md)
-* [notebooks](integrations/notebooks.md)
-* [spreadsheets](integrations/spreadsheets.md)
+* [Programmatic Clients](integrations/programmatic-clients.md)
+* [Notebooks](integrations/notebooks.md)
+* [Spreadsheets](integrations/spreadsheets.md)
 
 ## Reference
 
