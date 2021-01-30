@@ -17,15 +17,19 @@ We show several ways to explore data on DoltHub, starting with the most user fri
 ## Web
 
 The most accessible way to access data that is stored on Dolt and hosted on DoltHub is to navigate to the database [homepage](https://www.dolthub.com/repositories/dolthub/ip-to-country/):
+
 ![DoltHub database page](../../images/dolthub_intro_database_page.png)
 
 Click on the SQL console to start writing a query against that Dolt database, using the left hand menu to browse the schema:
+
 ![SQL editor open](../../images/dolthub_intro_sql_console_open.png)
 
 Now let's write a query for all the IPv4 codes in Australia:
+
 ![Sample query](../../images/dolthub_intro_sample_query.png)
 
 Executing the query renders the results:
+
 ![Query results](../../images/dolthub_intro_sample_query_results.png)
 
 While this is a useful data exploration interface, it doesn't offer the kind of interactivity that a local copy of the data might. Let's switch gears to the command line, where we will see the integration point between Dolt and DoltHub.
@@ -145,11 +149,17 @@ In the previous section we showed three canonical ways to get data from Dolt dat
 Uploading a file to DoltHub is the only way to publish data without using Dolt. Every repository, whether it contains data or not, has a button to upload a file. You'll be taken through a few steps in the upload wizard:
 
 - Choose a base branch (commits directly to `master` branch for empty repo)
+
   ![Choose a branch](../../images/choose-branch2.png)
+
 - Choose a table name (create a new table or update an existing table)
+
   ![Choose table name](../../images/update-table2.png)
+
 - Upload a file and choose primary keys (we currently support CSV, PSV, and XLSX files)
+
 - View and commit changes
+
   ![Commit changes](../../images/commit-changes2.png)
 
 You can learn more about file upload from [our blog](https://www.dolthub.com/blog/2020-11-13-dolthub-upload-file/).
@@ -171,6 +181,7 @@ requesting update
 ```
 
 This launches a browser window to create a token:
+
 ![Dolt Login Screen](../../images/dolt_login_screen.png)
 
 Give the token a name, click create, and you should see control returned to the prompt:
@@ -206,6 +217,7 @@ Date:   Wed May 06 23:38:45 -0700 2020
 ```
 
 Now suppose we want to share this data with others. The model for sharing on DoltHub is similar to GitHub, we create a public (or private, see [pricing](https://www.dolthub.com/pricing)) repository and add it as a remote to our local repository. Let's start by creating a repository on DoltHub. We can do that easily by heading over to [DoltHub](https://www.dolthub.com/profile/new-repository) with just a few clicks:
+
 ![Create a DoltHub repository](../../images/dolthub-create-repo.png)
 
 Earlier we ran `dolt login` to allow our local copy of Dolt to authenticate with our DoltHub account, we now put this to use by connecting our local Dolt repository to the repository we just created. Just like Git, we add a remote:
@@ -230,6 +242,7 @@ A major motivator for building Dolt and DoltHub was to create world class tools 
 ## Pull Requests
 
 In the simplest case two DoltHub users wish to make updates to the same database on DoltHub. Let's suppose that our esteemed CEO Tim has suddenly developed a passion for tennis, and would like to contribute to [dolthub/great-players-example](https://www.dolthub.com/repositories/dolthub/great-players-example), the database we created in the previous section.
+
 ![Adding a DoltHub Collaborator](../../images/add_dolthub_collaborator.png)
 
 Dolt has a concept of branches, almost identical to branches in Git. A branch is a named pointer to a commit. Users can create pull requests by proposing to merge one branch into another. The model looks something like this:
@@ -285,12 +298,15 @@ Successfully uploaded 1 of 1 file(s).
 ```
 
 Now we pushed the branch `more-great-players` to DoltHub, we can open a pull request by selecting the appropriate branch:
+
 ![Creating a Pull Request from a branch](../../images/create_pull_request.png)
 
 This pull request can be reviewed and merged:
+
 ![Merging a Pull Request](../../images/pull_request_ready_for_merge.png)
 
 And we are done!
+
 ![Merged Pull Request](../../images/merged_pull_request.png)
 
 ## Forking a Dolt Database
@@ -300,6 +316,7 @@ While this model is fine for small numbers of collaborators with high mutual tru
 ![Dolt Fork](../../images/forked_dolthub_database.png)
 
 Let's work through an example by forking the example database we have been working with:
+
 ![Forking a Database ](../../images/creating_a_fork.png)
 
 There is now a fork in the namespace `sampleorg`, which we can we clone and edit:
@@ -348,6 +365,7 @@ Successfully uploaded 1 of 1 file(s).
 ## Pulls Requests from Forks
 
 We can now create a pull request in a manner similar to the previous section, but instead of choosing only the from and to branches, we now choose the from repository:
+
 ![Creating a Pull Request from a fork](../../images/create_pull_request_from_fork.png)
 
 This creates a pull request, which will be familiar from the previous section, which we can go ahead and merge!
