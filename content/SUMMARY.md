@@ -14,8 +14,11 @@ Some stuff on getting started
 
 * [SQL Sync](guides/sql-sync.md)
 
+## Bounties
+* [Bounties](bounties/bounties.md)
 
-## Integration
+
+## Integrations
 
 * [Programmatic Clients](integrations/programmatic-clients.md)
 * [Notebooks](integrations/notebooks.md)
