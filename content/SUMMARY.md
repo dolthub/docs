@@ -1,8 +1,8 @@
+# Table of contents
 
-# Summary
+* [Introduction](README.md)
 
 ## Getting Started
-Some stuff on getting started
 
 * [Installation](getting-started/installation.md)
 * [Reading from Dolt](getting-started/reading-from-dolt.md)
@@ -15,8 +15,8 @@ Some stuff on getting started
 * [SQL Sync](guides/sql-sync.md)
 
 ## Bounties
-* [Bounties](bounties/bounties.md)
 
+* [Bounties](bounties/bounties.md)
 
 ## Integrations
 
@@ -30,3 +30,4 @@ Some stuff on getting started
 * [CLI](reference/cli.md)
 * [Python](reference/python.md)
 * [SQL](reference/sql.md)
+

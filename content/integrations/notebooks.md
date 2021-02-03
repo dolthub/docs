@@ -2,7 +2,7 @@
 title: Notebooks
 ---
 
-# Jupyter Notebook
+# Notebooks
 
 Python is the language of data science. Python Notebooks in [Jupyter format](https://jupyter.org/) have become a popular tool for creating and publishing complex data analysis. Dolt can be used with Jupyter Notebooks fairly easily by accessing the Dolt command line or by using Doltpy, Dolt's python interface.
 
@@ -14,7 +14,7 @@ Python is the language of data science. Python Notebooks in [Jupyter format](htt
 
 To use Dolt with Deepnote requires Dolt and Doltpy be installed. To get Dolt installed, you click the environemnt button on the left in Deepnote, click the Dockerfile link, and add the following text to the editable Dockerfile that appears.
 
-```
+```text
 RUN sudo curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | sudo bash
 ```
 
@@ -44,12 +44,13 @@ With Dolt, you have a full SQL database at your fingertips. So, if you don't wan
 
 #### API
 
-If you don't want to clone the data locally, [DoltHub has a versioned SQL to JSON API](https://www.dolthub.com/blog/2020-08-21-dolthub-repository-apis/) for every database. The API supports branches and releases so you can pin your notebook to a specific data version. [This example](https://deepnote.com/project/cacec925-c951-4d1e-bbf5-eaeaa9b1e8fc#%2Fdolt-demo.ipynb) reads from the tip of master but appending a `/<branch>` to the end of the API reads from the tip of that branch. [Dolt supports tags and releases](dolthub.com/blog/2020-09-14-data-releases/) so you should use those to pin to a specific commit.
+If you don't want to clone the data locally, [DoltHub has a versioned SQL to JSON API](https://www.dolthub.com/blog/2020-08-21-dolthub-repository-apis/) for every database. The API supports branches and releases so you can pin your notebook to a specific data version. [This example](https://deepnote.com/project/cacec925-c951-4d1e-bbf5-eaeaa9b1e8fc#%2Fdolt-demo.ipynb) reads from the tip of master but appending a `/<branch>` to the end of the API reads from the tip of that branch. [Dolt supports tags and releases](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/content/250-integrations/dolthub.com/blog/2020-09-14-data-releases/README.md) so you should use those to pin to a specific commit.
 
 ![Deepnote API](https://www.dolthub.com/blog/static/aa483fc7bd85ebbed37ac30e95bd3470/ccf0c/deepnote-api.png)
 
 ### Writing data to Dolt
 
-Dolt has the unique capability of providing safe and distributed writes. Modify the schema and the data to make your analysis easier. Writing in a Notebook is not very common because the model assumes idempotency of cells. With Dolt, you can just `dolt reset --hard` at the end of your cell to put the database back in the state you found it.  
+Dolt has the unique capability of providing safe and distributed writes. Modify the schema and the data to make your analysis easier. Writing in a Notebook is not very common because the model assumes idempotency of cells. With Dolt, you can just `dolt reset --hard` at the end of your cell to put the database back in the state you found it.
 
 In this example, we add a column to a table and populate it for a couple rows. We then show off Dolt's diff functionality. The code and output is a little long for a screenshot so head to Deepnote and [see for yourself](https://deepnote.com/project/cacec925-c951-4d1e-bbf5-eaeaa9b1e8fc#).
+

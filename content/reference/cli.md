@@ -2,257 +2,247 @@
 title: CLI
 ---
 
-# dolt init
+# CLI
 
-## Command
+## dolt init
+
+### Command
 
 `dolt init` - Create an empty Dolt data repository
 
-## Synopsis
+### Synopsis
 
-## Description
+### Description
 
 This command creates an empty Dolt data repository in the current directory.
 
 Running dolt init in an already initialized directory will fail.
 
-## Options
+### Options
 
-`--name`:
-The name used in commits to this repo. If not provided will be taken from `user.name` in the global config.
+`--name`: The name used in commits to this repo. If not provided will be taken from `user.name` in the global config.
 
-`--email`:
-The email address used. If not provided will be taken from `user.email` in the global config.
+`--email`: The email address used. If not provided will be taken from `user.email` in the global config.
 
-`--date`:
-Specify the date used in the initial commit. If not specified the current system time is used.
+`--date`: Specify the date used in the initial commit. If not specified the current system time is used.
 
-# dolt status
+## dolt status
 
-## Command
+### Command
 
 `dolt status` - Show the working status
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt status <br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt status 
 
-## Description
+
+          
+```
+
+### Description
 
 Displays working tables that differ from the current HEAD commit, tables that differ from the staged tables, and tables that are in the working tree that are not tracked by dolt. The first are what you would commit by running `dolt commit>`; the second and third are what you could commit by running `dolt add .>` before running `dolt commit>`.
 
-## Options
+### Options
 
 No options for this command.
 
-# dolt add
+## dolt add
 
-## Command
+### Command
 
 `dolt add` - Add table contents to the list of staged tables
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt add [&lt;table&gt;...]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt add [<table>...]
 
-## Description
+
+          
+```
+
+### Description
 
 This command updates the list of tables using the current content found in the working root, to prepare the content staged for the next commit. It adds the current content of existing tables as a whole or remove tables that do not exist in the working root anymore.
 
-This command can be performed multiple times before a commit. It only adds the content of the specified table(s) at the time the add command is run; if you want subsequent changes included in the next commit, then you must run dolt add again to add the new content to the index.
+This command can be performed multiple times before a commit. It only adds the content of the specified table\(s\) at the time the add command is run; if you want subsequent changes included in the next commit, then you must run dolt add again to add the new content to the index.
 
 The dolt status command can be used to obtain a summary of which tables have changes that are staged for the next commit.
 
-## Options
+### Options
 
 `<table>`:
 
-Working table(s) to add to the list tables staged to be committed. The abbreviation '.' can be used to add all tables.
+Working table\(s\) to add to the list tables staged to be committed. The abbreviation '.' can be used to add all tables.
 
-`-A`, `--all`:
-Stages any and all changes (adds, deletes, and modifications).
+`-A`, `--all`: Stages any and all changes \(adds, deletes, and modifications\).
 
-# dolt reset
+## dolt reset
 
-## Command
+### Command
 
 `dolt reset` - Resets staged tables to their HEAD state
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt reset &lt;tables&gt;...<br />
-			dolt reset [--hard | --soft]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt reset <tables>...
 
-## Description
+            dolt reset [--hard | --soft]
+
+
+          
+```
+
+### Description
 
 Sets the state of a table in the staging area to be that table's value at HEAD
 
-`dolt reset <tables>...`"
-This form resets the values for all staged `<tables>` to their values at `HEAD`. (It does not affect the working tree or
-the current branch.)
+`dolt reset <tables>...`" This form resets the values for all staged `<tables>` to their values at `HEAD`. \(It does not affect the working tree or the current branch.\)
 
-    This means that `dolt reset <tables>` is the opposite of `dolt add <tables>`.
+```text
+This means that `dolt reset <tables>` is the opposite of `dolt add <tables>`.
 
-    After running `dolt reset <tables>` to update the staged tables, you can use `dolt checkout` to check the
-    contents out of the staged tables to the working tables.
+After running `dolt reset <tables>` to update the staged tables, you can use `dolt checkout` to check the
+contents out of the staged tables to the working tables.
+```
 
-dolt reset .
-This form resets `all` staged tables to their values at HEAD. It is the opposite of `dolt add .`
+dolt reset . This form resets `all` staged tables to their values at HEAD. It is the opposite of `dolt add .`
 
-## Options
+### Options
 
-`--hard`:
-Resets the working tables and staged tables. Any changes to tracked tables in the working tree since `<commit>` are discarded.
+`--hard`: Resets the working tables and staged tables. Any changes to tracked tables in the working tree since `<commit>` are discarded.
 
-`--soft`:
-Does not touch the working tables, but removes all tables staged to be committed.
+`--soft`: Does not touch the working tables, but removes all tables staged to be committed.
 
-# dolt commit
+## dolt commit
 
-## Command
+### Command
 
 `dolt commit` - Record changes to the repository
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt commit [options]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt commit [options]
 
-## Description
 
-    Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
+          
+```
 
-    The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified files must be \"added\").
+### Description
 
-    The log message can be added with the parameter `-m <msg>`.  If the `<-m>` parameter is not provided an editor will be opened where you can review the commit and provide a log message.
+```text
+Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
 
-    The commit timestamp can be modified using the --date parameter.  Dates can be specified in the formats `<YYYY-MM-DD>`, `<YYYY-MM-DDTHH:MM:SS>`, or `<YYYY-MM-DDTHH:MM:SSZ07:00>` (where `<07:00>` is the time zone offset)."
+The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified files must be \"added\").
 
-## Options
+The log message can be added with the parameter `-m <msg>`.  If the `<-m>` parameter is not provided an editor will be opened where you can review the commit and provide a log message.
 
-`-m`, `--message`:
-Use the given `<msg>` as the commit message.
+The commit timestamp can be modified using the --date parameter.  Dates can be specified in the formats `<YYYY-MM-DD>`, `<YYYY-MM-DDTHH:MM:SS>`, or `<YYYY-MM-DDTHH:MM:SSZ07:00>` (where `<07:00>` is the time zone offset)."
+```
 
-`-a`:
-Adds all edited files in working to staged.
+### Options
 
-`--allow-empty`:
-Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
+`-m`, `--message`: Use the given `<msg>` as the commit message.
 
-`--date`:
-Specify the date used in the commit. If not specified the current system time is used.
+`-a`: Adds all edited files in working to staged.
 
-`--author`:
-Specify an explicit author using the standard "A U Thor <author@example.com>" format.
+`--allow-empty`: Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
 
-# dolt sql
+`--date`: Specify the date used in the commit. If not specified the current system time is used.
 
-## Command
+`--author`: Specify an explicit author using the standard "A U Thor [author@example.com](mailto:author@example.com)" format.
+
+## dolt sql
+
+### Command
 
 `dolt sql` - Runs a SQL query
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt sql [--multi-db-dir &lt;directory&gt;] [-r &lt;result format&gt;]<br />
-			dolt sql -q &lt;query;query&gt; [-r &lt;result format&gt;] -s &lt;name&gt; -m &lt;message&gt; [-b]<br />
-			dolt sql -q &lt;query;query&gt; --multi-db-dir &lt;directory&gt; [-r &lt;result format&gt;] [-b]<br />
-			dolt sql -x &lt;name&gt;<br />
-			dolt sql --list-saved<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt sql [--multi-db-dir <directory>] [-r <result format>]
 
-## Description
+            dolt sql -q <query;query> [-r <result format>] -s <name> -m <message> [-b]
+
+            dolt sql -q <query;query> --multi-db-dir <directory> [-r <result format>] [-b]
+
+            dolt sql -x <name>
+
+            dolt sql --list-saved
+
+
+          
+```
+
+### Description
 
 Runs a SQL query you specify. With no arguments, begins an interactive shell to run queries and view the results. With the `-q` option, runs the given query and prints any results, then exits.
 
-By default, `-q` executes a single statement. To execute multiple SQL statements separated by semicolons, use `-b` to enable batch mode. Queries can be saved with `-s`. Alternatively `-x` can be used to execute a saved query by name. Pipe SQL statements to dolt sql (no `-q`) to execute a SQL import or update script.
+By default, `-q` executes a single statement. To execute multiple SQL statements separated by semicolons, use `-b` to enable batch mode. Queries can be saved with `-s`. Alternatively `-x` can be used to execute a saved query by name. Pipe SQL statements to dolt sql \(no `-q`\) to execute a SQL import or update script.
 
-By default this command uses the dolt data repository in the current working directory as the one and only database. Running with `--multi-db-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored. Known limitations: - No support for creating indexes - No support for foreign keys - No support for column constraints besides NOT NULL - No support for default values - Joins can only use indexes for two table joins. Three or more tables in a join query will use a non-indexed join, which is very slow.
+By default this command uses the dolt data repository in the current working directory as the one and only database. Running with `--multi-db-dir <directory>` uses each of the subdirectories of the supplied directory \(each subdirectory must be a valid dolt data repository\) as databases. Subdirectories starting with '.' are ignored. Known limitations: - No support for creating indexes - No support for foreign keys - No support for column constraints besides NOT NULL - No support for default values - Joins can only use indexes for two table joins. Three or more tables in a join query will use a non-indexed join, which is very slow.
 
-## Options
+### Options
 
-`-q`, `--query`:
-Runs a single query and exits
+`-q`, `--query`: Runs a single query and exits
 
-`-r`, `--result-format`:
-How to format result output. Valid values are tabular, csv, json. Defaults to tabular.
+`-r`, `--result-format`: How to format result output. Valid values are tabular, csv, json. Defaults to tabular.
 
-`-s`, `--save`:
-Used with --query, save the query to the query catalog with the name provided. Saved queries can be examined in the dolt_query_catalog system table.
+`-s`, `--save`: Used with --query, save the query to the query catalog with the name provided. Saved queries can be examined in the dolt\_query\_catalog system table.
 
-`-x`, `--execute`:
-Executes a saved query with the given name
+`-x`, `--execute`: Executes a saved query with the given name
 
-`-l`, `--list-saved`:
-Lists all saved queries
+`-l`, `--list-saved`: Lists all saved queries
 
-`-m`, `--message`:
-Used with --query and --save, saves the query with the descriptive message given. See also --name
+`-m`, `--message`: Used with --query and --save, saves the query with the descriptive message given. See also --name
 
-`-b`, `--batch`:
-batch mode, to run more than one query with --query, separated by ';'. Piping input to sql with no arguments also uses batch mode
+`-b`, `--batch`: batch mode, to run more than one query with --query, separated by ';'. Piping input to sql with no arguments also uses batch mode
 
-`--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within
+`--multi-db-dir`: Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within
 
-# dolt sql-server
+## dolt sql-server
 
-## Command
+### Command
 
 `dolt sql-server` - Start a MySQL-compatible server.
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt sql-server --config &lt;file&gt;<br />
-			dolt sql-server [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [-r]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt sql-server --config <file>
 
-## Description
+            dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [-r]
 
-By default, starts a MySQL-compatible server which allows only one user connection at a time to the dolt repository in the current directory. Any edits made through this server will be automatically reflected in the working set. This behavior can be modified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line (If `--config <file>` is provided all other command line arguments are ignored). This is an example yaml configuration file showing all supported items and their default values:
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="By default, starts a MySQL-compatible server whilanguage-text">
-		<code class="language-text">
-			log_level: info
+          
+```
+
+### Description
+
+By default, starts a MySQL-compatible server which allows only one user connection at a time to the dolt repository in the current directory. Any edits made through this server will be automatically reflected in the working set. This behavior can be modified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line \(If `--config <file>` is provided all other command line arguments are ignored\). This is an example yaml configuration file showing all supported items and their default values:
+
+```text
+
+        
+            log_level: info
 
 behavior:
 read_only: false
@@ -270,238 +260,221 @@ read_timeout_millis: 30000
 write_timeout_millis: 30000
 
 databases: []
-</code>
-</pre>
 
-</div>
+```
 
 SUPPORTED CONFIG FILE FIELDS:
 
-    	`vlog_level` - Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
+```text
+    `vlog_level` - Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
-    	`behavior.read_only` - If true database modification is disabled
+    `behavior.read_only` - If true database modification is disabled
 
-    	`behavior.autocommit` - If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
+    `behavior.autocommit` - If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
 
-    	`user.name` - The username that connections should use for authentication
+    `user.name` - The username that connections should use for authentication
 
-    	`user.password` - The password that connections should use for authentication.
+    `user.password` - The password that connections should use for authentication.
 
-    	`listener.host` - The host address that the server will run on.  This may be `localhost` or an IPv4 or IPv6 address
+    `listener.host` - The host address that the server will run on.  This may be `localhost` or an IPv4 or IPv6 address
 
-    	`listener.port` - The port that the server should listen on
+    `listener.port` - The port that the server should listen on
 
-    	`listener.max_connections` - The number of simultaneous connections that the server will accept
+    `listener.max_connections` - The number of simultaneous connections that the server will accept
 
-    	`listener.read_timeout_millis` - The number of milliseconds that the server will wait for a read operation
+    `listener.read_timeout_millis` - The number of milliseconds that the server will wait for a read operation
 
-    	`listener.write_timeout_millis` - The number of milliseconds that the server will wait for a write operation
+    `listener.write_timeout_millis` - The number of milliseconds that the server will wait for a write operation
 
-    	`databases` - a list of dolt data repositories to make available as SQL databases. If databases is missing or empty then the working directory must be a valid dolt data repository which will be made available as a SQL database
+    `databases` - a list of dolt data repositories to make available as SQL databases. If databases is missing or empty then the working directory must be a valid dolt data repository which will be made available as a SQL database
 
-    	`databases[i].path` - A path to a dolt data repository
+    `databases[i].path` - A path to a dolt data repository
 
-    	`databases[i].name` - The name that the database corresponding to the given path should be referenced via SQL
+    `databases[i].name` - The name that the database corresponding to the given path should be referenced via SQL
+```
 
 If a config file is not provided many of these settings may be configured on the command line.
 
-## Options
+### Options
 
-`--config`:
-When provided configuration is taken from the yaml config file and all command line parameters are ignored.
+`--config`: When provided configuration is taken from the yaml config file and all command line parameters are ignored.
 
-`-H`, `--host`:
-Defines the host address that the server will run on (default `localhost`)
+`-H`, `--host`: Defines the host address that the server will run on \(default `localhost`\)
 
-`-P`, `--port`:
-Defines the port that the server will run on (default `3306`)
+`-P`, `--port`: Defines the port that the server will run on \(default `3306`\)
 
-`-u`, `--user`:
-Defines the server user (default `root`)
+`-u`, `--user`: Defines the server user \(default `root`\)
 
-`-p`, `--password`:
-Defines the server password (default ``)
+`-p`, `--password`: Defines the server password \(default \`\`\)
 
-`-t`, `--timeout`:
-Defines the timeout, in seconds, used for connections
-A value of `0` represents an infinite timeout (default `30000`)
+`-t`, `--timeout`: Defines the timeout, in seconds, used for connections A value of `0` represents an infinite timeout \(default `30000`\)
 
-`-r`, `--readonly`:
-Disables modification of the database
+`-r`, `--readonly`: Disables modification of the database
 
-`-l`, `--loglevel`:
-Defines the level of logging provided
-Options are: `trace',`debug`,`info`,`warning`,`error`,`fatal`(default`info`)
+`-l`, `--loglevel`: Defines the level of logging provided Options are: `trace',`debug`,`info`,`warning`,`error`,`fatal`(default`info\`\)
 
-`--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+`--multi-db-dir`: Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
 
-`--no-auto-commit`:
-When provided sessions will not automatically commit their changes to the working set. Anything not manually committed will be lost.
+`--no-auto-commit`: When provided sessions will not automatically commit their changes to the working set. Anything not manually committed will be lost.
 
-# dolt log
+## dolt log
 
-## Command
+### Command
 
 `dolt log` - Show commit logs
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt log [-n &lt;num_commits&gt;] [&lt;commit&gt;]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt log [-n <num_commits>] [<commit>]
 
-## Description
+
+          
+```
+
+### Description
 
 Shows the commit logs
 
 The command takes options to control what is shown and how.
 
-## Options
+### Options
 
-`-n`, `--number`:
-Limit the number of commits to output
+`-n`, `--number`: Limit the number of commits to output
 
-# dolt diff
+## dolt diff
 
-## Command
+### Command
 
 `dolt diff` - Show changes between commits, commit and working tree, etc
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt diff [options] [&lt;commit&gt;] [&lt;tables&gt;...]<br />
-			dolt diff [options] &lt;commit&gt; &lt;commit&gt; [&lt;tables&gt;...]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt diff [options] [<commit>] [<tables>...]
 
-## Description
+            dolt diff [options] <commit> <commit> [<tables>...]
+
+
+          
+```
+
+### Description
 
 Show changes between the working and staged tables, changes between the working tables and the tables within a commit, or changes between tables at two commits.
 
-`dolt diff [--options] [<tables>...]`
-This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
+`dolt diff [--options] [<tables>...]` This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
 
-`dolt diff [--options] <commit> [<tables>...]`
-This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch.
+`dolt diff [--options] <commit> [<tables>...]` This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch.
 
-`dolt diff [--options] <commit> <commit> [<tables>...]`
-This is to view the changes between two arbitrary `commit`.
+`dolt diff [--options] <commit> <commit> [<tables>...]` This is to view the changes between two arbitrary `commit`.
 
 The diffs displayed can be limited to show the first N by providing the parameter `--limit N` where `N` is the number of diffs to display.
 
 In order to filter which diffs are displayed `--where key=value` can be used. The key in this case would be either `to_COLUMN_NAME` or `from_COLUMN_NAME`. where `from_COLUMN_NAME=value` would filter based on the original value and `to_COLUMN_NAME` would select based on its updated value.
 
-## Options
+### Options
 
-`-d`, `--data`:
-Show only the data changes, do not show the schema changes (Both shown by default).
+`-d`, `--data`: Show only the data changes, do not show the schema changes \(Both shown by default\).
 
-`-s`, `--schema`:
-Show only the schema changes, do not show the data changes (Both shown by default).
+`-s`, `--schema`: Show only the schema changes, do not show the data changes \(Both shown by default\).
 
-`--summary`:
-Show summary of data changes
+`--summary`: Show summary of data changes
 
-`-q`, `--sql`:
-Output diff as a SQL patch file of `INSERT` / `UPDATE` / `DELETE` statements
+`-q`, `--sql`: Output diff as a SQL patch file of `INSERT` / `UPDATE` / `DELETE` statements
 
-`--where`:
-filters columns based on values in the diff. See `dolt diff --help` for details.
+`--where`: filters columns based on values in the diff. See `dolt diff --help` for details.
 
-`--limit`:
-limits to the first N diffs.
+`--limit`: limits to the first N diffs.
 
-# dolt blame
+## dolt blame
 
-## Command
+### Command
 
 `dolt blame` - Show what revision and author last modified each row of a table
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt blame [&lt;rev&gt;] &lt;tablename&gt;<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt blame [<rev>] <tablename>
 
-## Description
+
+          
+```
+
+### Description
 
 Annotates each row in the given table with information from the revision which last modified the row. Optionally, start annotating from the given revision.
 
-## Options
+### Options
 
 No options for this command.
 
-# dolt merge
+## dolt merge
 
-## Command
+### Command
 
 `dolt merge` - Join two or more development histories together
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt merge &lt;branch&gt;<br />
-			dolt merge --abort<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt merge <branch>
 
-## Description
+            dolt merge --abort
 
-Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.
 
-The second syntax (`<dolt merge --abort>`) can only be run after the merge has resulted in conflicts. git merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started (and especially if those changes were further modified after the merge was started), dolt merge `--abort` will in some cases be unable to reconstruct the original (pre-merge) changes. Therefore:
+          
+```
+
+### Description
+
+Incorporates changes from the named commits \(since the time their histories diverged from the current branch\) into the current branch.
+
+The second syntax \(`<dolt merge --abort>`\) can only be run after the merge has resulted in conflicts. git merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started \(and especially if those changes were further modified after the merge was started\), dolt merge `--abort` will in some cases be unable to reconstruct the original \(pre-merge\) changes. Therefore:
 
 `<Warning>`: Running dolt merge with non-trivial uncommitted changes is discouraged: while possible, it may leave you in a state that is hard to back out of in the case of a conflict.
 
-## Options
+### Options
 
-`--abort`:
-Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
+`--abort`: Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
 
 If there were uncommitted working set changes present when the merge started, `dolt merge --abort` will be unable to reconstruct these changes. It is therefore recommended to always commit or stash your changes before running git merge.
 
-# dolt branch
+## dolt branch
 
-## Command
+### Command
 
 `dolt branch` - List, create, or delete branches
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt branch [--list] [-v] [-a]<br />
-			dolt branch [-f] &lt;branchname&gt; [&lt;start-point&gt;]<br />
-			dolt branch -m [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
-			dolt branch -c [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
-			dolt branch -d [-f] &lt;branchname&gt;...<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt branch [--list] [-v] [-a]
 
-## Description
+            dolt branch [-f] <branchname> [<start-point>]
+
+            dolt branch -m [-f] [<oldbranch>] <newbranch>
+
+            dolt branch -c [-f] [<oldbranch>] <newbranch>
+
+            dolt branch -d [-f] <branchname>...
+
+
+          
+```
+
+### Description
 
 If `--list` is given, or if there are no non-option arguments, existing branches are listed; the current branch will be highlighted with an asterisk.
 
@@ -515,117 +488,107 @@ The `-c` options have the exact same semantics as `-m`, except instead of the br
 
 With a `-d`, `<branchname>` will be deleted. You may specify more than one branch for deletion.
 
-## Options
+### Options
 
 `<start-point>`:
 
 A commit that a new branch should point at.
 
-`--list`:
-List branches
+`--list`: List branches
 
-`-f`, `--force`:
-Reset `<branchname>` to `<startpoint>`, even if `<branchname>` exists already. Without `-f`, `dolt branch` refuses to change an existing branch. In combination with `-d` (or `--delete`), allow deleting the branch irrespective of its merged status. In combination with -m (or `--move`), allow renaming the branch even if the new branch name already exists, the same applies for `-c` (or `--copy`).
+`-f`, `--force`: Reset `<branchname>` to `<startpoint>`, even if `<branchname>` exists already. Without `-f`, `dolt branch` refuses to change an existing branch. In combination with `-d` \(or `--delete`\), allow deleting the branch irrespective of its merged status. In combination with -m \(or `--move`\), allow renaming the branch even if the new branch name already exists, the same applies for `-c` \(or `--copy`\).
 
-`-c`, `--copy`:
-Create a copy of a branch.
+`-c`, `--copy`: Create a copy of a branch.
 
-`-m`, `--move`:
-Move/rename a branch
+`-m`, `--move`: Move/rename a branch
 
-`-d`, `--delete`:
-Delete a branch. The branch must be fully merged in its upstream branch.
+`-d`, `--delete`: Delete a branch. The branch must be fully merged in its upstream branch.
 
-`--D`:
-Shortcut for `--delete --force`.
+`--D`: Shortcut for `--delete --force`.
 
-`-v`, `--verbose`:
-When in list mode, show the hash and commit subject line for each head
+`-v`, `--verbose`: When in list mode, show the hash and commit subject line for each head
 
-`-a`, `--all`:
-When in list mode, shows remote tracked branches
+`-a`, `--all`: When in list mode, shows remote tracked branches
 
-# dolt checkout
+## dolt checkout
 
-## Command
+### Command
 
 `dolt checkout` - Switch branches or restore working tree tables
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt checkout &lt;branch&gt;<br />
-			dolt checkout &lt;table&gt;...<br />
-			dolt checkout -b &lt;new-branch&gt; [&lt;start-point&gt;]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt checkout <branch>
 
-## Description
+            dolt checkout <table>...
+
+            dolt checkout -b <new-branch> [<start-point>]
+
+
+          
+```
+
+### Description
 
 Updates tables in the working set to match the staged versions. If no paths are given, dolt checkout will also update HEAD to set the specified branch as the current branch.
 
-dolt checkout `<}branch>`
-To prepare for working on `<}branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working
-tree are kept, so that they can be committed to the `<}branch>`.
+dolt checkout `<}branch>` To prepare for working on `<}branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working tree are kept, so that they can be committed to the `<}branch>`.
 
-dolt checkout -b `<}new_branch>` [`<}start_point>`]
-Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
+dolt checkout -b `<}new_branch>` \[`<}start_point>`\] Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
 
-dolt checkout `<}table>`...
-To update table(s) with their values in HEAD
+dolt checkout `<}table>`... To update table\(s\) with their values in HEAD
 
-## Options
+### Options
 
-`--b`:
-Create a new branch named `<new_branch>` and start it at `<start_point>`.
+`--b`: Create a new branch named `<new_branch>` and start it at `<start_point>`.
 
-# dolt remote
+## dolt remote
 
-## Command
+### Command
 
 `dolt remote` - Manage set of tracked repositories
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt remote [-v | --verbose]<br />
-			dolt remote add [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;name&gt; &lt;url&gt;<br />
-			dolt remote remove &lt;name&gt;<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt remote [-v | --verbose]
 
-## Description
+            dolt remote add [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <name> <url>
+
+            dolt remote remove <name>
+
+
+          
+```
+
+### Description
 
 With no arguments, shows a list of existing remotes. Several subcommands are available to perform operations on the remotes.
 
-`add`
-Adds a remote named `<name>` for the repository at `<url>`. The command dolt fetch `<name>` can then be used to create and update remote-tracking branches `<name>/<branch>`.
+`add` Adds a remote named `<name>` for the repository at `<url>`. The command dolt fetch `<name>` can then be used to create and update remote-tracking branches `<name>/<branch>`.
 
-The `<url>` parameter supports url schemes of http, https, aws, gs, and file. If a url scheme does not prefix the url then https is assumed. If the `<url>` paramenter is in the format `<organization>/<repository>` then dolt will use the `remotes.default_host` from your configuration file (Which will be dolthub.com unless changed).
+The `<url>` parameter supports url schemes of http, https, aws, gs, and file. If a url scheme does not prefix the url then https is assumed. If the `<url>` paramenter is in the format `<organization>/<repository>` then dolt will use the `remotes.default_host` from your configuration file \(Which will be dolthub.com unless changed\).
 
 AWS cloud remote urls should be of the form `aws://[dynamo-table:s3-bucket]/database`. You may configure your aws cloud remote using the optional parameters `aws-region`, `aws-creds-type`, `aws-creds-file`.
 
-aws-creds-type specifies the means by which credentials should be retrieved in order to access the specified cloud resources (specifically the dynamo table, and the s3 bucket). Valid values are 'role', 'env', or 'file'.
+aws-creds-type specifies the means by which credentials should be retrieved in order to access the specified cloud resources \(specifically the dynamo table, and the s3 bucket\). Valid values are 'role', 'env', or 'file'.
 
-    \trole: Use the credentials installed for the current user
-    \tenv: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-    \tfile: Uses the credentials file specified by the parameter aws-creds-file
+```text
+\trole: Use the credentials installed for the current user
+\tenv: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+\tfile: Uses the credentials file specified by the parameter aws-creds-file
+```
 
 GCP remote urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google +
 
-The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See https://en.wikipedia.org/wiki/File_URI_schemethi
-`remove`, `rm`,
-Remove the remote named `<name>`. All remote-tracking branches and configuration settings for the remote are removed.
+The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See [https://en.wikipedia.org/wiki/File\_URI\_schemethi](https://en.wikipedia.org/wiki/File_URI_schemethi) `remove`, `rm`, Remove the remote named `<name>`. All remote-tracking branches and configuration settings for the remote are removed.
 
-## Options
+### Options
 
 `<region>`:
 
@@ -639,37 +602,34 @@ credential type. Valid options are role, env, and file. See the help section for
 
 AWS profile to use.
 
-`-v`, `--verbose`:
-When printing the list of remotes adds additional details.
+`-v`, `--verbose`: When printing the list of remotes adds additional details.
 
 `--aws-region`
 
 `--aws-creds-type`
 
-`--aws-creds-file`:
-AWS credentials file
+`--aws-creds-file`: AWS credentials file
 
-`--aws-creds-profile`:
-AWS profile to use
+`--aws-creds-profile`: AWS profile to use
 
-# dolt push
+## dolt push
 
-## Command
+### Command
 
 `dolt push` - Update remote refs along with associated objects
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt push [-u | --set-upstream] [&lt;remote&gt;] [&lt;refspec&gt;]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt push [-u | --set-upstream] [<remote>] [<refspec>]
 
-## Description
+
+          
+```
+
+### Description
 
 Updates remote refs using local refs, while sending objects necessary to complete the given refs.
 
@@ -679,207 +639,199 @@ When the command line does not specify what to push with `<refspec>`... then the
 
 When neither the command-line does not specify what to push, the default behavior is used, which corresponds to the current branch being pushed to the corresponding upstream branch, but as a safety measure, the push is aborted if the upstream branch does not have the same name as the local one.
 
-## Options
+### Options
 
-`-u`, `--set-upstream`:
-For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less `dolt pull` and other commands.
+`-u`, `--set-upstream`: For every branch that is up to date or successfully pushed, add upstream \(tracking\) reference, used by argument-less `dolt pull` and other commands.
 
-`-f`, `--force`:
-Update the remote with local history, overwriting any conflicting history in the remote.
+`-f`, `--force`: Update the remote with local history, overwriting any conflicting history in the remote.
 
-# dolt pull
+## dolt pull
 
-## Command
+### Command
 
 `dolt pull` - Fetch from and integrate with another repository or a local branch
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt pull &lt;remote&gt;<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt pull <remote>
 
-## Description
+
+          
+```
+
+### Description
 
 Incorporates changes from a remote repository into the current branch. In its default mode, `dolt pull` is shorthand for `dolt fetch` followed by `dolt merge <remote>/<branch>`.
 
 More precisely, dolt pull runs `dolt fetch` with the given parameters and calls `dolt merge` to merge the retrieved branch `HEAD` into the current branch.
 
-## Options
+### Options
 
 No options for this command.
 
-# dolt fetch
+## dolt fetch
 
-## Command
+### Command
 
 `dolt fetch` - Download objects and refs from another repository
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt fetch [&lt;remote&gt;] [&lt;refspec&gt; ...]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt fetch [<remote>] [<refspec> ...]
 
-## Description
+
+          
+```
+
+### Description
 
 Fetch refs, along with the objects necessary to complete their histories and update remote-tracking branches.
 
 By default dolt will attempt to fetch from a remote named `origin`. The `<remote>` parameter allows you to specify the name of a different remote you wish to pull from by the remote's name.
 
-When no refspec(s) are specified on the command line, the fetch_specs for the default remote are used.
+When no refspec\(s\) are specified on the command line, the fetch\_specs for the default remote are used.
 
-## Options
+### Options
 
-`-f`, `--force`:
-Update refs to remote branches with the current state of the remote, overwriting any conflicting history.
+`-f`, `--force`: Update refs to remote branches with the current state of the remote, overwriting any conflicting history.
 
-# dolt clone
+## dolt clone
 
-## Command
+### Command
 
 `dolt clone` - Clone a data repository into a new directory
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt clone [-remote &lt;remote&gt;] [-branch &lt;branch&gt;]  [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;remote-url&gt; &lt;new-dir&gt;<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt clone [-remote <remote>] [-branch <branch>]  [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <remote-url> <new-dir>
 
-## Description
 
-Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository (visible using `<dolt branch -a>`), and creates and checks out an initial branch that is forked from the cloned repository's currently active branch.
+          
+```
+
+### Description
+
+Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository \(visible using `<dolt branch -a>`\), and creates and checks out an initial branch that is forked from the cloned repository's currently active branch.
 
 After the clone, a plain `dolt fetch` without arguments will update all the remote-tracking branches, and a `dolt pull` without arguments will in addition merge the remote branch into the current branch.
 
 This default configuration is achieved by creating references to the remote branch heads under `<refs/remotes/origin>` and by creating a remote named 'origin'.
 
-## Options
+### Options
 
-`--remote`:
-Name of the remote to be added. Default will be 'origin'.
+`--remote`: Name of the remote to be added. Default will be 'origin'.
 
-`-b`, `--branch`:
-The branch to be cloned. If not specified all branches will be cloned.
+`-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
 
 `--aws-region`
 
 `--aws-creds-type`
 
-`--aws-creds-file`:
-AWS credentials file.
+`--aws-creds-file`: AWS credentials file.
 
-`--aws-creds-profile`:
-AWS profile to use.
+`--aws-creds-profile`: AWS profile to use.
 
-# dolt login
+## dolt login
 
-## Command
+### Command
 
 `dolt login` - Login to DoltHub
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt login [&lt;creds&gt;]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt login [<creds>]
 
-## Description
+
+          
+```
+
+### Description
 
 Login into DoltHub using the email in your config so you can pull from private repos and push to those you have permission to.
 
-## Options
+### Options
 
 `<creds>`:
 
 A specific credential to use for login.
 
-# dolt config
+## dolt config
 
-## Command
+### Command
 
 `dolt config` - Get and set repository or global options
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt config [--global|--local] --list<br />
-			dolt config [--global|--local] --add &lt;name&gt; &lt;value&gt;<br />
-			dolt config [--global|--local] --get &lt;name&gt;<br />
-			dolt config [--global|--local] --unset &lt;name&gt;...<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt config [--global|--local] --list
 
-## Description
+            dolt config [--global|--local] --add <name> <value>
+
+            dolt config [--global|--local] --get <name>
+
+            dolt config [--global|--local] --unset <name>...
+
+
+          
+```
+
+### Description
 
 You can query/set/replace/unset options with this command.
 
-    When reading, the values are read from the global and repository local configuration files, and options `<--global>`, and `<--local>` can be used to tell the command to read from only that location.
+```text
+When reading, the values are read from the global and repository local configuration files, and options `<--global>`, and `<--local>` can be used to tell the command to read from only that location.
 
-    When writing, the new value is written to the repository local configuration file by default, and options `<--global>`, can be used to tell the command to write to that location (you can say `<--local>` but that is the default).
+When writing, the new value is written to the repository local configuration file by default, and options `<--global>`, can be used to tell the command to write to that location (you can say `<--local>` but that is the default).
+```
 
-## Options
+### Options
 
-`--global`:
-Use global config.
+`--global`: Use global config.
 
-`--local`:
-Use repository local config.
+`--local`: Use repository local config.
 
-`--add`:
-Set the value of one or more config parameters
+`--add`: Set the value of one or more config parameters
 
-`--list`:
-List the values of all config parameters.
+`--list`: List the values of all config parameters.
 
-`--get`:
-Get the value of one or more config parameters.
+`--get`: Get the value of one or more config parameters.
 
-`--unset`:
-Unset the value of one or more config paramaters.
+`--unset`: Unset the value of one or more config paramaters.
 
-# dolt ls
+## dolt ls
 
-## Command
+### Command
 
 `dolt ls` - List tables
 
-## Synopsis
+### Synopsis
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="language-text">
-		<code class="language-text">
-			dolt ls [--options] [&lt;commit&gt;]<br />
+```text
 
-  		</code>
-	</pre>
-</div>
+        
+            dolt ls [--options] [<commit>]
 
-## Description
+
+          
+```
+
+### Description
 
 With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit. If the `--verbose` flag is provided a row count and a hash of the table will also be displayed.
 
@@ -887,13 +839,11 @@ If the `--system` flag is supplied this will show the dolt system tables which a
 
 If the `--all` flag is supplied both user and system tables will be printed.
 
-## Options
+### Options
 
-`-v`, `--verbose`:
-show the hash of the table
+`-v`, `--verbose`: show the hash of the table
 
-`-s`, `--system`:
-show system tables
+`-s`, `--system`: show system tables
 
-`-a`, `--all`:
-show system tables
+`-a`, `--all`: show system tables
+

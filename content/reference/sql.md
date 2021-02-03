@@ -2,70 +2,67 @@
 title: SQL
 ---
 
-# Overview
+# SQL
+
+## Overview
 
 Dolt data repositories are unique in that they arrive capable of running MySQL compatible SQL statements against them. Your Dolt binary can execute SQL against any Dolt repo you have happen to have locally. Existing RDBMS solutions have optimized their on-disk layout to support the needs of physical plan execution. Dolt makes a different set of tradeoffs, instead using a Merkel Tree to support robust version control semantics, and thus portability of the data. The combination of portability, robust version control semantics, and a SQL interface make Dolt a uniquely compelling data format.
 
-## Executing SQL
+### Executing SQL
 
 There are two ways of executing SQL against your data repository. The first is via the `dolt sql` command, which runs SQL queries from your shell, and the second is the sql-server command, which starts a MySQL compatible server you can connect to with any standard database client.
 
-### dolt sql
+#### dolt sql
 
 Using `dolt sql` you can issue SQL statements against a local data repository directly. Any writes made to the repository will be reflected in the working set, which can be added via `dolt add` and committed via `dolt commit` as per usual.
 
 There are 2 basic modes which the `dolt sql` command operate in. The first is command line query mode where a semicolon delimited list of queries is provided on the command line using the -q parameter. The second is using the Dolt SQL interactive shell which can be started by running the `dolt sql` command without any arguments in a directory containing a Dolt data repository.
 
-View the `dolt sql` command documentation [here](../cli/#dolt-sql)
+View the `dolt sql` command documentation [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql)
 
-### dolt sql-server
+#### dolt sql-server
 
 The `dolt sql-server` command will run a MySQL compatible server which clients can execute queries against. This provides a programmatic interface to get data into or out of a Dolt data repository. It can also be used to connect with third party tooling which supports MySQL.
 
-View the `dolt sql-server` command documentation [here](../cli/#dolt-sql-server) to learn how to configure the server.
+View the `dolt sql-server` command documentation [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql-server) to learn how to configure the server.
 
-
-## Dolt CLI in SQL
+### Dolt CLI in SQL
 
 You can operate several of dolt cli commands in the sql layer directly. This is especially useful if you are using sql in the application layer and want to the query a Dolt repository.
 
-
-## System Tables
+### System Tables
 
 Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
 
-- [dolt_log table](#dolt-system-tables_dolt_log)
-- [dolt_branches table](#dolt-system-tables_dolt_branches)
-- [dolt_docs table](#dolt-system-tables_dolt_docs)
-- [dolt_diff tables](#dolt-system-tables_dolt_diff_tablename)
-- [dolt_history tables](#dolt-system-tables_dolt_history_tablename)
-- [dolt_schemas table](#dolt-system-tables_dolt_schemas)
+* [dolt\_log table](sql.md#dolt-system-tables_dolt_log)
+* [dolt\_branches table](sql.md#dolt-system-tables_dolt_branches)
+* [dolt\_docs table](sql.md#dolt-system-tables_dolt_docs)
+* [dolt\_diff tables](sql.md#dolt-system-tables_dolt_diff_tablename)
+* [dolt\_history tables](sql.md#dolt-system-tables_dolt_history_tablename)
+* [dolt\_schemas table](sql.md#dolt-system-tables_dolt_schemas)
 
-## Concurrency
+### Concurrency
 
 When any client initiates a SQL session against a Dolt data repository, that session will be pointing to a specific commit even if other clients make changes. Therefore, modifications made by other clients will not be visible. There are two commit modes which determine how you are able to write to the database, commit those writes, and get modifications made by other clients.
 
-### Autocommit mode
+#### Autocommit mode
 
-```
+```text
 NOTE: This may be confusing to some readers. Commit in this context is Commit in the database context not Commit in the
 version control context.
 ```
 
-In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode (See the `dolt sql-server` docs [here](../cli/#dolt-sql-server) to see how to configure
-the server).
+In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode \(See the `dolt sql-server` docs [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql-server) to see how to configure the server\).
 
-### Manual commit mode
+#### Manual commit mode
 
-In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt_branches](../sql/#dolt-system-tables) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
+In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/sql/README.md#dolt-system-tables) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
 
-See the full [manual commit mode documentation](../sql/#concurrency)
+See the full [manual commit mode documentation](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/sql/README.md#concurrency)
 
-# Querying non-HEAD revisions of a database
+## Querying non-HEAD revisions of a database
 
-Dolt SQL supports a variant of [SQL
-2011](https://en.wikipedia.org/wiki/SQL:2011) syntax to query non-HEAD
-revisions of a database via the `AS OF` clause:
+Dolt SQL supports a variant of [SQL 2011](https://en.wikipedia.org/wiki/SQL:2011) syntax to query non-HEAD revisions of a database via the `AS OF` clause:
 
 ```sql
 SELECT * FROM myTable AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
@@ -75,31 +72,23 @@ SELECT * FROM myTable AS OF TIMESTAMP('2020-01-01');
 SELECT * FROM myTable AS OF 'myBranch' JOIN myTable AS OF 'yourBranch' AS foo;
 ```
 
-The `AS OF` expression must name a valid Dolt reference, such as a
-commit hash, branch name, or other reference. Timestamp / date values
-are also supported. Each table in a query can use a different `AS OF`
-clause.
+The `AS OF` expression must name a valid Dolt reference, such as a commit hash, branch name, or other reference. Timestamp / date values are also supported. Each table in a query can use a different `AS OF` clause.
 
-In addition to this `AS OF` syntax for `SELECT` statements, Dolt also
-supports an extension to the standard MySQL syntax to examine the
-database schema for a previous revision:
+In addition to this `AS OF` syntax for `SELECT` statements, Dolt also supports an extension to the standard MySQL syntax to examine the database schema for a previous revision:
 
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
 ```
 
-# DOLT CLI in SQL
+## DOLT CLI in SQL
 
+### `DOLT_COMMIT()`
 
-## `DOLT_COMMIT()`
-
-
-### Description
+#### Description
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with each value directly following the flag. Note that you must always support the message flag with the intended message right after.
 
 By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. You can also issue manual COMMIT statements to flush the working set to disk. See the section on [concurrency](https://www.dolthub.com/docs/reference/sql/#concurrency).
-
 
 ```sql
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit');
@@ -107,24 +96,19 @@ SELECT DOLT_COMMIT('-m', 'This is a commit');
 SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-### Options
+#### Options
 
-`-m`, `--message`:
-Use the given `<msg>` as the commit message. **Required**
+`-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
 
-`-a`:
-Stages all tables with changes before committing
+`-a`: Stages all tables with changes before committing
 
-`--allow-empty`:
-Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
+`--allow-empty`: Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
 
-`--date`:
-Specify the date used in the commit. If not specified the current system time is used.
+`--date`: Specify the date used in the commit. If not specified the current system time is used.
 
-`--author`:
-Specify an explicit author using the standard "A U Thor <author@example.com>" format.
+`--author`: Specify an explicit author using the standard "A U Thor [author@example.com](mailto:author@example.com)" format.
 
-### Example
+#### Example
 
 ```sql
 -- Set the current database for the session
@@ -139,17 +123,17 @@ WHERE pk = "key";
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-# Dolt System Tables
+## Dolt System Tables
 
-## `dolt_branches`
+### `dolt_branches`
 
-### Description
+#### Description
 
 Queryable system table which shows the Dolt data repository branches.
 
-### Schema
+#### Schema
 
-```
+```text
 +------------------------+----------+
 | Field                  | Type     |
 +------------------------+----------+
@@ -162,7 +146,7 @@ Queryable system table which shows the Dolt data repository branches.
 +------------------------+----------+
 ```
 
-### Example Queries
+#### Example Queries
 
 Get all the branches.
 
@@ -171,7 +155,7 @@ SELECT *
 FROM dolt_branches
 ```
 
-```
+```text
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 | name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
@@ -194,7 +178,7 @@ FROM dolt_branches
 WHERE hash = @@mydb_head
 ```
 
-```
+```text
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 | name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
@@ -211,18 +195,17 @@ INSERT INTO dolt_branches (name, hash)
 VALUES ("my branch name", @@mydb_head);
 ```
 
-## `dolt_diff_$TABLENAME`
+### `dolt_diff_$TABLENAME`
 
-### Description
+#### Description
 
-For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried
-to see how rows have changed over time. Each row in the result set represent a row that has changed between two commits.
+For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represent a row that has changed between two commits.
 
-### Schema
+#### Schema
 
 Every Dolt diff table will have the columns
 
-```
+```text
 +-------------+------+
 | field       | type |
 +-------------+------+
@@ -234,11 +217,11 @@ Every Dolt diff table will have the columns
 
 The remaining columns will be dependent on the schema of the user table. For every column X in your table at `from_commit`, there will be a column in the result set named `from_$X` with the same type as `X`, and for every column `Y` in your table at `to_commit` there will be a column in the result set named `to_$Y` with the same type as `Y`.
 
-### Example Schema
+#### Example Schema
 
 For a hypothetical table named states with a schema that changes between `from_commit` and `to_commit` as shown below
 
-```
+```text
 # schema at from_commit    # schema at to_commit
 +------------+--------+    +------------+--------+
 | field      | type   |    | field      | type   |
@@ -251,7 +234,7 @@ For a hypothetical table named states with a schema that changes between `from_c
 
 The schema for `dolt_diff_states` would be
 
-```
+```text
 +-----------------+--------+
 | field           | type   |
 +-----------------+--------+
@@ -266,17 +249,13 @@ The schema for `dolt_diff_states` would be
 +-----------------+--------+
 ```
 
-### Query Details
+#### Query Details
 
-Doing a `SELECT *` query for a diff table will show you every change that has occurred to each row for every commit in this
-branches history. Using `to_commit` and `from_commit` you can limit the data to specific commits. There is one special `to_commit`
-value `WORKING` which can be used to see what changes are in the working set that have yet to be committed to HEAD. It
-is often useful to use the `HASHOF()` function to get the commit hash of a branch, or an anscestor commit. To get the
-differences between the last commit and it's parent you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
+Doing a `SELECT *` query for a diff table will show you every change that has occurred to each row for every commit in this branches history. Using `to_commit` and `from_commit` you can limit the data to specific commits. There is one special `to_commit` value `WORKING` which can be used to see what changes are in the working set that have yet to be committed to HEAD. It is often useful to use the `HASHOF()` function to get the commit hash of a branch, or an anscestor commit. To get the differences between the last commit and it's parent you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
 
 For each row the field `diff_type` will be one of the values `added`, `modified`, or `removed`. You can filter which rows appear in the result set to one or more of those `diff_type` values in order to limit which types of changes will be returned.
 
-### Example Query
+#### Example Query
 
 Taking the [`dolthub/wikipedia-ngrams`](https://www.dolthub.com/repositories/dolthub/wikipedia-ngrams) data repository from [DoltHub](https://www.dolthub.com/) as our example, the following query will retrieve the bigrams whose total counts have changed the most between 2 versions.
 
@@ -288,7 +267,7 @@ ORDER BY delta DESC
 LIMIT 10;
 ```
 
-```
+```text
 +-------------+-------------+------------------+----------------+-------+
 | from_bigram | to_bigram   | from_total_count | to_total_count | delta |
 +-------------+-------------+------------------+----------------+-------+
@@ -305,15 +284,15 @@ LIMIT 10;
 +-------------+-------------+------------------+----------------+-------+
 ```
 
-## `dolt_docs`
+### `dolt_docs`
 
-### Description
+#### Description
 
-System table that stores the contents of Dolt docs (`LICENSE.md`, `README.md`).
+System table that stores the contents of Dolt docs \(`LICENSE.md`, `README.md`\).
 
-### Schema
+#### Schema
 
-```
+```text
 +----------+------+
 | field    | type |
 +----------+------+
@@ -322,21 +301,21 @@ System table that stores the contents of Dolt docs (`LICENSE.md`, `README.md`).
 +----------+------+
 ```
 
-### Usage
+#### Usage
 
 Dolt users do not have to be familiar with this system table in order to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or `touch README.md` and `touch LICENSE.md` from a Dolt repository to get started. Then, `dolt add` and `dolt commit` the docs like you would a table.
 
-## `dolt_history_$TABLENAME`
+### `dolt_history_$TABLENAME`
 
-### Description
+#### Description
 
 For every user table named $TABLENAME, there is a queryable system table named dolt\_history\_$TABLENAME which can be queried to find a rows value at every commit in the current branches commit graph.
 
-### Schema
+#### Schema
 
 Every Dolt history table will have the columns
 
-```
+```text
 +-------------+----------+
 | field       | type     |
 +-------------+----------+
@@ -348,11 +327,11 @@ Every Dolt history table will have the columns
 
 The rest of the columns will be the superset of all columns that have existed throughout the history of the table. As the query.
 
-### Example Schema
+#### Example Schema
 
 For a hypothetical data repository with the following commit graph:
 
-```
+```text
    A
   / \
  B   C
@@ -362,7 +341,7 @@ For a hypothetical data repository with the following commit graph:
 
 Which has a table named states with the following schemas at each commit:
 
-```
+```text
 # schema at A              # schema at B              # schema at C              # schema at D
 +------------+--------+    +------------+--------+    +------------+--------+    +------------+--------+
 | field      | type   |    | field      | type   |    | field      | type   |    | field      | type   |
@@ -374,9 +353,9 @@ Which has a table named states with the following schemas at each commit:
                                                                                  +------------+--------+
 ```
 
-The schema for dolt_history_states would be:
+The schema for dolt\_history\_states would be:
 
-```
+```text
 +-------------+----------+
 | field       | type     |
 +-------------+----------+
@@ -391,14 +370,14 @@ The schema for dolt_history_states would be:
 +-------------+----------+
 ```
 
-### Example Query
+#### Example Query
 
 Taking the above table as an example. If the data inside dates for each commit was:
 
-- At commit "A" the state data from 1790
-- At commit "B" the state data from 1800
-- At commit "C" the state data from 1800
-- At commit "D" the state data from 1810
+* At commit "A" the state data from 1790
+* At commit "B" the state data from 1800
+* At commit "C" the state data from 1800
+* At commit "D" the state data from 1810
 
 ```sql
 SELECT *
@@ -406,7 +385,7 @@ FROM dolt_history_states
 WHERE state = "Virginia";
 ```
 
-```
+```text
 +----------+------------+----------+--------+----------+-------------+-----------+---------------------------------+
 | state    | population | capital  | area   | counties | commit_hash | committer | commit_date                     |
 +----------+------------+----------+--------+----------+-------------+-----------+---------------------------------+
@@ -420,15 +399,15 @@ WHERE state = "Virginia";
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
 
-## `dolt_log`
+### `dolt_log`
 
-### Description
+#### Description
 
 Queryable system table which shows the commit log
 
-### Schema
+#### Schema
 
-```
+```text
 +-------------+----------+
 | field       | type     |
 +-------------+--------- +
@@ -440,7 +419,7 @@ Queryable system table which shows the commit log
 +-------------+--------- +
 ```
 
-### Example Query
+#### Example Query
 
 ```sql
 SELECT *
@@ -449,7 +428,7 @@ WHERE committer = "bheni" and date > "2019-04-01"
 ORDER BY "date";
 ```
 
-```
+```text
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
 | commit_hash                      | committer | email              | date                              | message       |
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
@@ -459,15 +438,15 @@ ORDER BY "date";
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
 ```
 
-## `dolt_schemas`
+### `dolt_schemas`
 
-### Description
+#### Description
 
 SQL Schema fragments for a dolt database value that are versioned alongside the database itself. Certain DDL statements will modify this table and the value of this table in a SQL session will affect what database entities exist in the session.
 
-### Schema
+#### Schema
 
-```
+```text
 +-------------+----------+
 | field       | type     |
 +-------------+--------- +
@@ -481,14 +460,14 @@ Currently on view definitions are stored in `dolt_schemas`. `type` is currently 
 
 The values in this table are partly implementation details associated with the implementation of the underlying database objects.
 
-### Example Query
+#### Example Query
 
 ```sql
 CREATE VIEW four AS SELECT 2+2 FROM dual;
 SELECT * FROM dolt_schemas;
 ```
 
-```
+```text
 +------+------+----------------------+
 | type | name | fragment             |
 +------+------+----------------------+
@@ -496,3548 +475,774 @@ SELECT * FROM dolt_schemas;
 +------+------+----------------------+
 ```
 
-# Supported SQL Features
+## Supported SQL Features
 
 Dolt's goal is to be a drop-in replacement for MySQL, with every query and statement that works in MySQL behaving identically in Dolt. For most syntax and technical questions, you should feel free to refer to the [MySQL user manual](https://dev.mysql.com/doc/refman/8.0/en/select.html). Any deviation from the MySQL manual should be documented on this page, or else indicates a bug. Please [file issues](https://github.com/dolthub/dolt/issues) with any incompatibilities you discover.
 
-## Data types
+### Data types
 
-<table class="sql-table">
-  <thead>
-      <tr>
-        <th>Data type</th>
-        <th>Supported</th>
-        <th>Notes</th>
-      </tr>
-  </thead>
-    <tbody>
-      <tr>
-        <td><code>BOOLEAN</code></td>
-        <td class="green">✓</td>
-        <td>Alias for <code>TINYINT</code></td>
-      </tr>
-      <tr>
-        <td><code>INTEGER</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>TINYINT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>SMALLINT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>MEDIUMINT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>INT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>BIGINT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>DECIMAL</code></td>
-        <td class="green">✓</td>
-        <td>Max (precision + scale) is 65</td>
-      </tr>
-      <tr>
-        <td><code>FLOAT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>DOUBLE</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>BIT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>DATE</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>TIME</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>DATETIME</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>TIMESTAMP</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>YEAR</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>CHAR</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>VARCHAR</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>BINARY</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>VARBINARY</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>BLOB</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>TINYTEXT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>TEXT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>MEDIUMTEXT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>LONGTEXT</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>ENUM</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>SET</code></td>
-        <td class="green">✓</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>GEOMETRY</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>POINT</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>LINESTRING</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>POLYGON</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>MULTIPOINT</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>MULTILINESTRING</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>MULTIPOLYGON</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>GEOMETRYCOLLECTION</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>JSON</code></td>
-        <td class="red">X</td>
-        <td></td>
-      </tr>
-    </tbody>
-</table>
+| Data type | Supported | Notes |
+| :--- | :--- | :--- |
+| `BOOLEAN` | ✓ | Alias for `TINYINT` |
+| `INTEGER` | ✓ |  |
+| `TINYINT` | ✓ |  |
+| `SMALLINT` | ✓ |  |
+| `MEDIUMINT` | ✓ |  |
+| `INT` | ✓ |  |
+| `BIGINT` | ✓ |  |
+| `DECIMAL` | ✓ | Max \(precision + scale\) is 65 |
+| `FLOAT` | ✓ |  |
+| `DOUBLE` | ✓ |  |
+| `BIT` | ✓ |  |
+| `DATE` | ✓ |  |
+| `TIME` | ✓ |  |
+| `DATETIME` | ✓ |  |
+| `TIMESTAMP` | ✓ |  |
+| `YEAR` | ✓ |  |
+| `CHAR` | ✓ |  |
+| `VARCHAR` | ✓ |  |
+| `BINARY` | ✓ |  |
+| `VARBINARY` | ✓ |  |
+| `BLOB` | ✓ |  |
+| `TINYTEXT` | ✓ |  |
+| `TEXT` | ✓ |  |
+| `MEDIUMTEXT` | ✓ |  |
+| `LONGTEXT` | ✓ |  |
+| `ENUM` | ✓ |  |
+| `SET` | ✓ |  |
+| `GEOMETRY` | X |  |
+| `POINT` | X |  |
+| `LINESTRING` | X |  |
+| `POLYGON` | X |  |
+| `MULTIPOINT` | X |  |
+| `MULTILINESTRING` | X |  |
+| `MULTIPOLYGON` | X |  |
+| `GEOMETRYCOLLECTION` | X |  |
+| `JSON` | X |  |
 
-## Constraints
+### Constraints
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Not Null</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Unique</td>
-      <td class="green">✓</td>
-      <td>Unique constraints are supported via creation of indexes with <code>UNIQUE</code> keys.</td>
-    </tr>
-    <tr>
-      <td>Primary Key</td>
-      <td class="green">✓</td>
-      <td>Dolt tables must have a primary key.</td>
-    </tr>
-    <tr>
-      <td>Check</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Foreign Key</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Default Value</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Not Null | ✓ |  |
+| Unique | ✓ | Unique constraints are supported via creation of indexes with `UNIQUE` keys. |
+| Primary Key | ✓ | Dolt tables must have a primary key. |
+| Check | X |  |
+| Foreign Key | ✓ |  |
+| Default Value | ✓ |  |
 
-## Transactions
+### Transactions
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>BEGIN</code></td>
-      <td class="orange">O</td>
-      <td><code>BEGIN</code> parses correctly, but is a no-op: it doesn&#39;t create a checkpoint that can be returned to with <code>ROLLBACK</code>.</td>
-    </tr>
-    <tr>
-      <td><code>COMMIT</code></td>
-      <td class="green">✓</td>
-      <td><code>COMMIT</code> will write any pending changes to the working set when <code>@@autocommit = false</code></td>
-    </tr>
-    <tr>
-      <td><code>COMMIT(MESSAGE)</code></td>
-      <td class="green">✓</td>
-      <td>The <code>COMMIT()</code> function creates a commit of the current database state and returns the hash of this new commit. See <a href="#concurrency">concurrency</a> for details.</td>
-    </tr>
-    <tr>
-      <td><code>LOCK TABLES</code></td>
-      <td class="red">X</td>
-      <td><code>LOCK TABLES</code> parses correctly but does not prevent access to those tables from other sessions.</td>
-    </tr>
-    <tr>
-      <td><code>ROLLBACK</code></td>
-      <td class="red">X</td>
-      <td><code>ROLLBACK</code> parses correctly but is a no-op.</td>
-    </tr>
-    <tr>
-      <td><code>SAVEPOINT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET @@autocommit = 1</code></td>
-      <td class="green">✓</td>
-      <td>When <code>@@autocommit = true</code>, changes to data will update the working set after every statement. When <code>@@autocommit = false</code>, the working set will only be updated after <code>COMMIT</code> statements.</td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
+| `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](sql.md#concurrency) for details. |
+| `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
+| `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
+| `SAVEPOINT` | X |  |
+| `SET @@autocommit = 1` | ✓ | When `@@autocommit = true`, changes to data will update the working set after every statement. When `@@autocommit = false`, the working set will only be updated after `COMMIT` statements. |
 
-## Indexes
+### Indexes
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Indexes</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Multi-column indexes</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Full-text indexes</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Spatial indexes</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Indexes | ✓ |  |
+| Multi-column indexes | ✓ |  |
+| Full-text indexes | X |  |
+| Spatial indexes | X |  |
 
-## Schema
+### Schema
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>ALTER TABLE</code> statements</td>
-      <td class="orange">O</td>
-      <td>Some limitations. See the <a href="#supported-statements">supported statements doc</a>.</td>
-    </tr>
-    <tr>
-      <td>Database renames</td>
-      <td class="red">X</td>
-      <td>Database names are read-only, and configured by the server at startup.</td>
-    </tr>
-    <tr>
-      <td>Adding tables</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Dropping tables</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Table renames</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Adding views</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Dropping views</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>View renames</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Column renames</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Adding columns</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Removing columns</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Reordering columns</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Adding constraints</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Removing constaints</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Creating indexes</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Index renames</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Removing indexes</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AUTO INCREMENT</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `ALTER TABLE` statements | O | Some limitations. See the [supported statements doc](sql.md#supported-statements). |
+| Database renames | X | Database names are read-only, and configured by the server at startup. |
+| Adding tables | ✓ |  |
+| Dropping tables | ✓ |  |
+| Table renames | ✓ |  |
+| Adding views | ✓ |  |
+| Dropping views | ✓ |  |
+| View renames | X |  |
+| Column renames | ✓ |  |
+| Adding columns | ✓ |  |
+| Removing columns | ✓ |  |
+| Reordering columns | ✓ |  |
+| Adding constraints | ✓ |  |
+| Removing constaints | ✓ |  |
+| Creating indexes | ✓ |  |
+| Index renames | ✓ |  |
+| Removing indexes | ✓ |  |
+| `AUTO INCREMENT` | ✓ |  |
 
-## Statements
+### Statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Common statements</td>
-      <td class="green">✓</td>
-      <td>See the <a href="#supported-statements">supported statements doc</a></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Common statements | ✓ | See the [supported statements doc](sql.md#supported-statements) |
 
-## Clauses
+### Clauses
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>WHERE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>HAVING</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LIMIT</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>OFFSET</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GROUP BY</code></td>
-      <td class="green">✓</td>
-      <td>Group-by columns can be referred to by their ordinal (e.g. <code>1</code>, <code>2</code>), a MySQL dialect extension.</td>
-    </tr>
-    <tr>
-      <td><code>ORDER BY</code></td>
-      <td class="green">✓</td>
-      <td>Order-by columns can be referred to by their ordinal (e.g. <code>1</code>, <code>2</code>), a MySQL dialect extension.</td>
-    </tr>
-    <tr>
-      <td>Aggregate functions</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DISTINCT</code></td>
-      <td class="orange">O</td>
-      <td>Only supported for certain expressions.</td>
-    </tr>
-    <tr>
-      <td><code>ALL</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `WHERE` | ✓ |  |
+| `HAVING` | ✓ |  |
+| `LIMIT` | ✓ |  |
+| `OFFSET` | ✓ |  |
+| `GROUP BY` | ✓ | Group-by columns can be referred to by their ordinal \(e.g. `1`, `2`\), a MySQL dialect extension. |
+| `ORDER BY` | ✓ | Order-by columns can be referred to by their ordinal \(e.g. `1`, `2`\), a MySQL dialect extension. |
+| Aggregate functions | ✓ |  |
+| `DISTINCT` | O | Only supported for certain expressions. |
+| `ALL` | ✓ |  |
 
-## Table expressions
+### Table expressions
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Tables and views</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Table and view aliases</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Joins</td>
-      <td class="orange">O</td>
-      <td><code>LEFT INNER</code>, <code>RIGHT INNER</code>, <code>INNER</code>, <code>NATURAL</code>, and <code>CROSS JOINS</code> are supported. <code>OUTER</code> joins are not supported.</td>
-    </tr>
-    <tr>
-      <td>Subqueries</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UNION</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Tables and views | ✓ |  |
+| Table and view aliases | ✓ |  |
+| Joins | O | `LEFT INNER`, `RIGHT INNER`, `INNER`, `NATURAL`, and `CROSS JOINS` are supported. `OUTER` joins are not supported. |
+| Subqueries | ✓ |  |
+| `UNION` | ✓ |  |
 
-## Scalar expressions
+### Scalar expressions
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Common operators</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IF</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CASE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NULLIF</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COALESCE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IFNULL</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AND</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>OR</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LIKE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IN</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INTERVAL</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Scalar subqueries</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Column ordinal references</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Common operators | ✓ |  |
+| `IF` | ✓ |  |
+| `CASE` | ✓ |  |
+| `NULLIF` | ✓ |  |
+| `COALESCE` | ✓ |  |
+| `IFNULL` | ✓ |  |
+| `AND` | ✓ |  |
+| `OR` | ✓ |  |
+| `LIKE` | ✓ |  |
+| `IN` | ✓ |  |
+| `INTERVAL` | ✓ |  |
+| Scalar subqueries | ✓ |  |
+| Column ordinal references | ✓ |  |
 
-## Functions and operators
+### Functions and operators
 
 **Currently supporting 129 of 436 MySQL functions.**
 
-Most functions are simple to implement. If you need one that isn't
-implemented, [please file an
-issue](https://github.com/dolthub/dolt/issues). We can fulfill
-most requests for new functions within 24 hours.
+Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>%</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&amp;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>|</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>*</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>+</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>-&gt;&gt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>-&gt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>-</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>/</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>:=</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&lt;&lt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&lt;=&gt;</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&lt;=</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&lt;&gt;</code>, <code>!=</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&lt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>=</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&gt;=</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&gt;&gt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>&gt;</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>^</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ABS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ACOS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ADDDATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ADDTIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AES_DECRYPT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AES_ENCRYPT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AND</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ANY_VALUE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ARRAY_LENGTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASCII()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASIN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASYMMETRIC_DECRYPT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASYMMETRIC_DERIVE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASYMMETRIC_ENCRYPT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASYMMETRIC_SIGN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ASYMMETRIC_VERIFY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ATAN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ATAN2()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>AVG()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BENCHMARK()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BETWEEN ... AND ...</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIN_TO_UUID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIT_AND()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIT_COUNT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIT_LENGTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>BIT_OR()</code></td>
-      <td class="red">X</td>
-      <td><code>|</code> is supported</td>
-    </tr>
-    <tr>
-      <td><code>BIT_XOR()</code></td>
-      <td class="red">X</td>
-      <td><code>^</code> is supported</td>
-    </tr>
-    <tr>
-      <td><code>CAN_ACCESS_COLUMN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CAN_ACCESS_DATABASE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CAN_ACCESS_TABLE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CAN_ACCESS_VIEW()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CASE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CAST()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CEIL()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CEILING()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CHAR()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CHARACTER_LENGTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CHARSET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CHAR_LENGTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COALESCE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COERCIBILITY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COLLATION()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COMMIT()</code></td>
-      <td class="green">✓</td>
-      <td>Creates a new Dolt commit and returns the hash of it. See <a href="#concurrency">concurrency</a></td>
-    </tr>
-    <tr>
-      <td><code>COMPRESS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONCAT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONCAT_WS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONNECTION_ID()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONV()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONVERT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CONVERT_TZ()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COUNT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>COUNT(DISTINCT)</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CRC32()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE_ASYMMETRIC_PRIV_KEY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE_ASYMMETRIC_PUB_KEY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE_DH_PARAMETERS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE_DIGEST()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CUME_DIST()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURDATE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURRENT_DATE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURRENT_ROLE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURRENT_TIME()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURRENT_TIMESTAMP()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURRENT_USER()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CURTIME()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATABASE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATEDIFF()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATETIME()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATE_ADD()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATE_FORMAT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DATE_SUB()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DAY()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DAYNAME()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DAYOFMONTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DAYOFWEEK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DAYOFYEAR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DEFAULT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DEGREES()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DENSE_RANK()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DIV</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ELT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>EXP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>EXPLODE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>EXPORT_SET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>EXTRACT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ExtractValue()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FIELD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FIND_IN_SET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FIRST()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FIRST_VALUE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FLOOR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FORMAT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FORMAT_BYTES()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FORMAT_PICO_TIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FOUND_ROWS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FROM_BASE64()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FROM_DAYS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>FROM_UNIXTIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GET_DD_COLUMN_PRIVILEGES()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GET_DD_CREATE_OPTIONS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GET_DD_INDEX_SUB_PART_LENGTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GET_FORMAT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GET_LOCK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GREATEST()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GROUPING()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GROUP_CONCAT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GTID_SUBSET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GTID_SUBTRACT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GeomCollection()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GeometryCollection()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>HASHOF()</code></td>
-      <td class="green">✓</td>
-      <td>Returns the hash of a reference, e.g. <code>HASHOF(&quot;master&quot;)</code>. See <a href="#concurrency">concurrency</a></td>
-    </tr>
-    <tr>
-      <td><code>HEX()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>HOUR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ICU_VERSION()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IF()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IFNULL()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INET6_ATON()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INET6_NTOA()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INET_ATON()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INET_NTOA()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INSERT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INSTR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>INTERVAL()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS NOT NULL</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS NOT</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS NULL</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ISNULL()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_BINARY()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_FREE_LOCK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_IPV4()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_IPV4_COMPAT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_IPV4_MAPPED()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_IPV6()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_USED_LOCK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS_UUID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IS</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_ARRAY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_ARRAYAGG()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_ARRAY_APPEND()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_ARRAY_INSERT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_CONTAINS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_CONTAINS_PATH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_DEPTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_EXTRACT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_INSERT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_KEYS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_LENGTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_MERGE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_MERGE_PATCH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_MERGE_PRESERVE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_OBJECT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_OBJECTAGG()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_OVERLAPS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_PRETTY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_QUOTE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_REMOVE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_REPLACE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_SCHEMA_VALID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_SCHEMA_VALIDATION_REPORT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_SEARCH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_SET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_STORAGE_FREE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_STORAGE_SIZE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_TABLE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_TYPE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_UNQUOTE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_VALID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>JSON_VALUE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LAG()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LAST()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LAST_DAY</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LAST_INSERT_ID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LAST_VALUE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LCASE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LEAD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LEAST()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LEFT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LENGTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LIKE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOAD_FILE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOCALTIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOCALTIMESTAMP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOCATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOG()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOG10()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOG2()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LOWER()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LPAD()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LTRIM()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>LineString()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MAKEDATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MAKETIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MAKE_SET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MASTER_POS_WAIT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MATCH</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MAX()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRContains()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRCoveredBy()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRCovers()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRDisjoint()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBREquals()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRIntersects()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBROverlaps()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRTouches()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MBRWithin()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MD5()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MEMBER OF()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MICROSECOND()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MID()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MIN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MINUTE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MOD()</code></td>
-      <td class="red">X</td>
-      <td><code>%</code> is supported</td>
-    </tr>
-    <tr>
-      <td><code>MONTH()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MONTHNAME()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MultiLineString()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MultiPoint()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MultiPolygon()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NAME_CONST()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT</code>, <code>!</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT BETWEEN ... AND ...</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT IN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT LIKE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT MATCH</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT REGEXP</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOT RLIKE</code></td>
-      <td class="red">X</td>
-      <td><code>NOT REGEXP</code> is supported</td>
-    </tr>
-    <tr>
-      <td><code>NOT</code>, <code>!</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NOW()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NTH_VALUE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NTILE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>NULLIF()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>OCT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>OCTET_LENGTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ORD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>OR</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PERCENT_RANK()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PERIOD_ADD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PERIOD_DIFF()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PI()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>POSITION()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>POW()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>POWER()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PS_CURRENT_THREAD_ID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>PS_THREAD_ID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>Point()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>Polygon()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>QUARTER()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>QUOTE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RADIANS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RAND()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RANDOM_BYTES()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RANK()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP_INSTR()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP_LIKE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP_MATCHES()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP_REPLACE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP_SUBSTR()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REGEXP</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RELEASE_ALL_LOCKS()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RELEASE_LOCK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REPEAT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REPLACE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REVERSE()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RIGHT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RLIKE</code></td>
-      <td class="red">X</td>
-      <td><code>REGEXP</code> is supported</td>
-    </tr>
-    <tr>
-      <td><code>ROLES_GRAPHML()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ROUND()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ROW_COUNT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ROW_NUMBER()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RPAD()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RTRIM()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SCHEMA()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SECOND()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SEC_TO_TIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SESSION_USER()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHA()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHA1()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHA2()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SIGN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SIN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SLEEP()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SOUNDEX()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SPACE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SPLIT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SQRT()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STATEMENT_DIGEST()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STATEMENT_DIGEST_TEXT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STDDEV()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STDDEV_POP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STDDEV_SAMP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STRCMP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>STR_TO_DATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Area()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_AsBinary()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_AsGeoJSON()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_AsText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Buffer()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Buffer_Strategy()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Centroid()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Contains()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_ConvexHull()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Crosses()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Difference()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Dimension()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Disjoint()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Distance()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Distance_Sphere()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_EndPoint()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Envelope()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Equals()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_ExteriorRing()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeoHash()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeomCollFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeomCollFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeomFromGeoJSON()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeomFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeomFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeometryN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_GeometryType()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_InteriorRingN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Intersection()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Intersects()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_IsClosed()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_IsEmpty()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_IsSimple()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_IsValid()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_LatFromGeoHash()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Latitude()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Length()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_LineFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_LineFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_LongFromGeoHash()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Longitude()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MLineFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MLineFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MPointFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MPointFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MPolyFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MPolyFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_MakeEnvelope()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_NumGeometries()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_NumInteriorRing()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_NumPoints()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Overlaps()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PointFromGeoHash()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PointFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PointFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PointN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PolyFromText()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_PolyFromWKB()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_SRID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Simplify()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_StartPoint()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_SwapXY()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_SymDifference()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Touches()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Transform()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Union()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Validate()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Within()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_X()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ST_Y()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUBDATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUBSTR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUBSTRING()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUBSTRING_INDEX()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUBTIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SUM()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SYSDATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SYSTEM_USER()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TAN()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIMEDIFF()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIMESTAMP()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIMESTAMPADD()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIMESTAMPDIFF()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIME_FORMAT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TIME_TO_SEC()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TO_BASE64()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TO_DAYS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TO_SECONDS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TRIM()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>TRUNCATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UCASE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UNCOMPRESS()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UNCOMPRESSED_LENGTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UNHEX()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UNIX_TIMESTAMP()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UPPER()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>USER()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UTC_DATE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UTC_TIME()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UTC_TIMESTAMP()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UUID()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UUID_SHORT()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UUID_TO_BIN()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UpdateXML()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VALIDATE_PASSWORD_STRENGTH()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VALUES()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VARIANCE()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VAR_POP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VAR_SAMP()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>VERSION()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WAIT_FOR_EXECUTED_GTID_SET()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WEEK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WEEKDAY()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WEEKOFYEAR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WEIGHT_STRING()</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>YEAR()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>YEARWEEK()</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `%` | ✓ |  |
+| `&` | ✓ |  |
+| `|` | ✓ |  |
+| `*` | ✓ |  |
+| `+` | ✓ |  |
+| `->>` | ✓ |  |
+| `->` | ✓ |  |
+| `-` | ✓ |  |
+| `/` | ✓ |  |
+| `:=` | X |  |
+| `<<` | ✓ |  |
+| `<=>` | X |  |
+| `<=` | ✓ |  |
+| `<>`, `!=` | ✓ |  |
+| `<` | ✓ |  |
+| `=` | ✓ |  |
+| `>=` | ✓ |  |
+| `>>` | ✓ |  |
+| `>` | ✓ |  |
+| `^` | ✓ |  |
+| `ABS()` | ✓ |  |
+| `ACOS()` | ✓ |  |
+| `ADDDATE()` | X |  |
+| `ADDTIME()` | X |  |
+| `AES_DECRYPT()` | X |  |
+| `AES_ENCRYPT()` | X |  |
+| `AND` | ✓ |  |
+| `ANY_VALUE()` | X |  |
+| `ARRAY_LENGTH()` | ✓ |  |
+| `ASCII()` | ✓ |  |
+| `ASIN()` | ✓ |  |
+| `ASYMMETRIC_DECRYPT()` | X |  |
+| `ASYMMETRIC_DERIVE()` | X |  |
+| `ASYMMETRIC_ENCRYPT()` | X |  |
+| `ASYMMETRIC_SIGN()` | X |  |
+| `ASYMMETRIC_VERIFY()` | X |  |
+| `ATAN()` | ✓ |  |
+| `ATAN2()` | X |  |
+| `AVG()` | ✓ |  |
+| `BENCHMARK()` | X |  |
+| `BETWEEN ... AND ...` | ✓ |  |
+| `BIN()` | ✓ |  |
+| `BIN_TO_UUID()` | X |  |
+| `BIT_AND()` | X |  |
+| `BIT_COUNT()` | X |  |
+| `BIT_LENGTH()` | ✓ |  |
+| `BIT_OR()` | X | `|` is supported |
+| `BIT_XOR()` | X | `^` is supported |
+| `CAN_ACCESS_COLUMN()` | X |  |
+| `CAN_ACCESS_DATABASE()` | X |  |
+| `CAN_ACCESS_TABLE()` | X |  |
+| `CAN_ACCESS_VIEW()` | X |  |
+| `CASE` | ✓ |  |
+| `CAST()` | X |  |
+| `CEIL()` | ✓ |  |
+| `CEILING()` | ✓ |  |
+| `CHAR()` | X |  |
+| `CHARACTER_LENGTH()` | ✓ |  |
+| `CHARSET()` | X |  |
+| `CHAR_LENGTH()` | ✓ |  |
+| `COALESCE()` | ✓ |  |
+| `COERCIBILITY()` | X |  |
+| `COLLATION()` | X |  |
+| `COMMIT()` | ✓ | Creates a new Dolt commit and returns the hash of it. See [concurrency](sql.md#concurrency) |
+| `COMPRESS()` | X |  |
+| `CONCAT()` | ✓ |  |
+| `CONCAT_WS()` | ✓ |  |
+| `CONNECTION_ID()` | ✓ |  |
+| `CONV()` | X |  |
+| `CONVERT()` | X |  |
+| `CONVERT_TZ()` | X |  |
+| `COS()` | ✓ |  |
+| `COT()` | ✓ |  |
+| `COUNT()` | ✓ |  |
+| `COUNT(DISTINCT)` | ✓ |  |
+| `CRC32()` | ✓ |  |
+| `CREATE_ASYMMETRIC_PRIV_KEY()` | X |  |
+| `CREATE_ASYMMETRIC_PUB_KEY()` | X |  |
+| `CREATE_DH_PARAMETERS()` | X |  |
+| `CREATE_DIGEST()` | X |  |
+| `CUME_DIST()` | X |  |
+| `CURDATE()` | ✓ |  |
+| `CURRENT_DATE()` | ✓ |  |
+| `CURRENT_ROLE()` | X |  |
+| `CURRENT_TIME()` | ✓ |  |
+| `CURRENT_TIMESTAMP()` | ✓ |  |
+| `CURRENT_USER()` | ✓ |  |
+| `CURTIME()` | ✓ |  |
+| `DATABASE()` | ✓ |  |
+| `DATE()` | ✓ |  |
+| `DATEDIFF()` | X |  |
+| `DATETIME()` | ✓ |  |
+| `DATE_ADD()` | ✓ |  |
+| `DATE_FORMAT()` | ✓ |  |
+| `DATE_SUB()` | ✓ |  |
+| `DAY()` | ✓ |  |
+| `DAYNAME()` | ✓ |  |
+| `DAYOFMONTH()` | ✓ |  |
+| `DAYOFWEEK()` | ✓ |  |
+| `DAYOFYEAR()` | ✓ |  |
+| `DEFAULT()` | X |  |
+| `DEGREES()` | ✓ |  |
+| `DENSE_RANK()` | X |  |
+| `DIV` | ✓ |  |
+| `ELT()` | X |  |
+| `EXP()` | X |  |
+| `EXPLODE()` | ✓ |  |
+| `EXPORT_SET()` | X |  |
+| `EXTRACT()` | X |  |
+| `ExtractValue()` | X |  |
+| `FIELD()` | X |  |
+| `FIND_IN_SET()` | X |  |
+| `FIRST()` | ✓ |  |
+| `FIRST_VALUE()` | X |  |
+| `FLOOR()` | ✓ |  |
+| `FORMAT()` | X |  |
+| `FORMAT_BYTES()` | X |  |
+| `FORMAT_PICO_TIME()` | X |  |
+| `FOUND_ROWS()` | X |  |
+| `FROM_BASE64()` | ✓ |  |
+| `FROM_DAYS()` | X |  |
+| `FROM_UNIXTIME()` | X |  |
+| `GET_DD_COLUMN_PRIVILEGES()` | X |  |
+| `GET_DD_CREATE_OPTIONS()` | X |  |
+| `GET_DD_INDEX_SUB_PART_LENGTH()` | X |  |
+| `GET_FORMAT()` | X |  |
+| `GET_LOCK()` | ✓ |  |
+| `GREATEST()` | ✓ |  |
+| `GROUPING()` | X |  |
+| `GROUP_CONCAT()` | X |  |
+| `GTID_SUBSET()` | X |  |
+| `GTID_SUBTRACT()` | X |  |
+| `GeomCollection()` | X |  |
+| `GeometryCollection()` | X |  |
+| `HASHOF()` | ✓ | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](sql.md#concurrency) |
+| `HEX()` | ✓ |  |
+| `HOUR()` | ✓ |  |
+| `ICU_VERSION()` | X |  |
+| `IF()` | ✓ |  |
+| `IFNULL()` | ✓ |  |
+| `IN()` | ✓ |  |
+| `INET6_ATON()` | X |  |
+| `INET6_NTOA()` | X |  |
+| `INET_ATON()` | X |  |
+| `INET_NTOA()` | X |  |
+| `INSERT()` | X |  |
+| `INSTR()` | ✓ |  |
+| `INTERVAL()` | ✓ |  |
+| `IS NOT NULL` | ✓ |  |
+| `IS NOT` | ✓ |  |
+| `IS NULL` | ✓ |  |
+| `ISNULL()` | X |  |
+| `IS_BINARY()` | ✓ |  |
+| `IS_FREE_LOCK()` | ✓ |  |
+| `IS_IPV4()` | X |  |
+| `IS_IPV4_COMPAT()` | X |  |
+| `IS_IPV4_MAPPED()` | X |  |
+| `IS_IPV6()` | X |  |
+| `IS_USED_LOCK()` | ✓ |  |
+| `IS_UUID()` | X |  |
+| `IS` | ✓ |  |
+| `JSON_ARRAY()` | X |  |
+| `JSON_ARRAYAGG()` | X |  |
+| `JSON_ARRAY_APPEND()` | X |  |
+| `JSON_ARRAY_INSERT()` | X |  |
+| `JSON_CONTAINS()` | X |  |
+| `JSON_CONTAINS_PATH()` | X |  |
+| `JSON_DEPTH()` | X |  |
+| `JSON_EXTRACT()` | ✓ |  |
+| `JSON_INSERT()` | X |  |
+| `JSON_KEYS()` | X |  |
+| `JSON_LENGTH()` | X |  |
+| `JSON_MERGE()` | X |  |
+| `JSON_MERGE_PATCH()` | X |  |
+| `JSON_MERGE_PRESERVE()` | X |  |
+| `JSON_OBJECT()` | X |  |
+| `JSON_OBJECTAGG()` | X |  |
+| `JSON_OVERLAPS()` | X |  |
+| `JSON_PRETTY()` | X |  |
+| `JSON_QUOTE()` | X |  |
+| `JSON_REMOVE()` | X |  |
+| `JSON_REPLACE()` | X |  |
+| `JSON_SCHEMA_VALID()` | X |  |
+| `JSON_SCHEMA_VALIDATION_REPORT()` | X |  |
+| `JSON_SEARCH()` | X |  |
+| `JSON_SET()` | X |  |
+| `JSON_STORAGE_FREE()` | X |  |
+| `JSON_STORAGE_SIZE()` | X |  |
+| `JSON_TABLE()` | X |  |
+| `JSON_TYPE()` | X |  |
+| `JSON_UNQUOTE()` | ✓ |  |
+| `JSON_VALID()` | X |  |
+| `JSON_VALUE()` | X |  |
+| `LAG()` | X |  |
+| `LAST()` | ✓ |  |
+| `LAST_DAY` | X |  |
+| `LAST_INSERT_ID()` | X |  |
+| `LAST_VALUE()` | X |  |
+| `LCASE()` | X |  |
+| `LEAD()` | X |  |
+| `LEAST()` | ✓ |  |
+| `LEFT()` | ✓ |  |
+| `LENGTH()` | ✓ |  |
+| `LIKE` | ✓ |  |
+| `LN()` | ✓ |  |
+| `LOAD_FILE()` | X |  |
+| `LOCALTIME()` | X |  |
+| `LOCALTIMESTAMP()` | X |  |
+| `LOCATE()` | X |  |
+| `LOG()` | ✓ |  |
+| `LOG10()` | ✓ |  |
+| `LOG2()` | ✓ |  |
+| `LOWER()` | ✓ |  |
+| `LPAD()` | ✓ |  |
+| `LTRIM()` | ✓ |  |
+| `LineString()` | X |  |
+| `MAKEDATE()` | X |  |
+| `MAKETIME()` | X |  |
+| `MAKE_SET()` | X |  |
+| `MASTER_POS_WAIT()` | X |  |
+| `MATCH` | X |  |
+| `MAX()` | ✓ |  |
+| `MBRContains()` | X |  |
+| `MBRCoveredBy()` | X |  |
+| `MBRCovers()` | X |  |
+| `MBRDisjoint()` | X |  |
+| `MBREquals()` | X |  |
+| `MBRIntersects()` | X |  |
+| `MBROverlaps()` | X |  |
+| `MBRTouches()` | X |  |
+| `MBRWithin()` | X |  |
+| `MD5()` | ✓ |  |
+| `MEMBER OF()` | X |  |
+| `MICROSECOND()` | ✓ |  |
+| `MID()` | ✓ |  |
+| `MIN()` | ✓ |  |
+| `MINUTE()` | ✓ |  |
+| `MOD()` | X | `%` is supported |
+| `MONTH()` | ✓ |  |
+| `MONTHNAME()` | ✓ |  |
+| `MultiLineString()` | X |  |
+| `MultiPoint()` | X |  |
+| `MultiPolygon()` | X |  |
+| `NAME_CONST()` | X |  |
+| `NOT`, `!` | ✓ |  |
+| `NOT BETWEEN ... AND ...` | ✓ |  |
+| `NOT IN()` | ✓ |  |
+| `NOT LIKE` | ✓ |  |
+| `NOT MATCH` | X |  |
+| `NOT REGEXP` | ✓ |  |
+| `NOT RLIKE` | X | `NOT REGEXP` is supported |
+| `NOT`, `!` | ✓ |  |
+| `NOW()` | ✓ |  |
+| `NTH_VALUE()` | X |  |
+| `NTILE()` | X |  |
+| `NULLIF()` | ✓ |  |
+| `OCT()` | X |  |
+| `OCTET_LENGTH()` | X |  |
+| `ORD()` | X |  |
+| `OR` | ✓ |  |
+| `PERCENT_RANK()` | X |  |
+| `PERIOD_ADD()` | X |  |
+| `PERIOD_DIFF()` | X |  |
+| `PI()` | X |  |
+| `POSITION()` | X |  |
+| `POW()` | ✓ |  |
+| `POWER()` | ✓ |  |
+| `PS_CURRENT_THREAD_ID()` | X |  |
+| `PS_THREAD_ID()` | X |  |
+| `Point()` | X |  |
+| `Polygon()` | X |  |
+| `QUARTER()` | X |  |
+| `QUOTE()` | X |  |
+| `RADIANS()` | ✓ |  |
+| `RAND()` | ✓ |  |
+| `RANDOM_BYTES()` | X |  |
+| `RANK()` | X |  |
+| `REGEXP_INSTR()` | X |  |
+| `REGEXP_LIKE()` | X |  |
+| `REGEXP_MATCHES()` | ✓ |  |
+| `REGEXP_REPLACE()` | X |  |
+| `REGEXP_SUBSTR()` | X |  |
+| `REGEXP` | ✓ |  |
+| `RELEASE_ALL_LOCKS()` | ✓ |  |
+| `RELEASE_LOCK()` | ✓ |  |
+| `REPEAT()` | ✓ |  |
+| `REPLACE()` | ✓ |  |
+| `REVERSE()` | ✓ |  |
+| `RIGHT()` | X |  |
+| `RLIKE` | X | `REGEXP` is supported |
+| `ROLES_GRAPHML()` | X |  |
+| `ROUND()` | ✓ |  |
+| `ROW_COUNT()` | X |  |
+| `ROW_NUMBER()` | X |  |
+| `RPAD()` | ✓ |  |
+| `RTRIM()` | ✓ |  |
+| `SCHEMA()` | ✓ |  |
+| `SECOND()` | ✓ |  |
+| `SEC_TO_TIME()` | X |  |
+| `SESSION_USER()` | X |  |
+| `SHA()` | ✓ |  |
+| `SHA1()` | ✓ |  |
+| `SHA2()` | ✓ |  |
+| `SIGN()` | ✓ |  |
+| `SIN()` | ✓ |  |
+| `SLEEP()` | ✓ |  |
+| `SOUNDEX()` | ✓ |  |
+| `SPACE()` | X |  |
+| `SPLIT()` | ✓ |  |
+| `SQRT()` | ✓ |  |
+| `STATEMENT_DIGEST()` | X |  |
+| `STATEMENT_DIGEST_TEXT()` | X |  |
+| `STD()` | X |  |
+| `STDDEV()` | X |  |
+| `STDDEV_POP()` | X |  |
+| `STDDEV_SAMP()` | X |  |
+| `STRCMP()` | X |  |
+| `STR_TO_DATE()` | X |  |
+| `ST_Area()` | X |  |
+| `ST_AsBinary()` | X |  |
+| `ST_AsGeoJSON()` | X |  |
+| `ST_AsText()` | X |  |
+| `ST_Buffer()` | X |  |
+| `ST_Buffer_Strategy()` | X |  |
+| `ST_Centroid()` | X |  |
+| `ST_Contains()` | X |  |
+| `ST_ConvexHull()` | X |  |
+| `ST_Crosses()` | X |  |
+| `ST_Difference()` | X |  |
+| `ST_Dimension()` | X |  |
+| `ST_Disjoint()` | X |  |
+| `ST_Distance()` | X |  |
+| `ST_Distance_Sphere()` | X |  |
+| `ST_EndPoint()` | X |  |
+| `ST_Envelope()` | X |  |
+| `ST_Equals()` | X |  |
+| `ST_ExteriorRing()` | X |  |
+| `ST_GeoHash()` | X |  |
+| `ST_GeomCollFromText()` | X |  |
+| `ST_GeomCollFromWKB()` | X |  |
+| `ST_GeomFromGeoJSON()` | X |  |
+| `ST_GeomFromText()` | X |  |
+| `ST_GeomFromWKB()` | X |  |
+| `ST_GeometryN()` | X |  |
+| `ST_GeometryType()` | X |  |
+| `ST_InteriorRingN()` | X |  |
+| `ST_Intersection()` | X |  |
+| `ST_Intersects()` | X |  |
+| `ST_IsClosed()` | X |  |
+| `ST_IsEmpty()` | X |  |
+| `ST_IsSimple()` | X |  |
+| `ST_IsValid()` | X |  |
+| `ST_LatFromGeoHash()` | X |  |
+| `ST_Latitude()` | X |  |
+| `ST_Length()` | X |  |
+| `ST_LineFromText()` | X |  |
+| `ST_LineFromWKB()` | X |  |
+| `ST_LongFromGeoHash()` | X |  |
+| `ST_Longitude()` | X |  |
+| `ST_MLineFromText()` | X |  |
+| `ST_MLineFromWKB()` | X |  |
+| `ST_MPointFromText()` | X |  |
+| `ST_MPointFromWKB()` | X |  |
+| `ST_MPolyFromText()` | X |  |
+| `ST_MPolyFromWKB()` | X |  |
+| `ST_MakeEnvelope()` | X |  |
+| `ST_NumGeometries()` | X |  |
+| `ST_NumInteriorRing()` | X |  |
+| `ST_NumPoints()` | X |  |
+| `ST_Overlaps()` | X |  |
+| `ST_PointFromGeoHash()` | X |  |
+| `ST_PointFromText()` | X |  |
+| `ST_PointFromWKB()` | X |  |
+| `ST_PointN()` | X |  |
+| `ST_PolyFromText()` | X |  |
+| `ST_PolyFromWKB()` | X |  |
+| `ST_SRID()` | X |  |
+| `ST_Simplify()` | X |  |
+| `ST_StartPoint()` | X |  |
+| `ST_SwapXY()` | X |  |
+| `ST_SymDifference()` | X |  |
+| `ST_Touches()` | X |  |
+| `ST_Transform()` | X |  |
+| `ST_Union()` | X |  |
+| `ST_Validate()` | X |  |
+| `ST_Within()` | X |  |
+| `ST_X()` | X |  |
+| `ST_Y()` | X |  |
+| `SUBDATE()` | X |  |
+| `SUBSTR()` | ✓ |  |
+| `SUBSTRING()` | ✓ |  |
+| `SUBSTRING_INDEX()` | ✓ |  |
+| `SUBTIME()` | X |  |
+| `SUM()` | ✓ |  |
+| `SYSDATE()` | X |  |
+| `SYSTEM_USER()` | X |  |
+| `TAN()` | ✓ |  |
+| `TIME()` | X |  |
+| `TIMEDIFF()` | ✓ |  |
+| `TIMESTAMP()` | ✓ |  |
+| `TIMESTAMPADD()` | X |  |
+| `TIMESTAMPDIFF()` | X |  |
+| `TIME_FORMAT()` | X |  |
+| `TIME_TO_SEC()` | ✓ |  |
+| `TO_BASE64()` | ✓ |  |
+| `TO_DAYS()` | X |  |
+| `TO_SECONDS()` | X |  |
+| `TRIM()` | ✓ |  |
+| `TRUNCATE()` | X |  |
+| `UCASE()` | X |  |
+| `UNCOMPRESS()` | X |  |
+| `UNCOMPRESSED_LENGTH()` | X |  |
+| `UNHEX()` | ✓ |  |
+| `UNIX_TIMESTAMP()` | ✓ |  |
+| `UPPER()` | ✓ |  |
+| `USER()` | ✓ |  |
+| `UTC_DATE()` | X |  |
+| `UTC_TIME()` | X |  |
+| `UTC_TIMESTAMP()` | ✓ |  |
+| `UUID()` | X |  |
+| `UUID_SHORT()` | X |  |
+| `UUID_TO_BIN()` | X |  |
+| `UpdateXML()` | X |  |
+| `VALIDATE_PASSWORD_STRENGTH()` | X |  |
+| `VALUES()` | ✓ |  |
+| `VARIANCE()` | X |  |
+| `VAR_POP()` | X |  |
+| `VAR_SAMP()` | X |  |
+| `VERSION()` | ✓ |  |
+| `WAIT_FOR_EXECUTED_GTID_SET()` | X |  |
+| `WEEK()` | ✓ |  |
+| `WEEKDAY()` | ✓ |  |
+| `WEEKOFYEAR()` | ✓ |  |
+| `WEIGHT_STRING()` | X |  |
+| `YEAR()` | ✓ |  |
+| `YEARWEEK()` | ✓ |  |
 
-# Permissions
+## Permissions
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Users</td>
-      <td class="orange">O</td>
-      <td>Only one user is configurable, and must be specified in the config file at startup.</td>
-    </tr>
-    <tr>
-      <td>Privileges</td>
-      <td class="red">X</td>
-      <td>Only one user is configurable, and they have all privileges.</td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Users | O | Only one user is configurable, and must be specified in the config file at startup. |
+| Privileges | X | Only one user is configurable, and they have all privileges. |
 
-## Misc features
+### Misc features
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Component</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Information schema</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Views</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Window functions</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Common table expressions (CTEs)</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Stored procedures</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Cursors</td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>Triggers</td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Component | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| Information schema | ✓ |  |
+| Views | ✓ |  |
+| Window functions | X |  |
+| Common table expressions \(CTEs\) | X |  |
+| Stored procedures | X |  |
+| Cursors | X |  |
+| Triggers | ✓ |  |
 
-## Collations and character sets
+### Collations and character sets
 
-Dolt currently only supports a single collation and character set, the
-same one that Go uses: `utf8_bin` and `utf8mb4`. We will add support
-for more character sets and collations as required by
-customers. Please [file an
-issue](https://github.com/dolthub/dolt/issues) explaining your
-use case if current character set and collation support isn't
-sufficient.
+Dolt currently only supports a single collation and character set, the same one that Go uses: `utf8_bin` and `utf8mb4`. We will add support for more character sets and collations as required by customers. Please [file an issue](https://github.com/dolthub/dolt/issues) explaining your use case if current character set and collation support isn't sufficient.
 
-# Supported Statements
+## Supported Statements
 
-Dolt's goal is to be a drop-in replacement for MySQL, with every query
-and statement that works in MySQL behaving identically in Dolt. For
-most syntax and technical questions, you should feel free to refer to
-the [MySQL user
-manual](https://dev.mysql.com/doc/refman/8.0/en/select.html). Any
-deviation from the MySQL manual should be documented on this page, or
-else indicates a bug. Please [file
-issues](https://github.com/dolthub/dolt/issues) with any
-incompatibilities you discover.
+Dolt's goal is to be a drop-in replacement for MySQL, with every query and statement that works in MySQL behaving identically in Dolt. For most syntax and technical questions, you should feel free to refer to the [MySQL user manual](https://dev.mysql.com/doc/refman/8.0/en/select.html). Any deviation from the MySQL manual should be documented on this page, or else indicates a bug. Please [file issues](https://github.com/dolthub/dolt/issues) with any incompatibilities you discover.
 
-## Data manipulation statements
+### Data manipulation statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>CALL</code></td>
-      <td class="red">X</td>
-      <td>Stored procedures are not yet implemented.</td>
-    </tr>
-    <tr>
-      <td><code>CREATE TABLE AS</code></td>
-      <td class="red">X</td>
-      <td><code>INSERT INTO SELECT *</code> is supported.</td>
-    </tr>
-    <tr>
-      <td><code>CREATE TABLE LIKE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DO</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DELETE</code></td>
-      <td class="green">✓</td>
-      <td>No support for referring to  more than one table in a single <code>DELETE</code> statement.</td>
-    </tr>
-    <tr>
-      <td><code>HANDLER</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>IMPORT TABLE</code></td>
-      <td class="red">X</td>
-      <td>Use <code>dolt table import</code></td>
-    </tr>
-    <tr>
-      <td><code>INSERT</code></td>
-      <td class="green">✓</td>
-      <td>Including support for <code>ON DUPLICATE KEY</code> clauses.</td>
-    </tr>
-    <tr>
-      <td><code>LOAD DATA</code></td>
-      <td class="red">X</td>
-      <td>Use <code>dolt table import</code></td>
-    </tr>
-    <tr>
-      <td><code>LOAD XML</code></td>
-      <td class="red">X</td>
-      <td>Use <code>dolt table import</code></td>
-    </tr>
-    <tr>
-      <td><code>REPLACE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SELECT</code></td>
-      <td class="green">✓</td>
-      <td>Most select statements, including <code>UNION</code> and <code>JOIN</code>, are supported.</td>
-    </tr>
-    <tr>
-      <td><code>SELECT FROM AS OF</code></td>
-      <td class="green">✓</td>
-      <td>Selecting from a table as of any known revision or commit timestamp is supported. See <a href="#querying-non-head-revisions-of-a-database">AS OF queries</a>.</td>
-    </tr>
-    <tr>
-      <td><code>SELECT FOR UPDATE</code></td>
-      <td class="red">X</td>
-      <td>Locking and concurrency are currently very limited.</td>
-    </tr>
-    <tr>
-      <td><code>SUBQUERIES</code></td>
-      <td class="green">✓</td>
-      <td>Subqueries work, but must be given aliases. Some limitations apply.</td>
-    </tr>
-    <tr>
-      <td><code>TABLE</code></td>
-      <td class="red">X</td>
-      <td>Equivalent to <code>SELECT * FROM TABLE</code> without a <code>WHERE</code> clause.</td>
-    </tr>
-    <tr>
-      <td><code>TRUNCATE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>UPDATE</code></td>
-      <td class="green">✓</td>
-      <td>No support for referring to more than one table in a single <code>UPDATE</code> statement.</td>
-    </tr>
-    <tr>
-      <td><code>VALUES</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>WITH</code></td>
-      <td class="red">X</td>
-      <td>Common table expressions (CTEs) are not yet supported</td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `CALL` | X | Stored procedures are not yet implemented. |
+| `CREATE TABLE AS` | X | `INSERT INTO SELECT *` is supported. |
+| `CREATE TABLE LIKE` | ✓ |  |
+| `DO` | X |  |
+| `DELETE` | ✓ | No support for referring to more than one table in a single `DELETE` statement. |
+| `HANDLER` | X |  |
+| `IMPORT TABLE` | X | Use `dolt table import` |
+| `INSERT` | ✓ | Including support for `ON DUPLICATE KEY` clauses. |
+| `LOAD DATA` | X | Use `dolt table import` |
+| `LOAD XML` | X | Use `dolt table import` |
+| `REPLACE` | ✓ |  |
+| `SELECT` | ✓ | Most select statements, including `UNION` and `JOIN`, are supported. |
+| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](sql.md#querying-non-head-revisions-of-a-database). |
+| `SELECT FOR UPDATE` | X | Locking and concurrency are currently very limited. |
+| `SUBQUERIES` | ✓ | Subqueries work, but must be given aliases. Some limitations apply. |
+| `TABLE` | X | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause. |
+| `TRUNCATE` | ✓ |  |
+| `UPDATE` | ✓ | No support for referring to more than one table in a single `UPDATE` statement. |
+| `VALUES` | X |  |
+| `WITH` | X | Common table expressions \(CTEs\) are not yet supported |
 
-## Data definition statements
+### Data definition statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>ADD COLUMN</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ADD CHECK</code></td>
-      <td class="red">X</td>
-      <td><code>NOT NULL</code> is the only check currently possible.</td>
-    </tr>
-    <tr>
-      <td><code>ADD CONSTRAINT</code></td>
-      <td class="red">X</td>
-      <td><code>NOT NULL</code> is the only constraint currently possible.</td>
-    </tr>
-    <tr>
-      <td><code>ADD FOREIGN KEY</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ADD PARTITION</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ALTER COLUMN</code></td>
-      <td class="green">✓</td>
-      <td>Name and order changes are supported, but not type or primary key changes.</td>
-    </tr>
-    <tr>
-      <td><code>ALTER DATABASE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ALTER INDEX</code></td>
-      <td class="red">X</td>
-      <td>Indexes can be created and dropped, but not altered.</td>
-    </tr>
-    <tr>
-      <td><code>ALTER PRIMARY KEY</code></td>
-      <td class="red">X</td>
-      <td>Primary keys of tables cannot be changed.</td>
-    </tr>
-    <tr>
-      <td><code>ALTER TABLE</code></td>
-      <td class="green">✓</td>
-      <td>Not all <code>ALTER TABLE</code> statements are supported. See the rest of this table for details.</td>
-    </tr>
-    <tr>
-      <td><code>ALTER TYPE</code></td>
-      <td class="red">X</td>
-      <td>Column type changes are not supported.</td>
-    </tr>
-    <tr>
-      <td><code>ALTER VIEW</code></td>
-      <td class="red">X</td>
-      <td>Views can be created and dropped, but not altered.</td>
-    </tr>
-    <tr>
-      <td><code>CHANGE COLUMN</code></td>
-      <td><span style="color:orange">O</span></td>
-      <td>Columns can be renamed and reordered, but type changes are not implemented.</td>
-    </tr>
-    <tr>
-      <td><code>CREATE DATABASE</code></td>
-      <td class="red">X</td>
-      <td>Create new repositories with <code>dolt clone</code> or <code>dolt init</code></td>
-    </tr>
-    <tr>
-      <td><code>CREATE EVENT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE FUNCTION</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE INDEX</code></td>
-      <td><span style="color:orange">O</span></td>
-      <td>Unique indexes are not yet supported. Fulltext and spatial indexes are not supported.</td>
-    </tr>
-    <tr>
-      <td><code>CREATE TABLE</code></td>
-      <td class="green">✓</td>
-      <td>Tables must have primary keys.</td>
-    </tr>
-    <tr>
-      <td><code>CREATE TABLE AS</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE TRIGGER</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE VIEW</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DESCRIBE TABLE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP COLUMN</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP CONSTRAINT</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP DATABASE</code></td>
-      <td class="red">X</td>
-      <td>Delete a repository by deleting its directory on disk.</td>
-    </tr>
-    <tr>
-      <td><code>DROP EVENT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP FUNCTION</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP INDEX</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP TABLE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP PARTITION</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP TRIGGER</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP VIEW</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>MODIFY COLUMN</code></td>
-      <td><span style="color:orange">O</span></td>
-      <td>Columns can be renamed and reordered, but type changes are not implemented.</td>
-    </tr>
-    <tr>
-      <td><code>RENAME COLUMN</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RENAME CONSTRAINT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RENAME DATABASE</code></td>
-      <td class="red">X</td>
-      <td>Database names are read-only, but can be configured in the server config.</td>
-    </tr>
-    <tr>
-      <td><code>RENAME INDEX</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RENAME TABLE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW COLUMNS</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW CONSTRAINTS</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW CREATE TABLE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW CREATE VIEW</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW DATABASES</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW INDEX</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW SCHEMAS</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SHOW TABLES</code></td>
-      <td class="green">✓</td>
-      <td><code>SHOW FULL TABLES</code> reveals whether a table is a base table or a view.</td>
-    </tr>
-    <tr>
-      <td><code>TRUNCATE TABLE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `ADD COLUMN` | ✓ |  |
+| `ADD CHECK` | X | `NOT NULL` is the only check currently possible. |
+| `ADD CONSTRAINT` | X | `NOT NULL` is the only constraint currently possible. |
+| `ADD FOREIGN KEY` | ✓ |  |
+| `ADD PARTITION` | X |  |
+| `ALTER COLUMN` | ✓ | Name and order changes are supported, but not type or primary key changes. |
+| `ALTER DATABASE` | X |  |
+| `ALTER INDEX` | X | Indexes can be created and dropped, but not altered. |
+| `ALTER PRIMARY KEY` | X | Primary keys of tables cannot be changed. |
+| `ALTER TABLE` | ✓ | Not all `ALTER TABLE` statements are supported. See the rest of this table for details. |
+| `ALTER TYPE` | X | Column type changes are not supported. |
+| `ALTER VIEW` | X | Views can be created and dropped, but not altered. |
+| `CHANGE COLUMN` | O | Columns can be renamed and reordered, but type changes are not implemented. |
+| `CREATE DATABASE` | X | Create new repositories with `dolt clone` or `dolt init` |
+| `CREATE EVENT` | X |  |
+| `CREATE FUNCTION` | X |  |
+| `CREATE INDEX` | O | Unique indexes are not yet supported. Fulltext and spatial indexes are not supported. |
+| `CREATE TABLE` | ✓ | Tables must have primary keys. |
+| `CREATE TABLE AS` | X |  |
+| `CREATE TRIGGER` | ✓ |  |
+| `CREATE VIEW` | ✓ |  |
+| `DESCRIBE TABLE` | ✓ |  |
+| `DROP COLUMN` | ✓ |  |
+| `DROP CONSTRAINT` | ✓ |  |
+| `DROP DATABASE` | X | Delete a repository by deleting its directory on disk. |
+| `DROP EVENT` | X |  |
+| `DROP FUNCTION` | X |  |
+| `DROP INDEX` | ✓ |  |
+| `DROP TABLE` | ✓ |  |
+| `DROP PARTITION` | X |  |
+| `DROP TRIGGER` | ✓ |  |
+| `DROP VIEW` | ✓ |  |
+| `MODIFY COLUMN` | O | Columns can be renamed and reordered, but type changes are not implemented. |
+| `RENAME COLUMN` | ✓ |  |
+| `RENAME CONSTRAINT` | X |  |
+| `RENAME DATABASE` | X | Database names are read-only, but can be configured in the server config. |
+| `RENAME INDEX` | X |  |
+| `RENAME TABLE` | ✓ |  |
+| `SHOW COLUMNS` | ✓ |  |
+| `SHOW CONSTRAINTS` | X |  |
+| `SHOW CREATE TABLE` | ✓ |  |
+| `SHOW CREATE VIEW` | ✓ |  |
+| `SHOW DATABASES` | ✓ |  |
+| `SHOW INDEX` | X |  |
+| `SHOW SCHEMAS` | ✓ |  |
+| `SHOW TABLES` | ✓ | `SHOW FULL TABLES` reveals whether a table is a base table or a view. |
+| `TRUNCATE TABLE` | ✓ |  |
 
-## Transactional statements
+### Transactional statements
 
-Transactional semantics are a work in progress. Dolt isn't like other
-databases: a "commit" in dolt creates a new entry in the repository
-revision graph, as opposed to updating one or more rows atomically as
-in other databases. By default, updating data through SQL statements
-modifies the working set of the repository. Committing changes to the
-repository requires the use of `dolt add` and `dolt commmit` from the
-command line. But it's also possible for advanced users to create
-commits and branches directly through SQL statements.
+Transactional semantics are a work in progress. Dolt isn't like other databases: a "commit" in dolt creates a new entry in the repository revision graph, as opposed to updating one or more rows atomically as in other databases. By default, updating data through SQL statements modifies the working set of the repository. Committing changes to the repository requires the use of `dolt add` and `dolt commmit` from the command line. But it's also possible for advanced users to create commits and branches directly through SQL statements.
 
-Not much work has been put into supporting the true transaction and
-concurrency primitives necessary to be an application server, but
-limited support for transactions does exist. Specifically, when
-running the SQL server with `@@autocommit = false`, the working set
-will not be updated with changes until a `COMMIT` statement is
-executed.
+Not much work has been put into supporting the true transaction and concurrency primitives necessary to be an application server, but limited support for transactions does exist. Specifically, when running the SQL server with `@@autocommit = false`, the working set will not be updated with changes until a `COMMIT` statement is executed.
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>BEGIN</code></td>
-      <td><span style="color:orange">O</span></td>
-      <td><code>BEGIN</code> parses correctly, but is a no-op: it doesn&#39;t create a checkpoint that can be returned to with <code>ROLLBACK</code>.</td>
-    </tr>
-    <tr>
-      <td><code>COMMIT</code></td>
-      <td class="green">✓</td>
-      <td><code>COMMIT</code> will write any pending changes to the working set when <code>@@autocommit = false</code></td>
-    </tr>
-    <tr>
-      <td><code>COMMIT(MESSAGE)</code></td>
-      <td class="green">✓</td>
-      <td>The <code>COMMIT()</code> function creates a commit of the current database state and returns the hash of this new commit. See <a href="#concurrency">concurrency</a> for details.</td>
-    </tr>
-    <tr>
-      <td><code>LOCK TABLES</code></td>
-      <td class="red">X</td>
-      <td><code>LOCK TABLES</code> parses correctly but does not prevent access to those tables from other sessions.</td>
-    </tr>
-    <tr>
-      <td><code>ROLLBACK</code></td>
-      <td class="red">X</td>
-      <td><code>ROLLBACK</code> parses correctly but is a no-op.</td>
-    </tr>
-    <tr>
-      <td><code>SAVEPOINT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RELEASE SAVEPOINT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>ROLLBACK TO SAVEPOINT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET @@autocommit = 1</code></td>
-      <td class="green">✓</td>
-      <td>When <code>@@autocommit = true</code>, changes to data will update the working set after every statement. When <code>@@autocommit = false</code>, the working set will only be updated after <code>COMMIT</code> statements.</td>
-    </tr>
-    <tr>
-      <td><code>SET TRANSACTION</code></td>
-      <td class="red">X</td>
-      <td>Different isolation levels are not yet supported.</td>
-    </tr>
-    <tr>
-      <td><code>START TRANSACTION</code></td>
-      <td><span style="color:orange">O</span></td>
-      <td><code>START TRANSACTION</code> parses correctly, but is a no-op: it doesn&#39;t create a checkpoint that can be returned to with <code>ROLLBACK</code>.</td>
-    </tr>
-    <tr>
-      <td><code>UNLOCK TABLES</code></td>
-      <td class="green">✓</td>
-      <td><code>UNLOCK TABLES</code> parses correctly, but since <code>LOCK TABLES</code> doesn&#39;t prevent concurrent access it&#39;s essentially a no-op.</td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
+| `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](sql.md#concurrency) for details. |
+| `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
+| `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
+| `SAVEPOINT` | X |  |
+| `RELEASE SAVEPOINT` | X |  |
+| `ROLLBACK TO SAVEPOINT` | X |  |
+| `SET @@autocommit = 1` | ✓ | When `@@autocommit = true`, changes to data will update the working set after every statement. When `@@autocommit = false`, the working set will only be updated after `COMMIT` statements. |
+| `SET TRANSACTION` | X | Different isolation levels are not yet supported. |
+| `START TRANSACTION` | O | `START TRANSACTION` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
+| `UNLOCK TABLES` | ✓ | `UNLOCK TABLES` parses correctly, but since `LOCK TABLES` doesn't prevent concurrent access it's essentially a no-op. |
 
-## Prepared statements
+### Prepared statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>PREPARE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>EXECUTE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `PREPARE` | ✓ |  |
+| `EXECUTE` | ✓ |  |
 
-## Access management statements
+### Access management statements
 
-Access management via SQL statements is not yet supported. This table
-will be updated as access management features are implemented. Please
-[file an issue](https://github.com/dolthub/dolt/issues) if lack
-of SQL access management is blocking your use of Dolt, and we will
-prioritize accordingly.
+Access management via SQL statements is not yet supported. This table will be updated as access management features are implemented. Please [file an issue](https://github.com/dolthub/dolt/issues) if lack of SQL access management is blocking your use of Dolt, and we will prioritize accordingly.
 
-A root user name and password can be specified in the config for
-[`sql-server`](/cli/dolt-sql-server/). This user has full privileges
-on the running database.
+A root user name and password can be specified in the config for [`sql-server`](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/cli/dolt-sql-server/README.md). This user has full privileges on the running database.
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>ALTER USER</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE ROLE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>CREATE USER</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP ROLE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>DROP USER</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>GRANT</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>RENAME USER</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>REVOKE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET DEFAULT ROLE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET PASSWORD</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET ROLE</code></td>
-      <td class="red">X</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `ALTER USER` | X |  |
+| `CREATE ROLE` | X |  |
+| `CREATE USER` | X |  |
+| `DROP ROLE` | X |  |
+| `DROP USER` | X |  |
+| `GRANT` | X |  |
+| `RENAME USER` | X |  |
+| `REVOKE` | X |  |
+| `SET DEFAULT ROLE` | X |  |
+| `SET PASSWORD` | X |  |
+| `SET ROLE` | X |  |
 
-## Session management statements
+### Session management statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>SET</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>SET CHARACTER SET</code></td>
-      <td class="orange">O</td>
-      <td>`SET CHARACTER SET` parses correctly, but Dolt supports only the `utf8mb4` collation</td>
-    </tr>
-    <tr>
-      <td><code>SET NAMES</code></td>
-      <td class="orange">O</td>
-      <td>`SET NAMES` parses correctly, but Dolt supports only the `utf8mb4` collation for identifiers</td>
-    </tr>
-    <tr>
-      <td><code>KILL QUERY</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `SET` | ✓ |  |
+| `SET CHARACTER SET` | O | \`SET CHARACTER SET\` parses correctly, but Dolt supports only the \`utf8mb4\` collation |
+| `SET NAMES` | O | \`SET NAMES\` parses correctly, but Dolt supports only the \`utf8mb4\` collation for identifiers |
+| `KILL QUERY` | ✓ |  |
 
-## Utility statements
+### Utility statements
 
-<table class="sql-table">
-  <thead>
-    <tr>
-      <th>Statement</th>
-      <th>Supported</th>
-      <th>Notes and limitations</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>EXPLAIN</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><code>USE</code></td>
-      <td class="green">✓</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
+| Statement | Supported | Notes and limitations |
+| :--- | :--- | :--- |
+| `EXPLAIN` | ✓ |  |
+| `USE` | ✓ |  |
 
-# Concurrency
+## Concurrency
 
-Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](../cli/#sql-server) for details.
+Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#sql-server) for details.
 
-### @@dbname_head
+#### @@dbname\_head
 
-The session variable `dbname_head` (Where dbname is the name of the database) provides an interface for reading and writing the HEAD commit for a session.
+The session variable `dbname_head` \(Where dbname is the name of the database\) provides an interface for reading and writing the HEAD commit for a session.
 
 ```sql
 # Set the head commit to a specific hash.
@@ -4047,16 +1252,15 @@ SET @@mydb_head = 'fe31vq5c0qj1afnghl0d9448652smlo0';
 SELECT @@mydb_head;
 ```
 
-### HASHOF()
+#### HASHOF\(\)
 
 The HASHOF function returns the hash of a branch such as `HASHOF("master")`.
 
-### COMMIT()
+#### COMMIT\(\)
 
-The COMMIT function writes a new commit to the database and returns the hash of that commit. The argument passed to the function is the commit message. The author's name and email for this commit will be determined by the server or can be provided by the user.
-on the repo.
+The COMMIT function writes a new commit to the database and returns the hash of that commit. The argument passed to the function is the commit message. The author's name and email for this commit will be determined by the server or can be provided by the user. on the repo.
 
-Dolt provides a manual commit mode where a user works with a detached HEAD whose value is accessible and modifiable through the session variable @@dbname_head (where dbname is the name of the database whose pointer you wish to read or write). You can write new commits to the database by inserting and updating rows in the dolt_branches table. See below for details on how this works.
+Dolt provides a manual commit mode where a user works with a detached HEAD whose value is accessible and modifiable through the session variable @@dbname\_head \(where dbname is the name of the database whose pointer you wish to read or write\). You can write new commits to the database by inserting and updating rows in the dolt\_branches table. See below for details on how this works.
 
 See the below examples as well as the section on [concurrency](https://www.dolthub.com/docs/reference/sql/#concurrency) for details.
 
@@ -4066,7 +1270,7 @@ Example:
 SET @@mydb_head = COMMIT('-m', 'my commit message');
 ```
 
-## Options
+### Options
 
 -m, --message: Use the given `<msg>` as the commit message. Required
 
@@ -4078,10 +1282,9 @@ SET @@mydb_head = COMMIT('-m', 'my commit message');
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
+#### MERGE\(\)
 
-### MERGE()
-
-The MERGE function merges a branch reference into HEAD. The argument passed to the function is a reference to a branch (its name). The author's name and email for this commit will be determined by the server or can be provided by the user. 
+The MERGE function merges a branch reference into HEAD. The argument passed to the function is a reference to a branch \(its name\). The author's name and email for this commit will be determined by the server or can be provided by the user.
 
 Example:
 
@@ -4089,16 +1292,15 @@ Example:
 SET @@mydb_head = MERGE('feature-branch');
 ```
 
-## Options
+### Options
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
-### dolt_branches
+#### dolt\_branches
 
-dolt_branches is a system table that can be used to create, modify and delete branches in a dolt data repository via
-SQL.
+dolt\_branches is a system table that can be used to create, modify and delete branches in a dolt data repository via SQL.
 
-### Putting it all together
+#### Putting it all together
 
 An example showing how to make modifications and create a new feature branch from those modifications.
 
@@ -4148,7 +1350,6 @@ SET @@mydb_head = HASHOF("master");
 An example of merging in a feature branch.
 
 ```sql
-
 -- Set the current database for the session
 USE mydb;
 
@@ -4166,38 +1367,37 @@ SET @@mydb_head = MERGE('feature-branch');
 -- Set the HEAD commit to the latest commit to the branch "master" which we just wrote
 INSERT INTO dolt_branches (name, hash)
 VALUES("master", @@bug_head);
-
 ```
 
-# Benchmarks
+## Benchmarks
 
 This section provides benchmarks for Dolt. The current version of Dolt is 0.22.13, and we benchmark against MySQL 8.0.22.
 
-## Data
+### Data
 
 Here we present the result of running `sysbench` MySQL tests against Dolt SQL for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
 Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed of MySQL common operations. If a query takes MySQL 1 second, we expect it to take Dolt 2-4 seconds. Or, if MySQL can run 8 queries in 10 seconds, then we want Dolt to run 2-4 queries in 10 seconds. The `multiple` column represents this relationship. Our custom lua tests can be found [here](https://github.com/dolthub/dolt/tree/master/benchmark/perf_tools/sysbench_scripts/lua).
 
-|Test|Dolt|MySQL|Multiple|
-| :-------------------- | :----- | :----- | :------- |
-|covering_index_scan|49.21|1.39|35.0|
-|index_scan|118.92|34.95|3.0|
-|oltp_delete|11.87|0.11|108.0|
-|oltp_point_select|1.27|0.11|12.0|
-|oltp_read_only|28.16|2.26|12.0|
-|oltp_read_write|81.48|5.88|14.0|
-|oltp_update_index|15.27|2.76|6.0|
-|oltp_update_non_index|8.9|2.66|3.0|
-|oltp_write_only|54.83|3.82|14.0|
-|select_random_points|2.52|0.26|10.0|
-|select_random_ranges|4.57|0.28|16.0|
-|table_scan|144.97|35.59|4.0|
-| _mean_                |        |        | _19.75_   |
+| Test | Dolt | MySQL | Multiple |
+| :--- | :--- | :--- | :--- |
+| covering\_index\_scan | 49.21 | 1.39 | 35.0 |
+| index\_scan | 118.92 | 34.95 | 3.0 |
+| oltp\_delete | 11.87 | 0.11 | 108.0 |
+| oltp\_point\_select | 1.27 | 0.11 | 12.0 |
+| oltp\_read\_only | 28.16 | 2.26 | 12.0 |
+| oltp\_read\_write | 81.48 | 5.88 | 14.0 |
+| oltp\_update\_index | 15.27 | 2.76 | 6.0 |
+| oltp\_update\_non\_index | 8.9 | 2.66 | 3.0 |
+| oltp\_write\_only | 54.83 | 3.82 | 14.0 |
+| select\_random\_points | 2.52 | 0.26 | 10.0 |
+| select\_random\_ranges | 4.57 | 0.28 | 16.0 |
+| table\_scan | 144.97 | 35.59 | 4.0 |
+| _mean_ |  |  | _19.75_ |
 
 In the spirit of ["dog fooding"](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) we created a Dolt database on [DoltHub](https://www.dolthub.com/repositories/dolthub/dolt-benchmarks) with our performance metrics. You can find the full set of metrics produced by `sysbench` there, and explore them via our SQL console.
 
-## Approach
+### Approach
 
 We adopted an industry standard benchmarking tool, [`sysbench`](https://github.com/akopytov/sysbench). `sysbench` provides a series of benchmarks for examining various aspects of database performance, and was authored by developers who worked on MySQL.
 
@@ -4205,7 +1405,7 @@ You can read more about our benchmarking approach [here](https://github.com/dolt
 
 For example, suppose that a developer made a bunch of changes that are supposed to speed up bulk inserts:
 
-```
+```text
 $ cd $DOLT_CHECKOUT/benchmark/perf_tools
 $ ./run_benchmarks.sh \
   bulk_insert \
@@ -4216,13 +1416,14 @@ $ ./run_benchmarks.sh \
 
 This will do the following:
 
-- build a copy of Dolt using the locally checked out Git repository located at `$DOLT_CHECKOUT` inside a Docker container
-- build and launch a Docker container running Dolt SQL
-- build and launch a Docker container running `sysbench` that executes `bulk_insert` using a table with 10000 records for the test
-- repeat the process using MySQL for comparison
+* build a copy of Dolt using the locally checked out Git repository located at `$DOLT_CHECKOUT` inside a Docker container
+* build and launch a Docker container running Dolt SQL
+* build and launch a Docker container running `sysbench` that executes `bulk_insert` using a table with 10000 records for the test
+* repeat the process using MySQL for comparison
 
 All of the data produced will be associated with a unique run ID.
 
-## Code
+### Code
 
 The benchmarking tools are part of Dolt, which is free and open source. You can find a more detailed description of the tools on [GitHub](https://github.com/dolthub/dolt/tree/master/benchmark/perf_tools).
+
