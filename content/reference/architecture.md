@@ -8,9 +8,11 @@ Dolt presents familiar interfaces insofar as users consider Git and SQL familiar
 Traditional database systems have a single and centralized version of "truth", namely the value of any given datapoint is its value when the most recent transaction committed. The presented data structure offers no concept of versions. This is fine for many application backing stores, but it is not good for facilitating distribution and collaboration. Distributed version control systems, exemplified by Git, recognize independent and concurrent collaborators can be independently be making changes to data. They also recognize that users want to be able to efficiently incorporate the changes of collaborators and upstream suppliers. One of the primary design goals of Dolt is to provide robust tools for such workflows with tabular data.
 
 Query performance for single-source-of-truth tabular data is a well understood problem, with many excellent solutions. MySQL and Postgres are examples. Dolt makes a different set of design decisions as it attempts to trade query performance off against storage footprint of the database at various commits. Perhaps the most pressing design consideration is how to balance acceptable query performance for a given commit against the need to store the state, schema and values, of the database at every commit. In this way each commit is itself can be thought of as a database in the sense that it can be queried as one. To make this more concrete, consider following schematic of a Dolt commit graph:
+
 ![Dolt Commit Graph](../../images/dolt-commit-graph.png)
 
 The tables have different values at different commits, but one could treat each commit as a database in the traditional RDBMS sense. This makes the design challenge of architect Dolt pretty clear: how do we efficiently serve data out to a SQL query engine while storing the value and schema of every table at every commit? Let's visualize a table value at a commit:
+
 ![Dolt Table Value](../../images/dolt-table-value.png)
 
 The design goal is relatively clear: we want to find a way to efficiently serve queries against the database at a given commit, possibly across the query graph (see Dolt's system tables) while not storing the entire database at every commit. In other words we want to share values repeated across values of tables in the commit graph, while preserving acceptable query performance at a given value, and possibly across many values. In the sections that follow we review some of the technologies and concepts we used to build Dolt to achieve these design goals.
@@ -36,15 +38,19 @@ In the last section we discussed Prolly Trees, a B-Tree like data structure whos
 
 To see how this works in practice, let's examine a couple of scenarios for updating a table to see how that manifest in a Prolly Tree and facilitates structural sharing:
 - The absolute smallest overhead for any mutation to a table is, on average, a little larger than 4KB times the depth of the tree. Typically changing the value in a chunk won't change the chunk boundary, and you'll need to store complete new chunk values for the new leaf chunk and all the new internal chunks up to the root. The best case scenario looks like:
+
 ![Single Value Edit](../../images/single-value-edit.png)
 
 - Adding rows to a table whose primary keys are lexicographically larger than any of the existing rows in the table results in an append at the end of Prolly-tree for the table value. The last leaf node in the tree will necessarily change, and new chunks will be created for all of the new rows. Expected duplicate storage overhead is going to be the 4KB chunk at the end of the table's leaf nodes and the spline of the internal nodes of the map leading up to the root node. This kind of table might represent naturally append-only data or time-series data, and the storage overhead is very small. This looks like:
+
 ![Append Edit](../../images/append-edit.png)
 
 - Adding rows to a table whose primary keys are lexicographically smaller than any of the existing rows is very similar to the case where they are all larger. It's expected to rewrite the first chunks in the table, and the probabilitistic rolling hash will quickly resynchronize with the existing table data. It might look like:
+
 ![Prepend Edit](../../images/prepend-edit.png)
 
 - Adding a run of data whose primary keys fall lexicographically within two existing rows is very similar to the prefix or postfix case. The run of data gets interpolated between the existing chunks of row data:
+
 ![Middle Run Edit](../../images/middle-run-edit.png)
 
 Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but interally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.

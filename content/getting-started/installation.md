@@ -1,5 +1,6 @@
 ---
 title: Installation
+description: Details on how to install Dolt.
 ---
 
 # Dolt
