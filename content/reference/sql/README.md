@@ -1,3 +1,6 @@
+---
+title: Dolt SQL
+---
 
 ## Overview
 
@@ -25,20 +28,24 @@ View the `dolt sql-server` command documentation [here](https://github.com/dolth
 
 You can operate several of dolt cli commands in the sql layer directly. This is especially useful if you are using sql in the application layer and want to the query a Dolt repository.
 
+You can find full API documentation [here](dolt-sql-functions.md)
+
 ### System Tables
 
 Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
 
-* [dolt\_log table](sql.md#dolt-system-tables_dolt_log)
-* [dolt\_branches table](sql.md#dolt-system-tables_dolt_branches)
-* [dolt\_docs table](sql.md#dolt-system-tables_dolt_docs)
-* [dolt\_diff tables](sql.md#dolt-system-tables_dolt_diff_tablename)
-* [dolt\_history tables](sql.md#dolt-system-tables_dolt_history_tablename)
-* [dolt\_schemas table](sql.md#dolt-system-tables_dolt_schemas)
+* [dolt\_log table](dolt-sql-functions.md#dolt-system-tables_dolt_log)
+* [dolt\_branches table](dolt-sql-functions.md#dolt-system-tables_dolt_branches)
+* [dolt\_docs table](dolt-sql-functions.md#dolt-system-tables_dolt_docs)
+* [dolt\_diff tables](dolt-sql-functions.md#dolt-system-tables_dolt_diff_tablename)
+* [dolt\_history tables](dolt-sql-functions.md#dolt-system-tables_dolt_history_tablename)
+* [dolt\_schemas table](dolt-sql-functions.md#dolt-system-tables_dolt_schemas)
 
 ### Concurrency
 
 When any client initiates a SQL session against a Dolt data repository, that session will be pointing to a specific commit even if other clients make changes. Therefore, modifications made by other clients will not be visible. There are two commit modes which determine how you are able to write to the database, commit those writes, and get modifications made by other clients.
+
+You can read a more detailed description of how Dolt handles concurrency [here](concurrency.md)
 
 #### Autocommit mode
 
