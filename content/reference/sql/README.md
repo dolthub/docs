@@ -1,3 +1,4 @@
+# SQL
 
 ## Overview
 
@@ -29,12 +30,12 @@ You can operate several of dolt cli commands in the sql layer directly. This is 
 
 Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
 
-* [dolt\_log table](sql.md#dolt-system-tables_dolt_log)
-* [dolt\_branches table](sql.md#dolt-system-tables_dolt_branches)
-* [dolt\_docs table](sql.md#dolt-system-tables_dolt_docs)
-* [dolt\_diff tables](sql.md#dolt-system-tables_dolt_diff_tablename)
-* [dolt\_history tables](sql.md#dolt-system-tables_dolt_history_tablename)
-* [dolt\_schemas table](sql.md#dolt-system-tables_dolt_schemas)
+* [dolt\_log table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_log)
+* [dolt\_branches table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_branches)
+* [dolt\_docs table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_docs)
+* [dolt\_diff tables](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_diff_tablename)
+* [dolt\_history tables](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_history_tablename)
+* [dolt\_schemas table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_schemas)
 
 ### Concurrency
 
@@ -74,3 +75,4 @@ In addition to this `AS OF` syntax for `SELECT` statements, Dolt also supports a
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
 ```
+

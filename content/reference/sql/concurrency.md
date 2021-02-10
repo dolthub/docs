@@ -2,9 +2,11 @@
 title: Concurrency
 ---
 
+# Concurrency
+
 Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#sql-server) for details.
 
-#### @@dbname\_head
+### @@dbname\_head
 
 The session variable `dbname_head` \(Where dbname is the name of the database\) provides an interface for reading and writing the HEAD commit for a session.
 
@@ -16,11 +18,11 @@ SET @@mydb_head = 'fe31vq5c0qj1afnghl0d9448652smlo0';
 SELECT @@mydb_head;
 ```
 
-#### HASHOF\(\)
+### HASHOF\(\)
 
 The HASHOF function returns the hash of a branch such as `HASHOF("master")`.
 
-#### COMMIT\(\)
+### COMMIT\(\)
 
 The COMMIT function writes a new commit to the database and returns the hash of that commit. The argument passed to the function is the commit message. The author's name and email for this commit will be determined by the server or can be provided by the user. on the repo.
 
@@ -34,7 +36,7 @@ Example:
 SET @@mydb_head = COMMIT('-m', 'my commit message');
 ```
 
-### Options
+## Options
 
 -m, --message: Use the given `<msg>` as the commit message. Required
 
@@ -46,7 +48,7 @@ SET @@mydb_head = COMMIT('-m', 'my commit message');
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
-#### MERGE\(\)
+### MERGE\(\)
 
 The MERGE function merges a branch reference into HEAD. The argument passed to the function is a reference to a branch \(its name\). The author's name and email for this commit will be determined by the server or can be provided by the user.
 
@@ -56,15 +58,15 @@ Example:
 SET @@mydb_head = MERGE('feature-branch');
 ```
 
-### Options
+## Options
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
-#### dolt\_branches
+### dolt\_branches
 
 dolt\_branches is a system table that can be used to create, modify and delete branches in a dolt data repository via SQL.
 
-#### Putting it all together
+### Putting it all together
 
 An example showing how to make modifications and create a new feature branch from those modifications.
 
@@ -132,3 +134,4 @@ SET @@mydb_head = MERGE('feature-branch');
 INSERT INTO dolt_branches (name, hash)
 VALUES("master", @@bug_head);
 ```
+
