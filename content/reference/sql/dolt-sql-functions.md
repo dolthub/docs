@@ -2,9 +2,9 @@
 title: Dolt SQL Functions
 ---
 
-### `DOLT_COMMIT()`
+# Dolt SQL Functions
 
-#### Description
+## Description
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with each value directly following the flag. Note that you must always support the message flag with the intended message right after.
 
@@ -16,7 +16,7 @@ SELECT DOLT_COMMIT('-m', 'This is a commit');
 SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-#### Options
+## Options
 
 `-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
 
@@ -28,7 +28,7 @@ SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@exam
 
 `--author`: Specify an explicit author using the standard "A U Thor [author@example.com](mailto:author@example.com)" format.
 
-#### Example
+## Example
 
 ```sql
 -- Set the current database for the session
@@ -42,3 +42,4 @@ WHERE pk = "key";
 -- Stage all changes and commit.
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
+

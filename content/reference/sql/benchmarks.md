@@ -2,10 +2,11 @@
 title: Benchmarks
 ---
 
+# Benchmarks
 
 This section provides benchmarks for Dolt. The current version of Dolt is 0.23.0, and we benchmark against MySQL 8.0.22.
 
-### Data
+## Data
 
 Here we present the result of running `sysbench` MySQL tests against Dolt SQL for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
@@ -14,10 +15,10 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 | Test | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | covering\_index\_scan | 11.45 | 1.37 | 8.0 |
-| index\_scan | 121.08 | 34.95 |3.0 |
+| index\_scan | 121.08 | 34.95 | 3.0 |
 | oltp\_delete | 11.87 | 0.11 | 108.0 |
 | oltp\_point\_select | 1.55 | 0.11 | 14.0 |
-| oltp\_read\_only | 	31.94 | 2.26 | 14.0 |
+| oltp\_read\_only | 31.94 | 2.26 | 14.0 |
 | oltp\_read\_write | 86.0 | 5.37 | 16.0 |
 | oltp\_update\_index | 15.27 | 2.22 | 7.0 |
 | oltp\_update\_non\_index | 9.06 | 2.22 | 4.0 |
@@ -29,7 +30,7 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 
 In the spirit of ["dog fooding"](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) we created a Dolt database on [DoltHub](https://www.dolthub.com/repositories/dolthub/dolt-benchmarks) with our performance metrics. You can find the full set of metrics produced by `sysbench` there, and explore them via our SQL console.
 
-### Approach
+## Approach
 
 We adopted an industry standard benchmarking tool, [`sysbench`](https://github.com/akopytov/sysbench). `sysbench` provides a series of benchmarks for examining various aspects of database performance, and was authored by developers who worked on MySQL.
 
@@ -55,6 +56,7 @@ This will do the following:
 
 All of the data produced will be associated with a unique run ID.
 
-### Code
+## Code
 
 The benchmarking tools are part of Dolt, which is free and open source. You can find a more detailed description of the tools on [GitHub](https://github.com/dolthub/dolt/tree/master/benchmark/perf_tools).
+
