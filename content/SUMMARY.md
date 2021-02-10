@@ -29,5 +29,9 @@
 * [Architecture](reference/architecture.md)
 * [CLI](reference/cli.md)
 * [Python](reference/python.md)
-* [SQL](reference/sql.md)
-
+* [SQL](reference/sql/README.md)
+  * [SQL Support](reference/sql/sql-support.md)
+  * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
+  * [Dolt System Tables](reference/sql/dolt-system-tables.md)
+  * [Concurrency](reference/sql/concurrency.md)
+  * [Benchmarks](reference/sql/benchmarks.md)
