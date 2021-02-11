@@ -1,8 +1,8 @@
 root: ./content
 
 redirects:
-  tutorials/installation: ./content/getting-started/installation.md
-  tutorials/reading-from-dolt: ./content/getting-started/reading-from-dolt.md
-  tutorials/writing-to-dolt: ./content/getting-started/reading-from-dolt.md
-  tutorials/using-sql: ./content/getting-started/using-sql.md
-  tutorials/dolthub: ./content/getting-started/dolthub.md
+  tutorials/installation: ./getting-started/installation.md
+  tutorials/reading-from-dolt: ./getting-started/reading-from-dolt.md
+  tutorials/writing-to-dolt: ./getting-started/reading-from-dolt.md
+  tutorials/using-sql: ./getting-started/using-sql.md
+  tutorials/dolthub: ./getting-started/dolthub.md
