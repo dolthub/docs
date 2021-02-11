@@ -35,12 +35,7 @@ Running dolt init in an already initialized directory will fail.
 ### Synopsis
 
 ```text
-
-        
-            dolt status 
-
-
-          
+            dolt status
 ```
 
 ### Description
@@ -60,12 +55,7 @@ No options for this command.
 ### Synopsis
 
 ```text
-
-        
             dolt add [<table>...]
-
-
-          
 ```
 
 ### Description
@@ -93,14 +83,9 @@ Working table\(s\) to add to the list tables staged to be committed. The abbrevi
 ### Synopsis
 
 ```text
-
-        
             dolt reset <tables>...
 
             dolt reset [--hard | --soft]
-
-
-          
 ```
 
 ### Description
@@ -133,12 +118,7 @@ dolt reset . This form resets `all` staged tables to their values at HEAD. It is
 ### Synopsis
 
 ```text
-
-        
             dolt commit [options]
-
-
-          
 ```
 
 ### Description
@@ -174,8 +154,6 @@ The commit timestamp can be modified using the --date parameter.  Dates can be s
 ### Synopsis
 
 ```text
-
-        
             dolt sql [--multi-db-dir <directory>] [-r <result format>]
 
             dolt sql -q <query;query> [-r <result format>] -s <name> -m <message> [-b]
@@ -185,9 +163,6 @@ The commit timestamp can be modified using the --date parameter.  Dates can be s
             dolt sql -x <name>
 
             dolt sql --list-saved
-
-
-          
 ```
 
 ### Description
@@ -225,14 +200,9 @@ By default this command uses the dolt data repository in the current working dir
 ### Synopsis
 
 ```text
-
-        
             dolt sql-server --config <file>
 
             dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [-r]
-
-
-          
 ```
 
 ### Description
@@ -240,8 +210,6 @@ By default this command uses the dolt data repository in the current working dir
 By default, starts a MySQL-compatible server which allows only one user connection at a time to the dolt repository in the current directory. Any edits made through this server will be automatically reflected in the working set. This behavior can be modified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line \(If `--config <file>` is provided all other command line arguments are ignored\). This is an example yaml configuration file showing all supported items and their default values:
 
 ```text
-
-        
             log_level: info
 
 behavior:
@@ -260,7 +228,6 @@ read_timeout_millis: 30000
 write_timeout_millis: 30000
 
 databases: []
-
 ```
 
 SUPPORTED CONFIG FILE FIELDS:
@@ -326,12 +293,7 @@ If a config file is not provided many of these settings may be configured on the
 ### Synopsis
 
 ```text
-
-        
             dolt log [-n <num_commits>] [<commit>]
-
-
-          
 ```
 
 ### Description
@@ -353,14 +315,9 @@ The command takes options to control what is shown and how.
 ### Synopsis
 
 ```text
-
-        
             dolt diff [options] [<commit>] [<tables>...]
 
             dolt diff [options] <commit> <commit> [<tables>...]
-
-
-          
 ```
 
 ### Description
@@ -400,12 +357,7 @@ In order to filter which diffs are displayed `--where key=value` can be used. Th
 ### Synopsis
 
 ```text
-
-        
             dolt blame [<rev>] <tablename>
-
-
-          
 ```
 
 ### Description
@@ -425,14 +377,9 @@ No options for this command.
 ### Synopsis
 
 ```text
-
-        
             dolt merge <branch>
 
             dolt merge --abort
-
-
-          
 ```
 
 ### Description
@@ -458,8 +405,6 @@ If there were uncommitted working set changes present when the merge started, `d
 ### Synopsis
 
 ```text
-
-        
             dolt branch [--list] [-v] [-a]
 
             dolt branch [-f] <branchname> [<start-point>]
@@ -469,9 +414,6 @@ If there were uncommitted working set changes present when the merge started, `d
             dolt branch -c [-f] [<oldbranch>] <newbranch>
 
             dolt branch -d [-f] <branchname>...
-
-
-          
 ```
 
 ### Description
@@ -519,16 +461,11 @@ A commit that a new branch should point at.
 ### Synopsis
 
 ```text
-
-        
             dolt checkout <branch>
 
             dolt checkout <table>...
 
             dolt checkout -b <new-branch> [<start-point>]
-
-
-          
 ```
 
 ### Description
@@ -554,16 +491,11 @@ dolt checkout `<}table>`... To update table\(s\) with their values in HEAD
 ### Synopsis
 
 ```text
-
-        
             dolt remote [-v | --verbose]
 
             dolt remote add [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <name> <url>
 
             dolt remote remove <name>
-
-
-          
 ```
 
 ### Description
@@ -621,12 +553,7 @@ AWS profile to use.
 ### Synopsis
 
 ```text
-
-        
             dolt push [-u | --set-upstream] [<remote>] [<refspec>]
-
-
-          
 ```
 
 ### Description
@@ -654,12 +581,7 @@ When neither the command-line does not specify what to push, the default behavio
 ### Synopsis
 
 ```text
-
-        
             dolt pull <remote>
-
-
-          
 ```
 
 ### Description
@@ -681,12 +603,7 @@ No options for this command.
 ### Synopsis
 
 ```text
-
-        
             dolt fetch [<remote>] [<refspec> ...]
-
-
-          
 ```
 
 ### Description
@@ -710,12 +627,7 @@ When no refspec\(s\) are specified on the command line, the fetch\_specs for the
 ### Synopsis
 
 ```text
-
-        
             dolt clone [-remote <remote>] [-branch <branch>]  [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <remote-url> <new-dir>
-
-
-          
 ```
 
 ### Description
@@ -749,12 +661,7 @@ This default configuration is achieved by creating references to the remote bran
 ### Synopsis
 
 ```text
-
-        
             dolt login [<creds>]
-
-
-          
 ```
 
 ### Description
@@ -776,8 +683,6 @@ A specific credential to use for login.
 ### Synopsis
 
 ```text
-
-        
             dolt config [--global|--local] --list
 
             dolt config [--global|--local] --add <name> <value>
@@ -785,9 +690,6 @@ A specific credential to use for login.
             dolt config [--global|--local] --get <name>
 
             dolt config [--global|--local] --unset <name>...
-
-
-          
 ```
 
 ### Description
@@ -823,12 +725,7 @@ When writing, the new value is written to the repository local configuration fil
 ### Synopsis
 
 ```text
-
-        
             dolt ls [--options] [<commit>]
-
-
-          
 ```
 
 ### Description

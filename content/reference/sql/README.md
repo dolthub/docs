@@ -2,6 +2,8 @@
 title: Dolt SQL
 ---
 
+# SQL
+
 ## Overview
 
 Dolt data repositories are unique in that they arrive capable of running MySQL compatible SQL statements against them. Your Dolt binary can execute SQL against any Dolt repo you have happen to have locally. Existing RDBMS solutions have optimized their on-disk layout to support the needs of physical plan execution. Dolt makes a different set of tradeoffs, instead using a Merkel Tree to support robust version control semantics, and thus portability of the data. The combination of portability, robust version control semantics, and a SQL interface make Dolt a uniquely compelling data format.
@@ -16,13 +18,13 @@ Using `dolt sql` you can issue SQL statements against a local data repository di
 
 There are 2 basic modes which the `dolt sql` command operate in. The first is command line query mode where a semicolon delimited list of queries is provided on the command line using the -q parameter. The second is using the Dolt SQL interactive shell which can be started by running the `dolt sql` command without any arguments in a directory containing a Dolt data repository.
 
-View the `dolt sql` command documentation [here](../cli#dolt-sql)
+View the `dolt sql` command documentation [here](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/cli/README.md#dolt-sql)
 
 #### dolt sql-server
 
 The `dolt sql-server` command will run a MySQL compatible server which clients can execute queries against. This provides a programmatic interface to get data into or out of a Dolt data repository. It can also be used to connect with third party tooling which supports MySQL.
 
-View the `dolt sql-server` command documentation [here](../cli#dolt-sql-server) to learn how to configure the server.
+View the `dolt sql-server` command documentation [here](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/cli/README.md#dolt-sql-server) to learn how to configure the server.
 
 ### Dolt CLI in SQL
 
@@ -54,7 +56,7 @@ NOTE: This may be confusing to some readers. Commit in this context is Commit in
 version control context.
 ```
 
-In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode (See the `dolt sql-server` docs [here](../cli.md#dolt-sql-server) to see how to configure the server).
+In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode \(See the `dolt sql-server` docs [here](../cli.md#dolt-sql-server) to see how to configure the server\).
 
 #### Manual commit mode
 
@@ -81,3 +83,4 @@ In addition to this `AS OF` syntax for `SELECT` statements, Dolt also supports a
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
 ```
+

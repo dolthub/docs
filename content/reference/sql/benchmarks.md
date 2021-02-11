@@ -2,10 +2,11 @@
 title: Benchmarks
 ---
 
+# Benchmarks
 
 This section provides benchmarks for Dolt. The current version of Dolt is 0.23.2, and we benchmark against MySQL 8.0.22.
 
-### Data
+## Data
 
 Here we present the result of running `sysbench` MySQL tests against Dolt SQL for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
@@ -29,7 +30,7 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 
 In the spirit of ["dog fooding"](https://en.wikipedia.org/wiki/Eating_your_own_dog_food) we created a Dolt database on [DoltHub](https://www.dolthub.com/repositories/dolthub/dolt-benchmarks) with our performance metrics. You can find the full set of metrics produced by `sysbench` there, and explore them via our SQL console.
 
-### Approach
+## Approach
 
 We adopted an industry standard benchmarking tool, [`sysbench`](https://github.com/akopytov/sysbench). `sysbench` provides a series of benchmarks for examining various aspects of database performance, and was authored by developers who worked on MySQL.
 
@@ -55,6 +56,7 @@ This will do the following:
 
 All of the data produced will be associated with a unique run ID.
 
-### Code
+## Code
 
 The benchmarking tools are part of Dolt, which is free and open source. You can find a more detailed description of the tools on [GitHub](https://github.com/dolthub/dolt/tree/master/benchmark/perf_tools).
+

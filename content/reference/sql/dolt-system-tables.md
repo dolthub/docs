@@ -2,13 +2,15 @@
 title: Dolt System Tables
 ---
 
-### `dolt_branches`
+# Dolt System Tables
 
-#### Description
+## `dolt_branches`
+
+### Description
 
 Queryable system table which shows the Dolt data repository branches.
 
-#### Schema
+### Schema
 
 ```text
 +------------------------+----------+
@@ -23,7 +25,7 @@ Queryable system table which shows the Dolt data repository branches.
 +------------------------+----------+
 ```
 
-#### Example Queries
+### Example Queries
 
 Get all the branches.
 
@@ -72,13 +74,13 @@ INSERT INTO dolt_branches (name, hash)
 VALUES ("my branch name", @@mydb_head);
 ```
 
-### `dolt_diff_$TABLENAME`
+## `dolt_diff_$TABLENAME`
 
-#### Description
+### Description
 
 For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represent a row that has changed between two commits.
 
-#### Schema
+### Schema
 
 Every Dolt diff table will have the columns
 
@@ -94,7 +96,7 @@ Every Dolt diff table will have the columns
 
 The remaining columns will be dependent on the schema of the user table. For every column X in your table at `from_commit`, there will be a column in the result set named `from_$X` with the same type as `X`, and for every column `Y` in your table at `to_commit` there will be a column in the result set named `to_$Y` with the same type as `Y`.
 
-#### Example Schema
+### Example Schema
 
 For a hypothetical table named states with a schema that changes between `from_commit` and `to_commit` as shown below
 
@@ -126,13 +128,13 @@ The schema for `dolt_diff_states` would be
 +-----------------+--------+
 ```
 
-#### Query Details
+### Query Details
 
 Doing a `SELECT *` query for a diff table will show you every change that has occurred to each row for every commit in this branches history. Using `to_commit` and `from_commit` you can limit the data to specific commits. There is one special `to_commit` value `WORKING` which can be used to see what changes are in the working set that have yet to be committed to HEAD. It is often useful to use the `HASHOF()` function to get the commit hash of a branch, or an anscestor commit. To get the differences between the last commit and it's parent you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
 
 For each row the field `diff_type` will be one of the values `added`, `modified`, or `removed`. You can filter which rows appear in the result set to one or more of those `diff_type` values in order to limit which types of changes will be returned.
 
-#### Example Query
+### Example Query
 
 Taking the [`dolthub/wikipedia-ngrams`](https://www.dolthub.com/repositories/dolthub/wikipedia-ngrams) data repository from [DoltHub](https://www.dolthub.com/) as our example, the following query will retrieve the bigrams whose total counts have changed the most between 2 versions.
 
@@ -161,13 +163,13 @@ LIMIT 10;
 +-------------+-------------+------------------+----------------+-------+
 ```
 
-### `dolt_docs`
+## `dolt_docs`
 
-#### Description
+### Description
 
 System table that stores the contents of Dolt docs \(`LICENSE.md`, `README.md`\).
 
-#### Schema
+### Schema
 
 ```text
 +----------+------+
@@ -178,17 +180,17 @@ System table that stores the contents of Dolt docs \(`LICENSE.md`, `README.md`\)
 +----------+------+
 ```
 
-#### Usage
+### Usage
 
 Dolt users do not have to be familiar with this system table in order to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or `touch README.md` and `touch LICENSE.md` from a Dolt repository to get started. Then, `dolt add` and `dolt commit` the docs like you would a table.
 
-### `dolt_history_$TABLENAME`
+## `dolt_history_$TABLENAME`
 
-#### Description
+### Description
 
 For every user table named $TABLENAME, there is a queryable system table named dolt\_history\_$TABLENAME which can be queried to find a rows value at every commit in the current branches commit graph.
 
-#### Schema
+### Schema
 
 Every Dolt history table will have the columns
 
@@ -204,7 +206,7 @@ Every Dolt history table will have the columns
 
 The rest of the columns will be the superset of all columns that have existed throughout the history of the table. As the query.
 
-#### Example Schema
+### Example Schema
 
 For a hypothetical data repository with the following commit graph:
 
@@ -247,7 +249,7 @@ The schema for dolt\_history\_states would be:
 +-------------+----------+
 ```
 
-#### Example Query
+### Example Query
 
 Taking the above table as an example. If the data inside dates for each commit was:
 
@@ -276,13 +278,13 @@ WHERE state = "Virginia";
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
 
-### `dolt_log`
+## `dolt_log`
 
-#### Description
+### Description
 
 Queryable system table which shows the commit log
 
-#### Schema
+### Schema
 
 ```text
 +-------------+----------+
@@ -296,7 +298,7 @@ Queryable system table which shows the commit log
 +-------------+--------- +
 ```
 
-#### Example Query
+### Example Query
 
 ```sql
 SELECT *
@@ -315,13 +317,13 @@ ORDER BY "date";
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
 ```
 
-### `dolt_schemas`
+## `dolt_schemas`
 
-#### Description
+### Description
 
 SQL Schema fragments for a dolt database value that are versioned alongside the database itself. Certain DDL statements will modify this table and the value of this table in a SQL session will affect what database entities exist in the session.
 
-#### Schema
+### Schema
 
 ```text
 +-------------+----------+
@@ -337,7 +339,7 @@ Currently on view definitions are stored in `dolt_schemas`. `type` is currently 
 
 The values in this table are partly implementation details associated with the implementation of the underlying database objects.
 
-#### Example Query
+### Example Query
 
 ```sql
 CREATE VIEW four AS SELECT 2+2 FROM dual;
@@ -351,3 +353,4 @@ SELECT * FROM dolt_schemas;
 | view | four | select 2+2 from dual |
 +------+------+----------------------+
 ```
+
