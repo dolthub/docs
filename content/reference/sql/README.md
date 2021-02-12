@@ -1,4 +1,6 @@
-# SQL
+---
+title: Dolt SQL
+---
 
 ## Overview
 
@@ -14,32 +16,36 @@ Using `dolt sql` you can issue SQL statements against a local data repository di
 
 There are 2 basic modes which the `dolt sql` command operate in. The first is command line query mode where a semicolon delimited list of queries is provided on the command line using the -q parameter. The second is using the Dolt SQL interactive shell which can be started by running the `dolt sql` command without any arguments in a directory containing a Dolt data repository.
 
-View the `dolt sql` command documentation [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql)
+View the `dolt sql` command documentation [here](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/cli/README.md#dolt-sql)
 
 #### dolt sql-server
 
 The `dolt sql-server` command will run a MySQL compatible server which clients can execute queries against. This provides a programmatic interface to get data into or out of a Dolt data repository. It can also be used to connect with third party tooling which supports MySQL.
 
-View the `dolt sql-server` command documentation [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql-server) to learn how to configure the server.
+View the `dolt sql-server` command documentation [here](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/cli/README.md#dolt-sql-server) to learn how to configure the server.
 
 ### Dolt CLI in SQL
 
 You can operate several of dolt cli commands in the sql layer directly. This is especially useful if you are using sql in the application layer and want to the query a Dolt repository.
 
+You can find full API documentation [here](dolt-sql-functions.md)
+
 ### System Tables
 
 Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
 
-* [dolt\_log table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_log)
-* [dolt\_branches table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_branches)
-* [dolt\_docs table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_docs)
-* [dolt\_diff tables](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_diff_tablename)
-* [dolt\_history tables](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_history_tablename)
-* [dolt\_schemas table](https://github.com/dolthub/docs/tree/4e60e5dc7cb816d05b4d58eb38f9581e666d53b8/content/reference/sql/sql.md#dolt-system-tables_dolt_schemas)
+* [dolt\_log table](dolt-sql-functions.md#dolt-system-tables_dolt_log)
+* [dolt\_branches table](dolt-sql-functions.md#dolt-system-tables_dolt_branches)
+* [dolt\_docs table](dolt-sql-functions.md#dolt-system-tables_dolt_docs)
+* [dolt\_diff tables](dolt-sql-functions.md#dolt-system-tables_dolt_diff_tablename)
+* [dolt\_history tables](dolt-sql-functions.md#dolt-system-tables_dolt_history_tablename)
+* [dolt\_schemas table](dolt-sql-functions.md#dolt-system-tables_dolt_schemas)
 
 ### Concurrency
 
 When any client initiates a SQL session against a Dolt data repository, that session will be pointing to a specific commit even if other clients make changes. Therefore, modifications made by other clients will not be visible. There are two commit modes which determine how you are able to write to the database, commit those writes, and get modifications made by other clients.
+
+You can read a more detailed description of how Dolt handles concurrency [here](concurrency.md)
 
 #### Autocommit mode
 
@@ -48,13 +54,13 @@ NOTE: This may be confusing to some readers. Commit in this context is Commit in
 version control context.
 ```
 
-In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode \(See the `dolt sql-server` docs [here](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/cli/README.md#dolt-sql-server) to see how to configure the server\).
+In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode \(See the `dolt sql-server` docs [here](../cli.md#dolt-sql-server) to see how to configure the server\).
 
 #### Manual commit mode
 
-In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/sql/README.md#dolt-system-tables) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
+In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](dolt-system-tables.md) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
 
-See the full [manual commit mode documentation](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/content/sql/README.md#concurrency)
+See the full [manual commit mode documentation](concurrency.md)
 
 ## Querying non-HEAD revisions of a database
 

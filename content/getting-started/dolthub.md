@@ -28,7 +28,7 @@ Click on the SQL console to start writing a query against that Dolt database, us
 
 Now let's write a query for all the IPv4 codes in Australia:
 
-![Sample query](../.gitbook/assets/dolthub_intro_sample_query.png)
+![Sample query](../.gitbook/assets/dolthub_intro_sample_query%20%281%29.png)
 
 Executing the query renders the results:
 
@@ -152,7 +152,7 @@ Uploading a file to DoltHub is the only way to publish data without using Dolt. 
 
 * Choose a base branch \(commits directly to `master` branch for empty repo\)
 
-  ![Choose a branch](../.gitbook/assets/choose-branch2.png)
+  ![Choose a branch](../.gitbook/assets/choose-branch2%20%281%29.png)
 
 * Choose a table name \(create a new table or update an existing table\)
 
