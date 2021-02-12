@@ -20,11 +20,11 @@ We show several ways to explore data on DoltHub, starting with the most user fri
 
 The most accessible way to access data that is stored on Dolt and hosted on DoltHub is to navigate to the database [homepage](https://www.dolthub.com/repositories/dolthub/ip-to-country/):
 
-![DoltHub database page](../.gitbook/assets/dolthub_intro_database_page.png)
+![DoltHub database page](../.gitbook/assets/dolthub_intro_database_page%20%281%29.png)
 
 Click on the SQL console to start writing a query against that Dolt database, using the left hand menu to browse the schema:
 
-![SQL editor open](../.gitbook/assets/dolthub_intro_sql_console_open.png)
+![SQL editor open](../.gitbook/assets/dolthub_intro_sql_console_open%20%281%29.png)
 
 Now let's write a query for all the IPv4 codes in Australia:
 
@@ -32,7 +32,7 @@ Now let's write a query for all the IPv4 codes in Australia:
 
 Executing the query renders the results:
 
-![Query results](../.gitbook/assets/dolthub_intro_sample_query_results.png)
+![Query results](../.gitbook/assets/dolthub_intro_sample_query_results%20%281%29.png)
 
 While this is a useful data exploration interface, it doesn't offer the kind of interactivity that a local copy of the data might. Let's switch gears to the command line, where we will see the integration point between Dolt and DoltHub.
 
@@ -244,7 +244,7 @@ A major motivator for building Dolt and DoltHub was to create world class tools 
 
 In the simplest case two DoltHub users wish to make updates to the same database on DoltHub. Let's suppose that our esteemed CEO Tim has suddenly developed a passion for tennis, and would like to contribute to [dolthub/great-players-example](https://www.dolthub.com/repositories/dolthub/great-players-example), the database we created in the previous section.
 
-![Adding a DoltHub Collaborator](../.gitbook/assets/add_dolthub_collaborator.png)
+![Adding a DoltHub Collaborator](../.gitbook/assets/add_dolthub_collaborator%20%281%29.png)
 
 Dolt has a concept of branches, almost identical to branches in Git. A branch is a named pointer to a commit. Users can create pull requests by proposing to merge one branch into another. The model looks something like this:
 
@@ -304,7 +304,7 @@ Now we pushed the branch `more-great-players` to DoltHub, we can open a pull req
 
 This pull request can be reviewed and merged:
 
-![Merging a Pull Request](../.gitbook/assets/pull_request_ready_for_merge.png)
+![Merging a Pull Request](../.gitbook/assets/pull_request_ready_for_merge%20%281%29.png)
 
 And we are done!
 
