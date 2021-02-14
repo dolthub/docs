@@ -64,7 +64,7 @@ Dolt's goal is to be a drop-in replacement for MySQL, with every query and state
 | :--- | :--- | :--- |
 | `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#concurrency) for details. |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](concurrency) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | X |  |
@@ -83,7 +83,7 @@ Dolt's goal is to be a drop-in replacement for MySQL, with every query and state
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| `ALTER TABLE` statements | O | Some limitations. See the [supported statements doc](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#supported-statements). |
+| `ALTER TABLE` statements | O | Some limitations. See the [supported statements doc](sql-support). |
 | Database renames | X | Database names are read-only, and configured by the server at startup. |
 | Adding tables | ✓ |  |
 | Dropping tables | ✓ |  |
@@ -106,7 +106,7 @@ Dolt's goal is to be a drop-in replacement for MySQL, with every query and state
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| Common statements | ✓ | See the [supported statements doc](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#supported-statements) |
+| Common statements | ✓ | See the [supported statements doc](sql-support) |
 
 ### Clauses
 
@@ -221,7 +221,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()` | ✓ |  |  |
 | `COERCIBILITY()` | X |  |  |
 | `COLLATION()` | X |  |  |
-| `COMMIT()` | ✓ | Creates a new Dolt commit and returns the hash of it. See [concurrency](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#concurrency) |  |
+| `COMMIT()` | ✓ | Creates a new Dolt commit and returns the hash of it. See [concurrency](conrrency) |  |
 | `COMPRESS()` | X |  |  |
 | `CONCAT()` | ✓ |  |  |
 | `CONCAT_WS()` | ✓ |  |  |
@@ -292,7 +292,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GTID_SUBTRACT()` | X |  |  |
 | `GeomCollection()` | X |  |  |
 | `GeometryCollection()` | X |  |  |
-| `HASHOF()` | ✓ | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#concurrency) |  |
+| `HASHOF()` | ✓ | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](conrrency) |  |
 | `HEX()` | ✓ |  |  |
 | `HOUR()` | ✓ |  |  |
 | `ICU_VERSION()` | X |  |  |
@@ -638,7 +638,7 @@ Dolt's goal is to be a drop-in replacement for MySQL, with every query and state
 | `LOAD XML` | X | Use `dolt table import` |
 | `REPLACE` | ✓ |  |
 | `SELECT` | ✓ | Most select statements, including `UNION` and `JOIN`, are supported. |
-| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#querying-non-head-revisions-of-a-database). |
+| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](dolt-system-tables). |
 | `SELECT FOR UPDATE` | X | Locking and concurrency are currently very limited. |
 | `SUBQUERIES` | ✓ | Subqueries work, but must be given aliases. Some limitations apply. |
 | `TABLE` | X | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause. |
@@ -709,7 +709,7 @@ Not much work has been put into supporting the true transaction and concurrency 
 | :--- | :--- | :--- |
 | `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](https://github.com/dolthub/docs/tree/c572a91f53f4112a15930510a0c1966ae3c52394/content/reference/sql/sql.md#concurrency) for details. |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](conrrency) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | X |  |
@@ -731,7 +731,7 @@ Not much work has been put into supporting the true transaction and concurrency 
 
 Access management via SQL statements is not yet supported. This table will be updated as access management features are implemented. Please [file an issue](https://github.com/dolthub/dolt/issues) if lack of SQL access management is blocking your use of Dolt, and we will prioritize accordingly.
 
-A root user name and password can be specified in the config for [`sql-server`](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/cli/dolt-sql-server/README.md). This user has full privileges on the running database.
+A root user name and password can be specified in the config for [`sql-server`](../cli#dolt-sql-server). This user has full privileges on the running database.
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -762,4 +762,3 @@ A root user name and password can be specified in the config for [`sql-server`](
 | :--- | :--- | :--- |
 | `EXPLAIN` | ✓ |  |
 | `USE` | ✓ |  |
-

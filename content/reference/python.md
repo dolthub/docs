@@ -6,7 +6,7 @@ title: Python
 
 ## Doltpy Overview
 
-Doltpy is a Python API that exposes core Dolt features, as well as tools for common use cases of Dolt. It also facilitates interactions with DoltHub out of the box. Doltpy is open source, and distributed via `pip` on PyPi. You can install it by running `pip install doltpy`. See more detailed installation instructions [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/tutorials/installation/README.md).
+Doltpy is a Python API that exposes core Dolt features, as well as tools for common use cases of Dolt. It also facilitates interactions with DoltHub out of the box. Doltpy is open source, and distributed via `pip` on PyPi. You can install it by running `pip install doltpy`. See more detailed installation instructions [here](getting-started/installation).
 
 ## Core
 
@@ -159,5 +159,4 @@ See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy
 
 ## SQL Sync
 
-We provide a library for syncing between Dolt and existing relational database implementations. Usage is covered in an extensive example in the [guides section](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/guides/sql-sync/README.md).
-
+We provide a library for syncing between Dolt and existing relational database implementations. Usage is covered in an extensive example in the [guides section](../guides/sql-sync).
