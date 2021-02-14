@@ -10,7 +10,7 @@ This section provides a very brief introduction to the the Dolt SQL implementati
 
 ## Getting Started
 
-To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/content/installation/README.md), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. The Dolt binary has a SQL execution engine which will allow it to act as a relational database when combined with a repository. Before we dive in let's grab some sample data:
+To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](installation), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. The Dolt binary has a SQL execution engine which will allow it to act as a relational database when combined with a repository. Before we dive in let's grab some sample data:
 
 ```text
 $ dolt clone dolthub/great-players-example && cd great-players-example
@@ -75,7 +75,7 @@ This is a nice interface for exploring data, but doesn't do us much good if we w
 
 ### MySQL Server
 
-To meet the needs of users who want to read Dolt data into existing data tools and applications, we provide the ability to stand up a MySQL Server instance. To learn more about our implementation of the MySQL server standard, we go over it in some detail [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/reference/sql/README.md). The implementation is open source. Let's fire it up:
+To meet the needs of users who want to read Dolt data into existing data tools and applications, we provide the ability to stand up a MySQL Server instance. To learn more about our implementation of the MySQL server standard, we go over it in some detail [here](../reference/sql). The implementation is open source. Let's fire it up:
 
 ```text
 $ dolt sql-server
@@ -104,7 +104,7 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
-Here the password is empty, that is the default for our MySQL Server. If you want to go beyond local experiments, that can be configured, along with many other options, in the YAML file that defines the operating parameters of the server. You can read about those in more detail [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/reference/sql/README.md), but for now we will proceed without security.
+Here the password is empty, that is the default for our MySQL Server. If you want to go beyond local experiments, that can be configured, along with many other options, in the YAML file that defines the operating parameters of the server. You can read about those in more detail [here](../reference/sql), but for now we will proceed without security.
 
 Careful readers might also observe that we didn't connect to a specific database. Just like SQL databases we know and love, Dolt MySQL Server has a concept of a database separate from the instance of a server: \`\`\`mysql&gt; show databases; +-----------------------+ \| Database \| +-----------------------+ \| great\_players\_example \| \| information\_schema \| +-----------------------+ 2 rows in set \(0.01 sec\)
 
@@ -158,4 +158,3 @@ As a reminder, Doltpy provides some convenience methods for interacting with loc
 ## Conclusion
 
 Here we showed several familiar ways to connect with a MySQL server instance that executes SQL queries against your Dolt data. The benefit of this is that there is a great deal of existing infrastructure for connecting to SQL databases, and by implementing the familiar MySQL, Dolt reduces to cost of adoption for users wanting the benfits for a version controlled relational database.
-

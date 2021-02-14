@@ -6,7 +6,7 @@ title: Writing to Dolt
 
 ## Introduction
 
-Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every repository has a button to upload a file, and you can learn more about those specific steps [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/tutorials/dolthub/README.md#data-publishing).
+Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every repository has a button to upload a file, and you can learn more about those specific steps [here](dolthub).
 
 In the last section we saw how to read data from Dolt using several familiar interfaces. Those interfaces were:
 
@@ -241,5 +241,4 @@ In this section we used the example from both the CLI and SQL sections, but exec
 
 ## Summary
 
-Much like the [Reading from Dolt](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/content/reading-from-dolt/README.md) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
-
+Much like the [Reading from Dolt](reading-from-dolt) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
