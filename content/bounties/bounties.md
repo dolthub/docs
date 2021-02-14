@@ -10,7 +10,9 @@ A Data Bounty is a financial reward paid for sourcing all, or part, of a specifi
 
 The first thing to do is make sure you have a DoltHub account, which is required to participate in a Data Bounty. Sign up [here](https://www.dolthub.com/signin), or if you have signed up already, carry on reading.
 
-Once you're logged in, you can easily see the list of available data bounties on the [Discover page](https://dolthub.com/profile/bounties): ![Index of Open Data Bounties](../.gitbook/assets/bounties_index_screenshot.png)
+Once you're logged in, you can easily see the list of available data bounties on the [Discover page](https://dolthub.com/profile/bounties):
+
+![Index of Open Data Bounties](../.gitbook/assets/bounties_index_screenshot.png)
 
 Let's focus on the `dolthub/us-president-precinct-results` bounty. Head over to the [bounty detail](https://dolthub.com/repositories/dolthub/us-president-precinct-results/bounties/00000000-0000-0000-0000-000000000005) page to see the available rewards: ![Bounty Index Page](../.gitbook/assets/bounty_detail_page.png)
 
@@ -20,9 +22,13 @@ Presuming you feel like capturing some of the $25,000 available for gathering pr
 
 DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](../getting-started/dolthub#data-collaboration) in our docs.
 
-For now just fork `dolthub/us-president-precinct-results` into your own namespace: ![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository.png)
+For now just fork `dolthub/us-president-precinct-results` into your own namespace:
 
-You will then be redirected to the forked repository where you can have a look around: ![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository.png)
+![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository.png)
+
+You will then be redirected to the forked repository where you can have a look around:
+
+![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository.png)
 
 If you want to get paid, you need to write some data to the repository, so let's turn to that!
 
@@ -37,7 +43,9 @@ The merge procedure that will compare your fork to the base repository is indiff
 
 ### Creating a Pull Request
 
-Once you have pushed a commit with some changes you want to get paid for, create a pull request from the base repository, `dolthub/us-president-precinct-results`: ![Creating a Pull Request](../.gitbook/assets/bounty_pull_request.png)
+Once you have pushed a commit with some changes you want to get paid for, create a pull request from the base repository, `dolthub/us-president-precinct-results`:
+
+![Creating a Pull Request](../.gitbook/assets/bounty_pull_request.png)
 
 It is _vital_ that your pull request follow the instructions associated with the bounty. Specifically this means you must provide not only the data specified, but any references to sources in the commit message. Citing your sources in the commit message may be the difference when it comes to getting paid.
 
