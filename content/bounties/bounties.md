@@ -14,7 +14,9 @@ Once you're logged in, you can easily see the list of available data bounties on
 
 ![Index of Open Data Bounties](../.gitbook/assets/bounties_index_screenshot.png)
 
-Let's focus on the `dolthub/us-president-precinct-results` bounty. Head over to the [bounty detail](https://dolthub.com/repositories/dolthub/us-president-precinct-results/bounties/00000000-0000-0000-0000-000000000005) page to see the available rewards: ![Bounty Index Page](../.gitbook/assets/bounty_detail_page.png)
+Let's focus on the `dolthub/us-president-precinct-results` bounty. Head over to the [bounty detail](https://dolthub.com/repositories/dolthub/us-president-precinct-results/bounties/00000000-0000-0000-0000-000000000005) page to see the available rewards: 
+
+![Bounty Index Page](../.gitbook/assets/bounty_detail_page.png)
 
 Presuming you feel like capturing some of the $25,000 available for gathering precinct level results for the 2016 or 2020 US General Election, then it's time to dive into the details on how to participate.
 
