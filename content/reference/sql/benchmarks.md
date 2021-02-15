@@ -22,6 +22,7 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 | select\_random\_points | 2.76 | 0.26 | 11.0 |
 | select\_random\_ranges | 3.07 | 0.28 | 11.0 |
 | table\_scan | 147.61 | 34.95 | 4.0 |
+| mean | | | _9.29_ |
 
 <br/>
 
@@ -33,6 +34,7 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 | oltp\_update\_non\_index | 8.74 | 2.48 | 4.0 |
 | oltp\_write\_only | 54.83 | 3.36 | 16.0 |
 | oltp\_delete | 11.65 | 0.11 | 106.0 |
+| mean | | | _24.67_ |
 
 <br/>
 
