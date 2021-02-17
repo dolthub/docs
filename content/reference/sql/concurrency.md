@@ -83,7 +83,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Create a new commit containing these modifications and set the HEAD commit for this session to that commit
-SET @@mydb_head = COMMIT("modified something")
+SET @@mydb_head = COMMIT("-m", "modified something")
 
 -- Create a new branch with these changes
 INSERT INTO dolt_branches (name,hash)
@@ -106,15 +106,14 @@ WHERE pk = "key";
 
 -- Modify master if nobody else has changed it
 UPDATE dolt_branches
-SET hash = COMMIT("modified something")
+SET hash = COMMIT("-m", "modified something")
 WHERE name == "master" and hash == @@mydb_head;
 
 -- Set the HEAD commit to the latest commit to the branch "master" which we just wrote
 SET @@mydb_head = HASHOF("master");
 ```
 
-An example of merging in a feature branch.
-
+An example of making changes to a feature branch and merging into master.
 ```sql
 -- Set the current database for the session
 USE mydb;
@@ -127,10 +126,18 @@ UPDATE table
 SET column = "new value"
 WHERE pk = "key";
 
+-- Create the commit of the changes and insert it into the feature branch
+SET @@mydb_head = COMMIT("-m", "Update the value on feature-branch");
+INSERT INTO dolt_branches (name, hash)
+VALUES("feature-branch", @@mydb_head);
+
+-- Set the HEAD commit to the branch "master".
+SET @@mydb_head = HASHOF("master")
+
 -- MERGE the feature-branch into master and get a commit
 SET @@mydb_head = MERGE('feature-branch');
 
--- Set the HEAD commit to the latest commit to the branch "master" which we just wrote
+-- Set the HEAD commit to the latest commit to the branch "master"
 INSERT INTO dolt_branches (name, hash)
-VALUES("master", @@bug_head);
+VALUES("master", @@mydb_head);
 ```
