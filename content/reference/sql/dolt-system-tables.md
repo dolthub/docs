@@ -363,13 +363,13 @@ Queryable system table which shows the commit log
 ### Schema
 
 ```text
-+------------+---------+------+-----+---------+-------+
-| Field      | Type    | Null | Key | Default | Extra |
-+------------+---------+------+-----+---------+-------+
-| table_name | text    | NO   | PRI |         |       |
-| staged     | tinyint | NO   |     |         |       |
-| status     | text    | NO   |     |         |       |
-+------------+---------+------+-----+---------+-------+
++------------+---------+------+-----+
+| Field      | Type    | Null | Key |
++------------+---------+------+-----+
+| table_name | text    | NO   | PRI |
+| staged     | tinyint | NO   |     |
+| status     | text    | NO   |     |
++------------+---------+------+-----+
 ```
 
 ### Example Query

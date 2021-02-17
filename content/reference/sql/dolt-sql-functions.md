@@ -131,7 +131,7 @@ Incorporates changes from the named commits (since the time their histories dive
 By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. Hence, this method will only work in autocommit mode.
 
 ```sql
-SELECT DOLT_MERGE('feature-branch'); -- Optional --squash paranter
+SELECT DOLT_MERGE('feature-branch'); -- Optional --squash parameter
 SELECT DOLT_MERGE('feature-branch', '-no-ff', '-m', 'This is a msg for a non fast forward merge');
 SELECT DOLT_MERGE('--abort');
 ```
@@ -142,7 +142,7 @@ SELECT DOLT_MERGE('--abort');
 
 `--squash`: Merges changes to the working set without updating the commit history
 
-`-m <msg>, --message=<msg>`: Use the given <msg> as the commit message.
+`-m <msg>, --message=<msg>`: Use the given <msg> as the commit message. This is only useful for --non-ff commits.
 
 `--abort`: Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
 
