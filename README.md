@@ -18,9 +18,11 @@ GitBook is configured to sync off of two branches, `gitbook-dev` and `gitbook-pu
 
 To recap:
 - make changes on `your-feature-branch`
-- review and merge to `dev`
-- merge `dev` to `gitbook-dev`, and review on `docs.dolthub.com`
-- if it looks good `gitbook-dev` to `gitbook-publish`
+- review and merge to `gitbook-dev`, `gitbook-dev` syncs to [Dolt Dev](https://dolt.gitbook.io/dolt-dev/)
+- once you are satisfied with your changes, merge `gitbook-dev` to `gitbook-publish`, at which point your changes will sync'd to production
+
+The following diagram illustrates the workflow:
+![GitHub/GitBook Workflow](gitbook_workflow.png)
 
 ## Outstanding Items
 There are few things that need doing to sync our documentation with our release automation process:
