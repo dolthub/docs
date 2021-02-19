@@ -27,27 +27,7 @@ Dolt compliments this familiar interface with novel version control features tha
 - diffs: given two results, each associated with a commit, show me the exact differences
 - lineage: the ability to trace back through reads and writes based on commit IDs
 
-By building a SQL database on top of a Git-like commit graph, where writes are grouped into commits, users can answer these questions by using Dolt.
+We built Dolt so users could easily build these capabilities into their data infrastructure without writing complex application code.
 
-
-
-
-
-
-
-Since then we have seen an explosion in uses of data to deliver products across a huge number of verticals. Some examples include:
-- use of machine learning and artificial intelligence, where the data used to train the model is part of the model
-- automated decision making based on feeds, such as financial services industry
-- use of third party data feeds to calibrate targeted advertising, for example in direct to consumer e-commerce
-- data sharing between academic researchers and pharmaceutical companies seeking to accelerate research
-
-In other words data has become much more than storing user profiles and preferences.
-
-In each case the data forms an essential ingredient to a consequential business process. For example, where a model is being used to make automate or optimize a business process, the data used to train that model is part of that version of the deployed code.
-
-Dolt is a relational database that is built from the ground up for this world.
-
-## Familiar
-Adopting databases is hard. Adopting databases with novel query languages is harder still. Dolt's query language is the most widely adopted of all, SQL. While SQL is not the perfect query interface for a whole host of use-cases, almost _every_ organization uses it to some degree. Many popular libraries in the data science and engineering ecosystem, such as Pandas, are oriented around a tabular abstraction. Even data that is not straightforwardly tabular can often be represented in SQL.
-
-Most data that ends up in highly optimized layouts for production systems starts life in tables. We believe tables are the fundamental abstraction that defines the data ecosystem, and SQL is the most mature and widely adopted mechanism for defining, managing, and querying tabular data structures.
+## Conclusion
+Dolt is for users that want to build better data infrastructure, with data versioning built into the datastore they use to build data pipelines.
