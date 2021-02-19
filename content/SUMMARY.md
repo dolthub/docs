@@ -1,6 +1,10 @@
 # Table of contents
 
-* [Introduction](README.md)
+* [Welcome to Dolt Docs](README.md)
+
+## Introduction
+* [Why Dolt](introduction/why-dolt.md)
+* [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
 
