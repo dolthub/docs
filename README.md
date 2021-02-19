@@ -14,13 +14,19 @@ Using GitBook requires us to adopt their model of content structuring in order t
 - the content structure is configured in `content/SUMMARY.md`
 
 ## Contribution Workflow
-GitBook is configured to sync off of two branches, `gitbook-dev` and `gitbook-publish`. The landing page is configured to point at the `gitbook-publish` variant. Due to the way the GitBook sync works both of those branches have push restrictions on them, you cannot push to them. There is also a branch called `dev`. You should make `your-feature-branch` pull requests against `dev`, review them, and then merge them `gitbook-dev`. They will then sync to GitBook, and can be reviewed. Finally you should merge them to `gitbook-publish`.
+We have two GitBook "spaces", one for development and review, and one for production:
+- "Dolt", which `docs.dolthub.com` links to, and syncs off of `gitbook-publish`
+- "Dolt Dev", which is `dolt.gitbook.com/dolt-dev`, and syncs off of `gitbook-dev`
+
+To make a contribution create a feature branch, either in a fork or in this repository, and then make a PR against `gitbook-dev`. This can be reviewed and merged, which will result in it being deployed to "Dolt Dev" space. Once it has been reviewed in GitBook we can merge `gitbook-dev` to `gitbook-publish`, and it will land in production.
 
 To recap:
 - make changes on `your-feature-branch`
-- review and merge to `dev`
-- merge `dev` to `gitbook-dev`, and review on `docs.dolthub.com`
-- if it looks good `gitbook-dev` to `gitbook-publish`
+- review and merge to `gitbook-dev`, `gitbook-dev` syncs to [Dolt Dev](https://dolt.gitbook.io/dolt-dev/)
+- once you are satisfied with your changes, merge `gitbook-dev` to `gitbook-publish`, at which point your changes will sync'd to production
+
+The following diagram illustrates the workflow:
+![GitHub/GitBook Workflow](gitbook_workflow.png)
 
 ## Outstanding Items
 There are few things that need doing to sync our documentation with our release automation process:
