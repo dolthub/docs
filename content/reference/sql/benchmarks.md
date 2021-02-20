@@ -4,7 +4,7 @@ title: Benchmarks
 
 # Benchmarks
 
-This section provides benchmarks for Dolt. The current version of Dolt is 0.23.2, and we benchmark against MySQL 8.0.22.
+This section provides benchmarks for Dolt. The current version of Dolt is 0.23.5, and we benchmark against MySQL 8.0.22.
 
 ## Data
 
@@ -15,13 +15,13 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :---  | :--- | :--- | :--- |
-| covering\_index\_scan | 11.24 | 1.39 | 8.0 |
-| index\_scan | 118.92 | 34.33 | 3.0 |
+| covering\_index\_scan | 11.04 | 1.39 | 8.0 |
+| index\_scan | 125.52 | 34.95 | 4.0 |
 | oltp\_point\_select | 1.55 | 0.11 | 14.0 |
-| oltp\_read\_only | 31.94 | 2.22 | 14.0 |
-| select\_random\_points | 2.76 | 0.26 | 11.0 |
+| oltp\_read\_only | 31.37 | 2.26 | 14.0 |
+| select\_random\_points | 2.71 | 0.26 | 10.0 |
 | select\_random\_ranges | 3.07 | 0.28 | 11.0 |
-| table\_scan | 147.61 | 34.95 | 4.0 |
+| table\_scan | 142.39 | 34.95 | 4.0 |
 | mean | | | _9.29_ |
 
 <br/>
@@ -29,16 +29,17 @@ Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times the speed
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_read\_write | 84.47 | 5.57 | 15.0 |
-| oltp\_update\_index | 15.0 | 2.61 | 6.0 |
-| oltp\_update\_non\_index | 8.74 | 2.48 | 4.0 |
-| oltp\_write\_only | 54.83 | 3.36 | 16.0 |
-| oltp\_delete | 11.65 | 0.11 | 106.0 |
-| mean | | | _24.67_ |
+| oltp\_delete | 12.08 | 0.11 | 110.0 |
+| oltp\_insert | 13.22 | 2.43 | 5.0 |
+| oltp\_read\_write | 84.47 | 6.09 | 14.0 |
+| oltp\_update\_index | 15.27 | 2.97 | 5.0 |
+| oltp\_update\_non\_index | 9.06 | 2.86 | 3.0 |
+| oltp\_write\_only | 55.82 | 3.75 | 15.0 |
+| mean | | | _21.86_ |
 
 <br/>
 
-| Overall Mean Multiple | _16.38_ |
+| Overall Mean Multiple | _15.57_ |
 | ------ | ------ |
 
 <br/>
