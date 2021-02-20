@@ -3,7 +3,10 @@ title: What is Dolt
 ---
 
 ## Version Controlled Database
-Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing version control features. The version control features are closely modeled on Git.
+Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing the version control features which are closely modeled on Git.
+
+### Offline vs Online
+"Offline" Dolt operations happen via the Git-like command line interface (CLI). Used offline Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
 
 ### Offline
 When Dolt is "offline", it looks very much like Git. Let's use `dolt clone` to acquire a database:
@@ -13,7 +16,7 @@ cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 32,832 of 32,832 chunks complete. 0 chunks being downloaded currently.
 ```
 
-We now have acquired a database, and we can move into the newly created directory to give `dolt` the right database context:
+We now have acquired a database, and we can move into the newly created directory to give the `dolt` command the right database context:
 ```
 $ cd ip-to-country
 $ dolt sql
@@ -38,7 +41,7 @@ dolt sql-server
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
 ```
 
-We now have a running Dolt SQL Server that presents a superset of the MySQL dialect as its query interface. We can connect using using the standard MySQL connector:
+We now have a running Dolt SQL Server. We can connect using using the standard MySQL connector:
 ```
 ~|>>  mysql --host=127.0.0.1 --user=root
 Welcome to the MySQL monitor.  Commands end with ; or \g.
@@ -68,7 +71,7 @@ mysql> show tables;
 2 rows in set (0.00 sec)
 ```
 
-We used Git-like "offline" features to clone a database, and then stood up a server, and connected to it to start performing "online" operations. Let's see how to access Git-like version control features in SQL.
+We used Git-like "offline" features to clone a database, stood up a server, and connected to it to start performing "online" operations. Let's see how to access Git-like version control features in SQL.
 
 ## Everything in SQL
 Where possible Dolt's version control features are exposed in SQL. That means users can script complex version control workflows into the SQL queries that define data pipelines.
@@ -76,7 +79,7 @@ Where possible Dolt's version control features are exposed in SQL. That means us
 Let's dive into a couple of examples to see what this looks like in practice.
 
 ### AS OF
-Suppose the IP to country mapping dataset that we procured earlier introduces a bug into our systems that observed at `2020-12-12 02:00:00`. We can can grab the commit that introduced this state easily:
+Suppose the IP to country mapping dataset that we procured earlier introduces a bug into our systems observed at `2020-12-12 02:00:00`. We can can grab the commit that introduced this state easily:
 ```
 mysql> select commit_hash, committer, message from dolt_log where `date` < '2020-12-10 18:00:00' limit 1;
 +----------------------------------+------------------------+----------------------------------------------------------+
@@ -143,15 +146,12 @@ mysql> INSERT INTO dolt_branches (name, hash) VALUES  ('production' , 'u8pnf1o0m
 Query OK, 1 row affected (0.21 sec)
 ```
 
-The state of the Dolt SQL Serve when queried at the production branch is now set to a commit prior to the one that caused an outage, and it was achieved with a single SQL query.
+The state of the Dolt SQL Serve is now set to a commit prior to the one that caused an outage, and it was achieved with a single SQL query.
 
 ### DOLT_COMMIT
-Suppose that we want to write some data to Dolt and create a commit against a running Dolt SQL Server. We can use Dolt specific SQL functions that expose the Git-like version control features.:
+Suppose that we want to write some data to Dolt and create a commit against a running Dolt SQL Server. We can use Dolt SQL functions that expose the Git-like version control features.:
 ```
 msql> SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 We have now committed a new state of the database, which can be queried against and checked out.
-
-## Conclusion
-Dolt is a version controlled SQL database. It implements the MySQL dialect augmented with additional features to expose Dolt's version control features. Dolt's version control features are inspired by Git, and the semantics should be familiar to Git users.
