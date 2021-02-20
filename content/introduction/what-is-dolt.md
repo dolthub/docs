@@ -3,7 +3,7 @@ title: What is Dolt
 ---
 
 ## Version Controlled Database
-Dolt is a version controlled relational database. It has a SQL query interface, which draws heavily on the MySQL dialect. It implements Git-like version control features.
+Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing version control features. The version control features are closely modeled on Git.
 
 ### Offline
 When Dolt is "offline", it looks very much like Git. Let's use `dolt clone` to acquire a database:
@@ -16,6 +16,17 @@ cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 We now have acquired a database, and we can move into the newly created directory to give `dolt` the right database context:
 ```
 $ cd ip-to-country
+$ dolt sql
+# Welcome to the DoltSQL shell.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+ip_to_country> show tables;
++---------------+
+| Table         |
++---------------+
+| IPv4ToCountry |
+| IPv6ToCountry |
++---------------+
 ```
 
 ### Online
