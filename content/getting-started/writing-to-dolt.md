@@ -2,11 +2,9 @@
 title: Writing to Dolt
 ---
 
-# Writing to Dolt
-
 ## Introduction
 
-Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every repository has a button to upload a file, and you can learn more about those specific steps [here](dolthub).
+Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every database has a button to upload a file, and you can learn more about those specific steps [here](../dolthub/getting-started.md).
 
 In the last section we saw how to read data from Dolt using several familiar interfaces. Those interfaces were:
 
@@ -186,55 +184,67 @@ We just executed an identical set of updates to our database using pure SQL.
 First let's create a new database, which can be done from Python using a convenience function:
 
 ```python
-from doltpy.core import Dolt
-
+from doltpy.cli import Dolt
 dolt = Dolt.init('~/temp/tennis-players')
 ```
 
 Now we can use the bulk import function:
 
 ```python
-from doltpy.core.write  import bulk_import
-bulk_import(dolt, 'great_players', open('path/to/great_players.csv'), ['id'], 'create')
+from doltpy.cli.write  import write_file
+
+write_file(dolt,
+           'great_players',
+           open('path/to/great_players.csv'),
+           import_mode='create',
+           primary_key=['id'],
+           commit=True,
+           commit_message='Create great_players')
 ```
 
 Or if we would prefer to use Pandas:
 
 ```python
 import pandas as pd
-from doltpy.core.write import import_df
-import_df(dolt, 'great_players', pd.read_csv('path/to/great_players.csv'), ['id'], 'create')
+from doltpy.cli.write import write_pandas
+
+write_pandas(dolt,
+             'great_players',
+             pd.read_csv('path/to/great_players.csv'),
+             import_mode='create',
+             primary_key=['id'],
+             commit=True,
+             commit_message='Create great_players')
 ```
 
-This is exactly equivalent to the CLI commands we saw in the previous section, and you can create a commit similarly:
-
-```python
-dolt.add('great_players')
-dolt.commit('Added some great players')
-```
 
 The update case is again similar:
 
 ```python
-from doltpy.core.write import bulk_import
+from doltpy.cli.write import write_file
 
-bulk_import(dolt, 'great_players', open('path/to/great_players.csv'), ['id'], 'update')
+write_file(dolt,
+           'great_players',
+           open('path/to/great_players.csv'),
+           import_mode='update',
+           primary_key=['id'],
+           commit=True,
+           commit_message='Update great_players')
 ```
 
 Or:
 
 ```python
 import pandas as pd
-from doltpy.core.write import import_df
+from doltpy.cli.write import write_pandas
 
-import_df(dolt, 'great_players', pd.read_csv('path/to/great_players.csv'), ['id'], 'update')
-```
-
-And again we generate a commit:
-
-```python
-dolt.add('great_players')
-dolt.commit('do not forget Andy!')
+write_pandas(dolt,
+             'great_players',
+             pd.read_csv('path/to/great_players.csv'),
+             import_mode='update',
+             primary_key=['id'],
+             commit=True,
+             commit_message='Update great_players')
 ```
 
 In this section we used the example from both the CLI and SQL sections, but executed our operations in pure Python.

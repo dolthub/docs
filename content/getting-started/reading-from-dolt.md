@@ -2,23 +2,17 @@
 title: Reading from Dolt
 ---
 
-# Reading from Dolt
-
 ## Introduction
 
 This tutorial covers how to read form Dolt databases using three different interfaces, the command line interface \(CLI\), SQL, and Python \(using Doltpy\). In the [installation tutorial](installation.md) we covered installing Dolt, which provides the CLI and SQL. We also covered installing Doltpy, which provides the Python tools for interacting with Dolt that we will use.
 
-## CLI
-
-Dolt ships along with a Git-like CLI, it is the most basic way to manipulate data stored in Dolt. To start we are going to use `dolt clone` to obtain a dataset to play with:
-
+## Clone an Example Database
+Before looking at the different interfaces, let's grab a public database from [DoltHub](../dolthub). Dolt implements Git-like clone operations, so it's easy enough:
 ```text
 $ dolt clone dolthub/ip-to-country && cd ip-to-country
 cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 23,716 of 23,716 chunks complete. 0 chunks being downloaded currently.
 ```
-
-Note this data is stored in DoltHub, we will cover interacting with DoltHub in more detail. The above command requires not authentication, any Dolt binary can perform the clone operation on a public dataset.
 
 You now have a Dolt dataset locally in a directory `ip-to-country` that the `clone` command created. You should see the following:
 
@@ -58,6 +52,10 @@ ip_to_country> describe IPv4tocountry;
 +--------------------+----------+------+-----+---------+-------+
 ```
 
+You should now skip ahead to whichever API you want to use for reading data from Dolt.
+
+## CLI
+
 Let's suppose we want to get a CSV with the counts of the IP mappings by country:
 
 ```text
@@ -81,7 +79,7 @@ We can expose this query interface via a SQL server in a familiar manner, that i
 
 ## SQL
 
-In the previous section we acquired a Dolt database and used the Dolt CLI to execute some SQL against that database. Here we show how to interact with a more traditional SQL interface. Let's install the `mysql-client`, which we will use to connect to Dolt's SQL server,to get going:
+In the previous section we acquired a Dolt database and used the Dolt CLI to execute some SQL against that database. Here we use a stock MySQL client to interact with Dolt. If you're using Homebrew it's easy enough to install:
 
 ```text
 $ brew install mysql-client
@@ -98,26 +96,16 @@ Updating Homebrew...
 .
 ```
 
-Note, here we used Homebrew, the open source package manager for OSX. For other platforms users will need to install the `mysql-client` which comes in the `bin` folder of the server distribution. You can find the download page [here](https://dev.mysql.com/downloads/mysql/).
+See the MySQL [documentation](https://dev.mysql.com/downloads/mysql/) for details on installation on other platforms.
 
-As usual we first obtain data to play with, which is simple to do using the `dolt clone` command:
-
-```text
-$ dolt clone dolthub/ip-to-country && cd ip-to-country
-cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
-23,716 of 23,716 chunks complete. 0 chunks being downloaded currently.
-```
-
-In the CLI section we used `dolt sql` to simply interpret SQL commands one at a time. Here we fire up the Dolt SQL server instance via the command line, and connect to it using a standard issue MySQL client:
+To use a MySQL client, we need a server. We can use the CLI to fire up Dolt SQL Server:
 
 ```text
 $ dolt sql-server --log-level info
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="30000"|R="false"|L="info"
 ```
 
-Note that we have to run this command from directory that your Dolt database was initialized in \(or moved to\). The name of the database will be the name of the directory, mapped to legal database names.
-
-We are now running a SQL server which will execute queries against your Dolt data. Just like a regular MySQL Server we can expose a port and other users can connect to it over a network. We added those switches to output the server logs to STDOUT for illustrative purposes. We can connect as user `root`, there is no password by default:
+Note that we have to run this command from directory that your Dolt database was initialized in \(or moved to\). The name of the database will be the name of the directory, mapped to legal database names. Let's go ahead and connect. We are using default username `root` and empty password, but both of these values can be configured:
 
 ```text
 $ mysql -h 127.0.0.1 -u root
@@ -157,9 +145,11 @@ mysql> show tables;
 2 rows in set (0.00 sec)
 ```
 
+Dolt SQL Server can make your Dolt database into a familiar MySQL-like database that can be connected to using existing tools.
+
 ## Python
 
-We can the same set of operations in Python. If you haven't installed Doltpy, then refer to the [installation tutorial](installation.md) for details, but if you're using `pip` it's simple:
+Doltpy is a Python API for Dolt. If you haven't installed Doltpy, then refer to the [installation tutorial](installation.md) for details, but if you're using `pip` it's simple:
 
 ```text
 $ pip install doltpy
@@ -168,22 +158,23 @@ $ pip install doltpy
 .
 ```
 
-Now, let's fire up a Python shell and clone a repo by running `python`:
+The first thing we need is a reference to a `doltpy.cli.Dolt` object which wraps the Dolt database we cloned. That's easy enough:
 
-```text
-$ python
-Python 3.8.2 (default, Mar 26 2020, 10:43:30)
-[Clang 4.0.1 (tags/RELEASE_401/final)] :: Anaconda, Inc. on darwin
-Type "help", "copyright", "credits" or "license" for more information.
->>> from doltpy.core import Dolt
->>> repo = Dolt.clone('dolthub/ip-to-country')
+```python
+from doltpy.cli import Dolt
+dolt = Dolt('dolthub/ip-to-country')
 ```
 
-We have now obtained a dataset, and we can quickly get the data we are interested in into a Pandas DataFrame:
+Reading a table to a `pandas.DataFrame` object is straightforward:
 
+```python
+from doltpy.cli.read import read_pandas
+df = read_pandas(dolt, 'IPv4ToCountry')
+```
+
+This produces the expected `pandas.DataFrame`, printed below using iPython:
 ```text
->>> from doltpy.core.read import read_table
->>> read_table(repo, 'IPv4ToCountry')
+>>> print(df)
             IPFrom        IpTo Registry  AssignedDate CountryCode2Letter CountryCode3Letter    Country
 0                0    16777215     iana     410227200                 ZZ                ZZZ   Reserved
 1         16777216    16777471    apnic    1313020800                 AU                AUS  Australia
@@ -200,12 +191,11 @@ We have now obtained a dataset, and we can quickly get the data we are intereste
 [212184 rows x 7 columns]
 ```
 
-If we would instead like to push data "preparation" down to Dolt, and just work with a subset of the data for analysis, we can spin up the Dolt SQL server and execute a query to obtain the data we need:
+We can execute SQL queries via Dolt if we would like to push our data preparation down into our database layer:
 
-```text
->>> from doltpy.core.read import pandas_read_sql
->>> repo.sql_server()
->>> query = '''
+```python
+form doltpy.cli.read import read_pandas_sql
+query = '''
   select
     Country, count(*)
   from
@@ -215,12 +205,11 @@ If we would instead like to push data "preparation" down to Dolt, and just work 
   order by
     count(*) desc
 '''
->>> df = pandas_read_sql(query, repo.get_engine())
->>> repo.sql_server_stop()
->>> df.to_csv('results.csv')
+read_pandas_sql(dolt, query)
+df.to_csv('results.csv')
 ```
 
-The functionality available via the Dolt CLI and SQL interfaces can be accessesed via Doltpy. This makes it easy to integrate Dolt into existing data engineering workflows build using Python.
+The functionality available via the Dolt CLI and SQL interfaces can be accessed via Doltpy. This makes it easy to integrate Dolt into existing data engineering workflows using Python.
 
 ## R
 
