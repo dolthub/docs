@@ -1,8 +1,15 @@
 root: ./content
 
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
 redirects:
   tutorials/installation: ./getting-started/installation.md
   tutorials/reading-from-dolt: ./getting-started/reading-from-dolt.md
   tutorials/writing-to-dolt: ./getting-started/reading-from-dolt.md
   tutorials/using-sql: ./getting-started/using-sql.md
   tutorials/dolthub: ./getting-started/dolthub.md
+  integrations/programmatic-clients: ./integrations/sql-clients.md
+  getting-started/dolthub: ./dolthub/getting-started.md
+  bounties/bounties: dolthub/bounties.md

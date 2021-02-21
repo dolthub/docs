@@ -1,8 +1,6 @@
 ---
-title: Programmatic Clients
+title: SQL Clients
 ---
-
-# Programmatic Clients
 
 Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](https://www.dolthub.com/docs/reference/cli/#dolt-sql-server).
 
@@ -95,4 +93,3 @@ We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library. 
 
 * [Official Client Documentation](http://www.tmtm.org/en/ruby/mysql/)
 * [ruby/mysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/ruby/ruby-mysql-test.rb)
-

@@ -1,8 +1,6 @@
 ---
-title: DoltHub
+title: Getting Started
 ---
-
-# DoltHub
 
 ## Introduction
 
