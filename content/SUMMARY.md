@@ -1,8 +1,7 @@
 # Table of contents
 
-* [Welcome to Dolt Docs](README.md)
-
 ## Introduction
+* [Welcome](introduction/welcome.md)
 * [Why Dolt](introduction/why-dolt.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
@@ -12,19 +11,14 @@
 * [Reading from Dolt](getting-started/reading-from-dolt.md)
 * [Writing to Dolt](getting-started/writing-to-dolt.md)
 * [Using SQL](getting-started/using-sql.md)
-* [DoltHub](getting-started/dolthub.md)
 
-## Guides
-
-* [SQL Sync](guides/sql-sync.md)
-
-## Bounties
-
-* [Bounties](bounties/bounties.md)
+## DoltHub
+* [DoltHub](dolthub/getting-started.md)
+* [Bounties](dolthub/bounties.md)
 
 ## Integrations
 
-* [Programmatic Clients](integrations/programmatic-clients.md)
+* [SQL Clients](integrations/sql-clients.md)
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
 
@@ -43,3 +37,7 @@
   * [Dolt System Tables](reference/sql/dolt-system-tables.md)
   * [Concurrency](reference/sql/concurrency.md)
   * [Benchmarks](reference/sql/benchmarks.md)
+
+## Guides
+
+* [SQL Sync](guides/sql-sync.md)
