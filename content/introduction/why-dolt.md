@@ -21,8 +21,8 @@ Dolt is a database that includes version control features so that users can buil
 We chose SQL as Dolt's query interface because it is the most widely the most widely adopted data description and query language for tabular data, and tables are the most common abstraction for managing datasets.
 
 Dolt adds the following version control features to a familiar SQL database:
-- reproducibility: given a commit, give the exact state of the database at that state in time
-- diffs: given two results, each associated with a commit, show me the exact differences
-- lineage: the ability to trace back through reads and writes based on commit IDs
+- lineage: associate results with a Dolt commit to retrieve the exact database state used to create those results
+- time travel: examine the history of a value or values directly from SQL and without the use of backups
+- collaboration: combine concurrently edited schema and data of a database in a principled way
 
 Dolt makes it easy to enable these capabilities in any data infrastructure. These features are native to the database so little application code is required.
