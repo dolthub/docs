@@ -1,7 +1,6 @@
 # Table of contents
 
 ## Introduction
-* [Welcome](introduction/welcome.md)
 * [Why Dolt](introduction/why-dolt.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
