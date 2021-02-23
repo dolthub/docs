@@ -23,13 +23,13 @@ Here we present the result of running `sysbench` MySQL tests against Dolt SQL Se
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :---  | :--- | :--- | :--- |
-| covering\_index\_scan | 11.04 | 1.39 | 8.0 |
-| index\_scan | 125.52 | 34.95 | 4.0 |
+| covering\_index\_scan | 10.84 | 1.39 | 8.0 |
+| index\_scan | 125.52 | 35.59 | 4.0 |
 | oltp\_point\_select | 1.55 | 0.11 | 14.0 |
-| oltp\_read\_only | 31.37 | 2.26 | 14.0 |
+| oltp\_read\_only | 31.37 | 2.3 | 14.0 |
 | select\_random\_points | 2.71 | 0.26 | 10.0 |
-| select\_random\_ranges | 3.07 | 0.28 | 11.0 |
-| table\_scan | 142.39 | 34.95 | 4.0 |
+| select\_random\_ranges | 3.07 | 0.29 | 11.0 |
+| table\_scan | 139.85 | 36.24 | 4.0 |
 | mean | | | _9.29_ |
 
 <br/>
@@ -37,17 +37,17 @@ Here we present the result of running `sysbench` MySQL tests against Dolt SQL Se
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_delete | 12.08 | 0.11 | 110.0 |
-| oltp\_insert | 13.22 | 2.43 | 5.0 |
+| oltp\_delete | 12.3 | 0.11 | 112.0 |
+| oltp\_insert | 13.22 | 2.57 | 5.0 |
 | oltp\_read\_write | 84.47 | 6.09 | 14.0 |
-| oltp\_update\_index | 15.27 | 2.97 | 5.0 |
-| oltp\_update\_non\_index | 9.06 | 2.86 | 3.0 |
-| oltp\_write\_only | 55.82 | 3.75 | 15.0 |
-| mean | | | _21.86_ |
+| oltp\_update\_index | 15.27 | 2.61 | 6.0 |
+| oltp\_update\_non\_index | 9.22 | 2.81 | 3.0 |
+| oltp\_write\_only | 55.82 | 3.96 | 14.0 |
+| mean | | | _22.14_ |
 
 <br/>
 
-| Overall Mean Multiple | _15.57_ |
+| Overall Mean Multiple | _15.72_ |
 | ------ | ------ |
 
 <br/>
