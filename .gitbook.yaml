@@ -13,3 +13,4 @@ redirects:
   integrations/programmatic-clients: ./integrations/sql-clients.md
   getting-started/dolthub: ./dolthub/getting-started.md
   bounties/bounties: dolthub/bounties.md
+  reference/sql/benchmarks: introduction/why-dolt/performance-characteristics
