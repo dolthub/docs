@@ -3,8 +3,6 @@ title: Installation
 description: Details on how to install Dolt.
 ---
 
-# Installation
-
 ## Dolt
 
 Dolt is a data format and a database. The Dolt database provides a command line interface and a MySQL compatible Server for reading and writing data. There are several options for installation, detailed in the following sections.

@@ -1,7 +1,6 @@
 ---
-tite: Welcome
+tite: Welcome to Dolt
 ---
-
 
 ## Welcome to Dolt Docs
 
