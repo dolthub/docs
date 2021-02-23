@@ -221,7 +221,7 @@ cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 23,716 of 23,716 chunks complete. 0 chunks being downloaded currently.
 ```
 
-Now we need to start the MySQL Server instance:
+Now we need to start the Dolt SQL Server instance:
 
 ```text
 $ dolt sql-server

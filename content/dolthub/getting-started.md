@@ -232,8 +232,8 @@ Tree Level: 1. 100.00% of new chunks buffered.
 Successfully uploaded 1 of 1 file(s).
 ```
 
-And now anyone that wants to consume this data can do so with a _single command_. Once the consumer has run that command they can immediately stand up a MySQL server instance and start querying the data. If you're ready for collaborators you can add them as one on DoltHub.
-
+And now anyone that wants to consume this data can do so with a _single command_. Once the consumer has run that command they can immediately stand up a Dolt SQL Server instance and start querying the data. If you're ready for collaborators you can add them as one on DoltHub.
+``
 ## Data Collaboration
 
 A major motivator for building Dolt and DoltHub was to create world class tools for data collaboration. Earlier sections of this guide to using DoltHub show how Dolt makes moving data seamless by implementing Git style version control, including `clone`, `pull`, and `pull` operations. This section shows how to use DoltHub's collaboration tools to efficiently coordinate updates to shared datasets.
