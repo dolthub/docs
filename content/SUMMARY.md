@@ -1,11 +1,11 @@
 # Table of contents
 
 ## Introduction
-* [Why Dolt](introduction/README.md)
-  * [Lineage and Reproducibility](lineage-and-reproducibility.md)
-  * [Time Travel and Audit](time-travel-and-audit.md)
-  * [Collaboration and Distribution](collaboration-and-distribution.md)
-  * [Performance Characteristics](performance-characteristics.md)
+* [Why Dolt](introduction/why-dolt/README.md)
+  * [Lineage and Reproducibility](introduction/why-dolt/lineage-and-reproducibility.md)
+  * [Time Travel and Audit](introduction/why-dolt/time-travel-and-audit.md)
+  * [Collaboration and Distribution](introduction/why-dolt/collaboration-and-distribution.md)
+  * [Performance Characteristics](introduction/why-dolt/performance-characteristics.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
