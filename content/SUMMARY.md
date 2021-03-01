@@ -39,7 +39,12 @@
   * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
   * [Dolt System Tables](reference/sql/dolt-system-tables.md)
   * [Concurrency](reference/sql/concurrency.md)
-  * [Benchmarks](reference/sql/benchmarks.md)
+
+## Administration
+* [Introduction](administration/introduction.md)
+
+
+
 
 ## Guides
 

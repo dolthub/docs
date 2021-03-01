@@ -354,3 +354,36 @@ SELECT * FROM dolt_schemas;
 +------+------+----------------------+
 ```
 
+# `dolt_status`
+
+### Description
+
+Queryable system table which shows the commit log
+
+### Schema
+
+```text
++------------+---------+------+-----+
+| Field      | Type    | Null | Key |
++------------+---------+------+-----+
+| table_name | text    | NO   | PRI |
+| staged     | tinyint | NO   |     |
+| status     | text    | NO   |     |
++------------+---------+------+-----+
+```
+
+### Example Query
+
+```sql
+SELECT *
+FROM dolt_status
+WHERE staged=false;
+```
+
+```text
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| one_pk     | false  | new table |
++------------+--------+-----------+
+```
