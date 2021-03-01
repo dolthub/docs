@@ -1,8 +1,11 @@
 # Table of contents
 
 ## Introduction
-* [Welcome](introduction/welcome.md)
-* [Why Dolt](introduction/why-dolt.md)
+* [Why Dolt](introduction/why-dolt/README.md)
+  * [Lineage](introduction/why-dolt/lineage-and-reproducibility.md)
+  * [Time Travel](introduction/why-dolt/time-travel-and-audit.md)
+  * [Collaboration](introduction/why-dolt/collaboration-and-distribution.md)
+  * [Scalability, Availability, and Performance](introduction/why-dolt/performance-characteristics.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
