@@ -9,6 +9,7 @@ This is the documentation site for Dolt, a version controlled relational databas
 Jump into [Why Dolt](why-dolt.md) and [What is Dolt](what-is-dolt.md) to get a more detailed idea of Dolt and why we built it, or go straight to [Getting Started](getting-started/installation.md) if you're ready for some action!
 
 
+
 ## Documentation Overview
 
 The documentation is divided into five parts, briefly summarized below:
@@ -17,6 +18,7 @@ The documentation is divided into five parts, briefly summarized below:
 - [Integrations](integrations/sql-clients.md): SQL clients and data tools that are compatible with Dolt
 - [Reference](reference/cli.md): a detailed API reference for Dolt, as well as details about architecture and concurrency
 - [Guides](guides/sql-sync.md): guides for some common use-cases and design patterns for Dolt
+
 
 ## DoltHub
 

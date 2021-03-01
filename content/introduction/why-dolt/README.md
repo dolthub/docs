@@ -2,7 +2,7 @@
 title: Why Dolt
 ---
 
-## Background
+## A Relational Database, Evolved
 Existing relational databases were built in a different era of computing. Their design goal was to capture the state of the application, and serve it up in a performant way.
 
 ## Data Has Changed, Databases Have Not
@@ -24,5 +24,6 @@ Dolt adds the following version control features to a familiar SQL database:
 - [lineage and reproducibility](lineage-and-reproducibility.md): associate results with a Dolt commit to retrieve the exact database state used to create those results
 - [time travel and audit](time-travel-and-audit.md): examine the history of a value or values directly from SQL and without the use of backups
 - [collaboration and distribution](collaboration-and-distribution.md): combine concurrently edited schema and data of a database in a principled way
+
 
 Dolt makes it easy to enable these capabilities in any data infrastructure. These features are native to the database so little application code is required.
