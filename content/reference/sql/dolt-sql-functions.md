@@ -4,6 +4,23 @@ title: Dolt SQL Functions
 
 # Dolt SQL Functions
 
+Dolt provides SQL functions to allow access to command line `dolt`
+commands from within a SQL session. Each command is named after the
+`dolt` command line command it matches, and takes arguments in an
+identical form. 
+
+For example, `dolt commit -m 'Added a table'` is equivalent to
+executing the following SQL statement:
+
+```sql
+SELECT DOLT_COMMIT('-m', 'Added a table');
+```
+
+SQL functions are provided for all imperative CLI commands. For
+commands that inspect the state of the repository and print some
+information, (`dolt diff`, `dolt log`, etc.) [system
+tables](dolt-system-tables) are provided instead.
+
 ### DOLT_COMMIT\(\)
 
 ### Description
