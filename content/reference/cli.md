@@ -207,25 +207,34 @@ By default this command uses the dolt data repository in the current working dir
 
 ### Description
 
-By default, starts a MySQL-compatible server which allows only one user connection at a time to the dolt repository in the current directory. Any edits made through this server will be automatically reflected in the working set. This behavior can be modified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line \(If `--config <file>` is provided all other command line arguments are ignored\). This is an example yaml configuration file showing all supported items and their default values:
+By default, starts a MySQL-compatible server which allows only one
+user connection at a time to the dolt repository in the current
+directory. Any edits made through this server will be automatically
+reflected in the working set. This behavior can be modified using a
+yaml configuration file passed to the server via `--config <file>`, or
+by using the supported switches and flags to configure the server
+directly on the command line \(If `--config <file>` is provided all
+other command line arguments are ignored\). This is an example yaml
+configuration file showing all supported items and their default
+values:
 
 ```text
-            log_level: info
+log_level: info
 
 behavior:
-read_only: false
-autocommit: true
+    read_only: false
+    autocommit: true
 
 user:
-name: root
-password: ""
+    name: root
+    password: ""
 
 listener:
-host: localhost
-port: 3306
-max_connections: 1
-read_timeout_millis: 30000
-write_timeout_millis: 30000
+    host: localhost
+    port: 3306
+    max_connections: 1
+    read_timeout_millis: 30000
+    write_timeout_millis: 30000
 
 databases: []
 ```
