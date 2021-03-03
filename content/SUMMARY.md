@@ -1,7 +1,11 @@
 # Table of contents
 
 ## Introduction
-* [Why Dolt](introduction/why-dolt.md)
+* [Why Dolt](introduction/why-dolt/README.md)
+  * [Lineage](introduction/why-dolt/lineage.md)
+  * [Time Travel](introduction/why-dolt/time-travel.md)
+  * [Collaboration](introduction/why-dolt/collaboration.md)
+  * [Scalability, Availability, and Performance](introduction/why-dolt/characteristics.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
@@ -35,7 +39,12 @@
   * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
   * [Dolt System Tables](reference/sql/dolt-system-tables.md)
   * [Concurrency](reference/sql/concurrency.md)
-  * [Benchmarks](reference/sql/benchmarks.md)
+
+## Administration
+* [Introduction](administration/introduction.md)
+
+
+
 
 ## Guides
 

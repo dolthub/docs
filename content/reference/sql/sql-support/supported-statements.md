@@ -43,11 +43,11 @@ title: Supported Statements
 | `ALTER TABLE` | ✓ | Not all `ALTER TABLE` statements are supported. See the rest of this table for details. |
 | `ALTER TYPE` | X | Column type changes are not supported. |
 | `ALTER VIEW` | X | Views can be created and dropped, but not altered. |
-| `CHANGE COLUMN` | O | Columns can be renamed and reordered, but type changes are not implemented. |
+| `CHANGE COLUMN` | ✓ |  |
 | `CREATE DATABASE` | X | Create new repositories with `dolt clone` or `dolt init` |
 | `CREATE EVENT` | X |  |
 | `CREATE FUNCTION` | X |  |
-| `CREATE INDEX` | O | Unique indexes are not yet supported. Fulltext and spatial indexes are not supported. |
+| `CREATE INDEX` | O | Fulltext and spatial indexes are not supported. |
 | `CREATE TABLE` | ✓ | Tables must have primary keys. |
 | `CREATE TABLE AS` | X |  |
 | `CREATE TRIGGER` | ✓ |  |
@@ -63,7 +63,7 @@ title: Supported Statements
 | `DROP PARTITION` | X |  |
 | `DROP TRIGGER` | ✓ |  |
 | `DROP VIEW` | ✓ |  |
-| `MODIFY COLUMN` | O | Columns can be renamed and reordered, but type changes are not implemented. |
+| `MODIFY COLUMN` | ✓ |  |
 | `RENAME COLUMN` | ✓ |  |
 | `RENAME CONSTRAINT` | X |  |
 | `RENAME DATABASE` | X | Database names are read-only, but can be configured in the server config. |

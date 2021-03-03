@@ -15,12 +15,17 @@ title: Miscellaneous
 | :--- | :--- | :--- |
 | Information schema | ✓ |  |
 | Views | ✓ |  |
-| Window functions | X |  |
+| Window functions | O | Only `ROW_NUMBER()` is supported currently, and other limitations apply. |
 | Common table expressions \(CTEs\) | X |  |
-| Stored procedures | X |  |
+| Stored procedures | O | Currently in alpha release |
 | Cursors | X |  |
 | Triggers | ✓ |  |
 
 ### Collations and character sets
 
-Dolt currently only supports a single collation and character set, the same one that Go uses: `utf8_bin` and `utf8mb4`. We will add support for more character sets and collations as required by customers. Please [file an issue](https://github.com/dolthub/dolt/issues) explaining your use case if current character set and collation support isn't sufficient.
+Dolt currently only supports a single collation and character set, the
+same one that Go uses: `utf8_bin` and `utf8mb4`. We will add support
+for more character sets and collations as required by
+customers. Please [file an
+issue](https://github.com/dolthub/dolt/issues) explaining your use
+case if current character set and collation support isn't sufficient.

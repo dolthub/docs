@@ -69,7 +69,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `/` | ✓ |  |
 | `:=` | X |  |
 | `<<` | ✓ |  |
-| `<=>` | X |  |
+| `<=>` | ✓ | Null-safe equals operator  |
 | `<=` | ✓ |  |
 | `<>`, `!=` | ✓ |  |
 | `<` | ✓ |  |
@@ -104,7 +104,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BIT_AND()` | X |  |
 | `BIT_COUNT()` | X |  |
 | `BIT_LENGTH()` | ✓ |  |
-| `BIT_OR()` | X | `|` is supported |
+| `BIT_OR()` | X | `\|` is supported |
 | `BIT_XOR()` | X | `^` is supported |
 | `CAN_ACCESS_COLUMN()` | X |  |
 | `CAN_ACCESS_DATABASE()` | X |  |
@@ -351,7 +351,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ROLES_GRAPHML()` | X |  |
 | `ROUND()` | ✓ |  |
 | `ROW_COUNT()` | X |  |
-| `ROW_NUMBER()` | X |  |
+| `ROW_NUMBER()` | ✓ |  |
 | `RPAD()` | ✓ |  |
 | `RTRIM()` | ✓ |  |
 | `SCHEMA()` | ✓ |  |
