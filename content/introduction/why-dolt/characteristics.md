@@ -40,35 +40,33 @@ It's important recognize that these are industry standard tests, and are OLTP or
 ## Benchmark Data
 Below are the results of running `sysbench` MySQL tests against Dolt SQL Server for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
-The Dolt version is `0.23.5`.
+The Dolt version is `0.23.9`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :---  | :--- | :--- | :--- |
-| covering\_index\_scan | 10.84 | 1.39 | 8.0 |
-| index\_scan | 125.52 | 35.59 | 4.0 |
-| oltp\_point\_select | 1.55 | 0.11 | 14.0 |
-| oltp\_read\_only | 31.37 | 2.3 | 14.0 |
-| select\_random\_points | 2.71 | 0.26 | 10.0 |
-| select\_random\_ranges | 3.07 | 0.29 | 11.0 |
-| table\_scan | 139.85 | 36.24 | 4.0 |
-| mean | | | _9.29_ |
+| covering\_index\_scan | 10.27 | 1.39 | 7.0 |
+| index\_scan | 125.52 | 34.33 | 4.0 |
+| oltp\_point\_select | 1.27 | 0.11 | 12.0 |
+| oltp\_read\_only | 28.67 | 2.26 | 13.0 |
+| select\_random\_points | 2.57 | 0.26 | 10.0 |
+| select\_random\_ranges | 2.66 | 0.29 | 9.0 |
+| table\_scan | 137.35 | 34.95 | 4.0 |
+| mean | | | _8.43_ |
 
 <br/>
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_delete | 12.3 | 0.11 | 112.0 |
-| oltp\_insert | 13.22 | 2.57 | 5.0 |
-| oltp\_read\_write | 84.47 | 6.09 | 14.0 |
-| oltp\_update\_index | 15.27 | 2.61 | 6.0 |
-| oltp\_update\_non\_index | 9.22 | 2.81 | 3.0 |
-| oltp\_write\_only | 55.82 | 3.96 | 14.0 |
-| mean | | | _22.14_ |
+| oltp\_delete | 11.24 | 0.11 | 102.0 |
+| oltp\_insert | 12.52 | 2.43 | 5.0 |
+| oltp\_read\_write | 78.6 | 6.09 | 13.0 |
+| oltp\_update\_index | 14.73 | 2.66 | 6.0 |
+| oltp\_update\_non\_index | 8.13 | 2.81 | 3.0 |
+| oltp\_write\_only | 52.89 | 3.55 | 15.0 |
+| mean | | | _20.71_ |
 
 <br/>
 
-| Overall Mean Multiple | _15.72_ |
+| Overall Mean Multiple | _14.57_ |
 | ------ | ------ |
-
-<br/>
