@@ -27,7 +27,7 @@
 ## Reference
 
 * [Architecture](reference/architecture.md)
-* [Scalability, Availability, and Performance](introduction/why-dolt/characteristics.md)
+* [Scalability, Availability, and Performance](reference/characteristics.md)
 * [CLI](reference/cli.md)
 * [Python](reference/python.md)
 * [SQL](reference/sql/README.md)
