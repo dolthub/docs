@@ -16,7 +16,7 @@ redirects:
   reference/sql/benchmarks: introduction/why-dolt/performance-characteristics
   introduction/why-dolt/characteristics: reference/characteristics.md
   reference/sql: interfaces/sql
-  reference/sql/sql-support/README.md: interfaces/sql/sql-support/README.md
+  reference/sql/sql-support: interfaces/sql/sql-support
   reference/sql/sql-support/data-description.md: interfaces/sql/sql-support/data-description.md
   reference/sql/sql-support/expressions-functions-operators.md: interfaces/sql/sql-support/expressions-functions-operators.md
   reference/sql/sql-support/supported-statements.md: interfaces/sql/sql-support/supported-statements.md

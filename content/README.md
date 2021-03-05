@@ -15,9 +15,8 @@ Jump into [Why Dolt](why-dolt.md) and [What is Dolt](what-is-dolt.md) to get a m
 The documentation is divided into five parts, briefly summarized below:
 - [Getting Started](getting-started/installation.md): installation and the basics for getting started with Dolt
 - [DoltHub](dolthub/getting-started.md): learn about DoltHub, a hosting and collaboration platform for Dolt databases
-- [Integrations](integrations/sql-clients.md): SQL clients and data tools that are compatible with Dolt
-- [Reference](reference/cli.md): a detailed API reference for Dolt, as well as details about architecture and concurrency
-- [Guides](guides/sql-sync.md): guides for some common use-cases and design patterns for Dolt
+- [Interfaces](interfaces/sql): find out how to interact with Dolt programmatically, whether it's SQL, command line, or Python
+- [Reference](reference/architecture.md): learn more about how Dolt works under the hood, as well as considerations around using Dolt in production
 
 
 ## DoltHub
