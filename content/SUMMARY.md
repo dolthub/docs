@@ -5,7 +5,6 @@
   * [Lineage](introduction/why-dolt/lineage.md)
   * [Time Travel](introduction/why-dolt/time-travel.md)
   * [Collaboration](introduction/why-dolt/collaboration.md)
-  * [Scalability, Availability, and Performance](introduction/why-dolt/characteristics.md)
 * [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
@@ -28,6 +27,7 @@
 ## Reference
 
 * [Architecture](reference/architecture.md)
+* [Scalability, Availability, and Performance](introduction/why-dolt/characteristics.md)
 * [CLI](reference/cli.md)
 * [Python](reference/python.md)
 * [SQL](reference/sql/README.md)
