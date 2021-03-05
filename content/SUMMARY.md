@@ -39,13 +39,5 @@
 * [Architecture](reference/architecture.md)
 * [Scalability, Availability, and Performance](reference/characteristics.md)
 
-
-## Administration
-* [Introduction](administration/introduction.md)
-
-
-
-
 ## Guides
-
 * [SQL Sync](guides/sql-sync.md)
