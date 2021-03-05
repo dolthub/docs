@@ -6,7 +6,7 @@ title: Supported Statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| `CALL` | X | Stored procedures are not yet implemented. |
+| `CALL` | ✓ |  |
 | `CREATE TABLE AS` | X | `INSERT INTO SELECT *` is supported. |
 | `CREATE TABLE LIKE` | ✓ |  |
 | `DO` | X |  |
@@ -61,6 +61,7 @@ title: Supported Statements
 | `DROP INDEX` | ✓ |  |
 | `DROP TABLE` | ✓ |  |
 | `DROP PARTITION` | X |  |
+| `DROP PROCEDURE` | ✓ |  |
 | `DROP TRIGGER` | ✓ |  |
 | `DROP VIEW` | ✓ |  |
 | `MODIFY COLUMN` | ✓ |  |
@@ -71,10 +72,16 @@ title: Supported Statements
 | `RENAME TABLE` | ✓ |  |
 | `SHOW COLUMNS` | ✓ |  |
 | `SHOW CONSTRAINTS` | X |  |
+| `SHOW CREATE FUNCTION` | X |  |
+| `SHOW CREATE PROCEDURE` | X |  |
 | `SHOW CREATE TABLE` | ✓ |  |
 | `SHOW CREATE VIEW` | ✓ |  |
 | `SHOW DATABASES` | ✓ |  |
+| `SHOW FUNCTION CODE` | X |  |
+| `SHOW FUNCTION STATUS` | X |  |
 | `SHOW INDEX` | X |  |
+| `SHOW PROCEDURE CODE` | X |  |
+| `SHOW PROCEDURE STATUS` | ✓ |  |
 | `SHOW SCHEMAS` | ✓ |  |
 | `SHOW TABLES` | ✓ | `SHOW FULL TABLES` reveals whether a table is a base table or a view. |
 | `TRUNCATE TABLE` | ✓ |  |

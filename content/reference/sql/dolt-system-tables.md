@@ -317,6 +317,44 @@ ORDER BY "date";
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
 ```
 
+## `dolt_procedures`
+
+### Description
+
+System table that stores each stored procedure that has been created on the database.
+
+### Schema
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+----------+
+| name        | longtext |
+| create_stmt | longtext |
+| created_at  | datetime |
+| modified_at | datetime |
++-------------+----------+
+```
+
+When using the standard `CREATE PROCEDURE` workflow, the `name` column will always be lowercase. Dolt assumes that `name` is always lowercase as a result, and manually inserting a stored procedure must also have a lowercase `name`. Otherwise, it will be invisible to some operations, such as `DROP PROCEDURE`.
+
+The values in this table are implementation details associated with the storage of stored procedures.
+
+### Example Query
+
+```sql
+CREATE PROCEDURE p1(x INT) SELECT x;
+SELECT * FROM dolt_procedures;
+```
+
+```text
++------+-------------------------------------+-------------------------------+-------------------------------+
+| name | create_stmt                         | created_at                    | modified_at                   |
++------+-------------------------------------+-------------------------------+-------------------------------+
+| p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
++------+-------------------------------------+-------------------------------+-------------------------------+
+```
+
 ## `dolt_schemas`
 
 ### Description
