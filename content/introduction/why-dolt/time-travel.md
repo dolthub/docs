@@ -2,12 +2,16 @@
 title: Time Travel
 ---
 
+# Time Travel
+
 Dolt's commit graph storage layer models each state committed state of the database as a commit, along with associated metadata. The entire commit history can be queried in SQL:
 
 ![Dolt Storage and Query Layers](../../.gitbook/assets/dolt-time-travel-commit-graph.png)
 
 ## Time Travel
+
 The ability to the query any state of the database means that values implicitly become time series. If the results of a model run are output to a table, we can easily track the values those outputs take on through time:
+
 ```sql
 SELECT
   `value`
@@ -20,6 +24,7 @@ ORDER BY
 ```
 
 This underlying commit graph also means any query can be parameterized with historical state:
+
 ```sql
 SELECT
   `id`,
@@ -31,7 +36,9 @@ AS OF
 ```
 
 ## Audit
+
 All states are associated with a commit object, which stores metadata:
+
 ```sql
 SELECT
   `committer`,
@@ -43,3 +50,4 @@ WHERE
 ```
 
 This allows users to resolve any value to a state, which can optionally be checked out.
+

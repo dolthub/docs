@@ -6,7 +6,7 @@ title: Architecture
 
 ## Overview
 
-Dolt presents familiar interfaces insofar as users consider Git and SQL familiar. The command line interface \(CLI\) is Git-like, and the query interface is SQL. When we say Dolt is a SQL database, we mean that Dolt can run a server that presents SQL semantics. In particular we aim to implement a superset of the MySQL dialect standard by standing up a MySQL compatible server written in Go. This greatly reduces the overhead of integrating Dolt with existing database infrastructure. This document explores the design decisions that were made in order for Dolt to be feasibly present these two interfaces. You can can read more about the particulars of our SQL interface in this [document](sql). In that document we layout the current and planned scope of our MySQL support, and the unique functions implemented to interact with Dolt's version control model.
+Dolt presents familiar interfaces insofar as users consider Git and SQL familiar. The command line interface \(CLI\) is Git-like, and the query interface is SQL. When we say Dolt is a SQL database, we mean that Dolt can run a server that presents SQL semantics. In particular we aim to implement a superset of the MySQL dialect standard by standing up a MySQL compatible server written in Go. This greatly reduces the overhead of integrating Dolt with existing database infrastructure. This document explores the design decisions that were made in order for Dolt to be feasibly present these two interfaces. You can can read more about the particulars of our SQL interface in this [document](../interfaces/sql/). In that document we layout the current and planned scope of our MySQL support, and the unique functions implemented to interact with Dolt's version control model.
 
 Traditional database systems have a single and centralized version of "truth", namely the value of any given datapoint is its value when the most recent transaction committed. The presented data structure offers no concept of versions. This is fine for many application backing stores, but it is not good for facilitating distribution and collaboration. Distributed version control systems, exemplified by Git, recognize independent and concurrent collaborators can be independently be making changes to data. They also recognize that users want to be able to efficiently incorporate the changes of collaborators and upstream suppliers. One of the primary design goals of Dolt is to provide robust tools for such workflows with tabular data.
 
@@ -16,7 +16,7 @@ Query performance for single-source-of-truth tabular data is a well understood p
 
 The tables have different values at different commits, but one could treat each commit as a database in the traditional RDBMS sense. This makes the design challenge of architect Dolt pretty clear: how do we efficiently serve data out to a SQL query engine while storing the value and schema of every table at every commit? Let's visualize a table value at a commit:
 
-![Dolt Table Value](../.gitbook/assets/dolt-table-value.png)
+![Dolt Table Value](../.gitbook/assets/dolt-table-value%20%282%29%20%282%29.png)
 
 The design goal is relatively clear: we want to find a way to efficiently serve queries against the database at a given commit, possibly across the query graph \(see Dolt's system tables\) while not storing the entire database at every commit. In other words we want to share values repeated across values of tables in the commit graph, while preserving acceptable query performance at a given value, and possibly across many values. In the sections that follow we review some of the technologies and concepts we used to build Dolt to achieve these design goals.
 
@@ -50,7 +50,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 * Adding rows to a table whose primary keys are lexicographically larger than any of the existing rows in the table results in an append at the end of Prolly-tree for the table value. The last leaf node in the tree will necessarily change, and new chunks will be created for all of the new rows. Expected duplicate storage overhead is going to be the 4KB chunk at the end of the table's leaf nodes and the spline of the internal nodes of the map leading up to the root node. This kind of table might represent naturally append-only data or time-series data, and the storage overhead is very small. This looks like:
 
-![Append Edit](../.gitbook/assets/append-edit.png)
+![Append Edit](../.gitbook/assets/append-edit%20%282%29%20%286%29.png)
 
 * Adding rows to a table whose primary keys are lexicographically smaller than any of the existing rows is very similar to the case where they are all larger. It's expected to rewrite the first chunks in the table, and the probabilitistic rolling hash will quickly resynchronize with the existing table data. It might look like:
 
@@ -58,7 +58,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 * Adding a run of data whose primary keys fall lexicographically within two existing rows is very similar to the prefix or postfix case. The run of data gets interpolated between the existing chunks of row data:
 
-![Middle Run Edit](../.gitbook/assets/middle-run-edit.png)
+![Middle Run Edit](../.gitbook/assets/middle-run-edit%20%282%29.png)
 
 Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but interally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.
 
@@ -75,3 +75,4 @@ We have [blogged](https://www.dolthub.com/blog/2020-05-04-adopting-go-mysql-serv
 The motivation for implementing MySQL, as opposed to say Postgres, is relatively straight forward. Firstly, there was a relatively mature open source project implement the MySQL Server standard. MySQL also makes a distinction between query engine and storage engine, whereas no such distinction exists in Postgres. While we could have implemented the Postgres wire format and SQL syntax, we would have had to write a parser from scratch. With Go MySQL Server, we were able to build on top of existing art in the language that Dolt is written in.
 
 Go MySQL Server implements parsing and query execution for the MySQL dialect. The idea is that folks with their own underlying storage engines can wire those into the interfaces provided by Go MySQL Server, and take advantage of a production grade parsing and execution, but plug in a custom storage engine. We found many issues that needed resolving in Go MySQL Server, thus our work is split across fixing and improving the Go MySQL Server itself, and providing the required interface on top of Dolt's storage to correctly execute SQL queries against Dolt data.
+

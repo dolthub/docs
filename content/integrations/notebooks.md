@@ -53,3 +53,4 @@ If you don't want to clone the data locally, [DoltHub has a versioned SQL to JSO
 Dolt has the unique capability of providing safe and distributed writes. Modify the schema and the data to make your analysis easier. Writing in a Notebook is not very common because the model assumes idempotency of cells. With Dolt, you can just `dolt reset --hard` at the end of your cell to put the database back in the state you found it.
 
 In this example, we add a column to a table and populate it for a couple rows. We then show off Dolt's diff functionality. The code and output is a little long for a screenshot so head to Deepnote and [see for yourself](https://deepnote.com/project/cacec925-c951-4d1e-bbf5-eaeaa9b1e8fc#).
+

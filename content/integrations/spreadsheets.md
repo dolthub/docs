@@ -150,7 +150,7 @@ example.csv
 
 Navigate in your web browser to the desired Google Sheet. Select `File` &gt; `Open`, select the Upload tab, and either drag the `example.csv` file into the web browser window or `Select a file from your device` using the operating system's file system browser. Click `OK` and the Dolt table should be loaded in as a sheet named after the CSV filename.
 
-![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv%20%281%29.png)
+![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv%20%285%29%20%285%29.png)
 
 Note, you can also export the results of a single query using `dolt sql -r csv -q <query> > export.csv`.
 

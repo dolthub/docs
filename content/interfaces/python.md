@@ -2,9 +2,11 @@
 title: Python
 ---
 
+# Python
+
 ## Doltpy Overview
 
-Doltpy is a Python API that exposes cli Dolt features, as well as tools for common use cases of Dolt. It also facilitates interactions with DoltHub out of the box. Doltpy is open source, and distributed via `pip` on PyPi. You can install it by running `pip install doltpy`. See more detailed installation instructions [here](getting-started/installation).
+Doltpy is a Python API that exposes cli Dolt features, as well as tools for common use cases of Dolt. It also facilitates interactions with DoltHub out of the box. Doltpy is open source, and distributed via `pip` on PyPi. You can install it by running `pip install doltpy`. See more detailed installation instructions [here](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/getting-started/installation/README.md).
 
 ## `cli`
 
@@ -71,9 +73,11 @@ See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy
 ## `sql`
 
 ### Overview and Example
+
 Doltpy comes with a SQL module for interacting with Dolt SQL Server. The centerpiece of that module is abstract class `DoltSQLContext`. It has two concrete subclasses, `DoltSQLServerContext`, and `DoltSQLEngineContext`. `DoltSQLServerContext` handles standing up the Dolt SQL Server subprocess, and shutting it down. `DoltSQLEngineContext` assumes the server is running on some host that can be specified in the past `Dolt`.
 
 We will use the same data from the previous example, but this time in Pandas DataFrame object:
+
 ```python
 import pandas as pd
 data = pd.DataFrame([
@@ -84,6 +88,7 @@ data = pd.DataFrame([
 ```
 
 First, let's initialize a new database create a table with our sample data. Note that the following code will take care of inferring a schema for the table:
+
 ```python
 from doltpy.cli import Dolt
 from doltpy.sql import DoltSQLServerContext
@@ -105,6 +110,7 @@ dolt.push('origin', 'master')
 The context manager takes care of spinning up the SQL server, managing a connection, which is then used to write and commit data. We can then push the data to the remote database we on DoltHub.
 
 Now let's clone the database and add a row:
+
 ```python
 from doltpy.cli import Dolt
 from doltpy.cli.write import write_file
@@ -123,7 +129,6 @@ And we are done. We showed how to use `doltpy.sql` to create a Dolt database fro
 ### Full API
 
 See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy/sql/sql.py).
-
 
 ## `etl`
 
@@ -217,4 +222,5 @@ See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy
 
 ## SQL Sync
 
-We provide a library for syncing between Dolt and existing relational database implementations. Usage is covered in an extensive example in the [guides section](../guides/sql-sync).
+We provide a library for syncing between Dolt and existing relational database implementations. Usage is covered in an extensive example in the [guides section](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/guides/sql-sync/README.md).
+

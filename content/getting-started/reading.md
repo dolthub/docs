@@ -2,12 +2,16 @@
 title: Reading from Dolt
 ---
 
+# Reading
+
 ## Introduction
 
 This tutorial covers how to read form Dolt databases using three different interfaces, the command line interface \(CLI\), SQL, and Python \(using Doltpy\). In the [installation tutorial](installation.md) we covered installing Dolt, which provides the CLI and SQL. We also covered installing Doltpy, which provides the Python tools for interacting with Dolt that we will use.
 
 ## Clone an Example Database
-Before looking at the different interfaces, let's grab a public database from [DoltHub](../dolthub). Dolt implements Git-like clone operations, so it's easy enough:
+
+Before looking at the different interfaces, let's grab a public database from [DoltHub](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/content/dolthub/README.md). Dolt implements Git-like clone operations, so it's easy enough:
+
 ```text
 $ dolt clone dolthub/ip-to-country && cd ip-to-country
 cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
@@ -173,6 +177,7 @@ df = read_pandas(dolt, 'IPv4ToCountry')
 ```
 
 This produces the expected `pandas.DataFrame`, printed below using iPython:
+
 ```text
 >>> print(df)
             IPFrom        IpTo Registry  AssignedDate CountryCode2Letter CountryCode3Letter    Country
@@ -255,3 +260,4 @@ You can now proceed to do your data analysis using the familiar database interfa
 We examined four different interfaces for examining data stored in a Dolt database. In each case we obtained the data using the `dolt clone` command, which mimics the Git command that has made acquiring code so easy. The data that arrived via the command line could be immediately worked with via a SQL interface.
 
 This illustrates the core value proposition of Dolt as a distribution format. Dolt provides seamless data distribution, and a familiar query interface, along with a server process for executing those queries.
+

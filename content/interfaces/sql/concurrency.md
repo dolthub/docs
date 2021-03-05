@@ -4,7 +4,7 @@ title: Concurrency
 
 # Concurrency
 
-Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](../cli#dolt-sql-server) for details.
+Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/cli/README.md#dolt-sql-server) for details.
 
 ### @@dbname\_head
 
@@ -114,6 +114,7 @@ SET @@mydb_head = HASHOF("master");
 ```
 
 An example of making changes to a feature branch and merging into master.
+
 ```sql
 -- Set the current database for the session
 USE mydb;
@@ -141,3 +142,4 @@ SET @@mydb_head = MERGE('feature-branch');
 INSERT INTO dolt_branches (name, hash)
 VALUES("master", @@mydb_head);
 ```
+
