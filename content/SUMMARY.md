@@ -32,7 +32,6 @@
 * [Python](interfaces/python.md)
 
 ## Integrations
-* [SQL Clients](integrations/sql-clients.md)
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
 
