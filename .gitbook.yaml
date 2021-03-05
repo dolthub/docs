@@ -15,3 +15,18 @@ redirects:
   bounties/bounties: dolthub/bounties.md
   reference/sql/benchmarks: introduction/why-dolt/performance-characteristics
   introduction/why-dolt/characteristics: reference/characteristics.md
+
+
+  reference/sql: interfaces/sql
+  reference/sql/sql-support/README.md: interfaces/sql/sql-support/README.md
+  reference/sql/sql-support/data-description.md: interfaces/sql/sql-support/data-description.md
+  reference/sql/sql-support/expressions-functions-operators.md: interfaces/sql/sql-support/expressions-functions-operators.md
+  reference/sql/sql-support/supported-statements.md: interfaces/sql/sql-support/supported-statements.md
+  reference/sql/sql-support/miscellaneous.md: interfaces/sql/sql-support/miscellaneous.md
+  reference/sql/dolt-sql-functions.md: interfaces/sql/dolt-sql-functions.md
+  reference/sql/dolt-system-tables.md: interfaces/sql/dolt-system-tables.md
+  reference/sql/concurrency.md: interfaces/sql/concurrency.md
+  reference/cli.md: interfaces/cli.md
+  reference/python.md: interfaces/python.md
+
+  integrations/sql-clients: interfaces/sql/clients.md
