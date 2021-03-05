@@ -2,9 +2,11 @@
 title: Writing to Dolt
 ---
 
+# Writing to Dolt
+
 ## Introduction
 
-Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every database has a button to upload a file, and you can learn more about those specific steps [here](../dolthub/getting-started.md).
+Uploading a file to DoltHub is the lowest barrier to entry for putting data into Dolt. Every repository has a button to upload a file, and you can learn more about those specific steps [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/tutorials/dolthub/README.md#data-publishing).
 
 In the last section we saw how to read data from Dolt using several familiar interfaces. Those interfaces were:
 
@@ -184,71 +186,60 @@ We just executed an identical set of updates to our database using pure SQL.
 First let's create a new database, which can be done from Python using a convenience function:
 
 ```python
-from doltpy.cli import Dolt
+from doltpy.core import Dolt
+
 dolt = Dolt.init('~/temp/tennis-players')
 ```
 
 Now we can use the bulk import function:
 
 ```python
-from doltpy.cli.write  import write_file
-
-write_file(dolt,
-           'great_players',
-           open('path/to/great_players.csv'),
-           import_mode='create',
-           primary_key=['id'],
-           commit=True,
-           commit_message='Create great_players')
+from doltpy.core.write  import bulk_import
+bulk_import(dolt, 'great_players', open('path/to/great_players.csv'), ['id'], 'create')
 ```
 
 Or if we would prefer to use Pandas:
 
 ```python
 import pandas as pd
-from doltpy.cli.write import write_pandas
-
-write_pandas(dolt,
-             'great_players',
-             pd.read_csv('path/to/great_players.csv'),
-             import_mode='create',
-             primary_key=['id'],
-             commit=True,
-             commit_message='Create great_players')
+from doltpy.core.write import import_df
+import_df(dolt, 'great_players', pd.read_csv('path/to/great_players.csv'), ['id'], 'create')
 ```
 
+This is exactly equivalent to the CLI commands we saw in the previous section, and you can create a commit similarly:
+
+```python
+dolt.add('great_players')
+dolt.commit('Added some great players')
+```
 
 The update case is again similar:
 
 ```python
-from doltpy.cli.write import write_file
+from doltpy.core.write import bulk_import
 
-write_file(dolt,
-           'great_players',
-           open('path/to/great_players.csv'),
-           import_mode='update',
-           primary_key=['id'],
-           commit=True,
-           commit_message='Update great_players')
+bulk_import(dolt, 'great_players', open('path/to/great_players.csv'), ['id'], 'update')
 ```
 
 Or:
 
 ```python
 import pandas as pd
-from doltpy.cli.write import write_pandas
+from doltpy.core.write import import_df
 
-write_pandas(dolt,
-             'great_players',
-             pd.read_csv('path/to/great_players.csv'),
-             import_mode='update',
-             primary_key=['id'],
-             commit=True,
-             commit_message='Update great_players')
+import_df(dolt, 'great_players', pd.read_csv('path/to/great_players.csv'), ['id'], 'update')
+```
+
+And again we generate a commit:
+
+```python
+dolt.add('great_players')
+dolt.commit('do not forget Andy!')
 ```
 
 In this section we used the example from both the CLI and SQL sections, but executed our operations in pure Python.
 
 ## Summary
 
-Much like the [Reading from Dolt](reading-from-dolt) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
+Much like the [Reading from Dolt](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/content/reading-from-dolt/README.md) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
+

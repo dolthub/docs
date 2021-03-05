@@ -10,9 +10,9 @@ Dolt is a relational database that uses a commit graph as its underlying data st
 
 This is distinct from existing relational database solutions, such as MySQL, Postgresql, Oracle, that have a "last write wins" model of versioning. A cell takes on the value set by the last query that modified it. Some of these databases, such as Microsoft SQL Sever and Maria DB, also support `AS OF` functionality that stores the history of values and exposes a syntax for querying them. This requires explicit configuration. Additionally, these relational database implementations offer various sorts of backup and recovery mechanisms that, at a very high level, take periodic snapshots which can be restored.
 
-This document shows how to use Dolt to create version history of an existing relational database without having to actually modify that database. We use our Python API, [Doltpy](../reference/python), to achieve this. The setup can visualized as follows:
+This document shows how to use Dolt to create version history of an existing relational database without having to actually modify that database. We use our Python API, [Doltpy](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/reference/python/README.md), to achieve this. The setup can visualized as follows:
 
-![Sync to Dolt](../.gitbook/assets/sql_sync_diagram.png)
+![Sync to Dolt](../.gitbook/assets/sql_sync_diagram%20%282%29%20%282%29.png)
 
 The left hand side shows a schematic for the how each sync corresponds to a commit in Dolt, and the right hand side the query interface presented to the user via Dolt SQL. We can now "time travel" through our database history.
 
@@ -20,7 +20,7 @@ The left hand side shows a schematic for the how each sync corresponds to a comm
 
 This guide will explain how to sync data to and from Dolt, and either Postgres or MySQL. Currently automated schema sync is supported only when syncing from another database to Dolt.
 
-This guide assumes that you have both Dolt and Doltpy installed, and that you are somewhat familiar with both Dolt and Python. Checkout the [installation guide](../getting-started/installation) if you haven't install Dolt or Doltpy.
+This guide assumes that you have both Dolt and Doltpy installed, and that you are somewhat familiar with both Dolt and Python. Checkout the [installation guide](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/tutorials/installation/README.md) if you haven't install Dolt or Doltpy.
 
 ## MySQL
 
@@ -279,3 +279,4 @@ The "interface" that the two databases communicate over is strikingly simple. `M
 ## Future Work
 
 We are excited by the possibilities a database with Dolt's unique features creates for data engineering workflows. Next up the sync is expanding to more relational database implementations \(MS SQL Server and Oracle\), and supporting syncing a schema from Dolt to any of the supported database implementations.
+

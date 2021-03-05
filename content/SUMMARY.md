@@ -1,12 +1,6 @@
 # Table of contents
 
-## Introduction
-* [Why Dolt](introduction/why-dolt/README.md)
-  * [Lineage](introduction/why-dolt/lineage.md)
-  * [Time Travel](introduction/why-dolt/time-travel.md)
-  * [Collaboration](introduction/why-dolt/collaboration.md)
-  * [Scalability, Availability, and Performance](introduction/why-dolt/characteristics.md)
-* [What is Dolt](introduction/what-is-dolt.md)
+* [Introduction](README.md)
 
 ## Getting Started
 
@@ -14,14 +8,19 @@
 * [Reading from Dolt](getting-started/reading-from-dolt.md)
 * [Writing to Dolt](getting-started/writing-to-dolt.md)
 * [Using SQL](getting-started/using-sql.md)
+* [DoltHub](getting-started/dolthub.md)
 
-## DoltHub
-* [DoltHub](dolthub/getting-started.md)
-* [Bounties](dolthub/bounties.md)
+## Guides
+
+* [SQL Sync](guides/sql-sync.md)
+
+## Bounties
+
+* [Bounties](bounties/bounties.md)
 
 ## Integrations
 
-* [SQL Clients](integrations/sql-clients.md)
+* [Programmatic Clients](integrations/programmatic-clients.md)
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
 
@@ -30,22 +29,5 @@
 * [Architecture](reference/architecture.md)
 * [CLI](reference/cli.md)
 * [Python](reference/python.md)
-* [SQL](reference/sql/README.md)
-  * [SQL Support](reference/sql/sql-support/README.md)
-    * [Data Description](reference/sql/sql-support/data-description.md)
-    * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
-    * [Supported Statements](reference/sql/sql-support/supported-statements.md)
-    * [Micscellaneous](reference/sql/sql-support/miscellaneous.md)
-  * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
-  * [Dolt System Tables](reference/sql/dolt-system-tables.md)
-  * [Concurrency](reference/sql/concurrency.md)
+* [SQL](reference/sql.md)
 
-## Administration
-* [Introduction](administration/introduction.md)
-
-
-
-
-## Guides
-
-* [SQL Sync](guides/sql-sync.md)

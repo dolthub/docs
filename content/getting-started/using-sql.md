@@ -2,19 +2,23 @@
 title: Using SQL
 ---
 
+# Using SQL
+
 ## Background
 
 This section provides a very brief introduction to the the Dolt SQL implementation, along with some tutorials on how to get started running SQL.
 
 ## Getting Started
 
-To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](installation), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. Before we dive in let's grab some sample data using Dolt's Git-like `clone` operation:
+To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/content/installation/README.md), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. The Dolt binary has a SQL execution engine which will allow it to act as a relational database when combined with a repository. Before we dive in let's grab some sample data:
 
 ```text
 $ dolt clone dolthub/great-players-example && cd great-players-example
 cloning https://doltremoteapi.dolthub.com/dolthub/great-players-example
 8 of 8 chunks complete. 0 chunks being downloaded currently.
 ```
+
+With one command you have acquired a SQL database which we can use to demonstrate Dolt's SQL implementation.
 
 ### CLI
 
@@ -43,7 +47,7 @@ $ dolt sql -q 'select * from great_players'
 +-------+----+
 ```
 
-We can launch a SQL shell to get a more interactive feel:
+The nice thing about a database is rather than a collection of data files, it presents itself as a coherent whole, with metadata that can be queried. Running commands one at a time doesn't take full advantage of the query interface. To do that, launch the interactive shell:
 
 ```text
 $ dolt sql
@@ -67,24 +71,22 @@ great_players_example> select * from great_players;
 +-------+----+
 ```
 
-This is a nice interface for exploring data, but for a database to be useful it has to accept connections from clients, not just provide a shell.
+This is a nice interface for exploring data, but doesn't do us much good if we want to use existing data interfaces, or perhaps read this data into an existing application.
 
-### Dolt SQL Server
+### MySQL Server
 
-The Dolt SQL Server can be launched from the command line:
+To meet the needs of users who want to read Dolt data into existing data tools and applications, we provide the ability to stand up a MySQL Server instance. To learn more about our implementation of the MySQL server standard, we go over it in some detail [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/reference/sql/README.md). The implementation is open source. Let's fire it up:
 
 ```text
 $ dolt sql-server
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="30000"|R="false"|L="info"
 ```
 
-In the following sections we show that you can connect to this Dolt SQL Server using MySQL clients, and other familiar database clients.
+Let's connect to it via a few different interfaces to reinforce the idea that a Dolt database presents a familiar database server interface to existing ODBC clients.
 
 #### MySQL Client
 
-If you're using macOS, you can install a MySQL client using `brew install mysql-client`. Other platforms provide similarly simple installation options. They call put a `mysql` command on your path, which will launch a client process that attempts to connect to a server.
-
-Let's connect to the Dolt SQL Server we just started:
+If you're using a Mac, you can install a MySQL client using `brew install mysql-client`, which will in turn create a command called `mysql` that will fire up the client, and installers are available for all platforms. Let's fire it up:
 
 ```text
 $ mysql -h 127.0.0.1 -P 3306 -u root -p
@@ -102,53 +104,32 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
-Here the password is empty, that is the default for our Dolt SQL Server. If you want to go beyond local experiments a YAML file can be provided with configurations needed for a production instance. You can read about those in more detail [here](../reference/sql), but for now we will proceed without security.
+Here the password is empty, that is the default for our MySQL Server. If you want to go beyond local experiments, that can be configured, along with many other options, in the YAML file that defines the operating parameters of the server. You can read about those in more detail [here](https://github.com/dolthub/docs/tree/c431fa43023cc5f49a405b228db5d427d301269f/reference/sql/README.md), but for now we will proceed without security.
 
-We didn't specify a database when connecting, but we can use the `show databases` command to see which database our Dolt SQL Server instance has mounted:
-
-```text
-mysql> show databases;
-+-----------------------+
-| Database              |
-+-----------------------+
-| great_players_example |
-| information_schema    |
-+-----------------------+
-2 rows in set (0.00 sec)
-```
-
-
-Let's select a database so we can execute some queries:
+Careful readers might also observe that we didn't connect to a specific database. Just like SQL databases we know and love, Dolt MySQL Server has a concept of a database separate from the instance of a server: \`\`\`mysql&gt; show databases; +-----------------------+ \| Database \| +-----------------------+ \| great\_players\_example \| \| information\_schema \| +-----------------------+ 2 rows in set \(0.01 sec\)
 
 ```text
-mysql> use great_players
-ERROR 1105 (HY000): unknown error: database not found: great_players
-mysql> use great_players_example
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
+The sever can also be configured the server to point at multiple Dolt databases. This enables users to use ``
 
-Database changed
+For now let's focus on emphasizing the familiarity of this interface by focusing on our small example repository, which corresponds to a database in the context of a database server instance:
 ```
 
-Shell clients for SQL databases are good for testing connections and exploring data, but they aren't useful for building applications. For that we need higher level programming language. In the next section we show how to use Python MySQL connectors to write scripts that interact with Dolt.
+mysql&gt; use great\_players\_example; Reading table information for completion of table and column names You can turn off this feature to get a quicker startup with -A
+
+Database changed mysql&gt; select \* from great\_players; +-------+------+ \| name \| id \| +-------+------+ \| rafa \| 1 \| \| roger \| 2 \| \| novak \| 3 \| \| andy \| 4 \| +-------+------+ 4 rows in set \(0.00 sec\)
+
+```text
+Not many applications are built on top of a SQL interpreter, though it's useful for illustrative purposes to show that this works with out of the box SQL clients.
 
 ### Python
-We have created a Python API for Dolt, which includes convenience methods for interacting with Dolt SQL Server. You can read more about that API [here](../../reference/python). In this example we use the off the shelf Python connector to emphasize compatibility with MySQL wire protocol.
+We have created a Python API for Dolt, which includes convenience methods for interacting with our MySQL Server instance. You can read more about that [here](../../reference/python). Here we focus on using a raw MySQL connector to emphasize the familiarity of the interface. We assume you have `python` and `pip` in your path.
 
 First off, install the connector, which should look like something like this:
-```text
-pip install mysql-connector-python
-Collecting mysql-connector-python
-  Downloading https://files.pythonhosted.org/packages/3d/d6/e9834b6c28442a250ea6e6aa67de3878ed81ccd3c205fbe18eb0e635f212/mysql_connector_python-8.0.23-cp37-cp37m-macosx_10_14_x86_64.whl (4.9MB)
-     |████████████████████████████████| 4.9MB 4.8MB/s
-Requirement already satisfied: protobuf>=3.0.0 in ./anaconda3/lib/python3.7/site-packages (from mysql-connector-python) (3.10.0)
-Requirement already satisfied: setuptools in ./anaconda3/lib/python3.7/site-packages (from protobuf>=3.0.0->mysql-connector-python) (41.0.1)
-Requirement already satisfied: six>=1.9 in ./anaconda3/lib/python3.7/site-packages (from protobuf>=3.0.0->mysql-connector-python) (1.12.0)
-ERROR: doltpy 2.0.2 has requirement mysql-connector-python==8.0.21, but you'll have mysql-connector-python 8.0.23 which is incompatible.
-Installing collected packages: mysql-connector-python
-Successfully installed mysql-connector-python-8.0.23
 ```
 
+pip install mysql-connector-python==8.0.17 Collecting mysql-connector-python==8.0.17 Using cached mysql\_connector\_python-8.0.17-cp37-cp37m-macosx\_10\_13\_x86\_64.whl \(4.2 MB\) Collecting protobuf&gt;=3.0.0 Using cached protobuf-3.11.3-cp37-cp37m-macosx\_10\_9\_x86\_64.whl \(1.3 MB\) Requirement already satisfied: setuptools in /Users/oscarbatori/anaconda3/envs/python-mysql-test/lib/python3.7/site-packages \(from protobuf&gt;=3.0.0-&gt;mysql-connector-python==8.0.17\) \(46.1.3.post20200330\) Collecting six&gt;=1.9 Using cached six-1.14.0-py2.py3-none-any.whl \(10 kB\) Installing collected packages: six, protobuf, mysql-connector-python Successfully installed mysql-connector-python-8.0.17 protobuf-3.11.3 six-1.14.0
+
+```text
 Now let's create a small script example:
 ```python
 from mysql import connector
@@ -176,4 +157,5 @@ As a reminder, Doltpy provides some convenience methods for interacting with loc
 
 ## Conclusion
 
-In this section we showed how to connect with Dolt SQL Server using off the shelf MySQL connectors to take advantage of Dolt's compatibility with the MySQL dialect.
+Here we showed several familiar ways to connect with a MySQL server instance that executes SQL queries against your Dolt data. The benefit of this is that there is a great deal of existing infrastructure for connecting to SQL databases, and by implementing the familiar MySQL, Dolt reduces to cost of adoption for users wanting the benfits for a version controlled relational database.
+
