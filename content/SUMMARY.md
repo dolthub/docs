@@ -9,9 +9,9 @@
 
 ## Getting Started
 * [Installation](getting-started/installation.md)
-* [Reading from Dolt](getting-started/reading-from-dolt.md)
-* [Writing to Dolt](getting-started/writing-to-dolt.md)
-* [Using SQL](getting-started/using-sql.md)
+* [Reading](getting-started/reading.md)
+* [Writing](getting-started/writing.md)
+* [SQL](getting-started/sql.md)
 
 ## DoltHub
 * [DoltHub](dolthub/getting-started.md)

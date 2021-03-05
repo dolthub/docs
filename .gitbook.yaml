@@ -7,7 +7,7 @@ structure:
 redirects:
   tutorials/installation: ./getting-started/installation.md
   tutorials/reading-from-dolt: ./getting-started/reading-from-dolt.md
-  tutorials/writing-to-dolt: ./getting-started/reading-from-dolt.md
+  tutorials/writing-to-dolt: ./getting-started/writing-to-dolt.md
   tutorials/using-sql: ./getting-started/using-sql.md
   tutorials/dolthub: ./getting-started/dolthub.md
   integrations/programmatic-clients: ./integrations/sql-clients.md
@@ -27,3 +27,6 @@ redirects:
   reference/cli.md: interfaces/cli.md
   reference/python.md: interfaces/python.md
   integrations/sql-clients: interfaces/sql/clients.md
+  getting-started/reading-from-dolt: getting-started/reading.md
+  getting-started/writing-to-dolt: getting-started/writing.md
+  getting-started/using-sql: getting-started/sql.md
