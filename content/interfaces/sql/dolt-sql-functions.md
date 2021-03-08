@@ -186,3 +186,49 @@ SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
 -- Go back to master
 SELECT DOLT_MERGE('feature-branch');
 ```
+
+### DOLT_RESET\(\)
+
+### Description
+
+Resets staged tables to their HEAD state. Works exactly like `dolt reset`.
+
+By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. Hence, this method will only work in autocommit mode.
+
+```sql
+SELECT DOLT_RESET('--hard');
+SELECT DOLT_RESET('my-table');
+```
+
+### Options
+
+`--hard`:  Resets the working tables and staged tables. Any changes to tracked tables in the working tree since <commit> are discarded.
+
+`--soft`: Does not touch the working tables, but removes all tables staged to be committed.
+
+### Example
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Make modifications
+UPDATE table
+SET column = "new value"
+WHERE pk = "key";
+
+-- Reset the changes permanently.
+SELECT DOLT_CHECKOUT('--hard');
+
+-- Makes some more changes.
+UPDATE table
+SET column = "new value"
+WHERE pk = "key";
+
+-- Stage the table.
+SELECT DOLT_ADD('table')
+
+-- Unstage the table.
+SELECT DOLT_RESET('table')
+```
+
