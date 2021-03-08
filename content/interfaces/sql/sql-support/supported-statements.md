@@ -44,10 +44,11 @@ title: Supported Statements
 | `ALTER TYPE` | X | Column type changes are not supported. |
 | `ALTER VIEW` | X | Views can be created and dropped, but not altered. |
 | `CHANGE COLUMN` | ✓ |  |
-| `CREATE DATABASE` | X | Create new repositories with `dolt clone` or `dolt init` |
+| `CREATE DATABASE` | O | Create an in-memory database the length of a session. Creating new dolt databases that persist outside of a session is not yet supported. |
 | `CREATE EVENT` | X |  |
 | `CREATE FUNCTION` | X |  |
 | `CREATE INDEX` | O | Fulltext and spatial indexes are not supported. |
+| `CREATE SCHEMA` | O | Create an in memory database the length of a session. Creating new dolt databases that persist outside of a session is not yet supported. |
 | `CREATE TABLE` | ✓ | Tables must have primary keys. |
 | `CREATE TABLE AS` | X |  |
 | `CREATE TRIGGER` | ✓ |  |
@@ -55,10 +56,11 @@ title: Supported Statements
 | `DESCRIBE TABLE` | ✓ |  |
 | `DROP COLUMN` | ✓ |  |
 | `DROP CONSTRAINT` | ✓ |  |
-| `DROP DATABASE` | X | Delete a repository by deleting its directory on disk. |
+| `DROP DATABASE` | O | Deletes only in-memory database. To delete a repository you must delete its directory on disk. |
 | `DROP EVENT` | X |  |
 | `DROP FUNCTION` | X |  |
 | `DROP INDEX` | ✓ |  |
+| `DROP SCHEMA` | O | Deletes only in-memory database. To delete a repository you must delete its directory on disk. |
 | `DROP TABLE` | ✓ |  |
 | `DROP PARTITION` | X |  |
 | `DROP PROCEDURE` | ✓ |  |
