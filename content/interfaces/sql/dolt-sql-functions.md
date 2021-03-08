@@ -197,14 +197,14 @@ By default, when running in server mode with dolt sql-server, dolt does not auto
 
 ```sql
 SELECT DOLT_RESET('--hard');
-SELECT DOLT_RESET('my-table');
+SELECT DOLT_RESET('my-table'); -- soft reset
 ```
 
 ### Options
 
 `--hard`:  Resets the working tables and staged tables. Any changes to tracked tables in the working tree since <commit> are discarded.
 
-`--soft`: Does not touch the working tables, but removes all tables staged to be committed.
+`--soft`: Does not touch the working tables, but removes all tables staged to be committed. This is the default behavior.
 
 ### Example
 
@@ -218,7 +218,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Reset the changes permanently.
-SELECT DOLT_CHECKOUT('--hard');
+SELECT DOLT_RESET('--hard');
 
 -- Makes some more changes.
 UPDATE table
