@@ -2,6 +2,8 @@
 title: SQL Clients
 ---
 
+# SQL Clients
+
 Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](https://www.dolthub.com/docs/reference/cli/#dolt-sql-server).
 
 Once a server is running, any MySQL client should be able to connect to Dolt SQL Server in the exact same way it connects to a standard MySQL database. We explicitly support the programmatic clients outlined in this document through integration testing. Tests are run on GitHub pull requests to Dolt in a Ubuntu environment in a Docker container. If you would like another MySQL compatible client supported and tested, [please let us know](https://www.dolthub.com/contact).
@@ -93,3 +95,4 @@ We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library. 
 
 * [Official Client Documentation](http://www.tmtm.org/en/ruby/mysql/)
 * [ruby/mysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/ruby/ruby-mysql-test.rb)
+

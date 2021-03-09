@@ -2,13 +2,15 @@
 title: Getting Started
 ---
 
+# DoltHub
+
 ## Introduction
 
 DoltHub is a collaboration platform for managing Dolt databases. Dolt is the format the data travels in, and provides the SQL query interface. DoltHub builds collaboration tools on top of Dolt to make acquiring, publishing, and collaboratively building datasets using Dolt a joy.
 
 ## Signing Up
 
-This tutorial assumes that you have signed up for DoltHub, though you needn't do so to clone public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
+This tutorial assumes that you have signed up for DoltHub, though you needn't do so to clone public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](https://github.com/dolthub/docs/tree/f76a2f79ed1eae76ff8606afebe2e567d3616d5c/content/dolthub/installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
 
 ## Data Acquisition
 
@@ -18,19 +20,19 @@ We show several ways to explore data on DoltHub, starting with the most user fri
 
 The most accessible way to access data that is stored on Dolt and hosted on DoltHub is to navigate to the database [homepage](https://www.dolthub.com/repositories/dolthub/ip-to-country/):
 
-![DoltHub database page](../.gitbook/assets/dolthub_intro_database_page%20%281%29.png)
+![DoltHub database page](../.gitbook/assets/dolthub_intro_database_page%20%283%29%20%287%29.png)
 
 Click on the SQL console to start writing a query against that Dolt database, using the left hand menu to browse the schema:
 
-![SQL editor open](../.gitbook/assets/dolthub_intro_sql_console_open%20%281%29.png)
+![SQL editor open](../.gitbook/assets/dolthub_intro_sql_console_open%20%283%29.png)
 
 Now let's write a query for all the IPv4 codes in Australia:
 
-![Sample query](../.gitbook/assets/dolthub_intro_sample_query%20%281%29.png)
+![Sample query](../.gitbook/assets/dolthub_intro_sample_query%20%283%29%20%286%29.png)
 
 Executing the query renders the results:
 
-![Query results](../.gitbook/assets/dolthub_intro_sample_query_results%20%281%29.png)
+![Query results](../.gitbook/assets/dolthub_intro_sample_query_results%20%283%29%20%284%29.png)
 
 While this is a useful data exploration interface, it doesn't offer the kind of interactivity that a local copy of the data might. Let's switch gears to the command line, where we will see the integration point between Dolt and DoltHub.
 
@@ -150,7 +152,7 @@ Uploading a file to DoltHub is the only way to publish data without using Dolt. 
 
 * Choose a base branch \(commits directly to `master` branch for empty repo\)
 
-  ![Choose a branch](../.gitbook/assets/choose-branch2%20%281%29.png)
+  ![Choose a branch](../.gitbook/assets/choose-branch2%20%283%29%20%283%29.png)
 
 * Choose a table name \(create a new table or update an existing table\)
 
@@ -193,7 +195,7 @@ You are now logged in and you can push data to DoltHub.
 
 ### DoltHub Remotes
 
-Publishing data is equally easy once it's in the Dolt format. In [another section](writing-to-dolt.md) we showed how to write data to Dolt. Let's assume we have some data in a local Dolt repository:
+Publishing data is equally easy once it's in the Dolt format. In [another section](https://github.com/dolthub/docs/tree/f76a2f79ed1eae76ff8606afebe2e567d3616d5c/content/dolthub/writing-to-dolt.md) we showed how to write data to Dolt. Let's assume we have some data in a local Dolt repository:
 
 ```text
 $ cat > great_players.csv
@@ -232,8 +234,8 @@ Tree Level: 1. 100.00% of new chunks buffered.
 Successfully uploaded 1 of 1 file(s).
 ```
 
-And now anyone that wants to consume this data can do so with a _single command_. Once the consumer has run that command they can immediately stand up a Dolt SQL Server instance and start querying the data. If you're ready for collaborators you can add them as one on DoltHub.
-``
+And now anyone that wants to consume this data can do so with a _single command_. Once the consumer has run that command they can immediately stand up a Dolt SQL Server instance and start querying the data. If you're ready for collaborators you can add them as one on DoltHub. \`\`
+
 ## Data Collaboration
 
 A major motivator for building Dolt and DoltHub was to create world class tools for data collaboration. Earlier sections of this guide to using DoltHub show how Dolt makes moving data seamless by implementing Git style version control, including `clone`, `pull`, and `pull` operations. This section shows how to use DoltHub's collaboration tools to efficiently coordinate updates to shared datasets.
@@ -242,7 +244,7 @@ A major motivator for building Dolt and DoltHub was to create world class tools 
 
 In the simplest case two DoltHub users wish to make updates to the same database on DoltHub. Let's suppose that our esteemed CEO Tim has suddenly developed a passion for tennis, and would like to contribute to [dolthub/great-players-example](https://www.dolthub.com/repositories/dolthub/great-players-example), the database we created in the previous section.
 
-![Adding a DoltHub Collaborator](../.gitbook/assets/add_dolthub_collaborator%20%281%29.png)
+![Adding a DoltHub Collaborator](../.gitbook/assets/add_dolthub_collaborator%20%283%29%20%288%29.png)
 
 Dolt has a concept of branches, almost identical to branches in Git. A branch is a named pointer to a commit. Users can create pull requests by proposing to merge one branch into another. The model looks something like this:
 
@@ -302,7 +304,7 @@ Now we pushed the branch `more-great-players` to DoltHub, we can open a pull req
 
 This pull request can be reviewed and merged:
 
-![Merging a Pull Request](../.gitbook/assets/pull_request_ready_for_merge%20%281%29.png)
+![Merging a Pull Request](../.gitbook/assets/pull_request_ready_for_merge%20%283%29%20%283%29.png)
 
 And we are done!
 
@@ -441,3 +443,4 @@ We have seen two models of collaboration. One suitable for smaller groups of col
 ## Conclusion
 
 This succinctly illustrates the value of Dolt and DoltHub. Dolt provides for the seamless transfer of structured data, and ensures all data arrives ready for use in a familiar query interface. DoltHub provides a layer of collaboration tools.
+

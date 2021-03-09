@@ -1,6 +1,9 @@
 # Table of contents
 
+* [Introduction](README.md)
+
 ## Introduction
+
 * [Why Dolt](introduction/why-dolt/README.md)
   * [Lineage](introduction/why-dolt/lineage.md)
   * [Time Travel](introduction/why-dolt/time-travel.md)
@@ -8,16 +11,19 @@
 * [What is Dolt](introduction/what-is-dolt.md)
 
 ## Getting Started
+
 * [Installation](getting-started/installation.md)
 * [Reading](getting-started/reading.md)
 * [Writing](getting-started/writing.md)
 * [SQL](getting-started/sql.md)
 
 ## DoltHub
+
 * [DoltHub](dolthub/getting-started.md)
 * [Bounties](dolthub/bounties.md)
 
 ## Interfaces
+
 * [SQL](interfaces/sql/README.md)
   * [SQL Clients](interfaces/sql/clients.md)
   * [SQL Support](interfaces/sql/sql-support/README.md)
@@ -32,12 +38,16 @@
 * [Python](interfaces/python.md)
 
 ## Integrations
+
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
 
 ## Reference
+
 * [Architecture](reference/architecture.md)
 * [Scalability, Availability, and Performance](reference/characteristics.md)
 
 ## Guides
+
 * [SQL Sync](guides/sql-sync.md)
+

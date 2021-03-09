@@ -4,26 +4,19 @@ title: Dolt SQL Functions
 
 # Dolt SQL Functions
 
-Dolt provides SQL functions to allow access to command line `dolt`
-commands from within a SQL session. Each command is named after the
-`dolt` command line command it matches, and takes arguments in an
-identical form. 
+Dolt provides SQL functions to allow access to command line `dolt` commands from within a SQL session. Each command is named after the `dolt` command line command it matches, and takes arguments in an identical form.
 
-For example, `dolt commit -m 'Added a table'` is equivalent to
-executing the following SQL statement:
+For example, `dolt commit -m 'Added a table'` is equivalent to executing the following SQL statement:
 
 ```sql
 SELECT DOLT_COMMIT('-m', 'Added a table');
 ```
 
-SQL functions are provided for all imperative CLI commands. For
-commands that inspect the state of the repository and print some
-information, (`dolt diff`, `dolt log`, etc.) [system
-tables](dolt-system-tables) are provided instead.
+SQL functions are provided for all imperative CLI commands. For commands that inspect the state of the repository and print some information, \(`dolt diff`, `dolt log`, etc.\) [system tables](https://github.com/dolthub/docs/tree/483390a96f3747775b02702ec2e76e6ba727f5ef/content/reference/sql/dolt-system-tables/README.md) are provided instead.
 
-### DOLT_COMMIT\(\)
+## DOLT\_COMMIT\(\)
 
-### Description
+## Description
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with each value directly following the flag. Note that you must always support the message flag with the intended message right after.
 
@@ -35,7 +28,7 @@ SELECT DOLT_COMMIT('-m', 'This is a commit');
 SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-### Options
+## Options
 
 `-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
 
@@ -47,7 +40,7 @@ SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@exam
 
 `--author`: Specify an explicit author using the standard "A U Thor [author@example.com](mailto:author@example.com)" format.
 
-### Example
+## Example
 
 ```sql
 -- Set the current database for the session
@@ -62,9 +55,9 @@ WHERE pk = "key";
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-### DOLT_ADD\(\)
+## DOLT\_ADD\(\)
 
-### Description
+## Description
 
 Adds working changes to staged. Works exactly like `dolt add` with each value directly following the flag.
 
@@ -76,13 +69,13 @@ SELECT DOLT_ADD('.');
 SELECT DOLT_ADD('<table1>', '<table2>');
 ```
 
-### Options
+## Options
 
-`table`: Working table(s) to add to the list tables staged to be committed. The abbreviation '.' can be used to add all tables.
+`table`: Working table\(s\) to add to the list tables staged to be committed. The abbreviation '.' can be used to add all tables.
 
 `-A`: Stages all tables with changes.
 
-### Example
+## Example
 
 ```sql
 -- Set the current database for the session
@@ -100,11 +93,11 @@ SELECT DOLT_ADD('-a');
 SELECT DOLT_COMMIT('-m', 'commiting all changes');
 ```
 
-### DOLT_CHECKOUT\(\)
+## DOLT\_CHECKOUT\(\)
 
-### Description
+## Description
 
-Updates tables in the working set to match the staged versions. If no paths are given, DOLT_CHECKOUT will also update HEAD to set the specified branch as the current branch. Works exactly like `dolt checkout` with each value directly following the flag. 
+Updates tables in the working set to match the staged versions. If no paths are given, DOLT\_CHECKOUT will also update HEAD to set the specified branch as the current branch. Works exactly like `dolt checkout` with each value directly following the flag.
 
 By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. Hence, this method will only work in autocommit mode.
 
@@ -114,11 +107,11 @@ SELECT DOLT_CHECKOUT('my-existing-branch');
 SELECT DOLT_CHECKOUT('my-table-in-HEAD');
 ```
 
-### Options
+## Options
 
 `-b`: Create a new branch with your desired name.
 
-### Example
+## Example
 
 ```sql
 -- Set the current database for the session
@@ -139,11 +132,11 @@ SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
 SELECT DOLT_CHECKOUT('master');
 ```
 
-### DOLT_MERGE\(\)
+## DOLT\_MERGE\(\)
 
-### Description
+## Description
 
-Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch. Works exactly like `dolt merge`.
+Incorporates changes from the named commits \(since the time their histories diverged from the current branch\) into the current branch. Works exactly like `dolt merge`.
 
 By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. Hence, this method will only work in autocommit mode.
 
@@ -153,20 +146,19 @@ SELECT DOLT_MERGE('feature-branch', '-no-ff', '-m', 'This is a msg for a non fas
 SELECT DOLT_MERGE('--abort');
 ```
 
-### Options
+## Options
 
 `--no-ff`: Create a merge commit even when the merge resolves as a fast-forward.
 
 `--squash`: Merges changes to the working set without updating the commit history
 
-`-m <msg>, --message=<msg>`: Use the given <msg> as the commit message. This is only useful for --non-ff commits.
+`-m <msg>, --message=<msg>`: Use the given  as the commit message. This is only useful for --non-ff commits.
 
 `--abort`: Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
 
-If there were uncommitted working set changes present when the merge started, `DOLT_MERGE('--abort')` will be unable to reconstruct these changes. It is therefore recommended to always commit or stash your changes
-before running dolt merge.
+If there were uncommitted working set changes present when the merge started, `DOLT_MERGE('--abort')` will be unable to reconstruct these changes. It is therefore recommended to always commit or stash your changes before running dolt merge.
 
-### Example
+## Example
 
 ```sql
 -- Set the current database for the session

@@ -2,22 +2,29 @@
 title: What is Dolt
 ---
 
+# What is Dolt
+
 ## Version Controlled Database
+
 Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing the version control features which are closely modeled on Git.
 
 ### Offline vs Online
-"Offline" Dolt operations happen via the Git-like command line interface (CLI). Used offline Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
+
+"Offline" Dolt operations happen via the Git-like command line interface \(CLI\). Used offline Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
 
 ### Offline
+
 When Dolt is "offline", it looks very much like Git. Let's use `dolt clone` to acquire a database:
-```
+
+```text
 $ dolt clone dolthub/ip-to-country
 cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 32,832 of 32,832 chunks complete. 0 chunks being downloaded currently.
 ```
 
 We now have acquired a database, and we can move into the newly created directory to give the `dolt` command the right database context:
-```
+
+```text
 $ cd ip-to-country
 $ dolt sql
 # Welcome to the DoltSQL shell.
@@ -33,16 +40,19 @@ ip_to_country> show tables;
 ```
 
 ### Online
-In the previous section we used Dolt's version control features, familiar from Git, to clone a remote database. In [Why Dolt](why-dolt.md) we identified the value of a familiar SQL query interface, served over a widely adopted wire protocol, MySQL.
+
+In the previous section we used Dolt's version control features, familiar from Git, to clone a remote database. In [Why Dolt](why-dolt/) we identified the value of a familiar SQL query interface, served over a widely adopted wire protocol, MySQL.
 
 We can now take the cloned Dolt database "online" by firing up the Dolt SQL Server:
-```
+
+```text
 dolt sql-server
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
 ```
 
 We now have a running Dolt SQL Server. We can connect using using the standard MySQL connector:
-```
+
+```text
 ~|>>  mysql --host=127.0.0.1 --user=root
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 1
@@ -74,13 +84,16 @@ mysql> show tables;
 We used Git-like "offline" features to clone a database, stood up a server, and connected to it to start performing "online" operations. Let's see how to access Git-like version control features in SQL.
 
 ## Everything in SQL
+
 Where possible Dolt's version control features are exposed in SQL. That means users can script complex version control workflows into the SQL queries that define data pipelines.
 
 Let's dive into a couple of examples to see what this looks like in practice.
 
 ### AS OF
+
 Suppose the IP to country mapping dataset that we procured earlier introduces a bug into our systems observed at `2020-12-12 02:00:00`. We can can grab the commit that introduced this state easily:
-```
+
+```text
 mysql> select commit_hash, committer, message from dolt_log where `date` < '2020-12-10 18:00:00' limit 1;
 +----------------------------------+------------------------+----------------------------------------------------------+
 | commit_hash                      | committer              | message                                                  |
@@ -90,7 +103,8 @@ mysql> select commit_hash, committer, message from dolt_log where `date` < '2020
 ```
 
 Suppose we want to see the new data introduced in that commit:
-```
+
+```text
 mysql> select * from dolt_diff_IPv4ToCountry where to_commit = 'bqtrbbrsgie7u4fsgph0t12j94ofefml' and diff_type = 'added' limit 5;
 +-----------------------+-------------+-----------------+---------------------+------------+------------+-----------------------+----------------------------------+-----------------------------------+-------------------------+---------------+-------------------+--------------+-----------+-------------+-------------------------+----------------------------------+-----------------------------------+-----------+
 | to_CountryCode2Letter | to_Registry | to_AssignedDate | to_Country          | to_IpTo    | to_IPFrom  | to_CountryCode3Letter | to_commit                        | to_commit_date                    | from_CountryCode2Letter | from_Registry | from_AssignedDate | from_Country | from_IpTo | from_IPFrom | from_CountryCode3Letter | from_commit                      | from_commit_date                  | diff_type |
@@ -103,20 +117,24 @@ mysql> select * from dolt_diff_IPv4ToCountry where to_commit = 'bqtrbbrsgie7u4fs
 +-----------------------+-------------+-----------------+---------------------+------------+------------+-----------------------+----------------------------------+-----------------------------------+-------------------------+---------------+-------------------+--------------+-----------+-------------+-------------------------+----------------------------------+-----------------------------------+-----------+
 ```
 
-
 ### Rollback
+
 Continuing with this example, let's suppose this is causing a production issue, and we need to rollback urgently. Dolt makes that easy:
-```
+
+```text
 mysql> INSERT INTO dolt_branches (name, hash) VALUES  ('production' , 'u8pnf1o0mus2d8mok0083t5lpj190j5f');
 Query OK, 1 row affected (0.21 sec)
 ```
 
 The state of the Dolt SQL Server is now set to a commit prior to the one that caused an outage, and it was achieved with a single SQL query.
 
-### DOLT_COMMIT
+### DOLT\_COMMIT
+
 Suppose that we want to write some data to Dolt and create a commit against a running Dolt SQL Server. We can use Dolt SQL functions that expose the Git-like version control features.:
-```
+
+```text
 msql> SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 We have now committed a new state of the database, which can be queried against and checked out.
+

@@ -2,7 +2,9 @@
 title: Supported Statements
 ---
 
-### Data manipulation statements
+# Supported Statements
+
+## Data manipulation statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -18,7 +20,7 @@ title: Supported Statements
 | `LOAD XML` | X | Use `dolt table import` |
 | `REPLACE` | ✓ |  |
 | `SELECT` | ✓ | Most select statements, including `UNION` and `JOIN`, are supported. |
-| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](sql.md#querying-non-head-revisions-of-a-database). |
+| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](https://github.com/dolthub/docs/tree/0d4afbb9419de3674e55343f64688aea8fcd188e/content/reference/sql/sql-support/sql.md#querying-non-head-revisions-of-a-database). |
 | `SELECT FOR UPDATE` | X | Locking and concurrency are currently very limited. |
 | `SUBQUERIES` | ✓ | Subqueries work, but must be given aliases. Some limitations apply. |
 | `TABLE` | X | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause. |
@@ -27,7 +29,7 @@ title: Supported Statements
 | `VALUES` | X |  |
 | `WITH` | X | Common table expressions \(CTEs\) are not yet supported |
 
-### Data definition statements
+## Data definition statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -88,7 +90,7 @@ title: Supported Statements
 | `SHOW TABLES` | ✓ | `SHOW FULL TABLES` reveals whether a table is a base table or a view. |
 | `TRUNCATE TABLE` | ✓ |  |
 
-### Transactional statements
+## Transactional statements
 
 Transactional semantics are a work in progress. Dolt isn't like other databases: a "commit" in dolt creates a new entry in the repository revision graph, as opposed to updating one or more rows atomically as in other databases. By default, updating data through SQL statements modifies the working set of the repository. Committing changes to the repository requires the use of `dolt add` and `dolt commmit` from the command line. But it's also possible for advanced users to create commits and branches directly through SQL statements.
 
@@ -98,7 +100,7 @@ Not much work has been put into supporting the true transaction and concurrency 
 | :--- | :--- | :--- |
 | `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](sql.md#concurrency) for details. |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](https://github.com/dolthub/docs/tree/0d4afbb9419de3674e55343f64688aea8fcd188e/content/reference/sql/sql-support/sql.md#concurrency) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | X |  |
@@ -109,14 +111,14 @@ Not much work has been put into supporting the true transaction and concurrency 
 | `START TRANSACTION` | O | `START TRANSACTION` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `UNLOCK TABLES` | ✓ | `UNLOCK TABLES` parses correctly, but since `LOCK TABLES` doesn't prevent concurrent access it's essentially a no-op. |
 
-### Prepared statements
+## Prepared statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | `PREPARE` | ✓ |  |
 | `EXECUTE` | ✓ |  |
 
-### Access management statements
+## Access management statements
 
 Access management via SQL statements is not yet supported. This table will be updated as access management features are implemented. Please [file an issue](https://github.com/dolthub/dolt/issues) if lack of SQL access management is blocking your use of Dolt, and we will prioritize accordingly.
 
@@ -136,7 +138,7 @@ A root user name and password can be specified in the config for [`sql-server`](
 | `SET PASSWORD` | X |  |
 | `SET ROLE` | X |  |
 
-### Session management statements
+## Session management statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -145,9 +147,10 @@ A root user name and password can be specified in the config for [`sql-server`](
 | `SET NAMES` | O | \`SET NAMES\` parses correctly, but Dolt supports only the \`utf8mb4\` collation for identifiers |
 | `KILL QUERY` | ✓ |  |
 
-### Utility statements
+## Utility statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | `EXPLAIN` | ✓ |  |
 | `USE` | ✓ |  |
+

@@ -2,7 +2,9 @@
 title: Data Description
 ---
 
-### Data types
+# Data Description
+
+## Data types
 
 | Data type | Supported | Notes |
 | :--- | :--- | :--- |
@@ -43,7 +45,7 @@ title: Data Description
 | `GEOMETRYCOLLECTION` | X |  |
 | `JSON` | X |  |
 
-### Constraints
+## Constraints
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -54,19 +56,19 @@ title: Data Description
 | Foreign Key | ✓ |  |
 | Default Value | ✓ |  |
 
-### Transactions
+## Transactions
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](sql.md#concurrency) for details. |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/sql-support/sql.md#concurrency) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | X |  |
 | `SET @@autocommit = 1` | ✓ | When `@@autocommit = true`, changes to data will update the working set after every statement. When `@@autocommit = false`, the working set will only be updated after `COMMIT` statements. |
 
-### Indexes
+## Indexes
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -75,11 +77,11 @@ title: Data Description
 | Full-text indexes | X |  |
 | Spatial indexes | X |  |
 
-### Schema
+## Schema
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| `ALTER TABLE` statements | O | Some limitations. See the [supported statements doc](sql.md#supported-statements). |
+| `ALTER TABLE` statements | O | Some limitations. See the [supported statements doc](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/sql-support/sql.md#supported-statements). |
 | Database renames | X | Database names are read-only, and configured by the server at startup. |
 | Adding tables | ✓ |  |
 | Dropping tables | ✓ |  |
@@ -97,3 +99,4 @@ title: Data Description
 | Index renames | ✓ |  |
 | Removing indexes | ✓ |  |
 | `AUTO INCREMENT` | ✓ |  |
+

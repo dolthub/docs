@@ -2,6 +2,8 @@
 title: Dolt SQL
 ---
 
+# SQL
+
 ## Overview
 
 Dolt data repositories are unique in that they arrive capable of running MySQL compatible SQL statements against them. Your Dolt binary can execute SQL against any Dolt repo you have happen to have locally. Existing RDBMS solutions have optimized their on-disk layout to support the needs of physical plan execution. Dolt makes a different set of tradeoffs, instead using a Merkel Tree to support robust version control semantics, and thus portability of the data. The combination of portability, robust version control semantics, and a SQL interface make Dolt a uniquely compelling data format.
@@ -16,36 +18,36 @@ Using `dolt sql` you can issue SQL statements against a local data repository di
 
 There are 2 basic modes which the `dolt sql` command operate in. The first is command line query mode where a semicolon delimited list of queries is provided on the command line using the -q parameter. The second is using the Dolt SQL interactive shell which can be started by running the `dolt sql` command without any arguments in a directory containing a Dolt data repository.
 
-View the `dolt sql` command documentation [here](../cli#dolt-sql)
+View the `dolt sql` command documentation [here](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/cli/README.md#dolt-sql)
 
 #### dolt sql-server
 
 The `dolt sql-server` command will run a MySQL compatible server which clients can execute queries against. This provides a programmatic interface to get data into or out of a Dolt data repository. It can also be used to connect with third party tooling which supports MySQL.
 
-View the `dolt sql-server` command documentation [here](../cli#dolt-sql-server) to learn how to configure the server.
+View the `dolt sql-server` command documentation [here](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/cli/README.md#dolt-sql-server) to learn how to configure the server.
 
 ### Dolt CLI in SQL
 
 You can operate several of dolt cli commands in the sql layer directly. This is especially useful if you are using sql in the application layer and want to the query a Dolt repository.
 
-You can find full API documentation [here](dolt-sql-functions)
+You can find full API documentation [here](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md)
 
 ### System Tables
 
 Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
 
-* [dolt\_log table](dolt-sql-functions#dolt-system-tables_dolt_log)
-* [dolt\_branches table](dolt-sql-functions#dolt-system-tables_dolt_branches)
-* [dolt\_docs table](dolt-sql-functions#dolt-system-tables_dolt_docs)
-* [dolt\_diff tables](dolt-sql-functions#dolt-system-tables_dolt_diff_tablename)
-* [dolt\_history tables](dolt-sql-functions#dolt-system-tables_dolt_history_tablename)
-* [dolt\_schemas table](dolt-sql-functions#dolt-system-tables_dolt_schemas)
+* [dolt\_log table](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_log)
+* [dolt\_branches table](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_branches)
+* [dolt\_docs table](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_docs)
+* [dolt\_diff tables](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_diff_tablename)
+* [dolt\_history tables](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_history_tablename)
+* [dolt\_schemas table](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-sql-functions/README.md#dolt-system-tables_dolt_schemas)
 
 ### Concurrency
 
 When any client initiates a SQL session against a Dolt data repository, that session will be pointing to a specific commit even if other clients make changes. Therefore, modifications made by other clients will not be visible. There are two commit modes which determine how you are able to write to the database, commit those writes, and get modifications made by other clients.
 
-You can read a more detailed description of how Dolt handles concurrency [here](concurrency)
+You can read a more detailed description of how Dolt handles concurrency [here](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/concurrency/README.md)
 
 #### Autocommit mode
 
@@ -58,9 +60,9 @@ In autocommit mode, when a client connects they will be pinned to the working da
 
 #### Manual commit mode
 
-In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](dolt-system-tables) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
+In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/dolt-system-tables/README.md) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
 
-See the full [manual commit mode documentation](concurrency)
+See the full [manual commit mode documentation](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/concurrency/README.md)
 
 ## Querying non-HEAD revisions of a database
 
@@ -81,3 +83,4 @@ In addition to this `AS OF` syntax for `SELECT` statements, Dolt also supports a
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
 ```
+

@@ -14,7 +14,7 @@ Once you're logged in, you can easily see the list of available data bounties on
 
 ![Index of Open Data Bounties](../.gitbook/assets/bounties_index_screenshot.png)
 
-Let's focus on the `dolthub/us-president-precinct-results` bounty. Head over to the [bounty detail](https://dolthub.com/repositories/dolthub/us-president-precinct-results/bounties/00000000-0000-0000-0000-000000000005) page to see the available rewards: 
+Let's focus on the `dolthub/us-president-precinct-results` bounty. Head over to the [bounty detail](https://dolthub.com/repositories/dolthub/us-president-precinct-results/bounties/00000000-0000-0000-0000-000000000005) page to see the available rewards:
 
 ![Bounty Index Page](../.gitbook/assets/bounty_detail_page.png)
 
@@ -22,15 +22,15 @@ Presuming you feel like capturing some of the $25,000 available for gathering pr
 
 ### Fork the Repository
 
-DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](../getting-started/dolthub#data-collaboration) in our docs.
+DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/getting-started/dolthub/README.md#data-collaboration) in our docs.
 
 For now just fork `dolthub/us-president-precinct-results` into your own namespace:
 
-![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository.png)
+![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository%20%282%29%20%282%29.png)
 
 You will then be redirected to the forked repository where you can have a look around:
 
-![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository.png)
+![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository%20%282%29%20%283%29.png)
 
 If you want to get paid, you need to write some data to the repository, so let's turn to that!
 
@@ -68,3 +68,4 @@ When the bounty is over we will send an email to the primary email address on th
 ## Getting Help
 
 If you need help, or have questions, hop onto [Discord](https://discord.com/invite/RFwfYpu) and jump into the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
+
