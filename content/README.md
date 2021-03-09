@@ -1,5 +1,5 @@
 ---
-tite: Welcome to Dolt
+title: Welcome to Dolt
 ---
 
 # Introduction
@@ -8,7 +8,7 @@ tite: Welcome to Dolt
 
 This is the documentation site for Dolt, a version controlled relational database. Dolt is inspired by familiar features from MySQL and Git. These features are combined to create powerful new kind of relational database ideal for the evolved data landscape. Dolt is free and open source, licensed under Apache 2.0.
 
-Jump into [Why Dolt](https://github.com/dolthub/docs/tree/c3220eee0d01255c067c470014418628fe8df9b7/content/why-dolt.md) and [What is Dolt](https://github.com/dolthub/docs/tree/c3220eee0d01255c067c470014418628fe8df9b7/content/what-is-dolt.md) to get a more detailed idea of Dolt and why we built it, or go straight to [Getting Started](getting-started/installation.md) if you're ready for some action!
+Jump into [Why Dolt](introduction/why-dolt/README.md) and [What is Dolt](introduction/what-is-dolt.md) to get a more detailed idea of Dolt and why we built it, or go straight to [Getting Started](getting-started/installation.md) if you're ready for some action!
 
 ## Documentation Overview
 
