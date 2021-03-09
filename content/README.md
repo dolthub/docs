@@ -1,5 +1,5 @@
 ---
-tite: Welcome to Dolt
+title: Welcome to Dolt
 ---
 
 ## Welcome to Dolt Docs
