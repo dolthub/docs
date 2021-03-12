@@ -50,31 +50,31 @@ It's important recognize that these are industry standard tests, and are OLTP or
 
 Below are the results of running `sysbench` MySQL tests against Dolt SQL Server for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
-The Dolt version is `0.23.9`.
+The Dolt version is `0.24.1`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
-| covering\_index\_scan | 10.27 | 1.39 | 7.0 |
-| index\_scan | 125.52 | 34.33 | 4.0 |
-| oltp\_point\_select | 1.27 | 0.11 | 12.0 |
-| oltp\_read\_only | 28.67 | 2.26 | 13.0 |
+| covering\_index\_scan | 10.09 | 1.37 | 7.0 |
+| index\_scan | 123.28 | 34.95 | 4.0 |
+| oltp\_point\_select | 1.3 | 0.11 | 12.0 |
+| oltp\_read\_only | 29.19 | 2.26 | 13.0 |
 | select\_random\_points | 2.57 | 0.26 | 10.0 |
-| select\_random\_ranges | 2.66 | 0.29 | 9.0 |
-| table\_scan | 137.35 | 34.95 | 4.0 |
-| mean |  |  | _8.43_ |
+| select\_random\_ranges | 2.76 | 0.28 | 10.0 |
+| table\_scan | 134.9 | 34.95 | 4.0 |
+| mean |  |  | _8.57_ |
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_delete | 11.24 | 0.11 | 102.0 |
-| oltp\_insert | 12.52 | 2.43 | 5.0 |
-| oltp\_read\_write | 78.6 | 6.09 | 13.0 |
-| oltp\_update\_index | 14.73 | 2.66 | 6.0 |
-| oltp\_update\_non\_index | 8.13 | 2.81 | 3.0 |
-| oltp\_write\_only | 52.89 | 3.55 | 15.0 |
-| mean |  |  | _20.71_ |
+| oltp\_delete | 11.45 | 0.11 | 104.0 |
+| oltp\_insert | 12.75 | 2.18 | 6.0 |
+| oltp\_read\_write | 80.03 | 5.67 | 14.0 |
+| oltp\_update\_index | 14.73 | 2.35 | 6.0 |
+| oltp\_update\_non\_index | 8.28 | 2.3 | 4.0 |
+| oltp\_write\_only | 52.89 | 3.25 | 16.0 |
+| mean |  |  | _21.57_ |
 
-| Overall Mean Multiple | _14.57_ |
+| Overall Mean Multiple | _15.07_ |
 | :--- | :--- |
 
 
