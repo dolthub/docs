@@ -2,15 +2,13 @@
 title: Using SQL
 ---
 
-# SQL
-
 ## Background
 
 This section provides a very brief introduction to the the Dolt SQL implementation, along with some tutorials on how to get started running SQL.
 
 ## Getting Started
 
-To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/content/getting-started/installation/README.md), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. Before we dive in let's grab some sample data using Dolt's Git-like `clone` operation:
+To follow along with this tutorial you need to have Dolt installed. See the [installation tutorial](installation.md), but it's as easy as `brew install dolt` for Mac users, and we publish `.msi` files for Windows users. Before we dive in let's grab some sample data using Dolt's Git-like `clone` operation:
 
 ```text
 $ dolt clone dolthub/great-players-example && cd great-players-example
@@ -104,7 +102,7 @@ owners.
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 ```
 
-Here the password is empty, that is the default for our Dolt SQL Server. If you want to go beyond local experiments a YAML file can be provided with configurations needed for a production instance. You can read about those in more detail [here](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/content/reference/sql/README.md), but for now we will proceed without security.
+Here the password is empty, that is the default for our Dolt SQL Server. If you want to go beyond local experiments a YAML file can be provided with configurations needed for a production instance. You can read about those in more detail [here](../interfaces/sql), but for now we will proceed without security.
 
 We didn't specify a database when connecting, but we can use the `show databases` command to see which database our Dolt SQL Server instance has mounted:
 
@@ -118,6 +116,7 @@ mysql> show databases;
 +-----------------------+
 2 rows in set (0.00 sec)
 ```
+
 
 Let's select a database so we can execute some queries:
 
@@ -134,11 +133,9 @@ Database changed
 Shell clients for SQL databases are good for testing connections and exploring data, but they aren't useful for building applications. For that we need higher level programming language. In the next section we show how to use Python MySQL connectors to write scripts that interact with Dolt.
 
 ### Python
-
-We have created a Python API for Dolt, which includes convenience methods for interacting with Dolt SQL Server. You can read more about that API [here](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/reference/python/README.md). In this example we use the off the shelf Python connector to emphasize compatibility with MySQL wire protocol.
+We have created a Python API for Dolt, which includes convenience methods for interacting with Dolt SQL Server. You can read more about that API [here](../interfaces/python). In this example we use the off the shelf Python connector to emphasize compatibility with MySQL wire protocol.
 
 First off, install the connector, which should look like something like this:
-
 ```text
 pip install mysql-connector-python
 Collecting mysql-connector-python
@@ -153,7 +150,6 @@ Successfully installed mysql-connector-python-8.0.23
 ```
 
 Now let's create a small script example:
-
 ```python
 from mysql import connector
 
@@ -181,4 +177,3 @@ As a reminder, Doltpy provides some convenience methods for interacting with loc
 ## Conclusion
 
 In this section we showed how to connect with Dolt SQL Server using off the shelf MySQL connectors to take advantage of Dolt's compatibility with the MySQL dialect.
-

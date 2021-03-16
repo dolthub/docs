@@ -38,8 +38,8 @@ If you want to get paid, you need to write some data to the repository, so let's
 
 A prerequisite making a Pull Request against the bounty repository from your fork is getting some non-trivial changes into that fork. There are several ways to go about this:
 
-* source a CSV file and upload it directly using our drag and drop functionality, see [docs](https://www.dolthub.com/docs/tutorials/dolthub/#data-publishing_file-upload) for further details
-* clone the database and use the command line, SQL, or Doltpy to make changes; see [docs](https://www.dolthub.com/docs/tutorials/writing-to-dolt/) for details
+* source a CSV file and upload it directly using our drag and drop functionality, see [docs](getting-started#file-upload) for further details
+* clone the database and use the command line, SQL, or Doltpy to make changes; see [docs](../getting-started/writing) for details
 
 The merge procedure that will compare your fork to the base repository is indifferent to how you made your changes, so long as they are correct.
 
