@@ -8,7 +8,7 @@ title: 'Expressions, Functions, and Operators'
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| Common statements | ✓ | See the [supported statements doc](https://github.com/dolthub/docs/tree/483390a96f3747775b02702ec2e76e6ba727f5ef/content/reference/sql/sql-support/supported-statements/README.md) |
+| Common statements | ✓ | See the [supported statements doc](supported-statements.md) |
 
 ## Clauses
 
@@ -123,7 +123,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()` | ✓ |  |  |
 | `COERCIBILITY()` | X |  |  |
 | `COLLATION()` | X |  |  |
-| `COMMIT()` | ✓ | Creates a new Dolt commit and returns the hash of it. See [concurrency](https://github.com/dolthub/docs/tree/483390a96f3747775b02702ec2e76e6ba727f5ef/content/reference/sql/sql-support/sql.md#concurrency) |  |
+| `COMMIT()` | ✓ | Creates a new Dolt commit and returns the hash of it. See [concurrency](../concurrency.md) |  |
 | `COMPRESS()` | X |  |  |
 | `CONCAT()` | ✓ |  |  |
 | `CONCAT_WS()` | ✓ |  |  |
@@ -194,7 +194,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GTID_SUBTRACT()` | X |  |  |
 | `GeomCollection()` | X |  |  |
 | `GeometryCollection()` | X |  |  |
-| `HASHOF()` | ✓ | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](https://github.com/dolthub/docs/tree/483390a96f3747775b02702ec2e76e6ba727f5ef/content/reference/sql/sql-support/sql.md#concurrency) |  |
+| `HASHOF()` | ✓ | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](../concurrency.md) |  |
 | `HEX()` | ✓ |  |  |
 | `HOUR()` | ✓ |  |  |
 | `ICU_VERSION()` | X |  |  |
@@ -496,4 +496,3 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `WEIGHT_STRING()` | X |  |  |
 | `YEAR()` | ✓ |  |  |
 | `YEARWEEK()` | ✓ |  |  |
-

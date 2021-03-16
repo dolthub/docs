@@ -12,7 +12,7 @@ For example, `dolt commit -m 'Added a table'` is equivalent to executing the fol
 SELECT DOLT_COMMIT('-m', 'Added a table');
 ```
 
-SQL functions are provided for all imperative CLI commands. For commands that inspect the state of the repository and print some information, \(`dolt diff`, `dolt log`, etc.\) [system tables](https://github.com/dolthub/docs/tree/483390a96f3747775b02702ec2e76e6ba727f5ef/content/reference/sql/dolt-system-tables/README.md) are provided instead.
+SQL functions are provided for all imperative CLI commands. For commands that inspect the state of the repository and print some information, \(`dolt diff`, `dolt log`, etc.\) [system tables](dolt-system-tables.md) are provided instead.
 
 ## DOLT\_COMMIT\(\)
 
@@ -223,4 +223,3 @@ SELECT DOLT_ADD('table')
 -- Unstage the table.
 SELECT DOLT_RESET('table')
 ```
-

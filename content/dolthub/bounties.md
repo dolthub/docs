@@ -22,7 +22,7 @@ Presuming you feel like capturing some of the $25,000 available for gathering pr
 
 ### Fork the Repository
 
-DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/getting-started/dolthub/README.md#data-collaboration) in our docs.
+DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](/getting-started.md#data-collaboration) in our docs.
 
 For now just fork `dolthub/us-president-precinct-results` into your own namespace:
 
@@ -68,4 +68,3 @@ When the bounty is over we will send an email to the primary email address on th
 ## Getting Help
 
 If you need help, or have questions, hop onto [Discord](https://discord.com/invite/RFwfYpu) and jump into the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
-

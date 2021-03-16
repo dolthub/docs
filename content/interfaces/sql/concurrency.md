@@ -4,7 +4,7 @@ title: Concurrency
 
 # Concurrency
 
-Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/cli/README.md#dolt-sql-server) for details.
+Currently, the only way the Dolt SQL server interface can handle modifications from multiple clients is by pushing some of the complexity onto the users. By default this mode is disabled, and autocommit mode is enabled, but concurrent connections can be enabled using either the `dolt sql-server` command line arguments, or the supported YAML configuration file. Read the [dolt sql-server documentation](../cli.md#dolt-sql-server) for details.
 
 ### @@dbname\_head
 
@@ -28,7 +28,7 @@ The COMMIT function writes a new commit to the database and returns the hash of 
 
 Dolt provides a manual commit mode where a user works with a detached HEAD whose value is accessible and modifiable through the session variable @@dbname\_head \(where dbname is the name of the database whose pointer you wish to read or write\). You can write new commits to the database by inserting and updating rows in the dolt\_branches table. See below for details on how this works.
 
-See the below examples as well as the section on [concurrency](https://www.dolthub.com/docs/reference/sql/#concurrency) for details.
+See the below examples as well as the section on [concurrency](concurrency.md) for details.
 
 Example:
 
@@ -142,4 +142,3 @@ SET @@mydb_head = MERGE('feature-branch');
 INSERT INTO dolt_branches (name, hash)
 VALUES("master", @@mydb_head);
 ```
-

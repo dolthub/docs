@@ -10,7 +10,7 @@ This tutorial covers how to read form Dolt databases using three different inter
 
 ## Clone an Example Database
 
-Before looking at the different interfaces, let's grab a public database from [DoltHub](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/content/dolthub/README.md). Dolt implements Git-like clone operations, so it's easy enough:
+Before looking at the different interfaces, let's grab a public database from [DoltHub](../dolthub/getting-started.md). Dolt implements Git-like clone operations, so it's easy enough:
 
 ```text
 $ dolt clone dolthub/ip-to-country && cd ip-to-country
@@ -260,4 +260,3 @@ You can now proceed to do your data analysis using the familiar database interfa
 We examined four different interfaces for examining data stored in a Dolt database. In each case we obtained the data using the `dolt clone` command, which mimics the Git command that has made acquiring code so easy. The data that arrived via the command line could be immediately worked with via a SQL interface.
 
 This illustrates the core value proposition of Dolt as a distribution format. Dolt provides seamless data distribution, and a familiar query interface, along with a server process for executing those queries.
-

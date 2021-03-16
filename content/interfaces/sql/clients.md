@@ -4,7 +4,7 @@ title: SQL Clients
 
 # SQL Clients
 
-Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](https://www.dolthub.com/docs/reference/cli/#dolt-sql-server).
+Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](../interfaces/cli.md#dolt-sql-server).
 
 Once a server is running, any MySQL client should be able to connect to Dolt SQL Server in the exact same way it connects to a standard MySQL database. We explicitly support the programmatic clients outlined in this document through integration testing. Tests are run on GitHub pull requests to Dolt in a Ubuntu environment in a Docker container. If you would like another MySQL compatible client supported and tested, [please let us know](https://www.dolthub.com/contact).
 
@@ -17,12 +17,12 @@ We currently support two native Python MySQL connectors, [mysql.connector](https
 ### mysql.connector
 
 * [Offical Client documentation.](https://dev.mysql.com/doc/connector-python/en/)
-* [Python mysql.connector test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/python/mysql.connector-test.py)
+* [Python mysql.connector test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/python/mysql.connector-test.py)
 
 ### pymysql
 
 * [Offical Client documentation](https://pymysql.readthedocs.io/en/latest/)
-* [Python pymysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/python/pymysql-test.py)
+* [Python pymysql test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/python/pymysql-test.py)
 
 ### SQLAlchemy
 
@@ -38,61 +38,60 @@ engine = create_engine(conn_string_base +
 ```
 
 * [Offical Library documentation](https://docs.sqlalchemy.org/en/13/)
-* [Python SQLAlchemy test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/python/sqlalchemy-test.py)
+* [Python SQLAlchemy test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/python/sqlalchemy-test.py)
 
 ## Node
 
 We support the standard `mysql` Node library.
 
 * [Official Client documentation](https://www.npmjs.com/package/mysql)
-* [Node MySQL test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/node/index.js)
+* [Node MySQL test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/node/index.js)
 
 ## Java
 
 We support the Java client distributed on the MySQL website called `mysql-connector-java`. For our test we use the architecture independent build.
 
 * [Official Client Documentation](https://dev.mysql.com/doc/connector-j/8.0/en/)
-* [Java mysql-connector test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/java/MySQLConnectorTest.java)
+* [Java mysql-connector test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/java/MySQLConnectorTest.java)
 
 ## C
 
 We support [libmysqlclient](https://dev.mysql.com/doc/c-api/8.0/en/) distrbuted by MySQL. On OSX, we tested the client distributed by `brew install mysql-client`. For the Ubuntu tests, we `apt install -y libmysqlclient-dev`. We then use `pkg-config` to generate the proper `CFLAGS` and `LDFLAGS`.
 
 * [Official Client Documentation](https://dev.mysql.com/doc/c-api/8.0/en/)
-* [C libmysqlclient test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/c/mysql-connector-c-test.c)
+* [C libmysqlclient test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/c/mysql-connector-c-test.c)
 
 ## C++
 
-We support `mysql-connector-cpp`. Getting it to work correctly required we checkout and build [mysql-connector-cpp](https://github.com/mysql/mysql-connector-cpp) using the proper flags and dependencies. This was a relatively heavy lift but you can use [our build logic](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/cpp/README.md) as an example.
+We support `mysql-connector-cpp`. Getting it to work correctly required we checkout and build [mysql-connector-cpp](https://github.com/mysql/mysql-connector-cpp) using the proper flags and dependencies. This was a relatively heavy lift but you can use [our build logic](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/cpp/README.md) as an example.
 
 * [Official Client Documentation](https://dev.mysql.com/doc/connector-cpp/8.0/en/)
-* [C++ mysql-connector-cpp test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/cpp/mysql-connector-cpp-test.cpp)
+* [C++ mysql-connector-cpp test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/cpp/mysql-connector-cpp-test.cpp)
 
 ## Dotnet
 
 We support [MySql.Data](https://www.nuget.org/packages/MySql.Data/) distrbuted by MySQL. On OSX and Ubuntu we tested the client using [.Net core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 
 * [Official Client Documentation](https://dev.mysql.com/doc/connector-net/en/connector-net-introduction.html)
-* [MySql.Data test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/dotnet/Program.cs)
+* [MySql.Data test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/dotnet/Program.cs)
 
 ## Perl
 
 We support the [DBD::mysql](https://metacpan.org/pod/DBD::mysql) package that implements [DBI](https://metacpan.org/pod/DBI) for MySQL. This connector relies on [libmysqlclient](https://dev.mysql.com/doc/c-api/8.0/en/).
 
 * [Official Client Documentation](https://metacpan.org/pod/DBD::mysql)
-* [DBD:mysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/perl/dbd-mysql-test.pl)
+* [DBD:mysql test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/perl/dbd-mysql-test.pl)
 
 ## Go
 
 We support the [go-sql-driver/mysql](https://github.com/go-sql-driver/mysql) package. This is the MySQL driver for the [database/sql](https://golang.org/pkg/database/sql/) package.
 
 * [Official Client Documentation](https://github.com/go-sql-driver/mysql)
-* [go-sql-driver/mysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/go/go-sql-driver-mysql-test.go)
+* [go-sql-driver/mysql test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/go/go-sql-driver-mysql-test.go)
 
 ## Ruby
 
 We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library. The [mysql/ruby](http://www.tmtm.org/en/mysql/ruby/) package uses the MySQL C API and [has not been ported to MySQL client version 8](https://github.com/luislavena/mysql-gem/issues/35). Thus, we do not support `mysql/ruby`.
 
 * [Official Client Documentation](http://www.tmtm.org/en/ruby/mysql/)
-* [ruby/mysql test code](https://github.com/dolthub/dolt/blob/master/mysql-client-tests/ruby/ruby-mysql-test.rb)
-
+* [ruby/mysql test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/ruby/ruby-mysql-test.rb)

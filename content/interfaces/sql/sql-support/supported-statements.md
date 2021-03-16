@@ -20,7 +20,7 @@ title: Supported Statements
 | `LOAD XML` | X | Use `dolt table import` |
 | `REPLACE` | ✓ |  |
 | `SELECT` | ✓ | Most select statements, including `UNION` and `JOIN`, are supported. |
-| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](https://github.com/dolthub/docs/tree/0d4afbb9419de3674e55343f64688aea8fcd188e/content/reference/sql/sql-support/sql.md#querying-non-head-revisions-of-a-database). |
+| `SELECT FROM AS OF` | ✓ | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](../concurrency.md). |
 | `SELECT FOR UPDATE` | X | Locking and concurrency are currently very limited. |
 | `SUBQUERIES` | ✓ | Subqueries work, but must be given aliases. Some limitations apply. |
 | `TABLE` | X | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause. |
@@ -100,7 +100,7 @@ Not much work has been put into supporting the true transaction and concurrency 
 | :--- | :--- | :--- |
 | `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
 | `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](https://github.com/dolthub/docs/tree/0d4afbb9419de3674e55343f64688aea8fcd188e/content/reference/sql/sql-support/sql.md#concurrency) for details. |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../concurrency.md) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | X |  |
@@ -122,7 +122,7 @@ Not much work has been put into supporting the true transaction and concurrency 
 
 Access management via SQL statements is not yet supported. This table will be updated as access management features are implemented. Please [file an issue](https://github.com/dolthub/dolt/issues) if lack of SQL access management is blocking your use of Dolt, and we will prioritize accordingly.
 
-A root user name and password can be specified in the config for [`sql-server`](https://github.com/dolthub/docs/tree/bfdf7d8c4c511940b3281abe0290c8eb4097e6c0/cli/dolt-sql-server/README.md). This user has full privileges on the running database.
+A root user name and password can be specified in the config for [`sql-server`](../../cli.md#dolt-sql-server). This user has full privileges on the running database.
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
@@ -153,4 +153,3 @@ A root user name and password can be specified in the config for [`sql-server`](
 | :--- | :--- | :--- |
 | `EXPLAIN` | ✓ |  |
 | `USE` | ✓ |  |
-
