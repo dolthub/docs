@@ -30,7 +30,7 @@ Our current support for syncing MySQL and Dolt allows users to sync data from My
 
 #### Setup
 
-In order to perform the sync we need some objects that provide connections to the relevant databases, and we need to start any database servers needed. Let's assume we are running MySQL on `mysql_host` and `mysql_port`. We can crate the required database engine object, and an object to represent our Dolt database as follows:
+In order to perform the sync we need some objects that provide connections to the relevant databases, and we need to start any database servers needed. Let's assume we are running MySQL on `mysql_host` and `mysql_port`. We can create the required database engine object, and an object to represent our Dolt database as follows:
 
 ```python
 from doltpy.core import Dolt
