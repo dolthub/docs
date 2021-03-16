@@ -4,7 +4,7 @@ title: Spreadsheets
 
 # Spreadsheets
 
-Spreadsheets are a fundamental data analysis tool. If you provide a data tool, it must integrate with spreadsheet software. This document outlines Dolt's supported integrations to various spreadheet tools: how to read data from Dolt into a spreadsheet, how to write data from a spreadsheet into Dolt, and how to access Dolt versioning functionality from spreadsheets.
+Spreadsheets are a fundamental data analysis tool. If you provide a data tool, it must integrate with spreadsheet software. This document outlines Dolt's supported integrations to various spreadsheet tools: how to read data from Dolt into a spreadsheet, how to write data from a spreadsheet into Dolt, and how to access Dolt versioning functionality from spreadsheets.
 
 ## Excel
 
@@ -150,11 +150,7 @@ example.csv
 
 Navigate in your web browser to the desired Google Sheet. Select `File` &gt; `Open`, select the Upload tab, and either drag the `example.csv` file into the web browser window or `Select a file from your device` using the operating system's file system browser. Click `OK` and the Dolt table should be loaded in as a sheet named after the CSV filename.
 
-<<<<<<< Updated upstream
-![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv%20%285%29%20%285%29.png)
-=======
 ![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv.png)
->>>>>>> Stashed changes
 
 Note, you can also export the results of a single query using `dolt sql -r csv -q <query> > export.csv`.
 

@@ -252,5 +252,4 @@ In this section we used the example from both the CLI and SQL sections, but exec
 
 ## Summary
 
-Much like the [Reading from Dolt](https://github.com/dolthub/docs/tree/0e569cab08639d78816564ec8da3bab719093f46/content/getting-started/reading-from-dolt/README.md) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
-
+Much like the [Reading from Dolt](../getting-started/reading.md) tutorial we followed exactly the same steps across three different interfaces. The goal of doing so is to illustrate that Dolt, just like existing relational database solutions, offers a variety of mechanisms for working with the underlying data. Users should choose the one best suited to their particular use-case.
