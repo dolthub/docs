@@ -22,7 +22,7 @@ Presuming you feel like capturing some of the $25,000 available for gathering pr
 
 ### Fork the Repository
 
-DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/getting-started/dolthub/README.md#data-collaboration) in our docs.
+DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a form of collaboration where there is a financial reward associated with an accepted contribution. You can read about DoltHub's collaboration model in greater detail [elsewhere](getting-started.md#data-collaboration) in our docs.
 
 For now just fork `dolthub/us-president-precinct-results` into your own namespace:
 
@@ -38,8 +38,8 @@ If you want to get paid, you need to write some data to the repository, so let's
 
 A prerequisite making a Pull Request against the bounty repository from your fork is getting some non-trivial changes into that fork. There are several ways to go about this:
 
-* source a CSV file and upload it directly using our drag and drop functionality, see [docs](https://www.dolthub.com/docs/tutorials/dolthub/#data-publishing_file-upload) for further details
-* clone the database and use the command line, SQL, or Doltpy to make changes; see [docs](https://www.dolthub.com/docs/tutorials/writing-to-dolt/) for details
+* source a CSV file and upload it directly using our drag and drop functionality, see [docs](getting-started.md#file-upload) for further details
+* clone the database and use the command line, SQL, or Doltpy to make changes; see [docs](../getting-started/writing.md) for details
 
 The merge procedure that will compare your fork to the base repository is indifferent to how you made your changes, so long as they are correct.
 
@@ -68,4 +68,3 @@ When the bounty is over we will send an email to the primary email address on th
 ## Getting Help
 
 If you need help, or have questions, hop onto [Discord](https://discord.com/invite/RFwfYpu) and jump into the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
-

@@ -10,6 +10,5 @@ The content is organized as follows:
 
 * [Data Description](data-description.md): SQL features for describing and organizing data
 * [Expressions, Functions, Operators](expressions-functions-operators.md): SQL expressions, functions and operators used in queries
-* [Supported Statements](https://github.com/dolthub/docs/tree/95ed38328c2aed47d61c08060dc93f0b852d1baa/content/reference/sql/sql-support/supported-statement.md): statements Dolt supports
+* [Supported Statements](supported-statements.md): statements Dolt supports
 * [Miscellaneous](miscellaneous.md): miscellaneous SQL features
-

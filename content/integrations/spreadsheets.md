@@ -4,7 +4,7 @@ title: Spreadsheets
 
 # Spreadsheets
 
-Spreadsheets are a fundamental data analysis tool. If you provide a data tool, it must integrate with spreadsheet software. This document outlines Dolt's supported integrations to various spreadheet tools: how to read data from Dolt into a spreadsheet, how to write data from a spreadsheet into Dolt, and how to access Dolt versioning functionality from spreadsheets.
+Spreadsheets are a fundamental data analysis tool. If you provide a data tool, it must integrate with spreadsheet software. This document outlines Dolt's supported integrations to various spreadsheet tools: how to read data from Dolt into a spreadsheet, how to write data from a spreadsheet into Dolt, and how to access Dolt versioning functionality from spreadsheets.
 
 ## Excel
 
@@ -12,13 +12,13 @@ This document assumes you are using Windows and would like to access a local Dol
 
 ### Reading from Dolt
 
-Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](https://www.dolthub.com/docs/tutorials/dolthub/#api-alpha) is recommended.
+Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
 
 #### Using CSVs
 
 If your data is small enough, it may be practical to export an entire Dolt table as a CSV and then read that CSV into Excel.
 
-To export a table from dolt to a CSV, [install Dolt](https://www.dolthub.com/docs/tutorials/installation/), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
+To export a table from dolt to a CSV, [install Dolt](../getting-started/installation.md), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
 
 ```bash
 $ dolt table export test
@@ -28,7 +28,7 @@ pk,test_col
 2,1
 $ dolt table export test > example.csv
 Successfully exported data.
-$ ls example.csv 
+$ ls example.csv
 example.csv
 ```
 
@@ -109,18 +109,18 @@ Most of the time, the above will work as you expect. But sometimes, you'll want 
 $ dolt schema import -c --pks pk --dry-run schema_import_test Sheet1.csv  
 CREATE TABLE `schema_import_test` (
   `pk` INT UNSIGNED NOT NULL COMMENT 'tag:9152',
-  `test_col` INT UNSIGNED NOT NULL COMMENT 'tag:13834',
+  `test_col` INT UNSIGNED NOT NULL hCOMMENT 'tag:13834',
   PRIMARY KEY (`pk`)
 );
 ```
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](https://www.dolthub.com/docs/tutorials/sharing-on-dolthub/) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
 
 ### Accessing Dolt Versioning
 
-We don't have a compelling story right now for either reading or creating versioning information in Excel. The ability to control branch and commit within Excel could be compelling. The best way to get read access to versioning information from Excel would be to use SQL and [Dolt System tables](https://www.dolthub.com/docs/reference/sql/#dolt-system-tables) to query the versioning information you would like using the process outlined in "Reading from Dolt Using ODBC".
+We don't have a compelling story right now for either reading or creating versioning information in Excel. The ability to control branch and commit within Excel could be compelling. The best way to get read access to versioning information from Excel would be to use SQL and [Dolt System tables](../interfaces/sql/dolt-system-tables.md) to query the versioning information you would like using the process outlined in "Reading from Dolt Using ODBC".
 
 We imagine providing this functionality through an Excel Plug In in the future. If this feature is compelling to you, [let us know](https://www.dolthub.com/contact).
 
@@ -128,13 +128,13 @@ We imagine providing this functionality through an Excel Plug In in the future. 
 
 ### Reading from Dolt
 
-This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](https://www.dolthub.com/docs/tutorials/dolthub/#api-alpha) is recommended.
+This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
 
 #### Using CSVs
 
 If your data is small enough, it may be practical to export an entire Dolt table as a CSV and then read that CSV into Google Sheets.
 
-To export a table from dolt to a CSV, [install Dolt](https://www.dolthub.com/docs/tutorials/installation/), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
+To export a table from dolt to a CSV, [install Dolt](../getting-started/installation.md), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
 
 ```bash
 $ dolt table export test
@@ -144,13 +144,13 @@ pk,test_col
 2,1
 $ dolt table export test > example.csv
 Successfully exported data.
-$ ls example.csv 
+$ ls example.csv
 example.csv
 ```
 
 Navigate in your web browser to the desired Google Sheet. Select `File` &gt; `Open`, select the Upload tab, and either drag the `example.csv` file into the web browser window or `Select a file from your device` using the operating system's file system browser. Click `OK` and the Dolt table should be loaded in as a sheet named after the CSV filename.
 
-![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv%20%285%29%20%285%29.png)
+![Google Sheets Read CSV Example](../.gitbook/assets/google-sheets-read-csv.png)
 
 Note, you can also export the results of a single query using `dolt sql -r csv -q <query> > export.csv`.
 
@@ -186,10 +186,10 @@ Paste the following code into the script editor:
 
 ```text
 var server    = '0.tcp.ngrok.io';
-var dbName    = 'dolt_test'; 
+var dbName    = 'dolt_test';
 var username  = 'dolt';  
 var password  = '';  
-var port      = 15612; 
+var port      = 15612;
 
 var query = 'SELECT * FROM test';
 
@@ -296,7 +296,7 @@ CREATE TABLE `schema_import_test` (
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](https://www.dolthub.com/docs/tutorials/sharing-on-dolthub/) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
 
 #### Using SQL JDBC Connector
 
@@ -310,10 +310,10 @@ First step is to start a `dolt sql-server` and expose a port to the internet as 
 
 ```text
 var server    = '0.tcp.ngrok.io';
-var dbName    = 'dolt_test'; 
+var dbName    = 'dolt_test';
 var username  = 'dolt';  
 var password  = '';  
-var port      = 15612; 
+var port      = 15612;
 
 var sheetName = 'Sheet1';
 
@@ -324,7 +324,7 @@ function writeDolt() {
   var data = sheet.getDataRange().getValues();
 
   // Clear the table so we mirror the sheet
-  var query = 'delete from test'; 
+  var query = 'delete from test';
 
   var url = 'jdbc:mysql://' + server + ':' + port + '/' + dbName;
   var conn = Jdbc.getConnection(url, username, password);
@@ -336,7 +336,7 @@ function writeDolt() {
     // the query manually
     query = 'insert into test values(';
 
-    // ignore last column (ie. formula) by subtracting 1 from length 
+    // ignore last column (ie. formula) by subtracting 1 from length
     var first = 1;
     for (var j =0; j < data[i].length - 1; j++) {
       if ( first ) {
@@ -373,7 +373,6 @@ You can add and commit these changes with standard Dolt commands `dolt add test`
 
 ### Accessing Dolt Versioning
 
-We don't have a compelling story right now for either reading or creating versioning information in Google sheets. The ability to control branch and commit within Google Sheets could be compelling. The best way to get read access to versioning information from Google Sheets would be to use SQL and [Dolt System tables](https://www.dolthub.com/docs/reference/sql/#dolt-system-tables) to query the versioning information you would like using the process outlined in "Reading from Dolt Using SQL JDBC Connector".
+We don't have a compelling story right now for either reading or creating versioning information in Google sheets. The ability to control branch and commit within Google Sheets could be compelling. The best way to get read access to versioning information from Google Sheets would be to use SQL and [Dolt System tables](../interfaces/sql/dolt-system-tables.md) to query the versioning information you would like using the process outlined in "Reading from Dolt Using SQL JDBC Connector".
 
 We imagine providing this functionality through an Google Sheets Add On in the future. If this feature is compelling to you, [let us know](https://www.dolthub.com/contact).
-
