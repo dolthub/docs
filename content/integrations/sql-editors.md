@@ -10,4 +10,4 @@ Dolt comes with a built in MySQL compatible server that you can connect SQL Edit
 | [Dbeaver](https://dbeaver.io/) | ✓ |  |
 | [Datagrip](https://www.jetbrains.com/datagrip/) | X | Need to implement a couple functions |
 
-If there are other editorsd that you want us to be compatible with please do not hesitate to reach out!
+If there are other editors that you want us to be compatible with please do not hesitate to reach out!
