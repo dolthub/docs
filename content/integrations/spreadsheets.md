@@ -120,7 +120,7 @@ To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commi
 
 ### Accessing Dolt Versioning
 
-We don't have a compelling story right now for either reading or creating versioning information in Excel. The ability to control branch and commit within Excel could be compelling. The best way to get read access to versioning information from Excel would be to use SQL and [Dolt System tables](../interfaces/sql/dolt-system-tables) to query the versioning information you would like using the process outlined in "Reading from Dolt Using ODBC".
+We don't have a compelling story right now for either reading or creating versioning information in Excel. The ability to control branch and commit within Excel could be compelling. The best way to get read access to versioning information from Excel would be to use SQL and [Dolt System tables](../interfaces/sql/dolt-system-tables.md) to query the versioning information you would like using the process outlined in "Reading from Dolt Using ODBC".
 
 We imagine providing this functionality through an Excel Plug In in the future. If this feature is compelling to you, [let us know](https://www.dolthub.com/contact).
 
@@ -128,13 +128,13 @@ We imagine providing this functionality through an Excel Plug In in the future. 
 
 ### Reading from Dolt
 
-This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started#api-alpha) is recommended.
+This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
 
 #### Using CSVs
 
 If your data is small enough, it may be practical to export an entire Dolt table as a CSV and then read that CSV into Google Sheets.
 
-To export a table from dolt to a CSV, [install Dolt](../getting-started/installation), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
+To export a table from dolt to a CSV, [install Dolt](../getting-started/installation.md), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
 
 ```bash
 $ dolt table export test

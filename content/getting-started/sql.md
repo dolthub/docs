@@ -133,7 +133,7 @@ Database changed
 Shell clients for SQL databases are good for testing connections and exploring data, but they aren't useful for building applications. For that we need higher level programming language. In the next section we show how to use Python MySQL connectors to write scripts that interact with Dolt.
 
 ### Python
-We have created a Python API for Dolt, which includes convenience methods for interacting with Dolt SQL Server. You can read more about that API [here](../interfaces/python). In this example we use the off the shelf Python connector to emphasize compatibility with MySQL wire protocol.
+We have created a Python API for Dolt, which includes convenience methods for interacting with Dolt SQL Server. You can read more about that API [here](../interfaces/python.md). In this example we use the off the shelf Python connector to emphasize compatibility with MySQL wire protocol.
 
 First off, install the connector, which should look like something like this:
 ```text

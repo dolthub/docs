@@ -20,7 +20,7 @@ SQL functions are provided for all imperative CLI commands. For commands that in
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with each value directly following the flag. Note that you must always support the message flag with the intended message right after.
 
-By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. You can also issue manual COMMIT statements to flush the working set to disk. See the section on [concurrency](https://www.dolthub.com/docs/reference/sql/#concurrency).
+By default, when running in server mode with dolt sql-server, dolt does not automatically update the working set of your repository with data updates unless @@autocommit is set to 1. You can also issue manual COMMIT statements to flush the working set to disk. See the section on [concurrency](concurrency.md).
 
 ```sql
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit');

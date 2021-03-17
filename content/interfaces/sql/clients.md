@@ -4,7 +4,7 @@ title: SQL Clients
 
 # SQL Clients
 
-Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](../interfaces/cli.md#dolt-sql-server).
+Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](../cli.md#dolt-sql-server).
 
 Once a server is running, any MySQL client should be able to connect to Dolt SQL Server in the exact same way it connects to a standard MySQL database. We explicitly support the programmatic clients outlined in this document through integration testing. Tests are run on GitHub pull requests to Dolt in a Ubuntu environment in a Docker container. If you would like another MySQL compatible client supported and tested, [please let us know](https://www.dolthub.com/contact).
 
@@ -73,7 +73,7 @@ We support `mysql-connector-cpp`. Getting it to work correctly required we check
 We support [MySql.Data](https://www.nuget.org/packages/MySql.Data/) distrbuted by MySQL. On OSX and Ubuntu we tested the client using [.Net core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 
 * [Official Client Documentation](https://dev.mysql.com/doc/connector-net/en/connector-net-introduction.html)
-* [MySql.Data test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/dotnet/Program.cs)
+* [MySql.Data test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/dotnet/MySqlConnector/Program.cs)
 
 ## Perl
 

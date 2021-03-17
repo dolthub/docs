@@ -80,7 +80,7 @@ This will create a binary named `dolt` at `~/go/bin/dolt`, unless you have `$GO_
 
 #### Set your config variables and connect to DoltHub
 
-After installing Dolt, the first thing you should do is set config variables. This is the information that will be used on each Dolt commit that you push. [See CLI reference](../interfaces/cli#dolt-config). If you already have a DoltHub account, just run `dolt login`, which automatically sets the variables for you. This will also prompt you to create and save a new credential key on DoltHub, which allows the CLI to authenticate.
+After installing Dolt, the first thing you should do is set config variables. This is the information that will be used on each Dolt commit that you push. [See CLI reference](../interfaces/cli.md#dolt-config). If you already have a DoltHub account, just run `dolt login`, which automatically sets the variables for you. This will also prompt you to create and save a new credential key on DoltHub, which allows the CLI to authenticate.
 
 If you don't have a DoltHub account yet, you can set the config variables manually:
 
