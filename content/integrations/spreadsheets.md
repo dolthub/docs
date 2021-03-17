@@ -116,7 +116,7 @@ CREATE TABLE `schema_import_test` (
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started#data-publishing) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
 
 ### Accessing Dolt Versioning
 
@@ -296,7 +296,7 @@ CREATE TABLE `schema_import_test` (
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started#data-publishing) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
 
 #### Using SQL JDBC Connector
 

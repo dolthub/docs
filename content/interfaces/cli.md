@@ -518,7 +518,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 
 GCP remote urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google +
 
-The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See [https://en.wikipedia.org/wiki/File\_URI\_schemethi](https://en.wikipedia.org/wiki/File_URI_schemethi) `remove`, `rm`, Remove the remote named `<name>`. All remote-tracking branches and configuration settings for the remote are removed.
+The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See [here](https://en.wikipedia.org/wiki/File_URI_scheme) for details. `remove`, `rm`, Remove the remote named `<name>`. All remote-tracking branches and configuration settings for the remote are removed.
 
 ### Options
 
@@ -743,4 +743,3 @@ If the `--all` flag is supplied both user and system tables will be printed.
 `-s`, `--system`: show system tables
 
 `-a`, `--all`: show system tables
-
