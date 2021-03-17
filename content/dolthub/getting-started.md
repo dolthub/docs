@@ -10,7 +10,7 @@ DoltHub is a collaboration platform for managing Dolt databases. Dolt is the for
 
 ## Signing Up
 
-This tutorial assumes that you have signed up for DoltHub, though you needn't do so to clone public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](../dolthub/installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
+This tutorial assumes that you have signed up for DoltHub, though you needn't do so to clone public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](../getting-started/installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
 
 ## Data Acquisition
 
@@ -195,7 +195,7 @@ You are now logged in and you can push data to DoltHub.
 
 ### DoltHub Remotes
 
-Publishing data is equally easy once it's in the Dolt format. In [another section](writing-to-dolt.md) we showed how to write data to Dolt. Let's assume we have some data in a local Dolt repository:
+Publishing data is equally easy once it's in the Dolt format. In [another section](../getting-started/writing.md) we showed how to write data to Dolt. Let's assume we have some data in a local Dolt repository:
 
 ```text
 $ cat > great_players.csv
