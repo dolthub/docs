@@ -2,7 +2,7 @@
 title: Miscellaneous
 ---
 
-# Micscellaneous
+# Miscellaneous
 
 ## Permissions
 
