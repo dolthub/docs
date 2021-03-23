@@ -6,7 +6,7 @@ title: Why Dolt
 
 ## A Relational Database, Evolved
 
-Existing relational databases were built in a different era of computing. Their design goal was to capture the state of the application, and serve it up in a performant way.
+Existing relational databases were built in a different era of computing. Their design goal was to capture the state of the application, and serve it up in a performant way. Dolt is built for a new era. 
 
 ## Data Has Changed, Databases Have Not
 
