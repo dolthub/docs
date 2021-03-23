@@ -50,41 +50,41 @@ It's important recognize that these are industry standard tests, and are OLTP or
 
 Below are the results of running `sysbench` MySQL tests against Dolt SQL Server for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
-The Dolt version is `0.24.2`.
+The Dolt version is `0.24.3`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
-| covering\_index\_scan | 10.27 | 1.39 | 7.0 |
-| index\_scan | 123.28 | 34.95 | 4.0 |
+| covering\_index\_scan | 10.65 | 1.44 | 7.0 |
+| index\_scan | 121.08 | 35.95 | 3.0 |
 | oltp\_point\_select | 1.3 | 0.11 | 12.0 |
-| oltp\_read\_only | 29.19 | 2.26 | 13.0 |
-| select\_random\_points | 2.61 | 0.26 | 10.0 |
-| select\_random\_ranges | 2.71 | 0.29 | 9.0 |
-| table\_scan | 134.9 | 35.59 | 4.0 |
+| oltp\_read\_only | 29.72 | 2.3 | 13.0 |
+| select\_random\_points | 2.66 | 0.26 | 10.0 |
+| select\_random\_ranges | 2.76 | 0.29 | 10.0 |
+| table\_scan | 134.9 | 36.24 | 4.0 |
 | mean |  |  | _8.43_ |
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_delete | 11.24 | 0.11 | 102.0 |
-| oltp\_insert | 12.75 | 2.57 | 5.0 |
-| oltp\_read\_write | 78.6 | 6.09 | 13.0 |
-| oltp\_update\_index | 14.73 | 2.71 | 5.0 |
-| oltp\_update\_non\_index | 8.28 | 2.66 | 3.0 |
-| oltp\_write\_only | 52.89 | 3.62 | 15.0 |
-| mean |  |  | _20.57_ |
+| oltp\_delete | 11.45 | 0.11 | 104.0 |
+| oltp\_insert | 12.75 | 3.62 | 4.0 |
+| oltp\_read\_write | 78.6 | 7.17 | 11.0 |
+| oltp\_update\_index | 14.73 | 3.82 | 4.0 |
+| oltp\_update\_non\_index | 8.13 | 3.82 | 2.0 |
+| oltp\_write\_only | 52.89 | 4.91 | 11.0 |
+| mean |  |  | _19.57_ |
 
-| Overall Mean Multiple | _14.5_ |
+| Overall Mean Multiple | _14.0_ |
 | :--- | :--- |
 <br/>
 ### SQL Correctness
 
-To measure Dolt's SQL correctness, we test each release of Dolt against a SQL testing suite called the [sqllogictests](https://github.com/dolthub/sqllogictest). More passing tests with a result of "ok" indicate the degree to which Dolt's SQL engine is working correctly. Here are Dolt's correctness results for version `0.24.2`.
+To measure Dolt's SQL correctness, we test each release of Dolt against a SQL testing suite called the [sqllogictests](https://github.com/dolthub/sqllogictest). More passing tests with a result of "ok" indicate the degree to which Dolt's SQL engine is working correctly. Here are Dolt's correctness results for version `0.24.3`.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5466817 |
-| not ok | 463605 |
+| ok | 5466798 |
+| not ok | 463624 |
 | did not run | 2464 |
 | timeout | 2 |
 | _total_ _tests_ | 5932888 |
