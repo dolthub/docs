@@ -9,6 +9,8 @@
   * [Time Travel](introduction/why-dolt/time-travel.md)
   * [Collaboration](introduction/why-dolt/collaboration.md)
 * [What is Dolt](introduction/what-is-dolt.md)
+* [Quickstart](introduction/quickstart.md)
+
 
 ## Getting Started
 
@@ -46,8 +48,9 @@
 
 * [Architecture](reference/architecture.md)
 * [Scalability, Availability, and Performance](reference/characteristics.md)
+* [FAQ](reference/faq.md)
+* [Roadmap](reference/roadmap.md)
 
 ## Guides
 
 * [SQL Sync](guides/sql-sync.md)
-
