@@ -16,7 +16,7 @@ title: Supported Statements
 | `HANDLER` | X |  |
 | `IMPORT TABLE` | X | Use `dolt table import` |
 | `INSERT` | ✓ | Including support for `ON DUPLICATE KEY` clauses. |
-| `LOAD DATA` | X | Use `dolt table import` |
+| `LOAD DATA` | ✓ |  |
 | `LOAD XML` | X | Use `dolt table import` |
 | `REPLACE` | ✓ |  |
 | `SELECT` | ✓ | Most select statements, including `UNION` and `JOIN`, are supported. |
