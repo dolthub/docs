@@ -48,8 +48,8 @@
 
 * [Architecture](reference/architecture.md)
 * [Scalability, Availability, and Performance](reference/characteristics.md)
-* [FAQ](introduction/faq.md)
-* [Roadmap](introduction/roadmap.md)
+* [FAQ](reference/faq.md)
+* [Roadmap](reference/roadmap.md)
 
 ## Guides
 
