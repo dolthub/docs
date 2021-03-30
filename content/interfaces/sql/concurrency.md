@@ -65,7 +65,7 @@ SET @@mydb_head = MERGE('feature-branch');
 ### SQUASH\(\)
 
 The SQUASH function merges a branch's root value into the current branch's working set. With this approach the user can then commit the changes, adding only 1 commit to a branch's
-history compared to the many that can orginate from a convential merge.
+history compared to the many that can orginate from a conventional merge.
 
 The argument passed to the function is a reference to a branch \(its name\).
 
