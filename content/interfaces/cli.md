@@ -669,7 +669,8 @@ By default, starts a MySQL-compatible server which allows only one user connecti
 <div class="gatsby-highlight" data-language="text">
 	<pre class="By default, starts a MySQL-compatible server whilanguage-text">
 		<code class="language-text">
-			log_level: info
+
+log_level: info
 
 behavior:
   read_only: false
