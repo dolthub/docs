@@ -2,9 +2,9 @@
 
 ## Quickstart
 
-Dolt can be used in Docker environments with a few short commands.
+Dolt can be run in Docker with a few short commands.
 
-1. Add the Dolt intall command to your `Dockerfile` (refer below for [sample Dockerfiles](#samples)):
+1. Install Dolt in your `Dockerfile` (refer below for complete [sample Dockerfiles](#samples)):
 ```Dockerfile
 RUN curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
 ```
@@ -53,16 +53,17 @@ Valid commands for dolt are
                reset - Remove table changes from the list of staged table changes.
 > docker run dolt-test version 
 dolt version 0.24.4
-> docker run dolt-test -v ${pwd}:/home/src -w /home/src dolt init
 ```
 
-A more interest example mounts a local data directory:
+A more interesting example mounts a local data directory:
 ```bash
 > mkdir test
-> docker run -v $PWD/test:/home/test -w /home/test dolt-cent sql -q "create table t1 (a bigint primary key)"
-> docker run -v $PWD/test:/home/test -w /home/test dolt-cent sql -q "insert into t1 values (0), (1)"
+> docker run -v $PWD/test:/home/test -w /home/test dolt-test init
+Successfully initialized dolt data repository.
+> docker run -v $PWD/test:/home/test -w /home/test dolt-test sql -q "create table t1 (a bigint primary key)"
+> docker run -v $PWD/test:/home/test -w /home/test dolt-test sql -q "insert into t1 values (0), (1)"
 Query OK, 2 rows affected
-> docker run -v $PWD/test:/home/test -w /home/test dolt-cent sql -q "select * from t1"
+> docker run -v $PWD/test:/home/test -w /home/test dolt-test sql -q "select * from t1"
 +---+
 | a |
 +---+
@@ -89,13 +90,13 @@ ENTRYPOINT ["dolt"]
 CMD ["sql-server", "-l", "trace", "--host", "0.0.0.0"]
 ```
 
-If our current directory is a valid Dolt repo:
+If our current directory has a valid Dolt repo `test`:
 ```bash
 > docker run -p 3306:3306 -v $PWD/test:/home/test -w /home/test dolt-test
 Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
 ```
 
-If we run above with `-d` or switch to a separate window we can connect with MySQL (empty password by default):
+If we run the command above with `-d` or switch to a separate window we can connect with MySQL (empty password by default):
 ```bash
 > mysql> --user=root --host=0.0.0.0 -t test -p
 mysql> select * from t1;
@@ -109,8 +110,7 @@ mysql> select * from t1;
 ```
 
 ## Docker-Compose SQL-Server
-The `Dockerfile` from [SQL-Server](#sql-server) example can be used in the same manner with a `docker-compose.yml`:
-TODO get working
+The `Dockerfile` from the [SQL-Server](#sql-server) example can be used in a `docker-compose.yml`:
 ```yaml
 version: '3.3'
 services:
@@ -130,7 +130,7 @@ volumes:
   test:
 ```
 
-Creating the resources exposes port 3306, accessed with `mysql` as shown the last example.
+Up'ing the resources exposes a server on port 3306, accessed with `mysql` as shown the last example.
 ```bash
 > docker-compose up
 Starting tmp_db_1 ... done
