@@ -86,20 +86,26 @@ RUN yum install -y curl \
 
 EXPOSE 3306
 ENTRYPOINT ["dolt"]
-CMD ["sql-server", "-l", "trace"]
+CMD ["sql-server", "-l", "trace", "--host", "0.0.0.0"]
 ```
 
 If our current directory is a valid Dolt repo:
-TODO this one doesn't work
 ```bash
 > docker run -p 3306:3306 -v $PWD/test:/home/test -w /home/test dolt-test
-Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
+Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
 ```
 
-If we run above with `-d` or switch to a separate window:
-TODO add mysql select * from t1
+If we run above with `-d` or switch to a separate window we can connect with MySQL (empty password by default):
 ```bash
-> mysql --user=root --host=0.0.0.0 -t test -p
+> mysql> --user=root --host=0.0.0.0 -t test -p
+mysql> select * from t1;
++------+
+| a    |
++------+
+|    0 |
+|    1 |
++------+
+2 rows in set (0.01 sec)
 ```
 
 ## Docker-Compose SQL-Server
@@ -118,15 +124,22 @@ services:
     expose:
       - '3306'
     volumes:
-      - my-db:/var/lib/mysql
+      - ./test:/home/test
+    working_dir: /home/test
 volumes:
-  my-db:
+  test:
 ```
 
-Run with the standard:
-TODO show output
+Creating the resources exposes port 3306, accessed with `mysql` as shown the last example.
 ```bash
 > docker-compose up
+Starting tmp_db_1 ... done
+Attaching to tmp_db_1
+db_1  | Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
+db_1  | TRACE: received query select * from t1
+db_1  | DEBUG: executing query
+db_1  | TRACE: returning result row [INT64(0)]
+db_1  | TRACE: returning result row [INT64(1)]
 ```
 
 ## Sample Dockerfiles <a name="samples"></a>
