@@ -54,3 +54,4 @@
 ## Guides
 
 * [SQL Sync](guides/sql-sync.md)
+* [Docker](guides/docker.md)
