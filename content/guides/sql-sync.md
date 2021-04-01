@@ -34,11 +34,13 @@ In order to perform the sync we need some objects that provide connections to th
 
 ```python
 from doltpy.cli import Dolt
+from doltpy.sql import DoltSQLServerContext, ServerConfig
 import sqlalchemy as sa
 
 # Setup objects to represents source and target databases, start Dolt SQL Server
 dolt = Dolt.clone('my-org/myback')
-dolt.sql_server()
+dssc = DoltSQLServerContext(dolt, ServerConfig())
+dssc.start_server()
 mysql_engine = sa.create_engine(
     '{dialect}://{user}:{password}@{host}:{port}/{database}'.format(
         dialect='mysql+mysqlconnector',
@@ -56,10 +58,10 @@ mysql_engine = sa.create_engine(
 The code for syncing the schema to Dolt once the database engine object and Dolt object are created is straight forward. We simply execute a generic function with engine appropriate parameters that take care of mapping types that Dolt does not support, which for MySQL is currently only JSON:
 
 ```python
-from doltpy.etl.sql_sync import sync_schema_to_dolt, MYSQL_TO_DOLT_TYPE_MAPPING
+from doltpy.sql.sync import sync_schema_to_dolt, MYSQL_TO_DOLT_TYPE_MAPPING
 
 sync_schema_to_dolt(mysql_engine,
-                    dolt,
+                    dssc.engine,
                     {'revenue_estimates': 'revenue_estimates'},
                     MYSQL_TO_DOLT_TYPE_MAPPINGS)
 ```
@@ -69,18 +71,18 @@ sync_schema_to_dolt(mysql_engine,
 Syncing the data to Dolt is similarly straight forward, and we use the same design pattern: pass implementation specific parameters, in this case reader and writer functions, to a generic procedure for syncing to Dolt:
 
 ```python
-from doltpy.etl.sql_sync import sync_to_dolt, get_dolt_target_writer, get_mysql_source_reader
+from doltpy.sql.sync import sync_to_dolt, get_dolt_target_writer, get_mysql_source_reader
 
 # Execute the sync
 sync_to_dolt(get_mysql_source_reader(mysql_engine),
-             get_dolt_target_writer(dolt),
+             get_dolt_target_writer(dssc),
              {'revenue_estimates': 'revenue_estimates'})
 ```
 
 Finally, we might want to stop the Dolt SQL server running:
 
 ```python
-dolt.sql_server_stop()
+dssc.stop_server()
 ```
 
 Relational databases have a straightforward concept of state, that is they simply capture the last value written to a given cell. We provide a simple reader that just captures the state of the table, and passes it to a simple writer for creating a commit. Note, Dolt will handle discerning what has changed, and commit _only the changes_ which will allow users to see diffs across syncs.
@@ -94,9 +96,9 @@ We now provide an example of going from Dolt to a MySQL instance. We again assum
 Since we do not currently support copying a Dolt schema to MySQL, we jump straight to syncing data. We use the same design pattern, passing implementation specific functions to a generic procedure for syncing from Dolt:
 
 ```python
-from doltpy.etl.sql_sync import sync_from_dolt, get_mysql_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_from_dolt, get_mysql_target_writer, get_dolt_source_reader
 
-sync_from_dolt(get_dolt_source_reader(dolt_repo, get_dolt_table_reader()),
+sync_from_dolt(get_dolt_source_reader(dssc, get_dolt_table_reader()),
                get_mysql_target_writer(mysql_engine),
                {'revenue_estimates': 'revenue_estimates'})
 ```
@@ -114,7 +116,7 @@ Our current support for syncing Postgresql and Dolt allows users to sync data fr
 Syncing to Postgres is similar. In the previous section we showed code snippets that use function parameters to specify implementation specific behavior:
 
 ```python
-from doltpy.etl.sql_sync import sync_to_dolt, get_DB_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_to_dolt, get_DB_target_writer, get_dolt_source_reader
 
 sync_from_dolt(get_dolt_source_reader(dolt, get_dolt_table_reader()),
                get_DB_target_writer(mysql_engine),
@@ -129,10 +131,12 @@ As in the MySQL section, we need some objects to represent the Postgres connecti
 
 ```python
 from doltpy.cli import Dolt
+from doltpy.sql import DoltSQLServerContext, ServerConfig
 import sqlalchemy as sa
 
 dolt_repo = Dolt.clone('my-org/analyst-estimates')
-dolt_repo.sql_server()
+dssc = DoltSQLServerContext(dolt, ServerConfig())
+dssc.start_server()
 postgres_engine = sa.create_engine(
     '{dialect}://{user}:{password}@{host}:{port}/{database}'.format(
         dialect='postgresql',
@@ -150,10 +154,10 @@ postgres_engine = sa.create_engine(
 We can now use the same generic `sync_schema_to_dolt` function with implementation specific parameters to sync the Postgres schema to Dolt:
 
 ```python
-from doltpy.etl.sql_sync import sync_schema_to_dolt, POSTGRES_TO_DOLT_TYPE_MAPPINGS
+from doltpy.sql.sync import sync_schema_to_dolt, POSTGRES_TO_DOLT_TYPE_MAPPINGS
 
 sync_schema_to_dolt(postgres_engine,
-                    dolt,
+                    dssc.engine,
                     {'revenue_estimates': 'revenue_estimates'},
                     POSTGRES_TO_DOLT_TYPE_MAPPINGS)
 ```
@@ -163,10 +167,10 @@ sync_schema_to_dolt(postgres_engine,
 To sync data we again use `sync_to_dolt`, this time with Postgres specific function parameters to get the correct behavior:
 
 ```python
-from doltpy.etl.sql_sync import sync_to_dolt, get_postgres_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_to_dolt, get_postgres_target_writer, get_dolt_source_reader
 
 sync_to_dolt(get_postgres_source_reader(postgres_engine),
-             get_dolt_target_writer(dolt),
+             get_dolt_target_writer(dssc),
              {'revenue_estimates': 'revenue_estimates'})
 ```
 
@@ -179,9 +183,9 @@ We again assume that Postgres is running on `postgres_host` at port `postgres_po
 As with syncing to Dolt from Postgres, we employ a generic method parameterized with database implementation specific parameters:
 
 ```python
-from doltpy.etl.sql_sync import sync_from_dolt, get_postgres_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_from_dolt, get_postgres_target_writer, get_dolt_source_reader
 
-sync_from_dolt(get_dolt_source_reader(dolt, get_dolt_table_reader()),
+sync_from_dolt(get_dolt_source_reader(dssc, get_dolt_table_reader()),
                get_postgres_target_writer(postgres_engine),
                {'revenue_estimates': 'revenue_estimates'})
 ```
@@ -200,11 +204,13 @@ As in the Postgres and MySQL sections, we need some objects to represent the Ora
 
 ```python
 from doltpy.cli import Dolt
+from doltpy.sql import DoltSQLServerContext, ServerConfig
 import sqlalchemy as sa
 import cx_Oracle
 
 dolt = Dolt.clone('my-org/analyst-estimates')
-dolt.sql_server()
+dssc = DoltSQLServerContext(dolt, ServerConfig())
+dssc.start_server()
 
 def _oracle_connection_helper:
     return cx_Oracle.connect('oracle_user', 'oracle_pwd', '{}:{}/{}'.format('oracle_host', 1521, 'oracle_db'))
@@ -217,10 +223,10 @@ engine = create_engine('oracle+cx_oracle://', creator=_oracle_connection_helper)
 To sync data we again use `sync_to_dolt`, this time with Oracle specific function parameters to get the correct behavior:
 
 ```python
-from doltpy.etl.sql_sync import sync_to_dolt, get_oracle_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_to_dolt, get_oracle_source_reader, get_dolt_target_writer
 
-sync_to_dolt(get_postgres_source_reader(oracle_engine),
-             get_dolt_target_writer(dolt),
+sync_to_dolt(get_oracle_source_reader(oracle_engine),
+             get_dolt_target_writer(dssc),
              {'revenue_estimates': 'revenue_estimates'})
 ```
 
@@ -233,9 +239,9 @@ We again assume that Oracle is running on `oracle_host` at port `oracle_port`, a
 As with syncing to Dolt from Postgres, we employ a generic method parameterized with database implementation specific parameters:
 
 ```python
-from doltpy.etl.sql_sync import sync_from_dolt, get_oracle_target_writer, get_dolt_source_reader
+from doltpy.sql.sync import sync_from_dolt, get_oracle_target_writer, get_dolt_source_reader
 
-sync_from_dolt(get_dolt_source_reader(dolt, get_dolt_table_reader()),
+sync_from_dolt(get_dolt_source_reader(dssc, get_dolt_table_reader()),
                get_oracle_target_writer(oracle_engine),
                {'revenue_estimates': 'revenue_estimates'})
 ```
