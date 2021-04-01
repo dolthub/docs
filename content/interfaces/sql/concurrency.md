@@ -62,6 +62,19 @@ SET @@mydb_head = MERGE('feature-branch');
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
+### SQUASH\(\)
+
+The SQUASH function merges a branch's root value into the current branch's working set. With this approach the user can then commit the changes, adding only 1 commit to a branch's
+history compared to the many that can orginate from a conventional merge.
+
+The argument passed to the function is a reference to a branch \(its name\).
+
+Example:
+
+```sql
+SET @@mydb_working = SQUASH('feature-branch');
+SET @@mydb_head = COMMIT('-m', 'This is a squash merge')
+```
 ### dolt\_branches
 
 dolt\_branches is a system table that can be used to create, modify and delete branches in a dolt data repository via SQL.
