@@ -50,31 +50,31 @@ It's important recognize that these are industry standard tests, and are OLTP or
 
 Below are the results of running `sysbench` MySQL tests against Dolt SQL Server for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
-The Dolt version is `0.25.0`.
+The Dolt version is `0.25.1`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
-| covering\_index\_scan | 10.65 | 1.37 | 8.0 |
-| index\_scan | 123.28 | 34.33 | 4.0 |
+| covering\_index\_scan | 10.46 | 1.39 | 8.0 |
+| index\_scan | 123.28 | 34.95 | 4.0 |
 | oltp\_point\_select | 1.34 | 0.11 | 12.0 |
-| oltp\_read\_only | 30.26 | 2.26 | 13.0 |
+| oltp\_read\_only | 30.26 | 2.3 | 13.0 |
 | select\_random\_points | 2.71 | 0.26 | 10.0 |
 | select\_random\_ranges | 2.86 | 0.29 | 10.0 |
-| table\_scan | 134.9 | 34.95 | 4.0 |
+| table\_scan | 137.35 | 34.95 | 4.0 |
 | mean |  |  | _8.71_ |
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
 | oltp\_delete | 11.87 | 0.11 | 108.0 |
-| oltp\_insert | 13.22 | 2.48 | 5.0 |
-| oltp\_read\_write | 82.96 | 5.88 | 14.0 |
-| oltp\_update\_index | 15.27 | 2.66 | 6.0 |
-| oltp\_update\_non\_index | 8.58 | 2.66 | 3.0 |
-| oltp\_write\_only | 54.83 | 3.55 | 15.0 |
-| mean |  |  | _21.71_ |
+| oltp\_insert | 12.98 | 3.68 | 4.0 |
+| oltp\_read\_write | 81.48 | 6.91 | 12.0 |
+| oltp\_update\_index | 14.73 | 3.55 | 4.0 |
+| oltp\_update\_non\_index | 8.28 | 3.49 | 2.0 |
+| oltp\_write\_only | 53.85 | 4.65 | 15.0 |
+| mean |  |  | _20.86_ |
 
-| Overall Mean Multiple | _15.21_ |
+| Overall Mean Multiple | _14.79_ |
 | :--- | :--- |
 <br/>
 
@@ -129,14 +129,14 @@ AND col3 IN (3,9,0))))) OR col4 <= 4.25 OR ((col3 = 5))) OR (((col0 >
 0)) AND col0 > 6 AND (col4 >= 6.56)))
 ```
 
-Here are Dolt's sqllogictest results for version `0.25.0`.  Tests that
+Here are Dolt's sqllogictest results for version `0.25.1`.  Tests that
 did not run could not complete due to a timeout earlier in the run.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5468278 |
-| not ok | 462144 |
-| did not run | 2464 |
+| ok | 5468448 |
+| not ok | 462179 |
+| did not run | 2259 |
 | timeout | 2 |
 | _total_ _tests_ | 5932888 |
 <br/>
