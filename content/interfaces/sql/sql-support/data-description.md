@@ -51,7 +51,7 @@ title: Data Description
 | :--- | :--- | :--- |
 | Not Null | ✓ |  |
 | Unique | ✓ | Unique constraints are supported via creation of indexes with `UNIQUE` keys. |
-| Primary Key | ✓ | Dolt tables must have a primary key. |
+| Primary Key | ✓ |  |
 | Check | X |  |
 | Foreign Key | ✓ |  |
 | Default Value | ✓ |  |
