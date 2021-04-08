@@ -43,7 +43,7 @@ title: Data Description
 | `MULTILINESTRING` | X |  |
 | `MULTIPOLYGON` | X |  |
 | `GEOMETRYCOLLECTION` | X |  |
-| `JSON` | X |  |
+| `JSON` | ✓ |  |
 
 ## Constraints
 
