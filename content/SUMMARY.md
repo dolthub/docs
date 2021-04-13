@@ -43,7 +43,7 @@
 
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
-* [Editors] (integrations/editors.md)
+* [Editors](integrations/sql-editors.md)
 
 ## Reference
 
