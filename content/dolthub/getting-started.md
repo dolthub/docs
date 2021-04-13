@@ -385,7 +385,7 @@ We do this by adding the parent as a remote. For a SampleOrg user they can add t
 $ dolt remote add upstream dolthub/great-players-example
 ```
 
-Now let's create a branch that will be used to pull in changes from the `upsteam`, call it `vendor`:
+Now let's create a branch that will be used to pull in changes from the `upstream`, call it `vendor`:
 
 ```text
 $ dolt branch vendor
