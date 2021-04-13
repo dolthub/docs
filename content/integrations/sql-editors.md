@@ -38,6 +38,8 @@ listener:
 	</pre>
 </div>
 
+NOTE: Dolt does not support SSL yet, so be sure to turn it off on your editor before connecting.
+
 You can see this [section](https://docs.dolthub.com/interfaces/cli#dolt-sql-server) to learn more about each part of our config file. 
 
 If there are other editors that you want us to be compatible with please do not hesitate to reach out!
