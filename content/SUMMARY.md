@@ -43,6 +43,7 @@
 
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
+* [Editors] (integrations/editors.md)
 
 ## Reference
 
