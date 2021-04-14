@@ -28,7 +28,10 @@ title: Data Description
 | `VARCHAR` | ✓ |  |
 | `BINARY` | ✓ |  |
 | `VARBINARY` | ✓ |  |
+| `TINYBLOB` | ✓ |  |
 | `BLOB` | ✓ |  |
+| `MEDIUMBLOB` | ✓ |  |
+| `LONGBLOB` | ✓ |  |
 | `TINYTEXT` | ✓ |  |
 | `TEXT` | ✓ |  |
 | `MEDIUMTEXT` | ✓ |  |
