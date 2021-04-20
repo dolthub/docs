@@ -64,7 +64,7 @@ write_file(dolt,
 dolt.push('origin', 'master')
 ```
 
-If the database has already been cloned your end via the CLI you can instead do 
+If the database has already been cloned on your end via the CLI you can instead do 
 
 ```python
 from doltpy.cli import Dolt
