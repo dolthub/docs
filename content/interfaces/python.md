@@ -134,7 +134,7 @@ from doltpy.cli.write import write_file
 dolt = Dolt.clone('dolthub/great-players-example')
 server_config = ServerConfig(user='root')
 
-with DoltSQLServerContext(dolt, server_cinfig) as dssc:
+with DoltSQLServerContext(dolt, server_config) as dssc:
   dssc.write_pandas('great_players',
                     pd.DataFrame([{'name': 'andy', 'id': 4}]),
                     commit=True)
