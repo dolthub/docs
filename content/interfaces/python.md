@@ -64,6 +64,20 @@ write_file(dolt,
 dolt.push('origin', 'master')
 ```
 
+If the database has already been cloned on your end via the CLI you can instead do 
+
+```python
+from doltpy.cli import Dolt
+from doltpy.cli.write import write_file
+
+dolt = Dolt('dolthub/great-players-example')
+write_file(dolt,
+           'great_players',
+           open('path/to/great_players.csv'),
+           import_mode'update')
+dolt.push('origin', 'master')
+```
+
 And we are done. This exact sequence of updates was executed on the example database, and you can see the [commit log](https://www.dolthub.com/repositories/dolthub/great-players-example), and [diff](https://www.dolthub.com/repositories/dolthub/great-players-example/compare/ht24tetekl12hmek03e6ldl0hbqm8l93).
 
 ### Full API
@@ -74,7 +88,7 @@ See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy
 
 ### Overview and Example
 
-Doltpy comes with a SQL module for interacting with Dolt SQL Server. The centerpiece of that module is abstract class `DoltSQLContext`. It has two concrete subclasses, `DoltSQLServerContext`, and `DoltSQLEngineContext`. `DoltSQLServerContext` handles standing up the Dolt SQL Server subprocess, and shutting it down. `DoltSQLEngineContext` assumes the server is running on some host that can be specified in the past `Dolt`.
+Doltpy comes with a SQL module for interacting with Dolt SQL Server. The centerpiece of that module is abstract class `DoltSQLContext`. It has two concrete subclasses, `DoltSQLServerContext`, and `DoltSQLEngineContext`. `DoltSQLServerContext` handles standing up the Dolt SQL Server subprocess, and shutting it down. It uses a `ServerConfig` to pass server parameters like username and password. `DoltSQLEngineContext` assumes the server is running on some host that can be specified in the past `Dolt`.
 
 We will use the same data from the previous example, but this time in Pandas DataFrame object:
 
@@ -91,12 +105,13 @@ First, let's initialize a new database create a table with our sample data. Note
 
 ```python
 from doltpy.cli import Dolt
-from doltpy.sql import DoltSQLServerContext
+from doltpy.sql import DoltSQLServerContext, ServerConfig
 from doltpy.cli.write import write_pandas
 
 dolt = Dolt.init('~/temp/tennis-players')
+server_config = ServerConfig(user='root')
 
-with DoltSQLServerContext(dolt) as dssc:
+with DoltSQLServerContext(dolt, server_config) as dssc:
   dssc.write_pandas('great_players',
                     data,
                     create_if_not_exists=True,
@@ -113,10 +128,13 @@ Now let's clone the database and add a row:
 
 ```python
 from doltpy.cli import Dolt
+from doltpy.sql import DoltSQLServerContext, ServerConfig
 from doltpy.cli.write import write_file
 
 dolt = Dolt.clone('dolthub/great-players-example')
-with DoltSQLServerContext(dolt) as dssc:
+server_config = ServerConfig(user='root')
+
+with DoltSQLServerContext(dolt, server_config) as dssc:
   dssc.write_pandas('great_players',
                     pd.DataFrame([{'name': 'andy', 'id': 4}]),
                     commit=True)
