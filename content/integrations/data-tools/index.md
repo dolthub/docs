@@ -1,7 +1,6 @@
 # Dolt Data Tool Integrations
 
-Navigate to case-study pages for details regarding
-specific tools:
+Case-studies for specific tools:
 
 - [Metaflow](https://www.dolthub.com/blog/2021-04-12-metaflow-dolt-integration/)
 - [DVC](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
