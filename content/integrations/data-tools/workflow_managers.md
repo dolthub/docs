@@ -172,8 +172,7 @@ can be pushed and pulled from DoltHub or an S3 endpoint in workflow
 managers:
 
 ```python
-remote_conf =
-Remote(url="https://www.dolthub.com/repositories/max-hoffman/state-age")
+remote_conf = Remote(url="https://www.dolthub.com/repositories/max-hoffman/state-age")
 ```
 
 Using Dolt in server-mode with transactional logic is currently in
