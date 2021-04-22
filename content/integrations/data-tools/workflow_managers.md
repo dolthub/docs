@@ -22,7 +22,7 @@ efficient branching, diffing and merging. Dolt tables also inherit the
 benefits of production relational databases, including schema
 management, horizontal scalability and a SQL query interface.
 
-[Cheems!](../../../static/cheems.jpg)
+![Cheems](../../../static/cheems.jpg)
 
 You would use Dolt's data storage instead of CSVs to track relationships
 between tables within and between computational steps. For example, Dolt
@@ -51,7 +51,7 @@ file-system native data interfaces here. Our [Metaflow integration]() is
 an example of an object-native integration if you are interested in
 learning more.
 
-[Dolt-CSV!](../../../static/dolt_csv.png)
+![Dolt-CSV](../../../static/dolt_csv.png)
 
 ## Workflow Integrations
 
@@ -74,7 +74,7 @@ metadata hooks for logging Dolt actions into a variety of metadata
 systems. Dolt can inject Git versioning in the save/load interfaces. We
 focus on branching and commit metadata here.
 
-[Kedro!](../../../static/kedro_example.png)
+![Kedro](../../../static/kedro_example.png)
 
 We will loosely use Kedro’s workflow data interface to ground our
 integration in a production context. Kedro’s DataSets meet our three
@@ -117,7 +117,7 @@ methods wrap these functions with branching, metadata and remote logic.
 Dolt branches follow Git semantics. Branches are created from specific
 commits and progress independently from other branches.
 
-[Save-Branch!](../../../static/load_branch.png)
+![Save-Branch](../../../static/load_branch.png)
 
 Loading tables in a workflow manager only requires specifying a branch
 or a commit. In the diagram above, we read (purple) from the "new"
@@ -130,7 +130,7 @@ to append a new commit to a branch:
 br_conf = AppendBranch(branch="master")
 ```
 
-[Load-Merge-Branch!](../../../static/load_branch.png)
+![Load-Merge-Branch](../../../static/load_branch.png)
 
 The green path in the diagram above uses parallel branching to save a
 table. Dolt will first checkout commit "c2," overwrite the table via a
@@ -148,9 +148,9 @@ timestamps, inputs, outputs, ...etc. CSV files generated during
 workflow can usually be downloaded using these path metadata references
 after workflow executions.
 
-[Load-Meta](../../../static/load_meta.png)
+![Load-Meta](../../../static/load_meta.png)
 
-[Save-Meta](../../../static/save_meta.png)
+![Save-Meta](../../../static/save_meta.png)
 
 Dolt metadata can be recorded in a format similar to the diagrams above.
 Tables in Dolt benefit from a host of other additional features --
