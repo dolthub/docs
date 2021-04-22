@@ -197,5 +197,5 @@ save(
 Here we import the data in `tmpfile` into the `bar` table of our `doltdb` database.
 Column `c` will be a primary key, the commit will use a branch merge
 to update master, and our application will log our metadata.
-All of this logic will update the most recently pulled version of master
-before pushing back to our origin.
+Finallly, the commit update the most recently pulled version of master
+before pushing results back to our origin.
