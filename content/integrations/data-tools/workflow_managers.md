@@ -162,7 +162,7 @@ below passes a callback function for manipulating these pieces of
 metadata:
 
 ```python
-meta_conf = CallbackMeta(fn=lambda x: log.log(x))
+meta_conf = CallbackMeta(fn=lambda x: logger.log(x))
 ```
 
 ## Remotes
@@ -178,3 +178,24 @@ remote_conf = Remote(url="https://www.dolthub.com/repositories/max-hoffman/state
 Using Dolt in server-mode with transactional logic is currently in
 development.
 
+## Putting It All Together
+
+The load and save functions are where we combine Dolt configs:
+
+```python
+save(
+    db=doltdb,
+    tablename="bar",
+    filename=tmpfile,
+    save_args=dict(primary_key="c"),
+    branch_conf=MergeBranch(branch_from="c2", merge_to="master"),
+    meta_conf=CallbackMeta(fn=lambda x: logger.log(x)),
+    remote_conf=Remote(url="https://www.dolthub.com/repositories/max-hoffman/state-age")
+)
+```
+
+Here we import the data in `tmpfile` into the `bar` table of our `doltdb` database.
+Column `c` will be a primary key, the commit will use a branch merge
+to update master, and our application will log our metadata.
+All of this logic will update the most recently pulled version of master
+before pushing back to our origin.
