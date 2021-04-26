@@ -11,5 +11,5 @@ Case-studies for specific tools:
 Architecture summaries to describe how Dolt integrates with
 different kinds of systems:
 
-- [Workflow managers](./workflow_managers.md)
+- [Workflow managers](workflow_managers.md)
 
