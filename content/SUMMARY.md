@@ -44,6 +44,8 @@
 * [Notebooks](integrations/notebooks.md)
 * [Spreadsheets](integrations/spreadsheets.md)
 * [Editors](integrations/sql-editors.md)
+* [Data Tools](integrations/data-tools/README.md)
+  * [Workflow Managers](integrations/data-tools/workflow_managers.md)
 
 ## Reference
 
