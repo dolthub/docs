@@ -50,31 +50,31 @@ It's important recognize that these are industry standard tests, and are OLTP or
 
 Below are the results of running `sysbench` MySQL tests against Dolt SQL Server for the most recent release of Dolt. We will update this with every release. The tests attempt to run as many queries as possible in a fixed 2 minute time window. The `Dolt` and `MySQL` columns show the median latency of each test during that 2 minute time window.
 
-The Dolt version is `0.26.1`.
+The Dolt version is `0.26.2`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
-| covering\_index\_scan | 10.09 | 1.39 | 7.0 |
+| covering\_index\_scan | 9.56 | 1.39 | 7.0 |
 | index\_scan | 123.28 | 34.95 | 4.0 |
-| oltp\_point\_select | 1.25 | 0.11 | 11.0 |
-| oltp\_read\_only | 28.16 | 2.26 | 12.0 |
-| select\_random\_points | 2.52 | 0.26 | 10.0 |
-| select\_random\_ranges | 2.71 | 0.29 | 9.0 |
-| table\_scan | 132.49 | 34.95 | 4.0 |
-| mean |  |  | _8.14_ |
+| oltp\_point\_select | 1.37 | 0.11 | 12.0 |
+| oltp\_read\_only | 29.19 | 2.35 | 12.0 |
+| select\_random\_points | 2.35 | 0.26 | 9.0 |
+| select\_random\_ranges | 3.43 | 0.29 | 12.0 |
+| table\_scan | 132.49 | 35.59 | 4.0 |
+| mean |  |  | _8.57_ |
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
 | oltp\_delete | 11.04 | 0.11 | 100.0 |
-| oltp\_insert | 12.52 | 2.39 | 5.0 |
-| oltp\_read\_write | 77.19 | 5.77 | 13.0 |
-| oltp\_update\_index | 14.21 | 2.48 | 6.0 |
-| oltp\_update\_non\_index | 7.84 | 2.43 | 3.0 |
-| oltp\_write\_only | 51.94 | 3.36 | 14.0 |
-| mean |  |  | _20.29_ |
+| oltp\_insert | 12.52 | 2.52 | 5.0 |
+| oltp\_read\_write | 78.6 | 5.99 | 13.0 |
+| oltp\_update\_index | 14.21 | 2.66 | 5.0 |
+| oltp\_update\_non\_index | 8.13 | 2.66 | 3.0 |
+| oltp\_write\_only | 51.94 | 3.75 | 14.0 |
+| mean |  |  | _20.14_ |
 
-| Overall Mean Multiple | _14.21_ |
+| Overall Mean Multiple | _14.36_ |
 | :--- | :--- |
 <br/>
 
@@ -129,13 +129,13 @@ AND col3 IN (3,9,0))))) OR col4 <= 4.25 OR ((col3 = 5))) OR (((col0 >
 0)) AND col0 > 6 AND (col4 >= 6.56)))
 ```
 
-Here are Dolt's sqllogictest results for version `0.26.1`.  Tests that
+Here are Dolt's sqllogictest results for version `0.26.2`.  Tests that
 did not run could not complete due to a timeout earlier in the run.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5468008 |
-| not ok | 462625 |
+| ok | 5468012 |
+| not ok | 462621 |
 | did not run | 2253 |
 | timeout | 2 |
 | _total_ _tests_ | 5932888 |
