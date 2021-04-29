@@ -58,7 +58,7 @@ mysql_engine = sa.create_engine(
 The code for syncing the schema to Dolt once the database engine object and Dolt object are created is straight forward. We simply execute a generic function with engine appropriate parameters that take care of mapping types that Dolt does not support, which for MySQL is currently only JSON:
 
 ```python
-from doltpy.sql.sync import sync_schema_to_dolt, MYSQL_TO_DOLT_TYPE_MAPPING
+from doltpy.sql.sync import sync_schema_to_dolt, MYSQL_TO_DOLT_TYPE_MAPPINGS
 
 sync_schema_to_dolt(mysql_engine,
                     dssc.engine,
