@@ -28,8 +28,8 @@ We chose SQL as Dolt's query interface because it is the most widely the most wi
 
 Dolt adds the following version control features to a familiar SQL database:
 
-* [data lineage](lineage.md): associate results with a Dolt commit to retrieve the exact database state used to create those results
-* [time travel](time-travel.md): examine the history of a value or values directly from SQL and without the use of backups
+* [time travel](time-travel.md): associate results with a Dolt commit to retrieve the exact database state used to create those results
+* [data lineage](lineage.md): examine the history of a value or values directly from SQL and without the use of backups
 * [collaboration](collaboration.md): combine concurrently edited schema and data of a database in a principled way
 
 Dolt makes it easy to enable these capabilities in any data infrastructure. These features are native to the database so little application code is required.
