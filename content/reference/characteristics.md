@@ -12,13 +12,13 @@ If you have questions feel free to [reach out](https://www.dolthub.com/contact) 
 
 Dolt is pre-1.0. We expect to release 1.0 version by mid 2021. The 1.0 release signals a commitment to no backwards incompatible changes to the format. That means that versions of Dolt subsequent to the 1.0 release will always be able to read Dolt data written as of 1.0 or later. We are obviously less stable than database solutions like MySQL and Postgres currently. Those solutions have been in market for over twenty five years. We think we can get to that degree of stability by the end of 2021.
 
-In practice Dolt's SQL implementation is relatively full featured, and we constantly improving on it. All breaking changes, even prior to 1.0, come with robust migration mechanisms, so no data will ever be lost in practice.
+In practice Dolt's SQL implementation is relatively full featured, and we are constantly improving on it. All breaking changes, even prior to 1.0, come with robust migration mechanisms, so no data will ever be lost in practice.
 
 ## Scalability
 
 Dolt is currently constrained to the hard drive size of single machine. Like any relational database once the storage footprint goes past a single machine the only solution is sharding. We have not implemented sharding in Dolt, though it is on our long term roadmap.
 
-Like a relational database, as data grows non-indexed read performance degrades. Unlike relational database Dolt is effectively append-only, though it still looks like a relational database. The larger the history grows, the larger the storage footprint is. There are offline utilities for pruning history when needed.
+Like a relational database, as data grows, non-indexed read performance degrades. Unlike a relational database, Dolt is effectively append-only, though it still looks like a relational database. The larger the history grows, the larger the storage footprint is. There are offline utilities for pruning history when needed.
 
 ## High Availability
 
