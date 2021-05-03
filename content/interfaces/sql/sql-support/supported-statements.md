@@ -27,42 +27,42 @@ title: Supported Statements
 | `TRUNCATE` | ✓ |  |
 | `UPDATE` | ✓ | No support for referring to more than one table in a single `UPDATE` statement. |
 | `VALUES` | X |  |
-| `WITH` | X | Common table expressions \(CTEs\) are not yet supported |
+| `WITH` | ✓ |  |
 
 ## Data definition statements
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | `ADD COLUMN` | ✓ |  |
-| `ADD CHECK` | X | `NOT NULL` is the only check currently possible. |
-| `ADD CONSTRAINT` | X | `NOT NULL` is the only constraint currently possible. |
+| `ADD CHECK` | ✓ |  |
+| `ADD CONSTRAINT` | ✓ |  |
 | `ADD FOREIGN KEY` | ✓ |  |
 | `ADD PARTITION` | X |  |
-| `ALTER COLUMN` | ✓ | Name and order changes are supported, but not type or primary key changes. |
+| `ALTER COLUMN` | O | Name and order changes are supported. Some but not all type changes are supported. Primary keys cannot be altered. |
 | `ALTER DATABASE` | X |  |
 | `ALTER INDEX` | X | Indexes can be created and dropped, but not altered. |
 | `ALTER PRIMARY KEY` | X | Primary keys of tables cannot be changed. |
 | `ALTER TABLE` | ✓ | Not all `ALTER TABLE` statements are supported. See the rest of this table for details. |
-| `ALTER TYPE` | X | Column type changes are not supported. |
+| `ALTER TYPE` | O | Some type changes are supported but not all. |
 | `ALTER VIEW` | X | Views can be created and dropped, but not altered. |
 | `CHANGE COLUMN` | ✓ |  |
 | `CREATE DATABASE` | O | Create an in-memory database the length of a session. Creating new dolt databases that persist outside of a session is not yet supported. |
 | `CREATE EVENT` | X |  |
 | `CREATE FUNCTION` | X |  |
 | `CREATE INDEX` | O | Fulltext and spatial indexes are not supported. |
-| `CREATE SCHEMA` | O | Create an in memory database the length of a session. Creating new dolt databases that persist outside of a session is not yet supported. |
-| `CREATE TABLE` | ✓ | Tables must have primary keys. |
+| `CREATE SCHEMA` | O | Create a temporary in memory database the length of a session. Creating new Dolt databases that persist outside of a session is not yet supported. |
+| `CREATE TABLE` | ✓ |  |
 | `CREATE TABLE AS` | X |  |
 | `CREATE TRIGGER` | ✓ |  |
 | `CREATE VIEW` | ✓ |  |
 | `DESCRIBE TABLE` | ✓ |  |
 | `DROP COLUMN` | ✓ |  |
 | `DROP CONSTRAINT` | ✓ |  |
-| `DROP DATABASE` | O | Deletes only in-memory database. To delete a repository you must delete its directory on disk. |
+| `DROP DATABASE` | O | Deletes only temporary in-memory databases. To delete a Dolt database you must delete its directory on disk. |
 | `DROP EVENT` | X |  |
 | `DROP FUNCTION` | X |  |
 | `DROP INDEX` | ✓ |  |
-| `DROP SCHEMA` | O | Deletes only in-memory database. To delete a repository you must delete its directory on disk. |
+| `DROP SCHEMA` | O | Deletes only temporary in-memory database. To delete a Dolt database you must delete its directory on disk. |
 | `DROP TABLE` | ✓ |  |
 | `DROP PARTITION` | X |  |
 | `DROP PROCEDURE` | ✓ |  |
