@@ -55,7 +55,7 @@ title: Data Description
 | Not Null | ✓ |  |
 | Unique | ✓ | Unique constraints are supported via creation of indexes with `UNIQUE` keys. |
 | Primary Key | ✓ |  |
-| Check | X |  |
+| Check | ✓ |  |
 | Foreign Key | ✓ |  |
 | Default Value | ✓ |  |
 
