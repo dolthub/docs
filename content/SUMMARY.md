@@ -23,6 +23,7 @@
 
 * [DoltHub](dolthub/getting-started.md)
 * [Bounties](dolthub/bounties.md)
+* [API](dolthub/api.md)
 
 ## Interfaces
 
