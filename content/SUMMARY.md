@@ -19,6 +19,15 @@
 * [Writing](getting-started/writing.md)
 * [SQL](getting-started/sql.md)
 
+
+## Use Cases
+* [Application Database](use-cases/application-databse/README.md)
+  * [Nautobot](use-cases/application-databse/nautobot.md)
+* [Medical Research](use-cases/medical-research/README.md)
+  * [Turbine](use-cases/application-databse/turbin.md)
+* [Natural Language Processing](use-cases/application-database/README.md)
+  * [Kalido](use-cases/application-databse/kalido.md)
+
 ## DoltHub
 
 * [DoltHub](dolthub/getting-started.md)
