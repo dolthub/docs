@@ -25,7 +25,7 @@
   * [Nautobot](use-cases/application-databse/nautobot.md)
 * [Medical Research](use-cases/medical-research/README.md)
   * [Turbine](use-cases/medical-research/turbine.md)
-* [Natural Language Processing](use-cases/application-database/README.md)
+* [Natural Language Processing](use-cases/natural-language-processing/README.md)
   * [Kalido](use-cases/natural-language-processing/kalido.md)
 
 ## DoltHub
