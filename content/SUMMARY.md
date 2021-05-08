@@ -22,11 +22,11 @@
 
 ## Use Cases
 * [Application Database](use-cases/application-databse/README.md)
-  * [Nautobot]()
+  * [Nautobot](use-cases/application-databse/nautobot.md)
 * [Medical Research](use-cases/medical-research/README.md)
-  * [Turbine]()
+  * [Turbine](use-cases/application-databse/turbin.md)
 * [Natural Language Processing](use-cases/application-database/README.md)
-  * [Kalido]()
+  * [Kalido](use-cases/application-databse/kalido.md)
 
 ## DoltHub
 
