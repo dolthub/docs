@@ -27,7 +27,7 @@ Around the beginning of April 2021, as a way to capture the benefits of Git-styl
 
 Kalido’s customer data comes from a Postgres RDS instance, and is enriched with data sent out to Amazon Mechanical Turk for manual labelling. This enriched third party data is stored in Dolt as the input to Kalido’s models:
 
-![Kalido + Dolt model pipeline architecture](../.gitbook/assets/kalido-dolt-architecture.png)
+![Kalido + Dolt model pipeline architecture](../../.gitbook/assets/kalido-dolt-architecture.png)
 
 Training configuration is a YAML file which among other things specifies the data and the ML model. The format for the data is `table_name@sha` and the in-house training software will then pull this data by just running `read_pandas(table_name, sha)` and potentially concatenate different tables listed. For example we might have something like this:
 
