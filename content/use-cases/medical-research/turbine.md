@@ -23,7 +23,7 @@ The Turbine team had initially implemented something in Mongo DB. Mongo DB has t
 
 At the same time the workflow around updating the Simulated Cell, soliciting enrichment from researchers, and testing experiment against "versions" of the core model was eerily reminiscent of a Git-like workflow. A quick Google search led to the the following Slack conversation:
 
-![The Moment Dolt was shared](../../dolt-turbine-finds-dolt.png)
+![The Moment Dolt was shared](../../.gitbook/assets/dolt-turbine-finds-dolt.png)
 
 This happened 31st of March, 2020. The team immediately took Dolt for a spin, but unfortunately they hit a snag:
 ```
