@@ -78,6 +78,8 @@ The Dolt version is `0.26.3`.
 | :--- | :--- |
 <br/>
 
+## Correctness
+
 ### SQL Correctness
 
 To measure Dolt's SQL correctness, we test each release of Dolt
