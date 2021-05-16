@@ -60,7 +60,12 @@
 ## Reference
 
 * [Architecture](reference/architecture.md)
-* [Scalability, Availability, and Performance](reference/characteristics.md)
+* [Characteristics](reference/characteristics/README.md)
+  * [Stability](reference/characteristics/stability.md)
+  * [Scalability](reference/characteristics/scalability.md)
+  * [Availability](reference/characteristics/availability.md)
+  * [Performance](reference/characteristics/performance.md)
+  * [Correctness](reference/characteristics/correctness.md)
 * [FAQ](reference/faq.md)
 * [Roadmap](reference/roadmap.md)
 
