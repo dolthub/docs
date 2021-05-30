@@ -394,7 +394,7 @@ SELECT * FROM dolt_schemas;
 +------+------+----------------------+
 ```
 
-## `dolt_status`
+### `dolt_status`
 
 #### Description
 
