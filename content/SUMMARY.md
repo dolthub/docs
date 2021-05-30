@@ -60,13 +60,13 @@
 ## Reference
 
 * [Architecture](reference/architecture.md)
-* [Characteristics](reference/characteristics/README.md)
-  * [Stability](reference/characteristics/stability.md)
-  * [Scalability](reference/characteristics/scalability.md)
-  * [Availability](reference/characteristics/availability.md)
-  * [Performance](reference/characteristics/performance.md)
-  * [Correctness](reference/characteristics/correctness.md)
 * [FAQ](reference/faq.md)
+* [Performance](reference/performance/README.md)
+  * [Stability](reference/performance/stability.md)
+  * [Scalability](reference/performance/scalability.md)
+  * [Availability](reference/performance/availability.md)
+  * [SQL Latency and Throughput](reference/performance/latency.md)
+  * [SQL Correctness](reference/performance/correctness.md)
 * [Roadmap](reference/roadmap.md)
 
 ## Guides
