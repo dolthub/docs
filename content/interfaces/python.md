@@ -26,14 +26,14 @@ First, let's initialize a new database create a table with our sample data:
 
 ```python
 from doltpy.cli import Dolt
-from doltpy.cli.write import bulk_import
+from doltpy.cli.write import write_file
 
 dolt = Dolt.init('~/temp/tennis-players')
 write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
            import_mode='create',
-           primary_keys=['id'],
+           primary_key=['id'],
            commit=True)
 dolt.remote(add=True, name='origin', url='dolthub/great-players-example')
 dolt.push('origin', 'master')
@@ -60,7 +60,7 @@ dolt = Dolt.clone('dolthub/great-players-example')
 write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
-           import_mode'update')
+           import_mode='update')
 dolt.push('origin', 'master')
 ```
 
@@ -74,7 +74,7 @@ dolt = Dolt('dolthub/great-players-example')
 write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
-           import_mode'update')
+           import_mode='update')
 dolt.push('origin', 'master')
 ```
 
