@@ -76,11 +76,91 @@ INSERT INTO dolt_branches (name, hash)
 VALUES ("my branch name", @@mydb_head);
 ```
 
+### `dolt_commit_diff_$TABLENAME`
+
+### Description 
+
+For every user table named `$TABLENAME`, there is a queryable system table names `dolt_commit_diff_$TABLENAME` which can be queried to see how a table has changed between two commits (regardless of which branch the user is currently using). Each row in the result set represents a row that has changed between two commits. 
+
+### Schema
+
+```text
++-------------+------+
+| field       | type |
++-------------+------+
+| from_commit | TEXT |
+| to_commit   | TEXT |
+| diff_type   | TEXT |
++-------------+------+
+```
+
+The remaining columns will be dependent on the schema of the user table. For every column X in your table at `from_commit`, there will be a column in the result set named `from_$X` with the same type as `X`, and for every column `Y` in your table at `to_commit` there will be a column in the result set named `to_$Y` with the same type as `Y`.
+
+The `dolt_commit_diff_$TABLENAME` represents the CLI tool `dolt diff` the closest. This table is consistent regardless of which branch is currently active.
+
+
+### Example Schema
+
+Let us consider a simple example with a table that has two columns. Consider the table 
+
+```text
++--------------+
+| field | type |
++--------------+
+| pk    | int  |
+| val   | int  |
++--------------+
+```
+
+We see that the structure of the `dolt_commit_diff_$TABLENAME` will be. 
+
+```text
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| to_pk            | int      |
+| to_val           | int      |
+| to_commit        | longtext |  
+| to_commit_date   | datetime |
+| from_pk          | int      | 
+| from_val         | int      |
+| from_commit      | longtext |
+| from_commit_date | datetime |
++------------------+----------+
+```
+### Query Details
+
+Let us now consider the following branch structure:
+
+```text
+      A---B---C feature
+     /
+D---E---F---G master
+```
+
+We can use the above table to represent two types of diffs. A two point diff and a three point diff. In a 
+two point diff we want to see the difference in rows between Point C and Point G. To do that we can simply do
+
+```SQL
+SELECT * from dolt_commif_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('master');
+```
+
+We can also compute a 3 point diff using this table. In a 3 point diff we want to see how our feature branch has diverged from our common ancestor E. We can do the following queries
+
+```SQL
+SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('master', 'feature');
+```
+The function `dolt_merge_base` computes the closest ancestore E between `master` and `feature`.
+
+### Additional Notes
+
+There is one special `to_commit` value `WORKING` which can be used to see what changes are in the working set that have yet to be committed to HEAD. It is often useful to use the `HASHOF()` function to get the commit hash of a branch, or an anscestor commit. The above table requires both `from_commit` and `to_commit` to be filled. 
+
 ### `dolt_diff_$TABLENAME`
 
 #### Description
 
-For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represent a row that has changed between two commits.
+For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represents a row that has changed between two commits. Compared to the `dolt_commit_diff_$TABLENAME` the `dolt_diff_$TABLENAME` focus on how particular row has evolved over time through the current branch. 
 
 #### Schema
 
