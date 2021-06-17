@@ -80,7 +80,7 @@ VALUES ("my branch name", @@mydb_head);
 
 ### Description 
 
-For every user table named `$TABLENAME`, there is a queryable system table names `dolt_commit_diff_$TABLENAME` which can be queried to see how a table has changed between two commits (regardless of which branch the user is currently using). Each row in the result set represents a row that has changed between two commits. 
+For every user table named `$TABLENAME`, there is a queryable system table named `dolt_commit_diff_$TABLENAME` which can be queried to see how a table has changed between two commits (regardless of which branch the user is currently using). Each row in the result set represents a row that has changed between two commits.
 
 ### Schema
 
@@ -94,10 +94,9 @@ For every user table named `$TABLENAME`, there is a queryable system table names
 +-------------+------+
 ```
 
-The remaining columns will be dependent on the schema of the user table. For every column X in your table at `from_commit`, there will be a column in the result set named `from_$X` with the same type as `X`, and for every column `Y` in your table at `to_commit` there will be a column in the result set named `to_$Y` with the same type as `Y`.
+The remaining columns will be dependent on the schema of the user table. For every column X in your table at `from_commit`, there will be a column in the result set named `from_$X` with the same type as `X`, and for every column `Y` in your table at `to_commit` there will be a column in the result set named `to_$Y` with the same type as `Y`. The `from_commit` and `to_commit` parameters must both be filled.
 
-The `dolt_commit_diff_$TABLENAME` represents the CLI tool `dolt diff` the closest. This table is consistent regardless of which branch 
-is currently active.
+`dolt_commit_diff_$TABLENAME` is more similar to the `dolt diff` CLI command than the `dolt_diff_$TABLENAME` table. It represents the [two-dot diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot) between the two commits provided.
 
 ### Example Schema
 
@@ -160,7 +159,7 @@ There is one special `to_commit` value `WORKING` which can be used to see what c
 
 #### Description
 
-For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represents a row that has changed between two commits. Compared to the `dolt_commit_diff_$TABLENAME` the `dolt_diff_$TABLENAME` focus on how a particular row has evolved over time through the current branch. 
+For every user table named `$TABLENAME`, there is a queryable system table named `dolt_diff_$TABLENAME` which can be queried to see how rows have changed over time. Each row in the result set represents a row that has changed between two commits. Compared to the `dolt_commit_diff_$TABLENAME` the `dolt_diff_$TABLENAME` focuses on how a particular row has evolved over time through the current branch. 
 
 #### Schema
 
