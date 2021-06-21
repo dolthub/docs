@@ -88,7 +88,9 @@ not enabled by default. To turn it on, set an environment variable:
 
 `export DOLT_ENABLE_TRANSACTIONS=true`
 
-See this blog post for more details.
+See [this blog
+post](https://www.dolthub.com/blog/2021-05-19-dolt-transactions/) for
+more details.
 
 Named locks work, via GET_LOCK() and RELEASE_LOCK() functions.
 
