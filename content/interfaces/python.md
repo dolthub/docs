@@ -26,7 +26,7 @@ First, let's initialize a new database create a table with our sample data:
 
 ```python
 from doltpy.cli import Dolt
-from doltpy.cli.write import bulk_import
+from doltpy.cli.write import write_file
 
 dolt = Dolt.init('~/temp/tennis-players')
 write_file(dolt,
