@@ -1,6 +1,6 @@
 # Python Quickstart
 
-Refer to [Python guides](../guides/python.README.md) to learn more.
+Refer to [Python guides](../guides/python/README.md) to learn more.
 
 ## CLI:
 
