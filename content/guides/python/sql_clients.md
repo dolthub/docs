@@ -14,13 +14,11 @@ The full set of MySQL commands that Dolt supports can be found
 
 Integration examples:
 
-- [Great Expectations
-    Integration](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
+- [Great Expectations Integration](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
 
 - [Kedro Integration](https://www.dolthub.com/blog/2021-06-16-kedro-dolt-plugin/)
 
-- [Various
-    DataFrames](https://www.dolthub.com/blog/2021-03-22-dolt-dataframes/)
+- [Various DataFrame Integrations](https://www.dolthub.com/blog/2021-03-22-dolt-dataframes/)
 
 ## Starting a Dolt Server
 

@@ -48,8 +48,7 @@ communicate with SQL servers in this way:
 
 Practical examples using Dolt sql-server:
 
-- [Great Expectations
-    Integration](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
+- [Great Expectations Integration](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
 
 - [Kedro Integration](https://www.dolthub.com/blog/2021-06-16-kedro-dolt-plugin/)
 
