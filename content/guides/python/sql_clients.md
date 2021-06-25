@@ -61,19 +61,20 @@ function except `dolt clone` using its SQL equivalent.
 Connecting to a Dolt database looks identical to connecting to MySQL:
 
 ```python
-import pymysql.cursors
-conn = pymysql.connect(
+>>> import pymysql.cursors
+>>> conn = pymysql.connect(
     host="localhost",
     user="root",
     password="",
     database="new_database",
     cursorclass=pymysql.cursors.DictCursor,
 )
-
-with conn:
+>>> with conn:
     with conn.cursor() as cur:
         cur.execute("select * from dolt_log")
+        cur.fetchone()
     conn.commit()
+{'commit_hash': 'bki1pgk63a34ouqj0mvjg5mfqtgf7jh1', 'committer': 'Max Hoffman', 'email': 'max@dolthub.com', 'date': datetime.datetime(2021, 6, 24, 20, 9, 56, 82000), 'message': 'Initialize data repository'}
 ```
 
  Refer to the [`pymysql`
@@ -96,8 +97,9 @@ connector with a hardcoded query:
 ```python
 >>> from sqlalchemy import create_engine
 >>> engine = create_engine("mysql+pymysql://root@localhost/new_database")
->>> with engine.begin() as connection:
-...     conn.execute("select id, elements from dolt_log limit 1").fetchone()
+>>> with engine.begin() as conn:
+...     conn.execute("select * from dolt_log limit 1").fetchone()
+('bki1pgk63a34ouqj0mvjg5mfqtgf7jh1', 'Max Hoffman', 'max@dolthub.com', datetime.datetime(2021, 6, 24, 20, 9, 56, 82000), 'Initialize data repository')
 ```
 
 Refer to the [`sqlalchemy`
