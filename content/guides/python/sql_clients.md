@@ -4,13 +4,23 @@ Any programming language or language package with a MySQL
 client can also connect to Dolt. Here we will discuss Python specific
 MySQL clients.
 
-Dolt is 99% MySQL compatible. Dolt also parses additional commands
-specific to version controlling. ([this blog gives a good
+Dolt is 99% MySQL compatible, and extends [custom SQL
+functions](../interfaces/dolt/dolt-sql-functions.md)
+specific to version controlling. ([this blog is a good practical
 introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/).
 
-The full superset of MySQL commands that Dolt supports can be found
+The full set of MySQL commands that Dolt supports can be found
 [here](https://docs.dolthub.com/interfaces/sql/sql-support).
 
+Integration examples:
+
+- [Great Expectations
+    Integration](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
+
+- [Kedro Integration](https://www.dolthub.com/blog/2021-06-16-kedro-dolt-plugin/)
+
+- [Various
+    DataFrames](https://www.dolthub.com/blog/2021-03-22-dolt-dataframes/)
 
 ## Starting a Dolt Server
 
@@ -46,7 +56,7 @@ mysql >
 
 ### PyMySQL
 
-PyMySQL is a MySQL client library for Python. Dolt's version
+PyMySQL is one of many MySQL Python client libraries. Dolt's version
 control functions are exposed in SQL, and you can run every Dolt
 function except `dolt clone` using its SQL equivalent.
 
@@ -68,7 +78,7 @@ with conn:
     conn.commit()
 ```
 
-Refer to the [`pymysql`
+ Refer to the [`pymysql`
 docs](https://pymysql.readthedocs.io/en/latest/user/examples.html)
 for more information.
 
@@ -86,10 +96,11 @@ the database dialect. Below is a simple progression of the pymysql
 connector with a hardcoded query:
 
 ```python
-from sqlalchemy import create_engine
-engine = create_engine("mysql+pymysql://root@localhost/new_database")
-with engine.begin() as connection:
-    connection.execute("select * from dolt_log")
+$ python
+>>> from sqlalchemy import create_engine
+>>> engine = create_engine("mysql+pymysql://root@localhost/new_database")
+>>> with engine.begin() as connection:
+...     conn.execute("select id, elements from dolt_log limit 1").fetchone()
 ```
 
 Refer to the [`sqlalchemy`

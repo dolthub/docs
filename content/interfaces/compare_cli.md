@@ -27,7 +27,7 @@ The server requires every step above, including a server instantiation:
 $ dolt sql-server -l trace --max-connections 10
 ```
 
-which requires a separately downloaded client tool to interact with:
+and a separately downloaded client to interact with our server:
 
 ```bash
 $ mysql --user=root --host=0.0.0.0 -p my_database
@@ -41,6 +41,6 @@ mysql> show tables;
 1 row in set (0.00 sec)
 ```
 
-Any tool that works with MySQL equivalently functions with a Dolt server.
+Any tool that works with MySQL works equivalently with a Dolt server.
 The downside is you need two tools: dolt for the server, something else
 for the client.

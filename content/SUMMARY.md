@@ -17,6 +17,7 @@
 * [Installation](getting-started/installation.md)
 * [Reading](getting-started/reading.md)
 * [Writing](getting-started/writing.md)
+* [Python Quickstart](getting-started/python.md)
 * [SQL](getting-started/sql.md)
 
 
@@ -47,7 +48,7 @@
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
   * [Concurrency](interfaces/sql/concurrency.md)
 * [CLI](interfaces/cli.md)
-* [Python](interfaces/python.md)
+* [Comparison](interfaces/compare_cli.md)
 
 ## Integrations
 
@@ -71,5 +72,9 @@
 
 ## Guides
 
-* [SQL Sync](guides/sql-sync.md)
+* [Python](guides/python/README.md)
+  * [Python SQL Clients](guides/python/sql_clients.md)
+  * [Doltpy](guides/python/doltpy.md)
+  * [Doltpy Tutorials](guides/python/doltpy_tutorials.md)
 * [Docker](guides/docker.md)
+* [SQL Sync](guides/sql-sync.md)

@@ -17,11 +17,15 @@ Source code:
 
 - [Pandas write](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/write.py)
 
+For long-form content refer to the [Doltpy
+Tutorials](./doltpy_tutorial.md).
+
 ## Setup
 
 ### Install
 
 ```bash
+sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | sudo bash'
 pip3 install --user doltcli doltpy
 ```
 
@@ -39,7 +43,7 @@ pip3 install --user doltcli doltpy
 >>> db = dolt.Dolt.clone("max-hoffman/qm9")
 ```
 
-### Connect to Existing Repo
+### Connect to Existing Repo Folder
 
 ```python
 >>> import doltcli as dolt
@@ -48,13 +52,6 @@ pip3 install --user doltcli doltpy
 
 ## Version Control Commands
 
-### Checkout Existing Branch
-
-```python
->>> db.checkout(branch="existing_branch")
->>> db.sql("select DOLT_CHECKOUT('existing_branch')")
-```
-
 ### Checkout New Branch
 
 ```python
@@ -62,7 +59,14 @@ pip3 install --user doltcli doltpy
 >>> db.sql("select DOLT_CHECKOUT('-b', 'new_branch')")
 ```
 
-### Add
+### Checkout Existing Branch
+
+```python
+>>> db.checkout(branch="existing_branch")
+>>> db.sql("select DOLT_CHECKOUT('existing_branch')")
+```
+
+### Add a Table
 
 ```python
 >>> db.add("table-to-add")
@@ -70,7 +74,7 @@ pip3 install --user doltcli doltpy
 >>> db.sql("select DOLT_ADD('.')")
 ```
 
-### Commit
+### Commit a Change
 
 ```python
 >>> db.commit(message="commit message")
