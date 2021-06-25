@@ -75,6 +75,6 @@
 * [Python](guides/python/README.md)
   * [Python SQL Clients](guides/python/sql_clients.md)
   * [Doltpy](guides/python/doltpy.md)
-  * [Doltpy Tutorials](guides/python/doltpy_tutorials.md)
+  * [Doltpy Tutorials](guides/python/doltpy_tutorial.md)
 * [Docker](guides/docker.md)
 * [SQL Sync](guides/sql-sync.md)
