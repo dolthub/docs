@@ -89,6 +89,7 @@ helps users import `Pandas.DataFrame` tables into Dolt:
 
 ```bash
 $ pip install --user doltpy
+$ python
 >>> import pandas as pd
 >>> import doltpy.cli as dolt
 >>> from doltpy.cli.write import write_pandas
