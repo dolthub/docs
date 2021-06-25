@@ -5,9 +5,9 @@ client can also connect to Dolt. Here we will discuss Python specific
 MySQL clients.
 
 Dolt is 99% MySQL compatible, and extends [custom SQL
-functions](../../interfaces/dolt/dolt-sql-functions.md)
+functions](../../interfaces/sql/dolt-sql-functions.md)
 specific to version controlling. ([this blog is a good practical
-introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/).
+introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/)).
 
 The full set of MySQL commands that Dolt supports can be found
 [here](https://docs.dolthub.com/interfaces/sql/sql-support).
@@ -94,7 +94,6 @@ the database dialect. Below is a simple progression of the pymysql
 connector with a hardcoded query:
 
 ```python
-$ python
 >>> from sqlalchemy import create_engine
 >>> engine = create_engine("mysql+pymysql://root@localhost/new_database")
 >>> with engine.begin() as connection:
@@ -111,12 +110,16 @@ Pandas is a data manipulation library. Pandas has a feature that moves
 data between DataFrames and databases using SQLAlchemy connectors.
 
 ```python
-imoprt pandas as pd
-from sqlalchemy import create_engine
-df = pd.DataFrame({"name" : ["User 1", "User 2", "User 3"]})
-engine = create_engine("mysql+pymysql://root@localhost/new_database")
-df.to_sql("users", con=engine, index=None)
-pd.read_sql("select * from users", engine)
+>>> import pandas as pd
+>>> from sqlalchemy import create_engine
+>>> df = pd.DataFrame({"name" : ["User 1", "User 2", "User 3"]})
+>>> engine = create_engine("mysql+pymysql://root@localhost/new_database")
+>>> df.to_sql("users", con=engine, index=None)
+>>> pd.read_sql("select * from users", engine)
+     name
+0  User 2
+1  User 3
+2  User 1
 ```
 
 Refer to the [`pandas`

@@ -9,9 +9,9 @@ and Conda users have additional dependency hurdles with `doltpy`.
 
 Source code:
 
-- [setup and version control commands](https://github.com/dolthub/doltcli/blob/main/doltcli/dolt.py).
+- [Setup and version control commands](https://github.com/dolthub/doltcli/blob/main/doltcli/dolt.py)
 
-- [most read and write commands](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py).
+- [Standard read and write commands](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py)
 
 - [Pandas read](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/read.py)
 
