@@ -9,21 +9,21 @@
 ## Summary
 
 There are several ways to use Dolt with Python. All require
-[installing the dolt command line tool](./installation.md).
-The Dolt team focuses heavily on supporting Dolt via a MySQL client/server
-connection, but Dolt's CLI commands are a simpler way to get started
+[installing the dolt command line tool](../../getting-started/installation.md).
+Dolt's MySQL client/server support has the most development attention,
+but Dolt's CLI commands are a simpler way to get started
 with Python.
 
 The sections below detail "sql-server" and "filesystem" interfaces for
-working with Dolt in Python. Refer to the [CLI vs. server summary](../interfaces/compare_cli.md)
+working with Dolt in Python. Refer to the [CLI vs. server summary](../../interfaces/compare_cli.md)
 for a side by side comparison of how the data interface affects
 application flexibility.
 
 More information regarding SQL-server use can be found in the [Python
-SQL Client guide](../guides/python/sql_clients.md).
+SQL Client guide](./sql_clients.md).
 
 More information regarding Dolt CLI use in Python use can be found in the [Doltpy
-guides](../guides/python/doltpy.md). If interested in the source code, [this
+guides](./doltpy.md). If interested in the source code, [this
 file](https://github.com/dolthub/doltcli/blob/main/doltcli/dolt.py)
 is responsible for most of basic commands. Most read/write source code is
 [here](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py).
@@ -36,9 +36,8 @@ using Dolt with Python. At production scale, Dolt is more practical
 as a Postgres or RDS substitute with additional
 versioning features.
 
-Several existing Python client packages ([example usage
-here](../guides/python_sql_server.md))
-communicate with SQL servers in this way:
+Several existing Python client packages communicate with SQL servers
+and integrate with Dolt:
 
 - [`pymysql`](https://pymysql.readthedocs.io/en/latest/user/examples.html)
 
