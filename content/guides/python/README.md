@@ -60,7 +60,7 @@ and the easiest way to jump into experimenting. Dolt standalone contains all the
 tools needed to create and mutate databases.
 
 If so inclined, you could use
-[`subprocess.POpen`](https://docs.python.org/3/library/subprocess.html)
+[`subprocess.Popen`](https://docs.python.org/3/library/subprocess.html)
 to directly call dolt shell commands from Python:
 
 ```bash
