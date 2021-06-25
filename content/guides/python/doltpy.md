@@ -71,6 +71,7 @@ pip3 install --user doltcli doltpy
 ```python
 >>> db.add("table-to-add")
 >>> db.add(".")
+Status(is_clean=False, modified_tables={}, added_tables={'test': True})
 >>> db.sql("select DOLT_ADD('.')")
 ```
 
@@ -85,6 +86,10 @@ pip3 install --user doltcli doltpy
 
 ```python
 >>> db.checkout(".")
+>>> db.reset()
+>>> db.reset(soft=True)
+>>> db.reset(".")
+>>> db.reset("a-table")
 >>> db.reset(hard=True)
 ```
 
