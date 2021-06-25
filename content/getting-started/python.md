@@ -36,9 +36,9 @@ communicate with SQL servers in this way:
 
 - [`pymysql`](https://pymysql.readthedocs.io/en/latest/user/examples.html)
 
-- [`pandas`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_sql.html)
-
 - [`sqlalchemy`](https://docs.sqlalchemy.org/en/14/dialects/mysql.html)
+
+- [`pandas`](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_sql.html)
 
 Practical examples using Dolt sql-server:
 
