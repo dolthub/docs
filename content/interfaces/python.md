@@ -33,7 +33,7 @@ write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
            import_mode='create',
-           primary_keys=['id'],
+           primary_key=['id'],
            commit=True)
 dolt.remote(add=True, name='origin', url='dolthub/great-players-example')
 dolt.push('origin', 'master')
@@ -60,7 +60,7 @@ dolt = Dolt.clone('dolthub/great-players-example')
 write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
-           import_mode'update')
+           import_mode='update')
 dolt.push('origin', 'master')
 ```
 
@@ -74,7 +74,7 @@ dolt = Dolt('dolthub/great-players-example')
 write_file(dolt,
            'great_players',
            open('path/to/great_players.csv'),
-           import_mode'update')
+           import_mode='update')
 dolt.push('origin', 'master')
 ```
 
