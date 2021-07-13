@@ -137,7 +137,7 @@ OrderedDict([('1uhml9dartkb8lndr643blsclgno9kbt', Commit(ref='1uhml9dartkb8lndr6
 >>> write_file(
         dolt=db,
         table="test",
-        file=open("test.csv", "r"),
+        file_handle=open("test.csv", "r"),
         import_mode="create",
     )
 ```
