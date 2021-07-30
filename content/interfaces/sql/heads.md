@@ -100,7 +100,7 @@ cannot be seen by any other session.
 Dolt supports special system variables and functions to support this
 use case.
 
-## @@dbname\_head
+## `@@dbname\_head`
 
 The session variable `@@dbname_head` \(Where dbname is the name of the
 database\) provides an interface for reading and writing the HEAD
@@ -117,12 +117,7 @@ SELECT @@mydb_head;
 When you set your session head variable like above, you enter detached
 head mode.
 
-## HASHOF\(\)
-
-The HASHOF function returns the commit hash of a branch,
-e.g. `HASHOF("master")`.
-
-## COMMIT\(\)
+## `COMMIT\(\)`
 
 The `COMMIT()` function writes a new commit to the database and
 returns the hash of that commit. Unlike `DOLT_COMMIT()`, the
@@ -154,7 +149,7 @@ current system time is used.
 --author: Specify an explicit author using the standard "A U Thor
 author@example.com" format.
 
-## MERGE\(\)
+## `MERGE\(\)`
 
 The `MERGE()` function merges a branch reference into the current
 head. Unlike `DOLT_MERGE()`, the current head is not updated. Rather,
@@ -171,7 +166,7 @@ SET @@mydb_head = MERGE('feature-branch');
 
 --author: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
-## SQUASH\(\)
+## `SQUASH\(\)`
 
 The SQUASH function merges a branch's root value into the current
 branch's working set. With this approach the user can then commit the
