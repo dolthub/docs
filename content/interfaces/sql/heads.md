@@ -39,29 +39,41 @@ instead of a branch name. The database will be read-only in this case.
 Following the above connection string examples, you can issue `USE`
 statements to switch your current head.
 
-`USE mydb` switches to the default branch
+`USE mydb` switches to the default branch.
 
-`USE \`mydb/feature-branch\`` switches to the feature branch
-given. Note that the string must be back-tick quoted, since it
-contains a `/` character.
+To switch to a named branch:
 
-`USE \`mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p\`` switches to a
-read-only database at the commit hash given.
+```sql
+USE `mydb/feature-branch`
+```
 
-## Switch heads with the `DOLT_CHECKOUT` function
+Note that the string must be back-tick quoted, since it contains a `/`
+character.
 
-The `DOLT_CHECKOUT` SQL function provides identical functionality as
+To siwtfh to a read-only databaes at a commit hash:
+
+```sql
+USE `mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
+```
+
+## Switch heads with the `DOLT_CHECKOUT()` function
+
+The `DOLT_CHECKOUT()` SQL function provides identical functionality as
 the `dolt checkout` command on the command line, and accepts the same
 arguments.
 
 `SELECT DOLT_CHECKOUT('feature-branch');` switches the session to the
 `feature-branch` branch. You can also switch to a new branch, like so:
 
-`SELECT DOLT_CHECKOUT('-b', 'new-branch');`
+```sql
+SELECT DOLT_CHECKOUT('-b', 'new-branch');
+```
 
 You can switch to a new branch with a starting commit as well:
 
-`SELECT DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')`
+```sql
+SELECT DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
+```
 
 ## Switch heads with a session variable
 
@@ -81,7 +93,9 @@ mydb> select @@mydb_head_ref;
 To switch heads, set this session variable. Use either
 `refs/heads/branchName` or just `branchName`:
 
-`SET @@mydb_head_ref = 'feature-branch'`
+```sql
+SET @@mydb_head_ref = 'feature-branch'
+```
 
 # Notes on switching heads
 
