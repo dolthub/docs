@@ -92,24 +92,42 @@ title: Supported Statements
 
 ## Transactional statements
 
-Transactional semantics are a work in progress. Dolt isn't like other databases: a "commit" in dolt creates a new entry in the repository revision graph, as opposed to updating one or more rows atomically as in other databases. By default, updating data through SQL statements modifies the working set of the repository. Committing changes to the repository requires the use of `dolt add` and `dolt commmit` from the command line. But it's also possible for advanced users to create commits and branches directly through SQL statements.
+Dolt supports atomic transactions like other SQL databases. It's also
+possible for clients to connect to different heads, which means they
+will never see each other's edits until a merge between heads is
+performed. See [Working with multiple heads](../heads.md) for more
+detail.
 
-Not much work has been put into supporting the true transaction and concurrency primitives necessary to be an application server, but limited support for transactions does exist. Specifically, when running the SQL server with `@@autocommit = false`, the working set will not be updated with changes until a `COMMIT` statement is executed.
+Dolt has two levels of persistence: 
+
+1) The SQL transaction layer, where a `COMMIT` statement atomically
+updates the working set for the connected head 
+
+2) The Dolt commit layer, where commits are added to the Dolt commit
+graph with an author, a parent commit, etc.
+
+Merging these two layers is a work in progress, and some
+functionality, such as the `DOLT_COMMIT` function, currently violate
+ACID properties in a high concurrency environment. For safety, we
+recommend using the Dolt commit layer in a single-threaded fashion, or
+offline, and limiting SQL statements to the SQL transaction layer when
+multiple clients per HEAD are required.
 
 | Statement | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
-| `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../concurrency.md) for details. |
+| `BEGIN` | ✓ | Synonym for `START TRANSACTION` |
+| `COMMIT` | ✓ | |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../heads.md#detached-head-mode) for details. |
+| `DOLT_COMMIT()` | ✓ | `DOLT_COMMIT()` commits the current SQL transaction, then creates a new Dolt commit on the current HEAD with the contents. [See docs on DOLT_COMMIT() for details.](../dolt-sql-functions.md#dolt_commit) |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
-| `SAVEPOINT` | X |  |
-| `RELEASE SAVEPOINT` | X |  |
-| `ROLLBACK TO SAVEPOINT` | X |  |
-| `SET @@autocommit = 1` | ✓ | When `@@autocommit = true`, changes to data will update the working set after every statement. When `@@autocommit = false`, the working set will only be updated after `COMMIT` statements. |
+| `SAVEPOINT` | ✓ |  |
+| `RELEASE SAVEPOINT` | ✓ |  |
+| `ROLLBACK TO SAVEPOINT` | ✓ |  |
+| `@@autocommit` | ✓ |  |
 | `SET TRANSACTION` | X | Different isolation levels are not yet supported. |
-| `START TRANSACTION` | O | `START TRANSACTION` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
-| `UNLOCK TABLES` | ✓ | `UNLOCK TABLES` parses correctly, but since `LOCK TABLES` doesn't prevent concurrent access it's essentially a no-op. |
+| `START TRANSACTION` | ✓ |  |
+| `UNLOCK TABLES` | O | `UNLOCK TABLES` parses correctly, but since `LOCK TABLES` doesn't prevent concurrent access it's essentially a no-op. |
 
 ## Prepared statements
 

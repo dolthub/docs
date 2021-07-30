@@ -82,7 +82,7 @@ And we are done. This exact sequence of updates was executed on the example data
 
 ### Full API
 
-See doc strings on [GitHub](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/dolt.py).
+See doc strings on [GitHub](https://github.com/dolthub/doltcli/blob/master/doltcli/dolt.py).
 
 ## `sql`
 

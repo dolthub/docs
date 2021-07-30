@@ -15,18 +15,6 @@ short enough to type on the command line, and
 not taken in the standard command line lexicon. So,
 `dolt`.
 
-## Why does my connection to the server hang / time out?
-
-With no config file, the server starts up in single user mode. It
-won't allow a second connection until the first hangs up. This is to
-prevent any unpleasant surprises with multiple writers, since Dolt's
-transaction / concurrency model is a work in progress.
-
-To allow multiple simultaneous connections, set the `max_connections`
-field in the config.yaml file you pass to the `dolt sql-server`
-command, [as described in the
-docs](https://docs.dolthub.com/interfaces/cli#dolt-sql-server).
-
 ## The MySQL shell gives me an error: `Can't connect to local MySQL server through socket '/tmp/mysql.sock'`
 
 The MySQL shell will try to connect through a socket file on many OSes. 
@@ -42,14 +30,13 @@ This is a SQL variable that you can turn on for your SQL session like so:
 
 `SET @@autocommit = 1`
 
-If it's set to a true value, then Dolt will flush your changes to disk
-after every SQL statement, so that you can see your changes when you
-run other commands (like `dolt diff`) from the command
-line. Specifically, it updates the working set in your database state,
-the same way that running `dolt sql -q ...` on the command line does.
+It's on by default in the MySQL shell, as well as in most clients. But
+some clients (notably the Python MySQL connector) turn it off by
+default.
 
-Otherwise, you won't see changes outside your session until you issue
-a `COMMIT` statement. See the next question.
+You must commit your changes for them to persist after your session
+ends, either by setting `@@autocommit` to on, or by issuing `COMMIT`
+statements manually.
 
 ## What's the difference between `COMMIT`, `COMMIT()`, and `DOLT_COMMIT()`?
 
@@ -67,9 +54,6 @@ into `dolt_branches`)
 `DOLT_COMMIT()` is the same as if you run `dolt commit` from the
 command line. It updates HEAD.
 
-See the [docs on
-concurrency](https://docs.dolthub.com/interfaces/sql/concurrency).
-
 ## I want each of my connected SQL users to get their own branch to make changes on, then merge them back into `master` when they're done making edits. How do I do that?
 
 We are glad you asked! This is a common use case, and we wrote a
@@ -83,18 +67,12 @@ SQL](https://www.dolthub.com/blog/2021-03-15-programmatic-merge-and-resolve/)
 
 ## Does Dolt support transactions?
 
-Not really, in the way that normal databases do. That's a work in
-progress. Until then, you can't `ROLLBACK` or create `SAVEPOINTS`, and
-things like row-level locking with `SELECT FOR UPDATE` don't work. You
-manage concurrency explicitly by creating branches / merging them back
-in to `master` when you're done with a unit of work (which can span
-any amount of time and any number of SQL sessions). `COMMIT` does
-something, but it's not a real transaction (see questions above).
+Yes, it should exactly work the same as MySQL, but with fewer locks
+for competing writes.
 
-Named locks work, via `GET_LOCK()` and `RELEASE_LOCK()` functions.
-
-Support for traditional database transactions, concurrency, and
-row-level locking is on our [roadmap](roadmap.md).
+It's also possible for different sessions to connect to different
+HEADs (branches) on the same server. See [Working with multiple
+heads](../interfaces/sql/heads) for details.
 
 ## What SQL features / syntax are supported?
 

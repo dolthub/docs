@@ -102,7 +102,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BENCHMARK()` | X |  |  |
 | `BETWEEN ... AND ...` | ✓ |  |  |
 | `BIN()` | ✓ |  |  |
-| `BIN_TO_UUID()` | X |  |  |
+| `BIN_TO_UUID()` | ✓ |  |  |
 | `BIT_AND()` | X |  |  |
 | `BIT_COUNT()` | X |  |  |
 | `BIT_LENGTH()` | ✓ |  |  |
@@ -479,9 +479,9 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `UTC_DATE()` | X |  |  |
 | `UTC_TIME()` | X |  |  |
 | `UTC_TIMESTAMP()` | ✓ |  |  |
-| `UUID()` | X |  |  |
+| `UUID()` | ✓ |  |  |
 | `UUID_SHORT()` | X |  |  |
-| `UUID_TO_BIN()` | X |  |  |
+| `UUID_TO_BIN()` | ✓ |  |  |
 | `UpdateXML()` | X |  |  |
 | `VALIDATE_PASSWORD_STRENGTH()` | X |  |  |
 | `VALUES()` | ✓ |  |  |
