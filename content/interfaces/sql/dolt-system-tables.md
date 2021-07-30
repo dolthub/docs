@@ -491,6 +491,54 @@ WHERE staged=false;
 +------------+--------+-----------+
 ```
 
+## `dolt_conflicts_$TABLENAME`
+
+For each table `$TABLENAME` in conflict after a merge, there is a
+corresponding system table named `dolt_conflicts_$TABLENAME`. The
+schema of each such table contains three columns for each column in
+the actual table, representing each row in conflict for each of ours,
+theirs, and base values.
+
+Consider a table `mytable` with this schema:
+
+```sql
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| a     | int  | NO   | PRI |         |       |
+| b     | int  | YES  |     |         |       |
++-------+------+------+-----+---------+-------+
+```
+
+If we attempt a merge that creates conflicts in this table, I can
+examine them with the following query:
+
+```sql
+mydb> select * from dolt_conflicts_mytable;
++--------+--------+-------+-------+---------+---------+
+| base_a | base_b | our_a | our_b | their_a | their_b |
++--------+--------+-------+-------+---------+---------+
+| NULL   | NULL   | 3     | 3     | 3       | 1       |
+| NULL   | NULL   | 4     | 4     | 4       | 2       |
++--------+--------+-------+-------+---------+---------+
+```
+
+To mark conflicts as resolved, delete them from the corresponding
+table. To effectively keep all `our` values, I would simply run:
+
+```sql
+mydb> delete from dolt_conflicts_mytable;
+```
+
+If I wanted to keep all `their` values, I would first run this statement:
+
+```sql
+mydb> replace into mytable (select their_a, their_b from dolt_conflicts_mytable);
+```
+
+And of course you can use any combination of `ours`, `theirs` and
+`base` rows in these replacements.
+
 ## `dolt_procedures`
 
 `dolt_procedures` stores each stored procedure that has been created
