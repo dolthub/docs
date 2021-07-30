@@ -58,7 +58,7 @@ default. This option bypasses that safety.
 current system time is used.
 
 `--author`: Specify an explicit author using the standard "A U Thor
-[author@example.com](mailto:author@example.com)" format.
+author@example.com" format.
 
 ### Examples
 
@@ -78,7 +78,7 @@ SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndo
 ## `DOLT_ADD()`
 
 Adds working changes to staged for this session. Works exactly like
-`dolt add` with each value directly following the flag.
+`dolt add` on the CLI, and takes the same arguments.
 
 After adding tables to the staged area, they can be committed with
 `DOLT_COMMIT()`.
@@ -160,7 +160,8 @@ SELECT DOLT_CHECKOUT('master');
 
 Incorporates changes from the named commits \(since the time their
 histories diverged from the current branch\) into the current
-branch. Works exactly like `dolt merge`.
+branch. Works exactly like `dolt merge` on the CLI, and takes the same
+arguments.
 
 Any resultiung merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created.
@@ -189,9 +190,10 @@ or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new dolt
 commit on the target branch.
 
 If the merge causes conflicts or constraint violations, you must
-resolve them using the `dolt_constraints` system tables before the
-transaction can be committed. See [Dolt System
-Tables](dolt-system-tables.md) for details.
+resolve them using the `dolt_conflicts` system tables before the
+transaction can be committed. See [Dolt system
+tables](dolt-system-tables.md##dolt_conflicts_usdtablename) for
+details.
 
 ### Example
 
@@ -214,10 +216,10 @@ SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
 SELECT DOLT_MERGE('feature-branch');
 ```
 
-## `DOLT_RESET\(\)`
+## `DOLT_RESET()`
 
 Resets staged tables to their HEAD state. Works exactly like `dolt
-reset`.
+reset` on the CLI, and takes the same arguments.
 
 Like other data modifications, after a reset you must `COMMIT` the
 transaction for any changes to affected tables to be visible to other

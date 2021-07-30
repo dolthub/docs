@@ -34,6 +34,13 @@ instead of a branch name. The database will be read-only in this case.
 
 `mysql://127.0.0.1:3306/mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
 
+The above options also work with the standard MySQL command line
+client:
+
+```sh
+mysql --host 127.0.0.1 --port 3306 -u root mydb/feature-branch
+```
+
 ## Switch heads with the `USE` statement
 
 Following the above connection string examples, you can issue `USE`
@@ -149,18 +156,18 @@ Doing so causes your session to enter detached head mode.
 
 ### Options
 
--m, --message: Use the given `<msg>` as the commit message. Required
+`-m, --message`: Use the given `<msg>` as the commit message. Required
 
--a: Stages all tables with changes before committing
+`-a`: Stages all tables with changes before committing
 
---allow-empty: Allow recording a commit that has the exact same data
+`--allow-empty`: Allow recording a commit that has the exact same data
 as its sole parent. This is usually a mistake, so it is disabled by
 default. This option bypasses that safety.
 
---date: Specify the date used in the commit. If not specified the
+`--date`: Specify the date used in the commit. If not specified the
 current system time is used.
 
---author: Specify an explicit author using the standard "A U Thor
+`--author`: Specify an explicit author using the standard "A U Thor
 author@example.com" format.
 
 ## `MERGE()`
@@ -178,7 +185,7 @@ SET @@mydb_head = MERGE('feature-branch');
 
 ### Options
 
---author: Specify an explicit author using the standard "A U Thor author@example.com" format.
+`--author`: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
 ## `SQUASH()`
 
