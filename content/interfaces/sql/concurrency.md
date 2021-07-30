@@ -12,9 +12,7 @@ default using the `dolt sql` shell and the MySQL shell, but some other
 clients turn it off by default (notably the [Python mysql
 connector](https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-autocommit.html).
 
-
 ## Session variables
-
 
 ### @@dbname\_head
 
