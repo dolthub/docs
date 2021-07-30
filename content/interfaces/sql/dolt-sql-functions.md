@@ -31,7 +31,7 @@ is that the command line environment is effectively a session, one
 that happens to be shared with whomever runs CLI commands from that
 directory.
 
-## `DOLT\_COMMIT\(\)`
+## `DOLT_COMMIT()`
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with
 each value directly following the flag.
@@ -75,7 +75,7 @@ WHERE pk = "key";
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-## `DOLT\_ADD\(\)`
+## `DOLT_ADD()`
 
 Adds working changes to staged for this session. Works exactly like
 `dolt add` with each value directly following the flag.
@@ -114,7 +114,7 @@ SELECT DOLT_ADD('-a');
 SELECT DOLT_COMMIT('-m', 'commiting all changes');
 ```
 
-## `DOLT\_CHECKOUT\(\)`
+## `DOLT_CHECKOUT()`
 
 Switches this session to a different branch.
 
@@ -156,7 +156,7 @@ SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
 SELECT DOLT_CHECKOUT('master');
 ```
 
-## `DOLT\_MERGE\(\)`
+## `DOLT_MERGE()`
 
 Incorporates changes from the named commits \(since the time their
 histories diverged from the current branch\) into the current
@@ -267,9 +267,9 @@ SELECT DOLT_RESET('table')
 Dolt also provides various SQL functions for dolt-specific
 functionality in SQL that have no command line equivalent.
 
-## `DOLT\_MERGE\_BASE()`
+## `DOLT_MERGE_BASE()`
 
-`DOLT\_MERGE\_BASE()` returns the hash of the common ancestor between
+`DOLT_MERGE_BASE()` returns the hash of the common ancestor between
 two branches. Given the following branch structure:
 
 Consider the following branch structure:
@@ -286,7 +286,7 @@ The following would return the hash of commit `E`:
 SELECT DOLT_MERGE_BASE('feature', 'master');
 ```
 
-## `HASHOF\(\)`
+## `HASHOF()`
 
 The HASHOF function returns the commit hash of a branch,
 e.g. `HASHOF("master")`.
