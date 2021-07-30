@@ -63,12 +63,12 @@ title: Data Description
 
 | Component | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| `BEGIN` | O | `BEGIN` parses correctly, but is a no-op: it doesn't create a checkpoint that can be returned to with `ROLLBACK`. |
-| `COMMIT` | ✓ | `COMMIT` will write any pending changes to the working set when `@@autocommit = false` |
-| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../concurrency.md) for details. |
+| `BEGIN` | ✓ | |
+| `COMMIT` | ✓ | |
+| `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a dolt commit of the current database state and returns the hash of this new commit. See [concurrency](../concurrency.md) for details. |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
-| `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
-| `SAVEPOINT` | X |  |
+| `ROLLBACK` | ✓ | |
+| `SAVEPOINT` | ✓ | |
 | `SET @@autocommit = 1` | ✓ | When `@@autocommit = true`, changes to data will update the working set after every statement. When `@@autocommit = false`, the working set will only be updated after `COMMIT` statements. |
 
 ## Indexes
