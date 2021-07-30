@@ -44,9 +44,10 @@
     * [Expressions, Functions, Operators](interfaces/sql/sql-support/expressions-functions-operators.md)
     * [Supported Statements](interfaces/sql/sql-support/supported-statements.md)
     * [Micscellaneous](interfaces/sql/sql-support/miscellaneous.md)
+  * [Working with multiple HEADs](interfaces/sql/heads.md)
   * [Dolt SQL Functions](interfaces/sql/dolt-sql-functions.md)
+  * [Dolt System Variables](interfaces/sql/sysvars.md)
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
-  * [Concurrency](interfaces/sql/concurrency.md)
 * [CLI](interfaces/cli.md)
 * [Comparison](interfaces/compare_cli.md)
 

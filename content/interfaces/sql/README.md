@@ -45,24 +45,13 @@ Many of Dolt's unique features are accessible via system tables. These tables al
 
 ### Concurrency
 
-When any client initiates a SQL session against a Dolt data repository, that session will be pointing to a specific commit even if other clients make changes. Therefore, modifications made by other clients will not be visible. There are two commit modes which determine how you are able to write to the database, commit those writes, and get modifications made by other clients.
-
-You can read a more detailed description of how Dolt handles concurrency [here](concurrency.md)
-
-#### Autocommit mode
-
-```text
-NOTE: This may be confusing to some readers. Commit in this context is Commit in the database context not Commit in the
-version control context.
-```
-
-In autocommit mode, when a client connects they will be pinned to the working data for the Dolt data repository. Any write queries will modify the in memory state, and automatically update the working set. This is the most intuitive model in that it works identically to the `dolt sql` command. Any time a write query completes against the server, you could open up a separate terminal window and see the modifications with `dolt diff` or by running a SELECT query using `dolt sql`. That same client will be able to see his modifications in read queries, however if there was a second client that connected at the same time, they will not see eachother's writes, and if both tried to make writes to the database the last write would win, and the first would be overwritten. This is why maximum connections should be set to 1 when working in this mode \(See the `dolt sql-server` docs [here](../cli.md#dolt-sql-server) to see how to configure the server\).
-
-#### Manual commit mode
-
-In manual-commit mode users will manually set what commit they are pinned to and user writes are not written to the database until the user creates a commit manually. Manually created commits can be used in insert and update statements on the [dolt\_branches](dolt-system-tables.md#dolt_branches) table. In manual commit mode it is possible for multiple users to interact with the database simultaneously, however until merge support with conflict resolution is supported in dolt there are limitations.
-
-See the full [manual commit mode documentation](concurrency.md)
+Dolt supports SQL transactions using the standard transaction control
+statements: `START TRANSACTION`, `COMMIT`, `ROLLBACK`, and
+`SAVEPOINT`. The `@@autocommit` session variable is also supported,
+and behaves identically as in MySQL. `@@autocommit` is enabled by
+default using the `dolt sql` shell and the MySQL shell, but some other
+clients turn it off by default (notably the [Python mysql
+connector](https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlconnection-autocommit.html).
 
 ## Querying non-HEAD revisions of a database
 
