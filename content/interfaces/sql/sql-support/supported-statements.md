@@ -118,7 +118,7 @@ multiple clients per HEAD are required.
 | `BEGIN` | ✓ | Synonym for `START TRANSACTION` |
 | `COMMIT` | ✓ | |
 | `COMMIT(MESSAGE)` | ✓ | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../heads.md#detached-head-mode) for details. |
-| `DOLT_COMMIT()` | ✓ | `DOLT_COMMIT()` commits the current SQL transaction, then creates a new Dolt commit on the current HEAD with the contents. [See docs on DOLT_COMMIT() for details.](../dolt-sql-functions#dolt_commit) |
+| `DOLT_COMMIT()` | ✓ | `DOLT_COMMIT()` commits the current SQL transaction, then creates a new Dolt commit on the current HEAD with the contents. [See docs on DOLT_COMMIT() for details.](../dolt-sql-functions.md#dolt_commit) |
 | `LOCK TABLES` | X | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions. |
 | `ROLLBACK` | X | `ROLLBACK` parses correctly but is a no-op. |
 | `SAVEPOINT` | ✓ |  |
