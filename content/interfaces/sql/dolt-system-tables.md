@@ -326,8 +326,8 @@ table.
 
 ## `dolt_history_$TABLENAME`
 
-For every user table named $TABLENAME, there is a queryable system
-table named dolt\_history\_$TABLENAME which can be queried to find a
+For every user table named `$TABLENAME`, there is a queryable system
+table named `dolt_history_$TABLENAME` which can be queried to find a
 row's value at every commit in the current branches commit graph.
 
 ### Schema
