@@ -26,11 +26,11 @@ DoltHub uses the "fork" model for facilitating collaboration. A Data Bounty is a
 
 For now just fork `dolthub/us-president-precinct-results` into your own namespace:
 
-![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository%20%282%29%20%282%29.png)
+![Fork Bounty Repository](../.gitbook/assets/fork_bounty_repository.png)
 
 You will then be redirected to the forked repository where you can have a look around:
 
-![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository%20%282%29%20%283%29.png)
+![Forked Bounty Repository](../.gitbook/assets/forked_bounty_repository.png)
 
 If you want to get paid, you need to write some data to the repository, so let's turn to that!
 
