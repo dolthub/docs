@@ -16,7 +16,7 @@ Query performance for single-source-of-truth tabular data is a well understood p
 
 The tables have different values at different commits, but one could treat each commit as a database in the traditional RDBMS sense. This makes the design challenge of architect Dolt pretty clear: how do we efficiently serve data out to a SQL query engine while storing the value and schema of every table at every commit? Let's visualize a table value at a commit:
 
-![Dolt Table Value](../.gitbook/assets/dolt-table-value%20%282%29%20%282%29.png)
+![Dolt Table Value](../.gitbook/assets/dolt-table-value.png)
 
 The design goal is relatively clear: we want to find a way to efficiently serve queries against the database at a given commit, possibly across the query graph \(see Dolt's system tables\) while not storing the entire database at every commit. In other words we want to share values repeated across values of tables in the commit graph, while preserving acceptable query performance at a given value, and possibly across many values. In the sections that follow we review some of the technologies and concepts we used to build Dolt to achieve these design goals.
 
@@ -50,7 +50,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 * Adding rows to a table whose primary keys are lexicographically larger than any of the existing rows in the table results in an append at the end of Prolly-tree for the table value. The last leaf node in the tree will necessarily change, and new chunks will be created for all of the new rows. Expected duplicate storage overhead is going to be the 4KB chunk at the end of the table's leaf nodes and the spline of the internal nodes of the map leading up to the root node. This kind of table might represent naturally append-only data or time-series data, and the storage overhead is very small. This looks like:
 
-![Append Edit](../.gitbook/assets/append-edit%20%282%29%20%286%29.png)
+![Append Edit](../.gitbook/assets/append-edit.png)
 
 * Adding rows to a table whose primary keys are lexicographically smaller than any of the existing rows is very similar to the case where they are all larger. It's expected to rewrite the first chunks in the table, and the probabilitistic rolling hash will quickly resynchronize with the existing table data. It might look like:
 
@@ -58,7 +58,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 * Adding a run of data whose primary keys fall lexicographically within two existing rows is very similar to the prefix or postfix case. The run of data gets interpolated between the existing chunks of row data:
 
-![Middle Run Edit](../.gitbook/assets/middle-run-edit%20%282%29.png)
+![Middle Run Edit](../.gitbook/assets/middle-run-edit.png)
 
 Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but interally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.
 
