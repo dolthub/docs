@@ -17,7 +17,8 @@ documentation](https://docs.dolthub.com/getting-started/installation).
 % sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'
 ```
 
-For windows installation, see [here](windows.md).
+For windows installation, see
+[here](../getting-started/installation.md#windows).
 
 ## Configure dolt
 

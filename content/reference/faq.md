@@ -72,7 +72,7 @@ for competing writes.
 
 It's also possible for different sessions to connect to different
 HEADs (branches) on the same server. See [Working with multiple
-heads](../interfaces/sql/heads) for details.
+heads](../interfaces/sql/heads.md) for details.
 
 ## What SQL features / syntax are supported?
 
