@@ -6,53 +6,47 @@ title: Data Description
 
 ## Data types
 
-<table>
-<tr><th>Supported</th></tr>
-<tr><td class="greenText">✓<td></tr>
-<tr><td style="color: green">✓<td></tr>
-</table>
-
-| Data type            | Supported                        | Notes                           |
-| :------------------- | :------------------------------- | :------------------------------ |
-| `BOOLEAN`            | <span class="greenText">✓</span> | Alias for `TINYINT`             |
-| `INTEGER`            | ✓                                |                                 |
-| `TINYINT`            | ✓                                |                                 |
-| `SMALLINT`           | ✓                                |                                 |
-| `MEDIUMINT`          | ✓                                |                                 |
-| `INT`                | ✓                                |                                 |
-| `BIGINT`             | ✓                                |                                 |
-| `DECIMAL`            | ✓                                | Max \(precision + scale\) is 65 |
-| `FLOAT`              | ✓                                |                                 |
-| `DOUBLE`             | ✓                                |                                 |
-| `BIT`                | ✓                                |                                 |
-| `DATE`               | ✓                                |                                 |
-| `TIME`               | ✓                                |                                 |
-| `DATETIME`           | ✓                                |                                 |
-| `TIMESTAMP`          | ✓                                |                                 |
-| `YEAR`               | ✓                                |                                 |
-| `CHAR`               | ✓                                |                                 |
-| `VARCHAR`            | ✓                                |                                 |
-| `BINARY`             | ✓                                |                                 |
-| `VARBINARY`          | ✓                                |                                 |
-| `TINYBLOB`           | ✓                                |                                 |
-| `BLOB`               | ✓                                |                                 |
-| `MEDIUMBLOB`         | ✓                                |                                 |
-| `LONGBLOB`           | ✓                                |                                 |
-| `TINYTEXT`           | ✓                                |                                 |
-| `TEXT`               | ✓                                |                                 |
-| `MEDIUMTEXT`         | ✓                                |                                 |
-| `LONGTEXT`           | ✓                                |                                 |
-| `ENUM`               | ✓                                |                                 |
-| `SET`                | ✓                                |                                 |
-| `GEOMETRY`           | X                                |                                 |
-| `POINT`              | X                                |                                 |
-| `LINESTRING`         | X                                |                                 |
-| `POLYGON`            | X                                |                                 |
-| `MULTIPOINT`         | X                                |                                 |
-| `MULTILINESTRING`    | X                                |                                 |
-| `MULTIPOLYGON`       | X                                |                                 |
-| `GEOMETRYCOLLECTION` | X                                |                                 |
-| `JSON`               | ✓                                |                                 |
+| Data type            | Supported | Notes                           |
+| :------------------- | :-------- | :------------------------------ |
+| `BOOLEAN`            | ✅        | Alias for `TINYINT`             |
+| `INTEGER`            | ✓         |                                 |
+| `TINYINT`            | ✓         |                                 |
+| `SMALLINT`           | ✓         |                                 |
+| `MEDIUMINT`          | ✓         |                                 |
+| `INT`                | ✓         |                                 |
+| `BIGINT`             | ✓         |                                 |
+| `DECIMAL`            | ✓         | Max \(precision + scale\) is 65 |
+| `FLOAT`              | ✓         |                                 |
+| `DOUBLE`             | ✓         |                                 |
+| `BIT`                | ✓         |                                 |
+| `DATE`               | ✓         |                                 |
+| `TIME`               | ✓         |                                 |
+| `DATETIME`           | ✓         |                                 |
+| `TIMESTAMP`          | ✓         |                                 |
+| `YEAR`               | ✓         |                                 |
+| `CHAR`               | ✓         |                                 |
+| `VARCHAR`            | ✓         |                                 |
+| `BINARY`             | ✓         |                                 |
+| `VARBINARY`          | ✓         |                                 |
+| `TINYBLOB`           | ✓         |                                 |
+| `BLOB`               | ✓         |                                 |
+| `MEDIUMBLOB`         | ✓         |                                 |
+| `LONGBLOB`           | ✓         |                                 |
+| `TINYTEXT`           | ✓         |                                 |
+| `TEXT`               | ✓         |                                 |
+| `MEDIUMTEXT`         | ✓         |                                 |
+| `LONGTEXT`           | ✓         |                                 |
+| `ENUM`               | ✓         |                                 |
+| `SET`                | ✓         |                                 |
+| `GEOMETRY`           | X         |                                 |
+| `POINT`              | X         |                                 |
+| `LINESTRING`         | X         |                                 |
+| `POLYGON`            | X         |                                 |
+| `MULTIPOINT`         | X         |                                 |
+| `MULTILINESTRING`    | X         |                                 |
+| `MULTIPOLYGON`       | X         |                                 |
+| `GEOMETRYCOLLECTION` | X         |                                 |
+| `JSON`               | ✓         |                                 |
 
 ## Constraints
 
@@ -96,9 +90,3 @@ title: Data Description
 | Index renames            | ✓         |                                                                                |
 | Removing indexes         | ✓         |                                                                                |
 | `AUTO INCREMENT`         | ✓         |                                                                                |
-
-<style>
-  .greenText {
-    color: green;
-  }
-</style>
