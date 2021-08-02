@@ -6,6 +6,12 @@ title: Data Description
 
 ## Data types
 
+<table>
+<tr><th>Supported</th></tr>
+<tr><td class="greenText">✓<td></tr>
+<tr><td style="color: green">✓<td></tr>
+</table>
+
 | Data type            | Supported                        | Notes                           |
 | :------------------- | :------------------------------- | :------------------------------ |
 | `BOOLEAN`            | <span class="greenText">✓</span> | Alias for `TINYINT`             |
