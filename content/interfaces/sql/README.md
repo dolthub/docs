@@ -4,9 +4,9 @@ title: Dolt SQL
 
 # SQL
 
-## Executing SQL
+## Running SQL queries
 
-There are two ways of executing SQL against your data repository:
+There are two ways to run SQL queries against your database:
 
 * `dolt sql` runs SQL queries from your shell
 * `dolt sql-server` starts a MySQL-compatible server
@@ -52,7 +52,7 @@ another database.
 % dolt sql < mysqldump.sql
 ```
 
-View the `dolt sql` command documentation [here](../cli.md#dolt-sql)
+View the `dolt sql` command documentation [here](../cli.md#dolt-sql).
 
 ### dolt sql-server
 
