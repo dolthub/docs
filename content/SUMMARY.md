@@ -49,7 +49,6 @@
   * [Dolt System Variables](interfaces/sql/sysvars.md)
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
 * [CLI](interfaces/cli.md)
-* [Comparison](interfaces/compare_cli.md)
 
 ## Integrations
 
