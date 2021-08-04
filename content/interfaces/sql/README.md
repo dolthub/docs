@@ -4,46 +4,98 @@ title: Dolt SQL
 
 # SQL
 
-## Overview
+## Executing SQL
 
-Dolt data repositories are unique in that they arrive capable of running MySQL compatible SQL statements against them. Your Dolt binary can execute SQL against any Dolt repo you have happen to have locally. Existing RDBMS solutions have optimized their on-disk layout to support the needs of physical plan execution. Dolt makes a different set of tradeoffs, instead using a Merkel Tree to support robust version control semantics, and thus portability of the data. The combination of portability, robust version control semantics, and a SQL interface make Dolt a uniquely compelling data format.
+There are two ways of executing SQL against your data repository:
 
-### Executing SQL
+* `dolt sql` runs SQL queries from your shell
+* `dolt sql-server` starts a MySQL-compatible server
 
-There are two ways of executing SQL against your data repository. The first is via the `dolt sql` command, which runs SQL queries from your shell, and the second is the sql-server command, which starts a MySQL compatible server you can connect to with any standard database client.
+### dolt sql
 
-#### dolt sql
+Using `dolt sql` you can issue SQL statements against a local database
+without starting a server.
 
-Using `dolt sql` you can issue SQL statements against a local data repository directly. Any writes made to the repository will be reflected in the working set, which can be added via `dolt add` and committed via `dolt commit` as per usual.
+With no arguments, `dolt sql` begins an interactive shell.
 
-There are 2 basic modes which the `dolt sql` command operate in. The first is command line query mode where a semicolon delimited list of queries is provided on the command line using the -q parameter. The second is using the Dolt SQL interactive shell which can be started by running the `dolt sql` command without any arguments in a directory containing a Dolt data repository.
+```bash
+% dolt sql
+# Welcome to the DoltSQL shell.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+menus> show tables;
++------------+
+| Table      |
++------------+
+| menu_items |
++------------+
+menus> exit
+Bye
+```
+
+With the `-q` flag, it executes queries specified as arguments.
+
+```bash
+% dolt sql -q "show tables"
++------------+
+| Table      |
++------------+
+| menu_items |
++------------+
+```
+
+You can also feed a file of queries to the `dolt sql` command with
+standard input redirection. This is useful for importing a dump from
+another database.
+
+```bash
+% dolt sql < mysqldump.sql
+```
 
 View the `dolt sql` command documentation [here](../cli.md#dolt-sql)
 
-#### dolt sql-server
+### dolt sql-server
 
-The `dolt sql-server` command will run a MySQL compatible server which clients can execute queries against. This provides a programmatic interface to get data into or out of a Dolt data repository. It can also be used to connect with third party tooling which supports MySQL.
+The `dolt sql-server` command runs a MySQL compatible server which
+clients can connet to and execute queries against. Any library or tool
+that can connect to MySQL can connect to Dolt.
 
-View the `dolt sql-server` command documentation [here](../cli.md#dolt-sql-server) to learn how to configure the server.
+```bash
+% dolt sql-server
+Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
+```
 
-### Dolt CLI in SQL
+The host, user, password, timeout, logging info and other options can
+be set on the command line or via a config file.
 
-You can operate several of dolt cli commands in the sql layer directly. This is especially useful if you are using sql in the application layer and want to the query a Dolt repository.
+View the `dolt sql-server` command documentation
+[here](../cli.md#dolt-sql-server).
 
-You can find full API documentation [here](dolt-sql-functions.md)
+## Dolt CLI in SQL
 
-### System Tables
+Most of Dolt's CLI commands, e.g. `dolt status`, `dolt commit`, `dolt
+merge`, are available in the SQL context, either via [system
+tables](dolt-system-tables.md) or as [custom SQL
+functions](dolt-sql-functions.md). All CLI functionality will
+eventually be exposed in SQL.
 
-Many of Dolt's unique features are accessible via system tables. These tables allow you to query the same information available from various Dolt commands, such as branch information, the commit log, and much more. You can write queries that examine the history of a table, or that select the diff between two commits. See the individual sections below for more details.
+## System Tables
+
+Many of Dolt's unique features are accessible via system tables. These
+tables allow you to query the same information available from various
+Dolt commands, such as branch information, the commit log, and much
+more. You can write queries that examine the history of a table, or
+that select the diff between two commits.
 
 * [dolt\_log table](dolt-system-tables.md#dolt_branches)
 * [dolt\_branches table](dolt-system-tables.md#dolt_branches)
-* [dolt\_docs table](dolt-system-tables.md#dolt_docs)
-* [dolt\_diff tables](dolt-system-tables.md#dolt_diff_tablename)
-* [dolt\_history tables](dolt-system-tables.md#dolt_history_tablename)
-* [dolt\_schemas table](dolt-system-tables.md#dolt_schemas)
+* [dolt\_commit\_diff tables](dolt-system-tables.md#dolt_commit_diff_usdtablename)
+* [dolt\_diff tables](dolt-system-tables.md#dolt_diff_usdtablename)
+* [dolt\_history tables](dolt-system-tables.md#dolt_history_usdtablename)
+* [dolt\_status table](dolt-system-tables.md#dolt_status)
+* [dolt\_conflicts tables](dolt-system-tables.md#dolt_conflicts_usdtablename)
 
-### Concurrency
+## Concurrency
 
 Dolt supports SQL transactions using the standard transaction control
 statements: `START TRANSACTION`, `COMMIT`, `ROLLBACK`, and
@@ -55,7 +107,9 @@ connector](https://dev.mysql.com/doc/connector-python/en/connector-python-api-my
 
 ## Querying non-HEAD revisions of a database
 
-Dolt SQL supports a variant of [SQL 2011](https://en.wikipedia.org/wiki/SQL:2011) syntax to query non-HEAD revisions of a database via the `AS OF` clause:
+Dolt SQL supports a variant of [SQL
+2011](https://en.wikipedia.org/wiki/SQL:2011) syntax to query non-HEAD
+revisions of a database via the `AS OF` clause:
 
 ```sql
 SELECT * FROM myTable AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
@@ -65,10 +119,19 @@ SELECT * FROM myTable AS OF TIMESTAMP('2020-01-01');
 SELECT * FROM myTable AS OF 'myBranch' JOIN myTable AS OF 'yourBranch' AS foo;
 ```
 
-The `AS OF` expression must name a valid Dolt reference, such as a commit hash, branch name, or other reference. Timestamp / date values are also supported. Each table in a query can use a different `AS OF` clause.
+The `AS OF` expression must name a valid Dolt reference, such as a
+commit hash, branch name, or other reference. Timestamp / date values
+are also supported. Each table in a query can use a different `AS OF`
+clause.
 
-In addition to this `AS OF` syntax for `SELECT` statements, Dolt also supports an extension to the standard MySQL syntax to examine the database schema for a previous revision:
+In addition to this `AS OF` syntax for `SELECT` statements, Dolt also
+supports an extension to the standard MySQL syntax to examine the
+database schema for a previous revision:
 
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
 ```
+
+You can also connect to a non-HEAD revision in your connection string
+or with a `USE` statements. See [working with multiple
+HEADS](heads.md)
