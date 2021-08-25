@@ -22,8 +22,8 @@
 
 
 ## Use Cases
-* [Application Database](use-cases/application-databse/README.md)
-  * [Nautobot](use-cases/application-databse/nautobot.md)
+* [Application Database](use-cases/application-database/README.md)
+  * [Nautobot](use-cases/application-database/nautobot.md)
 * [Medical Research](use-cases/medical-research/README.md)
   * [Turbine](use-cases/medical-research/turbine.md)
 * [Natural Language Processing](use-cases/natural-language-processing/README.md)
