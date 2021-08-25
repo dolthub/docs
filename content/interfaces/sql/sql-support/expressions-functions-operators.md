@@ -265,7 +265,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `LENGTH()`                        | ✅        |                                                                                                |     |
 | `LIKE`                            | ✅        |                                                                                                |     |
 | `LN()`                            | ✅        |                                                                                                |     |
-| `LOAD_FILE()`                     | ❌        |                                                                                                |     |
+| `LOAD_FILE()`                     | ✅        |                                                                                                |     |
 | `LOCALTIME()`                     | ❌        |                                                                                                |     |
 | `LOCALTIMESTAMP()`                | ❌        |                                                                                                |     |
 | `LOCATE()`                        | ❌        |                                                                                                |     |
