@@ -199,7 +199,7 @@ This produces the expected `pandas.DataFrame`, printed below using iPython:
 We can execute SQL queries via Dolt if we would like to push our data preparation down into our database layer:
 
 ```python
-form doltpy.cli.read import read_pandas_sql
+from doltpy.cli.read import read_pandas_sql
 query = '''
   select
     Country, count(*)
