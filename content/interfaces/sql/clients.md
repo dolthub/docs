@@ -95,3 +95,13 @@ We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library. 
 
 * [Official Client Documentation](http://www.tmtm.org/en/ruby/mysql/)
 * [ruby/mysql test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/ruby/ruby-mysql-test.rb)
+
+## R
+
+We support the legacy [RMySQL](https://github.com/r-dbi/RMySQL) and newer [RMariaDB](https://github.com/r-dbi/RMariaDB) R clients. Both implement [DBI](https://metacpan.org/pod/DBI) and require either [libmysqlclient](https://dev.mysql.com/doc/c-api/8.0/en/) or [MariaDBConnector/C](https://downloads.mariadb.org/connector-c/).
+
+* [RMySQL Official Client Documentation](https://github.com/r-dbi/RMySQL)
+* [RMYSQL test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/r/rmysql-test.r)
+
+* [RMariaDB Official Client Documentation](https://rmariadb.r-dbi.org)
+* [RMariaDB test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/r/rmariadb-test.r)
