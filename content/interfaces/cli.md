@@ -766,6 +766,75 @@ Set the number of go routines spawned to handle each query (default `2`)
 
 
 
+## `dolt sql-client`
+Starts a built-in MySQL client.
+
+
+
+### Synopsis
+
+<div class="gatsby-highlight" data-language="text">
+	<pre class="language-text">
+		<code class="language-text">
+			dolt sql-client [-d] --config &lt;file&gt;<br />
+			dolt sql-client [-d] [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [--query-parallelism &lt;num-go-routines&gt;] [-r]<br />
+		</code>
+	</pre>
+</div>
+
+
+
+### Description
+Starts a MySQL client that is built into dolt. May connect to any database that supports MySQL connections, including dolt servers.
+
+You may also start a dolt server and automatically connect to it using this client. Both the server and client will be a part of the same process. This is useful for testing behavior of the dolt server without the need for an external client, and is not recommended for general usage.
+
+Similar to `dolt sql-server`, this command may use a YAML configuration file or command line arguments. For more information on the YAML file, refer to the documentation on `dolt sql-server`.
+
+### Options
+`--config`:
+When provided configuration is taken from the yaml config file and all command line parameters are ignored.
+
+`-H`, `--host`:
+Defines the host address that the server will run on (default `localhost`)
+
+`-P`, `--port`:
+Defines the port that the server will run on (default `3306`)
+
+`-u`, `--user`:
+Defines the server user (default `root`)
+
+`-p`, `--password`:
+Defines the server password (default ``)
+
+`-t`, `--timeout`:
+Defines the timeout, in seconds, used for connections
+A value of `0` represents an infinite timeout (default `28800000`)
+
+`-r`, `--readonly`:
+Disables modification of the database
+
+`-l`, `--loglevel`:
+Defines the level of logging provided
+Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
+
+`--multi-db-dir`:
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+
+`--no-auto-commit`:
+When provided sessions will not automatically commit their changes to the working set. Anything not manually committed will be lost.
+
+`--query-parallelism`:
+Set the number of go routines spawned to handle each query (default `2`)
+
+`--max-connections`:
+Set the number of connections handled by the server (default `100`)
+
+`-d`, `--dual`:
+Causes this command to spawn a dolt server that is automatically connected to.
+
+
+
 
 ## `dolt schema show`
 Shows the schema of one or more tables.
