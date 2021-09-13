@@ -13,8 +13,7 @@ Remove a stored public/private keypair.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt creds rm &lt;public_key_as_appears_in_ls&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -38,8 +37,7 @@ Fetch table(s) at a specific commit into a new dolt repo
 	<pre class="language-text">
 		<code class="language-text">
 			dolt read-tables [--dir <directory>] &lt;remote-url&gt; &lt;commit&gt; [&lt;table&gt;...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -80,8 +78,7 @@ Manage set of tracked repositories
 			dolt remote [-v | --verbose]<br />
 			dolt remote add [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;name&gt; &lt;url&gt;<br />
 			dolt remote remove &lt;name&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -150,8 +147,7 @@ Clone a data repository into a new directory
 	<pre class="language-text">
 		<code class="language-text">
 			dolt clone [-remote &lt;remote&gt;] [-branch &lt;branch&gt;]  [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;remote-url&gt; &lt;new-dir&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -196,8 +192,7 @@ List keypairs available for authenticating with doltremoteapi.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt creds ls [-v | --verbose]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -230,8 +225,7 @@ List, create, or delete branches
 			dolt tag -m [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
 			dolt tag -c [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
 			dolt tag -d [-f] [-r] &lt;branchname&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -278,8 +272,7 @@ Creates a new table with an inferred schema.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt schema import [--create|--replace] [--force] [--dry-run] [--lower|--upper] [--keep-types] [--file-type <type>] [--float-threshold] [--map &lt;mapping-file&gt;] [--delim &lt;delimiter&gt;]--pks &lt;field&gt;,... &lt;table&gt; &lt;file&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -368,8 +361,7 @@ Runs a SQL query
 			dolt sql -q &lt;query;query&gt; --multi-db-dir &lt;directory&gt; [-r &lt;result format&gt;] [-b]<br />
 			dolt sql -x &lt;name&gt; [&lt;commit&gt;]<br />
 			dolt sql --list-saved<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -430,8 +422,7 @@ Record changes to the repository
 	<pre class="language-text">
 		<code class="language-text">
 			dolt commit [options]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -485,8 +476,7 @@ List, create, or delete branches
 			dolt branch -m [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
 			dolt branch -c [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;<br />
 			dolt branch -d [-f] [-r] &lt;branchname&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -554,8 +544,7 @@ Login to DoltHub
 	<pre class="language-text">
 		<code class="language-text">
 			dolt login [&lt;creds&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -584,8 +573,7 @@ Import a dolt credential from an existing .jwk file.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt creds import [--no-profile] [&lt;jwk_filename&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -627,8 +615,7 @@ Select an existing dolt credential for authenticating with doltremoteapi.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt creds use &lt;public_key_as_appears_in_ls | public_key_id_as_appears_in_ls&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -658,8 +645,7 @@ Start a MySQL-compatible server.
 		<code class="language-text">
 			dolt sql-server --config &lt;file&gt;<br />
 			dolt sql-server [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [--query-parallelism &lt;num-go-routines&gt;] [-r]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -696,7 +682,7 @@ performance:
 	</pre>
 </div>
 
-SUPPORTED CONFIG FILE FIELDS:
+#### SUPPORTED CONFIG FILE FIELDS:
 
 		`vlog_level` - Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
@@ -766,6 +752,75 @@ Set the number of go routines spawned to handle each query (default `2`)
 
 
 
+## `dolt sql-client`
+Starts a built-in MySQL client.
+
+
+
+### Synopsis
+
+<div class="gatsby-highlight" data-language="text">
+	<pre class="language-text">
+		<code class="language-text">
+			dolt sql-client [-d] --config &lt;file&gt;<br />
+			dolt sql-client [-d] [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [--query-parallelism &lt;num-go-routines&gt;] [-r]<br />
+		</code>
+	</pre>
+</div>
+
+
+
+### Description
+Starts a MySQL client that is built into dolt. May connect to any database that supports MySQL connections, including dolt servers.
+
+You may also start a dolt server and automatically connect to it using this client. Both the server and client will be a part of the same process. This is useful for testing behavior of the dolt server without the need for an external client, and is not recommended for general usage.
+
+Similar to `dolt sql-server`, this command may use a [YAML configuration file](#supported-config-file-fields) or command line arguments. For more information on the YAML file, refer to the documentation on `dolt sql-server`.
+
+### Options
+`--config`:
+When provided configuration is taken from the yaml config file and all command line parameters are ignored.
+
+`-H`, `--host`:
+Defines the host address that the server will run on (default `localhost`)
+
+`-P`, `--port`:
+Defines the port that the server will run on (default `3306`)
+
+`-u`, `--user`:
+Defines the server user (default `root`)
+
+`-p`, `--password`:
+Defines the server password (default ``)
+
+`-t`, `--timeout`:
+Defines the timeout, in seconds, used for connections
+A value of `0` represents an infinite timeout (default `28800000`)
+
+`-r`, `--readonly`:
+Disables modification of the database
+
+`-l`, `--loglevel`:
+Defines the level of logging provided
+Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
+
+`--multi-db-dir`:
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+
+`--no-auto-commit`:
+When provided sessions will not automatically commit their changes to the working set. Anything not manually committed will be lost.
+
+`--query-parallelism`:
+Set the number of go routines spawned to handle each query (default `2`)
+
+`--max-connections`:
+Set the number of connections handled by the server (default `100`)
+
+`-d`, `--dual`:
+Causes this command to spawn a dolt server that is automatically connected to.
+
+
+
 
 ## `dolt schema show`
 Shows the schema of one or more tables.
@@ -778,8 +833,7 @@ Shows the schema of one or more tables.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt schema show [&lt;commit&gt;] [&lt;table&gt;...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -813,8 +867,7 @@ Show what revision and author last modified each row of a table
 	<pre class="language-text">
 		<code class="language-text">
 			dolt blame [&lt;rev&gt;] &lt;tablename&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -838,8 +891,7 @@ Shows the column tags of one or more tables.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt schema tags [-r &lt;result format&gt;] [&lt;table&gt;...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -872,8 +924,7 @@ Exports a table's schema.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt schema export &lt;table&gt; &lt;file&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -907,8 +958,7 @@ Switch branches or restore working tree tables
 			dolt checkout &lt;branch&gt;<br />
 			dolt checkout &lt;table&gt;...<br />
 			dolt checkout -b &lt;new-branch&gt; [&lt;start-point&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -946,8 +996,7 @@ Fetch from and integrate with another repository or a local branch
 	<pre class="language-text">
 		<code class="language-text">
 			dolt pull &lt;remote&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -980,8 +1029,7 @@ Get and set repository or global options
 			dolt config [--global|--local] --add &lt;name&gt; &lt;value&gt;<br />
 			dolt config [--global|--local] --get &lt;name&gt;<br />
 			dolt config [--global|--local] --unset &lt;name&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1028,8 +1076,7 @@ Removes table(s) from the working set of tables.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt table rm &lt;table&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1057,8 +1104,7 @@ Cleans up unreferenced data from the repository.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt gc [--shallow]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1114,8 +1160,7 @@ Makes a copy of a table
 	<pre class="language-text">
 		<code class="language-text">
 			dolt table cp [-f] &lt;oldtable&gt; &lt;newtable&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1156,8 +1201,7 @@ Resets staged tables to their HEAD state
 		<code class="language-text">
 			dolt reset &lt;tables&gt;...<br />
 			dolt reset [--hard | --soft]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1201,8 +1245,7 @@ Imports data into a dolt table
 			dolt table import -c [-f] [--pk &lt;field&gt;] [--schema &lt;file&gt;] [--map &lt;file&gt;] [--continue] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;<br />
 			dolt table import -u [--map &lt;file&gt;] [--continue] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;<br />
 			dolt table import -r [--map &lt;file&gt;] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1287,8 +1330,7 @@ Update remote refs along with associated objects
 	<pre class="language-text">
 		<code class="language-text">
 			dolt push [-u | --set-upstream] [&lt;remote&gt;] [&lt;refspec&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1325,8 +1367,7 @@ Renames a table
 	<pre class="language-text">
 		<code class="language-text">
 			dolt table mv [-f] &lt;oldtable` &lt;newtable`<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1368,8 +1409,7 @@ Show the working status
 	<pre class="language-text">
 		<code class="language-text">
 			dolt status <br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1393,8 +1433,7 @@ No options for this command.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt conflicts cat [&lt;commit&gt;] &lt;table&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1422,8 +1461,7 @@ Add table contents to the list of staged tables
 	<pre class="language-text">
 		<code class="language-text">
 			dolt add [&lt;table&gt;...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1459,8 +1497,7 @@ Export the contents of a table to a file.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt table export [-f] [-pk &lt;field&gt;] [-schema &lt;file&gt;] [-map &lt;file&gt;] [-continue] [-file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1513,8 +1550,7 @@ Show commit logs
 	<pre class="language-text">
 		<code class="language-text">
 			dolt log [-n &lt;num_commits&gt;] [&lt;commit&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1543,8 +1579,7 @@ List tables
 	<pre class="language-text">
 		<code class="language-text">
 			dolt ls [--options] [&lt;commit&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1583,8 +1618,7 @@ Removes rows from list of conflicts
 		<code class="language-text">
 			dolt conflicts resolve &lt;table&gt; [&lt;key_definition&gt;] &lt;key&gt;...<br />
 			dolt conflicts resolve --ours|--theirs &lt;table&gt;...<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1645,8 +1679,7 @@ Check authenticating with a credential keypair against a doltremoteapi.
 	<pre class="language-text">
 		<code class="language-text">
 			dolt creds check [--endpoint doltremoteapi.dolthub.com:443] [--creds &lt;eak95022q3vskvumn2fcrpibdnheq1dtr8t...&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1678,8 +1711,7 @@ Join two or more development histories together
 			dolt merge [--squash] &lt;branch&gt;<br />
 			dolt merge --no-ff [-m message] &lt;branch&gt;<br />
 			dolt merge --abort<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1723,8 +1755,7 @@ Edits the commit history using the provided query
 	<pre class="language-text">
 		<code class="language-text">
 			dolt filter-branch [--all] &lt;query&gt; [&lt;commit&gt;]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1757,8 +1788,7 @@ Show changes between commits, commit and working tree, etc
 		<code class="language-text">
 			dolt diff [options] [&lt;commit&gt;] [&lt;tables&gt;...]<br />
 			dolt diff [options] &lt;commit&gt; &lt;commit&gt; [&lt;tables&gt;...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
@@ -1818,8 +1848,7 @@ Download objects and refs from another repository
 	<pre class="language-text">
 		<code class="language-text">
 			dolt fetch [&lt;remote&gt;] [&lt;refspec&gt; ...]<br />
-
-  		</code>
+		</code>
 	</pre>
 </div>
 
