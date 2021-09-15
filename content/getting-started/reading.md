@@ -241,7 +241,7 @@ library(RMySQL)
 library(DBI)
 ```
 
-We can no instantiate a connection object and start checking out the data:
+We can now instantiate a connection object and start checking out the data:
 
 ```text
 con <- dbConnect(MySQL(),
