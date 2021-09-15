@@ -6,11 +6,11 @@ title: What is Dolt
 
 ## Version Controlled Database
 
-Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing the version control features which are closely modeled on Git.
+Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing the version control features, which are closely modeled on Git.
 
 ### Offline vs Online
 
-"Offline" Dolt operations happen via the Git-like command line interface \(CLI\). Used offline Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
+"Offline" Dolt operations happen via the Git-like command line interface \(CLI\). Used offline, Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors, users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
 
 ### Offline
 
@@ -50,7 +50,7 @@ dolt sql-server
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
 ```
 
-We now have a running Dolt SQL Server. We can connect using using the standard MySQL connector:
+We now have a running Dolt SQL Server. We can connect using the standard MySQL connector:
 
 ```text
 ~|>>  mysql --host=127.0.0.1 --user=root
@@ -85,7 +85,7 @@ We used Git-like "offline" features to clone a database, stood up a server, and 
 
 ## Everything in SQL
 
-Where possible Dolt's version control features are exposed in SQL. That means users can script complex version control workflows into the SQL queries that define data pipelines.
+Where possible, Dolt's version control features are exposed in SQL. That means users can script complex version control workflows into the SQL queries that define data pipelines.
 
 Let's dive into a couple of examples to see what this looks like in practice.
 
