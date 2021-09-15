@@ -196,7 +196,7 @@ Our current support for Oracle is data-only, which is to say we support syncing 
 
 ### Oracle to Dolt
 
-We again employ the same pattern for syncing form Oracle to Dolt that we used in the MySQL and Postgres sections.
+We again employ the same pattern for syncing from Oracle to Dolt that we used in the MySQL and Postgres sections.
 
 #### Setup
 
