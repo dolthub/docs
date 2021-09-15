@@ -4,7 +4,7 @@ title: Time Travel
 
 # Time Travel
 
-Dolt's commit graph storage layer models each state committed state of the database as a commit, along with associated metadata. The entire commit history can be queried in SQL:
+Dolt's commit graph storage layer models each committed state of the database as a commit, along with associated metadata. The entire commit history can be queried in SQL:
 
 ![Dolt Storage and Query Layers](../../.gitbook/assets/dolt-time-travel-commit-graph.png)
 
