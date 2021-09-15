@@ -6,7 +6,7 @@ title: Reading from Dolt
 
 ## Introduction
 
-This tutorial covers how to read form Dolt databases using three different interfaces, the command line interface \(CLI\), SQL, and Python \(using Doltpy\). In the [installation tutorial](installation.md) we covered installing Dolt, which provides the CLI and SQL. We also covered installing Doltpy, which provides the Python tools for interacting with Dolt that we will use.
+This tutorial covers how to read from Dolt databases using three different interfaces, the command line interface \(CLI\), SQL, and Python \(using Doltpy\). In the [installation tutorial](installation.md) we covered installing Dolt, which provides the CLI and SQL. We also covered installing Doltpy, which provides the Python tools for interacting with Dolt that we will use.
 
 ## Clone an Example Database
 
@@ -199,7 +199,7 @@ This produces the expected `pandas.DataFrame`, printed below using iPython:
 We can execute SQL queries via Dolt if we would like to push our data preparation down into our database layer:
 
 ```python
-form doltpy.cli.read import read_pandas_sql
+from doltpy.cli.read import read_pandas_sql
 query = '''
   select
     Country, count(*)
