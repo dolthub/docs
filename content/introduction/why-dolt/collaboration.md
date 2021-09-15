@@ -4,7 +4,7 @@ title: Collaboration
 
 # Collaboration
 
-One the primary inspirations for building Dolt was the friction associated with distributing and collaborating on datasets.
+One of the primary inspirations for building Dolt was the friction associated with distributing and collaborating on datasets.
 
 ## Distribution
 

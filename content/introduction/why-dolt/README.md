@@ -24,7 +24,7 @@ In each case there is the possibility of _failure caused by data_.
 
 Dolt is a database that includes version control features so that users can build workflows that reduce the possibility of data causing software failure while making recovery faster.
 
-We chose SQL as Dolt's query interface because it is the most widely the most widely adopted data description and query language for tabular data, and tables are the most common abstraction for managing datasets.
+We chose SQL as Dolt's query interface because it is the most widely adopted data description and query language for tabular data, and tables are the most common abstraction for managing datasets.
 
 Dolt adds the following version control features to a familiar SQL database:
 
