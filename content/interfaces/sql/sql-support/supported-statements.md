@@ -21,7 +21,7 @@ title: Supported Statements
 | `REPLACE`           | ✅        |                                                                                                                           |
 | `SELECT`            | ✅        | Most select statements, including `UNION` and `JOIN`, are supported.                                                      |
 | `SELECT FROM AS OF` | ✅        | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](../concurrency.md). |
-| `SELECT FOR UPDATE` | ❌        | Locking and concurrency are currently very limited.                                                                       |
+| `SELECT FOR UPDATE` | ❌        | Row-level locks are not supported.                                                                                        |
 | `SUBQUERIES`        | ✅        | Subqueries work, but must be given aliases. Some limitations apply.                                                       |
 | `TABLE`             | ❌        | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause.                                                             |
 | `TRUNCATE`          | ✅        |                                                                                                                           |
@@ -38,10 +38,10 @@ title: Supported Statements
 | `ADD CONSTRAINT`        | ✅        |                                                                                                                                                    |
 | `ADD FOREIGN KEY`       | ✅        |                                                                                                                                                    |
 | `ADD PARTITION`         | ❌        |                                                                                                                                                    |
-| `ALTER COLUMN`          | 🟠        | Name and order changes are supported. Some but not all type changes are supported. Primary keys cannot be altered.                                 |
+| `ALTER COLUMN`          | 🟠        | Name and order changes are supported. Some but not all type changes are supported.                                                                 |
 | `ALTER DATABASE`        | ❌        |                                                                                                                                                    |
 | `ALTER INDEX`           | ❌        | Indexes can be created and dropped, but not altered.                                                                                               |
-| `ALTER PRIMARY KEY`     | ❌        | Primary keys of tables cannot be changed.                                                                                                          |
+| `ALTER PRIMARY KEY`     | ✅        |                                                                                                                                                    |
 | `ALTER TABLE`           | ✅        | Not all `ALTER TABLE` statements are supported. See the rest of this table for details.                                                            |
 | `ALTER TYPE`            | 🟠        | Some type changes are supported but not all.                                                                                                       |
 | `ALTER VIEW`            | ❌        | Views can be created and dropped, but not altered.                                                                                                 |
@@ -120,7 +120,7 @@ multiple clients per HEAD are required.
 | `COMMIT(MESSAGE)`       | ✅        | The `COMMIT()` function creates a commit of the current database state and returns the hash of this new commit. See [concurrency](../heads.md#detached-head-mode) for details.                            |
 | `DOLT_COMMIT()`         | ✅        | `DOLT_COMMIT()` commits the current SQL transaction, then creates a new Dolt commit on the current HEAD with the contents. [See docs on DOLT_COMMIT() for details.](../dolt-sql-functions.md#dolt_commit) |
 | `LOCK TABLES`           | ❌        | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions.                                                                                                           |
-| `ROLLBACK`              | ❌        | `ROLLBACK` parses correctly but is a no-op.                                                                                                                                                               |
+| `ROLLBACK`              | ✅        |                                                                                                                                                                                                           |
 | `SAVEPOINT`             | ✅        |                                                                                                                                                                                                           |
 | `RELEASE SAVEPOINT`     | ✅        |                                                                                                                                                                                                           |
 | `ROLLBACK TO SAVEPOINT` | ✅        |                                                                                                                                                                                                           |

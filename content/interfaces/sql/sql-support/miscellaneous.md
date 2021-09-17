@@ -18,8 +18,8 @@ title: Miscellaneous
 | Information schema                | ✅        |                                                                          |
 | Views                             | ✅        |                                                                          |
 | Window functions                  | 🟠        | Only `ROW_NUMBER()` is supported currently, and other limitations apply. |
-| Common table expressions \(CTEs\) | ❌        |                                                                          |
-| Stored procedures                 | 🟠        | Currently in alpha release                                               |
+| Common table expressions \(CTEs\) | ✅        |                                                                          |
+| Stored procedures                 | ✅         | Currently in alpha release                                               |
 | Cursors                           | ❌        |                                                                          |
 | Triggers                          | ✅        |                                                                          |
 
