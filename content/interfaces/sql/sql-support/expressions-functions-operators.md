@@ -21,7 +21,7 @@ title: "Expressions, Functions, and Operators"
 | `GROUP BY`          | ✅        | Group-by columns can be referred to by their ordinal \(e.g. `1`, `2`\), a MySQL dialect extension. |
 | `ORDER BY`          | ✅        | Order-by columns can be referred to by their ordinal \(e.g. `1`, `2`\), a MySQL dialect extension. |
 | Aggregate functions | ✅        |                                                                                                    |
-| `DISTINCT`          | 🟠        | Only supported for certain expressions.                                                            |
+| `DISTINCT`          | ✅        |                                                                                                    |
 | `ALL`               | ✅        |                                                                                                    |
 
 ## Table expressions
@@ -30,7 +30,7 @@ title: "Expressions, Functions, and Operators"
 | :--------------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------- |
 | Tables and views       | ✅        |                                                                                                                         |
 | Table and view aliases | ✅        |                                                                                                                         |
-| Joins                  | 🟠        | `LEFT OUTER`, `RIGHT OUTER`, `INNER`, `NATURAL`, and `CROSS JOINS` are supported. `FULL OUTER` joins are not supported. |
+| Joins                  | ✅        | `LEFT OUTER`, `RIGHT OUTER`, `INNER`, `NATURAL`, and `CROSS JOINS` are supported. `FULL OUTER` joins are not supported. |
 | Subqueries             | ✅        |                                                                                                                         |
 | `UNION`                | ✅        |                                                                                                                         |
 
