@@ -58,9 +58,9 @@ did not run could not complete due to a timeout earlier in the run.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5889090 |
+| ok | 5889096 |
 | not ok | 41537 |
-| did not run | 2259 |
+| did not run | 2253 |
 | timeout | 2 |
 | _total_ _tests_ | 5932888 |
 <br/>
