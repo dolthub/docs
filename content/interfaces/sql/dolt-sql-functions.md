@@ -357,7 +357,7 @@ SELECT DOLT_FETCH('origin', 'master');
 SELECT HASHOF('origin/master');
 
 -- Merge remote master with current branch
-SELECT DOLT_MERGE('refs/remotes/origin/master');
+SELECT DOLT_MERGE('origin/master');
 ```
 
 ## `DOLT_PULL()`
