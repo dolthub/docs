@@ -625,3 +625,37 @@ SELECT * FROM dolt_schemas;
 | view | four | select 2+2 from dual |
 +------+------+----------------------+
 ```
+
+## `dolt_remotes`
+
+`dolt_status` returns the remote subcontents of the `repo_state.json`, similar
+to running `dolt remote -v` from the commands line.
+
+### Schema
+
+```text
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| name        | text | NO   | PRI |         |       |
+| url         | text | NO   |     |         |       |
+| fetch_specs | json | YES  |     |         |       |
+| params      | json | YES  |     |         |       |
++-------------+------+------+-----+---------+-------+
+```
+
+### Example Query
+
+```sql
+SELECT *
+FROM dolt_remotes
+WHERE name = 'origin';
+```
+
+```text
++--------+-----------------------------------------+--------------------------------------+--------+
+| name   | url                                     | fetch_specs                          | params |
++--------+-----------------------------------------+--------------------------------------+--------+
+| origin | file:///go/github.com/dolthub/dolt/rem1 | [refs/heads/*:refs/remotes/origin/*] | map[]  |
++--------+-----------------------------------------+--------------------------------------+--------+
+```
