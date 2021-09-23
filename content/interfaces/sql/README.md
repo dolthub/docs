@@ -94,6 +94,7 @@ that select the diff between two commits.
 * [dolt\_history tables](dolt-system-tables.md#dolt_history_usdtablename)
 * [dolt\_status table](dolt-system-tables.md#dolt_status)
 * [dolt\_conflicts tables](dolt-system-tables.md#dolt_conflicts_usdtablename)
+* [dolt\_status table](dolt-system-tables.md#dolt_remotes)
 
 ## Concurrency
 
