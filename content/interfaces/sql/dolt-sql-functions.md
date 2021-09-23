@@ -401,6 +401,5 @@ details.
 SELECT DOLT_PULL('origin');
 
 -- View a log of new commits
-SELECT * from dolt_log limit 5;
+SELECT * FROM dolt_log LIMIT 5;
 ```
-
