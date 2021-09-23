@@ -298,3 +298,106 @@ e.g. `HASHOF("master")`.
 Dolt also defines several functions useful for working in detached
 head mode. See [that section](heads.md#detached-head-mode) for
 details.
+
+## `DOLT_PUSH()`
+
+Updates remote refs using local refs, while sending objects necessary to
+complete the given refs.  Works exactly like `dolt push` on the CLI, and
+takes the same arguments.
+
+```sql
+SELECT DOLT_PUSH('origin', 'master');
+SELECT DOLT_PUSH('--force', 'origin', 'master');
+```
+
+### Options
+
+`--force`: Update the remote with local history, overwriting any conflicting history in the remote.
+
+### Example
+
+```sql
+-- Checkout new branch
+SELECT DOLT_CHECKOUT('-b', 'feature-branch');
+
+-- Add a table
+CREATE TABLE test (a int primary key);
+
+-- Create commit
+SELECT DOLT_COMMIT('-a', '-m', 'create table test');
+
+-- Push to remote
+SELECT DOLT_PUSH('origin', 'feature-branch');
+```
+
+## `DOLT_FETCH()`
+
+Fetch refs, along with the objects necessary to complete their histories
+and update remote-tracking branches. Works exactly like `dolt fetch` on
+the CLI, and takes the same arguments.
+
+```sql
+SELECT DOLT_FETCH('origin', 'master');
+SELECT DOLT_FETCH('origin', 'feature-branch');
+SELECT DOLT_FETCH('origin', 'refs/heads/master:refs/remotes/origin/master');
+```
+
+### Options
+
+`--force`: Update refs to remote branches with the current state of the
+remote, overwriting any conflicting history
+
+### Example
+
+```sql
+-- Get remote master
+SELECT DOLT_FETCH('origin', 'master');
+
+-- Merge remote master with current branch
+SELECT DOLT_MERGE('refs/remotes/origin/master');
+```
+
+## `DOLT_PULL()`
+
+Fetch from and integrate with another repository or a local branch. In
+its default mode, `dolt pull` is shorthand for `dolt fetch` followed by
+`dolt merge <remote>/<branch>`.  Works exactly like `dolt pull` on the
+CLI, and takes the same arguments.
+
+Any resultiung merge conflicts must be resolved before the transaction
+can be committed or a new Dolt commit created.
+
+```sql
+SELECT DOLT_PULL('origin');
+SELECT DOLT_PULL('feature-branch', '--force');
+```
+
+### Options
+
+`--no-ff`: Create a merge commit even when the merge resolves as a fast-forward.
+
+`--squash`: Merges changes to the working set without updating the
+commit history
+
+`--force`: Ignores any foreign key warnings and proceeds with the commit.
+
+When merging a branch, your session state must be clean. `COMMIT`
+or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new dolt
+commit on the target branch.
+
+If the merge causes conflicts or constraint violations, you must
+resolve them using the `dolt_conflicts` system tables before the
+transaction can be committed. See [Dolt system
+tables](dolt-system-tables.md##dolt_conflicts_usdtablename) for
+details.
+
+### Example
+
+```sql
+-- Update local working set with remote changes
+SELECT DOLT_PULL('origin');
+
+-- View a log of new commits
+SELECT * from dolt_log limit 5;
+```
+
