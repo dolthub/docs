@@ -353,6 +353,9 @@ remote, overwriting any conflicting history
 -- Get remote master
 SELECT DOLT_FETCH('origin', 'master');
 
+-- Inspect the hash of the fetched remote branch
+SELECT HASHOF('origin/master');
+
 -- Merge remote master with current branch
 SELECT DOLT_MERGE('refs/remotes/origin/master');
 ```
