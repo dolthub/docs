@@ -74,10 +74,10 @@ View the `dolt sql-server` command documentation
 ## Dolt CLI in SQL
 
 Most of Dolt's CLI commands, e.g. `dolt status`, `dolt commit`, `dolt
-merge`, are available in the SQL context, either via [system
-tables](dolt-system-tables.md) or as [custom SQL
-functions](dolt-sql-functions.md). All CLI functionality will
-eventually be exposed in SQL.
+merge`, `dolt push`, `dolt pull`, are available in the SQL context,
+either via [system tables](dolt-system-tables.md) or as [custom SQL
+functions](dolt-sql-functions.md). All CLI functionality will eventually
+be exposed in SQL.
 
 ## System Tables
 
@@ -94,6 +94,7 @@ that select the diff between two commits.
 * [dolt\_history tables](dolt-system-tables.md#dolt_history_usdtablename)
 * [dolt\_status table](dolt-system-tables.md#dolt_status)
 * [dolt\_conflicts tables](dolt-system-tables.md#dolt_conflicts_usdtablename)
+* [dolt\_remotes table](dolt-system-tables.md#dolt_remotes)
 
 ## Concurrency
 
