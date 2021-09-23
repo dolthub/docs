@@ -629,7 +629,7 @@ SELECT * FROM dolt_schemas;
 ## `dolt_remotes`
 
 `dolt_status` returns the remote subcontents of the `repo_state.json`, similar
-to running `dolt remote -v` from the commands line.
+to running `dolt remote -v` from the command line.
 
 ### Schema
 
