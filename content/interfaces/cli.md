@@ -1146,7 +1146,8 @@ The email address used. If not provided will be taken from `user.email` in the g
 `--date`:
 Specify the date used in the initial commit. If not specified the current system time is used.
 
-
+`-b`, `--initial-branch`:
+The branch name used to initialize this database. If not provided will be taken from `init.defaultbranch` in the global config. If unset, the default initialized branch will be named 'main'.
 
 
 ## `dolt table cp`
