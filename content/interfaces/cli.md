@@ -1835,3 +1835,65 @@ When no refspec(s) are specified on the command line, the fetch_specs for the de
 ### Options
 `-f`, `--force`:
 Update refs to remote branches with the current state of the remote, overwriting any conflicting history.
+
+
+
+
+## `dolt backup`
+
+Backup snapshots the entire database state and copies into a remote address.
+
+### Synopsis
+
+<div class="gatsby-highlight" data-language="text">
+	<pre class="language-text">
+		<code class="language-text">
+			dolt backup [-v | --verbose]<br />
+			dolt backup add [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;name&gt; &lt;url&gt;<br />
+			dolt backup remove &lt;name&gt;<br />
+			dolt backup restore &lt;url&gt; &lt;name&gt;<br />
+			dolt backup sync &lt;name&gt;<br />
+  		</code>
+	</pre>
+</div>
+
+
+### Description
+
+A backup is similar to a remote, but copies nonpublic data and is
+intended to be limited to a single writer.
+
+Backups are stored in a `repo_state.json` field separate from remotes. Users cannot add
+backups or remotes if there is an existing backup with a conflicting
+address.
+
+Sync snapshots the database and uploads to the named backup url. The snapshot includes branches, tags, working sets, and remote tracking refs.
+
+Restore copies the chunkstore a the given url into a new database
+folder.
+
+### Options
+`<region>`:
+
+cloud provider region associated with this remote.
+
+`<creds-type>`:
+
+credential type.  Valid options are role, env, and file.  See the help section for additional details.
+
+`<profile>`:
+
+AWS profile to use.
+
+`-v`, `--verbose`:
+When printing the list of remotes adds additional details.
+
+`--aws-region`
+
+`--aws-creds-type`
+
+`--aws-creds-file`:
+AWS credentials file
+
+`--aws-creds-profile`:
+AWS profile to use
