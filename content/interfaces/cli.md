@@ -1841,7 +1841,7 @@ Update refs to remote branches with the current state of the remote, overwriting
 
 ## `dolt backup`
 
-Backup snapshots the entire database state and copies into a remote address.
+Backup snapshots the entire database state and copies to a remote address.
 
 ### Synopsis
 
@@ -1860,16 +1860,16 @@ Backup snapshots the entire database state and copies into a remote address.
 
 ### Description
 
-A backup is similar to a remote, but copies nonpublic data and is
+A backup is similar to a remote, but copies non public data and is
 intended to be limited to a single writer.
 
 Backups are stored in a `repo_state.json` field separate from remotes. Users cannot add
 backups or remotes if there is an existing backup with a conflicting
 address.
 
-Sync snapshots the database and uploads to the named backup url. The snapshot includes branches, tags, working sets, and remote tracking refs.
+`backup sync` snapshots the database and uploads to the named backup url. The snapshot includes branches, tags, working sets, and remote tracking refs.
 
-Restore copies the chunkstore a the given url into a new database
+`backup restore` copies the chunkstore at the given url into a new database
 folder.
 
 ### Options
