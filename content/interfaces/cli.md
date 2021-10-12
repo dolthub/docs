@@ -1897,7 +1897,6 @@ List, create, or delete branches
 </div>
 
 
-
 ### Description
 If `--list` is given, or if there are no non-option arguments, existing branches are listed. The current branch will be highlighted with an asterisk. With no options, only local branches are listed. With `-r`, only remote branches are listed. With `-a` both local and remote branches are listed. `-v` causes the hash of the commit that the branches are at to be printed as well.
 
