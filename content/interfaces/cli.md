@@ -1888,7 +1888,6 @@ Backup snapshots the entire database state and copies to a remote address.
 	</pre>
 </div>
 
-
 ### Description
 
 A backup is similar to a remote, but copies non public data and is
