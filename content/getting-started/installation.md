@@ -20,6 +20,18 @@ The use of `sudo` is required to ensure the binary lands in your path. The scrip
 
 ### Windows
 
+#### winget
+
+```powershell
+winget install dolt
+```
+
+#### Chocolatey
+
+```powershell
+choco install dolt --version=<version>
+```
+
 We provide both `.msi` files and `.zip` files.
 
 #### MSI Files
