@@ -10,21 +10,23 @@ Overview:
 - [Multi-Master](#multi-master)
 
 In the context of an OLTP database, availability is the ability
-to tolerate and recover from server failures. Durability, or storing backups of
-data, is a basic prerequisite of availability. The more useful version
+to tolerate and recover from server failures. Durability and storing backups of
+data are basic prerequisites of availability. The more useful version
 of availability involves servers communicating changes with one another,
 load balancing read requests, and maintaining a responsive application
 when servers fail.
 
 ## Backups
 
-Storing snapshots of your database is technically a durability property
-(the "D" in ACID). But not losing data is required for database
-availablity.
+Dolt has two options for backup: remotes and backups.
 
-Dolt has remotes, which backs up some data. Dolt backup snapshot the
-entire private state of a database, which is more appropriate for data
-durability.
+Using remotes for backups should be suitable for some use cases. Pushing
+to a remote creates an off server copy of the branch being pushed.
+Frequently pushing to a remote can serve as a reasonable backup.
+
+Dolt also has backups, accessed with the `dolt backup` command. These backups
+look more like traditional database backups. The entire state of the
+database, including uncommitted changes, are copied to another location.
 
 Refer to the [cli
 documentation](https://docs.dolthub.com/interfaces/cli#dolt-backup) and
