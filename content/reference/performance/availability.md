@@ -2,12 +2,19 @@
 title: Availability
 ---
 
+Overview:
+
+- [Backups](#backups)
+- [Read Replication](#read-replication)
+- [Failover](#failover)
+- [Multi-Master](#multi-master)
+
 In the context of an OLTP database, availability is the ability
-to tolerate and recover from failure. Durability, or storing backups of
+to tolerate and recover from server failures. Durability, or storing backups of
 data, is a basic prerequisite of availability. The more useful version
 of availability involves servers communicating changes with one another,
 load balancing read requests, and maintaining a responsive application
-even when servers processing transactions fail.
+when servers fail.
 
 ## Backups
 
@@ -15,12 +22,14 @@ Storing snapshots of your database is technically a durability property
 (the "D" in ACID). But not losing data is required for database
 availablity.
 
-Dolt has remotes, which backup some data. Dolt backups snapshot the
+Dolt has remotes, which backs up some data. Dolt backup snapshot the
 entire private state of a database, which is more appropriate for data
-durability in an OLTP context.
+durability.
 
-Refer to the [cli documentation]() and the [backups blog]() for a more
-thorough introduction.
+Refer to the [cli
+documentation](https://docs.dolthub.com/interfaces/cli#dolt-backup) and
+the [backups blog](https://www.dolthub.com/blog/2021-10-08-backups/) for
+a more thorough introduction.
 
 ## Read Replication
 
@@ -31,13 +40,12 @@ problem that requires a [failover](#failover) solution.
 
 Dolt supports simple read replication with two caveats:
 
-- a remote is used as a replication middleman
+- A remote is a replication middleman.
 
-- individual transactions are _not_ replicated, only commits are
-    replicated.
+- Individual transactions are _not_ replicated, only commits.
 
-In summary, we support replication where a source database pushes
-on commit, and replicas pull on read. The stability of middleman is
+In summary, we support replicating a source database by pushing
+on commit, and pulling to replicas on read. The stability of middleman is
 required to maintain a line of communication between the primary server
 and its replicas.
 
@@ -45,16 +53,16 @@ and its replicas.
 
 ## Failover
 
-If the primary database processing writes in a read replication setup
+If the primary database processing writes
 fails, queries will either need to be routed to a standby server, or
 queue/fail until the primary restarts. We do not have a purpose-built
-solution or documentation specifically for failover recovery yet.
+solution or documentation for failover recovery yet.
 
 In the meantime, it is possible to use push/pull replication to maintain
-a standby server. If the primary servre fails, the standby and proxy
+a standby server. If the primary server fails, the standby and proxy
 would need to walk through a series of steps to create a new primary:
 
-- Standby server disables read-only mode if it was being used as a read
+- Standby server disables read-only mode if it was used as a read
     replica previously.
 
 - Standby server recovers the most recent transactions, either from the
@@ -67,9 +75,9 @@ would need to walk through a series of steps to create a new primary:
 
 ## Multi-Master
 
-We do not have specific solutions or documentation for running Dolt as
-an OLTP database with multiple masters. It is possible to setup several
-servers with a common remote middleman, but they would need to reconcile
+We do not have specific solutions or documentation to run Dolt as
+an OLTP database with multiple masters. It is possible to connect several
+write target with a common remote middleman, but they would need to reconcile
 merge conflicts in the same way an offline Dolt database does. Providing
 a transactional layer to enforce multi-master (to avoid merge conflicts)
 or a way to automatically resolve merge conflicts is necessary to run
