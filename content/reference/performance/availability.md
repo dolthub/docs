@@ -49,6 +49,9 @@ on commit, and pulling to replicas on read. The stability of middleman is
 required to maintain a line of communication between the primary server
 and its replicas.
 
+Refer to the [read replication
+blog](https://www.dolthub.com/blog/2021-10-20-read-replication/) for more details.
+
 ![Read replication](../../.gitbook/assets/dolt-read-replication.png)
 
 ## Failover
