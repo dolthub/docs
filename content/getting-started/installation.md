@@ -29,7 +29,7 @@ winget install dolt
 #### Chocolatey
 
 ```powershell
-choco install dolt --version=<version>
+choco install dolt
 ```
 
 We provide both `.msi` files and `.zip` files.
