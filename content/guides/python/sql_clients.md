@@ -69,11 +69,10 @@ Connecting to a Dolt database looks identical to connecting to MySQL:
     database="new_database",
     cursorclass=pymysql.cursors.DictCursor,
 )
->>> with conn:
-    with conn.cursor() as cur:
+>>> with conn.cursor() as cur:
         cur.execute("select * from dolt_log")
         cur.fetchone()
-    conn.commit()
+>>> conn.commit()
 {'commit_hash': 'bki1pgk63a34ouqj0mvjg5mfqtgf7jh1', 'committer': 'Max Hoffman', 'email': 'max@dolthub.com', 'date': datetime.datetime(2021, 6, 24, 20, 9, 56, 82000), 'message': 'Initialize data repository'}
 ```
 
