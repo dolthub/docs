@@ -7,7 +7,7 @@ title: Dolt System Variables
 Dolt exposes various information about the state of the current
 session. This information is typically only useful for advanced
 users. See information on [Detached Head
-mode](heads#detached-head-mode).
+mode](heads.md#detached-head-mode).
 
 ## @@dbname\_head\_ref
 
@@ -35,7 +35,7 @@ This system variable controls the current session's head
 commit. Setting this variable to a commit hash causes your session to
 enter detached head mode.
 
-See [Detached Head mode](heads#detached-head-mode) for more detail.
+See [Detached Head mode](heads.md#detached-head-mode) for more detail.
 
 ## @@dbname_working
 
