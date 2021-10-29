@@ -13,11 +13,8 @@
 * [Installation](getting-started/installation.md)
 * [Reading](getting-started/reading.md)
 * [Writing](getting-started/writing.md)
-* [Python Quickstart](getting-started/python.md)
-* [SQL](getting-started/sql.md)
-* [DoltHub](dolthub/getting-started.md)
-* [Bounties](dolthub/bounties.md)
-* [API](dolthub/api.md)
+* [DoltHub](getting-started/dolthub.md)
+* [Bounties](getting-started/bounties.md)
 
 ## Interfaces
 * [SQL](interfaces/sql/README.md)
@@ -32,9 +29,11 @@
   * [Dolt System Variables](interfaces/sql/sysvars.md)
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
 * [CLI](interfaces/cli.md)
+* [API](interfaces/api.md)
 
 ## Guides
 * [Python](guides/python/README.md)
+  * [Python Quickstart](getting-started/python.md)
   * [Python SQL Clients](guides/python/sql_clients.md)
   * [Doltpy](guides/python/doltpy.md)
   * [Doltpy Tutorials](guides/python/doltpy_tutorial.md)
