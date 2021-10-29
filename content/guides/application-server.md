@@ -36,6 +36,7 @@ email, which it will use to create its commits. Choose a dolt system
 account for your product or company.
 
 ```bash
+$ cd /var/lib/doltdb
 $ sudo -u dolt dolt config --global --add user.email doltServer@company.com
 $ sudo -u dolt dolt config --global --add user.name "Dolt Server Account"
 ```
@@ -88,7 +89,7 @@ WantedBy=multi-user.target
 [Service]
 User=dolt
 Group=dolt
-ExecStart=/usr/local/bin/dolt sql-server -u root -p pass
+ExecStart=/usr/local/bin/dolt sql-server -u root
 WorkingDirectory=/var/lib/doltdb/databases/my_db
 KillSignal=SIGTERM
 SendSIGKILL=no
@@ -111,12 +112,23 @@ The dolt sql server will now be running as a daemon. Test connecting
 to it with any SQL shell. Here we are using the mysql shell to connect.
 
 ```bash
-mysql -h 127.0.0.1 -u root -ppass
+mysql -h 127.0.0.1 -u root -p''
 ```
 
 Note that by default, Dolt runs on the same port as MySQL (3306). If
 you have MySQL installed on the same host, choose a different port for
 the server with the `-P` argument.
+
+## Users and passwords
+
+With the above settings, dolt runs with a single user `root` and an
+empty password. Dolt currently supports a single user and password. To
+change the name and password of the SQL user, provide a config file as
+described in the [`sql-server`](../interfaces/cli.md#dolt-sql-server)
+docs.
+
+Other configuration such as logging behavior, timeouts, etc. are
+available via this method as well.
 
 ## Other Linux distributions
 
