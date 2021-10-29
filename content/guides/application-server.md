@@ -5,14 +5,15 @@ title: Application Server
 # Application Server
 
 These instructions are for bootstrapping dolt as an application
-database server. They assume you are starting from scratch on a
+database server. They assume you are starting from scratch on a Linux
 machine without dolt installed or running.
+
+Package manager support (`.deb` and `.rpm` distributions) is coming
+soon, but for now this set of manual setup work is necessary.
 
 ## Installation
 
-Install dolt. Use an [installation script for your
-platform](../getting-started/installation.md). For Linux, run the
-following command:
+Install dolt. Run the following command:
 
 ```bash
 sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | sudo bash'
@@ -22,28 +23,25 @@ This script puts the `dolt` binary in `/usr/local/bin`, which is
 probably on your `$PATH`. If it isn't add it there or use use the
 absolute path of the `dolt` binary for next steps.
 
-Package manager support (`.deb` and `.rpm` distributions) is coming
-soon.
-
 ## Configuration
 
 Create a system account for the dolt user to run the server.
 
 ```bash
-useradd -r -m -d /var/lib/doltdb dolt
+sudo useradd -r -m -d /var/lib/doltdb dolt
 ```
 
-Before running the server, you need to give it a user and email, which
-it will use to create its commits. Choose a dolt system account for
-your product or company.
+Before running the server, you need to give this user a name and
+email, which it will use to create its commits. Choose a dolt system
+account for your product or company.
 
 ```bash
 $ sudo -u dolt dolt config --global --add user.email doltServer@company.com
 $ sudo -u dolt dolt config --global --add user.name "Dolt Server Account"
 ```
 
-You can override this user for future commits with the --author flag,
-but this will be default author of every commit in the server.
+You can override this user for future commits with the `--author`
+flag, but this will be default author of every commit in the server.
 
 ## Database creation
 
@@ -104,9 +102,9 @@ sudo mv doltdb.service /etc/systemd/system
 Finally, start the server as a system daemon.
 
 ```bash
-systemctl daemon-reload
-systemctl enable doltdb.service
-systemctl start doltdb
+sudo systemctl daemon-reload
+sudo systemctl enable doltdb.service
+sudo systemctl start doltdb
 ```
 
 The dolt sql server will now be running as a daemon. Test connecting
@@ -118,4 +116,12 @@ mysql -h 127.0.0.1 -u root -ppass
 
 Note that by default, Dolt runs on the same port as MySQL (3306). If
 you have MySQL installed on the same host, choose a different port for
-the server with `-P`.
+the server with the `-P` argument.
+
+## Other Linux distributions
+
+These instructions should work for Debian, Ubuntu, Amazon Linux, and
+many other common distributions. If you find they don't work for yours
+and you would like your distribution documented, come chat with us on
+[Discord](https://discord.com/invite/RFwfYpu) or [submit a
+PR](https://github.com/dolthub/docs) to update the docs.
