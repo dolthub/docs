@@ -2,11 +2,11 @@
 * [Introduction](README.md)
 
 ## Introduction
+* [What is Dolt](introduction/what-is-dolt.md)
 * [Why Dolt](introduction/why-dolt/README.md)
   * [Lineage](introduction/why-dolt/lineage.md)
   * [Time Travel](introduction/why-dolt/time-travel.md)
   * [Collaboration](introduction/why-dolt/collaboration.md)
-* [What is Dolt](introduction/what-is-dolt.md)
 * [Quickstart](introduction/quickstart.md)
 
 ## Getting Started
@@ -32,6 +32,7 @@
 * [API](interfaces/api.md)
 
 ## Guides
+* [Installing Dolt as an application server](guides/application-server.md)
 * [Python](guides/python/README.md)
   * [Python Quickstart](getting-started/python.md)
   * [Python SQL Clients](guides/python/sql_clients.md)
