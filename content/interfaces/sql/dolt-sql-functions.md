@@ -264,41 +264,6 @@ SELECT DOLT_ADD('table')
 SELECT DOLT_RESET('table')
 ```
 
-# Other Dolt SQL functions
-
-Dolt also provides various SQL functions for dolt-specific
-functionality in SQL that have no command line equivalent.
-
-## `DOLT_MERGE_BASE()`
-
-`DOLT_MERGE_BASE()` returns the hash of the common ancestor between
-two branches. Given the following branch structure:
-
-Consider the following branch structure:
-
-```text
-      A---B---C feature
-     /
-D---E---F---G master
-```
-
-The following would return the hash of commit `E`:
-
-```sql
-SELECT DOLT_MERGE_BASE('feature', 'master');
-```
-
-## `HASHOF()`
-
-The HASHOF function returns the commit hash of a branch,
-e.g. `HASHOF("master")`.
-
-## Functions for working with detached heads
-
-Dolt also defines several functions useful for working in detached
-head mode. See [that section](heads.md#detached-head-mode) for
-details.
-
 ## `DOLT_PUSH()`
 
 Updates remote refs using local refs, while sending objects necessary to
@@ -403,3 +368,38 @@ SELECT DOLT_PULL('origin');
 -- View a log of new commits
 SELECT * FROM dolt_log LIMIT 5;
 ```
+
+# Other Dolt SQL functions
+
+Dolt also provides various SQL functions for dolt-specific
+functionality in SQL that have no command line equivalent.
+
+## `DOLT_MERGE_BASE()`
+
+`DOLT_MERGE_BASE()` returns the hash of the common ancestor between
+two branches. Given the following branch structure:
+
+Consider the following branch structure:
+
+```text
+      A---B---C feature
+     /
+D---E---F---G master
+```
+
+The following would return the hash of commit `E`:
+
+```sql
+SELECT DOLT_MERGE_BASE('feature', 'master');
+```
+
+## `HASHOF()`
+
+The HASHOF function returns the commit hash of a branch,
+e.g. `HASHOF("master")`.
+
+## Functions for working with detached heads
+
+Dolt also defines several functions useful for working in detached
+head mode. See [that section](heads.md#detached-head-mode) for
+details.
