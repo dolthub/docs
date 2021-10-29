@@ -628,8 +628,11 @@ SELECT * FROM dolt_schemas;
 
 ## `dolt_remotes`
 
-`dolt_status` returns the remote subcontents of the `repo_state.json`, similar
+`dolt_remotes` returns the remote subcontents of the `repo_state.json`, similar
 to running `dolt remote -v` from the command line.
+
+The `dolt_remotes` table is currently read only. Use the CLI `dolt remote` functions
+to add, update or delete remotes.
 
 ### Schema
 

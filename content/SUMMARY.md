@@ -2,22 +2,19 @@
 * [Introduction](README.md)
 
 ## Introduction
+* [What is Dolt](introduction/what-is-dolt.md)
 * [Why Dolt](introduction/why-dolt/README.md)
   * [Lineage](introduction/why-dolt/lineage.md)
   * [Time Travel](introduction/why-dolt/time-travel.md)
   * [Collaboration](introduction/why-dolt/collaboration.md)
-* [What is Dolt](introduction/what-is-dolt.md)
 * [Quickstart](introduction/quickstart.md)
 
 ## Getting Started
 * [Installation](getting-started/installation.md)
 * [Reading](getting-started/reading.md)
 * [Writing](getting-started/writing.md)
-* [Python Quickstart](getting-started/python.md)
-* [SQL](getting-started/sql.md)
-* [DoltHub](dolthub/getting-started.md)
-* [Bounties](dolthub/bounties.md)
-* [API](dolthub/api.md)
+* [DoltHub](getting-started/dolthub.md)
+* [Bounties](getting-started/bounties.md)
 
 ## Interfaces
 * [SQL](interfaces/sql/README.md)
@@ -32,9 +29,12 @@
   * [Dolt System Variables](interfaces/sql/sysvars.md)
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
 * [CLI](interfaces/cli.md)
+* [API](interfaces/api.md)
 
 ## Guides
+* [Installing Dolt as an application server](guides/application-server.md)
 * [Python](guides/python/README.md)
+  * [Python Quickstart](guides/python/quickstart.md)
   * [Python SQL Clients](guides/python/sql_clients.md)
   * [Doltpy](guides/python/doltpy.md)
   * [Doltpy Tutorials](guides/python/doltpy_tutorial.md)
