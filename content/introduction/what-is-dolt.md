@@ -4,27 +4,28 @@ title: What is Dolt
 
 # What is Dolt
 
-## Version Controlled Database
+## Version controlled SQL database
 
-Dolt is a version controlled relational database. Dolt implements a superset of MySQL. It is compatible with MySQL, and provides extra constructs exposing the version control features, which are closely modeled on Git.
+Dolt is a version controlled SQL database. Its versioning model and
+command line are based on git, and its SQL dialect and wire protocol
+are based on MySQL. If you know how to use the `git` command line, you
+know how to use the `dolt` command line. If your application works
+with MySQL, it will work with Dolt with no changes.
 
-### Offline vs Online
+## Example
 
-"Offline" Dolt operations happen via the Git-like command line interface \(CLI\). Used offline, Dolt feels very much like Git but for tables. To serve the data in a Dolt database over SQL connectors, users go "online" by starting Dolt SQL Server, which behaves like MySQL with additional features.
+The dolt command line copies git exactly. Let's use `dolt clone` to
+clone a database from DoltHub:
 
-### Offline
-
-When Dolt is "offline", it looks very much like Git. Let's use `dolt clone` to acquire a database:
-
-```text
+```bash
 $ dolt clone dolthub/ip-to-country
 cloning https://doltremoteapi.dolthub.com/dolthub/ip-to-country
 32,832 of 32,832 chunks complete. 0 chunks being downloaded currently.
 ```
 
-We now have acquired a database, and we can move into the newly created directory to give the `dolt` command the right database context:
+After cloning the database, we can open a SQL shell on it.
 
-```text
+```bash
 $ cd ip-to-country
 $ dolt sql
 # Welcome to the DoltSQL shell.
@@ -39,20 +40,28 @@ ip_to_country> show tables;
 +---------------+
 ```
 
-### Online
+Make changes to tables with SQL. Create a new branch with `dolt
+checkout -b`. Examine the diff with `dolt diff`. Stage changes with
+`dolt add .`. Commit changes with `dolt commit`. Push your changes back to the remote with `dolt push origin master`. 
 
-In the previous section we used Dolt's version control features, familiar from Git, to clone a remote database. In [Why Dolt](why-dolt/) we identified the value of a familiar SQL query interface, served over a widely adopted wire protocol, MySQL.
+All the commands you know for git work exactly the same for `dolt`.
 
-We can now take the cloned Dolt database "online" by firing up the Dolt SQL Server:
+For more info, see the [CLI docs](../interfaces/cli.md).
 
-```text
+## Application server
+
+If you want Dolt to back your applicationo, start the MySQL-compatible
+server:
+
+```bash
 dolt sql-server
 Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
 ```
 
-We now have a running Dolt SQL Server. We can connect using the standard MySQL connector:
+Any tool or application that speaks the MySQL protocol can talk to the
+server. Here's the mysql shell:
 
-```text
+```bash
 ~|>>  mysql --host=127.0.0.1 --user=root
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 1
@@ -81,60 +90,30 @@ mysql> show tables;
 2 rows in set (0.00 sec)
 ```
 
-We used Git-like "offline" features to clone a database, stood up a server, and connected to it to start performing "online" operations. Let's see how to access Git-like version control features in SQL.
+## Version control features in SQL
 
-## Everything in SQL
-
-Where possible, Dolt's version control features are exposed in SQL. That means users can script complex version control workflows into the SQL queries that define data pipelines.
-
-Let's dive into a couple of examples to see what this looks like in practice.
+All of Dolt's version control features are exposed in SQL as well as
+on the command line. That means users can script complex version
+control workflows into the SQL queries that define data pipelines.
 
 ### AS OF
 
-Suppose the IP to country mapping dataset that we procured earlier introduces a bug into our systems observed at `2020-12-12 02:00:00`. We can can grab the commit that introduced this state easily:
+Query previous revisions of any table with the `AS OF` syntax.
 
-```text
-mysql> select commit_hash, committer, message from dolt_log where `date` < '2020-12-10 18:00:00' limit 1;
-+----------------------------------+------------------------+----------------------------------------------------------+
-| commit_hash                      | committer              | message                                                  |
-+----------------------------------+------------------------+----------------------------------------------------------+
-| bqtrbbrsgie7u4fsgph0t12j94ofefml | LiquidataSystemAccount | Update IP to Country for date 2020-12-11 01:29:53.647746 |
-+----------------------------------+------------------------+----------------------------------------------------------+
+```sql
+select * from IPv6ToCountry as of 'HEAD~';
 ```
 
-Suppose we want to see the new data introduced in that commit:
+### DOLT\_COMMIT()
 
-```text
-mysql> select * from dolt_diff_IPv4ToCountry where to_commit = 'bqtrbbrsgie7u4fsgph0t12j94ofefml' and diff_type = 'added' limit 5;
-+-----------------------+-------------+-----------------+---------------------+------------+------------+-----------------------+----------------------------------+-----------------------------------+-------------------------+---------------+-------------------+--------------+-----------+-------------+-------------------------+----------------------------------+-----------------------------------+-----------+
-| to_CountryCode2Letter | to_Registry | to_AssignedDate | to_Country          | to_IpTo    | to_IPFrom  | to_CountryCode3Letter | to_commit                        | to_commit_date                    | from_CountryCode2Letter | from_Registry | from_AssignedDate | from_Country | from_IpTo | from_IPFrom | from_CountryCode3Letter | from_commit                      | from_commit_date                  | diff_type |
-+-----------------------+-------------+-----------------+---------------------+------------+------------+-----------------------+----------------------------------+-----------------------------------+-------------------------+---------------+-------------------+--------------+-----------+-------------+-------------------------+----------------------------------+-----------------------------------+-----------+
-| FI                    | ripencc     | 1607385600      | Finland             | 1542419967 | 1542419712 | FIN                   | bqtrbbrsgie7u4fsgph0t12j94ofefml | 2020-12-11 01:30:36.075 +0000 UTC | NULL                    | NULL          | NULL              | NULL         | NULL      | NULL        | NULL                    | u8pnf1o0mus2d8mok0083t5lpj190j5f | 2020-12-10 01:30:29.088 +0000 UTC | added     |
-| DK                    | ripencc     | 1197936000      | Denmark             | 1559351295 | 1559347200 | DNK                   | bqtrbbrsgie7u4fsgph0t12j94ofefml | 2020-12-11 01:30:36.075 +0000 UTC | NULL                    | NULL          | NULL              | NULL         | NULL      | NULL        | NULL                    | u8pnf1o0mus2d8mok0083t5lpj190j5f | 2020-12-10 01:30:29.088 +0000 UTC | added     |
-| SE                    | ripencc     | 1197936000      | Sweden              | 1559353343 | 1559351296 | SWE                   | bqtrbbrsgie7u4fsgph0t12j94ofefml | 2020-12-11 01:30:36.075 +0000 UTC | NULL                    | NULL          | NULL              | NULL         | NULL      | NULL        | NULL                    | u8pnf1o0mus2d8mok0083t5lpj190j5f | 2020-12-10 01:30:29.088 +0000 UTC | added     |
-| DK                    | ripencc     | 1197936000      | Denmark             | 1559355391 | 1559353344 | DNK                   | bqtrbbrsgie7u4fsgph0t12j94ofefml | 2020-12-11 01:30:36.075 +0000 UTC | NULL                    | NULL          | NULL              | NULL         | NULL      | NULL        | NULL                    | u8pnf1o0mus2d8mok0083t5lpj190j5f | 2020-12-10 01:30:29.088 +0000 UTC | added     |
-| IN                    | apnic       | 1607472000      | India               | 1738531839 | 1738531328 | IND                   | bqtrbbrsgie7u4fsgph0t12j94ofefml | 2020-12-11 01:30:36.075 +0000 UTC | NULL                    | NULL          | NULL              | NULL         | NULL      | NULL        | NULL                    | u8pnf1o0mus2d8mok0083t5lpj190j5f | 2020-12-10 01:30:29.088 +0000 UTC | added     |
-+-----------------------+-------------+-----------------+---------------------+------------+------------+-----------------------+----------------------------------+-----------------------------------+-------------------------+---------------+-------------------+--------------+-----------+-------------+-------------------------+----------------------------------+-----------------------------------+-----------+
+`DOLT_COMMIT()` in a SQL query works the same as `dolt commit` on the
+command line:
+
+```sql
+SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
-### Rollback
+Most dolt commands are accessible in a similar manner, and others are
+exposed as system tables.
 
-Continuing with this example, let's suppose this is causing a production issue, and we need to rollback urgently. Dolt makes that easy:
-
-```text
-mysql> INSERT INTO dolt_branches (name, hash) VALUES  ('production' , 'u8pnf1o0mus2d8mok0083t5lpj190j5f');
-Query OK, 1 row affected (0.21 sec)
-```
-
-The state of the Dolt SQL Server is now set to a commit prior to the one that caused an outage, and it was achieved with a single SQL query.
-
-### DOLT\_COMMIT
-
-Suppose that we want to write some data to Dolt and create a commit against a running Dolt SQL Server. We can use Dolt SQL functions that expose the Git-like version control features.:
-
-```text
-msql> SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
-```
-
-We have now committed a new state of the database, which can be queried against and checked out.
-
+For more info, check out the [SQL docs](../interfaces/sql/README.md).
