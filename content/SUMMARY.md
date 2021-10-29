@@ -34,7 +34,7 @@
 ## Guides
 * [Installing Dolt as an application server](guides/application-server.md)
 * [Python](guides/python/README.md)
-  * [Python Quickstart](getting-started/python.md)
+  * [Python Quickstart](guides/python/quickstart.md)
   * [Python SQL Clients](guides/python/sql_clients.md)
   * [Doltpy](guides/python/doltpy.md)
   * [Doltpy Tutorials](guides/python/doltpy_tutorial.md)
