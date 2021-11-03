@@ -47,12 +47,46 @@ Dolt supports simple read replication with two caveats:
 - Individual transactions are _not_ replicated, only commits.
 
 In summary, we support replicating a source database by pushing
-on commit, and pulling to replicas on read. The stability of middleman is
+on commit, and pulling to replicas on read. The stability of the middleman is
 required to maintain a line of communication between the primary server
 and its replicas.
 
 Refer to the [read replication
-blog](https://www.dolthub.com/blog/2021-10-20-read-replication/) for more details.
+blog](https://www.dolthub.com/blog/2021-10-20-read-replication/) for a
+walkthrough.
+
+### Configuration
+
+Configs can be set in the CLI (limited to `--local` scope for now):
+
+```bash
+dolt config --add --local sqlserver.global.dolt_replicate_to_remote <name>
+dolt config --add --local sqlserver.global.dolt_read_replica_remote <name>
+```
+
+Configs can be set equivalently in SQL:
+
+```SQL
+SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
+SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
+```
+
+Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
+rather than error if replication is misconfigured.
+
+There are two ways to trigger pushing from the source: a SQL commit,
+or a branch head update. A standaone `COMMIT` and/or head set will not
+trigger replication:
+
+```SQL
+SELECT DOLT_COMMIT('-am', 'message')
+
+UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND hash = @@database_name_head
+```
+
+On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
+The first query in a session automatically starts a transaction, and `autocommit = 1` begins every
+query with a transaction.
 
 ![Read replication](../../.gitbook/assets/dolt-read-replication.png)
 
