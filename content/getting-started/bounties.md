@@ -4,7 +4,7 @@ title: Data Bounties
 
 # Bounties
 
-A Data Bounty is a financial reward paid for sourcing all, or part, of a specific dataset. A user or organization can also pay to attach a bounty to a dataset of their choosing.Anyone can get paid for finding the data specified in a bounty.
+A Data Bounty is a financial reward paid for sourcing all, or part, of a specific dataset. A user or organization can also pay to attach a bounty to a dataset of their choosing. Anyone can get paid for finding the data specified in a bounty.
 
 ## Participating
 
@@ -38,8 +38,7 @@ If you want to get paid, you need to add some data, so let's turn to that!
 
 In order to make a pull request against the bounty database, you need to make some changes in your fork. There are a few ways to do this:
 
-- Upload a file to DoltHub (see [docs](getting-started.md#file-upload))
-- Use the SQL Console on DoltHub
+- Use edit on the web features on DoltHub (see [docs](getting-started.md#using-dolthub)
 - Clone the database and use the command line, SQL, or [Doltpy](https://github.com/dolthub/doltpy) to make changes (see [docs](../getting-started/writing.md))
 
 It doesn't matter how you make changes, as long as they are correct.
