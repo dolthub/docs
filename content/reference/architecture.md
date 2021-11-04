@@ -52,7 +52,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 ![Append Edit](../.gitbook/assets/append-edit.png)
 
-* Adding rows to a table whose primary keys are lexicographically smaller than any of the existing rows is very similar to the case where they are all larger. It's expected to rewrite the first chunks in the table, and the probabilitistic rolling hash will quickly resynchronize with the existing table data. It might look like:
+* Adding rows to a table whose primary keys are lexicographically smaller than any of the existing rows is very similar to the case where they are all larger. It's expected to rewrite the first chunks in the table, and the probabilistic rolling hash will quickly resynchronize with the existing table data. It might look like:
 
 ![Prepend Edit](../.gitbook/assets/prepend-edit.png)
 
@@ -60,7 +60,7 @@ To see how this works in practice, let's examine a couple of scenarios for updat
 
 ![Middle Run Edit](../.gitbook/assets/middle-run-edit.png)
 
-Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but interally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.
+Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but internally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.
 
 ### Noms Block Store \(NBS\)
 

@@ -57,7 +57,7 @@ USE `mydb/feature-branch`
 Note that the string must be back-tick quoted, since it contains a `/`
 character.
 
-To switch to a read-only databaes at a commit hash:
+To switch to a read-only database at a commit hash:
 
 ```sql
 USE `mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
@@ -116,7 +116,7 @@ The above methods assume you want to update a head collaboratively
 with many sessions via transactions, like a traditional database. But
 it's also possible to operate the database in detached head mode,
 where the head you are editing is local to only your session and
-cannot be seen by any other session. 
+cannot be seen by any other session.
 
 Dolt supports special system variables and functions to support this
 use case.
@@ -192,7 +192,7 @@ SET @@mydb_head = MERGE('feature-branch');
 The SQUASH function merges a branch's root value into the current
 branch's working set. With this approach the user can then commit the
 changes, adding only 1 commit to a branch's history compared to the
-many that can orginate from a conventional merge.
+many that can originate from a conventional merge.
 
 The argument passed to the function is a reference to a branch \(its name\).
 
