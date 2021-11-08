@@ -50,7 +50,7 @@ For more info, see the [CLI docs](../interfaces/cli.md).
 
 ## Application server
 
-If you want Dolt to back your applicationo, start the MySQL-compatible
+If you want Dolt to back your application, start the MySQL-compatible
 server:
 
 ```bash

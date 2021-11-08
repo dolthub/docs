@@ -10,11 +10,11 @@ DoltHub is a collaboration platform for managing Dolt databases. Dolt is the for
 
 ## Signing Up
 
-This tutorial assumes that you have signed up for DoltHub, though you needn't do so to clone public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](../getting-started/installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
+This tutorial assumes that you have signed up for DoltHub, though you don't need to for cloning public datasets. You can sign up for DoltHub easily [here](https://www.dolthub.com/signin). To follow along with the commands you need to have Dolt installed. See the [installation guide](../getting-started/installation.md), but it's as easy as `brew install dolt`, and we publish `.msi` files for Windows users.
 
 ## Data Acquisition
 
-We show several ways to explore data on DoltHub, starting with the most user friendly. Let's say we are interested in the [dolthub/ip-to-country](https://www.dolthub.com/repositories/dolthub/ip-to-country/) mappings that DoltHub publishes. The repo path is `dolthub/ip-to-country`. Throughout this section we will demo the various ways to acquire data against this data set.
+We show several ways to explore data on DoltHub, starting with the most user friendly. Let's say we are interested in the [dolthub/ip-to-country](https://www.dolthub.com/repositories/dolthub/ip-to-country/) mappings that DoltHub publishes. Throughout this section we will demo the various ways to acquire data against this data set.
 
 ### Web
 
@@ -38,7 +38,7 @@ While this is a useful data exploration interface, it doesn't offer the kind of 
 
 ### Dolt CLI
 
-The integration point between Dolt and DoltHub is the concept of a "remote." Just like Git, Dolt imagines remotes which are stored in the metadata of the Dolt database. Dolt the command line tool has the ability to clone from remotes, and update them using the familiar commmands `clone` and `pull`. The data arrives as a SQL database, and your Dolt binary allows you to run SQL queries across the data. Let's say we are interested in pulling our example dataset into our local environment, either for use in some production system or for exploration. The database path is `dolthub/ip-to-country`. We can acquire it in a single command:
+The integration point between Dolt and DoltHub is the concept of a "remote." Just like Git, Dolt imagines remotes which are stored in the metadata of the Dolt database. Dolt the command line tool has the ability to clone from remotes, and update them using the familiar commands `clone` and `pull`. The data arrives as a SQL database, and your Dolt binary allows you to run SQL queries across the data. Let's say we are interested in pulling our example dataset into our local environment, either for use in some production system or for exploration. The database path is `dolthub/ip-to-country`. We can acquire it in a single command:
 
 ```text
 $ dolt clone dolthub/ip-to-country && cd ip-to-country
@@ -74,30 +74,77 @@ We also acquired a full history of values for each cell in the database, which w
 
 ## Data Publishing
 
-In the previous section we showed three canonical ways to get data from Dolt databases hosted on DoltHub: a web based SQL query interface, by cloning the database and using Dolt to run SQL against the database, and finally via an API. In this section we switch to pushing data to DoltHub.
+In the previous section we showed three canonical ways to get data from Dolt databases hosted on DoltHub: a web based SQL query interface, by cloning the database and using Dolt to run SQL against the database, and finally via an API. In this section we switch to editing data on DoltHub and pushing data to DoltHub from Dolt.
 
-### File Upload
+### Using DoltHub
 
-Uploading a file to DoltHub is the only way to publish data without using Dolt. Every repository, whether it contains data or not, has a button to upload a file. You'll be taken through a few steps in the upload wizard:
+There are a few ways to publish data without using Dolt.
 
-* Choose a base branch \(commits directly to `master` branch for empty repo\)
+![Create table](../.gitbook/assets/dolthub-create-table.png)
 
-  ![Choose a branch](../.gitbook/assets/choose-branch.png)
+#### File Upload
 
-* Choose a table name \(create a new table or update an existing table\)
+You can upload a file to create or update a table in your database. Click on "Upload a file" in the add item dropdown on the top right of a database page.
 
-  ![Choose table name](../.gitbook/assets/update-table2.png)
+![Upload a file dropdown](../.gitbook/assets/add-item-dropdown.png)
 
-* Upload a file and choose primary keys \(we currently support CSV, PSV, and XLSX files\)
-* View and commit changes
+You'll be taken through a few steps in the upload wizard.
 
-  ![Commit changes](../.gitbook/assets/commit-changes2.png)
+First, choose a base branch \(commits directly to the `main` branch for an empty database\)
 
-You can learn more about file upload from [our blog](https://www.dolthub.com/blog/2020-11-13-dolthub-upload-file/).
+![Choose a branch](../.gitbook/assets/upload-choose-branch.png)
 
-### Configuration
+Next, choose a table name \(create a new table or update an existing table\)
 
-To publish data on DoltHub using Dolt, the first thing to do is configure your copy of Dolt to recognize DoltHub as a remote to your repo. To do that, and then write to that repo, you need to login. Dolt provides a command for logging in that will launch a browser window, have you authenticate, and create token which your local Dolt will use to identify itself. The steps are straightforward:
+![Choose table name](../.gitbook/assets/upload-choose-table.png)
+
+Upload a file and optionally choose primary keys \(we currently support CSV, PSV, XLSX, and JSON files\)
+
+![Choose primary keys](../.gitbook/assets/upload-choose-pks.png)
+
+View and commit changes
+
+![Commit changes](../.gitbook/assets/commit-changes.png)
+
+You can learn more from our blog [here](https://www.dolthub.com/blog/2020-11-13-dolthub-upload-file/).
+
+#### Spreadsheet Editor
+
+As a part of the file upload process, you can also create and edit spreadsheets directly in DoltHub. You will see this option during step 3.
+
+![Spreadsheet editor option](../.gitbook/assets/upload-step-3.png)
+
+If you chose to update an existing table, the spreadsheet editor will be populated with the table's existing data. If the data has more than 50 rows it will paginate on scroll.
+
+![Spreadsheet with existing data](../.gitbook/assets/spreadsheet-editor-update.png)
+
+Once you are satisfied with your changes, you can click on "Upload table", and continue with the file upload process like above.
+
+Learn more from our blog [here](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/).
+
+#### SQL Console
+
+In addition to being able to run `SELECT` queries from the SQL Console to navigate data, you can also run queries that update data on DoltHub.
+
+Use the cell buttons or SQL Console to run a write query.
+
+![Edit cell value](../.gitbook/assets/table-edit-cell-value.png)
+
+You'll be navigated to a "workspace", which is a temporary staging area where you can make changes without updating the main branches of the database.
+
+![Workspace](../.gitbook/assets/workspace.png)
+
+Once you are satisfied, you can create a pull request with your changes for review.
+
+Learn more from our blog [here](https://www.dolthub.com/blog/2021-03-08-sql-edit-on-the-web/).
+
+### Using Dolt
+
+In addition to using DoltHub to publish data, you can also use the Dolt CLI.
+
+#### Configuration
+
+To publish data on DoltHub using Dolt, the first thing to do is configure your copy of Dolt to recognize DoltHub as a remote to your database. To do that, and then write to that database, you need to login. Dolt provides a command for logging in that will launch a browser window, have you authenticate, and create token which your local Dolt will use to identify itself. The steps are straightforward:
 
 ```text
 $ dolt login
@@ -123,7 +170,7 @@ Key successfully associated with user: your-username email: you@email.com
 
 You are now logged in and you can push data to DoltHub.
 
-### DoltHub Remotes
+#### DoltHub Remotes
 
 Publishing data is equally easy once it's in the Dolt format. In [another section](../getting-started/writing.md) we showed how to write data to Dolt. Let's assume we have some data in a local Dolt repository:
 

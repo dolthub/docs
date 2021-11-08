@@ -79,7 +79,7 @@ focus on branching and commit metadata here.
 We will loosely use Kedro’s workflow data interface to ground our
 integration in a production context. Kedro’s DataSets meet our three
 file-system criteria and naturally extend Dolt versioning. The "Example
-Application" diagram acts as a  reference for understanding loading
+Application" diagram acts as a reference for understanding loading
 (purple) and saving (green) data.
 
 ## IO With CSV Compatibility
@@ -107,7 +107,6 @@ save_args: dict = None):
     imp.append(filename)
     db.execute(imp)
 ```
-
 
 Neither of these functions are accessed directly. The load and save
 methods wrap these functions with branching, metadata and remote logic.
@@ -197,5 +196,5 @@ save(
 Here we import the data in `tmpfile` into the `bar` table of our `doltdb` database.
 Column `c` will be a primary key, the commit will use a branch merge
 to update master, and our application will log our metadata.
-Finallly, the commit update the most recently pulled version of master
+Finally, the commit update the most recently pulled version of master
 before pushing results back to our origin.
