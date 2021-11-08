@@ -12,7 +12,7 @@ This document assumes you are using Windows and would like to access a local Dol
 
 ### Reading from Dolt
 
-Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
+Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](../interfaces/api.md) is recommended.
 
 #### Using CSVs
 

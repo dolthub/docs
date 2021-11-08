@@ -177,12 +177,12 @@ $ dolt commit -m 'Added Andy!'
 We just executed an identical set of updates to our database using
 pure SQL.
 
-## DoltHub file upload
+## Writing using DoltHub
 
-Uploading a CSV file to DoltHub is the lowest barrier to entry for
-putting data into Dolt. Every database page has a button to upload a
-file, and you can learn more about those specific steps
-[here](dolthub.md).
+You can also use DoltHub to import files and run SQL queries to 
+update data. This is the lowest barrier to entry for putting 
+data into Dolt. Learn more about those specific steps 
+[here](dolthub.md#data-publishing).
 
 ## Next steps
 
