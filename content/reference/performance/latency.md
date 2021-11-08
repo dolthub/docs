@@ -3,7 +3,7 @@ title: SQL Latency and Throughput
 ---
 
 Our approach to SQL performance benchmarking is to use `sysbench`, an
-industry standard benchmkarking tool.
+industry standard benchmarking tool.
 
 ### Performance Roadmap
 

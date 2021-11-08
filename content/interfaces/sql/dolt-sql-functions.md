@@ -22,8 +22,7 @@ information, \(`dolt diff`, `dolt log`, etc.\) [system
 tables](dolt-system-tables.md) are provided instead.
 
 One important note: all functions modify state only for the current
-session, not for all clients. So for example, whereas running `dolt
-checkout feature-branch` will change the working HEAD for anyone who
+session, not for all clients. So for example, whereas running `dolt checkout feature-branch` will change the working HEAD for anyone who
 subsequently runs a command from the same dolt database directory,
 running `SELECT DOLT_CHECKOUT('feature-branch')` only changes the
 working HEAD for that database session. The right way to think of this
@@ -111,7 +110,7 @@ WHERE pk = "key";
 SELECT DOLT_ADD('-a');
 
 -- Commit the changes.
-SELECT DOLT_COMMIT('-m', 'commiting all changes');
+SELECT DOLT_COMMIT('-m', 'committing all changes');
 ```
 
 ## `DOLT_CHECKOUT()`
@@ -150,7 +149,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage and commit all  changes.
-SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
+SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to master
 SELECT DOLT_CHECKOUT('master');
@@ -163,7 +162,7 @@ histories diverged from the current branch\) into the current
 branch. Works exactly like `dolt merge` on the CLI, and takes the same
 arguments.
 
-Any resultiung merge conflicts must be resolved before the transaction
+Any resulting merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created.
 
 ```sql
@@ -210,7 +209,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage and commit all  changes.
-SELECT DOLT_COMMIT('-a', '-m', 'commiting all changes');
+SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to master
 SELECT DOLT_MERGE('feature-branch');
@@ -218,8 +217,7 @@ SELECT DOLT_MERGE('feature-branch');
 
 ## `DOLT_RESET()`
 
-Resets staged tables to their HEAD state. Works exactly like `dolt
-reset` on the CLI, and takes the same arguments.
+Resets staged tables to their HEAD state. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
 
 Like other data modifications, after a reset you must `COMMIT` the
 transaction for any changes to affected tables to be visible to other
@@ -267,7 +265,7 @@ SELECT DOLT_RESET('table')
 ## `DOLT_PUSH()`
 
 Updates remote refs using local refs, while sending objects necessary to
-complete the given refs.  Works exactly like `dolt push` on the CLI, and
+complete the given refs. Works exactly like `dolt push` on the CLI, and
 takes the same arguments.
 
 ```sql
@@ -329,10 +327,10 @@ SELECT DOLT_MERGE('origin/master');
 
 Fetch from and integrate with another repository or a local branch. In
 its default mode, `dolt pull` is shorthand for `dolt fetch` followed by
-`dolt merge <remote>/<branch>`.  Works exactly like `dolt pull` on the
+`dolt merge <remote>/<branch>`. Works exactly like `dolt pull` on the
 CLI, and takes the same arguments.
 
-Any resultiung merge conflicts must be resolved before the transaction
+Any resulting merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created.
 
 ```sql

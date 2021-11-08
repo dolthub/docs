@@ -83,7 +83,7 @@ VALUES ("my branch name", @@mydb_head);
 For every user table named `$TABLENAME`, there is a queryable system
 table named `dolt_commit_diff_$TABLENAME` which can be queried to see
 how a table has changed between two commits (regardless of which
-branch the user is currently using). 
+branch the user is currently using).
 
 For each pair of commits in the database history, the diff tables will
 have zero or more rows, each of which represents a row that is
@@ -129,7 +129,7 @@ columns. Consider the table
 +--------------+
 ```
 
-We see that the structure of the `dolt_commit_diff_$TABLENAME` will be. 
+We see that the structure of the `dolt_commit_diff_$TABLENAME` will be.
 
 ```text
 +------------------+----------+
@@ -139,12 +139,13 @@ We see that the structure of the `dolt_commit_diff_$TABLENAME` will be.
 | to_val           | int      |
 | to_commit        | longtext |
 | to_commit_date   | datetime |
-| from_pk          | int      | 
+| from_pk          | int      |
 | from_val         | int      |
 | from_commit      | longtext |
 | from_commit_date | datetime |
 +------------------+----------+
 ```
+
 ## Query Details
 
 Let us now consider the following branch structure:
@@ -172,7 +173,7 @@ from our common ancestor E. We can do the following queries
 SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('master', 'feature');
 ```
 
-The function `dolt_merge_base` computes the closest ancestore E
+The function `dolt_merge_base` computes the closest ancestor E
 between `master` and `feature`.
 
 ## Additional Notes
@@ -180,7 +181,7 @@ between `master` and `feature`.
 There is one special `to_commit` value `WORKING` which can be used to
 see what changes are in the working set that have yet to be committed
 to HEAD. It is often useful to use the `HASHOF()` function to get the
-commit hash of a branch, or an anscestor commit. The above table
+commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
 
 ## `dolt_diff_$TABLENAME`
@@ -190,7 +191,7 @@ table named `dolt_diff_$TABLENAME` which can be queried to see how
 rows have changed over time. Each row in the result set represents a
 row that has changed between two commits. Compared to the
 `dolt_commit_diff_$TABLENAME` the `dolt_diff_$TABLENAME` focuses on
-how a particular row has evolved over time through the current branch. 
+how a particular row has evolved over time through the current branch.
 
 ### Schema
 
@@ -254,10 +255,9 @@ history. Using `to_commit` and `from_commit` you can limit the data to
 specific commits. There is one special `to_commit` value `WORKING`
 which can be used to see what changes are in the working set that have
 yet to be committed to HEAD. It is often useful to use the `HASHOF()`
-function to get the commit hash of a branch, or an anscestor
+function to get the commit hash of a branch, or an ancestor
 commit. To get the differences between the last commit and it's parent
-you could use `to_commit=HASHOF("HEAD") and
-from_commit=HASHOF("HEAD^")`
+you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
 
 For each row the field `diff_type` will be one of the values `added`,
 `modified`, or `removed`. You can filter which rows appear in the
@@ -374,7 +374,7 @@ Which has a table named states with the following schemas at each commit:
                                                                                  +------------+--------+
 ```
 
-The schema for dolt\_history\_states would be:
+The schema for dolt_history_states would be:
 
 ```text
 +-------------+----------+
@@ -395,10 +395,10 @@ The schema for dolt\_history\_states would be:
 
 Taking the above table as an example. If the data inside dates for each commit was:
 
-* At commit "A" the state data from 1790
-* At commit "B" the state data from 1800
-* At commit "C" the state data from 1800
-* At commit "D" the state data from 1810
+- At commit "A" the state data from 1790
+- At commit "B" the state data from 1800
+- At commit "C" the state data from 1800
+- At commit "D" the state data from 1810
 
 ```sql
 SELECT *
@@ -422,7 +422,7 @@ WHERE state = "Virginia";
 
 ## `dolt_log`
 
-`dolt_log` contains the commit log, with contents idential to the
+`dolt_log` contains the commit log, with contents identical to the
 `dolt log` command on the CLI.
 
 ### Schema

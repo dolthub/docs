@@ -871,7 +871,7 @@ List the values of all config parameters.
 Get the value of one or more config parameters.
 
 `--unset`:
-Unset the value of one or more config paramaters.
+Unset the value of one or more config parameters.
 
 
 
@@ -1142,7 +1142,7 @@ dolt creds import [--no-profile] [&lt;jwk_filename&gt;]
 
 Imports a dolt credential from an existing .jwk file.
 
-Dolt credentials are stored in the creds subdirectory of the global dolt conifg
+Dolt credentials are stored in the creds subdirectory of the global dolt config
 directory as files with one key per file in JWK format. This command can import
 a JWK from a file or stdin and places the imported key in the correct place for
 dolt to find it as a valid credential.
@@ -1246,7 +1246,7 @@ A mapping file is json in the format:
 where source_field_name is the name of a field in the file being imported and dest_field_name is the name of a field in the table being imported to.
 
 
-In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (Currently only csv is supported).  For files separated by a delimiter other than a ',', the --delim parameter can be used to specify a delimeter.
+In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (Currently only csv is supported).  For files separated by a delimiter other than a ',', the --delim parameter can be used to specify a delimiter.
 
 If the parameter `--dry-run` is supplied a sql statement will be generated showing what would be executed if this were run without the --dry-run flag
 
@@ -1377,7 +1377,7 @@ A mapping file is json in the format:
 
 where source_field_name is the name of a field in the file being imported and dest_field_name is the name of a field in the table being imported to.
 
-In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (csv, psv, json, xlsx).  For files separated by a delimiter other than a ',' (type csv) or a '|' (type psv), the --delim parameter can be used to specify a delimeter
+In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (csv, psv, json, xlsx).  For files separated by a delimiter other than a ',' (type csv) or a '|' (type psv), the --delim parameter can be used to specify a delimiter
 
 ### Arguments and options
 
@@ -1413,7 +1413,7 @@ Explicitly define the name of the field in the schema which should be used as th
 Explicitly define the type of the file if it can't be inferred from the file extension.
 
 `--delim`:
-Specify a delimeter for a csv style file with a non-comma delimiter.
+Specify a delimiter for a csv style file with a non-comma delimiter.
 
 
 
