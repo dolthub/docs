@@ -128,7 +128,7 @@ We imagine providing this functionality through an Excel Plug In in the future. 
 
 ### Reading from Dolt
 
-This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
+This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../interfaces/api.md) is recommended.
 
 #### Using CSVs
 
