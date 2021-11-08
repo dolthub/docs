@@ -28,7 +28,7 @@ The documentation is divided into five parts, summarized below:
   programmatically, whether it's SQL, command line, or Python
 * [Guides](guides/application-server.md): Cookbooks for installing
   dolt as an application server, using it with Python, and more
-* [Integrations](../integrations/notebooks.md): A selection of other
+* [Integrations](integrations/notebooks.md): A selection of other
   data tools that work well with Dolt and how to use them. Dolt works
   with anything that speaks MySQL.
 * [Reference](reference/architecture.md): Learn more about how Dolt
