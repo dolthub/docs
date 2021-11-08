@@ -123,7 +123,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()`                      | ✅        |                                                                                                |     |
 | `COERCIBILITY()`                  | ❌        |                                                                                                |     |
 | `COLLATION()`                     | ❌        |                                                                                                |     |
-| `COMMIT()`                        | ✅        | Creates a new Dolt commit and returns the hash of it. See [concurrency](../concurrency.md)     |     |
+| `COMMIT()`                        | ✅        | Creates a new Dolt commit and returns the hash of it. See [docs on detached head mode](../heads.md#detached-head-mode)     |     |
 | `COMPRESS()`                      | ❌        |                                                                                                |     |
 | `CONCAT()`                        | ✅        |                                                                                                |     |
 | `CONCAT_WS()`                     | ✅        |                                                                                                |     |
@@ -194,7 +194,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GTID_SUBTRACT()`                 | ❌        |                                                                                                |     |
 | `GeomCollection()`                | ❌        |                                                                                                |     |
 | `GeometryCollection()`            | ❌        |                                                                                                |     |
-| `HASHOF()`                        | ✅        | Returns the hash of a reference, e.g. `HASHOF("master")`. See [concurrency](../concurrency.md) |     |
+| `HASHOF()`                        | ✅        | Returns the hash of a reference, e.g. `HASHOF("master")`. See [docs on detached head mode](../heads.md#detached-head-mode) |     |
 | `HEX()`                           | ✅        |                                                                                                |     |
 | `HOUR()`                          | ✅        |                                                                                                |     |
 | `ICU_VERSION()`                   | ❌        |                                                                                                |     |

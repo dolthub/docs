@@ -23,7 +23,7 @@ redirects:
   reference/sql/sql-support/miscellaneous.md: interfaces/sql/sql-support/miscellaneous.md
   reference/sql/dolt-sql-functions.md: interfaces/sql/dolt-sql-functions.md
   reference/sql/dolt-system-tables.md: interfaces/sql/dolt-system-tables.md
-  reference/sql/concurrency.md: interfaces/sql/concurrency.md
+  reference/sql/concurrency.md: interfaces/sql/heads.md#detached-head-mode
   reference/cli.md: interfaces/cli.md
   reference/python.md: interfaces/python.md
   integrations/sql-clients: interfaces/sql/clients.md

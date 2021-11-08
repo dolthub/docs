@@ -10,7 +10,7 @@ Dolt is a relational database that uses a commit graph as its underlying data st
 
 This is distinct from existing relational database solutions, such as MySQL, Postgresql, Oracle, that have a "last write wins" model of versioning. A cell takes on the value set by the last query that modified it. Some of these databases, such as Microsoft SQL Sever and Maria DB, also support `AS OF` functionality that stores the history of values and exposes a syntax for querying them. This requires explicit configuration. Additionally, these relational database implementations offer various sorts of backup and recovery mechanisms that, at a very high level, take periodic snapshots which can be restored.
 
-This document shows how to use Dolt to create version history of an existing relational database without having to actually modify that database. We use our Python API, [Doltpy](../interfaces/python.md), to achieve this. The setup can visualized as follows:
+This document shows how to use Dolt to create version history of an existing relational database without having to actually modify that database. We use our Python API, [Doltpy](./python/doltpy.md), to achieve this. The setup can visualized as follows:
 
 ![Sync to Dolt](../.gitbook/assets/sql_sync_diagram.png)
 
