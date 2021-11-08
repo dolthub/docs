@@ -11,6 +11,8 @@ machine without dolt installed or running.
 Package manager support (`.deb` and `.rpm` distributions) is coming
 soon, but for now this set of manual setup work is necessary.
 
+We have the instructions below packaged in a script [here](https://github.com/dolthub/dolt/blob/main/docs/deploy-server.sh).
+
 ## Installation
 
 Install dolt. Run the following command:
