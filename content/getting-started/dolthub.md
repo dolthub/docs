@@ -110,11 +110,11 @@ You can learn more from our blog [here](https://www.dolthub.com/blog/2020-11-13-
 
 #### Spreadsheet Editor
 
-As a part of the file upload process, we also added the option to create and edit spreadsheets directly in DoltHub. You will see this option during step 3.
+As a part of the file upload process, you can also create and edit spreadsheets directly in DoltHub. You will see this option during step 3.
 
 ![Spreadsheet editor option](../.gitbook/assets/upload-step-3.png)
 
-If you chose to update an existing table, the spreadsheet editor will be populated with the table's existing data. This data is paginated and we're currently working on making it easier to navigate existing data in the spreadsheet editor.
+If you chose to update an existing table, the spreadsheet editor will be populated with the table's existing data. If the data has more than 50 rows it will paginate on scroll.
 
 ![Spreadsheet with existing data](../.gitbook/assets/spreadsheet-editor-update.png)
 
@@ -130,7 +130,7 @@ Use the cell buttons or SQL Console to run a write query.
 
 ![Edit cell value](../.gitbook/assets/table-edit-cell-value.png)
 
-You'll be navigated to a "workspace", which is a temporary staging area where you can make changes using the SQL Console without consequence.
+You'll be navigated to a "workspace", which is a temporary staging area where you can make changes without updating the main branches of the database.
 
 ![Workspace](../.gitbook/assets/workspace.png)
 
