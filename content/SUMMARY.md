@@ -27,6 +27,7 @@
   * [Working with Multiple HEADs](interfaces/sql/heads.md)
   * [Dolt SQL Functions](interfaces/sql/dolt-sql-functions.md)
   * [Dolt System Variables](interfaces/sql/sysvars.md)
+  * [Dolt System Variable Persistence](interfaces/sql/persistence.md)
   * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
 * [CLI](interfaces/cli.md)
 * [API](interfaces/api.md)
