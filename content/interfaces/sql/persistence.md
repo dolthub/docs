@@ -40,24 +40,11 @@ SET @@PERSIST_ONLY.back_log = 1000;
 $ dolt config --local --add sqlserver.global.max_connections 1000
 ```
 
-## Future Work
+## Limitations
 
-## `RESET PERSIST`
+1) Deleting variables with `RESET PERSIST` is not supported.
 
-Variables can be unset by assigning keys to empty values, deleting the
-configuration file (not recommended), or using MySQL's `RESET PERSIST`
-or `RESET PERSIST ALL` syntax. We do not yet support `RESET PERSIST`.
+2) Persistence in multi-db mode is not supported.
 
-## Multiple Databases
-
-`SET PERSIST` queries in multi database settings are ambiguous, because
-there are multiple equivalent configs. In these
-scenarios, we write values to an in-memory map that do not survive a
-restart. We will either support real persistence or
-explicitly error in the future.
-
-## Global Config
-
-Users can persist system variables in the global dolt config using
-the CLI, but we do not currently support loading global config values
-on restarts.
+3) Loading variables from the Dolt global config on server startup is
+   not supported.
