@@ -81,8 +81,8 @@ To push on write, a valid remote middleman must be configured:
 dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 ```
 
-There are two ways to trigger pushing from the source: a Dolt commit,
-or a branch head update. A standaone SQL `COMMIT` and/or head set will not
+There are two ways to trigger pushing to a remote middlemane: a Dolt commit,
+or a branch head update. A standaone `COMMIT` or head set will not
 trigger replication:
 
 ```SQL
