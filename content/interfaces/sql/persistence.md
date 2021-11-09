@@ -58,5 +58,5 @@ explicitly error when we improve multidb mode support.
 ## Global Config
 
 Users can persist system variables in the global dolt config using
-the LCI, but we do not currently support loading global config values
+the CLI, but we do not currently support loading global config values
 on restarts.
