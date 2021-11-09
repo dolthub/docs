@@ -48,3 +48,73 @@ consequences. Selecting it is useful for diagnostics.
 This system variable controls the current staged root value. Setting
 it is an expert use case that can have very many unexpected
 consequences. Selecting it is useful for diagnostics.
+
+## @@dolt_default_branch
+
+This system variable controls the default database branch on server
+(or SQL engine) instantiation. You would use this to change the active branch
+and working set that new server sessions see.
+
+## @@dolt_replicate_to_remote
+
+This system variable is used to push on write from the source database
+in replication. Dolt commits will push the resulting dataset to the
+named remote. SQL commits do not trigger replication.
+
+```sql
+mysql> select name from dolt_remotes;
++---------+
+| name    |
++---------+
+| remote1 |
+| origin  |
++---------+
+mysql> SET @@GLOBAL.dolt_replicate_to_remote remote1;
+mysql> select dolt_commit('-am', 'push on write');
+```
+
+## @@dolt_read_replica_remote
+
+This system variable is used to pull to read replicas.
+Pulling is triggered on SQL `START TRANSACTION`. Setting `autocommit = 1`
+will wrap every query in a transaction.
+
+Setting `dolt_replicate_heads` or `dolt_replicate_all_heads` is required.
+
+```sql
+mysql> SET @@GLOBAL.dolt_read_replica_remote = origin;
+mysql> SET @@GLOBAL.dolt_replicate_heads main;
+mysql> START TRANSACTION;
+```
+
+## @@dolt_skip_replication_errors
+
+This system variable is used to quiet replication
+errors that would otherwise hault query execution. Missing or malformed
+values are the most comment quieted warnings. Faults
+unrelated to replication should still error.
+
+```sql
+mysql> SET @@GLOBAL.dolt_skip_replication_errors = 1;
+```
+
+## @@dolt_replicate_heads
+
+This system variable specifies which heads a read replica should fetch.
+Use with `dolt_read_replica_remote`. Use is mutually exclusive with
+`dolt_replicate_all_heads`.
+
+```sql
+mysql> SET @@GLOBAL.dolt_replicate_heads main;
+mysql> SET @@GLOBAL.dolt_replicate_heads main,feature1,feature2;
+```
+
+## @@dolt_replicate_all_heads
+
+This system variable specifies to pull all heads for every read replica
+fetch. Use with `dolt_read_replica_remote`. Use is mutually exclusive
+with `dolt_replicate_heads`.
+
+```sql
+mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
+```

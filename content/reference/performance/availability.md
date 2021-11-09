@@ -57,6 +57,8 @@ walkthrough.
 
 ### Configuration
 
+#### Persisting system variables
+
 Configs can be set in the CLI (limited to `--local` scope for now):
 
 ```bash
@@ -71,11 +73,16 @@ SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
 SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
 ```
 
-Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
-rather than error if replication is misconfigured.
+#### Push (on write) from sources
 
-There are two ways to trigger pushing from the source: a SQL commit,
-or a branch head update. A standaone `COMMIT` and/or head set will not
+To push on write, a valid remote middleman must be configured:
+
+```bash
+dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
+```
+
+There are two ways to trigger pushing from the source: a Dolt commit,
+or a branch head update. A standaone SQL `COMMIT` and/or head set will not
 trigger replication:
 
 ```SQL
@@ -84,9 +91,50 @@ SELECT DOLT_COMMIT('-am', 'message')
 UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND hash = @@database_name_head
 ```
 
+#### Pull (on read) to replica
+
+Read replicas are instantiated with a remote:
+
+```bash
+dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
+```
+
+A complete replication setup requires a pull spec with either 1) a set
+of heads, or 2) all heads (but not both):
+
+```bash
+dolt config --add --local sqlserver.global.dolt_replicate_heads main,feature1
+dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
+```
+
 On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
-The first query in a session automatically starts a transaction, and `autocommit = 1` begins every
-query with a transaction.
+The first query in a session automatically starts a transaction. Setting
+`autocommit = 1`, which begins every query with a transaction, is
+encouraged on read replicas for convenience.
+
+#### Auto-fetching
+
+Dolt supports auto-fetching branches on demand for read replication in
+certain circumstatnces:
+
+1) Clients that connect to a missing branch:
+
+`mysql://127.0.0.1:3306/mydb/feature-branch`
+
+2) `USE`ing a missing branch:
+
+`USE \`mydb/feature-branch\``
+
+In either case, a read replica will pull the indicated branch from
+the remote middleman. If the branch is not on the replica, a new remote
+tracking branch, head branch, and working set will be created.
+
+Read more about different head settings [here](../../../interfaces/sql/heads).
+
+#### Quiet Warnings
+
+Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
+rather than error if replication is misconfigured.
 
 ![Read replication](../../.gitbook/assets/dolt-read-replication.png)
 
