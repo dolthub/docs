@@ -48,7 +48,7 @@ Dolt supports simple read replication with two caveats:
 
 In summary, we support replicating a source database by pushing
 on commit, and pulling to replicas on read. The stability of the middleman is
-required to maintain a line of communication between the primary server
+required to maintain the thread of communication between a primary server
 and its replicas.
 
 Refer to the [read replication
@@ -66,12 +66,14 @@ dolt config --add --local sqlserver.global.dolt_replicate_to_remote <name>
 dolt config --add --local sqlserver.global.dolt_read_replica_remote <name>
 ```
 
-Configs can be set equivalently in SQL:
+Configs can be set equivalently in an SQL session:
 
 ```SQL
 SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
 SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
 ```
+
+Read more about persisting system variables [here](../../../interfaces/sql/persistence.md).
 
 #### Push (on write) from sources
 

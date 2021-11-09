@@ -57,10 +57,9 @@ and working set new server sessions connect to.
 
 ## @@dolt_replicate_to_remote
 
-This system variable is used to push on write from source database to
-replication middleman. Dolt commit triggers a push and transmits the
-resulting dataset to the named remote. SQL commits do not trigger
-replication.
+This system variable is used to push to replication middlemen. Dolt
+commit triggers a push and transmits the resulting dataset to the named
+remote. SQL commits do not trigger replication.
 
 ```sql
 mysql> select name from dolt_remotes;
@@ -112,7 +111,7 @@ mysql> SET @@GLOBAL.dolt_replicate_heads main,feature1,feature2;
 
 ## @@dolt_replicate_all_heads
 
-This system variable specifies to pull all heads for every read replica
+This system variable indicates to pull all branches for every read replica
 fetch. Pair with `dolt_read_replica_remote`. Use is mutually exclusive
 with `dolt_replicate_heads`.
 
