@@ -12,7 +12,7 @@ This document assumes you are using Windows and would like to access a local Dol
 
 ### Reading from Dolt
 
-Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
+Again, this document assumes you have a local clone of a Dolt database on your computer. If you would like to read data from a repository pushed to DoltHub, [the web API](../interfaces/api.md) is recommended.
 
 #### Using CSVs
 
@@ -83,7 +83,7 @@ Note the use of `-r` or replace. You have two options on import for an existing 
 Now we'll tackle the case where you want to create a new table from a Google Sheet. If you trust Dolt to infer the schema of the table from the data, you can run `dolt table import -c`. `c` stands for create.
 
 ```bash
-$ dolt table import -c test_types Sheet1.csv  
+$ dolt table import -c test_types Sheet1.csv
 Rows Processed: 3, Additions: 3, Modifications: 0, Had No Effect: 0
 Import completed successfully.
 $ dolt schema show test_types
@@ -103,10 +103,10 @@ $ dolt sql -q "select * from test_types"
 +----+----------+
 ```
 
-Most of the time, the above will work as you expect. But sometimes, you'll want to specify different types for certain columns or add additional primary keys. You can either specify the schema you would like by writing a `CREATE TABLE` statment and processing it through `dolt sql` or you can have Dolt give you a hint by running `dolt schema import --dry-run`.
+Most of the time, the above will work as you expect. But sometimes, you'll want to specify different types for certain columns or add additional primary keys. You can either specify the schema you would like by writing a `CREATE TABLE` statement and processing it through `dolt sql` or you can have Dolt give you a hint by running `dolt schema import --dry-run`.
 
 ```bash
-$ dolt schema import -c --pks pk --dry-run schema_import_test Sheet1.csv  
+$ dolt schema import -c --pks pk --dry-run schema_import_test Sheet1.csv
 CREATE TABLE `schema_import_test` (
   `pk` INT UNSIGNED NOT NULL COMMENT 'tag:9152',
   `test_col` INT UNSIGNED NOT NULL hCOMMENT 'tag:13834',
@@ -116,7 +116,7 @@ CREATE TABLE `schema_import_test` (
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../getting-started/dolthub.md#using-dolt) and run `dolt push`.
 
 ### Accessing Dolt Versioning
 
@@ -128,7 +128,7 @@ We imagine providing this functionality through an Excel Plug In in the future. 
 
 ### Reading from Dolt
 
-This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../dolthub/getting-started.md#api-alpha) is recommended.
+This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../interfaces/api.md) is recommended.
 
 #### Using CSVs
 
@@ -160,19 +160,19 @@ When importing the whole Dolt table to Google Sheets is impractical due to size 
 
 The first thing you have to do is start a Dolt SQL Server. To do this navigate to the Dolt repository directory you want to read from and run `dolt sql-server`. This command starts a MySQL compatible server on port 3306 with a user named `root`. It exposes a database named after the Dolt repository directory with dashes \(`-`\) changed to underscores \(`_`\). Thus, `dolt-test` directory name becomes `dolt_test` database name. For the purposes of this example I am running a database named `dolt_test` with user `dolt`.
 
-Once you have a running Dolt MySQL-compatiible server, you need to open the port it is running on to the internet. If your Dolt sql-server is already running on a host accessible via the internet, you can skip this step. To do this on a home or employer network, we recommend using [ngrok](https://ngrok.com/). `ngrok` is a hosted service that allows you to open a port on your computer to the internet fairly painlessly. First [follow the ngrok installation instructions](https://dashboard.ngrok.com/get-started/setup) for your operating system. Then run `ngrok tcp 3306` \(or substitute 3306 for whichever port you started the sql-server on\). This will start a program with the following output in your terminal:
+Once you have a running Dolt MySQL-compatible server, you need to open the port it is running on to the internet. If your Dolt sql-server is already running on a host accessible via the internet, you can skip this step. To do this on a home or employer network, we recommend using [ngrok](https://ngrok.com/). `ngrok` is a hosted service that allows you to open a port on your computer to the internet fairly painlessly. First [follow the ngrok installation instructions](https://dashboard.ngrok.com/get-started/setup) for your operating system. Then run `ngrok tcp 3306` \(or substitute 3306 for whichever port you started the sql-server on\). This will start a program with the following output in your terminal:
 
 ```text
 ngrok by @inconshreveable                                       (Ctrl+C to quit)
 
-Session Status                online                                            
-Account                       tim@dolthub.com (Plan: Free)                     
-Version                       2.3.35                                            
-Region                        United States (us)                                
-Web Interface                 http://127.0.0.1:4040                             
-Forwarding                    tcp://0.tcp.ngrok.io:15612 -> localhost:3306      
+Session Status                online
+Account                       tim@dolthub.com (Plan: Free)
+Version                       2.3.35
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4040
+Forwarding                    tcp://0.tcp.ngrok.io:15612 -> localhost:3306
 
-Connections                   ttl     opn     rt1     rt5     p50     p90       
+Connections                   ttl     opn     rt1     rt5     p50     p90
                               78      0       0.00    0.01    0.05    0.40
 ```
 
@@ -187,15 +187,15 @@ Paste the following code into the script editor:
 ```text
 var server    = '0.tcp.ngrok.io';
 var dbName    = 'dolt_test';
-var username  = 'dolt';  
-var password  = '';  
+var username  = 'dolt';
+var password  = '';
 var port      = 15612;
 
 var query = 'SELECT * FROM test';
 
 var sheetName = 'Sheet1'
 
-function readDolt() {  
+function readDolt() {
   var url  = 'jdbc:mysql://' + server + ':' + port + '/' + dbName;
   var conn = Jdbc.getConnection(url, username, password);
 
@@ -219,7 +219,7 @@ function readDolt() {
 
   while (results.next()) {
     insert = [];
-    for (var col = 0; col < numCols; col++) {      
+    for (var col = 0; col < numCols; col++) {
       insert.push(results.getString(col + 1));
     }
 
@@ -248,7 +248,7 @@ If you have data in a Google Sheet you would like to store and version, exportin
 
 Let's start with the simple case where you already have an existing Dolt table that is in the proper schema. Perhaps you even read the data from Dolt and you have simply modified it and want to store your changes.
 
-In Google Sheets, navigate to the sheet you would like to import to Dolt as a table and click `File` &gt; `Download` &gt; `Comma separated values (.csv, current sheet)`. This will make a CSV file in your default download location named `&lt;Speadsheet name&gt; - &lt;Sheet Name&gt.csv;`.
+In Google Sheets, navigate to the sheet you would like to import to Dolt as a table and click `File` &gt; `Download` &gt; `Comma separated values (.csv, current sheet)`. This will make a CSV file in your default download location named `&lt;Spreadsheet name&gt; - &lt;Sheet Name&gt.csv;`.
 
 To import this file to Dolt, go to the directory your Dolt database is located in. Then, you run the `dolt table import` command with the table and CSV file path as arguments.
 
@@ -263,7 +263,7 @@ Note the use of `-r` or replace. You have two options on import for an existing 
 Now we'll tackle the case where you want to create a new table from a Google Sheet. If you trust Dolt to infer the schema of the table from the data, you can run `dolt table import -c`. `c` stands for create.
 
 ```bash
-$ dolt table import -c test_types ~/Downloads/Dolt\ Connection\ Test\ -\ Sheet1.csv  
+$ dolt table import -c test_types ~/Downloads/Dolt\ Connection\ Test\ -\ Sheet1.csv
 Rows Processed: 3, Additions: 3, Modifications: 0, Had No Effect: 0
 Import completed successfully.
 $ dolt schema show test_types
@@ -283,10 +283,10 @@ $ dolt sql -q "select * from test_types"
 +----+----------+
 ```
 
-Most of the time, the above will work as you expect. But sometimes, you'll want to specify different types for certain columns or add additional primary keys. You can either specify the schema you would like by writing a `CREATE TABLE` statment and processing it through `dolt sql` or you can have Dolt give you a hint by running `dolt schema import --dry-run`.
+Most of the time, the above will work as you expect. But sometimes, you'll want to specify different types for certain columns or add additional primary keys. You can either specify the schema you would like by writing a `CREATE TABLE` statement and processing it through `dolt sql` or you can have Dolt give you a hint by running `dolt schema import --dry-run`.
 
 ```bash
-$ dolt schema import -c --pks pk --dry-run schema_import_test ~/Downloads/Dolt\ Connection\ Test\ -\ Sheet1.csv  
+$ dolt schema import -c --pks pk --dry-run schema_import_test ~/Downloads/Dolt\ Connection\ Test\ -\ Sheet1.csv
 CREATE TABLE `schema_import_test` (
   `pk` INT UNSIGNED NOT NULL COMMENT 'tag:9152',
   `test_col` INT UNSIGNED NOT NULL COMMENT 'tag:13834',
@@ -296,11 +296,11 @@ CREATE TABLE `schema_import_test` (
 
 You can then take that output and modify it to the schema you would like. For instance, you might want to removed the `UNSIGNED` and `NOT NULL` constraints from `test_col`. Once you have the schema you want, process the `CREATE TABLE` statement through `dolt sql` and complete the import by running `dolt table import -r`.
 
-To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#data-publishing) and run `dolt push`.
+To store the above tables in Dolt as a commit, run `dolt add -A` and `dolt commit`. To send that commit to DoltHub, [set up DoltHub as a remote](../dolthub/getting-started.md#using-dolt) and run `dolt push`.
 
 #### Using SQL JDBC Connector
 
-If you want to do something more complicated than mirror a Google Sheet in a Dolt table, you can use the SQL JDBC Connector to perform arbitrarily complex imports. You have the power of a full scripting lanuguage and SQL database.
+If you want to do something more complicated than mirror a Google Sheet in a Dolt table, you can use the SQL JDBC Connector to perform arbitrarily complex imports. You have the power of a full scripting language and SQL database.
 
 For this example we will make a script that mirrors a Google sheet but ignores a column. That column will contain a formula so we don't want to insert that as a string or value in the database. This is a common use case.
 
@@ -311,13 +311,13 @@ First step is to start a `dolt sql-server` and expose a port to the internet as 
 ```text
 var server    = '0.tcp.ngrok.io';
 var dbName    = 'dolt_test';
-var username  = 'dolt';  
-var password  = '';  
+var username  = 'dolt';
+var password  = '';
 var port      = 15612;
 
 var sheetName = 'Sheet1';
 
-function writeDolt() {      
+function writeDolt() {
   var spreadsheet = SpreadsheetApp.getActive();
   var sheet       = spreadsheet.getSheetByName(sheetName);
 
@@ -344,7 +344,7 @@ function writeDolt() {
       } else {
         query += ',';
       }
-      query += data[i][j];  
+      query += data[i][j];
     }
     query += ')';
     conn.createStatement().execute(query);

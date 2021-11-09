@@ -8,8 +8,8 @@ title: Dolt SQL
 
 There are two ways to run SQL queries against your database:
 
-* `dolt sql` runs SQL queries from your shell
-* `dolt sql-server` starts a MySQL-compatible server
+- `dolt sql` runs SQL queries from your shell
+- `dolt sql-server` starts a MySQL-compatible server
 
 ### dolt sql
 
@@ -57,7 +57,7 @@ View the `dolt sql` command documentation [here](../cli.md#dolt-sql).
 ### dolt sql-server
 
 The `dolt sql-server` command runs a MySQL compatible server which
-clients can connet to and execute queries against. Any library or tool
+clients can connect to and execute queries against. Any library or tool
 that can connect to MySQL can connect to Dolt.
 
 ```bash
@@ -73,8 +73,7 @@ View the `dolt sql-server` command documentation
 
 ## Dolt CLI in SQL
 
-Most of Dolt's CLI commands, e.g. `dolt status`, `dolt commit`, `dolt
-merge`, `dolt push`, `dolt pull`, are available in the SQL context,
+Most of Dolt's CLI commands, e.g. `dolt status`, `dolt commit`, `dolt merge`, `dolt push`, `dolt pull`, are available in the SQL context,
 either via [system tables](dolt-system-tables.md) or as [custom SQL
 functions](dolt-sql-functions.md). All CLI functionality will eventually
 be exposed in SQL.
@@ -87,14 +86,14 @@ Dolt commands, such as branch information, the commit log, and much
 more. You can write queries that examine the history of a table, or
 that select the diff between two commits.
 
-* [dolt\_log table](dolt-system-tables.md#dolt_branches)
-* [dolt\_branches table](dolt-system-tables.md#dolt_branches)
-* [dolt\_commit\_diff tables](dolt-system-tables.md#dolt_commit_diff_usdtablename)
-* [dolt\_diff tables](dolt-system-tables.md#dolt_diff_usdtablename)
-* [dolt\_history tables](dolt-system-tables.md#dolt_history_usdtablename)
-* [dolt\_status table](dolt-system-tables.md#dolt_status)
-* [dolt\_conflicts tables](dolt-system-tables.md#dolt_conflicts_usdtablename)
-* [dolt\_remotes table](dolt-system-tables.md#dolt_remotes)
+- [dolt_log table](dolt-system-tables.md#dolt_branches)
+- [dolt_branches table](dolt-system-tables.md#dolt_branches)
+- [dolt_commit_diff tables](dolt-system-tables.md#dolt_commit_diff_usdtablename)
+- [dolt_diff tables](dolt-system-tables.md#dolt_diff_usdtablename)
+- [dolt_history tables](dolt-system-tables.md#dolt_history_usdtablename)
+- [dolt_status table](dolt-system-tables.md#dolt_status)
+- [dolt_conflicts tables](dolt-system-tables.md#dolt_conflicts_usdtablename)
+- [dolt_remotes table](dolt-system-tables.md#dolt_remotes)
 
 ## Concurrency
 

@@ -48,7 +48,7 @@ input_data = read_pandas(table_name, sha)
 This allows the Kalido team to architect their pipelines with the required reproducibility and lineage features needed without manipulate Git repositories and files.
 
 ## Conclusion
-The technical lead on Kalido's model delivery pipeline summed things up succinclyl:
+The technical lead on Kalido's model delivery pipeline summed things up succinctly:
 > Dolt is useful because it simplifies things a lot. We can have all the training data in one place, be able to read off at specific commits corresponding to specific points in time. We can also see diffs, allowing us to understand, and possibly automate, when we need to retrain a client’s model.
 
 We are excited by Kalido's mission and use-case. We think Dolt can lead to better data management for teams operating complex model delivery pipelines, and Kalido's use of dolt highlights how.
