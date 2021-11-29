@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 129 of 436 MySQL functions.**
+**Currently supporting 137 of 436 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -201,10 +201,10 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `IF()`                            | ✅        |                                                                                                |     |
 | `IFNULL()`                        | ✅        |                                                                                                |     |
 | `IN()`                            | ✅        |                                                                                                |     |
-| `INET6_ATON()`                    | ❌        |                                                                                                |     |
-| `INET6_NTOA()`                    | ❌        |                                                                                                |     |
-| `INET_ATON()`                     | ❌        |                                                                                                |     |
-| `INET_NTOA()`                     | ❌        |                                                                                                |     |
+| `INET6_ATON()`                    | ✅        |                                                                                                |     |
+| `INET6_NTOA()`                    | ✅        |                                                                                                |     |
+| `INET_ATON()`                     | ✅        |                                                                                                |     |
+| `INET_NTOA()`                     | ✅        |                                                                                                |     |
 | `INSERT()`                        | ❌        |                                                                                                |     |
 | `INSTR()`                         | ✅        |                                                                                                |     |
 | `INTERVAL()`                      | ✅        |                                                                                                |     |
@@ -214,10 +214,10 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ISNULL()`                        | ❌        |                                                                                                |     |
 | `IS_BINARY()`                     | ✅        |                                                                                                |     |
 | `IS_FREE_LOCK()`                  | ✅        |                                                                                                |     |
-| `IS_IPV4()`                       | ❌        |                                                                                                |     |
-| `IS_IPV4_COMPAT()`                | ❌        |                                                                                                |     |
-| `IS_IPV4_MAPPED()`                | ❌        |                                                                                                |     |
-| `IS_IPV6()`                       | ❌        |                                                                                                |     |
+| `IS_IPV4()`                       | ✅        |                                                                                                |     |
+| `IS_IPV4_COMPAT()`                | ✅        |                                                                                                |     |
+| `IS_IPV4_MAPPED()`                | ✅        |                                                                                                |     |
+| `IS_IPV6()`                       | ✅        |                                                                                                |     |
 | `IS_USED_LOCK()`                  | ✅        |                                                                                                |     |
 | `IS_UUID()`                       | ❌        |                                                                                                |     |
 | `IS`                              | ✅        |                                                                                                |     |
