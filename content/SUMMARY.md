@@ -16,8 +16,16 @@
     * [Data Bounties](introduction/getting-started/data-bounties.md)
 
 ## Guides
+* Dolt
+    * [Why Dolt?](guides/dolt/why.md)
+    * [Commits](guides/dolt/commits.md)
+    * [Log](guides/dolt/log.md)
+    * [Diff](guides/dolt/diff.md)
+    * [Branch](guides/dolt/branches.md)
+    * [Merge](guides/dolt/merge.md)
+    * [Conflicts](guides/dolt/conflicts.md)
 * DoltHub
-    * [Why DoltHub?](guides/dolthub/what.md)
+    * [Why DoltHub?](guides/dolthub/why.md)
     * [Permissions](guides/dolthub/permissions.md)
     * [Pull Requests](guides/dolthub/prs.md)
     * [Issues](guides/dolthub/issues.md)
