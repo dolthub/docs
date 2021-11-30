@@ -1,10 +1,12 @@
+---
+title: Dolt Python
+---
+
 # Dolt Python
 
 * [Doltpy](./doltpy.md): For new users, experimentation and testing
 
 * [Python SQL Clients](./sql_clients.md): For integrations and production Dolt Python.
-
-* [Doltpy Tutorials](./doltpy_tutorial.md): Inspiration for testing Doltpy.
 
 ## Summary
 

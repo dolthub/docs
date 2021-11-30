@@ -9,11 +9,11 @@
     * [Build from Source](introduction/installation/source.md)
     * [Application Server](introduction/installation/application-server.md)
     * [Docker](introduction/installation/docker.md)
-* [Getting Started]()
-    * [Version Controlled Database]()
-    * [Git For Data]()
-    * [Data Sharing on DoltHub]()
-    * [Data Bounties]()
+* [Getting Started](introduction/getting-started/start.md)
+    * [Version Controlled Database](introduction/getting-started/database.md)
+    * [Git For Data](introduction/getting-started/git-for-data.md)
+    * [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
+    * [Data Bounties](introduction/getting-started/data-bounties.md)
 
 ## Reference
 * [SQL](reference/sql/sql.md)
@@ -26,7 +26,7 @@
     * [Dolt System Tables](reference/sql/dolt-system-tables.md)
     * [Dolt System Variables](reference/sql/dolt-sysvars.md)
     * [Using Branches](reference/sql/branches.md)
-    * [Configuration]()
+    * [Configuration](reference/sql/configuration.md)
     * [Backups](reference/sql/backups.md)
     * [Replication](reference/sql/replication.md)
     * [Correctness](reference/sql/correctness.md)
@@ -53,6 +53,6 @@
 * [Roadmap](other/roadmap.md)
 
 ## Python
-* Getting Started
-* SQL Clients
-* Doltpy
+* [Getting Started](python/python.md)
+* [SQL Clients](python/sql-clients.md)
+* [Doltpy](python/doltpy.md)
