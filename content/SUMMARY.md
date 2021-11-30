@@ -31,12 +31,12 @@
     * [Replication](reference/sql/replication.md)
     * [Correctness](reference/sql/correctness.md)
     * [Performance](reference/sql/performance.md)
-    * [Supported Clients]()
-        * [Programmatic](reference/sql/supportedclients/clients.md)
-        * [SQL Editors](reference/sql/supportedclients/sql-editors.md)
-        * [Spreadsheets](reference/sql/supportedclients/spreadsheets.md)
-        * [Notebooks](reference/sql/supportedclients/notebooks.md)
-        * [Other Integrations](reference/sql/supportedclients/workflow=managers.md)
+    * [Supported Clients](reference/sql/supported-clients/supported.md)
+        * [Programmatic](reference/sql/supported-clients/clients.md)
+        * [SQL Editors](reference/sql/supported-clients/sql-editors.md)
+        * [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
+        * [Notebooks](reference/sql/supported-clients/notebooks.md)
+        * [Other Integrations](reference/sql/supported-clients/workflow=managers.md)
 * [CLI](reference/cli.md))
 
 ## Architecture

@@ -1,6 +1,8 @@
-# Dolt in Docker
+---
+title: Docker
+---
 
-## Quickstart
+# Quickstart
 
 Dolt can be run in Docker with a few short commands.
 
@@ -28,7 +30,7 @@ exit
 >
 ```
 
-## Dolt Run Command
+# Dolt Run Command
 
 Use entrypoints to set the default executable and params:
 ```Dockerfile
@@ -74,7 +76,7 @@ Query OK, 2 rows affected
 config.json*     noms/            repo_state.json* temptf/          tmp/
 ```
 
-## Dolt SQL-Server <a name="sql-server"></a>
+# Dolt SQL-Server <a name="sql-server"></a>
 
 A `Dockerfile` that runs Dolt in server mode by default might look like:
 ```Dockerfile
@@ -109,7 +111,7 @@ mysql> select * from t1;
 2 rows in set (0.01 sec)
 ```
 
-## Docker-Compose SQL-Server
+# Docker-Compose SQL-Server
 The `Dockerfile` from the [SQL-Server](#sql-server) example can be used in a `docker-compose.yml`:
 ```yaml
 version: '3.3'
@@ -142,7 +144,7 @@ db_1  | TRACE: returning result row [INT64(0)]
 db_1  | TRACE: returning result row [INT64(1)]
 ```
 
-## Sample Dockerfiles <a name="samples"></a>
+# Sample Dockerfiles <a name="samples"></a>
 
 Ubuntu:
 ```Dockerfile
