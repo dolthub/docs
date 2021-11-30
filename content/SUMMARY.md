@@ -11,7 +11,7 @@
     * [Docker](introduction/installation/docker.md)
 * [Getting Started]()
     * [Version Controlled Database]()
-    * [Git For Tables]()
+    * [Git For Data]()
     * [Data Sharing on DoltHub]()
     * [Data Bounties]()
 
