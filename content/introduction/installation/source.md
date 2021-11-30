@@ -2,9 +2,7 @@
 title: Build from Source
 ---
 
-### Build from source
-
-For those interested in building from source, it's relatively straight forward to do. Just clone the repo and use `go install`:
+For those interested in building from source, clone the [Dolt repo from GitHub](https://github.com/dolthub/dolt) and use `go install`:
 
 ```text
 $ git clone git@github.com:dolthub/dolt.git
