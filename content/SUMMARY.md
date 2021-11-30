@@ -17,26 +17,26 @@
 
 ## Reference
 * [SQL](reference/sql/README.md)
-	* [SQL Support](reference/sql/sql-support/README.md)
-    * [Data Description](reference/sql/sql-support/data-description.md)
-    * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
-    * [Supported Statements](reference/sql/sql-support/supported-statements.md)
-    * [Miscellaneous](reference/sql/sql-support/miscellaneous.md)
-  * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
-  * [Dolt System Tables](reference/sql/dolt-system-tables.md)
-  * [Dolt System Variables](reference/sql/sysvars.md)
-	* Using Branches
-	* Configuration
-	* [Backups](reference/sql/backups.md)
-	* [Replication](reference/sql/replication.md)
-	* [Correctness](reference/sql/correctness.md)
-	* [Performance](reference/sql/performance.md)
-	* [Supported Clients](reference/sql/clients.md)
-		* Programmatic
-		* SQL Editors
-		* Spreadsheets
-		* Notebooks
-		* Other Integrations
+    * [SQL Support](reference/sql/sql-support/README.md)
+        * [Data Description](reference/sql/sql-support/data-description.md)
+        * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
+        * [Supported Statements](reference/sql/sql-support/supported-statements.md)
+        * [Miscellaneous](reference/sql/sql-support/miscellaneous.md)
+    * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
+    * [Dolt System Tables](reference/sql/dolt-system-tables.md)
+    * [Dolt System Variables](reference/sql/sysvars.md)
+	  * Using Branches
+	  * Configuration
+ 	  * [Backups](reference/sql/backups.md)
+	  * [Replication](reference/sql/replication.md)
+	  * [Correctness](reference/sql/correctness.md)
+	  * [Performance](reference/sql/performance.md)
+	  * [Supported Clients](reference/sql/clients.md)
+		    * Programmatic
+		    * SQL Editors
+		    * Spreadsheets
+		    * Notebooks
+		    * Other Integrations
 * [CLI](reference/cli.md))
 
 ## Architecture
@@ -53,4 +53,3 @@
 * Getting Started
 * SQL Clients
 * Doltpy
-
