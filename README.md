@@ -1,5 +1,5 @@
 ---
-title: Dolt & DoltHub Documentation
+title: Dolt Documentation
 ---
 
 ## Introduction
