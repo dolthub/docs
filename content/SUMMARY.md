@@ -40,13 +40,13 @@
 * [CLI](reference/cli.md))
 
 ## Architecture
-* [Storage Engine]()
+* [Storage Engine](architecture/storage-engine/storage.md)
     * [Noms](architecture/storage-engine/noms.md)
     * [Merkle DAG](architecture/storage-engine/merkle-dag.md)
     * [Prolly Trees](architecture/storage-engine/prolly-trees.md)
-* [SQL]()
-    * [Go MySQL Server]()
-    * [Vitess]()
+* [SQL](architecture/sql/sql.md)
+    * [Go MySQL Server](architecture/sql/go-mysql-server.md)
+    * [Vitess](architecture/sql/vitess.md)
 
 ## Other
 * [FAQ](other/faq.md)
