@@ -1,7 +1,12 @@
+---
+title: Branches
+---
+
 # Working with multiple heads
 
-Unlike other relational databases, Dolt has multiple heads, one for
-each branch in the database. Multiple clients can connect to each
+Unlike other relational databases, Dolt has multiple heads 
+one for each branch in the database. A head can be a branch, a tag, or 
+a working set. Multiple clients can connect to each
 head, and will see other writes to the same head following the normal
 SQL transactional isolation semantics (REPEATABLE_READ). In effect,
 each head functions as is its own isolated database instance, with

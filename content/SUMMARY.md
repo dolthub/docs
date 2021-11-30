@@ -3,17 +3,17 @@
 ## Introduction 
 * What Is Dolt?
 * Installation
-	* Linux
-	* Windows
-	* Mac
-	* Build from Source
-	* Docker
-	* Application Server
+	  * Linux
+	  * Windows
+	  * Mac
+	  * Build from Source
+	  * Docker
+	  * Application Server
 * Getting Started
-	* Version Controlled Database
-  * Git For Tables
-	* Data Sharing on DoltHub
-	* Data Bounties
+	  * Version Controlled Database
+    * Git For Tables
+	  * Data Sharing on DoltHub
+	  * Data Bounties
 
 ## Reference
 * [SQL](reference/sql/README.md)
@@ -24,15 +24,15 @@
         * [Miscellaneous](reference/sql/sql-support/miscellaneous.md)
     * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
     * [Dolt System Tables](reference/sql/dolt-system-tables.md)
-    * [Dolt System Variables](reference/sql/sysvars.md)
-	  * Using Branches
+    * [Dolt System Variables](reference/sql/dolt-sysvars.md)
+	  * [Using Branches](reference/sql/branches.md)
 	  * Configuration
  	  * [Backups](reference/sql/backups.md)
 	  * [Replication](reference/sql/replication.md)
 	  * [Correctness](reference/sql/correctness.md)
 	  * [Performance](reference/sql/performance.md)
-	  * [Supported Clients](reference/sql/clients.md)
-		    * Programmatic
+	  * Supported Clients
+		    * [Programmatic](reference/sql/supportedclients/clients.md)
 		    * SQL Editors
 		    * Spreadsheets
 		    * Notebooks
