@@ -4,6 +4,10 @@ title: What is Dolt?
 
 # What is Dolt?
 
+<p align=center>
+![Dolt Logo](../.gitbook/assets/dolt_logo.svg)
+</p>
+
 Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. 
 
 Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Connect to Dolt just like any MySQL database to run queries or update the data using SQL commands. 
