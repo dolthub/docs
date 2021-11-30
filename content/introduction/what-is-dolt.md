@@ -4,7 +4,7 @@ title: What is Dolt?
 
 # What is Dolt?
 
-![Dolt Logo](../.gitbook/assets/dolt_logo.svg)
+![Dolt Logo](../.gitbook/assets/dolt-logo.png)
 
 Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. 
 
