@@ -1,69 +1,56 @@
 # Table of contents
-* [Introduction](README.md)
 
-## Introduction
-* [What is Dolt](introduction/what-is-dolt.md)
-* [Why Dolt](introduction/why-dolt/README.md)
-  * [Lineage](introduction/why-dolt/lineage.md)
-  * [Time Travel](introduction/why-dolt/time-travel.md)
-  * [Collaboration](introduction/why-dolt/collaboration.md)
-* [Quickstart](introduction/quickstart.md)
-
-## Getting Started
-* [Installation](getting-started/installation.md)
-* [Reading](getting-started/reading.md)
-* [Writing](getting-started/writing.md)
-* [DoltHub](getting-started/dolthub.md)
-* [Bounties](getting-started/bounties.md)
-
-## Interfaces
-* [SQL](interfaces/sql/README.md)
-  * [SQL Clients](interfaces/sql/clients.md)
-  * [SQL Support](interfaces/sql/sql-support/README.md)
-    * [Data Description](interfaces/sql/sql-support/data-description.md)
-    * [Expressions, Functions, Operators](interfaces/sql/sql-support/expressions-functions-operators.md)
-    * [Supported Statements](interfaces/sql/sql-support/supported-statements.md)
-    * [Miscellaneous](interfaces/sql/sql-support/miscellaneous.md)
-  * [Working with Multiple HEADs](interfaces/sql/heads.md)
-  * [Dolt SQL Functions](interfaces/sql/dolt-sql-functions.md)
-  * [Dolt System Variables](interfaces/sql/sysvars.md)
-  * [Dolt System Variable Persistence](interfaces/sql/persistence.md)
-  * [Dolt System Tables](interfaces/sql/dolt-system-tables.md)
-* [CLI](interfaces/cli.md)
-* [API](interfaces/api.md)
-
-## Guides
-* [Installing Dolt as an application server](guides/application-server.md)
-* [Python](guides/python/README.md)
-  * [Python Quickstart](guides/python/quickstart.md)
-  * [Python SQL Clients](guides/python/sql_clients.md)
-  * [Doltpy](guides/python/doltpy.md)
-  * [Doltpy Tutorials](guides/python/doltpy_tutorial.md)
-* [Docker](guides/docker.md)
-* [SQL Sync](guides/sql-sync.md)
-
-## Use Cases
-* [Application Database](use-cases/application-database/README.md)
-  * [Nautobot](use-cases/application-database/nautobot.md)
-* [Medical Research](use-cases/medical-research/README.md)
-  * [Turbine](use-cases/medical-research/turbine.md)
-* [Natural Language Processing](use-cases/natural-language-processing/README.md)
-  * [Kalido](use-cases/natural-language-processing/kalido.md)
-
-## Integrations
-* [Notebooks](integrations/notebooks.md)
-* [Spreadsheets](integrations/spreadsheets.md)
-* [Editors](integrations/sql-editors.md)
-* [Data Tools](integrations/data-tools/README.md)
-  * [Workflow Managers](integrations/data-tools/workflow_managers.md)
+## Introduction 
+* What Is Dolt?
+* Installation
+	* Linux
+	* Windows
+	* Mac
+	* Build from Source
+	* Docker
+	* Application Server
+* Getting Started
+	* Version Controlled Database
+  * Git For Tables
+	* Data Sharing on DoltHub
+	* Data Bounties
 
 ## Reference
-* [Architecture](reference/architecture.md)
-* [FAQ](reference/faq.md)
-* [Performance](reference/performance/README.md)
-  * [Stability](reference/performance/stability.md)
-  * [Scalability](reference/performance/scalability.md)
-  * [Availability](reference/performance/availability.md)
-  * [SQL Latency and Throughput](reference/performance/latency.md)
-  * [SQL Correctness](reference/performance/correctness.md)
-* [Roadmap](reference/roadmap.md)
+* [SQL](reference/sql/README.md)
+	* [SQL Support](reference/sql/sql-support/README.md)
+    * [Data Description](reference/sql/sql-support/data-description.md)
+    * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
+    * [Supported Statements](reference/sql/sql-support/supported-statements.md)
+    * [Miscellaneous](reference/sql/sql-support/miscellaneous.md)
+  * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
+  * [Dolt System Tables](reference/sql/dolt-system-tables.md)
+  * [Dolt System Variables](reference/sql/sysvars.md)
+	* Using Branches
+	* Configuration
+	* [Backups](reference/sql/backups.md)
+	* [Replication](reference/sql/replication.md)
+	* [Correctness](reference/sql/correctness.md)
+	* [Performance](reference/sql/performance.md)
+	* [Supported Clients](reference/sql/clients.md)
+		* Programmatic
+		* SQL Editors
+		* Spreadsheets
+		* Notebooks
+		* Other Integrations
+* [CLI](reference/cli.md))
+
+## Architecture
+* Merkle Graph
+* Prolly Trees
+* Noms
+* Go MySQL Server
+
+## Other
+* [FAQ](other/faq.md)
+* [Roadmap](other/roadmap.md)
+
+## Python
+* Getting Started
+* SQL Clients
+* Doltpy
+
