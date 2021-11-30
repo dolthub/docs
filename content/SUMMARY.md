@@ -15,6 +15,12 @@
     * [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
     * [Data Bounties](introduction/getting-started/data-bounties.md)
 
+## Guides
+* Python
+    * [Getting Started](guides/python/python.md)
+    * [SQL Clients](guides/python/sql-clients.md)
+    * [Doltpy](guides/python/doltpy.md)
+
 ## Reference
 * [SQL](reference/sql/sql.md)
     * [SQL Support](reference/sql/sql-support/support.md)
@@ -51,8 +57,3 @@
 ## Other
 * [FAQ](other/faq.md)
 * [Roadmap](other/roadmap.md)
-
-## Python
-* [Getting Started](python/python.md)
-* [SQL Clients](python/sql-clients.md)
-* [Doltpy](python/doltpy.md)
