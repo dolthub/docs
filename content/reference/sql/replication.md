@@ -2,6 +2,8 @@
 title: Replication
 ---
 
+# Replication
+
 ## Read Replication
 
 Replicating data between servers can increase your application's read query
@@ -24,9 +26,9 @@ Refer to the [read replication
 blog](https://www.dolthub.com/blog/2021-10-20-read-replication/) for a
 walkthrough.
 
-### Configuration
+## Configuration
 
-#### Persisting system variables
+### Persisting system variables
 
 Configs can be set in the CLI (limited to `--local` scope for now):
 
@@ -44,7 +46,7 @@ SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
 
 Read more about persisting system variables [here](../../../interfaces/sql/persistence.md).
 
-#### Push (on write) from sources
+### Push (on write) from sources
 
 To push on write, a valid remote middleman must be configured:
 
@@ -62,7 +64,7 @@ SELECT DOLT_COMMIT('-am', 'message')
 UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND hash = @@database_name_head
 ```
 
-#### Pull (on read) to replica
+### Pull (on read) to replica
 
 Read replicas are instantiated with a remote:
 
@@ -83,7 +85,7 @@ The first query in a session automatically starts a transaction. Setting
 `autocommit = 1`, which begins every query with a transaction, is
 encouraged on read replicas for convenience.
 
-#### Auto-fetching
+### Auto-fetching
 
 Dolt supports auto-fetching branches on demand for read replication in
 certain circumstatnces:
@@ -102,7 +104,7 @@ tracking branch, head branch, and working set will be created.
 
 Read more about different head settings [here](../../../interfaces/sql/heads).
 
-#### Quiet Warnings
+### Quiet Warnings
 
 Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
 rather than error if replication is misconfigured.

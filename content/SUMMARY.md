@@ -16,6 +16,13 @@
     * [Data Bounties](introduction/getting-started/data-bounties.md)
 
 ## Guides
+* DoltHub
+    * [Why DoltHub?](guides/dolthub/what.md)
+    * [Permissions](guides/dolthub/permissions.md)
+    * [Pull Requests](guides/dolthub/prs.md)
+    * [Issues](guides/dolthub/issues.md)
+    * [Forks](guides/dolthub/forks.md)
+    * [API](guides/dolthub/api.md)
 * Python
     * [Getting Started](guides/python/python.md)
     * [SQL Clients](guides/python/sql-clients.md)
@@ -42,7 +49,6 @@
         * [SQL Editors](reference/sql/supported-clients/sql-editors.md)
         * [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
         * [Notebooks](reference/sql/supported-clients/notebooks.md)
-        * [Other Integrations](reference/sql/supported-clients/workflow-managers.md)
 * [CLI](reference/cli.md))
 
 ## Architecture

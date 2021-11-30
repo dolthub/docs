@@ -1,6 +1,8 @@
 ---
-title: MySQL Editors
+title: SQL Editors
 ---
+
+# SQL Editors
 
 Dolt comes with a built in MySQL compatible server that you can connect SQL Editors too. Here are a list of notable MySQL Editors and our compatibilty status.
 | Editor | Supported | Notes and limitations |
@@ -11,7 +13,7 @@ Dolt comes with a built in MySQL compatible server that you can connect SQL Edit
 | [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | Need to implement a couple functions |
 | [MySQL Workbench](https://www.mysql.com/products/workbench/) | ❌ | Missing some information schema materials |
 
-### Config Customization
+## Recommended Dolt Configuration
 
 Some editors require custom configuration of dolt's sql-server. For example, DBeaver use multiple connections to run queries whereas `dolt sql-server` supports 1 connection out of the box. Here's a sample config file that should get you started with `dolt sql-server`
 
@@ -41,7 +43,3 @@ write_timeout_millis: 28800000
 </div>
 
 NOTE: Dolt does not support SSL yet, so be sure to turn it off on your editor before connecting.
-
-You can see this [section](https://docs.dolthub.com/interfaces/cli#dolt-sql-server) to learn more about each part of our config file.
-
-If there are other editors that you want us to be compatible with please do not hesitate to reach out!
