@@ -16,8 +16,8 @@
     * [Data Bounties]()
 
 ## Reference
-* [SQL](reference/sql/README.md)
-    * [SQL Support](reference/sql/sql-support/README.md)
+* [SQL](reference/sql/sql.md)
+    * [SQL Support](reference/sql/sql-support/support.md)
         * [Data Description](reference/sql/sql-support/data-description.md)
         * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
         * [Supported Statements](reference/sql/sql-support/supported-statements.md)
@@ -36,7 +36,7 @@
         * [SQL Editors](reference/sql/supported-clients/sql-editors.md)
         * [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
         * [Notebooks](reference/sql/supported-clients/notebooks.md)
-        * [Other Integrations](reference/sql/supported-clients/workflow=managers.md)
+        * [Other Integrations](reference/sql/supported-clients/workflow-managers.md)
 * [CLI](reference/cli.md))
 
 ## Architecture

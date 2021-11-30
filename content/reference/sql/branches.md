@@ -2,7 +2,7 @@
 title: Branches
 ---
 
-# Working with multiple heads
+# Branches
 
 Unlike other relational databases, Dolt has multiple heads 
 one for each branch in the database. A head can be a branch, a tag, or 
@@ -109,13 +109,13 @@ To switch heads, set this session variable. Use either
 SET @@mydb_head_ref = 'feature-branch'
 ```
 
-# Notes on switching heads
+## Notes on switching heads
 
 If you have outstanding changes in your session (because you have
 issued DML or DDL statements to change the data or schema), you must
 `COMMIT` them or `ROLLBACK` the transaction before switching heads.
 
-# Detached head mode
+## Detached head mode
 
 The above methods assume you want to update a head collaboratively
 with many sessions via transactions, like a traditional database. But
@@ -126,7 +126,7 @@ cannot be seen by any other session.
 Dolt supports special system variables and functions to support this
 use case.
 
-## `@@dbname_head`
+### `@@dbname_head`
 
 The session variable `@@dbname_head` \(Where dbname is the name of the
 database\) provides an interface for reading and writing the HEAD
@@ -143,7 +143,7 @@ SELECT @@mydb_head;
 When you set your session head variable like above, you enter detached
 head mode.
 
-## `COMMIT()`
+### `COMMIT()`
 
 The `COMMIT()` function writes a new commit to the database and
 returns the hash of that commit. Unlike `DOLT_COMMIT()`, the
@@ -159,7 +159,7 @@ SET @@mydb_head = COMMIT('-m', 'my commit message');
 
 Doing so causes your session to enter detached head mode.
 
-### Options
+#### Options
 
 `-m, --message`: Use the given `<msg>` as the commit message. Required
 
@@ -175,7 +175,7 @@ current system time is used.
 `--author`: Specify an explicit author using the standard "A U Thor
 author@example.com" format.
 
-## `MERGE()`
+### `MERGE()`
 
 The `MERGE()` function merges a branch reference into the current
 head. Unlike `DOLT_MERGE()`, the current head is not updated. Rather,
@@ -188,11 +188,11 @@ Example:
 SET @@mydb_head = MERGE('feature-branch');
 ```
 
-### Options
+#### Options
 
 `--author`: Specify an explicit author using the standard "A U Thor author@example.com" format.
 
-## `SQUASH()`
+### `SQUASH()`
 
 The SQUASH function merges a branch's root value into the current
 branch's working set. With this approach the user can then commit the

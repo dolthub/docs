@@ -1,5 +1,5 @@
 ---
-title: Dolt SQL
+title: SQL
 ---
 
 # SQL

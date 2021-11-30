@@ -1,10 +1,18 @@
+---
+title: CLI
+---
+
+# CLI
+
 ## `dolt init`
 
 Create an empty Dolt data repository
 
 ### Synopsis
 
-
+```bash
+dolt init 
+```
 
 ### Description
 
