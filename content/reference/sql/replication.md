@@ -1,37 +1,6 @@
 ---
-title: Availability
+title: Replication
 ---
-
-Overview:
-
-- [Backups](#backups)
-- [Read Replication](#read-replication)
-- [Failover](#failover)
-- [Multi-Master](#multi-master)
-
-In the context of an OLTP database, availability is the ability
-to tolerate and recover from server failures. Durability and storing backups of
-data are basic prerequisites of availability. The more useful version
-of availability involves servers communicating changes with one another,
-load balancing read requests, and maintaining a responsive application
-when servers fail.
-
-## Backups
-
-Dolt has two options for backup: remotes and backups.
-
-Using remotes for backups should be suitable for some use cases. Pushing
-to a remote creates an off server copy of the branch being pushed.
-Frequently pushing to a remote can serve as a reasonable backup.
-
-Dolt also has backups, accessed with the `dolt backup` command. These backups
-look more like traditional database backups. The entire state of the
-database, including uncommitted changes, are copied to another location.
-
-Refer to the [cli
-documentation](https://docs.dolthub.com/interfaces/cli#dolt-backup) and
-the [backups blog](https://www.dolthub.com/blog/2021-10-08-backups/) for
-a more thorough introduction.
 
 ## Read Replication
 
