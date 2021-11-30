@@ -51,7 +51,7 @@
     * [Backups](reference/sql/backups.md)
     * [Replication](reference/sql/replication.md)
     * [Correctness](reference/sql/correctness.md)
-    * [Performance](reference/sql/performance.md)
+    * [Latency](reference/sql/latency.md)
     * [Supported Clients](reference/sql/supported-clients/supported.md)
         * [Programmatic](reference/sql/supported-clients/clients.md)
         * [SQL Editors](reference/sql/supported-clients/sql-editors.md)
