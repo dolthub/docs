@@ -34,7 +34,7 @@ example.csv
 
 Open Microsoft Excel. Select Data &gt; From Text/CSV. Navigate to the `export.csv` file on your computer. Click Import, make sure the preview is correct, click Load and the Dolt table should be loaded in as a new sheet.
 
-![Excel Read CSV Example](../../.gitbook/assets/excel-read-csv.png)
+![Excel Read CSV Example](../../../.gitbook/assets/excel-read-csv.png)
 
 Note, you can also export the results of a single query using `dolt sql -r csv -q <query> > export.csv`.
 
@@ -46,15 +46,15 @@ The first thing you have to do is start a Dolt SQL Server. To do this navigate t
 
 Now you must install the [MySQL ODBC Connector](https://dev.mysql.com/downloads/connector/odbc/) on your computer. Downloading the appropriate one and running it opens a standard Windows Installer. Once complete, navigate to `Control Panel` &gt; `Administrative Tools` &gt; `ODBC Data Sources` or just search for `ODBC Data Sources`. You'll be greeted by this window:
 
-![ODBC Data Sources](../../.gitbook/assets/odbc-data-sources.png)
+![ODBC Data Sources](../../../.gitbook/assets/odbc-data-sources.png)
 
 Click `Add...` and you should see `MySQL ODBC 8.0 ANSI Driver` and `MySQL ODBC 8.0 Unicode Driver`, select the `MySQL ODBC 8.0 ANSI Driver` and click `Finish`. Now you need to enter your connection information. We call the data source Dolt Test, leave the server on TCP and enter `localhost` as the server name, enter the user `dolt`, and the database as `dolt_test`. After entering that information, clicking `Test` should result in a `Connection Successful` dialog. Click `OK` and the new Dolt Test ODBC connector will appear in the list.
 
-![Mysql ODBC Configuration](../.../.gitbook/assets/mysql-odbc-config.png)
+![Mysql ODBC Configuration](../../../.gitbook/assets/mysql-odbc-config.png)
 
 Now it's time to read the data into Excel over that connection. Go back to Excel and navigate to `Data` &gt; `Get Data` &gt; `From Other Sources` &gt; `From ODBC`. Pick `Dolt Test` from the drop down and click `OK`. This will bring up the following preview screen where you can navigate to and pick the table you want to import. The test table is in the `dolt_test` database. Clicking `Load` will load the data into the selected sheet.
 
-![Get Data ODBC](../../.gitbook/assets/excel-get-data-odbc.png)
+![Get Data ODBC](../../../.gitbook/assets/excel-get-data-odbc.png)
 
 If you want to return the results of a query instead of a whole table, navigate to `Data` &gt; `Get Data` &gt; `From Other Sources` &gt; `From ODBC`. Pick `Dolt Test` from the drop down and click `Advanced` instead of `OK`. Enter the SQL query you would like to run in the text box. This currently does not work for some versions of Excel because of [a Dolt issue](https://github.com/dolthub/dolt/issues/991). Until this is resolved, if you want to import the results of a query instead of a full table we recommend `dolt sql -r csv -q` and using the CSV instructions of this document.
 
