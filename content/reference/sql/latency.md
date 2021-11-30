@@ -1,11 +1,13 @@
 ---
-title: SQL Latency and Throughput
+title: Latency
 ---
+
+# Latency and Throughput
 
 Our approach to SQL performance benchmarking is to use `sysbench`, an
 industry standard benchmarking tool.
 
-### Performance Roadmap
+## Performance Roadmap
 
 Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times
 the speed of MySQL for common operations. If a query takes MySQL 1
@@ -18,7 +20,7 @@ It's important recognize that these are industry standard tests, and
 are OLTP oriented. Many Dolt use-cases are non-OLTP, and Dolt is fast
 for bulk operations common in, for example, data pipeline contexts.
 
-### Benchmark Data
+## Benchmark Data
 
 Below are the results of running `sysbench` MySQL tests against Dolt
 SQL Server for the most recent release of Dolt. We will update this

@@ -2,7 +2,7 @@
 title: Correctness
 ---
 
-### SQL Correctness
+# SQL Correctness
 
 To measure Dolt's SQL correctness, we test each release of Dolt
 against a SQL testing suite called

@@ -2,6 +2,8 @@
 title: Backups
 ---
 
+# Backups
+
 Dolt has two options for backup: remotes and backups.
 
 ## Remotes

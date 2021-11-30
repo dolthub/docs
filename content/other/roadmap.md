@@ -1,7 +1,11 @@
-# Dolt feature roadmap
+---
+title: Roadmap
+---
+
+# Roadmap
 
 Full details on [supported SQL
-features](https://docs.dolthub.com/interfaces/sql/sql-support) are
+features](reference/sql/sql-support) are
 available on the docs site.
 
 This is a selection of unimplemented features we're working on. Don't

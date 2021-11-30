@@ -1,4 +1,8 @@
-# Dolt FAQ
+---
+title: FAQ
+---
+
+# FAQ
 
 ## Why is it called Dolt? Are you calling me dumb?
 

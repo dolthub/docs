@@ -2,6 +2,8 @@
 title: Build from Source
 ---
 
+# Build from Source
+
 For those interested in building from source, clone the [Dolt repo from GitHub](https://github.com/dolthub/dolt) and use `go install`:
 
 ```text
