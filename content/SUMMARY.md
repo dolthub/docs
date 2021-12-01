@@ -14,23 +14,30 @@
     * [Git For Data](introduction/getting-started/git-for-data.md)
     * [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
     * [Data Bounties](introduction/getting-started/data-bounties.md)
+* [Use Cases](introduction/use-cases/use-cases.md)
+    * [Data Sharing](introduction/use-cases/data-sharing.md)
+    * [Data Ingestion](introduction/use-cases/data-ingestion.md)
+    * [Version Control Your Application](introduction/use-cases/vc-your-app.md)
+    * [Better MySQL](introduction/use-cases/better-mysql.md)
 
-## Guides
+## Concepts
 * Dolt
-    * [Why Dolt?](guides/dolt/why.md)
-    * [Commits](guides/dolt/commits.md)
-    * [Log](guides/dolt/log.md)
-    * [Diff](guides/dolt/diff.md)
-    * [Branch](guides/dolt/branches.md)
+    * [Why Dolt?](concepts/dolt/why.md)
+    * [Commits](concepts/dolt/commits.md)
+    * [Log](concepts/dolt/log.md)
+    * [Diff](concepts/dolt/diff.md)
+    * [Branch](concepts/dolt/branches.md)
     * [Merge](guides/dolt/merge.md)
     * [Conflicts](guides/dolt/conflicts.md)
 * DoltHub
-    * [Why DoltHub?](guides/dolthub/why.md)
-    * [Permissions](guides/dolthub/permissions.md)
-    * [Pull Requests](guides/dolthub/prs.md)
-    * [Issues](guides/dolthub/issues.md)
-    * [Forks](guides/dolthub/forks.md)
-    * [API](guides/dolthub/api.md)
+    * [Why DoltHub?](concepts/dolthub/why.md)
+    * [Permissions](concepts/dolthub/permissions.md)
+    * [Pull Requests](concepts/dolthub/prs.md)
+    * [Issues](concepts/dolthub/issues.md)
+    * [Forks](concepts/dolthub/forks.md)
+    * [API](concepts/dolthub/api.md)
+
+## Guides
 * Python
     * [Getting Started](guides/python/python.md)
     * [SQL Clients](guides/python/sql-clients.md)
