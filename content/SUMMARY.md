@@ -27,8 +27,9 @@
     * [Log](concepts/dolt/log.md)
     * [Diff](concepts/dolt/diff.md)
     * [Branch](concepts/dolt/branches.md)
-    * [Merge](guides/dolt/merge.md)
-    * [Conflicts](guides/dolt/conflicts.md)
+    * [Merge](concepts/dolt/merge.md)
+    * [Conflicts](concepts/dolt/conflicts.md)
+    * [Remotes](concepts/dolt/remotes.md)
 * DoltHub
     * [Why DoltHub?](concepts/dolthub/why.md)
     * [Permissions](concepts/dolthub/permissions.md)
