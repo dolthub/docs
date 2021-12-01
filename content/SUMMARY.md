@@ -17,6 +17,8 @@
 * [Use Cases](introduction/use-cases/use-cases.md)
     * [Data Sharing](introduction/use-cases/data-sharing.md)
     * [Data Ingestion](introduction/use-cases/data-ingestion.md)
+    * [Machine Learning](introduction/use-cases/ml.md)
+    * [Configuration Management](introduction/use-cases/config.md)
     * [Version Control Your Application](introduction/use-cases/vc-your-app.md)
     * [Better MySQL](introduction/use-cases/better-mysql.md)
 
@@ -27,8 +29,9 @@
     * [Log](concepts/dolt/log.md)
     * [Diff](concepts/dolt/diff.md)
     * [Branch](concepts/dolt/branches.md)
-    * [Merge](guides/dolt/merge.md)
-    * [Conflicts](guides/dolt/conflicts.md)
+    * [Merge](concepts/dolt/merge.md)
+    * [Conflicts](concepts/dolt/conflicts.md)
+    * [Remotes](concepts/dolt/remotes.md)
 * DoltHub
     * [Why DoltHub?](concepts/dolthub/why.md)
     * [Permissions](concepts/dolthub/permissions.md)
