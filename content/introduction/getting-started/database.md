@@ -68,8 +68,8 @@ select dolt_commit('-a', '-m', 'Inserted Tim Sehn, CEO');
 ## Commit and Merge
 
 
-## Going Deeper
+## Next Steps
 
 As you can see, Dolt is a fully compatible MySQL Server with additional Git-style version control functionality implemented as system tables and SQL functions. You can use Dolt in this mode to back applications and give those applications version control at the data layer. 
 
-Version control can be exposed to the application's customers. Version control can also make the database easier to operate.
+* Not sure yet
