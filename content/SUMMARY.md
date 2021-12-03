@@ -23,7 +23,7 @@
     * [Better MySQL](introduction/use-cases/better-mysql.md)
 
 ## Concepts
-* Dolt
+* [Dolt](concepts/dolt/why.md)
     * [Why Dolt?](concepts/dolt/why.md)
     * [Commits](concepts/dolt/commits.md)
     * [Log](concepts/dolt/log.md)
