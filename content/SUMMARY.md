@@ -28,7 +28,7 @@
     * [Commits](concepts/dolt/commits.md)
     * [Log](concepts/dolt/log.md)
     * [Diff](concepts/dolt/diff.md)
-    * [Branch](concepts/dolt/branches.md)
+    * [Branch](concepts/dolt/branch.md)
     * [Merge](concepts/dolt/merge.md)
     * [Conflicts](concepts/dolt/conflicts.md)
     * [Remotes](concepts/dolt/remotes.md)
