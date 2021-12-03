@@ -24,7 +24,6 @@
 
 ## Concepts
 * [Dolt](concepts/dolt/why.md)
-    * [Why Dolt?](concepts/dolt/why.md)
     * [Commits](concepts/dolt/commits.md)
     * [Log](concepts/dolt/log.md)
     * [Diff](concepts/dolt/diff.md)
@@ -32,8 +31,7 @@
     * [Merge](concepts/dolt/merge.md)
     * [Conflicts](concepts/dolt/conflicts.md)
     * [Remotes](concepts/dolt/remotes.md)
-* DoltHub
-    * [Why DoltHub?](concepts/dolthub/why.md)
+* DoltHub(concepts/dolthub/why.md)
     * [Permissions](concepts/dolthub/permissions.md)
     * [Pull Requests](concepts/dolthub/prs.md)
     * [Issues](concepts/dolthub/issues.md)
