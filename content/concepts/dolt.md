@@ -24,7 +24,7 @@ In order to achieve the above mission, Dolt needed to implement specific Git con
 
 We built Dolt using the following axioms:
 
-1. Git versions files. Dolt versions tables, schema and data.
+1. Git versions files. Dolt versions table schema and table data.
 2. Dolt will copy the Git command line exactly.
 3. Dolt will be MySQL compatible.
 4. Git features in SQL will extend MySQL SQL. Write operations will be SQL functions. Read operations will be system tables.
