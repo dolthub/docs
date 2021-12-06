@@ -218,24 +218,24 @@ Runs a SQL query
 ### Synopsis
 
 ```bash
+dolt sql 
+dolt sql < script.sql
 dolt sql [--multi-db-dir &lt;directory&gt;] [-r &lt;result format&gt;]
-dolt sql -q &lt;query;query&gt; [-r &lt;result format&gt;] -s &lt;name&gt; -m &lt;message&gt; [-b] [&lt;commit&gt;]
-dolt sql -q &lt;query;query&gt; --multi-db-dir &lt;directory&gt; [-r &lt;result format&gt;] [-b]
-dolt sql -x &lt;name&gt; [&lt;commit&gt;]
+dolt sql -q &lt;query&gt; [-r &lt;result format&gt;] [-s &lt;name&gt; -m &lt;message&gt;] [-b]
+dolt sql -q &lt;query&gt; --multi-db-dir &lt;directory&gt; [-r &lt;result format&gt;] [-b]
+dolt sql -x &lt;name&gt;
 dolt sql --list-saved
 ```
 
 ### Description
 
-Runs a SQL query you specify. With no arguments, begins an interactive shell to run queries and view the results. With the `-q` option, runs the given query and prints any results, then exits. If a commit is specified then only read queries are supported, and will run against the data at the specified commit.
+Runs a SQL query you specify. With no arguments, begins an interactive shell to run queries and view the results. With the `-q` option, runs the given query and prints any results, then exits.
 
 By default, `-q` executes a single statement. To execute multiple SQL statements separated by semicolons, use `-b` to enable batch mode. Queries can be saved with `-s`. Alternatively `-x` can be used to execute a saved query by name. Pipe SQL statements to dolt sql (no `-q`) to execute a SQL import or update script. 
 
-By default this command uses the dolt data repository in the current working directory as the one and only database. Running with `--multi-db-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored.
+By default this command uses the dolt data repository in the current working directory, as well as any dolt databases that are found in the current directory. Any databases created are placed in the current directory as well. Running with `--multi-db-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored.
 
 ### Arguments and options
-
-`<commit>`: Commit to run read only queries against.
 
 `-q`, `--query`:
 Runs a single query and exits
@@ -291,6 +291,8 @@ This is an example yaml configuration file showing all supported items and their
 	behavior:
 	  read_only: false
 	  autocommit: true
+	  persistence_behavior: load
+	  disable_client_multi_statements: false
 	
 	user:
 	  name: root
@@ -385,6 +387,9 @@ Set the number of go routines spawned to handle each query (default `2`)
 `--max-connections`:
 Set the number of connections handled by the server (default `100`)
 
+`--persistence-behavior`:
+Indicate whether to `load` or `ignore` persisted global variables (default `load`)
+
 
 
 ## `dolt sql-client`
@@ -445,6 +450,9 @@ Set the number of go routines spawned to handle each query (default `2`)
 
 `--max-connections`:
 Set the number of connections handled by the server (default `100`)
+
+`--persistence-behavior`:
+Indicate whether to `load` or `ignore` persisted global variables (default `load`)
 
 `-d`, `--dual`:
 Causes this command to spawn a dolt server that is automatically connected to.
@@ -578,6 +586,9 @@ dolt checkout `<table>`...
 
 `--b`:
 Create a new branch named `<new_branch>` and start it at `<start_point>`.
+
+`-f`, `--force`:
+If there is any changes in working set, the force flag will wipe out the current changes and checkout the new branch.
 
 
 
@@ -871,7 +882,7 @@ List the values of all config parameters.
 Get the value of one or more config parameters.
 
 `--unset`:
-Unset the value of one or more config parameters.
+Unset the value of one or more config paramaters.
 
 
 
@@ -1142,7 +1153,7 @@ dolt creds import [--no-profile] [&lt;jwk_filename&gt;]
 
 Imports a dolt credential from an existing .jwk file.
 
-Dolt credentials are stored in the creds subdirectory of the global dolt config
+Dolt credentials are stored in the creds subdirectory of the global dolt conifg
 directory as files with one key per file in JWK format. This command can import
 a JWK from a file or stdin and places the imported key in the correct place for
 dolt to find it as a valid credential.
@@ -1246,7 +1257,7 @@ A mapping file is json in the format:
 where source_field_name is the name of a field in the file being imported and dest_field_name is the name of a field in the table being imported to.
 
 
-In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (Currently only csv is supported).  For files separated by a delimiter other than a ',', the --delim parameter can be used to specify a delimiter.
+In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (Currently only csv is supported).  For files separated by a delimiter other than a ',', the --delim parameter can be used to specify a delimeter.
 
 If the parameter `--dry-run` is supplied a sql statement will be generated showing what would be executed if this were run without the --dry-run flag
 
@@ -1377,7 +1388,7 @@ A mapping file is json in the format:
 
 where source_field_name is the name of a field in the file being imported and dest_field_name is the name of a field in the table being imported to.
 
-In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (csv, psv, json, xlsx).  For files separated by a delimiter other than a ',' (type csv) or a '|' (type psv), the --delim parameter can be used to specify a delimiter
+In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (csv, psv, json, xlsx).  For files separated by a delimiter other than a ',' (type csv) or a '|' (type psv), the --delim parameter can be used to specify a delimeter
 
 ### Arguments and options
 
@@ -1413,7 +1424,7 @@ Explicitly define the name of the field in the schema which should be used as th
 Explicitly define the type of the file if it can't be inferred from the file extension.
 
 `--delim`:
-Specify a delimiter for a csv style file with a non-comma delimiter.
+Specify a delimeter for a csv style file with a non-comma delimiter.
 
 
 
@@ -1544,31 +1555,23 @@ If data already exists in the destination, the force flag will allow the target 
 
 ## `dolt tag`
 
-List, create, or delete branches
+Create, list, delete tags.
 
 ### Synopsis
 
 ```bash
-dolt tag [--list] [-v] [-a] [-r]
-dolt tag [-f] &lt;branchname&gt; [&lt;start-point&gt;]
-dolt tag -m [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;
-dolt tag -c [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;
-dolt tag -d [-f] [-r] &lt;branchname&gt;...
+dolt tag [-v]
+dolt tag [-m &lt;message&gt;] &lt;tagname&gt; [&lt;ref&gt;]
+dolt tag -d &lt;tagname&gt;
 ```
 
 ### Description
 
-If `--list` is given, or if there are no non-option arguments, existing branches are listed. The current branch will be highlighted with an asterisk. With no options, only local branches are listed. With `-r`, only remote branches are listed. With `-a` both local and remote branches are listed. `-v` causes the hash of the commit that the branches are at to be printed as well.
+If there are no non-option arguments, existing tags are listed.
 
-The command's second form creates a new branch head named `<branchname>` which points to the current `HEAD`, or `<start-point>` if given.
+The command's second form creates a new tag named `<tagname>` which points to the current `HEAD`, or `<ref>` if given. Optionally, a tag message can be passed using the `-m` option. 
 
-Note that this will create the new branch, but it will not switch the working tree to it; use `dolt checkout <newbranch>` to switch to the new branch.
-
-With a `-m`, `<oldbranch>` will be renamed to `<newbranch>`. If `<newbranch>` exists, -f must be used to force the rename to happen.
-
-The `-c` options have the exact same semantics as `-m`, except instead of the branch being renamed it will be copied to a new name.
-
-With a `-d`, `<branchname>` will be deleted. You may specify more than one branch for deletion.
+With a `-d`, `<tagname>` will be deleted.
 
 ### Arguments and options
 
@@ -1625,7 +1628,7 @@ A shallow clone operation will retrieve the state of table(s) from a remote repo
 
 `<table>`:  Optional tables to retrieve.  If omitted, all tables are retrieved.
 
-`-d`, `--file`:
+`-d`, `--dir`:
 directory to create and put retrieved table data.
 
 
@@ -1696,4 +1699,37 @@ Find the common ancestor of two commits, and return the ancestor's commit hash.'
 ### Arguments and options
 
 No options for this command.
+
+## `dolt dump`
+
+Export all tables.
+
+### Synopsis
+
+```bash
+dolt dump [-f] [-r &lt;result-format&gt;] 
+```
+
+### Description
+
+`dolt dump` dumps all tables in the working set. 
+If a dump file already exists then the operation will fail, unless the `--force | -f` flag 
+is provided. The force flag forces the existing dump file to be overwritten.
+
+
+### Arguments and options
+
+`-f`, `--force`:
+If data already exists in the destination, the force flag will allow the target to be overwritten.
+
+`-r`, `--result-format`:
+Define the type of the output file. Defaults to sql. Valid values are sql, csv and json.
+
+`--file-name`:
+Define file name for dump file. Defaults to `doltdump.sql`.
+
+`--directory`:
+Define directory name to dump the files in. Defaults to `doltdump/`.
+
+
 
