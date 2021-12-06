@@ -54,8 +54,8 @@ To push on write, a valid remote middleman must be configured:
 dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 ```
 
-There are two ways to trigger pushing to a remote middlemane: a Dolt commit,
-or a branch head update. A standaone `COMMIT` or head set will not
+There are two ways to trigger pushing to a remote middleman: a Dolt commit,
+or a branch head update. A standalone `COMMIT` or head set will not
 trigger replication:
 
 ```SQL
@@ -88,13 +88,13 @@ encouraged on read replicas for convenience.
 ### Auto-fetching
 
 Dolt supports auto-fetching branches on demand for read replication in
-certain circumstatnces:
+certain circumstances:
 
-1) Clients that connect to a missing branch:
+1. Clients that connect to a missing branch:
 
 `mysql://127.0.0.1:3306/mydb/feature-branch`
 
-2) `USE`ing a missing branch:
+2. `USE`ing a missing branch:
 
 `USE \`mydb/feature-branch\``
 
@@ -123,15 +123,15 @@ a standby server. If the primary server fails, the standby and proxy
 would need to walk through a series of steps to create a new primary:
 
 - Standby server disables read-only mode if it was used as a read
-    replica previously.
+  replica previously.
 
 - Standby server recovers the most recent transactions, either from the
-    remote middleman or a primary backup.
+  remote middleman or a primary backup.
 
 - Standby sets the replication source configuration to push on write.
 
 - Proxy layer directs write queries to the formerly standby, now primary
-    server.
+  server.
 
 ## Multi-Master
 
