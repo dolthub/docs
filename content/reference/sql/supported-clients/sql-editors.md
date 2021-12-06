@@ -4,7 +4,7 @@ title: SQL Editors
 
 # SQL Editors
 
-Dolt comes with a built in MySQL compatible server that you can connect SQL Editors too. Here are a list of notable MySQL Editors and our compatibilty status.
+Dolt comes with a built in MySQL compatible server that you can connect SQL Editors too. Here are a list of notable MySQL Editors and our compatibility status.
 | Editor | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | [Tableplus](https://tableplus.com/) | ✅ | |
@@ -38,6 +38,7 @@ max_connections: 10
 read_timeout_millis: 28800000
 write_timeout_millis: 28800000
 </code>
+
 </pre>
 
 </div>

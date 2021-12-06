@@ -9,7 +9,7 @@ session. This information is typically only useful for advanced
 users. See information on [Detached Head
 mode](heads.md#detached-head-mode).
 
-## @@dbname\_head\_ref
+## @@dbname_head_ref
 
 Each session defines a system variable that controls the current
 session head. For a database called `mydb`, this variable
@@ -90,7 +90,7 @@ mysql> START TRANSACTION;
 ## @@dolt_skip_replication_errors
 
 This system variable is used to quiet replication
-errors that would otherwise hault query execution. Missing or malformed
+errors that would otherwise halt query execution. Missing or malformed
 configuration is the main target of replication warnings. Faults
 unrelated to replication should still error.
 
@@ -118,12 +118,13 @@ with `dolt_replicate_heads`.
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
 ```
+
 # Persisting System Variables
 
 Dolt supports a limited form of system variable persistence. The same
 way session
-variables can be changed with `SET`, global variables can be persisited
-to disk with `SET PERSIST`. Peristed system variables survive restarts,
+variables can be changed with `SET`, global variables can be persisted
+to disk with `SET PERSIST`. Persisted system variables survive restarts,
 loading back into the global variables namespace on startup.
 
 Dolt supports `SET PERSIST` and `SET PERSIST_ONLY` by writing system
@@ -158,9 +159,9 @@ $ dolt config --local --add sqlserver.global.max_connections 1000
 
 ## Limitations
 
-1) Deleting variables with `RESET PERSIST` is not supported.
+1. Deleting variables with `RESET PERSIST` is not supported.
 
-2) Persistence in multi-db mode is not supported.
+2. Persistence in multi-db mode is not supported.
 
-3) Loading variables from the Dolt global config on server startup is
+3. Loading variables from the Dolt global config on server startup is
    not supported.
