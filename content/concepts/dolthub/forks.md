@@ -6,7 +6,7 @@ title: Forks
 
 ## What is a fork?
 
-A fork is a copy of a database. The fork model exists so that database owners do not have to vet every potential collaborator for their database and allows people outside your organization to experiment with a database without affecting the original data. Changes from a fork can be merged into the original database using [pull requests](./prs.md).
+A fork is a copy of a database. The fork model exists so that you control who can modify your data, and determine what data gets merged. You can continue to pull changes from the database that you forked from, and you can submit [pull requests](./prs.md) back to it. You can use it as a tool to get your changes onto a database, or you can use it to take that database in a different direction.
 
 ## How to use forks
 
