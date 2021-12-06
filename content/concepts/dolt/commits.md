@@ -68,7 +68,6 @@ docs $ dolt sql -q "select dolt_commit('-a', '-m', 'Added docs_sql example table
 
 ### Creating and empty commit
 
-#### CLI
 ```
 docs $ dolt commit --allow-empty -m "This is a commit"
 commit bo318l76dq3bdvu1ie84d4nmv4hpi4km
@@ -77,10 +76,6 @@ Date:   Thu Dec 02 16:55:00 -0800 2021
 
 	This is a commit
 
-```
-
-#### SQL
-```
 docs $ dolt sql -q "select dolt_commit('-a', '--allow-empty', '-m', 'This is a commit')"
 +--------------------------------------------------------------+
 | dolt_commit('-a', '--allow-empty', '-m', 'This is a commit') |

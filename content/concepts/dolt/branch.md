@@ -22,6 +22,8 @@ Branches can be used on a running Dolt server for write isolation or parallelism
 
 In traditional SQL databases, transactions are designed to be short lived. The rows you change in a transaction are essentially locked for the duration of the transaction. Because Dolt allows for merge and more complex conflict resolution than traditional SQL databases, Dolt can essentially support long running transactions on branches.
 
+See [the branches section in reference](../../reference/sql/branches.md) for a deeper dive into how to use branches in the SQL server context.
+
 ## Difference between Git branch and Dolt branch
 
 Conceptually Git branches and Dolt branches are the same.
@@ -29,8 +31,6 @@ Conceptually Git branches and Dolt branches are the same.
 In Dolt, branches become a slightly more important concept is server mode. In Git, you often are working on a clone of your repository locally. Thus, you're write isolation can be at the clone level. With Dolt in server mode, your application will be coordinating writes to a single server through branches. 
 
 ## Example
-
-### Create a branch
 
 ```
 docs $ dolt branch new-branch
@@ -53,45 +53,3 @@ docs $ dolt sql -q "select * from dolt_branches"
 +----------------------+----------------------------------+------------------+------------------------+-----------------------------------+------------------------------+
 ```
 
-### Merge a branch
-
-```
-docs $ dolt sql -q "insert into docs values (10,10)"
-Query OK, 1 row affected
-docs $ dolt diff
-diff --dolt a/docs b/docs
---- a/docs @ 2lcu9e49ia08icjonmt3l0s7ph2cdb5s
-+++ b/docs @ vpl1rk08eccdfap89kkrff1pk3r8519j
-+-----+----+----+
-|     | pk | c1 |
-+-----+----+----+
-|  +  | 10 | 10 |
-+-----+----+----+
-docs $ dolt commit -am "Added a row on a branch"
-commit ijrrpul05o5j0kgsk1euds9pt5n5ddh0
-Author: Tim Sehn <tim@dolthub.com>
-Date:   Mon Dec 06 15:06:39 -0800 2021
-
-	Added a row on a branch
-
-docs $ dolt checkout main
-Switched to branch 'main'
-docs $ dolt sql -q "select * from docs"
-+----+----+
-| pk | c1 |
-+----+----+
-| 1  | 1  |
-| 2  | 1  |
-+----+----+
-docs $ dolt merge check-out-new-branch
-Updating f0ga78jrh4llc0uus8h2refopp6n870m..ijrrpul05o5j0kgsk1euds9pt5n5ddh0
-Fast-forward
-docs $ dolt sql -q "select * from docs"
-+----+----+
-| pk | c1 |
-+----+----+
-| 1  | 1  |
-| 2  | 1  |
-| 10 | 10 |
-+----+----+
-```
