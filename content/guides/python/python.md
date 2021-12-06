@@ -4,9 +4,9 @@ title: Dolt Python
 
 # Dolt Python
 
-* [Doltpy](./doltpy.md): For new users, experimentation and testing
+- [Doltpy](./doltpy.md): For new users, experimentation and testing
 
-* [Python SQL Clients](./sql_clients.md): For integrations and production Dolt Python.
+- [Python SQL Clients](./sql_clients.md): For integrations and production Dolt Python.
 
 ## Summary
 
@@ -72,7 +72,7 @@ cloning https://doltremoteapi.dolthub.com/max-hoffman/qm9
 CompletedProcess(args=['dolt', 'clone', 'max-hoffman/qm9'], returncode=0)
 ```
 
-We built wrapper librares (`doltpy`, `doltcli`) to simplify this experience in Python:
+We built wrapper libraries (`doltpy`, `doltcli`) to simplify this experience in Python:
 
 ```bash
 $ pip install --user doltcli
@@ -82,7 +82,7 @@ $ python
 Dolt(repo_dir='/Users/max-hoffman/qm9', print_output=False)
 ```
 
-Dolt's Python libraries have their own heirarchy and usage patterns.
+Dolt's Python libraries have their own hierarchy and usage patterns.
 `doltcli` is dependencyless and minimizes
 package conflicts for those getting started with Dolt locally.
 `doltpy` has more features to integrate with
