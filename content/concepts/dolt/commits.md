@@ -35,7 +35,40 @@ In Dolt, you can create a commit via the SQL interface. There is no analogue in 
 
 ## Example
 
-### CLI
+### Adding a table and making a commit
+
+#### CLI
+```
+docs $ dolt sql -q "create table docs (pk int, primary key(pk))"
+docs $ dolt add .
+docs $ dolt status
+On branch main
+Changes to be committed:
+  (use "dolt reset <table>..." to unstage)
+	new table:      docs
+docs $ dolt commit -m "Added example table docs"
+commit 7vureh3qotrr02sog3tjgjk73sqmc2de
+Author: Tim Sehn <tim@dolthub.com>
+Date:   Mon Dec 06 13:25:55 -0800 2021
+
+	Added example table docs
+
+```
+
+#### SQL
+```
+docs $ dolt sql -q "create table docs_sql (pk int, primary key(pk))"
+docs $ dolt sql -q "select dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add')"
++-------------------------------------------------------------------------------------------------------------------+
+| dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add') |
++-------------------------------------------------------------------------------------------------------------------+
+| v42og53ru3k3hak3decm23crp5p6kd2f                                                                                  |
++-------------------------------------------------------------------------------------------------------------------+
+```
+
+### Creating and empty commit
+
+#### CLI
 ```
 docs $ dolt commit --allow-empty -m "This is a commit"
 commit bo318l76dq3bdvu1ie84d4nmv4hpi4km
@@ -46,7 +79,7 @@ Date:   Thu Dec 02 16:55:00 -0800 2021
 
 ```
 
-### SQL
+#### SQL
 ```
 docs $ dolt sql -q "select dolt_commit('-a', '--allow-empty', '-m', 'This is a commit')"
 +--------------------------------------------------------------+
