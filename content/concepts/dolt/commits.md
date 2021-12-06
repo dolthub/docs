@@ -35,10 +35,8 @@ In Dolt, you can create a commit via the SQL interface. There is no analogue in 
 
 ## Example
 
-### Create a commit
-
+### CLI
 ```
-dolt commit -am "This is a commit message"
 docs $ dolt commit --allow-empty -m "This is a commit"
 commit bo318l76dq3bdvu1ie84d4nmv4hpi4km
 Author: Tim Sehn <tim@dolthub.com>
@@ -48,6 +46,12 @@ Date:   Thu Dec 02 16:55:00 -0800 2021
 
 ```
 
+### SQL
 ```
-SQL
+docs $ dolt sql -q "select dolt_commit('-a', '--allow-empty', '-m', 'This is a commit')"
++--------------------------------------------------------------+
+| dolt_commit('-a', '--allow-empty', '-m', 'This is a commit') |
++--------------------------------------------------------------+
+| u73s2mb1ho4mj1ldkof939vampo93bld                             |
++--------------------------------------------------------------+
 ```
