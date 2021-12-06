@@ -28,6 +28,7 @@ Dolt has additional log functionality beyond Git. You can log a particular cell 
 
 ## Example
 
+### CLI
 ```bash
 % dolt log
 commit cffu3k56rtv6cf28370buivf33bb2mvr
@@ -44,6 +45,14 @@ Date:   Fri Dec 03 09:49:10 -0800 2021
 
 ```
 
+### SQL
 ```
-SQL
+docs $ dolt sql -q "select * from dolt_log"
++----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
+| commit_hash                      | committer | email            | date                              | message                    |
++----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
+| u73s2mb1ho4mj1ldkof939vampo93bld | Tim Sehn  | tim@dolthub.com  | 2021-12-06 10:45:11.148 -0800 PST | This is a commit           |
+| bo318l76dq3bdvu1ie84d4nmv4hpi4km | Tim Sehn  | tim@dolthub.com | 2021-12-02 16:55:00.101 -0800 PST | This is a commit           |
+| jcj6q9c9nsveh72eadsms9i9k9ii1e55 | Tim Sehn  | tim@dolthub.com | 2021-12-02 16:54:35.87 -0800 PST  | Initialize data repository |
++----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
 ```

@@ -45,7 +45,7 @@
     * [Doltpy](guides/python/doltpy.md)
 
 ## Reference
-* [SQL](reference/sql/sql.md)
+* [SQL](reference/sql.md)
     * [SQL Support](reference/sql/sql-support/support.md)
         * [Data Description](reference/sql/sql-support/data-description.md)
         * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
