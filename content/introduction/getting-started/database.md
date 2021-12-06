@@ -26,16 +26,16 @@ Dolt will now respond to standard MySQL SQL. See [SQL Support](../../reference/s
 create database dolts;
 ```
 
-## Inspect the log
-
-```sql
-select * from dolt_log;
-```
-
 ## Create a table
 
 ```sql
-create table dolts (last_name varchar(255), first_name varchar(255), title varchar(255), date_started date, primary key(last_name, first_name));
+create table dolts (
+    last_name varchar(255), 
+    first_name varchar(255), 
+    title varchar(255), 
+    date_started date, 
+    primary key(last_name, first_name)
+);
 ```
 
 ## Create a Dolt commit
@@ -53,13 +53,13 @@ insert into dolts values ('Sehn', 'Tim', 'CEO', '2018-08-06');
 select dolt_commit('-a', '-m', 'Inserted Tim Sehn, CEO');
 ```
 
-## Create a branch
+## Create a branch and insert data on it
 
-
-
-## Insert more data
-
-
+```sql
+select dolt_checkout('-b', 'founders');
+insert into dolts values ('Son', 'Aaron', 'Founder', '2018-08-06');
+insert into dolts values ('Hendriks', 'Brian', 'Founder', '2018-08-06');
+```
 
 ## View the diff
 
@@ -67,6 +67,11 @@ select dolt_commit('-a', '-m', 'Inserted Tim Sehn, CEO');
 
 ## Commit and Merge
 
+## Inspect the log
+
+```sql
+select * from dolt_log;
+```
 
 ## Next Steps
 
