@@ -37,5 +37,3 @@ The best case scenario looks like:
 * Adding a run of data whose primary keys fall lexicographically within two existing rows is very similar to the prefix or postfix case. The run of data gets interpolated between the existing chunks of row data:
 
 ![Middle Run Edit](../../.gitbook/assets/middle-run-edit.png)
-
-Thus a table at a commit can is a Prolly Tree root, but will likely point to many of the same immutable chunks as the same table at other commits. Thus the commit graph consists of pointers to different Prolly Tree roots that represent tables, but internally those Prolly Trees will point to many of the same chunks since their pointers in the tree are content addressed to immutable chunks, facilitating structural sharing. Much of the content for this section came from a post we wrote on [structural sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/) in Dolt and surrounding trade-offs.

@@ -71,7 +71,6 @@
 * [Overview](architecture/architecture.md)
 * [Storage Engine](architecture/storage-engine.md)
     * [Prolly Trees](architecture/storage-engine/prolly-tree.md)
-    * [Merkle DAG](architecture/storage-engine/merkle-dag.md)
 * [SQL](architecture/sql.md)
     * [Go MySQL Server](architecture/sql/go-mysql-server.md)
     * [Vitess](architecture/sql/vitess.md)
