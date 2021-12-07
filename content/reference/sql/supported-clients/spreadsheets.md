@@ -18,7 +18,7 @@ Again, this document assumes you have a local clone of a Dolt database on your c
 
 If your data is small enough, it may be practical to export an entire Dolt table as a CSV and then read that CSV into Excel.
 
-To export a table from dolt to a CSV, [install Dolt](../../../getting-started/installation.md), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
+To export a table from dolt to a CSV, [install Dolt](../../../introduction/installation.md), create or clone the Dolt database you want, and then run the following command in the Dolt directory. `dolt table export test > example.csv` command exports the `test` table to `example.csv`. Test has 3 rows and two columns.
 
 ```bash
 $ dolt table export test

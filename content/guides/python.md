@@ -4,9 +4,9 @@ title: Dolt Python
 
 # Dolt Python
 
-- [Doltpy](./doltpy.md): For new users, experimentation and testing
+- [Doltpy](./python/doltpy.md): For new users, experimentation and testing
 
-- [Python SQL Clients](./sql-clients.md): For integrations and production Dolt Python.
+- [Python SQL Clients](./python/sql-clients.md): For integrations and production Dolt Python.
 
 ## Summary
 
