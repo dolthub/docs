@@ -24,4 +24,4 @@ Dolt implements tables on top of Noms as a map of primary keys to values. Table 
 
 ## Tables
 
-![](../.gitbook/content/dolt-table-value.png)
+![](../.gitbook/assets/dolt-table-value.png)
