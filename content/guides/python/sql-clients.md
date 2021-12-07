@@ -5,7 +5,7 @@ client can also connect to Dolt. Here we will discuss Python specific
 MySQL clients.
 
 Dolt is 99% MySQL compatible, and extends [custom SQL
-functions](../../interfaces/sql/dolt-sql-functions.md)
+functions](../../reference/sql/dolt-sql-functions.md)
 specific to version controlling. ([this blog is a good practical
 introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/)).
 

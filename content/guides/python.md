@@ -4,28 +4,26 @@ title: Dolt Python
 
 # Dolt Python
 
-- [Doltpy](./doltpy.md): For new users, experimentation and testing
+- [Doltpy](./python/doltpy.md): For new users, experimentation and testing
 
-- [Python SQL Clients](./sql_clients.md): For integrations and production Dolt Python.
+- [Python SQL Clients](./python/sql-clients.md): For integrations and production Dolt Python.
 
 ## Summary
 
 There are several ways to use Dolt with Python. All require
-[installing the dolt command line tool](../../getting-started/installation.md).
+[installing the dolt command line tool](../introduction/installation.md).
 Dolt's MySQL client/server support has the most development attention,
 but Dolt's CLI commands are a simpler way to get started
 with Python.
 
 The sections below detail "sql-server" and "filesystem" interfaces for
-working with Dolt in Python. Refer to the [CLI vs. server summary](../../interfaces/compare_cli.md)
-for a side by side comparison of how the data interface affects
-application flexibility.
+working with Dolt in Python.
 
 More information regarding SQL-server use can be found in the [Python
-SQL Client guide](./sql_clients.md).
+SQL Client guide](./python/sql-clients.md).
 
 More information regarding Dolt CLI use in Python use can be found in the [Doltpy
-guides](./doltpy.md). If interested in the source code, [this
+guides](./python/doltpy.md). If interested in the source code, [this
 file](https://github.com/dolthub/doltcli/blob/main/doltcli/dolt.py)
 is responsible for most of basic commands. Most read/write source code is
 [here](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py).

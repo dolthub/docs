@@ -44,8 +44,6 @@ SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
 SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
 ```
 
-Read more about persisting system variables [here](../../../interfaces/sql/persistence.md).
-
 ### Push (on write) from sources
 
 To push on write, a valid remote middleman must be configured:
@@ -102,7 +100,7 @@ In either case, a read replica will pull the indicated branch from
 the remote middleman. If the branch is not on the replica, a new remote
 tracking branch, head branch, and working set will be created.
 
-Read more about different head settings [here](../../../interfaces/sql/heads).
+Read more about different head settings [here](./branches.md).
 
 ### Quiet Warnings
 
