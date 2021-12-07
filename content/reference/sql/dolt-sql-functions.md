@@ -399,5 +399,5 @@ e.g. `HASHOF("master")`.
 ## Functions for working with detached heads
 
 Dolt also defines several functions useful for working in detached
-head mode. See [that section](heads.md#detached-head-mode) for
+head mode. See [that section](../branches.md#detached-head-mode) for
 details.
