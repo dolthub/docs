@@ -35,7 +35,7 @@ This system variable controls the current session's head
 commit. Setting this variable to a commit hash causes your session to
 enter detached head mode.
 
-See [Detached Head mode](heads.md#detached-head-mode) for more detail.
+See [Detached Head mode](./branches.md#detached-head-mode) for more detail.
 
 ## @@dbname_working
 

@@ -12,7 +12,7 @@ Dolt is architected to provide version control features like diff and merge on l
 
 When discussing architecture, Dolt has two distinct pieces:
 
-1. [The Storage Engine](storage-engine/storage.md)
-2. [The SQL Implementation](sql/sql.md)
+1. [The Storage Engine](./storage-engine.md)
+2. [The SQL Implementation](./sql.md)
 
 Combining these two concepts allows for the first SQL database you can clone, branch, and merge.

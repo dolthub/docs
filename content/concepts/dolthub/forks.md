@@ -15,7 +15,7 @@ Forks on DoltHub are useful in two main ways:
 1. You can propose changes to a database you don't have write permissions to
 2. You can experiment with or adopt someone else's database for your own use case without making changes to the original data
 
-Using forks to propose changes is commonly used for [data bounties](../../introduction/getting-started/data-bounties.md). You can create a fork, making changes to your fork, and then submit a [pull request](./pr.md) in the original database.
+Using forks to propose changes is commonly used for [data bounties](../../introduction/getting-started/data-bounties.md). You can create a fork, making changes to your fork, and then submit a [pull request](./prs.md) in the original database.
 
 ## Difference between GitHub forks and DoltHub forks
 

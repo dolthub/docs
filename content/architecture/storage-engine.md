@@ -14,7 +14,7 @@ Dolt implements tables on top of Noms as a map of primary keys to values.
 
 The top level abstraction in Noms is a database. Noms databases can have zero or more datasets. 
 
-A dataset is a named pointer to the root value of one or more [Prolly Trees](./prolly-tree.md), a content-addressed binary tree. Prolly trees can be compared in time proportional to the difference between the two trees, a necessary performance characteristic for version control operations. 
+A dataset is a named pointer to the root value of one or more [Prolly Trees](./storage-engine/prolly-tree.md), a content-addressed binary tree. Prolly trees can be compared in time proportional to the difference between the two trees, a necessary performance characteristic for version control operations. 
 
 ![](../.gitbook/assets/dolt-table-value.png)
 
