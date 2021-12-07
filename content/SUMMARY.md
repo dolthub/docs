@@ -68,6 +68,7 @@
 * [CLI](reference/cli.md))
 
 ## Architecture
+* [Overview](architecture.md)
 * [Storage Engine](architecture/storage-engine.md)
     * [Noms](architecture/storage-engine/noms.md)
     * [Merkle DAG](architecture/storage-engine/merkle-dag.md)
