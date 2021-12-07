@@ -20,10 +20,10 @@ The sections below detail "sql-server" and "filesystem" interfaces for
 working with Dolt in Python.
 
 More information regarding SQL-server use can be found in the [Python
-SQL Client guide](./sql-clients.md).
+SQL Client guide](./python/sql-clients.md).
 
 More information regarding Dolt CLI use in Python use can be found in the [Doltpy
-guides](./doltpy.md). If interested in the source code, [this
+guides](./python/doltpy.md). If interested in the source code, [this
 file](https://github.com/dolthub/doltcli/blob/main/doltcli/dolt.py)
 is responsible for most of basic commands. Most read/write source code is
 [here](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py).
