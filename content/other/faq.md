@@ -81,10 +81,10 @@ heads](../reference/sql/branches.md) for details.
 ## What SQL features / syntax are supported?
 
 Most of them! Check out [the docs for the full list of supported
-features](../reference/sql/sql-support.md).
+features](../reference/sql/sql-support/support.md).
 
 You can check out what we're working on next on our
-[roadmap](roadmap.md). Paying customers get their feature requests
+[roadmap](./roadmap.md). Paying customers get their feature requests
 bumped to the front of the line.
 
 ## Does Dolt support my favorite SQL workbench / tool?

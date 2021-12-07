@@ -39,8 +39,7 @@
     * [API](concepts/dolthub/api.md)
 
 ## Guides
-* Python
-    * [Getting Started](guides/python/python.md)
+* [Python](guides/python.md)
     * [SQL Clients](guides/python/sql-clients.md)
     * [Doltpy](guides/python/doltpy.md)
 

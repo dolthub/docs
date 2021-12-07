@@ -128,7 +128,7 @@ We imagine providing this functionality through an Excel Plug In in the future. 
 
 ### Reading from Dolt
 
-This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../interfaces/api.md) is recommended.
+This document assumes you have a local Dolt database you would like to read data from into Google Sheets. If you would like to read data from a repository pushed to DoltHub, [the web API](../../../concepts/dolthub//api.md) is recommended.
 
 #### Using CSVs
 
@@ -373,6 +373,6 @@ You can add and commit these changes with standard Dolt commands `dolt add test`
 
 ### Accessing Dolt Versioning
 
-We don't have a compelling story right now for either reading or creating versioning information in Google sheets. The ability to control branch and commit within Google Sheets could be compelling. The best way to get read access to versioning information from Google Sheets would be to use SQL and [Dolt System tables](../../../reference/sql/dolt-system-tables.md) to query the versioning information you would like using the process outlined in "Reading from Dolt Using SQL JDBC Connector".
+We don't have a compelling story right now for either reading or creating versioning information in Google sheets. The ability to control branch and commit within Google Sheets could be compelling. The best way to get read access to versioning information from Google Sheets would be to use SQL and [Dolt System tables](../dolt-system-tables.md) to query the versioning information you would like using the process outlined in "Reading from Dolt Using SQL JDBC Connector".
 
 We imagine providing this functionality through an Google Sheets Add On in the future. If this feature is compelling to you, [let us know](https://www.dolthub.com/contact).

@@ -11,7 +11,7 @@ title: Dolt Python
 ## Summary
 
 There are several ways to use Dolt with Python. All require
-[installing the dolt command line tool](../../getting-started/installation.md).
+[installing the dolt command line tool](../intoroduction/installation.md).
 Dolt's MySQL client/server support has the most development attention,
 but Dolt's CLI commands are a simpler way to get started
 with Python.
@@ -20,7 +20,7 @@ The sections below detail "sql-server" and "filesystem" interfaces for
 working with Dolt in Python.
 
 More information regarding SQL-server use can be found in the [Python
-SQL Client guide](./sql-lients.md).
+SQL Client guide](./sql-clients.md).
 
 More information regarding Dolt CLI use in Python use can be found in the [Doltpy
 guides](./doltpy.md). If interested in the source code, [this
