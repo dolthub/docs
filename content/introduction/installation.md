@@ -6,7 +6,7 @@ title: Installation
 
 Dolt is extremely simple to install. Dolt is a single ~50 megabyte program. To install it, you download or compile that program and put it on your `PATH`. For each operating system, we created simpler, more familiar methods of installation.
 
-* [Linux](./intstallation/linux.md)
+* [Linux](./installation/linux.md)
 * [Windows](./installation/windows.md)
 * [Mac](./installation/mac.md)
 
