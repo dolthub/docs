@@ -20,8 +20,8 @@ Dolt implements tables on top of Noms as a map of primary keys to values. Table 
 
 ## Commit Graph
 
-![](../../.gitbook/assets/dolt-commit-graph.png)
+![](../.gitbook/assets/dolt-commit-graph.png)
 
 ## Tables
 
-![](../../.gitbook/content/dolt-table-value.png)
+![](../.gitbook/content/dolt-table-value.png)
