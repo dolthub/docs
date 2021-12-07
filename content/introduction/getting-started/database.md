@@ -149,7 +149,7 @@ select * from dolt_log;
 
 ## Next Steps
 
-AS you can see, Dolt is a fully compatible MySQL Server with
+As you can see, Dolt is a fully compatible MySQL server with
 additional Git-style version control functionality implemented as
 system tables and SQL functions. You can use Dolt in this mode to back
 applications and give those applications version control at the data
