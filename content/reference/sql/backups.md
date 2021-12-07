@@ -19,6 +19,6 @@ look more like traditional database backups. The entire state of the
 database, including uncommitted changes, are copied to another location.
 
 Refer to the [cli
-documentation](https://docs.dolthub.com/interfaces/cli#dolt-backup) and
+documentation](../cli#dolt-backup) and
 the [backups blog](https://www.dolthub.com/blog/2021-10-08-backups/) for
 a more thorough introduction.

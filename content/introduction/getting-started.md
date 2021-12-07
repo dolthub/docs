@@ -8,3 +8,4 @@ Dolt has four primary functions all with different ways to get started.
 2. [Git for Data](./getting-started/git-for-data.md)
 3. [Data Sharing on DoltHub](./getting-started/data-sharing.md)
 4. [Data Bounties](./getting-started/data-bounties.md)
+
