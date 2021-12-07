@@ -7,7 +7,7 @@ title: Dolt System Variables
 Dolt exposes various information about the state of the current
 session. This information is typically only useful for advanced
 users. See information on [Detached Head
-mode](heads.md#detached-head-mode).
+mode](./branches.md#detached-head-mode).
 
 ## @@dbname_head_ref
 

@@ -35,7 +35,7 @@ cloning https://doltremoteapi.dolthub.com/taylor/us-schools
 141,350 of 141,350 chunks complete. 0 chunks being downloaded currently.
 ```
 
-If you forked a database to do your own experimenting, your work here is done. However, if you'd like to propose changes to the base database, you can create a [pull request](./pr.md) by navigating to `dolthub/us-schools` and clicking one of the new pull request buttons.
+If you forked a database to do your own experimenting, your work here is done. However, if you'd like to propose changes to the base database, you can create a [pull request](./prs.md) by navigating to `dolthub/us-schools` and clicking one of the new pull request buttons.
 
 ![New pull request](../../.gitbook/assets/new-pull-request.png)
 
