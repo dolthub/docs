@@ -8,7 +8,7 @@ title: Conflicts
 
 A conflict is a signal to a user that a [merge](./merge.md) has produced a database that requires further action. The merge algorithm could not infer the state of the database based on the merge rules after the merge. Further input is required to tell Dolt what the resulting merged database should contain.
 
-In Dolt, conflicts can occur on schema and data. On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair, a conflict is detected. For schema conflict detection is more complicated.
+In Dolt, conflicts can occur on schema and data. On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. For schema, conflict detection is more complicated.
 
 The following rules are used to detect conflicts in schema:
 
@@ -42,6 +42,111 @@ In the case of foreign keys, Dolt can produce invalid merges even after conflict
 
 ## Example
 
+### Generating a Conflict
+
 ```
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+docs $ dolt branch make-conflicts
+docs $ dolt sql -q "update docs set c1=10 where pk=1"
+Query OK, 1 row affected
+Rows matched: 1  Changed: 1  Warnings: 0
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 10 |
+| 2  | 2  |
++----+----+
+docs $ dolt add docs
+docs $ dolt commit -m "Made pk=1, c1=10"
+commit jjkqslpnbbvjh7efdhcsqdh68ekl0leb
+Author: Tim Sehn <tim@dolthub.com>
+Date:   Mon Dec 06 16:40:12 -0800 2021
+
+	Made pk=1, c1=10
+
+docs $ dolt checkout make-conflicts
+Switched to branch 'make-conflicts'
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+docs $ dolt sql -q "update docs set c1=0 where pk=1"
+Query OK, 1 row affected
+Rows matched: 1  Changed: 1  Warnings: 0
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 0  |
+| 2  | 2  |
++----+----+
+docs $ dolt add docs
+docs $ dolt commit -m "Made pk=1, c1=0"
+commit 5gmleh5ksmtsdeeaqeagpsitpug4ntoj
+Author: Tim Sehn <tim@dolthub.com>
+Date:   Mon Dec 06 16:40:54 -0800 2021
+
+	Made pk=1, c1=0
+
+docs $ dolt checkout main
+Switched to branch 'main'
+docs $ dolt merge make-conflicts
+Updating jjkqslpnbbvjh7efdhcsqdh68ekl0leb..5gmleh5ksmtsdeeaqeagpsitpug4ntoj
+Auto-merging docs
+CONFLICT (content): Merge conflict in docs
+Automatic merge failed; fix conflicts and then commit the result.
+docs $ dolt conflicts cat docs
++-----+--------+----+----+
+|     |        | pk | c1 |
++-----+--------+----+----+
+|     | base   | 1  | 1  |
+|  *  | ours   | 1  | 10 |
+|  *  | theirs | 1  | 0  |
++-----+--------+----+----+
+```
+
+### Resolving a Conflict
+
+```
+docs $ dolt conflicts cat docs
++-----+--------+----+----+
+|     |        | pk | c1 |
++-----+--------+----+----+
+|     | base   | 1  | 1  |
+|  *  | ours   | 1  | 10 |
+|  *  | theirs | 1  | 0  |
++-----+--------+----+----+
+docs $ dolt conflicts resolve --ours docs
+docs $ dolt conflicts cat docs
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 10 |
+| 2  | 2  |
++----+----+
+docs $ dolt add docs
+docs $ dolt commit -m "Resolved conflict"
+commit c8mff2tp5b3tg4j4u07dnmp912btltim
+Merge: jjkqslpnbbvjh7efdhcsqdh68ekl0leb 5gmleh5ksmtsdeeaqeagpsitpug4ntoj
+Author: Tim Sehn <tim@dolthub.com>
+Date:   Mon Dec 06 16:44:22 -0800 2021
+
+	Resolved conflict
 
 ```
