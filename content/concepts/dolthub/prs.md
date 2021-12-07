@@ -22,7 +22,7 @@ Due to the difference in nature of reviewing data vs reviewing code, diffs on Do
 
 ## Example
 
-We will use our [`dolthub/us-schools`](https://www.dolthub.com/repositories/dolthub/us-schools) database as an example. This database was created through one of our [bounties]().
+We will use our [`dolthub/us-schools`](https://www.dolthub.com/repositories/dolthub/us-schools) database as an example. This database was created through one of our [bounties](../../introduction/getting-started/data-bounties.md).
 
 First, we [fork](./forks.md) the database and clone our fork.
 
@@ -57,7 +57,7 @@ us_schools> exit;
 Bye
 ```
 
-We can look at the [diff]() of our changes. If they look good we add and commit the changed table and push our branch to DoltHub.
+We can look at the [diff](../dolt/diff.md) of our changes. If they look good we add and [commit](../dolt/commits.md) the changed table and push our branch to DoltHub.
 
 ```
 % dolt diff
