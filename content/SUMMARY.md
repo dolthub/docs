@@ -70,9 +70,8 @@
 ## Architecture
 * [Overview](architecture/architecture.md)
 * [Storage Engine](architecture/storage-engine.md)
-    * [Noms](architecture/storage-engine/noms.md)
-    * [Merkle DAG](architecture/storage-engine/merkle-dag.md)
     * [Prolly Trees](architecture/storage-engine/prolly-trees.md)
+    * [Merkle DAG](architecture/storage-engine/merkle-dag.md)
 * [SQL](architecture/sql.md)
     * [Go MySQL Server](architecture/sql/go-mysql-server.md)
     * [Vitess](architecture/sql/vitess.md)
