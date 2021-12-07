@@ -6,9 +6,9 @@ title: Use Cases
 
 Dolt can be used for many things. We highlighted a few use cases to inspire you.
 
-* [Data Sharing](./data-sharing.md)
-* [Data Ingestion](./data-ingestion.md)
-* [Machine Learning](./ml.md)
-* [Configuration Management](./config.md)
-* [Version Control Your Application](./vc-your-app.md)
-* [Better MySQL](./better-mysql.md)
+- [Data Sharing](./use-cases/data-sharing.md)
+- [Data Ingestion](./use-cases/data-ingestion.md)
+- [Machine Learning](./use-cases/ml.md)
+- [Configuration Management](./use-cases/config.md)
+- [Version Control Your Application](./use-cases/vc-your-app.md)
+- [Better MySQL](./use-cases/better-mysql.md)
