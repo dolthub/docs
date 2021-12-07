@@ -10,7 +10,7 @@ Emailing around CSVs is a way of the past. Have you ever tried to have more than
 
 On DoltHub, there is one source of truth. You can clone a database with one command, make some changes, and submit a [pull request](./dolthub/prs.md) to incorporate the change into the main branch. Sharing is made easy and you no longer need to worry about which version is the right version.
 
-Collaboration on DoltHub is seamless. Following the GitHub model of collaboration, anyone can have a copy of a database, whether using a [fork](./dolthub/forks.md) or [branch](./dolthub/branch.md), and propose changes using their copy through pull requests. Database maintainers can view the [diff](./dolt/diff.md) of changes and there is a built in forum for feedback.
+Collaboration on DoltHub is seamless. Following the GitHub model of collaboration, anyone can have a copy of a database, whether using a [fork](./dolthub/forks.md) or [branch](./dolt/branch.md), and propose changes using their copy through pull requests. Database maintainers can view the [diff](./dolt/diff.md) of changes and there is a built in forum for feedback.
 
 Want to make a change to a database and are new to SQL? No problem. DoltHub has table buttons that let you sort columns, filter by a value, delete and hide columns and rows, and update cell values. Not only do you not need to know SQL to use this functionality, but these buttons generate the corresponding SQL query so you can learn SQL as you're clicking around. DoltHub also has file upload and spreadsheet editor features that let you get data onto DoltHub easily without using the command line tool.
 
