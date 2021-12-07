@@ -76,12 +76,12 @@ for competing writes.
 
 It's also possible for different sessions to connect to different
 HEADs (branches) on the same server. See [Working with multiple
-heads](../interfaces/sql/heads.md) for details.
+heads](../reference/sql/branches.md) for details.
 
 ## What SQL features / syntax are supported?
 
 Most of them! Check out [the docs for the full list of supported
-features](https://docs.dolthub.com/interfaces/sql/sql-support).
+features](../reference/sql/sql-support.md).
 
 You can check out what we're working on next on our
 [roadmap](roadmap.md). Paying customers get their feature requests

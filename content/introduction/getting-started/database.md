@@ -158,7 +158,7 @@ layer.
 Keep reading the getting started guide to learn more, or jump straight
 to advanced SQL topics:
 
-* [Dolt SQL functions](../../refernce/sql/dolt-sql-functions.md)
+* [Dolt SQL functions](../../reference/sql/dolt-sql-functions.md)
 * [Dolt system tables](../../reference/sql/dolt-system-tables.md)
 * [Using branches](../../reference/sql/branches.md)
 

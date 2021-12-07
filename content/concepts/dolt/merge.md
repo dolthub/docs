@@ -6,11 +6,11 @@ title: Merge
 
 ## What is a merge?
 
-A merge is an operation that takes two branches and assembles a reasonable combination of the two databases represented by those branches. The merge may or may not generate [conflicts](./conflicts). Merges happen at the Dolt storage layer. No SQL is used to merge. 
+A merge is an operation that takes two branches and assembles a reasonable combination of the two databases represented by those branches. The merge may or may not generate [conflicts](./conflicts.md). Merges happen at the Dolt storage layer. No SQL is used to merge. 
 
 A merge can be triggered on the command line, through a Dolt SQL function, or implicitly when committing a SQL transaction.
 
-Dolt implements one merge strategy. The Dolt merge strategy will generally produce reasonable results. For schema, if the two branches modify different tables or columns, no conflict is generated. For data, Dolt does a cell-wise merge of data. See [conflicts](./conflicts) for details on when conflicts are generated and when they are not.
+Dolt implements one merge strategy. The Dolt merge strategy will generally produce reasonable results. For schema, if the two branches modify different tables or columns, no conflict is generated. For data, Dolt does a cell-wise merge of data. See [conflicts](./conflicts.md) for details on when conflicts are generated and when they are not.
 
 A commit that is created on a branch where a merge operation took place has two parent commits. 
 

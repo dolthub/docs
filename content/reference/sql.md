@@ -67,7 +67,7 @@ The host, user, password, timeout, logging info and other options can
 be set on the command line or via a config file.
 
 View the `dolt sql-server` command documentation
-[here](../cli.md#dolt-sql-server).
+[here](./cli.md#dolt-sql-server).
 
 ## Dolt CLI in SQL
 

@@ -22,7 +22,7 @@ If you'd like to capture some of the $10,000 available for gathering basketball 
 
 ### Fork the Repository
 
-DoltHub uses the "fork" model for facilitating collaboration. Contributions are accepted by making a pull request from your fork. You can read more about DoltHub's collaboration model [here](./dolthub.md#data-collaboration).
+DoltHub uses the "fork" model for facilitating collaboration. Contributions are accepted by making a pull request from your fork.
 
 For now just fork `dolthub/SHAQ` into your own namespace:
 

@@ -126,7 +126,7 @@ the server with the `-P` argument.
 With the above settings, dolt runs with a single user `root` and an
 empty password. Dolt currently supports a single user and password. To
 change the name and password of the SQL user, provide a config file as
-described in the [`sql-server`](../interfaces/cli.md#dolt-sql-server)
+described in the [`sql-server`](../reference/cli.md#dolt-sql-server)
 docs.
 
 Other configuration such as logging behavior, timeouts, etc. are

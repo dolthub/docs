@@ -6,7 +6,7 @@ title: Dolt Python
 
 - [Doltpy](./doltpy.md): For new users, experimentation and testing
 
-- [Python SQL Clients](./sql_clients.md): For integrations and production Dolt Python.
+- [Python SQL Clients](./sql-clients.md): For integrations and production Dolt Python.
 
 ## Summary
 
@@ -17,12 +17,10 @@ but Dolt's CLI commands are a simpler way to get started
 with Python.
 
 The sections below detail "sql-server" and "filesystem" interfaces for
-working with Dolt in Python. Refer to the [CLI vs. server summary](../../interfaces/compare_cli.md)
-for a side by side comparison of how the data interface affects
-application flexibility.
+working with Dolt in Python.
 
 More information regarding SQL-server use can be found in the [Python
-SQL Client guide](./sql_clients.md).
+SQL Client guide](./sql-lients.md).
 
 More information regarding Dolt CLI use in Python use can be found in the [Doltpy
 guides](./doltpy.md). If interested in the source code, [this

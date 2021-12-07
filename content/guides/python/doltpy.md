@@ -17,9 +17,6 @@ Source code:
 
 - [Pandas write](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/write.py)
 
-For long-form content refer to the [Doltpy
-Tutorials](./doltpy_tutorial.md).
-
 ## Setup
 
 ### Install
