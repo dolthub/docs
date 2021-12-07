@@ -23,7 +23,7 @@ GitHub forks are very similar to DoltHub forks in both purpose and practice.
 
 ## Example
 
-You can use the fork button on the top right of any database to fork the database to your own namespace. We will use our `us-schools` database as an example.
+You can use the fork button on the top right of any database to fork the database to your own namespace. We will use our [`us-schools` database](https://www.dolthub.com/repositories/dolthub/us-schools) as an example.
 
 ![Fork database](../../.gitbook/assets/fork-database.png)
 
