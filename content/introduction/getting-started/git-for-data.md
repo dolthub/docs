@@ -191,4 +191,4 @@ Fast-forward
 ## Next steps
 
 Keep reading the getting started guide to learn more, or skip to the
-full [CLI docs](../reference/cli.md).
+full [CLI docs](../../reference/cli.md).

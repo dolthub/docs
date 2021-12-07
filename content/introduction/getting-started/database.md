@@ -46,7 +46,7 @@ Any standard SQL statement that works in MySQL works in Dolt.
 For version control features, Dolt implements Git read operations as
 [system tables](../../reference/sql/dolt-system-tables.md) and Git
 write operations as [SQL
-functions](./../reference/sql/dolt-sql-functions.md). Follow along
+functions](../../reference/sql/dolt-sql-functions.md). Follow along
 below for a quick tutorial.
 
 ## Create a database
@@ -158,9 +158,9 @@ layer.
 Keep reading the getting started guide to learn more, or jump straight
 to advanced SQL topics:
 
-* [Dolt SQL functions](../refernce/sql/dolt-sql-functions.md)
-* [Dolt system tables](../reference/sql/dolt-system-tables.md)
-* [Using branches](../reference/sql/branches.md)
+* [Dolt SQL functions](../../refernce/sql/dolt-sql-functions.md)
+* [Dolt system tables](../../reference/sql/dolt-system-tables.md)
+* [Using branches](../../reference/sql/branches.md)
 
 
 
