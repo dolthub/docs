@@ -16,9 +16,11 @@ For user-owned databases, only individuals you add through the collaborators for
 
 For organization-owned databases, any member of the organization can read private databases. You can also grant read permissions to a database to individuals outside your organization through the collaborators form in the settings tab of your database.
 
+With read access users are able to view tables, run read-only SQL queries, clone and fork, and create issues and pull requests.
+
 ## Write permissions
 
-Databases have two levels of write permissions: write or admin. Users with non-admin write permissions are able to edit any table data or docs within the database. This includes merging pull requests. However, they cannot update database settings or manage database collaborators.
+Databases have two levels of write permissions: write or admin. Users with non-admin write permissions are able to edit any table data or docs within the database. This includes merging pull requests, running any SQL query, importing files, and pushing changes from Dolt. However, they cannot update database settings or manage database collaborators.
 
 Database admins are able to edit any data or settings within a database.
 
