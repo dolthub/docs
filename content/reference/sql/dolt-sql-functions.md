@@ -2,6 +2,20 @@
 title: Dolt SQL Functions
 ---
 
+# Table of Contents
+
+* [Introduction](#dolt-sql-functions)
+* [dolt\_commit()](#dolt_commit)
+* [dolt\_add()](#dolt_add)
+* [dolt\_checkout()](#dolt_checkout)
+* [dolt\_merge()](#dolt_merge)
+* [dolt\_reset()](#dolt_reset)
+* [dolt\_push()](#dolt_push)
+* [dolt\_fetch()](#dolt_fetch)
+* [dolt\_pull()](#dolt_pull)
+* [dolt\_merge\_base()](#dolt_merge_base)
+* [hash\_of()](#hash_of)
+
 # Dolt SQL Functions
 
 Dolt provides SQL functions to allow access to command line `dolt`
