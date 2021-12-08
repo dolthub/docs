@@ -1,0 +1,10 @@
+.gitbook-root {
+  * {
+    background-color: rgba(24, 28, 31, 1);
+    color: white;
+  }
+
+  a {
+    color: #29e3c1;
+  }
+}
