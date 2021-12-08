@@ -2,6 +2,20 @@
 title: Dolt System Tables
 ---
 
+# Table of contents
+
+* [dolt\_branches](#dolt_branches)
+* [dolt\_commit\_diff](#dolt_commit_diff_usdtablename)
+* [dolt\_diff](#dolt_diff_usdtablename)
+* [dolt\_docs](#dolt_docs)
+* [dolt\_history](#dolt_history_usdtablename)
+* [dolt\_log](#dolt_log)
+* [dolt\_status](#dolt_status)
+* [dolt\_conflicts](#dolt_conflicts_usdtablename)
+* [dolt\_procedures](#dolt_procedures)
+* [dolt\_schemas](#dolt_schemas)
+* [dolt\_remotes](#dolt_remotes)
+
 # Dolt System Tables
 
 ## `dolt_branches`
@@ -89,7 +103,7 @@ For each pair of commits in the database history, the diff tables will
 have zero or more rows, each of which represents a row that is
 different between the two commits, with its old and new values.
 
-## Schema
+### Schema
 
 ```text
 +-------------+------+
@@ -115,7 +129,7 @@ command than the `dolt_diff_$TABLENAME` table. It represents the
 diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
 between the two commits provided.
 
-## Example Schema
+### Example Schema
 
 Let us consider a simple example with a table that has two
 columns. Consider the table
@@ -146,7 +160,7 @@ We see that the structure of the `dolt_commit_diff_$TABLENAME` will be.
 +------------------+----------+
 ```
 
-## Query Details
+### Query Details
 
 Let us now consider the following branch structure:
 
@@ -176,7 +190,7 @@ SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and 
 The function `dolt_merge_base` computes the closest ancestor E
 between `master` and `feature`.
 
-## Additional Notes
+### Additional Notes
 
 There is one special `to_commit` value `WORKING` which can be used to
 see what changes are in the working set that have yet to be committed
@@ -247,7 +261,7 @@ The schema for `dolt_diff_states` would be
 +-----------------+--------+
 ```
 
-## Query Details
+### Query Details
 
 Doing a `SELECT *` query for a diff table will show you every change
 that has occurred to each row for every commit in this branches
@@ -316,7 +330,7 @@ guaranteed to see these changes reflected in the files on disk.
 +----------+------+
 ```
 
-## Usage
+### Usage
 
 Dolt users do not have to be familiar with this system table in order
 to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or
