@@ -54,6 +54,7 @@
     * [Dolt System Tables](reference/sql/dolt-system-tables.md)
     * [Dolt System Variables](reference/sql/dolt-sysvars.md)
     * [Using Branches](reference/sql/branches.md)
+    * [Querying History](reference/sql/querying-history.md)
     * [Configuration](reference/sql/configuration.md)
     * [Backups](reference/sql/backups.md)
     * [Replication](reference/sql/replication.md)
