@@ -5,7 +5,7 @@ title: Dolt SQL Functions
 # Dolt SQL Functions
 
 Dolt provides SQL functions to allow access to command line `dolt`
-commands from within a SQL session. Each command is named after the
+commands from within a SQL session. Each function is named after the
 `dolt` command line command it matches, and takes arguments in an
 identical form.
 
@@ -18,11 +18,12 @@ SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 SQL functions are provided for all imperative CLI commands. For
 commands that inspect the state of the repository and print some
-information, \(`dolt diff`, `dolt log`, etc.\) [system
+information, (`dolt diff`, `dolt log`, etc.) [system
 tables](dolt-system-tables.md) are provided instead.
 
 One important note: all functions modify state only for the current
-session, not for all clients. So for example, whereas running `dolt checkout feature-branch` will change the working HEAD for anyone who
+session, not for all clients. So for example, whereas running `dolt
+checkout feature-branch` will change the working HEAD for anyone who
 subsequently runs a command from the same dolt database directory,
 running `SELECT DOLT_CHECKOUT('feature-branch')` only changes the
 working HEAD for that database session. The right way to think of this
