@@ -42,7 +42,7 @@ You must commit your changes for them to persist after your session
 ends, either by setting `@@autocommit` to on, or by issuing `COMMIT`
 statements manually.
 
-## What's the difference between `COMMIT`, `COMMIT()`, and `DOLT_COMMIT()`?
+## What's the difference between `COMMIT` and `DOLT_COMMIT()`?
 
 `COMMIT` is a standard SQL statement that commits a transaction. In
 dolt, it just flushes any pending changes in the current SQL session
@@ -50,24 +50,16 @@ to disk, updating the working set. HEAD stays the same, but your
 working set changes. This means your edits will persist after this
 session ends.
 
-`COMMIT()` creates a new dolt commit, but doesn't reference it
-anywhere. If you want to reference it, you have to take the value
-returned by the function and create a branch with it (by inserting
-into `dolt_branches`)
+`DOLT_COMMIT()` commits the current SQL transaction, then creates a
+new dolt commit on the current branch. It's the same as if you run
+`dolt commit` from the command line.
 
-`DOLT_COMMIT()` is the same as if you run `dolt commit` from the
-command line. It updates HEAD.
+## I want each of my connected SQL users to get their own branch to make changes on, then merge them back into `main` when they're done making edits. How do I do that?
 
-## I want each of my connected SQL users to get their own branch to make changes on, then merge them back into `master` when they're done making edits. How do I do that?
-
-We are glad you asked! This is a common use case, and we wrote a
-couple blog articles about how to do this effectively.
-
-[dolt sql-server
-concurrency](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/)
-
-[Merging and resolving conflicts programmatically with
-SQL](https://www.dolthub.com/blog/2021-03-15-programmatic-merge-and-resolve/)
+We are glad you asked! This is a common use case, and giving each user
+their own branch is something we've spent a lot of time getting
+right. For more details on how to use this pattern effectively, see
+[using branches](../reference/sql/branches.md).
 
 ## Does Dolt support transactions?
 
@@ -75,8 +67,8 @@ Yes, it should exactly work the same as MySQL, but with fewer locks
 for competing writes.
 
 It's also possible for different sessions to connect to different
-HEADs (branches) on the same server. See [Working with multiple
-heads](../reference/sql/branches.md) for details.
+branches on the same server. See [using
+branches](../reference/sql/branches.md) for details.
 
 ## What SQL features / syntax are supported?
 
