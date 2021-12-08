@@ -8,7 +8,7 @@ Dolt databases allow you to query the data at any point in the commit
 history. There are several ways to do so.
 
 Please note: when querying history, the unit of snapshot is the dolt
-commit. SQL transactions commits do not create a dolt commit by
+commit. SQL transaction commits do not create a dolt commit by
 default.
 
 ## Querying past snapshots with `AS OF`
