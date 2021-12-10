@@ -70,10 +70,15 @@ We support `mysql-connector-cpp`. Getting it to work correctly required we check
 
 ## Dotnet
 
-We support [MySql.Data](https://www.nuget.org/packages/MySql.Data/) distributed by MySQL. On OSX and Ubuntu we tested the client using [.Net core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
+We support [MySQL.Data.MySqlClient](https://dev.mysql.com/doc/connector-net/en/) distributed by MySQL and the asynchronous [MySqlConnector](https://mysqlconnector.net/). On OSX and Ubuntu we tested the client using [.Net core SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1).
 
-- [Official Client Documentation](https://dev.mysql.com/doc/connector-net/en/connector-net-introduction.html)
-- [MySql.Data test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/dotnet/MySqlConnector/Program.cs)
+### MySQL.Data.MySqlClient
+- [Official Client Documentation](https://dev.mysql.com/doc/connector-net/en/)
+- [MySql.Data test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/dotnet/MySqlClient/Program.cs)
+
+### MySQLConnector
+- [Official Client Documentation](https://mysqlconnector.net/)
+- [MySqlConnector test code](https://github.com/dolthub/dolt/blob/master/integration-tests/mysql-client-tests/dotnet/MySqlConnector/Program.cs)
 
 ## Perl
 
