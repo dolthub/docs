@@ -26,7 +26,7 @@ The roots of the prolly trees are stored in a [Merkle Directed Acyclic Graph (DA
 
 # How Dolt Works Blog Series
 
-The best resource for diving into how Dolt works is a series of blog posts by Aaron Son.
+The best deep dive into how the Dolt storage engine works is a series of blog posts by Aaron Son.
 
 1. [How Dolt Stores Table Data](https://www.dolthub.com/blog/2020-04-01-how-dolt-stores-table-data/)
 2. [The Dolt Commit Graph and Structural Sharing](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/)
