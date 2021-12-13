@@ -108,13 +108,11 @@ caught exception: 1105 (HY000): not authorized: user does not have permission: w
 
 A better way to test this is to use a [bats](https://github.com/sstephenson/bats) tests, which are located in [`~/dolt_workspace/dolt/integration-tests/bats`](https://github.com/dolthub/dolt/tree/main/integration-tests/bats).
 You can install bats through npm
-
 ```bash
 $ npm install -g bats
 ```
 
 This test basically creates a config file (with the read-only flag set to true), starts a dolt sql-server using the config file, sends a query to create a table, and checks to see if that table was created. So, it's an automated way to do everything we did earlier.
-
 ```
 @test "sql-server: read-only flag prevents modification" {
     skiponwindows "Has dependencies that are missing on the Jenkins Windows installation."
@@ -150,7 +148,6 @@ EOF
 ```
 
 Then, I ran the test using this shell script placed in the `~/dolt_workspace/dolt` directory:
-
 ```bash
 #!/bin/bash
 cd go/cmd/dolt && go install . && cd -
@@ -161,7 +158,6 @@ cd integration-tests/bats && bats sql-server.bats && cd -
 ```
 
 As expected, this test passes.
-
 ```bash
 $ test.sh
 ...
@@ -169,6 +165,8 @@ $ test.sh
 ...
 ```
 
-## Create a Pull Request
+## Submit Changes
+Use git to commit and push our changes.
+
 If you are unfamiliar with how to create a Pull Request,
 follow the instructions [here](../contributing.md#submit-pull-request).
