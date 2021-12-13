@@ -100,15 +100,15 @@ If your fix required changes to multiple projects, commit them in this order:
 
 Navigate to the pull requests section of your repo(s).
 
-![Pull Request Section](../../.gitbook/assets/pr_section.png)
+![Pull Request Section](../../content/.gitbook/assets/pr_section.png)
 
 Click on "New pull request".
 
-![New Pull Request](../../.gitbook/assets/new_pr.png)
+![New Pull Request](../../content/.gitbook/assets/new_pr.png)
 
 Make sure the base repository is set to dolthub/dolt and click "Create pull request".
 
-![Create Pull Request](../../.gitbook/assets/create_pr.png)
+![Create Pull Request](../../content/.gitbook/assets/create_pr.png)
 
 This will trigger the continuous integration tests to run, which make sure the changes
 don't break any existing functionality. If all goes well, somebody on the Dolt team
