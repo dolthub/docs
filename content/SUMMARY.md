@@ -42,6 +42,9 @@
 * [Python](guides/python.md)
     * [SQL Clients](guides/python/sql-clients.md)
     * [Doltpy](guides/python/doltpy.md)
+* [Contributing](guides/contributing.md)
+    * [dolt](guides/contributing/dolt.md)
+    * [go-mysql-server](guides/contributing/go-mysql-server.md)
 
 ## Reference
 * [SQL](reference/sql.md)
