@@ -116,6 +116,9 @@ Make sure the base repository is set to dolthub/dolt and click "Create pull requ
 
 ![Create Pull Request](../../content/.gitbook/assets/create_pr.png)
 
-This will trigger the continuous integration tests to run, which make sure the changes
-don't break any existing functionality. If all goes well, somebody on the Dolt team
-will review the changes, and they'll be approved and merged.
+Submitting the PR will get some automated tests run against the branch
+and will notify the project maintainers that someone has some changes.
+If there are failures in the automated tests, the maintainers will
+let you know what steps you need to take to fix things up.
+Otherwise, the maintainers will provide feedback, or, if everything
+looks good, they will merge the PR.
