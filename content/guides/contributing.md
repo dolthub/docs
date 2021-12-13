@@ -50,7 +50,9 @@ Clone each of the dolt repos using Git.
 ~/dolt_workspace $ git clone git@github.com:<your-username>/vitess.git
 ```
 
-Add a local dependencies for `dolt` and `go-mysql-server`.
+By default, the dolt repository builds and links against pinned versions
+of go-mysql-server and vitess, so to develop them together we need to
+add a local dependencies for `dolt` and `go-mysql-server`.
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
 ~/dolt_workspace/dolt/go $ go mod edit -replace github.com/dolthub/go-mysql-server=../../go-mysql-server
@@ -99,7 +101,8 @@ Remember to remove local dependencies before pushing your changes.
 ~/dolt_workspace $ cd ..
 ```
 
-If your fix required changes to multiple projects, commit them in this order:
+There is an auto-dependency bump that takes place to keep the different parts up to date.
+As a result, if your fix required changes to multiple projects, commit them in this order:
 1. vitess
 2. go-mysql-server
 3. dolt
