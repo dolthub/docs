@@ -82,7 +82,7 @@ sqlEngine, err := engine.NewSqlEngine(ctx, mrEnv, engine.FormatTabular, "", serv
 
 For some reason, the `NewSqlEngine` constructor creates a new authenticator using `auth.None`, which always gives users full permissions.
 Instead, we should be passing in the authenticator already created that is based on permissions specified in the config file.
-```diff
+```
 // NewSqlEngine returns a SqlEngine
 func NewSqlEngine(
 	ctx context.Context,
