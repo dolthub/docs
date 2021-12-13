@@ -33,8 +33,7 @@ You should know that:
    SSH](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
    if you don't already have one.
 
-# Setup
-## Retrieve Source Code
+# Retrieve Source Code
 Create a fork of the dolt repo(s) by clicking the fork button at the upper
 right of each of the respective dolthub github repos.
 
@@ -77,12 +76,12 @@ ok      github.com/dolthub/dolt/go/store/util/writers   0.392s
 ok      github.com/dolthub/dolt/go/store/valuefile      0.786s
 ```
 
-## Fix Issue
+# Fix Issue
 Refer to these guides to fix bugs specific to each part of dolt:
 1. [Contributing to Dolt](./contributing/dolt.md)
 2. [Contributing to Go MySQL Server](./contributing/go-mysql-server.md)
 
-## Submit Pull Request
+# Submit Pull Request
 Remember to remove local dependencies before pushing your changes.
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
