@@ -76,6 +76,13 @@ ok      github.com/dolthub/dolt/go/store/util/writers   0.392s
 ok      github.com/dolthub/dolt/go/store/valuefile      0.786s
 ```
 
+# Install Dolt
+You can build dolt from source like so:
+```bash
+~/dolt_workspace $ cd ./dolt/go
+~/dolt_workspace/dolt/go $ go install ./cmd/dolt
+```
+
 # Fix Issue
 Refer to these guides to fix bugs specific to each part of dolt:
 1. [Contributing to Dolt](./contributing/dolt.md)
