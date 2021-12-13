@@ -79,8 +79,8 @@ ok      github.com/dolthub/dolt/go/store/valuefile      0.786s
 
 ## Fix Issue
 Refer to these guides to fix bugs specific to each part of dolt:
-1. [Contributing to Dolt](./contributing/dolt)
-2. [Contributing to Go MySQL Server](./contributing/go-mysql-server)
+1. [Contributing to Dolt](./contributing/dolt.md)
+2. [Contributing to Go MySQL Server](./contributing/go-mysql-server.md)
 
 ## Submit Pull Request
 Remember to remove local dependencies before pushing your changes.
