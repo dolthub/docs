@@ -43,7 +43,7 @@ value "2014-1-2" can't be converted to time.Time
 Brilliant, we've managed to reproduce the bug. Let's track down where that
 error is coming from.
 
-## Tracking Down the Error
+# Tracking Down the Error
 Hopefully this isn't too hard:
 ```shell
 $ ~/dolt_workspace $ grep -R "can't be converted to time.Time"
