@@ -2,55 +2,21 @@
 title: "Contributing to Dolt"
 ---
 
-# How to Contribute
-
-Dolt is basically [Git for data](https://www.dolthub.com/blog/2021-11-26-so-you-want-git-database/).
-We are growing fast and attracting many new users each with their own unique use case.
-As a result, it is not unlikely we discover that parts of Dolt don't work as expected.
-Fortunately, Dolt is open-source, meaning you can tackle any of the issues listed on our [issues page on GitHub](https://github.com/dolthub/dolt/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22).
-
-In this blog, I'll guide you through my recent fix for this [bug where Dolt wasn't respecting a config flag](https://github.com/dolthub/dolt/issues/2442) to show you what it's like to make a change to Dolt.
+# How to Contribute to Dolt
+Here, we will go through a fix for this
+[bug where Dolt wasn't respecting a config flag](https://github.com/dolthub/dolt/issues/2442)
+to demonstrate how to make a change to [Dolt](https://github.com/dolthub/dolt).
 
 ## Setup
-
-Create a fork of the [dolt repo](https://www.github.com/dolthub/dolt) by clicking the fork button at the upper right.
-
-Create a directory for your dolt workspace.
-
-```bash
-$ mkdir dolt_workspace
-```
-
-Clone the dolt project using Git.
-
-```bash
-$ cd ~/dolt_workspace
-$ git clone git@github.com:<your-username>/dolt.git
-```
-
-Create a branch
-
-```bash
-$ cd ~/dolt_workspace/dolt
-$ git checkout -b james/fix-2442-read-only-flag
-```
-
-Install dolt
-
-```bash
-$ cd ~/dolt_workspace/dolt/go
-$ go install ./cmd/dolt
-```
+Follow these [setup instructions](../contributing.md).
 
 ## Identifying the Bug
-
 Dolt has the ability to host a SQL server and take in user queries to create, modify, and drop tables.
 The server allows users to provide a config file through the `--config` option.
 A customer claimed that the `read_only` flag in their config file was not being respected when using the dolt server; this means that the server was allowing users to run queries that modified data on the server.
 
 First off, let's try to reproduce the issue.
 Create a dolt database:
-
 ```bash
 $ cd ~/dolt_workspace
 $ mkdir test_db
@@ -59,7 +25,6 @@ $ dolt init
 ```
 
 Create a config file named `config.yml` and put this in it:
-
 ```
 log_level: debug
 user:
@@ -73,7 +38,6 @@ behavior:
 
 We have a file called `pytest.py` located in `~/dolt_workspace/dolt/integration-tests/bats/helper`, which contains many useful helper methods for testing dolt sql-server.
 I wrote a quick Python script using methods from `pytest.py` to send queries and look at the results manually.
-
 ```python
 from pytest import *
 # Create a new connection
@@ -102,11 +66,9 @@ no problems
 In this case "no problems" is actually bad, since we expected the server to return an error.
 
 ## Fixing the Bug
-
 I highly recommend using an IDE like [Goland](https://www.jetbrains.com/go/) especially when debugging larger projects.
 
 After poking around in the code, we see that the config file containing user permissions is used to create a new `sqlengine`.
-
 ```go
 serverConf.Address = hostPort
 serverConf.Auth = userAuth
@@ -120,7 +82,6 @@ sqlEngine, err := engine.NewSqlEngine(ctx, mrEnv, engine.FormatTabular, "", serv
 
 For some reason, the `NewSqlEngine` constructor creates a new authenticator using `auth.None`, which always gives users full permissions.
 Instead, we should be passing in the authenticator already created that is based on permissions specified in the config file.
-
 ```diff
 // NewSqlEngine returns a SqlEngine
 func NewSqlEngine(
@@ -134,15 +95,12 @@ func NewSqlEngine(
 ```
 
 The method call to `NewSqlEngine` now looks like this:
-
 ```go
 sqlEngine, err := engine.NewSqlEngine(ctx, mrEnv, engine.FormatTabular, "", serverConf.Auth, serverConfig.AutoCommit())
 ```
 
 ## Testing
-
-After reinstalling dolt and running the python script, we get an exception as expected.
-
+After [reinstalling](../contributing.md#install-dolt) dolt and running the python script, we get an exception as expected.
 ```bash
 $ python sqltest.py
 caught exception: 1105 (HY000): not authorized: user does not have permission: write
@@ -212,29 +170,5 @@ $ test.sh
 ```
 
 ## Create a Pull Request
-
-Since the changes seem to be working locally, make a commit and push to your repo.
-
-```bash
-$ git add .
-$ git commit -m "read_only flag is no longer ignored"
-$ git push --set-upstream origin james/fix-2442-read-only-flag
-```
-
-Finally, I created a pull request from my fork to the main branch.
-Navigate to the pull requests section of your repo: `https://github.com/<your-username>/dolt/pulls`.
-
-<figure>
-	<img src="../images/contributing-to-dolt/pr_section.png" alt="Pull Request Section" />
-</figure>
-Click on "New pull request"
-<figure>
-	<img src="../images/contributing-to-dolt/new_pr.png" alt="New Pull Request" />
-</figure>
-Make sure the base repository is set to dolthub/dolt and click "Create pull request".
-<figure>
-	<img src="../images/contributing-to-dolt/create_pr.png" alt="Create Pull Request" />
-</figure>
-
-This will trigger the continuous integration tests to run, which makes sure the changes don't break any existing functionality.
-If all goes well, somebody on the Dolt team will review the changes, and they'll be approved and merged.
+If you are unfamiliar with how to create a Pull Request,
+follow the instructions [here](../contributing.md#submit-pull-request).
