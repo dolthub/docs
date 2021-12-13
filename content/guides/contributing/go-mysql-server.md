@@ -116,7 +116,7 @@ test](https://github.com/golang/go/wiki/TableDrivenTests) with a pretty
 straight forward structure of giving an input to `Convert` and asserting a
 matching output and error value. We can just add tests for each of the three
 handled time types:
-```diff
+```
 diff --git a/sql/datetimetype_test.go b/sql/datetimetype_test.go
 index d9551262..a3d385a9 100644
 --- a/sql/datetimetype_test.go
@@ -176,7 +176,7 @@ FAIL
 ```
 Perfect. Let's go ahead and see if we can fix it by adding the new pattern in
 `TimestampDatetimeLayouts`.
-```diff
+```
 diff --git a/sql/datetimetype.go b/sql/datetimetype.go
 index 2f00e324..f50b82af 100644
 --- a/sql/datetimetype.go
@@ -204,7 +204,7 @@ great to codify the fact that `INSERT INTO table_with_datetime (timestamp) VALUE
 `insert_queries.go` and we can look through that file for places where we're
 doing integration tests of inserts into datetime columns. Eventually, we might
 come with something like:
-```diff
+```
 diff --git a/enginetest/insert_queries.go b/enginetest/insert_queries.go
 index 5b88fad5..a4daf1f3 100644
 --- a/enginetest/insert_queries.go
