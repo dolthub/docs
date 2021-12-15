@@ -42,6 +42,9 @@
 * [Python](guides/python.md)
     * [SQL Clients](guides/python/sql-clients.md)
     * [Doltpy](guides/python/doltpy.md)
+* [Contributing](guides/contributing.md)
+    * [dolt](guides/contributing/dolt.md)
+    * [go-mysql-server](guides/contributing/go-mysql-server.md)
 
 ## Reference
 * [SQL](reference/sql.md)
@@ -54,6 +57,7 @@
     * [Dolt System Tables](reference/sql/dolt-system-tables.md)
     * [Dolt System Variables](reference/sql/dolt-sysvars.md)
     * [Using Branches](reference/sql/branches.md)
+    * [Querying History](reference/sql/querying-history.md)
     * [Configuration](reference/sql/configuration.md)
     * [Backups](reference/sql/backups.md)
     * [Replication](reference/sql/replication.md)

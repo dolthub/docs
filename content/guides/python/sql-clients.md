@@ -10,7 +10,7 @@ specific to version controlling. ([this blog is a good practical
 introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/)).
 
 The full set of MySQL commands that Dolt supports can be found
-[here](https://docs.dolthub.com/interfaces/sql/sql-support).
+[here](../../reference/sql/support).
 
 Integration examples:
 
@@ -76,7 +76,7 @@ Connecting to a Dolt database looks identical to connecting to MySQL:
 {'commit_hash': 'bki1pgk63a34ouqj0mvjg5mfqtgf7jh1', 'committer': 'Max Hoffman', 'email': 'max@dolthub.com', 'date': datetime.datetime(2021, 6, 24, 20, 9, 56, 82000), 'message': 'Initialize data repository'}
 ```
 
- Refer to the [`pymysql`
+Refer to the [`pymysql`
 docs](https://pymysql.readthedocs.io/en/latest/user/examples.html)
 for more information.
 
