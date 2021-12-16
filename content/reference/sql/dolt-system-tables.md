@@ -9,9 +9,13 @@ title: Dolt System Tables
 * [dolt\_diff](#dolt_diff_usdtablename)
 * [dolt\_docs](#dolt_docs)
 * [dolt\_history](#dolt_history_usdtablename)
+* [dolt\_commit\_ancestors](#dolt_commit_ancestors)
 * [dolt\_log](#dolt_log)
 * [dolt\_status](#dolt_status)
-* [dolt\_conflicts](#dolt_conflicts_usdtablename)
+* [dolt\_conflicts](#dolt_conflicts)
+* [dolt\_conflicts\_$tablename](#dolt_conflicts_usdtablename)
+* [dolt\_constraint\_violations](#dolt_constraint_violations)
+* [dolt\_constraint\_violations\_$tablename](#dolt_constraint_violations_usdtablename)
 * [dolt\_procedures](#dolt_procedures)
 * [dolt\_schemas](#dolt_schemas)
 * [dolt\_remotes](#dolt_remotes)
@@ -434,6 +438,27 @@ WHERE state = "Virginia";
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
 
+## `dolt_commit_ancestors`
+
+The `dolt_commit_ancestors` records the ancestors for every commit in the database. Each commit has one or two
+ancestors, two in the case of a merge.
+
+### Schema
+
+Each commit hash has one or two entries in the table, depending on whether it has one or two parent commits. The root
+commit of the database has a `NULL` parent. For merge commits, the merge base will have `parent_index` 0, and the commit
+merged will have `parent_index` 1.
+
+```text
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| commit_hash  | text | NO   | PRI |         |       |
+| parent_hash  | text | NO   | PRI |         |       |
+| parent_index | int  | NO   | PRI |         |       |
++--------------+------+------+-----+---------+-------+
+```
+
 ## `dolt_log`
 
 `dolt_log` contains the commit log, with contents identical to the
@@ -505,6 +530,23 @@ WHERE staged=false;
 +------------+--------+-----------+
 ```
 
+## `dolt_conflicts`
+
+dolt_conflicts is a system table that has a row for every table in the working set that has an unresolved merge
+conflict.
+
+```sql
++---------------+-----------------+------+-----+---------+-------+
+| Field         | Type            | Null | Key | Default | Extra |
++---------------+-----------------+------+-----+---------+-------+
+| table         | text            | NO   | PRI |         |       |
+| num_conflicts | bigint unsigned | NO   |     |         |       |
++---------------+-----------------+------+-----+---------+-------+
+```
+
+Query this table when resolving conflicts in a SQL session. For more information on resolving merge conflicts in SQL,
+see docs for the [dolt\_conflicts\_$TABLENAME](#dolt_conflicts_usdtablename) tables.
+
 ## `dolt_conflicts_$TABLENAME`
 
 For each table `$TABLENAME` in conflict after a merge, there is a
@@ -552,6 +594,64 @@ mydb> replace into mytable (select their_a, their_b from dolt_conflicts_mytable)
 
 And of course you can use any combination of `ours`, `theirs` and
 `base` rows in these replacements.
+
+## `dolt_constraint_violations`
+
+The `dolt_constraint_violations` system table contains one row for every table that has a constraint violation
+introduced by a merge. Dolt enforces constraints (such as foreign keys) during normal SQL operations, but it's possible
+that a merge puts one or more tables in a state where constraints no longer hold. For example, a row deleted in the
+merge base could be referenced via a foreign key constraint by an added row in the merged commit. Use
+`dolt_constraint_violations` to discover such violations.
+
+### Schema
+
+```sql
++----------------+-----------------+------+-----+---------+-------+
+| Field          | Type            | Null | Key | Default | Extra |
++----------------+-----------------+------+-----+---------+-------+
+| table          | text            | NO   | PRI |         |       |
+| num_violations | bigint unsigned | NO   |     |         |       |
++----------------+-----------------+------+-----+---------+-------+
+```
+
+## `dolt_constraint_violations_$TABLENAME`
+
+For each table `$TABLENAME` with a constraint violation after a merge, there is a  corresponding system table named
+`dolt_constraint_violations_$TABLENAME`. Each row in the table represents a constraint violation that must be resolved
+via `INSERT`, `UPDATE`, or `DELETE` statements. Resolve each constraint violation before committing the result of the 
+merge that introduced them.
+
+### Schema
+
+For a hypothetical table `a` with the following schema:
+
+```sql
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| x     | bigint     | NO   | PRI |         |       |
+| y     | varchar(1) | YES  |     |         |       |
++-------+------------+------+-----+---------+-------+
+```
+
+`dolt_constraint_violations_a` will have the following schema:
+
+```sql
++----------------+-------------------------------------------------------+------+-----+---------+-------+
+| Field          | Type                                                  | Null | Key | Default | Extra |
++----------------+-------------------------------------------------------+------+-----+---------+-------+
+| violation_type | enum('foreign key','unique index','check constraint') | NO   | PRI |         |       |
+| x              | bigint                                                | NO   | PRI |         |       |
+| y              | varchar(1)                                            | YES  |     |         |       |
+| violation_info | json                                                  | YES  |     |         |       |
++----------------+-------------------------------------------------------+------+-----+---------+-------+
+```
+
+Each row in the table represents a row in the primary table that is in violation of one or more constraint violations.
+The `violation_info` field is a JSON payload describing the violation.
+
+As with `dolt_conflicts`, delete rows from the corresponding `dolt_constraint_violations` table to signal to dolt that
+you have resolved any such violations before committing.
 
 ## `dolt_procedures`
 
