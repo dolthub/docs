@@ -82,7 +82,7 @@ Dolt commands, such as branch information, the commit log, and much
 more. You can write queries that examine the history of a table, or
 that select the diff between two commits.
 
-- [dolt_log table](sql/dolt-system-tables.md#dolt_branches)
+- [dolt_log table](sql/dolt-system-tables.md#dolt_log)
 - [dolt_branches table](sql/dolt-system-tables.md#dolt_branches)
 - [dolt_commit_diff tables](sql/dolt-system-tables.md#dolt_commit_diff_usdtablename)
 - [dolt_diff tables](sql/dolt-system-tables.md#dolt_diff_usdtablename)
