@@ -440,8 +440,8 @@ WHERE state = "Virginia";
 
 ## `dolt_commit_ancestors`
 
-The `dolt_commit_ancestors` records the ancestors for every commit in the database. Each commit has one or two
-ancestors, two in the case of a merge.
+The `dolt_commit_ancestors` table records the ancestors for every commit in the database. Each commit has one or two
+ancestors, two in the case of a merge commit.
 
 ### Schema
 
