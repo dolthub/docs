@@ -46,11 +46,11 @@ title: Supported Statements
 | `ALTER TYPE`            | 🟠        | Some type changes are supported but not all.                                                                                                       |
 | `ALTER VIEW`            | ❌        | Views can be created and dropped, but not altered.                                                                                                 |
 | `CHANGE COLUMN`         | ✅        |                                                                                                                                                    |
-| `CREATE DATABASE`       | 🟠        | Create an in-memory database the length of a session. Creating new dolt databases that persist outside of a session is not yet supported.          |
+| `CREATE DATABASE`       | ✅        | Creates a new dolt database rooted relative to the server directory                                                                                |
 | `CREATE EVENT`          | ❌        |                                                                                                                                                    |
 | `CREATE FUNCTION`       | ❌        |                                                                                                                                                    |
 | `CREATE INDEX`          | 🟠        | Fulltext and spatial indexes are not supported.                                                                                                    |
-| `CREATE SCHEMA`         | 🟠        | Create a temporary in memory database the length of a session. Creating new Dolt databases that persist outside of a session is not yet supported. |
+| `CREATE SCHEMA`         | ✅        | Creates a new dolt database rooted relative to the server directory                                                                                |
 | `CREATE TABLE`          | ✅        |                                                                                                                                                    |
 | `CREATE TABLE AS`       | ❌        |                                                                                                                                                    |
 | `CREATE TRIGGER`        | ✅        |                                                                                                                                                    |
@@ -58,11 +58,11 @@ title: Supported Statements
 | `DESCRIBE TABLE`        | ✅        |                                                                                                                                                    |
 | `DROP COLUMN`           | ✅        |                                                                                                                                                    |
 | `DROP CONSTRAINT`       | ✅        |                                                                                                                                                    |
-| `DROP DATABASE`         | 🟠        | Deletes only temporary in-memory databases. To delete a Dolt database you must delete its directory on disk.                                       |
+| `DROP DATABASE`         | ✅        | Deletes the dolt data directory. This is unrecoverable.                                                                                            |
 | `DROP EVENT`            | ❌        |                                                                                                                                                    |
 | `DROP FUNCTION`         | ❌        |                                                                                                                                                    |
 | `DROP INDEX`            | ✅        |                                                                                                                                                    |
-| `DROP SCHEMA`           | 🟠        | Deletes only temporary in-memory database. To delete a Dolt database you must delete its directory on disk.                                        |
+| `DROP SCHEMA`           | ✅        | Deletes the dolt data directory. This is unrecoverable.                                                                                            |
 | `DROP TABLE`            | ✅        |                                                                                                                                                    |
 | `DROP PARTITION`        | ❌        |                                                                                                                                                    |
 | `DROP PROCEDURE`        | ✅        |                                                                                                                                                    |
