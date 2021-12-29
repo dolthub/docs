@@ -76,8 +76,36 @@ This yields the results as JSON, with both schema and data:
 .
 ```
 
-As a reminder, this API is in Alpha version, and we do not currently support authentication for private databases. We will continue to flesh this out, as well as improve query performance, over time.
+As a reminder, this API is in Alpha version, and we will continue to flesh this out, as
+well as improve query performance, over time.
 
 You can also explore our SQL API on DoltHub whenever you execute a query:
 
 ![SQL API Tab](../../.gitbook/assets/sql-api-tab-dolthub.png)
+
+## Authentication
+
+API tokens can be used to authenticate calls to the SQL API over Basic Authentication.
+This is useful for executing SQL queries against private databases.
+
+First, create an API token in your settings on DoltHub. Copy the token right away, as you
+won't be able to see it again.
+
+![Token settings](../../.gitbook/assets/add-api-token-settings.png)
+
+Now you can use this token in the header when executing a query against a private database.
+
+```python
+owner, repo, branch = "dolthub", "private-db", "main"
+query = """SELECT * FROM testtable"""
+
+res = requests.get(
+    "https://www.dolthub.com/api/v1alpha1/{}/{}".format(owner, repo, branch),
+    params={"q": query},
+    headers={ "authorization": "token [TOKEN YOU COPIED]" },
+)
+
+res.json()
+```
+
+Please note: You must include a ref name when making authenticated calls to the SQL API using a token.
