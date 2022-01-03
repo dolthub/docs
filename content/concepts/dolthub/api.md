@@ -88,7 +88,7 @@ You can also explore our SQL API on DoltHub whenever you execute a query:
 API tokens can be used to authenticate calls to the SQL API over Basic Authentication.
 This is useful for executing SQL queries against private databases.
 
-First, create an API token in your settings on DoltHub. Copy the token right away, as you
+First, create an API token in your [settings](https://www.dolthub.com/settings/tokens) on DoltHub. Copy the token right away, as you
 won't be able to see it again.
 
 ![Token settings](../../.gitbook/assets/add-api-token-settings.png)
