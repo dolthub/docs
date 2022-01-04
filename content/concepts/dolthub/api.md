@@ -108,4 +108,4 @@ res = requests.get(
 res.json()
 ```
 
-Please note: You must include a ref name when making authenticated calls to the SQL API using a token.
+Please note: You must include a ref name (branch, tag, commit hash, etc) when making authenticated calls to the SQL API using a token. Unauthenticated API requests do not require this. They use the default branch (`main` or `master`).
