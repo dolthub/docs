@@ -32,7 +32,7 @@ $ ls example.csv
 example.csv
 ```
 
-Open Microsoft Excel. Select Data &gt; From Text/CSV. Navigate to the `export.csv` file on your computer. Click Import, make sure the preview is correct, click Load and the Dolt table should be loaded in as a new sheet.
+Open Microsoft Excel. Select Data > From Text/CSV. Navigate to the `export.csv` file on your computer. Click Import, make sure the preview is correct, click Load and the Dolt table should be loaded in as a new sheet.
 
 ![Excel Read CSV Example](../../../.gitbook/assets/excel-read-csv.png)
 
@@ -44,7 +44,7 @@ When importing the whole Dolt table to Excel using CSV is impractical due to siz
 
 The first thing you have to do is start a Dolt SQL Server. To do this navigate to the Dolt repository directory you want to read from and run `dolt sql-server`. This command starts a MySQL compatible server on port 3306 with a user named `root`. It exposes a database named after the Dolt repository directory with dashes \(`-`\) changed to underscores \(`_`\). Thus, `dolt-test` directory name becomes `dolt_test` database name. For the purposes of this example I am running a database named `dolt_test` with user `dolt`.
 
-Now you must install the [MySQL ODBC Connector](https://dev.mysql.com/downloads/connector/odbc/) on your computer. Downloading the appropriate one and running it opens a standard Windows Installer. Once complete, navigate to `Control Panel` &gt; `Administrative Tools` &gt; `ODBC Data Sources` or just search for `ODBC Data Sources`. You'll be greeted by this window:
+Now you must install the [MySQL ODBC Connector](https://dev.mysql.com/downloads/connector/odbc/) on your computer. Downloading the appropriate one and running it opens a standard Windows Installer. Once complete, navigate to `Control Panel` > `Administrative Tools` > `ODBC Data Sources` or just search for `ODBC Data Sources`. You'll be greeted by this window:
 
 ![ODBC Data Sources](../../../.gitbook/assets/odbc-data-sources.png)
 
@@ -52,11 +52,11 @@ Click `Add...` and you should see `MySQL ODBC 8.0 ANSI Driver` and `MySQL ODBC 8
 
 ![Mysql ODBC Configuration](../../../.gitbook/assets/mysql-odbc-config.png)
 
-Now it's time to read the data into Excel over that connection. Go back to Excel and navigate to `Data` &gt; `Get Data` &gt; `From Other Sources` &gt; `From ODBC`. Pick `Dolt Test` from the drop down and click `OK`. This will bring up the following preview screen where you can navigate to and pick the table you want to import. The test table is in the `dolt_test` database. Clicking `Load` will load the data into the selected sheet.
+Now it's time to read the data into Excel over that connection. Go back to Excel and navigate to `Data` > `Get Data` > `From Other Sources` > `From ODBC`. Pick `Dolt Test` from the drop down and click `OK`. This will bring up the following preview screen where you can navigate to and pick the table you want to import. The test table is in the `dolt_test` database. Clicking `Load` will load the data into the selected sheet.
 
 ![Get Data ODBC](../../../.gitbook/assets/excel-get-data-odbc.png)
 
-If you want to return the results of a query instead of a whole table, navigate to `Data` &gt; `Get Data` &gt; `From Other Sources` &gt; `From ODBC`. Pick `Dolt Test` from the drop down and click `Advanced` instead of `OK`. Enter the SQL query you would like to run in the text box. This currently does not work for some versions of Excel because of [a Dolt issue](https://github.com/dolthub/dolt/issues/991). Until this is resolved, if you want to import the results of a query instead of a full table we recommend `dolt sql -r csv -q` and using the CSV instructions of this document.
+If you want to return the results of a query instead of a whole table, navigate to `Data` > `Get Data` > `From Other Sources` > `From ODBC`. Pick `Dolt Test` from the drop down and click `Advanced` instead of `OK`. Enter the SQL query you would like to run in the text box. This currently does not work for some versions of Excel because of [a Dolt issue](https://github.com/dolthub/dolt/issues/991). Until this is resolved, if you want to import the results of a query instead of a full table we recommend `dolt sql -r csv -q` and using the CSV instructions of this document.
 
 ### Writing to Dolt
 
@@ -68,7 +68,7 @@ If you have data in an Excel sheet you would like to store and version, exportin
 
 Let's start with the simple case where you already have an existing Dolt table that is in the proper schema. Perhaps you even read the data from Dolt and you have simply modified it and want to store your changes.
 
-In Excel, navigate to the sheet you would like to import to Dolt as a table and click `File` &gt; `Export` &gt; `Change File Type` &gt; `CSV (Comma delimited)`. Then click `Save as`. Name the CSV and place it wherever you'd like on your filesystem. For the purposes of this example, we called the CSV `Sheet1.csv` and placed it in the `dolt-test` directory that houses the Dolt database.
+In Excel, navigate to the sheet you would like to import to Dolt as a table and click `File` > `Export` > `Change File Type` > `CSV (Comma delimited)`. Then click `Save as`. Name the CSV and place it wherever you'd like on your filesystem. For the purposes of this example, we called the CSV `Sheet1.csv` and placed it in the `dolt-test` directory that houses the Dolt database.
 
 To import this file to Dolt, go to the directory your Dolt database is located in. Then you run the `dolt table import` command with the table and CSV file path as arguments.
 
@@ -148,7 +148,7 @@ $ ls example.csv
 example.csv
 ```
 
-Navigate in your web browser to the desired Google Sheet. Select `File` &gt; `Open`, select the Upload tab, and either drag the `example.csv` file into the web browser window or `Select a file from your device` using the operating system's file system browser. Click `OK` and the Dolt table should be loaded in as a sheet named after the CSV filename.
+Navigate in your web browser to the desired Google Sheet. Select `File` > `Open`, select the Upload tab, and either drag the `example.csv` file into the web browser window or `Select a file from your device` using the operating system's file system browser. Click `OK` and the Dolt table should be loaded in as a sheet named after the CSV filename.
 
 ![Google Sheets Read CSV Example](../../../.gitbook/assets/google-sheets-read-csv.png)
 
@@ -178,7 +178,7 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 
 Now a port on an `ngrok.io` host is open and forwarding traffic through a secure tunnel to a host on your machine. In the above case the `ngrok` host is named `0.tcp.ngrok.io` and the port is `15612`. You can connect to your running Dolt sql-server from anywhere on the internet with this host and port.
 
-Lastly, you use the Google Sheets Script editor to read the data from Dolt over the SQL JDBC Connector and insert the results into your spreadsheet. Open a new script by clicking `Tools` &gt; `Script Editor`. You will be greeted by a new browser tab with an empty editor.
+Lastly, you use the Google Sheets Script editor to read the data from Dolt over the SQL JDBC Connector and insert the results into your spreadsheet. Open a new script by clicking `Tools` > `Script Editor`. You will be greeted by a new browser tab with an empty editor.
 
 ![Google Sheets New Script Editor](../../../.gitbook/assets/google-sheets-script-editor.png)
 
@@ -248,7 +248,7 @@ If you have data in a Google Sheet you would like to store and version, exportin
 
 Let's start with the simple case where you already have an existing Dolt table that is in the proper schema. Perhaps you even read the data from Dolt and you have simply modified it and want to store your changes.
 
-In Google Sheets, navigate to the sheet you would like to import to Dolt as a table and click `File` &gt; `Download` &gt; `Comma separated values (.csv, current sheet)`. This will make a CSV file in your default download location named `&lt;Spreadsheet name&gt; - &lt;Sheet Name&gt.csv;`.
+In Google Sheets, navigate to the sheet you would like to import to Dolt as a table and click `File` > `Download` > `Comma separated values (.csv, current sheet)`. This will make a CSV file in your default download location named `<Spreadsheet name> - <Sheet Name>.csv;`.
 
 To import this file to Dolt, go to the directory your Dolt database is located in. Then, you run the `dolt table import` command with the table and CSV file path as arguments.
 
@@ -306,7 +306,7 @@ For this example we will make a script that mirrors a Google sheet but ignores a
 
 ![Google Sheets New Script Editor](../../../.gitbook/assets/google-sheets-write-example.png)
 
-First step is to start a `dolt sql-server` and expose a port to the internet as described in "Reading from Dolt Using SQL JDBC Connector". Once that is complete, we again use the Script Editor in Google Sheets. Open a script editor, using `Tools` &gt; `Script Editor` and paste in the following code:
+First step is to start a `dolt sql-server` and expose a port to the internet as described in "Reading from Dolt Using SQL JDBC Connector". Once that is complete, we again use the Script Editor in Google Sheets. Open a script editor, using `Tools` > `Script Editor` and paste in the following code:
 
 ```text
 var server    = '0.tcp.ngrok.io';
