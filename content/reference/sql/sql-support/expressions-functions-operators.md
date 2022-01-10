@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 137 of 436 MySQL functions.**
+**Currently supporting 138 of 436 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -340,7 +340,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `REGEXP_INSTR()`                  | ❌        |                                                                                                |
 | `REGEXP_LIKE()`                   | ❌        |                                                                                                |
 | `REGEXP_MATCHES()`                | ✅        |                                                                                                |
-| `REGEXP_REPLACE()`                | ❌        |                                                                                                |
+| `REGEXP_REPLACE()`                | ✅        |                                                                                                |
 | `REGEXP_SUBSTR()`                 | ❌        |                                                                                                |
 | `REGEXP`                          | ✅        |                                                                                                |
 | `RELEASE_ALL_LOCKS()`             | ✅        |                                                                                                |
