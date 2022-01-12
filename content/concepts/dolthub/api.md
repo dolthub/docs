@@ -196,7 +196,7 @@ endpoint with an empty query.
 
 ```python
 merge_res = requests.post(
-        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/write/{from_branch}/{to_branch}',
+        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/write/{to_branch}/{from_branch}',
         params=None,
         headers=headers,
     )
