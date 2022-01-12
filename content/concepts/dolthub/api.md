@@ -173,13 +173,13 @@ A `done` operation will yield a response that includes some query metadata, incl
 ```
 
 Since a lot of Dolt's functionality is exposed via SQL, we can use the commit ids to query
-the [`dolt_diff_$tablename`
-table](../../reference/sql/dolt-system-tables.md#dolt_diff_usdtablename) to view the
+the [`dolt_commit_diff_$tablename`
+table](../../reference/sql/dolt-system-tables.md#dolt_commit_diff_usdtablename) to view the
 resulting diff from our `UPDATE` query.
 
 ```python
 from_commit, to_commit = res['res_details']['from_commit_id'], res['res_details']['to_commit_id']
-query = f'''SELECT from_player_id, to_player_id, diff_type FROM `dolt_diff_player_season_stat_totals` WHERE from_commit="{from_commit}" AND to_commit="{to_commit}"'''
+query = f'''SELECT from_player_id, to_player_id, diff_type FROM `dolt_commit_diff_player_season_stat_totals` WHERE from_commit="{from_commit}" AND to_commit="{to_commit}"'''
 diff_res = requests.get(
     f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/{to_branch}',
     params={'q': query},
