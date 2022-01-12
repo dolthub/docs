@@ -98,7 +98,7 @@ First, we want to hit the write endpoint with our `UPDATE` query. This will star
 asynchronous operation.
 
 ```python
-owner, repo, from_branch, to_branch = 'dolthub', 'SHAQ', 'main', 'update-dimitri'
+owner, repo, from_branch, to_branch = 'dolthub', 'SHAQ', 'main', 'update-player'
 query = '''UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617'''
 headers = {
     'authorization': 'token [see Authentication section below for token]'
@@ -122,7 +122,7 @@ The yielded JSON results include an `operation_name`.
   "query_execution_message": "",
   "repository_owner": "dolthub",
   "repository_name": "SHAQ",
-  "to_branch_name": "update-dimitri",
+  "to_branch_name": "update-player",
   "from_branch_name": "main",
   "query": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617",
   "operation_name": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
@@ -178,7 +178,7 @@ table](../../reference/sql/dolt-system-tables.md#dolt_diff_usdtablename) to view
 resulting diff from our `UPDATE` query.
 
 ```python
-from_commit, to_commit = poll_res['res_details']['from_commit_id'], poll_res['res_details']['to_commit_id']
+from_commit, to_commit = res['res_details']['from_commit_id'], res['res_details']['to_commit_id']
 query = f'''SELECT from_player_id, to_player_id, diff_type FROM `dolt_diff_player_season_stat_totals` WHERE from_commit="{from_commit}" AND to_commit="{to_commit}"'''
 diff_res = requests.get(
     f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/{to_branch}',
