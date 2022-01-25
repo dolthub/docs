@@ -1136,25 +1136,31 @@ show system tables
 
 ## `dolt schema export`
 
-Exports a table's schema.
+Exports table schemas as SQL DDL statements.
 
 ### Synopsis
 
 ```bash
-dolt schema export <table> <file>
+dolt schema export [table] [file]
 ```
 
 ### Description
 
+Exports tables as SQL DDL statements, which can then be executed to recreate tables.
+
+If `table` is given, only that table's schema will be exported, otherwise all table schemas will be exported. 
+
+If `file` is given, the exported schemas will be written to that file, otherwise they will be output to standard out.
+
 ### Arguments and options
 
-`<table>`: table whose schema is being exported.
+`[table]`: table whose schema is being exported.
 
-`<file>`: the file that the schema will be written to.
+`[file]`: the file to which the schema will be exported.
 
 ## `dolt schema import`
 
-Creates a new table with an inferred schema.
+Creates or updates a table by inferring a schema from a file containing sample data. 
 
 ### Synopsis
 
