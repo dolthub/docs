@@ -62,7 +62,7 @@ Add table contents to the list of staged tables
 ### Synopsis
 
 ```bash
-dolt add [&lt;table&gt;...]
+dolt add [<table>...]
 ```
 
 ### Description
@@ -90,8 +90,8 @@ Show changes between commits, commit and working tree, etc
 ### Synopsis
 
 ```bash
-dolt diff [options] [&lt;commit&gt;] [&lt;tables&gt;...]
-dolt diff [options] &lt;commit&gt; &lt;commit&gt; [&lt;tables&gt;...]
+dolt diff [options] [<commit>] [<tables>...]
+dolt diff [options] <commit> <commit> [<tables>...]
 ```
 
 ### Description
@@ -145,7 +145,7 @@ Resets staged tables to their HEAD state
 ### Synopsis
 
 ```bash
-dolt reset &lt;tables&gt;...
+dolt reset <tables>...
 dolt reset [--hard | --soft]
 ```
 
@@ -228,10 +228,10 @@ Runs a SQL query
 ```bash
 dolt sql 
 dolt sql < script.sql
-dolt sql [--multi-db-dir &lt;directory&gt;] [-r &lt;result format&gt;]
-dolt sql -q &lt;query&gt; [-r &lt;result format&gt;] [-s &lt;name&gt; -m &lt;message&gt;] [-b]
-dolt sql -q &lt;query&gt; --multi-db-dir &lt;directory&gt; [-r &lt;result format&gt;] [-b]
-dolt sql -x &lt;name&gt;
+dolt sql [--multi-db-dir <directory>] [-r <result format>]
+dolt sql -q <query> [-r <result format>] [-s <name> -m <message>] [-b]
+dolt sql -q <query> --multi-db-dir <directory> [-r <result format>] [-b]
+dolt sql -x <name>
 dolt sql --list-saved
 ```
 
@@ -284,8 +284,8 @@ Start a MySQL-compatible server.
 ### Synopsis
 
 ```bash
-dolt sql-server --config &lt;file&gt;
-dolt sql-server [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [--query-parallelism &lt;num-go-routines&gt;] [-r]
+dolt sql-server --config <file>
+dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
 ```
 
 ### Description
@@ -414,8 +414,8 @@ Starts a built-in MySQL client.
 ### Synopsis
 
 ```bash
-dolt sql-client [-d] --config &lt;file&gt;
-dolt sql-client [-d] [-H &lt;host&gt;] [-P &lt;port&gt;] [-u &lt;user&gt;] [-p &lt;password&gt;] [-t &lt;timeout&gt;] [-l &lt;loglevel&gt;] [--multi-db-dir &lt;directory&gt;] [--query-parallelism &lt;num-go-routines&gt;] [-r]
+dolt sql-client [-d] --config <file>
+dolt sql-client [-d] [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
 ```
 
 ### Description
@@ -481,7 +481,7 @@ Show commit logs
 ### Synopsis
 
 ```bash
-dolt log [-n &lt;num_commits&gt;] [&lt;commit&gt;] [[--] &lt;table&gt;]
+dolt log [-n <num_commits>] [<commit>] [[--] <table>]
 ```
 
 ### Description
@@ -514,10 +514,10 @@ List, create, or delete branches
 
 ```bash
 dolt branch [--list] [-v] [-a] [-r]
-dolt branch [-f] &lt;branchname&gt; [&lt;start-point&gt;]
-dolt branch -m [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;
-dolt branch -c [-f] [&lt;oldbranch&gt;] &lt;newbranch&gt;
-dolt branch -d [-f] [-r] &lt;branchname&gt;...
+dolt branch [-f] <branchname> [<start-point>]
+dolt branch -m [-f] [<oldbranch>] <newbranch>
+dolt branch -c [-f] [<oldbranch>] <newbranch>
+dolt branch -d [-f] [-r] <branchname>...
 ```
 
 ### Description
@@ -577,9 +577,9 @@ Switch branches or restore working tree tables
 ### Synopsis
 
 ```bash
-dolt checkout &lt;branch&gt;
-dolt checkout &lt;table&gt;...
-dolt checkout -b &lt;new-branch&gt; [&lt;start-point&gt;]
+dolt checkout <branch>
+dolt checkout <table>...
+dolt checkout -b <new-branch> [<start-point>]
 ```
 
 ### Description
@@ -614,8 +614,8 @@ Join two or more development histories together
 ### Synopsis
 
 ```bash
-dolt merge [--squash] &lt;branch&gt;
-dolt merge --no-ff [-m message] &lt;branch&gt;
+dolt merge [--squash] <branch>
+dolt merge --no-ff [-m message] <branch>
 dolt merge --abort
 ```
 
@@ -647,6 +647,12 @@ If there were uncommitted working set changes present when the merge started, `d
 
 
 
+---
+title: CLI
+---
+
+# CLI
+
 ## `dolt conflicts cat`
 
 print conflicts
@@ -654,7 +660,7 @@ print conflicts
 ### Synopsis
 
 ```bash
-dolt conflicts cat [&lt;commit&gt;] &lt;table&gt;...
+dolt conflicts cat [<commit>] <table>...
 ```
 
 ### Description
@@ -674,8 +680,8 @@ Removes rows from list of conflicts
 ### Synopsis
 
 ```bash
-dolt conflicts resolve &lt;table&gt; [&lt;key_definition&gt;] &lt;key&gt;...
-dolt conflicts resolve --ours|--theirs &lt;table&gt;...
+dolt conflicts resolve <table> [<key_definition>] <key>...
+dolt conflicts resolve --ours|--theirs <table>...
 ```
 
 ### Description
@@ -738,7 +744,7 @@ Clone a data repository into a new directory
 ### Synopsis
 
 ```bash
-dolt clone [-remote &lt;remote&gt;] [-branch &lt;branch&gt;]  [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;remote-url&gt; &lt;new-dir&gt;
+dolt clone [-remote <remote>] [-branch <branch>]  [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <remote-url> <new-dir>
 ```
 
 ### Description
@@ -777,7 +783,7 @@ Download objects and refs from another repository
 ### Synopsis
 
 ```bash
-dolt fetch [&lt;remote&gt;] [&lt;refspec&gt; ...]
+dolt fetch [<remote>] [<refspec> ...]
 ```
 
 ### Description
@@ -803,7 +809,7 @@ Fetch from and integrate with another repository or a local branch
 ### Synopsis
 
 ```bash
-dolt pull &lt;remote&gt;
+dolt pull <remote>
 ```
 
 ### Description
@@ -833,7 +839,7 @@ Update remote refs along with associated objects
 ### Synopsis
 
 ```bash
-dolt push [-u | --set-upstream] [&lt;remote&gt;] [&lt;refspec&gt;]
+dolt push [-u | --set-upstream] [<remote>] [<refspec>]
 ```
 
 ### Description
@@ -865,9 +871,9 @@ Get and set repository or global options
 
 ```bash
 dolt config [--global|--local] --list
-dolt config [--global|--local] --add &lt;name&gt; &lt;value&gt;
-dolt config [--global|--local] --get &lt;name&gt;
-dolt config [--global|--local] --unset &lt;name&gt;...
+dolt config [--global|--local] --add <name> <value>
+dolt config [--global|--local] --get <name>
+dolt config [--global|--local] --unset <name>...
 ```
 
 ### Description
@@ -909,8 +915,8 @@ Manage set of tracked repositories
 
 ```bash
 dolt remote [-v | --verbose]
-dolt remote add [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;name&gt; &lt;url&gt;
-dolt remote remove &lt;name&gt;
+dolt remote add [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <name> <url>
+dolt remote remove <name>
 ```
 
 ### Description
@@ -968,10 +974,10 @@ Manage server backups
 
 ```bash
 dolt backup [-v | --verbose]
-dolt backup add [--aws-region &lt;region&gt;] [--aws-creds-type &lt;creds-type&gt;] [--aws-creds-file &lt;file&gt;] [--aws-creds-profile &lt;profile&gt;] &lt;name&gt; &lt;url&gt;
-dolt backup remove &lt;name&gt;
-dolt backup restore &lt;url&gt; &lt;name&gt;
-dolt backup sync &lt;name&gt;
+dolt backup add [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <name> <url>
+dolt backup remove <name>
+dolt backup restore <url> <name>
+dolt backup sync <name>
 ```
 
 ### Description
@@ -1034,7 +1040,7 @@ Login to DoltHub
 ### Synopsis
 
 ```bash
-dolt login [&lt;creds&gt;]
+dolt login [<creds>]
 ```
 
 ### Description
@@ -1047,6 +1053,12 @@ Login into DoltHub using the email in your config so you can pull from private r
 `<creds>`: A specific credential to use for login.
 
 
+
+---
+title: CLI
+---
+
+# CLI
 
 ## `dolt creds new`
 
@@ -1073,7 +1085,7 @@ Remove a stored public/private keypair.
 ### Synopsis
 
 ```bash
-dolt creds rm &lt;public_key_as_appears_in_ls&gt;
+dolt creds rm <public_key_as_appears_in_ls>
 ```
 
 ### Description
@@ -1114,7 +1126,7 @@ Check authenticating with a credential keypair against a doltremoteapi.
 ### Synopsis
 
 ```bash
-dolt creds check [--endpoint doltremoteapi.dolthub.com:443] [--creds &lt;eak95022q3vskvumn2fcrpibdnheq1dtr8t...&gt;]
+dolt creds check [--endpoint doltremoteapi.dolthub.com:443] [--creds <eak95022q3vskvumn2fcrpibdnheq1dtr8t...>]
 ```
 
 ### Description
@@ -1138,7 +1150,7 @@ Select an existing dolt credential for authenticating with doltremoteapi.
 ### Synopsis
 
 ```bash
-dolt creds use &lt;public_key_as_appears_in_ls | public_key_id_as_appears_in_ls&gt;
+dolt creds use <public_key_as_appears_in_ls | public_key_id_as_appears_in_ls>
 ```
 
 ### Description
@@ -1161,7 +1173,7 @@ Import a dolt credential from an existing .jwk file.
 ### Synopsis
 
 ```bash
-dolt creds import [--no-profile] [&lt;jwk_filename&gt;]
+dolt creds import [--no-profile] [<jwk_filename>]
 ```
 
 ### Description
@@ -1195,7 +1207,7 @@ List tables
 ### Synopsis
 
 ```bash
-dolt ls [--options] [&lt;commit&gt;]
+dolt ls [--options] [<commit>]
 ```
 
 ### Description
@@ -1220,6 +1232,12 @@ show system tables
 
 
 
+---
+title: CLI
+---
+
+# CLI
+
 ## `dolt schema export`
 
 Exports table schemas as SQL DDL statements.
@@ -1227,7 +1245,7 @@ Exports table schemas as SQL DDL statements.
 ### Synopsis
 
 ```bash
-dolt schema export [&lt;table&gt;] [&lt;file&gt;]
+dolt schema export [<table>] [<file>]
 ```
 
 ### Description
@@ -1253,7 +1271,7 @@ Creates or updates a table by inferring a schema from a file containing sample d
 ### Synopsis
 
 ```bash
-dolt schema import [--create|--replace] [--force] [--dry-run] [--lower|--upper] [--keep-types] [--file-type <type>] [--float-threshold] [--map &lt;mapping-file&gt;] [--delim &lt;delimiter&gt;]--pks &lt;field&gt;,... &lt;table&gt; &lt;file&gt;
+dolt schema import [--create|--replace] [--force] [--dry-run] [--lower|--upper] [--keep-types] [--file-type <type>] [--float-threshold] [--map <mapping-file>] [--delim <delimiter>]--pks <field>,... <table> <file>
 ```
 
 ### Description
@@ -1328,7 +1346,7 @@ Shows the schema of one or more tables.
 ### Synopsis
 
 ```bash
-dolt schema show [&lt;commit&gt;] [&lt;table&gt;...]
+dolt schema show [<commit>] [<table>...]
 ```
 
 ### Description
@@ -1352,7 +1370,7 @@ Shows the column tags of one or more tables.
 ### Synopsis
 
 ```bash
-dolt schema tags [-r &lt;result format&gt;] [&lt;table&gt;...]
+dolt schema tags [-r <result format>] [<table>...]
 ```
 
 ### Description
@@ -1370,6 +1388,12 @@ How to format result output. Valid values are tabular, csv, json. Defaults to ta
 
 
 
+---
+title: CLI
+---
+
+# CLI
+
 ## `dolt table import`
 
 Imports data into a dolt table
@@ -1377,9 +1401,9 @@ Imports data into a dolt table
 ### Synopsis
 
 ```bash
-dolt table import -c [-f] [--pk &lt;field&gt;] [--schema &lt;file&gt;] [--map &lt;file&gt;] [--continue] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;
-dolt table import -u [--map &lt;file&gt;] [--continue] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;
-dolt table import -r [--map &lt;file&gt;] [--file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;
+dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue] [--file-type <type>] <table> <file>
+dolt table import -u [--map <file>] [--continue] [--file-type <type>] <table> <file>
+dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
 ```
 
 ### Description
@@ -1454,7 +1478,7 @@ Export the contents of a table to a file.
 ### Synopsis
 
 ```bash
-dolt table export [-f] [-pk &lt;field&gt;] [-schema &lt;file&gt;] [-map &lt;file&gt;] [-continue] [-file-type &lt;type&gt;] &lt;table&gt; &lt;file&gt;
+dolt table export [-f] [-pk <field>] [-schema <file>] [-map <file>] [-continue] [-file-type <type>] <table> <file>
 ```
 
 ### Description
@@ -1485,7 +1509,7 @@ Removes table(s) from the working set of tables.
 ### Synopsis
 
 ```bash
-dolt table rm &lt;table&gt;...
+dolt table rm <table>...
 ```
 
 ### Description
@@ -1505,7 +1529,7 @@ Renames a table
 ### Synopsis
 
 ```bash
-dolt table mv [-f] &lt;oldtable` &lt;newtable`
+dolt table mv [-f] <oldtable` <newtable`
 ```
 
 ### Description
@@ -1537,7 +1561,7 @@ Makes a copy of a table
 ### Synopsis
 
 ```bash
-dolt table cp [-f] &lt;oldtable&gt; &lt;newtable&gt;
+dolt table cp [-f] <oldtable> <newtable>
 ```
 
 ### Description
@@ -1568,8 +1592,8 @@ Create, list, delete tags.
 
 ```bash
 dolt tag [-v]
-dolt tag [-m &lt;message&gt;] &lt;tagname&gt; [&lt;ref&gt;]
-dolt tag -d &lt;tagname&gt;
+dolt tag [-m <message>] <tagname> [<ref>]
+dolt tag -d <tagname>
 ```
 
 ### Description
@@ -1602,7 +1626,7 @@ Show what revision and author last modified each row of a table
 ### Synopsis
 
 ```bash
-dolt blame [&lt;rev&gt;] &lt;tablename&gt;
+dolt blame [<rev>] <tablename>
 ```
 
 ### Description
@@ -1613,6 +1637,12 @@ Annotates each row in the given table with information from the revision which l
 
 No options for this command.
 
+---
+title: CLI
+---
+
+# CLI
+
 ## `dolt constraints verify`
 
 Verifies a table's constraints
@@ -1620,7 +1650,7 @@ Verifies a table's constraints
 ### Synopsis
 
 ```bash
-dolt constraints verify [--all] [--output-only] [&lt;table&gt;...]
+dolt constraints verify [--all] [--output-only] [<table>...]
 ```
 
 ### Description
@@ -1648,7 +1678,7 @@ Fetch table(s) at a specific commit into a new dolt repo
 ### Synopsis
 
 ```bash
-dolt read-tables [--dir <directory>] &lt;remote-url&gt; &lt;commit&gt; [&lt;table&gt;...]
+dolt read-tables [--dir <directory>] <remote-url> <commit> [<table>...]
 ```
 
 ### Description
@@ -1698,7 +1728,7 @@ Edits the commit history using the provided query
 ### Synopsis
 
 ```bash
-dolt filter-branch [--all] &lt;query&gt; [&lt;commit&gt;]
+dolt filter-branch [--all] <query> [<commit>]
 ```
 
 ### Description
@@ -1724,7 +1754,7 @@ Find the common ancestor of two commits.
 ### Synopsis
 
 ```bash
-dolt merge-base &lt;commit spec&gt; &lt;commit spec&gt;
+dolt merge-base <commit spec> <commit spec>
 ```
 
 ### Description
@@ -1742,7 +1772,7 @@ Export all tables.
 ### Synopsis
 
 ```bash
-dolt dump [-f] [-r &lt;result-format&gt;] 
+dolt dump [-f] [-r <result-format>] 
 ```
 
 ### Description
