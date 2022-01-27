@@ -647,12 +647,6 @@ If there were uncommitted working set changes present when the merge started, `d
 
 
 
----
-title: CLI
----
-
-# CLI
-
 ## `dolt conflicts cat`
 
 print conflicts
@@ -1054,12 +1048,6 @@ Login into DoltHub using the email in your config so you can pull from private r
 
 
 
----
-title: CLI
----
-
-# CLI
-
 ## `dolt creds new`
 
 Create a new public/private keypair for authenticating with doltremoteapi.
@@ -1232,12 +1220,6 @@ show system tables
 
 
 
----
-title: CLI
----
-
-# CLI
-
 ## `dolt schema export`
 
 Exports table schemas as SQL DDL statements.
@@ -1387,12 +1369,6 @@ A list of tables can optionally be provided.  If it is omitted then all tables w
 How to format result output. Valid values are tabular, csv, json. Defaults to tabular.
 
 
-
----
-title: CLI
----
-
-# CLI
 
 ## `dolt table import`
 
@@ -1636,12 +1612,6 @@ Annotates each row in the given table with information from the revision which l
 ### Arguments and options
 
 No options for this command.
-
----
-title: CLI
----
-
-# CLI
 
 ## `dolt constraints verify`
 
