@@ -13,6 +13,8 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
+Roadmap last updated Feb 2022, next update Apr 2022.
+
 | Feature                                 | ETA / Launch Date |
 | -------                                 | ---               |
 | Join for update                         | Launched Oct 2021 |
@@ -20,7 +22,7 @@ their feature requests implemented first.
 | Commit graph performance                | Launched Nov 2021 |
 | Persistent SQL configuration            | Launched Dec 2021 |
 | CREATE / DROP DATABASE                  | Launched Dec 2021 |
-| Hosted Dolt                             | Launched Jan 2022 |
+| Hosted Dolt Alpha                       | Launched Jan 2022 |
 | `ROWS` window definitions               | Launched Jan 2022 |
 | `RANGE` window definitions              | Launched Jan 2022 |
 | DoltLab (on-prem DoltHub)               | Launched Jan 2022 |
@@ -28,6 +30,7 @@ their feature requests implemented first.
 | Geometry types and functions            | Feb 2022          |
 | 99.9% SQL correctness                   | Q1 2022           |
 | Better `dolt_diff` table experience     | Q1 2022           |
+| Hosted Dolt v1                          | Q2 2022           |
 | Hash join strategy                      | Q2 2022           |
 | Storage performance                     | Q2 2022           |
 | Lock / unlock tables                    | Q2 2022           |
@@ -42,6 +45,8 @@ their feature requests implemented first.
 | Automatic garbage collection            | Unscheduled       |
 | Collation and charset support           | Unscheduled       |
 | Virtual columns and json indexing       | Unscheduled       |
+| Full text indexes                       | Unscheduled       |
+| Spatial indexes                         | Unscheduled       |
 | Multiple DBs in one repo                | Unscheduled       |
 | Embedded dolt                           | Unscheduled       |
 | Signed commits                          | Unscheduled       |
