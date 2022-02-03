@@ -13,6 +13,8 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
+Roadmap last updated Feb 2022, next update Apr 2022.
+
 | Feature                                 | ETA / Launch Date |
 | -------                                 | ---               |
 | Join for update                         | Launched Oct 2021 |
