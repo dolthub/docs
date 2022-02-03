@@ -10,7 +10,7 @@ A commit signals to Dolt that you would like to save the state of the current da
 
 ![](../../.gitbook/assets/dolt-commit-graph.png)
 
-Commit hashes are SHA-256 encoded hashes of the entire database. Commit hashes look like `t5d5inj4bpc1fltrdm9uoscjdsgebaih`. These are abbreviations of the entire has that Dolt understands. When referring to a specific commit, this is the identifier you use.  
+Commit hashes are SHA-256 encoded hashes of the entire database. Commit hashes look like `t5d5inj4bpc1fltrdm9uoscjdsgebaih`. These are abbreviations of the entire hash that Dolt understands. When referring to a specific commit, this is the identifier you use.  
 
 ## How to use Commits
 
@@ -25,7 +25,7 @@ Dolt uses commits as the basis of comparison between two versions of a database.
 
 You should make a commit when you want to be able to use the current version of the database to do one of the above things.
 
-To create a commit, you tell Dolt you want to make one on the command line or in the SQL interface. A users and commit message are required. Your user is defined in configuration. You provide a commit message via the user interface.
+To create a commit, you tell Dolt you want to make one on the command line or in the SQL interface. A user and commit message are required. Your user is defined in configuration. You provide a commit message via the user interface.
 
 ## Difference between Git Commits and Dolt commits
 
