@@ -24,4 +24,4 @@ We also built [DoltHub](https://www.dolthub.com), a place to share Dolt database
 
 ## DoltLab
 
-Not ready to put your databases on the internet, no matter the permissions? We have a self-hosted version of DoltHub we call [DoltLab](https://www.doltlab.com). DoltLab gives you all the features of DoltHub, wherever you want them, in your own network or on your development machine. Come chat with us on [Discord](https://discord.com/invite/RFwfYpu) about hosting your own DoltLab instance today!
+Not ready to put your databases on the internet, no matter the permissions? We have a self-hosted version of DoltHub we call [DoltLab](http://www.doltlab.com). DoltLab gives you all the features of DoltHub, wherever you want them, in your own network or on your development machine.
