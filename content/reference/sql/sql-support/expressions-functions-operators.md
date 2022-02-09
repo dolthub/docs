@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 138 of 436 MySQL functions.**
+**Currently supporting 152 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -275,7 +275,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `LOWER()`                         | ✅        |                                                                                                |
 | `LPAD()`                          | ✅        |                                                                                                |
 | `LTRIM()`                         | ✅        |                                                                                                |
-| `LineString()`                    | ❌        |                                                                                                |
+| `LineString()`                    | ✅        |                                                                                                |
 | `MAKEDATE()`                      | ❌        |                                                                                                |
 | `MAKETIME()`                      | ❌        |                                                                                                |
 | `MAKE_SET()`                      | ❌        |                                                                                                |
@@ -329,8 +329,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `POWER()`                         | ✅        |                                                                                                |
 | `PS_CURRENT_THREAD_ID()`          | ❌        |                                                                                                |
 | `PS_THREAD_ID()`                  | ❌        |                                                                                                |
-| `Point()`                         | ❌        |                                                                                                |
-| `Polygon()`                       | ❌        |                                                                                                |
+| `Point()`                         | ✅        |                                                                                                |
+| `Polygon()`                       | ✅        |                                                                                                |
 | `QUARTER()`                       | ❌        |                                                                                                |
 | `QUOTE()`                         | ❌        |                                                                                                |
 | `RADIANS()`                       | ✅        |                                                                                                |
@@ -379,9 +379,11 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `STRCMP()`                        | ❌        |                                                                                                |
 | `STR_TO_DATE()`                   | ❌        |                                                                                                |
 | `ST_Area()`                       | ❌        |                                                                                                |
-| `ST_AsBinary()`                   | ❌        |                                                                                                |
-| `ST_AsGeoJSON()`                  | ❌        |                                                                                                |
-| `ST_AsText()`                     | ❌        |                                                                                                |
+| `ST_AsBinary()`                   | ✅        |                                                                                                |
+| `ST_AsGeoJSON()`                  | ✅        |                                                                                                |
+| `ST_AsText()`                     | ✅        |                                                                                                |
+| `ST_AsWKB()`                      | ✅        |                                                                                                |
+| `ST_AsWKT()`                      | ✅        |                                                                                                |
 | `ST_Buffer()`                     | ❌        |                                                                                                |
 | `ST_Buffer_Strategy()`            | ❌        |                                                                                                |
 | `ST_Centroid()`                   | ❌        |                                                                                                |
@@ -389,7 +391,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_ConvexHull()`                 | ❌        |                                                                                                |
 | `ST_Crosses()`                    | ❌        |                                                                                                |
 | `ST_Difference()`                 | ❌        |                                                                                                |
-| `ST_Dimension()`                  | ❌        |                                                                                                |
+| `ST_Dimension()`                  | ✅        |                                                                                                |
 | `ST_Disjoint()`                   | ❌        |                                                                                                |
 | `ST_Distance()`                   | ❌        |                                                                                                |
 | `ST_Distance_Sphere()`            | ❌        |                                                                                                |
@@ -400,9 +402,9 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_GeoHash()`                    | ❌        |                                                                                                |
 | `ST_GeomCollFromText()`           | ❌        |                                                                                                |
 | `ST_GeomCollFromWKB()`            | ❌        |                                                                                                |
-| `ST_GeomFromGeoJSON()`            | ❌        |                                                                                                |
-| `ST_GeomFromText()`               | ❌        |                                                                                                |
-| `ST_GeomFromWKB()`                | ❌        |                                                                                                |
+| `ST_GeomFromGeoJSON()`            | ✅        |                                                                                                |
+| `ST_GeomFromText()`               | ✅        |                                                                                                |
+| `ST_GeomFromWKB()`                | ✅        |                                                                                                |
 | `ST_GeometryN()`                  | ❌        |                                                                                                |
 | `ST_GeometryType()`               | ❌        |                                                                                                |
 | `ST_InteriorRingN()`              | ❌        |                                                                                                |
@@ -413,12 +415,12 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_IsSimple()`                   | ❌        |                                                                                                |
 | `ST_IsValid()`                    | ❌        |                                                                                                |
 | `ST_LatFromGeoHash()`             | ❌        |                                                                                                |
-| `ST_Latitude()`                   | ❌        |                                                                                                |
+| `ST_Latitude()`                   | ✅        |                                                                                                |
 | `ST_Length()`                     | ❌        |                                                                                                |
-| `ST_LineFromText()`               | ❌        |                                                                                                |
-| `ST_LineFromWKB()`                | ❌        |                                                                                                |
+| `ST_LineFromText()`               | ✅        |                                                                                                |
+| `ST_LineFromWKB()`                | ✅        |                                                                                                |
 | `ST_LongFromGeoHash()`            | ❌        |                                                                                                |
-| `ST_Longitude()`                  | ❌        |                                                                                                |
+| `ST_Longitude()`                  | ✅        |                                                                                                |
 | `ST_MLineFromText()`              | ❌        |                                                                                                |
 | `ST_MLineFromWKB()`               | ❌        |                                                                                                |
 | `ST_MPointFromText()`             | ❌        |                                                                                                |
@@ -431,23 +433,23 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_NumPoints()`                  | ❌        |                                                                                                |
 | `ST_Overlaps()`                   | ❌        |                                                                                                |
 | `ST_PointFromGeoHash()`           | ❌        |                                                                                                |
-| `ST_PointFromText()`              | ❌        |                                                                                                |
-| `ST_PointFromWKB()`               | ❌        |                                                                                                |
+| `ST_PointFromText()`              | ✅        |                                                                                                |
+| `ST_PointFromWKB()`               | ✅        |                                                                                                |
 | `ST_PointN()`                     | ❌        |                                                                                                |
 | `ST_PolyFromText()`               | ❌        |                                                                                                |
 | `ST_PolyFromWKB()`                | ❌        |                                                                                                |
-| `ST_SRID()`                       | ❌        |                                                                                                |
+| `ST_SRID()`                       | ✅        |                                                                                                |
 | `ST_Simplify()`                   | ❌        |                                                                                                |
 | `ST_StartPoint()`                 | ❌        |                                                                                                |
-| `ST_SwapXY()`                     | ❌        |                                                                                                |
+| `ST_SwapXY()`                     | ✅        |                                                                                                |
 | `ST_SymDifference()`              | ❌        |                                                                                                |
 | `ST_Touches()`                    | ❌        |                                                                                                |
 | `ST_Transform()`                  | ❌        |                                                                                                |
 | `ST_Union()`                      | ❌        |                                                                                                |
 | `ST_Validate()`                   | ❌        |                                                                                                |
 | `ST_Within()`                     | ❌        |                                                                                                |
-| `ST_X()`                          | ❌        |                                                                                                |
-| `ST_Y()`                          | ❌        |                                                                                                |
+| `ST_X()`                          | ✅        |                                                                                                |
+| `ST_Y()`                          | ✅        |                                                                                                |
 | `SUBDATE()`                       | ❌        |                                                                                                |
 | `SUBSTR()`                        | ✅        |                                                                                                |
 | `SUBSTRING()`                     | ✅        |                                                                                                |
