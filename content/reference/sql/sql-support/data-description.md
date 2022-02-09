@@ -39,9 +39,9 @@ title: Data Description
 | `ENUM`               | ✅        |                                 |
 | `SET`                | ✅        |                                 |
 | `GEOMETRY`           | ❌        |                                 |
-| `POINT`              | ❌        |                                 |
-| `LINESTRING`         | ❌        |                                 |
-| `POLYGON`            | ❌        |                                 |
+| `POINT`              | ✅        |                                 |
+| `LINESTRING`         | ✅        |                                 |
+| `POLYGON`            | ✅        |                                 |
 | `MULTIPOINT`         | ❌        |                                 |
 | `MULTILINESTRING`    | ❌        |                                 |
 | `MULTIPOLYGON`       | ❌        |                                 |
