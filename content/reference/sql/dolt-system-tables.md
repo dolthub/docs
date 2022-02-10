@@ -4,21 +4,30 @@ title: Dolt System Tables
 
 # Table of contents
 
+**Basic Repository Metadata:**
 * [dolt\_branches](#dolt_branches)
-* [dolt\_commit\_diff](#dolt_commit_diff_usdtablename)
-* [dolt\_diff](#dolt_diff_usdtablename)
 * [dolt\_docs](#dolt_docs)
-* [dolt\_history](#dolt_history_usdtablename)
+* [dolt\_procedures](#dolt_procedures)
+* [dolt\_remotes](#dolt_remotes)
+* [dolt\_schemas](#dolt_schemas)
+
+**Repository History:**
 * [dolt\_commit\_ancestors](#dolt_commit_ancestors)
+* [dolt\_commit\_diff\_$tablename](#dolt_commit_diff_usdtablename)
+* [dolt\_diff](#dolt_diff)
+* [dolt\_diff\_$tablename](#dolt_diff_usdtablename)
+* [dolt\_history\_$tablename](#dolt_history_usdtablename)
 * [dolt\_log](#dolt_log)
-* [dolt\_status](#dolt_status)
+
+**Working Set Metadata:** 
 * [dolt\_conflicts](#dolt_conflicts)
 * [dolt\_conflicts\_$tablename](#dolt_conflicts_usdtablename)
+* [dolt\_status](#dolt_status)
+
+**Constraint Validation:**
 * [dolt\_constraint\_violations](#dolt_constraint_violations)
 * [dolt\_constraint\_violations\_$tablename](#dolt_constraint_violations_usdtablename)
-* [dolt\_procedures](#dolt_procedures)
-* [dolt\_schemas](#dolt_schemas)
-* [dolt\_remotes](#dolt_remotes)
+
 
 # Dolt System Tables
 
@@ -201,6 +210,88 @@ see what changes are in the working set that have yet to be committed
 to HEAD. It is often useful to use the `HASHOF()` function to get the
 commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
+
+
+## `dolt_diff`
+
+The `dolt_diff` system table shows which tables were changed in each commit in a database. 
+When multiple tables are changed in a single commit, there is one row in the `dolt_diff` system table 
+for each table, all with the same commit hash. After identifying the tables that changed in a commit, the
+`dolt_diff_$TABLENAME` system tables can be used to determine the data that changed in each table. 
+
+### Schema
+
+The `DOLT_DIFF` system table has the following columns
+
+```text
++-------------+----------+
+| field       | Type     |
++-------------+----------+
+| commit_hash | text     |
+| table_name  | text     |
+| committer   | text     |
+| email       | text     |
+| date        | datetime |
+| message     | text     |
++-------------+----------+
+```
+
+### Query Details
+
+Working set changes are **not** included in the `dolt_diff` system table results – only committed data 
+changes are listed in `dolt_diff`. If a commit did not make any changes to tables _(e.g. an empty commit)_, 
+it is not included in the `dolt_diff` results.
+
+### Example Query
+
+Taking the
+[`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players)
+data repository from [DoltHub](https://www.dolthub.com/) as our
+example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed, 
+from the month of October, 2020.  
+
+```sql
+SELECT commit_hash, table_name
+FROM   dolt_diff 
+WHERE  date BETWEEN "2020-10-01" AND "2020-10-31";
+```
+
+```text
++----------------------------------+------------------------------+
+| commit_hash                      | table_name                   |
++----------------------------------+------------------------------+
+| rla1p8emnp91urj3uant52msrskouqil | draft_history                |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_post_season    |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_regular_season |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_post_season         |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_regular_season      |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_allstar        |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_post_season    |
+| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_regular_season |
+| jbk2ckroo4hhqovrcpiv7c615dlsf3ut | draft_history                |
+| pu60cdppae7rumf1lm06j5ngkijp7i8f | players                      |
++----------------------------------+------------------------------+
+```
+
+From these results, we can see there were four commits to this database in October, 2020. Commits 
+`rla1p8em` and `jbk2ckro` only changed the `draft_history` table, commit `pu60cdpp` changed the `players`
+table, and commit `1gtq675i` made changes to seven tables. To dig deeper into these changes, we can query 
+the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
+
+```sql
+SELECT count(*) as total_rows_changed 
+FROM   dolt_diff_players 
+WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
+```
+
+```text
++--------------------+
+| total_rows_changed |
++--------------------+
+| 4501               |
++--------------------+
+```
+
 
 ## `dolt_diff_$TABLENAME`
 
