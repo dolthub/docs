@@ -64,6 +64,6 @@ us-businesses $ dolt sql -q "select * from dolt_query_catalog"
 +---------------------+---------------+---------------------+-------------+-------------------------------------+
 ```
 
-DoltHub displays these queries in the Queries tab of you database for easy use.
+DoltHub displays these queries in the Queries tab of your database for easy use.
 
 ![Saved Queries](../../.gitbook/assets/saved-query-dolthub.png)
