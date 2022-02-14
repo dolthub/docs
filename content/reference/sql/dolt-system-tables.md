@@ -8,6 +8,7 @@ title: Dolt System Tables
 * [dolt\_branches](#dolt_branches)
 * [dolt\_docs](#dolt_docs)
 * [dolt\_procedures](#dolt_procedures)
+* [dolt\_query\_catalog](#dolt_query_catalog)
 * [dolt\_remotes](#dolt_remotes)
 * [dolt\_schemas](#dolt_schemas)
 
@@ -787,6 +788,73 @@ SELECT * FROM dolt_procedures;
 | p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
 +------+-------------------------------------+-------------------------------+-------------------------------+
 ```
+
+
+## `dolt_query_catalog`
+
+The `dolt_query_catalog` system table stores named queries for your database. 
+Like all data stored in Dolt, these named queries are versioned alongside your data, so 
+after you create, modify, or remove a named query, you'll need to commit that change to save it.  
+You can use the Dolt CLI to save and execute named queries or you can use the  
+`dolt_query_catalog` system table directly to add, modify, or delete named queries. 
+All named queries are displayed in the Queries tab of your database on DoltHub.
+
+### Schema
+
+```text
++---------------+-----------------+------+-----+---------+-------+
+| Field         | Type            | Null | Key | Default | Extra |
++---------------+-----------------+------+-----+---------+-------+
+| id            | varchar(16383)  | NO   | PRI |         |       |
+| display_order | bigint unsigned | NO   |     |         |       |
+| name          | varchar(16383)  | YES  |     |         |       |
+| query         | varchar(16383)  | YES  |     |         |       |
+| description   | varchar(16383)  | YES  |     |         |       |
++---------------+-----------------+------+-----+---------+-------+
+```
+
+### Example Query
+
+Using the `jfulghum/iris-flower-dataset` from DoltHub as an example, you can create a
+named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
+
+```shell
+> dolt sql -q "select distinct(class) from classified_measurements where petal_length_cm > 5" \
+           -s "Large Irises" -m "Query to identify iris species with the largest recorded petal lengths"
+```
+
+After creating a named query, you can view it in the `dolt_query_catalog` table:
+
+```sql
+> select * from dolt_query_catalog;
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+| id           | display_order | name         | query                                                                         | description                                                            |
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+| Large Irises | 1             | Large Irises | select distinct(class) from classified_measurements where petal_length_cm > 5 | Query to identify iris species with the largest recorded petal lengths |
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+```
+
+Then you can use the dolt CLI to execute it:
+
+```shell
+> dolt sql -x "Large Irises"
+Executing saved query 'Large Irises':
+select distinct(class) from classified_measurements where petal_length_cm > 5
++------------+
+| class)     |
++------------+
+| versicolor |
+| virginica  |
++------------+
+```
+
+Last, but not least, if you want to persist that named query, be sure to commit your change to the 
+`dolt_query_catalog` table. 
+```shell
+dolt add dolt_query_catalog
+dolt commit -m "Adding new named query"
+```
+
 
 ## `dolt_schemas`
 
