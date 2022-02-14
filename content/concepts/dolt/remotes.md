@@ -8,7 +8,7 @@ title: Remotes
 
 A remote is a Dolt database in another location, usually on a different, network accessible host. A Dolt remote is the coordination mechanism between many local copies of Dolt. A Dolt database can have multiple remotes.
 
-DoltHub is a hosted Dolt remote with addition discovery and management user interface. [Dolt also supports filesystem, HTTPS, AWS, and GCS remotes](https://www.dolthub.com/blog/2021-07-19-remotes/).
+DoltHub is a hosted Dolt remote with addition discovery and management user interface. [DoltLab](https://www.dolthub.com/blog/2022-01-14-announcing-doltlab/) is a self-hosted version of DoltHub. [Dolt also supports filesystem, HTTPS, AWS, and GCS remotes](https://www.dolthub.com/blog/2021-07-19-remotes/).
 
 You configure a Dolt database as a remote. Once configured, you can perform Dolt's distributed operations using that remote: clone, fetch, push, and pull. 
 
