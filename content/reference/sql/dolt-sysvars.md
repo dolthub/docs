@@ -29,31 +29,30 @@ To switch heads, set this session variable. Use either
 
 `SET @@mydb_head_ref = 'feature-branch'`
 
-## @@dbname_head
-
-This system variable controls the current session's head
-commit. Setting this variable to a commit hash causes your session to
-enter detached head mode.
-
-See [Detached Head mode](./branches.md#detached-head-mode) for more detail.
-
-## @@dbname_working
-
-This system variable controls the current working root value. Setting
-it is an expert use case that can have very many unexpected
-consequences. Selecting it is useful for diagnostics.
-
-## @@dbname_staged
-
-This system variable controls the current staged root value. Setting
-it is an expert use case that can have very many unexpected
-consequences. Selecting it is useful for diagnostics.
-
 ## @@dolt_default_branch
 
 This system variable toggles the default database branch on server
 (or SQL engine) instantiation. Setting this changes the active branch
 and working set new server sessions connect to.
+
+## @@dolt_transaction_commit
+
+When set to `1`, this system variable creates a Dolt commit for every
+SQL transaction commit. Commits have an auto-generated commit
+message. Defaults to `0`.
+
+## @@dolt_allow_commit_conflicts
+
+When set to `1`, this system variable allows transactions with merge
+conflicts to be committed. When set to `0`, merge conflicts must be
+resolved before committing a transaction, and attempting to commit a
+transaction with conflicts is an error. Defaults to `1`.
+
+## @@dolt_force_transaction_commit
+
+When set to `1`, this system variable ignores all merge conflicts,
+constraint violations, and other correctness issues resulting from a
+merge and allows them to be committed. Defaults to `0`.
 
 ## @@dolt_replicate_to_remote
 
@@ -118,6 +117,26 @@ with `dolt_replicate_heads`.
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
 ```
+
+## @@dbname_head
+
+This system variable controls the current session's head
+commit. Setting this variable to a commit hash causes your session to
+enter detached head mode.
+
+See [Detached Head mode](./branches.md#detached-head-mode) for more detail.
+
+## @@dbname_working
+
+This system variable controls the current working root value. Setting
+it is an expert use case that can have very many unexpected
+consequences. Selecting it is useful for diagnostics.
+
+## @@dbname_staged
+
+This system variable controls the current staged root value. Setting
+it is an expert use case that can have very many unexpected
+consequences. Selecting it is useful for diagnostics.
 
 # Persisting System Variables
 
