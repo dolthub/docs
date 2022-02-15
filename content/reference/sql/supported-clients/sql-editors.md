@@ -15,7 +15,7 @@ Dolt comes with a built in MySQL compatible server that you can connect SQL Edit
 
 ## Setting up Dolt with Tableplus
 
-[Tableplus](https://tableplus.com/) is the recommended SQL editor to use with dolt. In this guide we will go step-by-step to clone a Dolt repo and connect it to Tableplus.
+[Tableplus](https://tableplus.com/) is the recommended SQL editor to use with dolt. Let's clone a Dolt repo and connect it to Tableplus.
 
 ### Step 1: Cloning a repository.
 
@@ -39,21 +39,17 @@ Now run: `dolt sql -q 'show tables'` and you should see the following output
 
 ### Step 2: Setting up your server
 
-Some editors require custom configuration of dolt's [sql-server](https://docs.dolthub.com/reference/cli#dolt-sql-server). For example, DBeaver use multiple connections to run queries whereas `dolt sql-server` supports 1 connection out of the box. Here's a sample config file that should get you started with `dolt sql-server` Save this in the `ip-to-country` directory we created above as `config.yaml`
+Some editors require custom configuration of dolt's [sql-server](https://docs.dolthub.com/reference/cli#dolt-sql-server). For example, DBeaver use multiple connections to run queries whereas `dolt sql-server` supports 1 connection out of the box. Here's a sample config file that should get you started with `dolt sql-server`. Save this in the `ip-to-country` directory we created above as `config.yaml`
 
 ```yaml
 log_level: debug
-
-behavior:
-	read_only: false
-	autocommit: true
 
 user:
 	name: root
 	password: ""
 
 listener:
-	host: localhost
+	host: 0.0.0.0
 	port: 3306
 	max_connections: 10
 	read_timeout_millis: 28800000
@@ -73,6 +69,8 @@ Now let's spin up our server
 Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="debug"
 ```
 
+Let's take a second to reflect on the above configuration file. We defined a server that can be accessed on host 0.0.0.0.0 and port 3306. It has a username of "root" and no password. It can support up to 10 concurrent connections and supports queries that timeout after `28800000` millseconds. At the top defines, the various log levels a server supports as defined [here](https://docs.dolthub.com/reference/cli#dolt-sql-server).
+
 ### Step 3: Connecting our server with Tableplus
 
 If you haven't already go ahead and install Tableplus from [here](https://tableplus.com/download):
@@ -81,11 +79,11 @@ Click on create a new connection:
 
 ![](../.gitbook/assets/tableplus-create-new-connection.png)
 
-Hit MySQL in the selection box and fill in the following information. Note all the paramters set here are exactly in the configuration file you defined above.
+Hit MySQL in the selection box and fill in the following information. Note all the parameters set here are exactly in the configuration file you defined above.
 
 ![](../.gitbook/assets/tableplus-connect-info.png)
 
-When you hit Test you should see all the boxes turn green like in the above image. Finally, hit connect
+When you hit `Test` you should see all the boxes turn green like in the above image. Finally, hit connect
 to access the Dolt server.
 
 ### Step 4: Writing queries with Tableplus
