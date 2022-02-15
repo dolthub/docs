@@ -69,7 +69,7 @@ Now let's spin up our server
 Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="debug"
 ```
 
-Let's take a second to reflect on the above configuration file. We defined a server that can be accessed on host 0.0.0.0.0 and port 3306. It has a username of "root" and no password. It can support up to 10 concurrent connections and supports queries that timeout after `28800000` millseconds. At the top defines, the various log levels a server supports as defined [here](https://docs.dolthub.com/reference/cli#dolt-sql-server).
+Let's take a second to reflect on the above configuration file. We defined a server that can be accessed on host 0.0.0.0.0 and port 3306. It has a username of "root" and no password. It can support up to 10 concurrent connections and supports queries that timeout after `28800000` millseconds. At the top we defined how often Dolt's server outputs [logs](https://docs.dolthub.com/reference/cli#dolt-sql-server).
 
 ### Step 3: Connecting our server with Tableplus
 
