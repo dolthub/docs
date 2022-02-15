@@ -7,40 +7,103 @@ title: SQL Editors
 Dolt comes with a built in MySQL compatible server that you can connect SQL Editors too. Here are a list of notable MySQL Editors and our compatibility status.
 | Editor | Supported | Notes and limitations |
 | :--- | :--- | :--- |
-| [Tableplus](https://tableplus.com/) | ✅ | |
+| [Tableplus](https://tableplus.com/) | ✅ | Recommended (see below) |
 | [Navicat For Mysql](https://www.navicat.com/en/products/navicat-for-mysql) | ✅ | |
 | [Dbeaver](https://dbeaver.io/) | ✅ | |
-| [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | Need to implement a couple functions |
+| [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | |
 | [MySQL Workbench](https://www.mysql.com/products/workbench/) | ❌ | Missing some information schema materials |
 
-## Recommended Dolt Configuration
+## Setting up Dolt with Tableplus
 
-Some editors require custom configuration of dolt's sql-server. For example, DBeaver use multiple connections to run queries whereas `dolt sql-server` supports 1 connection out of the box. Here's a sample config file that should get you started with `dolt sql-server`
+[Tableplus](https://tableplus.com/) is the recommended SQL editor to use with dolt. In this guide we will go step-by-step to clone a Dolt repo and connect it to Tableplus.
 
-<div class="gatsby-highlight" data-language="text">
-	<pre class="By default, starts a MySQL-compatible server whilanguage-text">
-		<code class="language-text">
+### Step 1: Cloning a repository.
 
-log_level: trace
+Open your terminal and clone the following [repository](https://www.dolthub.com/repositories/dolthub/ip-to-country/data/master).
+
+```bash
+dolt clone dolthub/ip-to-country && cd ip-to-country
+```
+
+Now run: `dolt sql -q 'show tables'` and you should see the following output
+
+```bash
+> dolt sql -q 'show tables'
++---------------+
+| Table         |
++---------------+
+| IPv4ToCountry |
+| IPv6ToCountry |
++---------------+
+```
+
+### Step 2: Setting up your server
+
+Some editors require custom configuration of dolt's [sql-server](https://docs.dolthub.com/reference/cli#dolt-sql-server). For example, DBeaver use multiple connections to run queries whereas `dolt sql-server` supports 1 connection out of the box. Here's a sample config file that should get you started with `dolt sql-server` Save this in the `ip-to-country` directory we created above as `config.yaml`
+
+```yaml
+log_level: debug
 
 behavior:
-read_only: false
-autocommit: true
+	read_only: false
+	autocommit: true
 
 user:
-name: root
-password: ""
+	name: root
+	password: ""
 
 listener:
-host: localhost
-port: 3306
-max_connections: 10
-read_timeout_millis: 28800000
-write_timeout_millis: 28800000
-</code>
+	host: localhost
+	port: 3306
+	max_connections: 10
+	read_timeout_millis: 28800000
+	write_timeout_millis: 28800000
+```
 
-</pre>
+Your directory should now look like this:
+```bash
+> ls -a
+.           ..          .dolt       config.yaml
+```
 
-</div>
+Now let's spin up our server
 
-NOTE: Dolt does not support SSL yet, so be sure to turn it off on your editor before connecting.
+``` bash
+> dolt sql-server --config=config.yaml
+Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="debug"
+```
+
+### Step 3: Connecting our server with Tableplus
+
+If you haven't already go ahead and install Tableplus from [here](https://tableplus.com/download):
+
+Click on create a new connection:
+
+![](../.gitbook/assets/tableplus-create-new-connection.png)
+
+Hit MySQL in the selection box and fill in the following information. Note all the paramters set here are exactly in the configuration file you defined above.
+
+![](../.gitbook/assets/tableplus-connect-info.png)
+
+When you hit Test you should see all the boxes turn green like in the above image. Finally, hit connect
+to access the Dolt server.
+
+### Step 4: Writing queries with Tableplus
+
+Let's start by selecting a database in the Dolt server and writing queries against it.
+
+![](../.gitbook/assets/select-db-tableplus.png)
+
+Select the `ip_to_country` database. You should see tables populate to the left like below.
+
+![](../.gitbook/assets/tables-on-left-tableplus.png)
+
+Now click on the table `IPv4ToCountry` and see the screen populate. We just read from our Dolt database!
+
+![](../.gitbook/assets/open-table-tableplus.png)
+
+Finally, let's write a quick query on the dataset. Click the `SQL` button in the top left and write the query in the box. Hit the `Run Current` button to execute it and the results should appear:
+
+![](../.gitbook/assets/run-query-tableplus.png)
+
+That's it you've successfully connected Dolt to Tableplus and ran your first query!
