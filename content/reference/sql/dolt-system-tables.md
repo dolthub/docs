@@ -13,6 +13,7 @@ title: Dolt System Tables
 * [dolt\_schemas](#dolt_schemas)
 
 **Repository History:**
+* [dolt\ blame\ $tablename](#dolt_blame_usdtablename)
 * [dolt\_commit\_ancestors](#dolt_commit_ancestors)
 * [dolt\_commit\_diff\_$tablename](#dolt_commit_diff_usdtablename)
 * [dolt\_diff](#dolt_diff)
@@ -529,6 +530,68 @@ WHERE state = "Virginia";
 # Note in the real result set there would be actual commit hashes for each row.  Here I have used notation that is
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
+
+## `dolt_blame_$tablename`
+
+For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename` 
+which can be queried to see the user and commit responsible for the current value of each row. 
+This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/reference/cli#dolt-blame).
+
+### Schema
+
+The `dolt_blame_$tablename` system view has the following columns:
+```text
++-------------------+----------+
+| field             | type     |
++-------------------+----------+
+| commit            | text     |
+| commit_date       | datetime |
+| committer         | text     |
+| email             | text     |
+| message           | text     |
+| primary key cols  |          |
++-------------------+----------+
+```
+
+The remaining columns are dependent on the schema of the user table. 
+Every column from the primary key of your table will be included in the `dolt_blame_$tablename` system table.
+
+### Query Details
+
+Executing a `SELECT *` query for a `dolt_blame_$tablename` system view will show you the primary key columns 
+for every row in the underlying user table and the commit metadata for the last commit that modified that row. 
+Note that if a table has any uncommitted changes in the working set, 
+those will not be displayed in the `dolt_blame_$tablename` system view.
+
+`dolt_blame_$tablename` is only available for tables with a primary key.
+
+### Example Query
+
+Consider the following example table `app_config` that holds configuration data: 
+```
+> describe app_config;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| id     | bigint   | NO   | PRI |         |       |
+| name   | longtext | NO   |     |         |       |
+| value  | longtext | NO   |     |         |       |
++--------+----------+------+-----+---------+-------+
+```
+
+To find who set the current configuration values, we can query the `dolt_blame_app_config` table: 
+```
+> select * from dolt_blame_app_config;
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| id  | commit                           | commit_date                       | committer       | email             | message                       |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
+| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
+| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
+| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+```
+
 
 ## `dolt_commit_ancestors`
 
