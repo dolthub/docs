@@ -263,6 +263,7 @@ LIMIT 5;
 | akiasoe4jp68gq3k4fbhdni6ti0lntqk | bpf120    | brianf@dolthub.com | 2021-10-22 04:19:07.037 -0700 PDT | Adding BAA to league tables                            |
 | ptau7oesshub36075l12bqp7cejqu64j | bpf120    | brianf@dolthub.com | 2021-10-22 04:09:07.604 -0700 PDT | Adding ABA as a league                                 |
 +----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
+```
 
 
 ## `dolt_diff`
