@@ -13,8 +13,10 @@ title: Dolt System Tables
 * [dolt\_schemas](#dolt_schemas)
 
 **Repository History:**
+* [dolt\_blame\_$tablename](#dolt_blame_usdtablename)
 * [dolt\_commit\_ancestors](#dolt_commit_ancestors)
 * [dolt\_commit\_diff\_$tablename](#dolt_commit_diff_usdtablename)
+* [dolt\_commits](#dolt_commits)
 * [dolt\_diff](#dolt_diff)
 * [dolt\_diff\_$tablename](#dolt_diff_usdtablename)
 * [dolt\_history\_$tablename](#dolt_history_usdtablename)
@@ -211,6 +213,56 @@ see what changes are in the working set that have yet to be committed
 to HEAD. It is often useful to use the `HASHOF()` function to get the
 commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
+
+
+## `dolt_commits`
+
+The `dolt_commits` system table shows *ALL* commits in a Dolt database. 
+
+This is similar, but different from the `dolt_log` [system table](https://docs.dolthub.com/reference/sql/dolt-system-tables#dolt_log) 
+and the `dolt log` [CLI command](https://docs.dolthub.com/reference/cli#dolt-log). 
+`dolt log` shows you commit history for all commit ancestors reachable from the current `HEAD` of the
+checked out branch, whereas `dolt_commits` shows all commits from the entire database, no matter which branch is checked out. 
+
+### Schema
+
+```text
+> describe dolt_commits;
++-------------+----------+------+-----+---------+-------+
+| Field       | Type     | Null | Key | Default | Extra |
++-------------+----------+------+-----+---------+-------+
+| commit_hash | text     | NO   | PRI |         |       |
+| committer   | text     | NO   |     |         |       |
+| email       | text     | NO   |     |         |       |
+| date        | datetime | NO   |     |         |       |
+| message     | text     | NO   |     |         |       |
++-------------+----------+------+-----+---------+-------+
+```
+
+### Example Query
+
+Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/repositories/dolthub/SHAQ), 
+we can query for the five most recent commits before November 1st, 2021, across all commits in the database 
+(regardless of what is checked out to `HEAD`) with this query:  
+
+```sql
+SELECT * 
+FROM dolt_commits 
+WHERE date < "2021-11-01"
+ORDER BY date DESC 
+LIMIT 5;
+```
+
+```text
++----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
+| commit_hash                      | committer | email              | date                              | message                                                |
++----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
+| 57cbn09m8egip6anq5c8s94uhhvaifkp | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:32.125 -0700 PDT | Merge pull request #43 from brian_add_all_team_seasons |
+| nqpgo65t5rcq2gkcvnfigqpsabc42qln | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:17.919 -0700 PDT | Merge pull request #41 from brian                      |
+| vto66re76lvfri7ls0ndu3m9fg47s4li | bpf120    | bpf120@gmail.com   | 2021-10-22 08:28:20.748 -0700 PDT | Added all teams for all seasons                        |
+| akiasoe4jp68gq3k4fbhdni6ti0lntqk | bpf120    | brianf@dolthub.com | 2021-10-22 04:19:07.037 -0700 PDT | Adding BAA to league tables                            |
+| ptau7oesshub36075l12bqp7cejqu64j | bpf120    | brianf@dolthub.com | 2021-10-22 04:09:07.604 -0700 PDT | Adding ABA as a league                                 |
++----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
 
 
 ## `dolt_diff`
@@ -530,6 +582,68 @@ WHERE state = "Virginia";
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
 
+## `dolt_blame_$tablename`
+
+For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename` 
+which can be queried to see the user and commit responsible for the current value of each row. 
+This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/reference/cli#dolt-blame).
+
+### Schema
+
+The `dolt_blame_$tablename` system view has the following columns:
+```text
++-------------------+----------+
+| field             | type     |
++-------------------+----------+
+| commit            | text     |
+| commit_date       | datetime |
+| committer         | text     |
+| email             | text     |
+| message           | text     |
+| primary key cols  |          |
++-------------------+----------+
+```
+
+The remaining columns are dependent on the schema of the user table. 
+Every column from the primary key of your table will be included in the `dolt_blame_$tablename` system table.
+
+### Query Details
+
+Executing a `SELECT *` query for a `dolt_blame_$tablename` system view will show you the primary key columns 
+for every row in the underlying user table and the commit metadata for the last commit that modified that row. 
+Note that if a table has any uncommitted changes in the working set, 
+those will not be displayed in the `dolt_blame_$tablename` system view.
+
+`dolt_blame_$tablename` is only available for tables with a primary key.
+
+### Example Query
+
+Consider the following example table `app_config` that holds configuration data: 
+```
+> describe app_config;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| id     | bigint   | NO   | PRI |         |       |
+| name   | longtext | NO   |     |         |       |
+| value  | longtext | NO   |     |         |       |
++--------+----------+------+-----+---------+-------+
+```
+
+To find who set the current configuration values, we can query the `dolt_blame_app_config` table: 
+```
+> select * from dolt_blame_app_config;
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| id  | commit                           | commit_date                       | committer       | email             | message                       |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
+| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
+| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
+| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+```
+
+
 ## `dolt_commit_ancestors`
 
 The `dolt_commit_ancestors` table records the ancestors for every commit in the database. Each commit has one or two
@@ -551,10 +665,11 @@ merged will have `parent_index` 1.
 +--------------+------+------+-----+---------+-------+
 ```
 
+
 ## `dolt_log`
 
-`dolt_log` contains the commit log, with contents identical to the
-`dolt log` command on the CLI.
+The `dolt_log` system table contains the commit log for all commits reachable from the current `HEAD`.
+This is the same data returned by the [`dolt log` CLI command](https://docs.dolthub.com/reference/cli#dolt-log). 
 
 ### Schema
 
@@ -572,6 +687,8 @@ merged will have `parent_index` 1.
 
 ### Example Query
 
+The following query shows the commits reachable from the current checked out head and created by user `bheni` since April, 2019:  
+
 ```sql
 SELECT *
 FROM dolt_log
@@ -588,6 +705,7 @@ ORDER BY "date";
 | rqpd7ga1nic3jmc54h44qa05i8124vsp | bheni     | brian@dolthub.com | 2019-04-04 21:07:36.536 +0000 UTC | fixes         |
 +----------------------------------+-----------+--------------------+-----------------------------------+---------------+
 ```
+
 
 ## `dolt_status`
 
