@@ -4,13 +4,6 @@ title: Miscellaneous
 
 # Miscellaneous
 
-## Permissions
-
-| Component  | Supported | Notes and limitations                                                               |
-| :--------- | :-------- | :---------------------------------------------------------------------------------- |
-| Users      | 🟠        | Only one user is configurable, and must be specified in the config file at startup. |
-| Privileges | ❌        | Only one user is configurable, and they have all privileges.                        |
-
 ## Misc features
 
 | Component                         | Supported | Notes and limitations                                                    |
