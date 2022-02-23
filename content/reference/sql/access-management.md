@@ -32,7 +32,7 @@ To enable full user support when using [`sql-server`](../cli.md#dolt-sql-server)
 To enable full user support when using [`sql-server`](../cli.md#dolt-sql-server) mode, you may add the `privilege_file: PATH` line to your [YAML config](configuration.md).
 `PATH` represents the path to the privileges file, generally named `privs.json`.
 
-## User and Password Arguments
+### User and Password Arguments
 
 Before the introduction of users and privileges, Dolt supported only a single user with an accompanying password.
 This was done using the `--user` and `--password` arguments ([see the docs for their defaults](../cli.md#dolt-sql-server), also available using YAML configuration), whereby a server would only allow connections that supplied that singular user and password combination.
