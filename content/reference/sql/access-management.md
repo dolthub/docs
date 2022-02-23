@@ -39,6 +39,7 @@ This was done using the `--user` and `--password` arguments ([see the docs for t
 Although Dolt now supports users in a similar fashion to MySQL, we still retain the user and password arguments.
 In MySQL, the default super account (generally called the root user) is created during installation and configuration.
 Rather than creating a parallel with [`init`](../cli.md#dolt-init), we handle the super account creation when starting a server via the arguments.
+Rather than creating this super account during [`init`](../cli.md#dolt-init), we instead handle the super account creation when starting a server via the arguments.
 
 This leads to an interaction with the [privilege file](#privilege-file) that should be noted.
 When the privilege file is specified, it will be created as an empty file if it does not exist.
@@ -73,7 +74,7 @@ Below is an example file representing the following properties (formatted for ea
   - Has the `DROP` privilege on the table `some_tbl` in the database `some_db`
   - Has both the `CREATE` and `DROP` privileges on the `other_db` database
 - The role `test_role` has been granted to `test_user`
-- The `"Columns"` field is present, but is currently unused (example will be updated when column-level privileges are supported)
+- The `"Columns"` field is present, but is currently unused
 
 ```json
 {
@@ -198,12 +199,15 @@ Unlike in MySQL, Dolt immediately processes all updates to the grant tables.
 Any privilege changes will immediately take effect, any deleted users with current sessions will immediately lose access, etc.
 Whether these are benefits or drawbacks depend on those running the database.
 For Dolt, the decision to have all updates take immediate effect allows for emergency updates to not require a server restart in some cases, which we believe offers some security and convenience advantages.
-The benefit of delayed updates do not seem as likely nor often, although we may still change this behavior in the future if it is proven otherwise.
+The benefit of delayed updates do not seem as likely or often, although we may still change this behavior in the future if it is proven otherwise.
 
 Persistence to the [privilege file](#privilege-file) is immediate only when the grant tables are modified through their typical statements (`CREATE USER`, `GRANT`, `REVOKE`, etc.).
 Directly modifying the grant tables using `INSERT`, `UPDATE`, etc. will cause an immediate update to all current users, however it **will not** be immediately persisted to the [privilege file](#privilege-file).
 The [privilege file](#privilege-file) is **only** updated when the aforementioned statements are executed.
 This may change in the future.
+
+Lastly, any manual changes to the privilege file should be done when the server is not running.
+Not only is the privilege file only read when the server is starting, but the privilege file's contents will be overwritten if any of the aforementioned commands are run.
 
 ## Statements
 
@@ -237,17 +241,17 @@ The following grant tables are fully implemented:
   - All other fields, such as the `DEFAULT ROLE` and multiple auth options, are either ignored or will throw an error
   - Even though a comment and attributes may be set (and are persisted), they are ignored, and this includes partial revokes
 - `GRANT`
-  - The form `GRANT <privileges> ON <privilege_level> TO <users...>` does not yet support columns, an object type (tables only), nor assuming a different user
+  - The form `GRANT <privileges> ON <privilege_level> TO <users...>` does not yet support columns, an object type (tables only), or assuming a different user
   - The form `GRANT <roles...> TO <users...> [WITH ADMIN OPTION]` is fully supported
   - The form `GRANT PROXY ...` is not yet supported
 - `REVOKE`
-  - The form `REVOKE <privileges...> ON <privilege_level> FROM <users...>` does not yet support columns nor an object type (tables only)
+  - The form `REVOKE <privileges...> ON <privilege_level> FROM <users...>` does not yet support columns or an object type (tables only)
   - The form `REVOKE <roles...> FROM <users...>` is fully supported
   - The form `REVOKE PROXY ...` is not yet supported
   - The form `REVOKE ALL PRIVILEGES ...` is not yet supported, which differs from `REVOKE ALL ON ...` in functionality
 - `SHOW GRANTS`
   - Displays global static grants and granted roles
-  - Does not yet display a user's database nor table-level privileges
+  - Does not yet display a user's database or table-level privileges
   - The optional `[USING <roles...>]` portion is not yet supported
 
 ### Not Yet Supported
@@ -275,7 +279,7 @@ The following grant tables (and their associated functionality) are not yet supp
 
 The following system variables are not yet supported:
 - `mandatory_roles`
-  - All roles (and users) named here are granted to all users automatically, and cannot be revoked nor dropped
+  - All roles (and users) named here are granted to all users automatically, and cannot be revoked or dropped
 - `activate_all_roles_on_login`
   - Sets all roles to active upon logging into a user
   - As `SET ROLE` is also not yet implemented, any granted roles are automatically active when granted and logging in
