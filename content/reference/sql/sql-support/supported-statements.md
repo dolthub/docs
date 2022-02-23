@@ -83,7 +83,9 @@ title: Supported Statements
 | `SHOW DATABASES`        | ✅        |                                                                                                                                                    |
 | `SHOW FUNCTION CODE`    | ❌        |                                                                                                                                                    |
 | `SHOW FUNCTION STATUS`  | ❌        |                                                                                                                                                    |
+| `SHOW GRANTS`           | 🟠        | Database privileges, table privileges, and role assumption are not yet implemented.                                                               |
 | `SHOW INDEX`            | ❌        |                                                                                                                                                    |
+| `SHOW PRIVILEGES`       | ✅        |                                                                                                                                                    |
 | `SHOW PROCEDURE CODE`   | ❌        |                                                                                                                                                    |
 | `SHOW PROCEDURE STATUS` | ✅        |                                                                                                                                                    |
 | `SHOW SCHEMAS`          | ✅        |                                                                                                                                                    |
@@ -138,23 +140,21 @@ multiple clients per HEAD are required.
 
 ## Access management statements
 
-Access management via SQL statements is not yet supported. This table will be updated as access management features are implemented. Please [file an issue](https://github.com/dolthub/dolt/issues) if lack of SQL access management is blocking your use of Dolt, and we will prioritize accordingly.
-
-A root user name and password can be specified in the config for [`sql-server`](../../cli.md#dolt-sql-server). This user has full privileges on the running database.
+More information on how Dolt handles access management may be found in the [access management page](../access-management.md).
 
 | Statement          | Supported | Notes and limitations |
 | :----------------- | :-------- | :-------------------- |
-| `ALTER USER`       | ❌        |                       |
-| `CREATE ROLE`      | ❌        |                       |
-| `CREATE USER`      | ❌        |                       |
-| `DROP ROLE`        | ❌        |                       |
-| `DROP USER`        | ❌        |                       |
-| `GRANT`            | ❌        |                       |
-| `RENAME USER`      | ❌        |                       |
-| `REVOKE`           | ❌        |                       |
-| `SET DEFAULT ROLE` | ❌        |                       |
-| `SET PASSWORD`     | ❌        |                       |
-| `SET ROLE`         | ❌        |                       |
+| `ALTER USER`       | ❌        |                                                             |
+| `CREATE ROLE`      | ✅        |                                                             |
+| `CREATE USER`      | 🟠        | Only supports basic user creation with an optional password |
+| `DROP ROLE`        | ✅        |                                                             |
+| `DROP USER`        | ✅        |                                                             |
+| `GRANT`            | 🟠        | Only handles static privileges down to the table level      |
+| `RENAME USER`      | ❌        |                                                             |
+| `REVOKE`           | 🟠        | Only handles static privileges down to the table level      |
+| `SET DEFAULT ROLE` | ❌        |                                                             |
+| `SET PASSWORD`     | ❌        |                                                             |
+| `SET ROLE`         | ❌        |                                                             |
 
 ## Session management statements
 
