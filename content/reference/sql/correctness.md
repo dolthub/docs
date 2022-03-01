@@ -53,18 +53,18 @@ AND col3 IN (3,9,0))))) OR col4 <= 4.25 OR ((col3 = 5))) OR (((col0 >
 0)) AND col0 > 6 AND (col4 >= 6.56)))
 ```
 
-Here are Dolt's sqllogictest results for version `0.37.1`.  Tests that
+Here are Dolt's sqllogictest results for version `0.37.3`.  Tests that
 did not run could not complete due to a timeout earlier in the run.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5915609 |
-| not ok | 16758 |
+| ok | 5893904 |
+| not ok | 38463 |
 | did not run | 520 |
 | timeout | 1 |
 | _total_ _tests_ | 5932888 |
 <br/>
 
-| Correctness Percentage | 99.71 |
+| Correctness Percentage | 99.34 |
 | :--- | :--- |
 <br/>
