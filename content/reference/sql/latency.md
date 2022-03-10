@@ -26,8 +26,8 @@ Below are the results of running `sysbench` MySQL tests against Dolt
 SQL Server for the most recent release of Dolt. We will update this
 with every release. The tests attempt to run as many queries as
 possible in a fixed 2 minute time window. The `Dolt` and `MySQL`
-columns show the median latency of each query during that 2 minute
-time window.
+columns show the median latency in milliseconds (ms) of each query 
+during that 2 minute time window.
 
 The Dolt version is `0.37.4`.
 
