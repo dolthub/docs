@@ -58,13 +58,13 @@ did not run could not complete due to a timeout earlier in the run.
 
 | Results | Count |
 | :--- | :--- |
-| ok | 5893904 |
-| not ok | 38463 |
+| ok | 5914672 |
+| not ok | 17695 |
 | did not run | 520 |
 | timeout | 1 |
 | _total_ _tests_ | 5932888 |
 <br/>
 
-| Correctness Percentage | 99.34 |
+| Correctness Percentage | 99.69 |
 | :--- | :--- |
 <br/>
