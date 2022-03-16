@@ -31,7 +31,7 @@
     * [Merge](concepts/dolt/merge.md)
     * [Conflicts](concepts/dolt/conflicts.md)
     * [Remotes](concepts/dolt/remotes.md)
-* [DoltHub](concepts/dolthub.md)
+* [DoltHub/DoltLab](concepts/dolthub.md)
     * [Permissions](concepts/dolthub/permissions.md)
     * [Pull Requests](concepts/dolthub/prs.md)
     * [Issues](concepts/dolthub/issues.md)

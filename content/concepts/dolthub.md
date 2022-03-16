@@ -19,3 +19,9 @@ DoltHub adds an extra layer of transparency to data. Every change in every cell 
 DoltHub is unbreakable. Easily create a branch or fork of a database and do all the experimenting you want. Any change can be undone, making it safer to let less-savvy friends or coworkers have access to your database.
 
 DoltHub wants to change the way data is shared and collaborated on, similar to how GitHub changed how people and companies managed source code. Check out our [discover page](https://www.dolthub.com/discover) to choose an interesting database and see for yourself!
+
+# Why DoltLab?
+
+DoltLab is the self-hosted version of DoltHub that allows you to run your own DoltHub on-prem. If you're interested in using Dolt in production at your company, but can't push data to DoltHub, DoltLab is the product you're looking for. DoltLab provides the same web-based UI as DoltHub, backed entirely by local disk, so your data never leaves your control!
+
+Released as a simple zip file, DoltLab is a suite of publically available container images that run using Docker Compose on a single Linux host. This host can be a local desktop, or a cloud server, but by no means are any cloud resources required to start running DoltLab today.
