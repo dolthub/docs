@@ -5,9 +5,34 @@ title: "Administrator Guide"
 In DoltLab's current version, there is no Administrator (Admin) web-based UI or dashboard as it is still in development. In the meantime,
 the following information can help DoltLab Admins manually perform some common adminstration tasks, see below for details.
 
-1. [Upgrade DoltLab Versions Without Data Loss](upgrade-doltlab)
-2. [View Service Logs]()
+1. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
+2. [Send Service Logs To DoltLab Team](#send-service-logs)
 3. [Backup DoltLab Data]()
+4. [File Issues and View Release Notes]()
+<!-- 4. [View Service Metrics]() -->
+
+<h1 id="send-service-logs">Send Service Logs to DoltLab Team</h1>
+
+DoltLab is comprised of [multiple services](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/) running in a single Docker network via Docker compose. Logs for a particular service can be viewed using the `docker logs <container name>` command. For example, to view to logs of `doltlabapi` service, run:
+
+```bash
+docker logs doltlab_doltlabapi_1
+```
+
+If you need to send service logs to the DoltLab team, first locate the logs on the host using the `docker inspect` command, then `cp` the logs to your working directory:
+
+```bash
+DOLTLABAPI_LOGS=$(docker inspect --format='{{.LogPath}}' doltlab_doltlabapi_1)
+cp "$DOLTLABAPI_LOGS" ./doltlab-api-logs.json
+```
+
+Next change permissions on the copied file to enable reads by running:
+
+```bash
+chmod 0644 ./doltlab-api-logs.json
+```
+
+Finally, download the copied log file from your DoltLab host using `scp`. You can then send this and any other log files to the DoltLab team member you're working with via email.
 
 <h1 id="upgrade-doltlab">Upgrading DoltLab</h1>
 
@@ -17,7 +42,7 @@ In addition, some early versions have different database schemas than newer ones
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
 
-<h2 id="upgrade-v01-v02"><ins>Upgrade from DoltLab <code>v0.1.0</code> to <code>v0.2.0</code> Without Data Loss</ins></h2>
+<h2 id="upgrade-v010-v020"><ins>Upgrade from DoltLab <code>v0.1.0</code> to <code>v0.2.0</code> Without Data Loss</ins></h2>
 
 To upgrade DoltLab `v0.1.0` to `v0.2.0`, leave DoltLab `v0.1.0`'s services running and connect a PostgreSQL client from inside the `doltlab_doltlab` Docker network to the running `doltlab_doltlabdb_1` server. On the DoltLab host machine, run:
 
@@ -29,7 +54,7 @@ mkdir doltlab-db-dumps
 docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v "$(pwd)"/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "pg_dump --data-only --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi > /doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql"
 ```
 
-The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab v0.1.0 was first deployed. You should now see the SQL dump file in the `doltlab-db-dumps` directory:
+The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab `v0.1.0` was first deployed. You should now see the SQL dump file in the `doltlab-db-dumps` directory:
 
 ```bash
 ls doltlab-db-dumps/
@@ -50,7 +75,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-/* We add this disable constraint checking during import */
+/* We add this to disable constraint checking during import */
 SET session_replication_role = replica;
 ...
 ```
@@ -64,13 +89,13 @@ docker system prune -a
 
 <!-- TODO: have them backup data first? -->
 
-Next, remove the Docker volume used with DoltLab `v0.1.0`'s `doltlab_doltlabdb_1` server by running:
+Next, remove the Docker volume used with DoltLab `v0.1.0`'s `doltlab_doltlabdb_1` postgres server by running:
 
 ```bash
 docker volume rm doltlab_doltlabdb-data
 ```
 
-[Download DoltLab]() `v0.2.0`, unzip it's contents, and [start DoltLab]() `v0.2.0`'s services by running the `start-doltlab.sh` script.
+[Download DoltLab](./installation.md#download-doltlab) `v0.2.0`, unzip it's contents, and [start DoltLab](./installation.md#start-doltlab) `v0.2.0`'s services by running the `start-doltlab.sh` script.
 
 After the script completes, confirm DoltLab `v0.2.0`'s services are running with `docker ps`:
 
@@ -97,26 +122,3 @@ docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v "
 ```
 
 You have now completed the upgrade, and should no be running DoltLab `v0.2.0` with your postgres data from DoltLab `v0.1.0`.
-steps:
-
-<!-- connect to the running postgres server using a docker container in the doltlab network
-dump the database/data using pg_dump
-stop the running doltlab servers with docker-compose stop
-backup the remote data and (user uploaded data only in doltlab v0.2.0)
-remove the build caches and stopped containers with docker system prune -a
-remove only docker volume rm doltlab_doltlabdb-data? this is right
-download the latest version of doltlab
-start the latest version using the start script
-connect to the running pg server of the latest doltlab version
-
-edit the dump file and add
-`SET session_replication_role = replica;`
-
-import the data dump into that running server
-psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi < doltlab-v0.1.0-dump-data-only.sql
-
-then run this query
-psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi
-`update users set has_dolt = 'false';`
-
-ensure that doltlab's running as expect with older data on latest server -->
