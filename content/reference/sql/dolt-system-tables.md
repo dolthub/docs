@@ -108,6 +108,311 @@ INSERT INTO dolt_branches (name, hash)
 VALUES ("my branch name", @@mydb_head);
 ```
 
+## `dolt_docs`
+
+`dolt_docs` stores the contents of Dolt docs \(`LICENSE.md`,
+`README.md`\).
+
+You can modify the contents of these files via SQL, but you are not
+guaranteed to see these changes reflected in the files on disk.
+
+### Schema
+
+```text
++----------+------+
+| field    | type |
++----------+------+
+| doc_name | text |
+| doc_text | text |
++----------+------+
+```
+
+### Usage
+
+Dolt users do not have to be familiar with this system table in order
+to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or
+`touch README.md` and `touch LICENSE.md` from a Dolt repository to get
+started. Then, `dolt add` and `dolt commit` the docs like you would a
+table.
+
+
+## `dolt_procedures`
+
+`dolt_procedures` stores each stored procedure that has been created
+on the database.
+
+The values in this table are implementation details associated with
+the storage of stored procedures. It is recommended to use built-in
+SQL statements for examining and modifying stored procedures rather
+than using this table directly.
+
+### Schema
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+----------+
+| name        | longtext |
+| create_stmt | longtext |
+| created_at  | datetime |
+| modified_at | datetime |
++-------------+----------+
+```
+
+When using the standard `CREATE PROCEDURE` workflow, the `name` column
+will always be lowercase. Dolt assumes that `name` is always lowercase
+as a result, and manually inserting a stored procedure must also have
+a lowercase `name`. Otherwise, it will be invisible to some
+operations, such as `DROP PROCEDURE`.
+
+### Example Query
+
+```sql
+CREATE PROCEDURE p1(x INT) SELECT x;
+SELECT * FROM dolt_procedures;
+```
+
+```text
++------+-------------------------------------+-------------------------------+-------------------------------+
+| name | create_stmt                         | created_at                    | modified_at                   |
++------+-------------------------------------+-------------------------------+-------------------------------+
+| p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
++------+-------------------------------------+-------------------------------+-------------------------------+
+```
+
+
+## `dolt_query_catalog`
+
+The `dolt_query_catalog` system table stores named queries for your database.
+Like all data stored in Dolt, these named queries are versioned alongside your data, so
+after you create, modify, or remove a named query, you'll need to commit that change to save it.  
+You can use the Dolt CLI to save and execute named queries or you can use the  
+`dolt_query_catalog` system table directly to add, modify, or delete named queries.
+All named queries are displayed in the Queries tab of your database on DoltHub.
+
+### Schema
+
+```text
++---------------+-----------------+------+-----+---------+-------+
+| Field         | Type            | Null | Key | Default | Extra |
++---------------+-----------------+------+-----+---------+-------+
+| id            | varchar(16383)  | NO   | PRI |         |       |
+| display_order | bigint unsigned | NO   |     |         |       |
+| name          | varchar(16383)  | YES  |     |         |       |
+| query         | varchar(16383)  | YES  |     |         |       |
+| description   | varchar(16383)  | YES  |     |         |       |
++---------------+-----------------+------+-----+---------+-------+
+```
+
+### Example Query
+
+Using the `jfulghum/iris-flower-dataset` from DoltHub as an example, you can create a
+named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
+
+```shell
+> dolt sql -q "select distinct(class) from classified_measurements where petal_length_cm > 5" \
+           -s "Large Irises" -m "Query to identify iris species with the largest recorded petal lengths"
+```
+
+After creating a named query, you can view it in the `dolt_query_catalog` table:
+
+```sql
+> select * from dolt_query_catalog;
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+| id           | display_order | name         | query                                                                         | description                                                            |
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+| Large Irises | 1             | Large Irises | select distinct(class) from classified_measurements where petal_length_cm > 5 | Query to identify iris species with the largest recorded petal lengths |
++--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
+```
+
+Then you can use the dolt CLI to execute it:
+
+```shell
+> dolt sql -x "Large Irises"
+Executing saved query 'Large Irises':
+select distinct(class) from classified_measurements where petal_length_cm > 5
++------------+
+| class)     |
++------------+
+| versicolor |
+| virginica  |
++------------+
+```
+
+Last, but not least, if you want to persist that named query, be sure to commit your change to the
+`dolt_query_catalog` table.
+```shell
+dolt add dolt_query_catalog
+dolt commit -m "Adding new named query"
+```
+
+
+## `dolt_remotes`
+
+`dolt_remotes` returns the remote subcontents of the `repo_state.json`, similar
+to running `dolt remote -v` from the command line.
+
+The `dolt_remotes` table is currently read only. Use the CLI `dolt remote` functions
+to add, update or delete remotes.
+
+### Schema
+
+```text
++-------------+------+------+-----+---------+-------+
+| Field       | Type | Null | Key | Default | Extra |
++-------------+------+------+-----+---------+-------+
+| name        | text | NO   | PRI |         |       |
+| url         | text | NO   |     |         |       |
+| fetch_specs | json | YES  |     |         |       |
+| params      | json | YES  |     |         |       |
++-------------+------+------+-----+---------+-------+
+```
+
+### Example Query
+
+```sql
+SELECT *
+FROM dolt_remotes
+WHERE name = 'origin';
+```
+
+```text
++--------+-----------------------------------------+--------------------------------------+--------+
+| name   | url                                     | fetch_specs                          | params |
++--------+-----------------------------------------+--------------------------------------+--------+
+| origin | file:///go/github.com/dolthub/dolt/rem1 | [refs/heads/*:refs/remotes/origin/*] | map[]  |
++--------+-----------------------------------------+--------------------------------------+--------+
+```
+
+
+## `dolt_schemas`
+
+`dolt_schemas` stores SQL schema fragments for a dolt database that
+are versioned alongside the database itself. Certain DDL statements
+will modify this table and the value of this table in a SQL session
+will affect what database entities exist in the session.
+
+The values in this table are implementation details associated with
+the storage of certain schema elements. It is recommended to use
+built-in SQL statements for examining and modifying schemas, rather
+than using this table directly.
+
+### Schema
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+--------- +
+| type        | text     |
+| name        | text     |
+| fragment    | text     |
++-------------+--------- +
+```
+
+Currently on view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
+
+The values in this table are partly implementation details associated with the implementation of the underlying database objects.
+
+### Example Query
+
+```sql
+CREATE VIEW four AS SELECT 2+2 FROM dual;
+SELECT * FROM dolt_schemas;
+```
+
+```text
++------+------+----------------------+
+| type | name | fragment             |
++------+------+----------------------+
+| view | four | select 2+2 from dual |
++------+------+----------------------+
+```
+
+
+## `dolt_blame_$tablename`
+
+For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename`
+which can be queried to see the user and commit responsible for the current value of each row.
+This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/reference/cli#dolt-blame).
+
+### Schema
+
+The `dolt_blame_$tablename` system view has the following columns:
+```text
++-------------------+----------+
+| field             | type     |
++-------------------+----------+
+| commit            | text     |
+| commit_date       | datetime |
+| committer         | text     |
+| email             | text     |
+| message           | text     |
+| primary key cols  |          |
++-------------------+----------+
+```
+
+The remaining columns are dependent on the schema of the user table.
+Every column from the primary key of your table will be included in the `dolt_blame_$tablename` system table.
+
+### Query Details
+
+Executing a `SELECT *` query for a `dolt_blame_$tablename` system view will show you the primary key columns
+for every row in the underlying user table and the commit metadata for the last commit that modified that row.
+Note that if a table has any uncommitted changes in the working set,
+those will not be displayed in the `dolt_blame_$tablename` system view.
+
+`dolt_blame_$tablename` is only available for tables with a primary key.
+
+### Example Query
+
+Consider the following example table `app_config` that holds configuration data:
+```
+> describe app_config;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| id     | bigint   | NO   | PRI |         |       |
+| name   | longtext | NO   |     |         |       |
+| value  | longtext | NO   |     |         |       |
++--------+----------+------+-----+---------+-------+
+```
+
+To find who set the current configuration values, we can query the `dolt_blame_app_config` table:
+```
+> select * from dolt_blame_app_config;
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| id  | commit                           | commit_date                       | committer       | email             | message                       |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
+| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
+| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
+| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
++-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
+```
+
+
+## `dolt_commit_ancestors`
+
+The `dolt_commit_ancestors` table records the ancestors for every commit in the database. Each commit has one or two
+ancestors, two in the case of a merge commit.
+
+### Schema
+
+Each commit hash has one or two entries in the table, depending on whether it has one or two parent commits. The root
+commit of the database has a `NULL` parent. For merge commits, the merge base will have `parent_index` 0, and the commit
+merged will have `parent_index` 1.
+
+```text
++--------------+------+------+-----+---------+-------+
+| Field        | Type | Null | Key | Default | Extra |
++--------------+------+------+-----+---------+-------+
+| commit_hash  | text | NO   | PRI |         |       |
+| parent_hash  | text | NO   | PRI |         |       |
+| parent_index | int  | NO   | PRI |         |       |
++--------------+------+------+-----+---------+-------+
+```
+
+
 ## `dolt_commit_diff_$TABLENAME`
 
 For every user table named `$TABLENAME`, there is a queryable system
@@ -460,32 +765,6 @@ LIMIT 10;
 +-------------+-------------+------------------+----------------+-------+
 ```
 
-## `dolt_docs`
-
-`dolt_docs` stores the contents of Dolt docs \(`LICENSE.md`,
-`README.md`\).
-
-You can modify the contents of these files via SQL, but you are not
-guaranteed to see these changes reflected in the files on disk.
-
-### Schema
-
-```text
-+----------+------+
-| field    | type |
-+----------+------+
-| doc_name | text |
-| doc_text | text |
-+----------+------+
-```
-
-### Usage
-
-Dolt users do not have to be familiar with this system table in order
-to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or
-`touch README.md` and `touch LICENSE.md` from a Dolt repository to get
-started. Then, `dolt add` and `dolt commit` the docs like you would a
-table.
 
 ## `dolt_history_$TABLENAME`
 
@@ -583,89 +862,6 @@ WHERE state = "Virginia";
 # easier to understand how it relates to our commit graph and the data associated with each commit above
 ```
 
-## `dolt_blame_$tablename`
-
-For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename` 
-which can be queried to see the user and commit responsible for the current value of each row. 
-This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/reference/cli#dolt-blame).
-
-### Schema
-
-The `dolt_blame_$tablename` system view has the following columns:
-```text
-+-------------------+----------+
-| field             | type     |
-+-------------------+----------+
-| commit            | text     |
-| commit_date       | datetime |
-| committer         | text     |
-| email             | text     |
-| message           | text     |
-| primary key cols  |          |
-+-------------------+----------+
-```
-
-The remaining columns are dependent on the schema of the user table. 
-Every column from the primary key of your table will be included in the `dolt_blame_$tablename` system table.
-
-### Query Details
-
-Executing a `SELECT *` query for a `dolt_blame_$tablename` system view will show you the primary key columns 
-for every row in the underlying user table and the commit metadata for the last commit that modified that row. 
-Note that if a table has any uncommitted changes in the working set, 
-those will not be displayed in the `dolt_blame_$tablename` system view.
-
-`dolt_blame_$tablename` is only available for tables with a primary key.
-
-### Example Query
-
-Consider the following example table `app_config` that holds configuration data: 
-```
-> describe app_config;
-+--------+----------+------+-----+---------+-------+
-| Field  | Type     | Null | Key | Default | Extra |
-+--------+----------+------+-----+---------+-------+
-| id     | bigint   | NO   | PRI |         |       |
-| name   | longtext | NO   |     |         |       |
-| value  | longtext | NO   |     |         |       |
-+--------+----------+------+-----+---------+-------+
-```
-
-To find who set the current configuration values, we can query the `dolt_blame_app_config` table: 
-```
-> select * from dolt_blame_app_config;
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| id  | commit                           | commit_date                       | committer       | email             | message                       |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
-| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
-| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-```
-
-
-## `dolt_commit_ancestors`
-
-The `dolt_commit_ancestors` table records the ancestors for every commit in the database. Each commit has one or two
-ancestors, two in the case of a merge commit.
-
-### Schema
-
-Each commit hash has one or two entries in the table, depending on whether it has one or two parent commits. The root
-commit of the database has a `NULL` parent. For merge commits, the merge base will have `parent_index` 0, and the commit
-merged will have `parent_index` 1.
-
-```text
-+--------------+------+------+-----+---------+-------+
-| Field        | Type | Null | Key | Default | Extra |
-+--------------+------+------+-----+---------+-------+
-| commit_hash  | text | NO   | PRI |         |       |
-| parent_hash  | text | NO   | PRI |         |       |
-| parent_index | int  | NO   | PRI |         |       |
-+--------------+------+------+-----+---------+-------+
-```
-
 
 ## `dolt_log`
 
@@ -708,39 +904,6 @@ ORDER BY "date";
 ```
 
 
-## `dolt_status`
-
-`dolt_status` returns the status of the database session, analogous to
-running `dolt status` from the command line.
-
-### Schema
-
-```text
-+------------+---------+------+-----+
-| Field      | Type    | Null | Key |
-+------------+---------+------+-----+
-| table_name | text    | NO   | PRI |
-| staged     | tinyint | NO   |     |
-| status     | text    | NO   |     |
-+------------+---------+------+-----+
-```
-
-### Example Query
-
-```sql
-SELECT *
-FROM dolt_status
-WHERE staged=false;
-```
-
-```text
-+------------+--------+-----------+
-| table_name | staged | status    |
-+------------+--------+-----------+
-| one_pk     | false  | new table |
-+------------+--------+-----------+
-```
-
 ## `dolt_conflicts`
 
 dolt_conflicts is a system table that has a row for every table in the working set that has an unresolved merge
@@ -757,6 +920,7 @@ conflict.
 
 Query this table when resolving conflicts in a SQL session. For more information on resolving merge conflicts in SQL,
 see docs for the [dolt\_conflicts\_$TABLENAME](#dolt_conflicts_usdtablename) tables.
+
 
 ## `dolt_conflicts_$TABLENAME`
 
@@ -806,6 +970,41 @@ mydb> replace into mytable (select their_a, their_b from dolt_conflicts_mytable)
 And of course you can use any combination of `ours`, `theirs` and
 `base` rows in these replacements.
 
+
+## `dolt_status`
+
+`dolt_status` returns the status of the database session, analogous to
+running `dolt status` from the command line.
+
+### Schema
+
+```text
++------------+---------+------+-----+
+| Field      | Type    | Null | Key |
++------------+---------+------+-----+
+| table_name | text    | NO   | PRI |
+| staged     | tinyint | NO   |     |
+| status     | text    | NO   |     |
++------------+---------+------+-----+
+```
+
+### Example Query
+
+```sql
+SELECT *
+FROM dolt_status
+WHERE staged=false;
+```
+
+```text
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| one_pk     | false  | new table |
++------------+--------+-----------+
+```
+
+
 ## `dolt_constraint_violations`
 
 The `dolt_constraint_violations` system table contains one row for every table that has a constraint violation
@@ -824,6 +1023,7 @@ merge base could be referenced via a foreign key constraint by an added row in t
 | num_violations | bigint unsigned | NO   |     |         |       |
 +----------------+-----------------+------+-----+---------+-------+
 ```
+
 
 ## `dolt_constraint_violations_$TABLENAME`
 
@@ -863,194 +1063,3 @@ The `violation_info` field is a JSON payload describing the violation.
 
 As with `dolt_conflicts`, delete rows from the corresponding `dolt_constraint_violations` table to signal to dolt that
 you have resolved any such violations before committing.
-
-## `dolt_procedures`
-
-`dolt_procedures` stores each stored procedure that has been created
-on the database.
-
-The values in this table are implementation details associated with
-the storage of stored procedures. It is recommended to use built-in
-SQL statements for examining and modifying stored procedures rather
-than using this table directly.
-
-### Schema
-
-```text
-+-------------+----------+
-| field       | type     |
-+-------------+----------+
-| name        | longtext |
-| create_stmt | longtext |
-| created_at  | datetime |
-| modified_at | datetime |
-+-------------+----------+
-```
-
-When using the standard `CREATE PROCEDURE` workflow, the `name` column
-will always be lowercase. Dolt assumes that `name` is always lowercase
-as a result, and manually inserting a stored procedure must also have
-a lowercase `name`. Otherwise, it will be invisible to some
-operations, such as `DROP PROCEDURE`.
-
-### Example Query
-
-```sql
-CREATE PROCEDURE p1(x INT) SELECT x;
-SELECT * FROM dolt_procedures;
-```
-
-```text
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| name | create_stmt                         | created_at                    | modified_at                   |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-```
-
-
-## `dolt_query_catalog`
-
-The `dolt_query_catalog` system table stores named queries for your database. 
-Like all data stored in Dolt, these named queries are versioned alongside your data, so 
-after you create, modify, or remove a named query, you'll need to commit that change to save it.  
-You can use the Dolt CLI to save and execute named queries or you can use the  
-`dolt_query_catalog` system table directly to add, modify, or delete named queries. 
-All named queries are displayed in the Queries tab of your database on DoltHub.
-
-### Schema
-
-```text
-+---------------+-----------------+------+-----+---------+-------+
-| Field         | Type            | Null | Key | Default | Extra |
-+---------------+-----------------+------+-----+---------+-------+
-| id            | varchar(16383)  | NO   | PRI |         |       |
-| display_order | bigint unsigned | NO   |     |         |       |
-| name          | varchar(16383)  | YES  |     |         |       |
-| query         | varchar(16383)  | YES  |     |         |       |
-| description   | varchar(16383)  | YES  |     |         |       |
-+---------------+-----------------+------+-----+---------+-------+
-```
-
-### Example Query
-
-Using the `jfulghum/iris-flower-dataset` from DoltHub as an example, you can create a
-named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
-
-```shell
-> dolt sql -q "select distinct(class) from classified_measurements where petal_length_cm > 5" \
-           -s "Large Irises" -m "Query to identify iris species with the largest recorded petal lengths"
-```
-
-After creating a named query, you can view it in the `dolt_query_catalog` table:
-
-```sql
-> select * from dolt_query_catalog;
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| id           | display_order | name         | query                                                                         | description                                                            |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| Large Irises | 1             | Large Irises | select distinct(class) from classified_measurements where petal_length_cm > 5 | Query to identify iris species with the largest recorded petal lengths |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-```
-
-Then you can use the dolt CLI to execute it:
-
-```shell
-> dolt sql -x "Large Irises"
-Executing saved query 'Large Irises':
-select distinct(class) from classified_measurements where petal_length_cm > 5
-+------------+
-| class)     |
-+------------+
-| versicolor |
-| virginica  |
-+------------+
-```
-
-Last, but not least, if you want to persist that named query, be sure to commit your change to the 
-`dolt_query_catalog` table. 
-```shell
-dolt add dolt_query_catalog
-dolt commit -m "Adding new named query"
-```
-
-
-## `dolt_schemas`
-
-`dolt_schemas` stores SQL schema fragments for a dolt database that
-are versioned alongside the database itself. Certain DDL statements
-will modify this table and the value of this table in a SQL session
-will affect what database entities exist in the session.
-
-The values in this table are implementation details associated with
-the storage of certain schema elements. It is recommended to use
-built-in SQL statements for examining and modifying schemas, rather
-than using this table directly.
-
-### Schema
-
-```text
-+-------------+----------+
-| field       | type     |
-+-------------+--------- +
-| type        | text     |
-| name        | text     |
-| fragment    | text     |
-+-------------+--------- +
-```
-
-Currently on view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
-
-The values in this table are partly implementation details associated with the implementation of the underlying database objects.
-
-### Example Query
-
-```sql
-CREATE VIEW four AS SELECT 2+2 FROM dual;
-SELECT * FROM dolt_schemas;
-```
-
-```text
-+------+------+----------------------+
-| type | name | fragment             |
-+------+------+----------------------+
-| view | four | select 2+2 from dual |
-+------+------+----------------------+
-```
-
-## `dolt_remotes`
-
-`dolt_remotes` returns the remote subcontents of the `repo_state.json`, similar
-to running `dolt remote -v` from the command line.
-
-The `dolt_remotes` table is currently read only. Use the CLI `dolt remote` functions
-to add, update or delete remotes.
-
-### Schema
-
-```text
-+-------------+------+------+-----+---------+-------+
-| Field       | Type | Null | Key | Default | Extra |
-+-------------+------+------+-----+---------+-------+
-| name        | text | NO   | PRI |         |       |
-| url         | text | NO   |     |         |       |
-| fetch_specs | json | YES  |     |         |       |
-| params      | json | YES  |     |         |       |
-+-------------+------+------+-----+---------+-------+
-```
-
-### Example Query
-
-```sql
-SELECT *
-FROM dolt_remotes
-WHERE name = 'origin';
-```
-
-```text
-+--------+-----------------------------------------+--------------------------------------+--------+
-| name   | url                                     | fetch_specs                          | params |
-+--------+-----------------------------------------+--------------------------------------+--------+
-| origin | file:///go/github.com/dolthub/dolt/rem1 | [refs/heads/*:refs/remotes/origin/*] | map[]  |
-+--------+-----------------------------------------+--------------------------------------+--------+
-```
