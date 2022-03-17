@@ -428,8 +428,8 @@ user table has changed from the `from_commit` ref to the `to_commit` ref by show
 Note that `dolt_commit_diff_$TABLENAME` is the analogue of the `dolt diff` CLI command.  
 It represents the [two-dot diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
 between the two commits provided. 
-The `dolt_diff_$TABLENAME` system table also exposes diff information, but instead of a traditional two-way diff,
-it returns a log of individual diffs between all adjacent commits on a single branch.   
+The `dolt_diff_$TABLENAME` system table also exposes diff information, but instead of a two-way diff,
+it returns a log of individual diffs between all adjacent commits in the current branch's commit graph. 
 
 
 ### Schema
@@ -767,9 +767,8 @@ LIMIT 10;
 
 ## `dolt_history_$TABLENAME`
 
-For every user table named `$TABLENAME`, there is a queryable system
-table named `dolt_history_$TABLENAME` which can be queried to find a
-row's value at every commit in the current branches commit graph.
+For every user table named `$TABLENAME`, there is a read-only system table named `dolt_history_$TABLENAME` 
+which can be queried to find a row's value at every commit in the current branches commit graph.
 
 ### Schema
 
