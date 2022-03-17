@@ -29,31 +29,31 @@ possible in a fixed 2 minute time window. The `Dolt` and `MySQL`
 columns show the median latency in milliseconds (ms) of each query 
 during that 2 minute time window.
 
-The Dolt version is `0.37.5`.
+The Dolt version is `0.37.6`.
 
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
-| covering\_index\_scan | 7.43 | 1.7 | 4.4 |
-| groupby\_scan | 32.53 | 11.87 | 2.7 |
+| covering\_index\_scan | 7.84 | 1.7 | 4.6 |
+| groupby\_scan | 33.12 | 11.87 | 2.8 |
 | index\_scan | 84.47 | 35.59 | 2.4 |
-| oltp\_point\_select | 0.92 | 0.15 | 6.1 |
-| oltp\_read\_only | 15.83 | 2.76 | 5.7 |
+| oltp\_point\_select | 0.94 | 0.15 | 6.3 |
+| oltp\_read\_only | 16.12 | 2.81 | 5.7 |
 | select\_random\_points | 1.76 | 0.28 | 6.3 |
-| select\_random\_ranges | 2.07 | 0.34 | 6.1 |
-| table\_scan | 82.96 | 35.59 | 2.3 |
-| mean |  |  | _4.5_ |
+| select\_random\_ranges | 2.11 | 0.33 | 6.4 |
+| table\_scan | 84.47 | 35.59 | 2.4 |
+| mean |  |  | _4.6_ |
 
 | Write Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | bulk\_insert | 0.001 | 0.001 | 1.0 |
-| oltp\_delete | 1.27 | 0.14 | 9.1 |
-| oltp\_insert | 7.98 | 2.81 | 2.8 |
-| oltp\_read\_write | 41.85 | 7.7 | 5.4 |
-| oltp\_update\_index | 9.56 | 3.89 | 2.5 |
-| oltp\_update\_non\_index | 6.67 | 3.25 | 2.1 |
-| oltp\_write\_only | 26.68 | 4.49 | 5.9 |
-| mean |  |  | _4.1_ |
+| oltp\_delete | 1.3 | 0.14 | 9.3 |
+| oltp\_insert | 8.13 | 2.26 | 3.6 |
+| oltp\_read\_write | 41.85 | 6.09 | 6.9 |
+| oltp\_update\_index | 9.56 | 2.3 | 4.2 |
+| oltp\_update\_non\_index | 6.67 | 2.35 | 2.8 |
+| oltp\_write\_only | 26.68 | 3.36 | 7.9 |
+| mean |  |  | _5.1_ |
 
-| Overall Mean Multiple | _4.3_ |
+| Overall Mean Multiple | _4.8_ |
 | :--- | :--- |
 <br/>
