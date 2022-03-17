@@ -415,45 +415,46 @@ merged will have `parent_index` 1.
 
 ## `dolt_commit_diff_$TABLENAME`
 
-For every user table named `$TABLENAME`, there is a queryable system
-table named `dolt_commit_diff_$TABLENAME` which can be queried to see
-how a table has changed between two commits (regardless of which
-branch the user is currently using).
+For every user table named `$TABLENAME`, there is a read-only system table named `dolt_commit_diff_$TABLENAME` 
+which can be queried to see a diff of the data in the specified table between **any** two commits. 
+For example, you can use this system table to view the diff between two commits on different branches. 
+The schema of the returned data from this system table is based on the schema of the underlying user table 
+at the currently checked out branch. 
 
-For each pair of commits in the database history, the diff tables will
-have zero or more rows, each of which represents a row that is
-different between the two commits, with its old and new values.
+You must provide `from_commit` and `to_commit` in all queries to this system table in order to specify the 
+to and from points for the diff of your table data. Each returned row describes how a row in the underlying
+user table has changed from the `from_commit` ref to the `to_commit` ref by showing the old and new values.  
+
+Note that `dolt_commit_diff_$TABLENAME` is the analogue of the `dolt diff` CLI command.  
+It represents the [two-dot diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
+between the two commits provided. 
+The `dolt_diff_$TABLENAME` system table also exposes diff information, but instead of a traditional two-way diff,
+it returns a log of individual diffs between all adjacent commits on a single branch.   
+
 
 ### Schema
 
 ```text
-+-------------+------+
-| field       | type |
-+-------------+------+
-| from_commit | TEXT |
-| to_commit   | TEXT |
-| diff_type   | TEXT |
-| other cols  |      |
-+-------------+------+
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| from_commit      | TEXT     |
+| from_commit_date | DATETIME |
+| to_commit        | TEXT     |
+| to_commit_date   | DATETIME |
+| diff_type        | TEXT     |
+| other cols       |          |
++------------------+----------+
 ```
 
-The remaining columns will be dependent on the schema of the user
-table. For every column X in your table at `from_commit`, there will
-be a column in the result set named `from_$X` with the same type as
-`X`, and for every column `Y` in your table at `to_commit` there will
-be a column in the result set named `to_$Y` with the same type as
-`Y`. The `from_commit` and `to_commit` parameters must both be filled.
-
-`dolt_commit_diff_$TABLENAME` is more similar to the `dolt diff` CLI
-command than the `dolt_diff_$TABLENAME` table. It represents the
-[two-dot
-diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
-between the two commits provided.
+The remaining columns are dependent on the schema of the user table at the currently checked out branch.   
+For every column X in your table at the currently checked out branch, there are columns in the result set named 
+`from_$X` and `to_$X` with the same type as `X` in the current schema. 
+The `from_commit` and `to_commit` parameters must both be specified in the query, or an error is returned. 
 
 ### Example Schema
 
-Let us consider a simple example with a table that has two
-columns. Consider the table
+Consider a simple example with a table that has two columns:
 
 ```text
 +--------------+
@@ -464,7 +465,7 @@ columns. Consider the table
 +--------------+
 ```
 
-We see that the structure of the `dolt_commit_diff_$TABLENAME` will be.
+Based on the table's schema above, the schema of the `dolt_commit_diff_$TABLENAME` will be:
 
 ```text
 +------------------+----------+
@@ -483,33 +484,31 @@ We see that the structure of the `dolt_commit_diff_$TABLENAME` will be.
 
 ### Query Details
 
-Let us now consider the following branch structure:
+Now consider the following branch structure:
 
 ```text
       A---B---C feature
      /
-D---E---F---G master
+D---E---F---G main
 ```
 
-We can use the above table to represent two types of diffs, a
-two-point diff and a three-point diff. In a two-point diff we want to
-see the difference in rows between Point C and Point G. To do that we
-can simply do
+We can use the above table to represent two types of diffs: a two-point diff and a three-point diff. 
+In a two-point diff we want to see the difference in rows between Point C and Point G. 
 
 ```SQL
-SELECT * from dolt_commif_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('master');
+SELECT * from dolt_commif_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('main');
 ```
 
-We can also compute a three-point diff using this table. In a
-three-point diff we want to see how our feature branch has diverged
-from our common ancestor E. We can do the following queries
+We can also compute a three-point diff using this table. 
+In a three-point diff we want to see how our feature branch has diverged
+from our common ancestor E, without including the changes from F and G on main.
 
 ```SQL
-SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('master', 'feature');
+SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('main', 'feature');
 ```
 
-The function `dolt_merge_base` computes the closest ancestor E
-between `master` and `feature`.
+The function [`dolt_merge_base`](../dolt-sql-functions.md#dolt_merge_base) 
+computes the closest ancestor E between `main` and `feature`.
 
 ### Additional Notes
 
