@@ -1,5 +1,5 @@
 ---
-title: "Getting Started"
+title: "Installation"
 ---
 
 The latest version of DoltLab is `v0.2.0` and to get started running your own DoltLab `v0.2.0` instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
