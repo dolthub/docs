@@ -5,28 +5,122 @@ title: "Administrator Guide"
 In DoltLab's current version, there is no Administrator (Admin) web-based UI or dashboard as it is still in development. In the meantime,
 the following information can help DoltLab Admins manually perform some common adminstration tasks, see below for details.
 
-1. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
-2. [Send Service Logs To DoltLab Team](#send-service-logs)
-3. [Backup DoltLab Data](#backup-restore-volumes)
-4. [File Issues and View Release Notes]()
-<!-- 4. [View Service Metrics]() -->
+1. [File Issues and View Release Notes](#issues-release-notes)
+2. [Backup DoltLab Data](#backup-restore-volumes)
+3. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
+4. [Send Service Logs To DoltLab Team](#send-service-logs)
+5. [Connect with a DoltLab Team Member]()
+
+<h1 id="issues-release-notes">File Issues and View Release Notes</h1>
+
+DoltLab's source code is currenly closed-source, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
-https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes
+DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which adhere to Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes), with the exception of DoltLab's PostgreSQL server, which we recommend slighlty different backup and restore pattern for.
 
-For PG backups, dumping and importing might be best
+<h2 id="backup-restore-remote-data-user-data"><ins>Backing Up and Restoring Remote Data and User Uploaded Data</ins></h2>
 
+To backup DoltLab's remote data, the database data for all database on a given DoltLab instance, leave DoltLab's services up and run:
 
-For other volumes the following might be ok:
-
-Backup a service:
-docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /var/lib/postgresql/data
+```bash
+# backup remote data stored in DoltLab RemoteAPI's volume and save to a tar file
 docker run --rm --volumes-from doltlab_doltlabremoteapi_1 -v $(pwd):/backup ubuntu tar cvf /backup/remote-data.tar /doltlab-remote-storage
+```
 
-testing:
-docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+This will create a tar file called `remote-data.tar` in your working directory.
+
+To backup user uploaded files, run:
+
+```bash
+# backup remote data stored in DoltLab RemoteAPI's volume and save to a tar file
+docker run --rm --volumes-from doltlab_doltlabfileserviceapi_1 -v $(pwd):/backup ubuntu tar cvf /backup/user-uploaded-data.tar /doltlab-user-uploads
+```
+
+This will create a tar file called `user-uploaded-data.tar` in your working directory.
+
+Before restoring DoltLab's volumes from a backup, first, stop the running DoltLab services, `prune` the Docker containers, and remove the old volume(s):
+
+```bash
+cd doltlab
+
+# stop the DoltLab services
+docker-compose stop
+
+# prune containers
+docker container prune
+
+# remove the remote data volume
+docker volume rm doltlab_doltlab-remote-storage
+
+# remove the user uploaded data
+docker volume rm doltlab_doltlab-user-uploads
+```
+
+Next, [start DoltLab's services](./installation.md#start-doltlab) using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `remote-data.tar` backup file and run:
+
+```bash
+# restore remote data from tar
 docker run --rm --volumes-from doltlab_doltlabremoteapi_1 -v $(pwd):/backup ubuntu bash -c "cd /doltlab-remote-storage && tar xvf /backup/remote-data.tar --strip 1"
+```
+
+To restore user uploaded data, `cd` into the directory containing `user-uploaded-data.tar` and run:
+
+```bash
+# restore remote data from tar
+docker run --rm --volumes-from doltlab_doltlabfileserviceapi_1 -v $(pwd):/backup ubuntu bash -c "cd /doltlab-user-uploads && tar xvf /backup/user-uploaded-data.tar --strip 1"
+```
+
+<h2 id="backup-restore-postgres-data"><ins>Backing Up and Restoring PostgreSQL Data</ins></h2>
+
+For backing up data from DoltLab's postgres server, we recommend executing a data dump with `pg_dump`. To do so, keep DoltLab's services up and run:
+
+```bash
+# dump postgres to postgres-dump.sql
+docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd):/doltlab-db-dumps postgres:13-bullseye bash -c "pg_dump --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi > /doltlab-db-dumps/postgres-dump.sql"
+```
+
+The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab was first deployed.
+
+To restore a postgres server from `postgres-dump.sql`, first stop the running DoltLab services, remove the stopped containers, and remove the old postgres server volume:
+```bash
+cd doltlab
+
+# stop DoltLab
+docker-compose stop
+
+# remove containers
+docker container prune
+
+# remove old postgres data volume
+docker volume rm doltlab_doltlabdb-data
+```
+
+Next, edit the `postgres-dump.sql` file by adding the line `SET session_replication_role = replica;` near the top of the file:
+
+```sql
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+/* We add this to disable triggers and rules during import */
+SET session_replication_role = replica;
+...
+```
+
+[Start DoltLab's services](./installation.md#start-doltlab) again using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `postgres-dump.sql` file and run:
+
+```bash
+# import the postgres dump into the running server
+docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd):/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi < /doltlab-db-dumps/postgres-dump.sql"
+```
 
 <h1 id="send-service-logs">Send Service Logs to DoltLab Team</h1>
 
@@ -64,21 +158,13 @@ If you want to upgrade your DoltLab version without losing any data, please foll
 To upgrade DoltLab `v0.1.0` to `v0.2.0`, leave DoltLab `v0.1.0`'s services running and connect a PostgreSQL client from inside the `doltlab_doltlab` Docker network to the running `doltlab_doltlabdb_1` server. On the DoltLab host machine, run:
 
 ```bash
-# create a directory on the host to store data dumps
-mkdir doltlab-db-dumps
-
 # dump data from DoltLab v0.1.0's postgres server to doltlab-db-dumps
-docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v "$(pwd)"/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "pg_dump --data-only --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi > /doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql"
+docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd):/doltlab-db-dumps postgres:13-bullseye bash -c "pg_dump --data-only --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi > /doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql"
 ```
 
-The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab `v0.1.0` was first deployed. You should now see the SQL dump file in the `doltlab-db-dumps` directory:
+The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab `v0.1.0` was first deployed. You should now see the SQL dump file called `doltlab-v0.1.0-dump-data-only.sql`.
 
-```bash
-ls doltlab-db-dumps/
-doltlab-v0.1.0-dump-data-only.sql
-```
-
-Next, edit the `doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql` file by adding the line `SET session_replication_role = replica;` near the top of the file:
+Next, edit the `doltlab-v0.1.0-dump-data-only.sql` file by adding the line `SET session_replication_role = replica;` near the top of the file:
 
 ```sql
 SET statement_timeout = 0;
@@ -92,7 +178,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-/* We add this to disable constraint checking during import */
+/* We add this to disable triggers and rules during import */
 SET session_replication_role = replica;
 ...
 ```
@@ -101,8 +187,12 @@ You can now stop the DoltLab `v0.1.0` services and delete the Docker caches and 
 
 ```bash
 cd doltlab
+
+# stop DoltLab
 docker-compose stop
-docker system prune -a
+
+# remove containers
+docker container prune
 ```
 
 <!-- TODO: have them backup data first? -->
@@ -133,10 +223,10 @@ Now, connect a PostgreSQL client from inside the `doltlab_doltlab` Docker networ
 
 ```bash
 # import the data dump into the running DoltLab v0.2.0 postgres server
-docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v "$(pwd)"/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi < /doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql"
+docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd)/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi < /doltlab-db-dumps/doltlab-v0.1.0-dump-data-only.sql"
 
 # update the users table to prevent DoltLab v0.2.0 error
-docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v "$(pwd)"/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi -c 'update users set has_dolt = 'false';'"
+docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd)/doltlab-db-dumps:/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi -c 'update users set has_dolt = 'false';'"
 ```
 
 You have now completed the upgrade, and should no be running DoltLab `v0.2.0` with your postgres data from DoltLab `v0.1.0`.
