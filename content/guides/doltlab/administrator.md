@@ -7,9 +7,26 @@ the following information can help DoltLab Admins manually perform some common a
 
 1. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
 2. [Send Service Logs To DoltLab Team](#send-service-logs)
-3. [Backup DoltLab Data]()
+3. [Backup DoltLab Data](#backup-restore-volumes)
 4. [File Issues and View Release Notes]()
 <!-- 4. [View Service Metrics]() -->
+
+<h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
+
+https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes
+
+For PG backups, dumping and importing might be best
+
+
+For other volumes the following might be ok:
+
+Backup a service:
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /var/lib/postgresql/data
+docker run --rm --volumes-from doltlab_doltlabremoteapi_1 -v $(pwd):/backup ubuntu tar cvf /backup/remote-data.tar /doltlab-remote-storage
+
+testing:
+docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+docker run --rm --volumes-from doltlab_doltlabremoteapi_1 -v $(pwd):/backup ubuntu bash -c "cd /doltlab-remote-storage && tar xvf /backup/remote-data.tar --strip 1"
 
 <h1 id="send-service-logs">Send Service Logs to DoltLab Team</h1>
 
@@ -83,6 +100,7 @@ SET session_replication_role = replica;
 You can now stop the DoltLab `v0.1.0` services and delete the Docker caches and stopped containers on the host by running:
 
 ```bash
+cd doltlab
 docker-compose stop
 docker system prune -a
 ```
