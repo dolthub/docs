@@ -110,8 +110,8 @@ VALUES ("my branch name", @@mydb_head);
 
 ## `dolt_docs`
 
-`dolt_docs` stores the contents of Dolt docs (`LICENSE.md`,
-`README.md`).
+`dolt_docs` stores the contents of Dolt docs \(`LICENSE.md`,
+`README.md`\).
 
 You can modify the contents of these files via SQL, but you are not
 guaranteed to see these changes reflected in the files on disk.
