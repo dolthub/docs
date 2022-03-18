@@ -4,7 +4,7 @@ title: Dolt System Tables
 
 # Table of contents
 
-**Basic Database Metadata:**
+**Database Metadata:**
 * [dolt\_branches](#dolt_branches)
 * [dolt\_docs](#dolt_docs)
 * [dolt\_procedures](#dolt_procedures)
@@ -110,8 +110,8 @@ VALUES ("my branch name", @@mydb_head);
 
 ## `dolt_docs`
 
-`dolt_docs` stores the contents of Dolt docs \(`LICENSE.md`,
-`README.md`\).
+`dolt_docs` stores the contents of Dolt docs (`LICENSE.md`,
+`README.md`).
 
 You can modify the contents of these files via SQL, but you are not
 guaranteed to see these changes reflected in the files on disk.
@@ -188,7 +188,8 @@ Like all data stored in Dolt, these named queries are versioned alongside your d
 after you create, modify, or remove a named query, you'll need to commit that change to save it.  
 You can use the Dolt CLI to save and execute named queries or you can use the  
 `dolt_query_catalog` system table directly to add, modify, or delete named queries.
-All named queries are displayed in the Queries tab of your database on DoltHub.
+All named queries are displayed in the Queries tab of your database on 
+[DoltHub](https://www.dolthub.com/).
 
 ### Schema
 
@@ -416,7 +417,7 @@ merged will have `parent_index` 1.
 ## `dolt_commit_diff_$TABLENAME`
 
 For every user table named `$TABLENAME`, there is a read-only system table named `dolt_commit_diff_$TABLENAME` 
-which can be queried to see a diff of the data in the specified table between **any** two commits. 
+that can be queried to see a diff of the data in the specified table between **any** two commits in the database. 
 For example, you can use this system table to view the diff between two commits on different branches. 
 The schema of the returned data from this system table is based on the schema of the underlying user table 
 at the currently checked out branch. 
@@ -425,11 +426,11 @@ You must provide `from_commit` and `to_commit` in all queries to this system tab
 to and from points for the diff of your table data. Each returned row describes how a row in the underlying
 user table has changed from the `from_commit` ref to the `to_commit` ref by showing the old and new values.  
 
-Note that `dolt_commit_diff_$TABLENAME` is the analogue of the `dolt diff` CLI command.  
+`dolt_commit_diff_$TABLENAME` is the analogue of the `dolt diff` CLI command.  
 It represents the [two-dot diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
 between the two commits provided. 
 The `dolt_diff_$TABLENAME` system table also exposes diff information, but instead of a two-way diff,
-it returns a log of individual diffs between all adjacent ancestor commits reachable from the current branch.
+it returns a log of individual diffs between all adjacent commits in the history of the current branch.
 In other words, if a row was changed in 10 separate commits, `dolt_diff_$TABLENAME` will show 10 separate rows – 
 one for each individual delta. In contrast, `dolt_commit_diff_$TABLENAME` would show a single row that combines
 all the individual commit deltas into one diff.  
@@ -451,8 +452,8 @@ all the individual commit deltas into one diff.
 ```
 
 The remaining columns are dependent on the schema of the user table at the currently checked out branch.   
-For every column X in your table at the currently checked out branch, there are columns in the result set named 
-`from_$X` and `to_$X` with the same type as `X` in the current schema. 
+For every column `X` in your table at the currently checked out branch, there are columns in the result set named 
+`from_X` and `to_X` with the same type as `X` in the current schema. 
 The `from_commit` and `to_commit` parameters must both be specified in the query, or an error is returned. 
 
 ### Example Schema
@@ -510,15 +511,16 @@ from our common ancestor E, without including the changes from F and G on main.
 SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('main', 'feature');
 ```
 
-The function [`dolt_merge_base`](../dolt-sql-functions.md#dolt_merge_base) 
+[The `dolt_merge_base` function](../dolt-sql-functions.md#dolt_merge_base) 
 computes the closest ancestor E between `main` and `feature`.
 
 ### Additional Notes
 
 There is one special `to_commit` value `WORKING` which can be used to
 see what changes are in the working set that have yet to be committed
-to HEAD. It is often useful to use the `HASHOF()` function to get the
-commit hash of a branch, or an ancestor commit. The above table
+to HEAD. It is often useful to use
+[the `HASHOF()` function](../dolt-sql-functions.md#hashof)
+to get the commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
 
 
@@ -658,8 +660,7 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 
 For every user table named `$TABLENAME`, there is a read-only system
 table named `dolt_diff_$TABLENAME` that returns a list of diffs showing
-how rows have changed over time on the current branch.  
-
+how rows have changed over time on the current branch.
 Each row in the result set represents a row that has changed between two adjacent 
 commits on the current branch – if a row has been updated in 10 commits, then 10 
 individual rows are returned, showing each of the 10 individual updates.
@@ -667,8 +668,9 @@ individual rows are returned, showing each of the 10 individual updates.
 Compared to the
 [`dolt_commit_diff_$TABLENAME` system table](#dolt_commit_diff_usdtablename),
 the `dolt_diff_$TABLENAME` system table focuses on
-how a particular row has evolved over time through the current branch. 
-The `dolt_commit_diff_$TABLENAME` system table requires specifying `from_commit` and `to_commit` 
+how a particular row has evolved over time in the current branch's history. 
+The major differences are that `dolt_commit_diff_$TABLENAME` requires specifying `from_commit` and `to_commit`,
+works on any commits in the database (not just the current branch),
 and returns a single combined diff for all changes to a row between those two commits. In the example 
 above where a row is changed 10 times, `dolt_commit_diff_$TABLENAME` would only return a single row
 showing the diff, instead of the 10 individual deltas. 
@@ -713,13 +715,13 @@ The schema for `dolt_diff_states` would be:
 | field            | type     |
 +-----------------+-----------+
 | from_state       | TEXT     |
-| to_state         | TEXT     |
 | from_population  | BIGINT   |
-| to_population    | BIGINT   |
 | from_area        | TEXT     |
-| to_area          | TEXT     |
 | from_commit      | TEXT     |
 | from_commit_date | DATETIME |
+| to_state         | TEXT     |
+| to_population    | BIGINT   |
+| to_area          | TEXT     |
 | to_commit        | TEXT     |
 | to_commit_date   | DATETIME |
 | diff_type        | TEXT     |
@@ -728,15 +730,15 @@ The schema for `dolt_diff_states` would be:
 
 ### Query Details
 
-Doing a `SELECT *` query for a diff table will show you every change
+A `SELECT *` query for a diff table will show you every change
 that has occurred to each row for every commit in this branch's
-history. Using `to_commit` and `from_commit` you can limit the data to
+history. Using `to_commit` or `from_commit` will limit the data to
 specific commits. There is one special `to_commit` value `WORKING`
 which can be used to see what changes are in the working set that have
 yet to be committed to HEAD. It is often useful to use the 
 [`HASHOF()`](../dolt-sql-functions.md#hashof)
 function to get the commit hash of a branch, or an ancestor
-commit. To get the differences between the last commit and its parent
+commit. For example, to get the differences between the last commit and its parent
 you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
 
 For each row the field `diff_type` will be one of the values `added`,
@@ -781,7 +783,7 @@ LIMIT 10;
 ## `dolt_history_$TABLENAME`
 
 For every user table named `$TABLENAME`, there is a read-only system table named `dolt_history_$TABLENAME` 
-which can be queried to find a row's value at every commit ancestor reachable from the current branch. 
+that can be queried to find a row's value at every commit in the current branch's history. 
 
 ### Schema
 
@@ -837,11 +839,9 @@ The schema for `dolt_history_states` would be:
 Assume a database with the `states` table above and the following commit graph:
 
 ```text
-     A
-    / \
-   C   B  <-- branch1
+   B---E  feature
   /
- D  <-- main
+ A---C---D  main
 ```
 
 When the `main` branch is checked out, the following query returns the results below, showing
