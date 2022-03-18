@@ -429,7 +429,10 @@ Note that `dolt_commit_diff_$TABLENAME` is the analogue of the `dolt diff` CLI c
 It represents the [two-dot diff](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#double_dot)
 between the two commits provided. 
 The `dolt_diff_$TABLENAME` system table also exposes diff information, but instead of a two-way diff,
-it returns a log of individual diffs between all adjacent commits in the current branch's commit graph. 
+it returns a log of individual diffs between all adjacent ancestor commits reachable from the current branch.
+In other words, if a row was changed in 10 separate commits, `dolt_diff_$TABLENAME` will show 10 separate rows – 
+one for each individual delta. In contrast, `dolt_commit_diff_$TABLENAME` would show a single row that combines
+all the individual commit deltas into one diff.  
 
 
 ### Schema
@@ -768,11 +771,12 @@ LIMIT 10;
 ## `dolt_history_$TABLENAME`
 
 For every user table named `$TABLENAME`, there is a read-only system table named `dolt_history_$TABLENAME` 
-which can be queried to find a row's value at every commit in the current branches commit graph.
+which can be queried to find a row's value at every commit ancestor reachable from the current branch. 
 
 ### Schema
 
-Every Dolt history table will have the columns
+Every Dolt history table contains columns for `commit_hash`, `committer`, and `commit_date`, plus every column 
+from the user table's schema at the current checked out branch.  
 
 ```text
 +-------------+----------+
@@ -785,44 +789,31 @@ Every Dolt history table will have the columns
 +-------------+----------+
 ```
 
-The rest of the columns will be the superset of all columns that have
-existed throughout the history of the table.
-
 ### Example Schema
 
-For a hypothetical data repository with the following commit graph:
+Consider a table named `states` with the following schema:
 
 ```text
-   A
-  / \
- B   C
-      \
-       D
++------------+--------+
+| field      | type   |
++------------+--------+
+| state      | TEXT   |
+| capital    | TEXT   |
+| population | BIGINT |
+| area       | BIGINT |
+| counties   | BIGINT |
++------------+--------+
 ```
 
-Which has a table named states with the following schemas at each commit:
-
-```text
-# schema at A              # schema at B              # schema at C              # schema at D
-+------------+--------+    +------------+--------+    +------------+--------+    +------------+--------+
-| field      | type   |    | field      | type   |    | field      | type   |    | field      | type   |
-+------------+--------+    +------------+--------+    +------------+--------+    +------------+--------+
-| state      | TEXT   |    | state      | TEXT   |    | state      | TEXT   |    | state      | TEXT   |
-| population | BIGINT |    | population | BIGINT |    | population | BIGINT |    | population | BIGINT |
-+------------+--------+    | capital    | TEXT   |    | area       | BIGINT |    | area       | BIGINT |
-                           +------------+--------+    +------------+--------+    | counties   | BIGINT |
-                                                                                 +------------+--------+
-```
-
-The schema for dolt_history_states would be:
+The schema for `dolt_history_states` would be:
 
 ```text
 +-------------+----------+
 | field       | type     |
 +-------------+----------+
 | state       | TEXT     |
-| population  | BIGINT   |
 | capital     | TEXT     |
+| population  | BIGINT   |
 | area        | BIGINT   |
 | counties    | BIGINT   |
 | commit_hash | TEXT     |
@@ -833,13 +824,18 @@ The schema for dolt_history_states would be:
 
 ### Example Query
 
-Taking the above table as an example. If the data inside dates for each commit was:
+Assume a database with the `states` table above and the following commit graph:
 
-- At commit "A" the state data from 1790
-- At commit "B" the state data from 1800
-- At commit "C" the state data from 1800
-- At commit "D" the state data from 1810
+```text
+     A
+    / \
+   C   B  <-- branch1
+  /
+ D  <-- main
+```
 
+When the `main` branch is checked out, the following query returns the results below, showing
+the state of the Virginia row at every ancestor commit reachable from our current branch.
 ```sql
 SELECT *
 FROM dolt_history_states
@@ -847,17 +843,15 @@ WHERE state = "Virginia";
 ```
 
 ```text
-+----------+------------+----------+--------+----------+-------------+-----------+---------------------------------+
-| state    | population | capital  | area   | counties | commit_hash | committer | commit_date                     |
-+----------+------------+----------+--------+----------+-------------+-----------+---------------------------------+
-| Virginia | 691937     | <NULL>   | <NULL> | <NULL>   | HASH_AT(A)  | billybob  | 1790-01-09 00:00:00.0 +0000 UTC |
-| Virginia | 807557     | Richmond | <NULL> | <NULL>   | HASH_AT(B)  | billybob  | 1800-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 807557     | <NULL>   | 42774  | <NULL>   | HASH_AT(C)  | billybob  | 1800-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 877683     | <NULL>   | 42774  | 99       | HASH_AT(D)  | billybob  | 1810-01-01 00:00:00.0 +0000 UTC |
-+----------+------------+----------+--------+----------+-------------+-----------+---------------------------------+
++----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
+| state    | population | capital      | area   | counties | commit_hash | committer | commit_date                     |
++----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
+| Virginia | 877683     | Richmond     | 42774  | 75       | HASHOF(D)   | billybob  | 1810-01-01 00:00:00.0 +0000 UTC |
+| Virginia | 807557     | Richmond     | 42774  | 73       | HASHOF(C)   | billybob  | 1800-01-01 00:00:00.0 +0000 UTC |
+| Virginia | 691937     | Williamsburg | 42774  | 68       | HASHOF(A)   | billybob  | 1778-01-09 00:00:00.0 +0000 UTC |
++----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
 
-# Note in the real result set there would be actual commit hashes for each row.  Here I have used notation that is
-# easier to understand how it relates to our commit graph and the data associated with each commit above
+# Note: in the real result set there would be actual commit hashes for each row. 
 ```
 
 
