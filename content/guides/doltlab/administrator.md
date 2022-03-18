@@ -9,15 +9,15 @@ the following information can help DoltLab Admins manually perform some common a
 2. [Backup DoltLab Data](#backup-restore-volumes)
 3. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
 4. [Send Service Logs To DoltLab Team](#send-service-logs)
-5. [Connect with a DoltLab Team Member]()
+5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
-DoltLab's source code is currenly closed-source, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
+DoltLab's source code is currenly closed, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
-DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which adhere to Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes), with the exception of DoltLab's PostgreSQL server, which we recommend slighlty different backup and restore pattern for.
+DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes), with the exception of DoltLab's postgres server. To backup the postgres server we recommend dumping the database with `pg_dump` and restoring the database from the dump using `psql`.
 
 <h2 id="backup-restore-remote-data-user-data"><ins>Backing Up and Restoring Remote Data and User Uploaded Data</ins></h2>
 
@@ -230,3 +230,7 @@ docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $
 ```
 
 You have now completed the upgrade, and should no be running DoltLab `v0.2.0` with your postgres data from DoltLab `v0.1.0`.
+
+<h1 id="connect-with-doltlab-team">Connect with the DoltLab Team</h1>
+
+If you need to connect to a DoltLab team member, the best way to do so is on [Discord](https://discord.com/invite/RFwfYpu), in the `#doltlab` server.
