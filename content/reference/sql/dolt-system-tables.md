@@ -656,77 +656,87 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 
 ## `dolt_diff_$TABLENAME`
 
-For every user table named `$TABLENAME`, there is a queryable system
-table named `dolt_diff_$TABLENAME` which can be queried to see how
-rows have changed over time. Each row in the result set represents a
-row that has changed between two commits. Compared to the
-`dolt_commit_diff_$TABLENAME` the `dolt_diff_$TABLENAME` focuses on
-how a particular row has evolved over time through the current branch.
+For every user table named `$TABLENAME`, there is a read-only system
+table named `dolt_diff_$TABLENAME` that returns a list of diffs showing
+how rows have changed over time on the current branch.  
+
+Each row in the result set represents a row that has changed between two adjacent 
+commits on the current branch – if a row has been updated in 10 commits, then 10 
+individual rows are returned, showing each of the 10 individual updates.
+
+Compared to the
+[`dolt_commit_diff_$TABLENAME` system table](#dolt_commit_diff_usdtablename),
+the `dolt_diff_$TABLENAME` system table focuses on
+how a particular row has evolved over time through the current branch. 
+The `dolt_commit_diff_$TABLENAME` system table requires specifying `from_commit` and `to_commit` 
+and returns a single combined diff for all changes to a row between those two commits. In the example 
+above where a row is changed 10 times, `dolt_commit_diff_$TABLENAME` would only return a single row
+showing the diff, instead of the 10 individual deltas. 
 
 ### Schema
 
 Every Dolt diff table will have the columns
 
 ```text
-+-------------+------+
-| field       | type |
-+-------------+------+
-| from_commit | TEXT |
-| to_commit   | TEXT |
-| diff_type   | TEXT |
-| other cols  |      |
-+-------------+------+
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| from_commit      | TEXT     |
+| from_commit_date | DATETIME |
+| to_commit        | TEXT     |
+| to_commit_date   | DATETIME |
+| diff_type        | TEXT     |
+| other cols       |          |
++------------------+----------+
 ```
 
-The remaining columns will be dependent on the schema of the user
-table. For every column X in your table at `from_commit`, there will
-be a column in the result set named `from_$X` with the same type as
-`X`, and for every column `Y` in your table at `to_commit` there will
-be a column in the result set named `to_$Y` with the same type as `Y`.
+The remaining columns are dependent on the schema of the user
+table at the current branch. For every column `X` in your table at the current branch there will
+be columns in the result set named `from_X` and `to_X` with the same type as `X`.
 
 ### Example Schema
 
-For a hypothetical table named states with a schema that changes
-between `from_commit` and `to_commit` as shown below
-
+For a table named `states` with the following schema:
 ```text
-# schema at from_commit    # schema at to_commit
-+------------+--------+    +------------+--------+
-| field      | type   |    | field      | type   |
-+------------+--------+    +------------+--------+
-| state      | TEXT   |    | state      | TEXT   |
-| population | BIGINT |    | population | BIGINT |
-+------------+--------+    | area       | BIGINT |
-                           +-------------+-------+
++------------+--------+
+| field      | type   |
++------------+--------+
+| state      | TEXT   |
+| population | BIGINT |
+| area       | BIGINT |
++-------------+-------+
 ```
 
-The schema for `dolt_diff_states` would be
-
+The schema for `dolt_diff_states` would be:
 ```text
-+-----------------+--------+
-| field           | type   |
-+-----------------+--------+
-| from_state      | TEXT   |
-| to_state        | TEXT   |
-| from_population | BIGINT |
-| to_population   | BIGINT |
-| to_state        | TEXT   |
-| from_commit     | TEXT   |
-| to_commit       | TEXT   |
-| diff_type       | TEXT   |
-+-----------------+--------+
++------------------+----------+
+| field            | type     |
++-----------------+-----------+
+| from_state       | TEXT     |
+| to_state         | TEXT     |
+| from_population  | BIGINT   |
+| to_population    | BIGINT   |
+| from_area        | TEXT     |
+| to_area          | TEXT     |
+| from_commit      | TEXT     |
+| from_commit_date | DATETIME |
+| to_commit        | TEXT     |
+| to_commit_date   | DATETIME |
+| diff_type        | TEXT     |
++------------------+----------+
 ```
 
 ### Query Details
 
 Doing a `SELECT *` query for a diff table will show you every change
-that has occurred to each row for every commit in this branches
+that has occurred to each row for every commit in this branch's
 history. Using `to_commit` and `from_commit` you can limit the data to
 specific commits. There is one special `to_commit` value `WORKING`
 which can be used to see what changes are in the working set that have
-yet to be committed to HEAD. It is often useful to use the `HASHOF()`
+yet to be committed to HEAD. It is often useful to use the 
+[`HASHOF()`](../dolt-sql-functions.md#hashof)
 function to get the commit hash of a branch, or an ancestor
-commit. To get the differences between the last commit and it's parent
+commit. To get the differences between the last commit and its parent
 you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
 
 For each row the field `diff_type` will be one of the values `added`,
