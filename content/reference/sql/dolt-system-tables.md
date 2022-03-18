@@ -4,7 +4,7 @@ title: Dolt System Tables
 
 # Table of contents
 
-**Basic Repository Metadata:**
+**Basic Database Metadata:**
 * [dolt\_branches](#dolt_branches)
 * [dolt\_docs](#dolt_docs)
 * [dolt\_procedures](#dolt_procedures)
@@ -12,7 +12,7 @@ title: Dolt System Tables
 * [dolt\_remotes](#dolt_remotes)
 * [dolt\_schemas](#dolt_schemas)
 
-**Repository History:**
+**Database History:**
 * [dolt\_blame\_$tablename](#dolt_blame_usdtablename)
 * [dolt\_commit\_ancestors](#dolt_commit_ancestors)
 * [dolt\_commit\_diff\_$tablename](#dolt_commit_diff_usdtablename)
@@ -131,7 +131,7 @@ guaranteed to see these changes reflected in the files on disk.
 
 Dolt users do not have to be familiar with this system table in order
 to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or
-`touch README.md` and `touch LICENSE.md` from a Dolt repository to get
+`touch README.md` and `touch LICENSE.md` from a Dolt database to get
 started. Then, `dolt add` and `dolt commit` the docs like you would a
 table.
 
@@ -607,7 +607,7 @@ it is not included in the `dolt_diff` results.
 
 Taking the
 [`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players)
-data repository from [DoltHub](https://www.dolthub.com/) as our
+database from [DoltHub](https://www.dolthub.com/) as our
 example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed, 
 from the month of October, 2020.  
 
@@ -748,7 +748,7 @@ limit which types of changes will be returned.
 
 Taking the
 [`dolthub/wikipedia-ngrams`](https://www.dolthub.com/repositories/dolthub/wikipedia-ngrams)
-data repository from [DoltHub](https://www.dolthub.com/) as our
+database from [DoltHub](https://www.dolthub.com/) as our
 example, the following query will retrieve the bigrams whose total
 counts have changed the most between 2 versions.
 
