@@ -55,7 +55,7 @@ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-Next, download and unzip DoltLab:
+<div id="download-doltlab">Next, download and unzip DoltLab:</div>
 To use it run:
 
 ```bash
