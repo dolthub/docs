@@ -17,7 +17,6 @@ title: Dolt SQL Functions
 * [Dolt Commit Metadata SQL Functions](#dolt_commit_metadata_sql_functions)
   * [dolt\_merge\_base()](#dolt_merge_base)
   * [hashof()](#hashof)
-  * [detached head functions](#detached_head_functions)
 
 # Dolt SQL Functions
 
@@ -393,8 +392,7 @@ SELECT * FROM dolt_log LIMIT 5;
 
 # Dolt Commit Metadata SQL Functions
 
-Dolt also provides various SQL functions for dolt-specific
-functionality that has no command line equivalent.
+Dolt also provides SQL functions that have no command line equivalent.  
 
 ## `DOLT_MERGE_BASE()`
 
@@ -419,9 +417,3 @@ SELECT DOLT_MERGE_BASE('feature', 'main');
 
 The HASHOF function returns the commit hash of a branch,
 e.g. `HASHOF("main")`.
-
-## Detached Head Functions
-
-Dolt also defines several functions specifically for working in detached
-head mode. See the [detached head mode section](../branches.md#detached-head-mode) 
-for details.

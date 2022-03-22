@@ -6,8 +6,7 @@ title: Dolt System Variables
 
 Dolt exposes various information about the state of the current
 session. This information is typically only useful for advanced
-users. See information on [Detached Head
-mode](./branches.md#detached-head-mode).
+users. 
 
 ## @@dbname_head_ref
 
@@ -117,14 +116,6 @@ with `dolt_replicate_heads`.
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
 ```
-
-## @@dbname_head
-
-This system variable controls the current session's head
-commit. Setting this variable to a commit hash causes your session to
-enter detached head mode.
-
-See [Detached Head mode](./branches.md#detached-head-mode) for more detail.
 
 ## @@dbname_working
 
