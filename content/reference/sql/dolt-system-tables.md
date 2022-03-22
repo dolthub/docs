@@ -335,6 +335,7 @@ SELECT * FROM dolt_schemas;
 For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename`
 which can be queried to see the user and commit responsible for the current value of each row.
 This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/reference/cli#dolt-blame).
+Tables without primary keys will not have an associated `dolt_blame_$tablename`.
 
 ### Schema
 
@@ -362,7 +363,8 @@ for every row in the underlying user table and the commit metadata for the last 
 Note that if a table has any uncommitted changes in the working set,
 those will not be displayed in the `dolt_blame_$tablename` system view.
 
-`dolt_blame_$tablename` is only available for tables with a primary key.
+`dolt_blame_$tablename` is only available for tables with a primary key. 
+Attempting to query `dolt_blame_$tablename` for a table without a primary key will return an error message.  
 
 ### Example Query
 
