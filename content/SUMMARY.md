@@ -45,7 +45,9 @@
 * [Contributing](guides/contributing.md)
     * [dolt](guides/contributing/dolt.md)
     * [go-mysql-server](guides/contributing/go-mysql-server.md)
-
+* [DoltLab](guides/doltlab.md)
+    * [Install DoltLab](guides/doltlab/installation.md)
+    * [Administrator Guide](guides/doltlab/administrator.md)
 ## Reference
 * [SQL](reference/sql.md)
     * [SQL Support](reference/sql/sql-support/support.md)
