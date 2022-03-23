@@ -18,6 +18,9 @@ title: Dolt SQL Functions
   * [dolt\_merge\_base()](#dolt_merge_base)
   * [hashof()](#hashof)
 
+* [Dolt Table Functions](#dolt_table_functions)
+  * [dolt_diff()](#dolt_diff)
+
 # Dolt SQL Functions
 
 Dolt provides SQL functions to allow access to `dolt` CLI 
@@ -417,3 +420,130 @@ SELECT DOLT_MERGE_BASE('feature', 'main');
 
 The HASHOF function returns the commit hash of a branch,
 e.g. `HASHOF("main")`.
+
+# Dolt Table Functions
+
+Table functions operate like regular SQL functions, but instead of returning a single, scalar value, a
+table function returns rows of data, just like a table. Dolt's table function support is currently limited
+to only the `DOLT_DIFF()` function and table functions have several restrictions in how they can be used in 
+queries. For example, you cannot currently alias a table function or join a table function with another table
+or table function. 
+
+## `DOLT_DIFF()`
+
+The `DOLT_DIFF()` table function calculates the differences in a table's data at any two commits in the database.
+Each row in the result set describes how a row in the underlying table has changed between the two commits,
+including the row's values at to and from commits and the type of change (i.e. `added`, `modified`, or `removed`).
+`DOLT_DIFF()` is an alternative to the 
+[`dolt_commit_diff_$tablename` system table](dolt-system-tables#dolt_commit_diff_usdtablename).
+You should generally prefer the system tables when possible, since they have less restrictions on use. 
+However, some use cases, such as viewing a table data diff containing schema changes, can be easier to view 
+with the `DOLT_DIFF` table function.  
+
+The main difference between the results of the `DOLT_DIFF()` table function and the `dolt_commit_diff_$tablename`
+system table is the schema of the returned results. `dolt_commit_diff_$tablename` generates the resulting schema
+based on the table's schema at the currently checked out branch. `DOLT_DIFF()` will use the schema at the `from_commit`
+for the `from_` columns and the schema at the `to_commit` for the `to_` columns. This can make it easier to view 
+diffs where the schema of the underlying table has changed. 
+
+Note that the `DOLT_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
+support aliasing or joining with other tables, and argument values must currently be literal values. 
+
+### Options
+
+```sql
+DOLT_DIFF(<tablename>, <from_revision>, <to_revision>)
+```
+The `DOLT_DIFF()` table function takes three required arguments:
+* `tablename`  —  the name of the table containing the data to diff
+* `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+* `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+
+### Schema 
+
+```text
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| from_commit      | TEXT     |
+| from_commit_date | DATETIME |
+| to_commit        | TEXT     |
+| to_commit_date   | DATETIME |
+| diff_type        | TEXT     |
+| other cols       |          |
++------------------+----------+
+```
+
+The remaining columns are dependent on the schema of the user table as it existed at the `from_commit` and at 
+the `to_commit`. For every column `X` in your table at the `from_commit` revision, there is a column in the result 
+set named `from_X`. Likewise, for every column 'Y' in your table at the `to_commit` revision, there is a column
+in the result set named `to_Y`. This is the major difference between the `DOLT_DIFF()` function and the
+`dolt_commit_diff_$tablename` system table. 
+
+### Example 
+
+Consider a table named `inventory` in a database with two branches: `main` and `feature_branch`. We can use the
+`DOLT_DIFF()` function to calculate a diff of the table data from the `main` branch to the `feature_branch` branch
+to see how our data has changed on the feature branch. 
+
+Here is the schema of `inventory` at the tip of `main`:
+```text
++----------+------+
+| field    | type |
++----------+------+
+| pk       | int  |
+| name     | text |
+| quantity | int  |
++----------+------+
+```
+
+Here is the schema of `inventory` at the tip of `feature_branch`:
+```text
++----------+------+
+| field    | type |
++----------+------+
+| pk       | int  |
+| name     | text |
+| color    | text |
+| size     | int  |
++----------+------+
+```
+
+Based on the schemas at the two revision above, the resulting schema from `DOLT_DIFF()` will be:
+```text
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| from_pk          | int      |
+| from_name        | text     |
+| from_quantity    | int      |
+| from_commit      | TEXT     |
+| from_commit_date | DATETIME |
+| to_pk            | int      |
+| to_name          | text     |
+| to_color         | text     |
+| to_size          | int      |
+| to_commit        | TEXT     |
+| to_commit_date   | DATETIME |
+| diff_type        | text     |
++------------------+----------+
+```
+
+To calculate the diff and view the results, we run the following query: 
+
+```sql
+SELECT * FROM DOLT_DIFF("inventory", "main", "feature_branch")
+```
+
+The results from `DOLT_DIFF()` show how the data has changed going from `main` to `feature_branch`:
+```text
++---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
+| to_name | to_pk | to_size | to_color | to_commit      | to_commit_date                    | from_name | from_pk | from_quantity | from_commit | from_commit_date                  | diff_type |
++---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
+| shirt   | 1     | 15      | false    | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | shirt     | 1       | 70            | main        | 2022-03-23 18:51:48.333 +0000 UTC | modified  |
+| shoes   | 2     | 9       | brown    | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | shoes     | 2       | 200           | main        | 2022-03-23 18:51:48.333 +0000 UTC | modified  |
+| pants   | 3     | 30      | blue     | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | pants     | 3       | 150           | main        | 2022-03-23 18:51:48.333 +0000 UTC | modified  |
+| hat     | 4     | 6       | grey     | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | NULL      | NULL    | NULL          | main        | 2022-03-23 18:51:48.333 +0000 UTC | added     |
++---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
+```
+
