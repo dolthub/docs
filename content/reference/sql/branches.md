@@ -9,7 +9,7 @@ each branch in the database. A head can be a branch, a tag, or a
 working set. Multiple clients can connect to each branch, and will see
 other writes to the same branch following the normal SQL transactional
 isolation semantics (REPEATABLE_READ). In effect, each branch
-functions as is its own isolated database instance, with changes only
+functions as its own isolated database instance, with changes only
 visible to other clients connected to the same branch.
 
 ![A Dolt database server with multiple heads](../../.gitbook/assets/dolt-server-branches.png)
@@ -98,7 +98,7 @@ mydb> select @@mydb_head_ref;
 +-------------------------+
 | @@SESSION.mydb_head_ref |
 +-------------------------+
-| refs/heads/master       |
+| refs/heads/main       |
 +-------------------------+
 ```
 
@@ -245,175 +245,3 @@ set @@dolt_force_transaction_commit = 1;
 
 Keep in mind that anyone else connected to the same branch will see
 these conflicts as well once you commit the transaction.
-
-## Detached head mode
-
-The above methods assume you want to update a branch collaboratively
-with many sessions via transactions, like a traditional database. But
-it's also possible to operate the database in detached head mode,
-where the head you are editing is local to only your session and
-cannot be seen by any other session.
-
-Dolt supports special system variables and functions to support this
-use case.
-
-### `@@dbname_head`
-
-The session variable `@@dbname_head` \(Where dbname is the name of the
-database\) provides an interface for reading and writing the HEAD
-commit for a session, using its commit hash.
-
-```sql
-# Set the head commit to a specific hash.
-SET @@mydb_head = 'fe31vq5c0qj1afnghl0d9448652smlo0';
-
-# Get the head commit
-SELECT @@mydb_head;
-```
-
-When you set your session head variable like above, you enter detached
-head mode.
-
-### `COMMIT()`
-
-The `COMMIT()` function writes a new commit to the database and
-returns the hash of that commit. Unlike `DOLT_COMMIT()`, the
-`COMMIT()` function does not update the current head. Rather, it
-creates a dangling commit not associated with any branch or head.
-
-To associate your session with the new commit created by this
-function, assign it to the session head variable:
-
-```sql
-SET @@mydb_head = COMMIT('-m', 'my commit message');
-```
-
-Doing so causes your session to enter detached head mode.
-
-#### Options
-
-`-m, --message`: Use the given `<msg>` as the commit message. Required
-
-`-a`: Stages all tables with changes before committing
-
-`--allow-empty`: Allow recording a commit that has the exact same data
-as its sole parent. This is usually a mistake, so it is disabled by
-default. This option bypasses that safety.
-
-`--date`: Specify the date used in the commit. If not specified the
-current system time is used.
-
-`--author`: Specify an explicit author using the standard "A U Thor
-author@example.com" format.
-
-### `MERGE()`
-
-The `MERGE()` function merges a branch reference into the current
-head. Unlike `DOLT_MERGE()`, the current head is not updated. Rather,
-a dangling commit is created, which you must associate with your
-session manually by assigning it to the session head variable:
-
-Example:
-
-```sql
-SET @@mydb_head = MERGE('feature-branch');
-```
-
-#### Options
-
-`--author`: Specify an explicit author using the standard "A U Thor author@example.com" format.
-
-### `SQUASH()`
-
-The SQUASH function merges a branch's root value into the current
-branch's working set. With this approach the user can then commit the
-changes, adding only 1 commit to a branch's history compared to the
-many that can originate from a conventional merge.
-
-The argument passed to the function is a reference to a branch \(its name\).
-
-Example:
-
-```sql
-SET @@mydb_working = SQUASH('feature-branch');
-SET @@mydb_head = COMMIT('-m', 'This is a squash merge')
-```
-
-## Using detached head mode to update a branch
-
-An example showing how to make modifications and create a new feature
-branch from those modifications.
-
-```sql
--- Set the current database
-USE mydb;
-
--- Set the HEAD commit to the latest commit of the branch "master"
-SET @@mydb_head = HASHOF("master");
-
--- Make modifications
-UPDATE table
-SET column = "new value"
-WHERE pk = "key";
-
--- Create a new commit containing these modifications and set the HEAD commit for this session to that commit
-SET @@mydb_head = COMMIT("-m", "modified something")
-
--- Create a new branch with these changes
-INSERT INTO dolt_branches (name,hash)
-VALUES ("new_branch", @@mydb_head);
-```
-
-An example attempting to change the value of master, but only if
-nobody else has modified it since we read it.
-
-```sql
--- Set the current database for the session
-USE mydb;
-
--- Set the HEAD commit to the latest commit to the branch "master"
-SET @@mydb_head = HASHOF("master");
-
--- Make modifications
-UPDATE table
-SET column = "new value"
-WHERE pk = "key";
-
--- Modify master if nobody else has changed it
-UPDATE dolt_branches
-SET hash = COMMIT("-m", "modified something")
-WHERE name == "master" and hash == @@mydb_head;
-
--- Set the HEAD commit to the latest commit to the branch "master" which we just wrote
-SET @@mydb_head = HASHOF("master");
-```
-
-An example of making changes to a feature branch and merging into master.
-
-```sql
--- Set the current database for the session
-USE mydb;
-
--- Set the HEAD commit to the latest commit to the branch "feature-branch"
-SET @@mydb_head = HASHOF("feature-branch");
-
--- Make modifications
-UPDATE table
-SET column = "new value"
-WHERE pk = "key";
-
--- Create the commit of the changes and insert it into the feature branch
-SET @@mydb_head = COMMIT("-m", "Update the value on feature-branch");
-INSERT INTO dolt_branches (name, hash)
-VALUES("feature-branch", @@mydb_head);
-
--- Set the HEAD commit to the branch "master".
-SET @@mydb_head = HASHOF("master")
-
--- MERGE the feature-branch into master and get a commit
-SET @@mydb_head = MERGE('feature-branch');
-
--- Set the HEAD commit to the latest commit to the branch "master"
-INSERT INTO dolt_branches (name, hash)
-VALUES("master", @@mydb_head);
-```

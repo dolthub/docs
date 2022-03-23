@@ -13,9 +13,9 @@ Source code:
 
 - [Standard read and write commands](https://github.com/dolthub/doltcli/blob/main/doltcli/utils.py)
 
-- [Pandas read](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/read.py)
+- [Pandas read](https://github.com/dolthub/doltpy/blob/main/doltpy/cli/read.py)
 
-- [Pandas write](https://github.com/dolthub/doltpy/blob/master/doltpy/cli/write.py)
+- [Pandas write](https://github.com/dolthub/doltpy/blob/main/doltpy/cli/write.py)
 
 ## Setup
 
@@ -102,7 +102,7 @@ OrderedDict([('1uhml9dartkb8lndr643blsclgno9kbt', Commit(ref='1uhml9dartkb8lndr6
 ### Merge
 
 ```python
->>> db.merge(branch="master")
+>>> db.merge(branch="main")
 ```
 
 ### Remote
@@ -116,7 +116,7 @@ OrderedDict([('1uhml9dartkb8lndr643blsclgno9kbt', Commit(ref='1uhml9dartkb8lndr6
 ### Push
 
 ```python
->>> db.push(remote="origin", refspec="master")
+>>> db.push(remote="origin", refspec="main")
 ```
 
 ### Pull

@@ -123,7 +123,6 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()`                      | ✅        |                                                                                                |
 | `COERCIBILITY()`                  | ❌        |                                                                                                |
 | `COLLATION()`                     | ❌        |                                                                                                |
-| `COMMIT()`                        | ✅        | Creates a new Dolt commit and returns the hash of it. See [docs on detached head mode](../heads.ached-head-mode)     |     |
 | `COMPRESS()`                      | ❌        |                                                                                                |
 | `CONCAT()`                        | ✅        |                                                                                                |
 | `CONCAT_WS()`                     | ✅        |                                                                                                |
@@ -194,7 +193,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GTID_SUBTRACT()`                 | ❌        |                                                                                                |
 | `GeomCollection()`                | ❌        |                                                                                                |
 | `GeometryCollection()`            | ❌        |                                                                                                |
-| `HASHOF()`                        | ✅        | Returns the hash of a reference, e.g. `HASHOF("master")`. See [docs on detached head mode](../he#detached-head-mode) |     |
+| `HASHOF()`                        | ✅        | Returns the hash of a reference, e.g. `HASHOF("master")`) |     |
 | `HEX()`                           | ✅        |                                                                                                |
 | `HOUR()`                          | ✅        |                                                                                                |
 | `ICU_VERSION()`                   | ❌        |                                                                                                |
@@ -499,7 +498,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `YEAR()`                          | ✅        |                                                                                                |
 | `YEARWEEK()`                      | ✅        |                                                                                                |
 
-## Aggregatee Functions
+## Aggregate Functions
 
 Refer to the [MySQL Aggregate Function Documentation](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html) for more info.
 
