@@ -4,21 +4,23 @@ title: Dolt SQL Functions
 
 # Table of Contents
 
-* [Introduction](#dolt-sql-functions)
-* [dolt\_commit()](#dolt_commit)
-* [dolt\_add()](#dolt_add)
-* [dolt\_checkout()](#dolt_checkout)
-* [dolt\_merge()](#dolt_merge)
-* [dolt\_reset()](#dolt_reset)
-* [dolt\_push()](#dolt_push)
-* [dolt\_fetch()](#dolt_fetch)
-* [dolt\_pull()](#dolt_pull)
-* [dolt\_merge\_base()](#dolt_merge_base)
-* [hash\_of()](#hash_of)
+* [Dolt SQL Functions](#dolt-sql-functions)
+  * [dolt\_add()](#dolt_add)
+  * [dolt\_checkout()](#dolt_checkout)
+  * [dolt\_commit()](#dolt_commit)
+  * [dolt\_fetch()](#dolt_fetch)
+  * [dolt\_merge()](#dolt_merge)
+  * [dolt\_pull()](#dolt_pull)
+  * [dolt\_push()](#dolt_push)
+  * [dolt\_reset()](#dolt_reset)
+  
+* [Dolt Commit Metadata SQL Functions](#dolt_commit_metadata_sql_functions)
+  * [dolt\_merge\_base()](#dolt_merge_base)
+  * [hashof()](#hashof)
 
 # Dolt SQL Functions
 
-Dolt provides SQL functions to allow access to command line `dolt`
+Dolt provides SQL functions to allow access to `dolt` CLI 
 commands from within a SQL session. Each function is named after the
 `dolt` command line command it matches, and takes arguments in an
 identical form.
@@ -31,7 +33,7 @@ SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 ```
 
 SQL functions are provided for all imperative CLI commands. For
-commands that inspect the state of the repository and print some
+commands that inspect the state of the database and print some
 information, (`dolt diff`, `dolt log`, etc.) [system
 tables](dolt-system-tables.md) are provided instead.
 
@@ -45,49 +47,6 @@ is that the command line environment is effectively a session, one
 that happens to be shared with whomever runs CLI commands from that
 directory.
 
-## `DOLT_COMMIT()`
-
-Commits staged tables to HEAD. Works exactly like `dolt commit` with
-each value directly following the flag.
-
-`DOLT_COMMIT()` also commits the current transaction.
-
-```sql
-SELECT DOLT_COMMIT('-a', '-m', 'This is a commit');
-SELECT DOLT_COMMIT('-m', 'This is a commit');
-SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
-```
-
-### Options
-
-`-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
-
-`-a`: Stages all tables with changes before committing
-
-`--allow-empty`: Allow recording a commit that has the exact same data
-as its sole parent. This is usually a mistake, so it is disabled by
-default. This option bypasses that safety.
-
-`--date`: Specify the date used in the commit. If not specified the
-current system time is used.
-
-`--author`: Specify an explicit author using the standard "A U Thor
-author@example.com" format.
-
-### Examples
-
-```sql
--- Set the current database for the session
-USE mydb;
-
--- Make modifications
-UPDATE table
-SET column = "new value"
-WHERE pk = "key";
-
--- Stage all changes and commit.
-SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
-```
 
 ## `DOLT_ADD()`
 
@@ -166,9 +125,86 @@ WHERE pk = "key";
 -- Stage and commit all  changes.
 SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
--- Go back to master
-SELECT DOLT_CHECKOUT('master');
+-- Go back to main
+SELECT DOLT_CHECKOUT('main');
 ```
+
+
+## `DOLT_COMMIT()`
+
+Commits staged tables to HEAD. Works exactly like `dolt commit` with
+each value directly following the flag.
+
+`DOLT_COMMIT()` also commits the current transaction.
+
+```sql
+SELECT DOLT_COMMIT('-a', '-m', 'This is a commit');
+SELECT DOLT_COMMIT('-m', 'This is a commit');
+SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
+```
+
+### Options
+
+`-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
+
+`-a`: Stages all tables with changes before committing
+
+`--allow-empty`: Allow recording a commit that has the exact same data
+as its sole parent. This is usually a mistake, so it is disabled by
+default. This option bypasses that safety.
+
+`--date`: Specify the date used in the commit. If not specified the
+current system time is used.
+
+`--author`: Specify an explicit author using the standard "A U Thor
+author@example.com" format.
+
+### Examples
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Make modifications
+UPDATE table
+SET column = "new value"
+WHERE pk = "key";
+
+-- Stage all changes and commit.
+SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
+```
+
+
+## `DOLT_FETCH()`
+
+Fetch refs, along with the objects necessary to complete their histories
+and update remote-tracking branches. Works exactly like `dolt fetch` on
+the CLI, and takes the same arguments.
+
+```sql
+SELECT DOLT_FETCH('origin', 'main');
+SELECT DOLT_FETCH('origin', 'feature-branch');
+SELECT DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
+```
+
+### Options
+
+`--force`: Update refs to remote branches with the current state of the
+remote, overwriting any conflicting history
+
+### Example
+
+```sql
+-- Get remote main
+SELECT DOLT_FETCH('origin', 'main');
+
+-- Inspect the hash of the fetched remote branch
+SELECT HASHOF('origin/main');
+
+-- Merge remote main with current branch
+SELECT DOLT_MERGE('origin/main');
+```
+
 
 ## `DOLT_MERGE()`
 
@@ -226,9 +262,10 @@ WHERE pk = "key";
 -- Stage and commit all  changes.
 SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
--- Go back to master
+-- Go back to main
 SELECT DOLT_MERGE('feature-branch');
 ```
+
 
 ## `DOLT_RESET()`
 
@@ -284,8 +321,8 @@ complete the given refs. Works exactly like `dolt push` on the CLI, and
 takes the same arguments.
 
 ```sql
-SELECT DOLT_PUSH('origin', 'master');
-SELECT DOLT_PUSH('--force', 'origin', 'master');
+SELECT DOLT_PUSH('origin', 'main');
+SELECT DOLT_PUSH('--force', 'origin', 'main');
 ```
 
 ### Options
@@ -308,39 +345,10 @@ SELECT DOLT_COMMIT('-a', '-m', 'create table test');
 SELECT DOLT_PUSH('origin', 'feature-branch');
 ```
 
-## `DOLT_FETCH()`
-
-Fetch refs, along with the objects necessary to complete their histories
-and update remote-tracking branches. Works exactly like `dolt fetch` on
-the CLI, and takes the same arguments.
-
-```sql
-SELECT DOLT_FETCH('origin', 'master');
-SELECT DOLT_FETCH('origin', 'feature-branch');
-SELECT DOLT_FETCH('origin', 'refs/heads/master:refs/remotes/origin/master');
-```
-
-### Options
-
-`--force`: Update refs to remote branches with the current state of the
-remote, overwriting any conflicting history
-
-### Example
-
-```sql
--- Get remote master
-SELECT DOLT_FETCH('origin', 'master');
-
--- Inspect the hash of the fetched remote branch
-SELECT HASHOF('origin/master');
-
--- Merge remote master with current branch
-SELECT DOLT_MERGE('origin/master');
-```
 
 ## `DOLT_PULL()`
 
-Fetch from and integrate with another repository or a local branch. In
+Fetch from and integrate with another database or a local branch. In
 its default mode, `dolt pull` is shorthand for `dolt fetch` followed by
 `dolt merge <remote>/<branch>`. Works exactly like `dolt pull` on the
 CLI, and takes the same arguments.
@@ -382,10 +390,9 @@ SELECT DOLT_PULL('origin');
 SELECT * FROM dolt_log LIMIT 5;
 ```
 
-# Other Dolt SQL functions
+# Dolt Commit Metadata SQL Functions
 
-Dolt also provides various SQL functions for dolt-specific
-functionality in SQL that have no command line equivalent.
+Dolt also provides SQL functions that have no command line equivalent.  
 
 ## `DOLT_MERGE_BASE()`
 
@@ -397,22 +404,16 @@ Consider the following branch structure:
 ```text
       A---B---C feature
      /
-D---E---F---G master
+D---E---F---G main
 ```
 
 The following would return the hash of commit `E`:
 
 ```sql
-SELECT DOLT_MERGE_BASE('feature', 'master');
+SELECT DOLT_MERGE_BASE('feature', 'main');
 ```
 
 ## `HASHOF()`
 
 The HASHOF function returns the commit hash of a branch,
-e.g. `HASHOF("master")`.
-
-## Functions for working with detached heads
-
-Dolt also defines several functions useful for working in detached
-head mode. See [that section](../branches.md#detached-head-mode) for
-details.
+e.g. `HASHOF("main")`.
