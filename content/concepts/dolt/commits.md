@@ -10,7 +10,9 @@ A commit signals to Dolt that you would like to save the state of the current da
 
 ![](../../.gitbook/assets/dolt-commit-graph.png)
 
-Commit hashes are SHA-256 encoded hashes of the entire database. Commit hashes look like `t5d5inj4bpc1fltrdm9uoscjdsgebaih`. These are abbreviations of the entire hash that Dolt understands. When referring to a specific commit, this is the identifier you use.  
+Commit hashes are SHA-256 encoded hashes of the entire database. Commit hashes look like `t5d5inj4bpc1fltrdm9uoscjdsgebaih`. These are abbreviations of the entire hash that Dolt understands. When referring to a specific commit, this is the identifier you use.
+
+A Dolt commit is different from a standard SQL transaction commit. Dolt supports both which can be a bit confusing.
 
 ## How to use Commits
 
