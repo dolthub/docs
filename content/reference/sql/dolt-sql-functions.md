@@ -14,11 +14,11 @@ title: Dolt SQL Functions
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
   
-* [Dolt Commit Metadata SQL Functions](#dolt_commit_metadata_sql_functions)
+* [Dolt Commit Metadata SQL Functions](#dolt-commit-metadata-sql-functions)
   * [dolt\_merge\_base()](#dolt_merge_base)
   * [hashof()](#hashof)
 
-* [Dolt Table Functions](#dolt_table_functions)
+* [Dolt Table Functions](#dolt-table-functions)
   * [dolt_diff()](#dolt_diff)
 
 # Dolt SQL Functions
