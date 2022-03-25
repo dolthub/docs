@@ -437,6 +437,10 @@ In other words, if a row was changed in 10 separate commits, `dolt_diff_$TABLENA
 one for each individual delta. In contrast, `dolt_commit_diff_$TABLENAME` would show a single row that combines
 all the individual commit deltas into one diff.  
 
+The [`DOLT_DIFF()` table function](../dolt-sql-functions.md#dolt_diff) is an alternative to the 
+`dolt_commit_diff_$tablename` system table for cases where a table's schema has changed between the `to` and `from` 
+commits. Consider the `DOLT_DIFF()` table function if you need to see the schema from each of those commits, 
+instead of using the schema from the currently checked out branch. 
 
 ### Schema
 
