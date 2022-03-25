@@ -476,9 +476,11 @@ The `DOLT_DIFF()` table function takes three required arguments:
 
 The remaining columns are dependent on the schema of the user table as it existed at the `from_commit` and at 
 the `to_commit`. For every column `X` in your table at the `from_commit` revision, there is a column in the result 
-set named `from_X`. Likewise, for every column 'Y' in your table at the `to_commit` revision, there is a column
-in the result set named `to_Y`. This is the major difference between the `DOLT_DIFF()` function and the
-`dolt_commit_diff_$tablename` system table. 
+set named `from_X`. Likewise, for every column `Y` in your table at the `to_commit` revision, there is a column
+in the result set named `to_Y`. This is the major difference between the `DOLT_DIFF()` table function and the
+`dolt_commit_diff_$tablename` system table – `DOLT_DIFF()` uses the two schemas at the `to_commit` and 
+`from_commit` revisions to form the to and from columns of the result set, while `dolt_commit_diff_$tablename` uses
+only the table schema of the currently checked out branch to form the to and from columns of the result set.   
 
 ### Example 
 
