@@ -99,3 +99,63 @@ ORDER BY state, to_commit_date;
 For more information, see the [system table
 docs](dolt-system-tables.md).
 
+## Querying historical view data
+
+Database views are an edge case for historical queries. When you have
+a database view whose definition has changed, querying it with `AS OF`
+will use the current definition of the view, but use rows from the
+tables as they existed at the revision provided. To query the
+historical definition of a view, use a commit hash-qualified database
+identifier as above.
+
+Consider this example:
+
+```sql
+-- Past data
+view_test> select * from t1 as of '81223g1cpmib215gmov8686b6310p37d';
++---+---+
+| a | b |
++---+---+
+| 1 | 1 |
+| 2 | 2 |
++---+---+
+-- Past view definition
+view_test> show create table `view_test/81223g1cpmib215gmov8686b6310p37d`.v1;
++------+--------------------------------------+
+| View | Create View                          |
++------+--------------------------------------+
+| v1   | CREATE VIEW `v1` AS select * from t1 |
++------+--------------------------------------+
+-- Current data
+view_test> select * from t1;
++---+---+
+| a | b |
++---+---+
+| 1 | 1 |
+| 2 | 2 |
+| 3 | 3 |
++---+---+
+-- Current view definition
+view_test> show create table v1;
++------+-----------------------------------------------+
+| View | Create View                                   |
++------+-----------------------------------------------+
+| v1   | CREATE VIEW `v1` AS select a+10, b+10 from t1 |
++------+-----------------------------------------------+
+-- Select past data using current view definition
+view_test> select * from v1 as of '81223g1cpmib215gmov8686b6310p37d';
++------+------+
+| a+10 | b+10 |
++------+------+
+| 11   | 11   |
+| 12   | 12   |
++------+------+
+-- Select past data using past view definition
+view_test> select * from `view_test/81223g1cpmib215gmov8686b6310p37d`.v1;
++---+---+
+| a | b |
++---+---+
+| 1 | 1 |
+| 2 | 2 |
++---+---+
+```
