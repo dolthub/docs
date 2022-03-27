@@ -506,7 +506,7 @@ We can use the above table to represent two types of diffs: a two-point diff and
 In a two-point diff we want to see the difference in rows between Point C and Point G. 
 
 ```SQL
-SELECT * from dolt_commif_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('main');
+SELECT * from dolt_commit_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('main');
 ```
 
 We can also compute a three-point diff using this table. 
