@@ -52,11 +52,11 @@ If you haven't already go ahead and install Tableplus from [here](https://tablep
 
 Click on create a new connection:
 
-![](../.gitbook/assets/tableplus-create-new-connection.png)
+![](../../../.gitbook/assets/tableplus-create-new-connection.png)
 
 Hit MySQL in the selection box and fill in the following information. All the parameters are the same as for any MySQL database.
 
-![](../.gitbook/assets/tableplus-connect-info.png)
+![](../../../.gitbook/assets/tableplus-connect-info.png)
 
 When you hit `Test` you should see all the boxes turn green like in the above image. Finally, hit connect
 to access the Dolt server.
@@ -65,19 +65,19 @@ to access the Dolt server.
 
 Let's start by selecting a database in the Dolt server and writing queries against it.
 
-![](../.gitbook/assets/select-db-tableplus.png)
+![](../../../.gitbook/assets/select-db-tableplus.png)
 
 Select the `ip_to_country` database. You should see tables populate to the left like below.
 
-![](../.gitbook/assets/tables-on-left-tableplus.png)
+![](../../../.gitbook/assets/tables-on-left-tableplus.png)
 
 Now click on the table `IPv4ToCountry` and see the screen populate. We just read from our Dolt database!
 
-![](../.gitbook/assets/open-table-tableplus.png)
+![](../../../.gitbook/assets/open-table-tableplus.png)
 
 Finally, let's write a quick query on the dataset. Click the `SQL` button in the top left and write the query in the box. Hit the `Run Current` button to execute it and the results should appear:
 
-![](../.gitbook/assets/run-query-tableplus.png)
+![](../../../.gitbook/assets/run-query-tableplus.png)
 
 That's it! You've successfully connected Dolt to Tableplus and ran your first query.
 
