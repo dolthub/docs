@@ -8,7 +8,7 @@ Dolt comes with a built-in MySQL compatible server, making it easy to connect to
 | Editor | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | [Tableplus](https://tableplus.com/) | ✅ | Recommended (see below) |
-| [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | |
+| [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | Potential information schema and backup compatibility issues |
 | [MySQL Workbench](https://www.mysql.com/products/workbench/) | ❌ | Missing some information schema materials |
 
 ## Setting up Dolt with Tableplus
