@@ -8,14 +8,12 @@ Dolt comes with a built-in MySQL compatible server, making it easy to connect to
 | Editor | Supported | Notes and limitations |
 | :--- | :--- | :--- |
 | [Tableplus](https://tableplus.com/) | ✅ | Recommended (see below) |
-| [Navicat For Mysql](https://www.navicat.com/en/products/navicat-for-mysql) | ✅ | |
-| [Dbeaver](https://dbeaver.io/) | ✅ | |
 | [Datagrip](https://www.jetbrains.com/datagrip/) | ✅ | |
 | [MySQL Workbench](https://www.mysql.com/products/workbench/) | ❌ | Missing some information schema materials |
 
 ## Setting up Dolt with Tableplus
 
-[Tableplus](https://tableplus.com/) is the recommended SQL editor to use with Dolt. Let's clone a Dolt repo and connect it to Tableplus.
+[Tableplus](https://tableplus.com/) is the recommended SQL editor to use with Dolt. Let's clone a Dolt database and connect it to Tableplus. We have a [video](https://www.youtube.com/watch?v=0FkYraVqNjM) that walks through this experience as well. 
 
 ### Step 1: Cloning a database.
 
@@ -82,3 +80,5 @@ Finally, let's write a quick query on the dataset. Click the `SQL` button in the
 ![](../.gitbook/assets/run-query-tableplus.png)
 
 That's it! You've successfully connected Dolt to Tableplus and ran your first query.
+
+If you have any additional issues please file them [here](https://github.com/dolthub/dolt/issues).
