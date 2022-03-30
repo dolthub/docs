@@ -2,11 +2,11 @@
 title: "DoltLab"
 ---
 
-[DoltLab](https://www.doltlab.com) is the self-hosted version of DoltHub that allows you to deploy and manage your own DoltHub instance on-prem. We launched DoltLab in January of 2022 and are rapidly adding features to it that will continue to make DoltLab simpler manage and more user and administrator-friendly.
+[DoltLab](https://www.doltlab.com) is the self-hosted version of DoltHub that allows you to deploy and manage your own DoltHub instance on-prem. We launched DoltLab in January of 2022 and are rapidly adding features to it that will make DoltLab simpler to manage and more user and administrator friendly.
 
 For instructions on how to install the latest DoltLab version, checkout our [installation guide](./doltlab/installation.md). After installing, learn how to operate DoltLab like a pro by reading our [administrator guide](./doltlab/administrator.md).
 
-You can also get more DoltLab content by checking our [blog](https://www.dolthub.com/blog/), where we've published the following blogs about DoltLab:
+You can also get more DoltLab content by checking out our [blog](https://www.dolthub.com/blog/), where we've published the following articles about DoltLab:
 
 * [Announcing DoltLab: Your Self-Hosted DoltHub Solution](https://www.dolthub.com/blog/2022-01-14-announcing-doltlab/)
 * [Announcing DoltLab v0.2.0](https://www.dolthub.com/blog/2022-02-11-announcing-doltlab-v0.2.0/)
