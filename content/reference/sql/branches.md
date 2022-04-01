@@ -235,13 +235,21 @@ logic you want, with the SQL primitives above.
 
 ### Commiting with conflicts
 
-In some cases it may be necessary to commit a transaction that has
-conflicts. Dolt will reject such `COMMIT` statements by default, but
-you can override this behavior by setting a session variable:
+By default, Dolt will allow you to commit transactions that have
+conflicts. Anyone else connected to the same branch will see these
+conflicts as well once you commit the transaction.  In a multi user
+environment, it may be necessary to prevent clients from committing
+working sets that contain conflicts. To force clients to resolve
+conflicts before committing their SQL transactions, set this system
+variable to off:
 
 ```sql
-set @@dolt_force_transaction_commit = 1;
+set GLOBAL @@dolt_allow_commit_conflicts = 0;
 ```
 
-Keep in mind that anyone else connected to the same branch will see
-these conflicts as well once you commit the transaction.
+The server will not allow you to create new Dolt commits (with the
+[`dolt_commit()` system function](./dolt-sql-functions.md#dolt_commit)
+or with the [`@@dolt_transaction_commit` system
+variable](./dolt-sysvars.md#dolt_transaction_commit)) if the working
+set has conflicts. You must resolve conflicts before creating a Dolt
+commit.
