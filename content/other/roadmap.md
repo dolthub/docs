@@ -15,7 +15,7 @@ their feature requests implemented first.
 
 Roadmap last updated Apr 2022, next update Jun 2022.
 
-# Upcoming features
+## Upcoming features
 
 | Feature                                 | Estimate    |
 | -------                                 | ---         |
@@ -43,7 +43,7 @@ Roadmap last updated Apr 2022, next update Jun 2022.
 | Cross-database joins with indexes       | Unscheduled |
 | More function coverage                  | Ongoing     |
 
-# Recently launched features
+## Recently launched features
 
 | Feature                             | Launch Date |
 | -------                             | ---         |
