@@ -18,9 +18,9 @@ DoltLab is currently available for Linux and we recommend the following _minimum
 * The following `TCP` ports _must_ be open on the host:
   * `22`, for `ssh` connections.
   * `80`, for ingress `HTTP` connections.
-  * `100`, for ingress connections to DoltLab's [remote data file server]().
-  * `50051`, for ingress connections to DoltLab's [remote API]().
-  * `4321`, for ingress connections to DoltLab's [file upload service API]().
+  * `100`, for ingress connections to DoltLab's [remote data file server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
+  * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
+  * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server).
 
 <h1 id="install-doltlab-dependencies"><ins>Step 1: Install DoltLab's Dependencies on the Host</ins></h1>
 
