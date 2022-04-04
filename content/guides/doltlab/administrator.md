@@ -11,6 +11,7 @@ the following information can help DoltLab Admins manually perform some common a
 4. [Send Service Logs To DoltLab Team](#send-service-logs)
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
+7. [View Service Metrics](#view-service-metrics)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -282,4 +283,12 @@ Paste the public key into the "Public Key" field, write a description in the "De
 
 Your Dolt client is now authenticated for this DoltLab account.
 
+<h1 id="view-service-metrics">View Service Metrics</h1>
 
+As of DoltLab `v0.3.0`, [Prometheus](https://prometheus.io/) [gRPC](https://grpc.io/) service metrics for [DoltLab's Remote API Server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), `doltlabremoteapi`, and [DoltLab's API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-api-server), `doltlabapi`, are available for viewing.
+
+These metrics are are published by [DoltLab's Envoy proxy](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-envoy-proxy-server), `doltlabenvoy`, on port `7770` at endpoints corresponding to their container name. 
+
+For example, you can view the `doltlabremoteapi` service metrics for our development DoltLab instance here, [http://doltlab.awsdev.ld-corp.com:7770/doltlabremoteapi](http://doltlab.awsdev.ld-corp.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.awsdev.ld-corp.com:7770/doltlabapi](http://doltlab.awsdev.ld-corp.com:7770/doltlabapi).
+
+Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
