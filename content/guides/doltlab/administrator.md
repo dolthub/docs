@@ -10,6 +10,7 @@ the following information can help DoltLab Admins manually perform some common a
 3. [Upgrade DoltLab Versions Without Data Loss](#upgrade-doltlab)
 4. [Send Service Logs To DoltLab Team](#send-service-logs)
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
+6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -153,6 +154,30 @@ In addition, some early versions have different database schemas than newer ones
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
 
+<h2 id="upgrade-v030-plus"><ins>Upgrade from DoltLab <code>v0.3.0+</code></ins></h2>
+
+DoltLab versions >= `v0.3.0` support schema migrations without data loss. To upgrade to a DoltLab version after `v0.3.0`, simply stop your old version of DoltLab, then download and unzip the newer DoltLab version to the same location as your previous version. This will ensure that when you [start the new version]((./installation.md#start-doltlab)) of DoltLab using the `start-doltlab.sh` script, the old DoltLab version's Docker volumes get attached to the new version's containers.
+
+```bash
+# stop old DoltLab
+cd doltlab
+docker-compose stop
+cd ../
+rm -rf doltlab
+
+# download and unzip newer DoltLab
+curl -OL https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip
+unzip doltlab-latest.zip -d doltlab
+
+# start DoltLab
+cd doltlab
+./start-doltlab.sh
+```
+
+<h2 id="upgrade-v020-v030"><ins>Upgrade from DoltLab <code>v0.2.0</code> to <code>v0.3.0</code></ins></h2>
+
+To upgrade without data loss, follow the same instructions for upgrading found in the [Upgrade from DoltLab <code>v0.1.0</code> <code>v0.2.0</code>](#upgrade-v010-v020) section.
+
 <h2 id="upgrade-v010-v020"><ins>Upgrade from DoltLab <code>v0.1.0</code> to <code>v0.2.0</code> Without Data Loss</ins></h2>
 
 To upgrade DoltLab `v0.1.0` to `v0.2.0`, leave DoltLab `v0.1.0`'s services running and connect a PostgreSQL client from inside the `doltlab_doltlab` Docker network to the running `doltlab_doltlabdb_1` server. On the DoltLab host machine, run:
@@ -234,3 +259,27 @@ You have now completed the upgrade, and should no be running DoltLab `v0.2.0` wi
 <h1 id="connect-with-doltlab-team">Connect with the DoltLab Team</h1>
 
 If you need to connect to a DoltLab team member, the best way to do so is on [Discord](https://discord.com/invite/RFwfYpu), in the `#doltlab` server.
+
+<h1 id="auth-dolt-client">Authenticate a Dolt Client to use a DoltLab Account</h1>
+
+To authenticate a Dolt client to use a DoltLab account, use the Dolt client and run the [dolt creds new](../../reference/cli#dolt-creds-new) command, which will output a new public key:
+
+```bash
+dolt creds new
+Credentials created successfully.
+pub key: fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
+```
+
+Copy the generated public key and run the [dolt creds use](../../reference/cli#dolt-creds-use) command:
+
+```bash
+dolt creds use fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
+```
+
+Next, login to your DoltLab account, click your profile image, then click "Settings" and then "Credentials".
+
+Paste the public key into the "Public Key" field, write a description in the "Description" field, then click "Create".
+
+Your Dolt client is now authenticated for this DoltLab account.
+
+
