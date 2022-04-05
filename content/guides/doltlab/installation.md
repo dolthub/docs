@@ -78,6 +78,24 @@ unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
 ```
 
+Inside the unzipped `doltlab` directory, you'll find the following items:
+
+* envoy.tmpl
+* gentokenenckey
+* send_doltlab_deployed_event
+* docker-compose.yaml
+* start-doltlab.sh
+
+`envoy.tmpl` is an template file used to create the [Envoy](https://www.envoyproxy.io/) proxy configuration file called `envoy.yaml`.
+
+`gentokenenckey`, short for "generate token encryption key" is a binary used to generate token encryption keys used by DoltLab. The code is available [here](https://gist.github.com/coffeegoddd/9b1acb07baaa72c8173a2e7b11dacb80).
+
+`send_doltlab_deployed_event` is a binary that sends a single request to our metrics server, letting us track how many DoltLab instances get deployed each day. This information helps us properly fund and staff our DoltLab team. The source for this binary is [here](https://gist.github.com/coffeegoddd/cc1c7c765af56f6523bc5faffbc19e7a).
+
+`docker-compose.yaml` is a complete [Docker Compose](https://docs.docker.com/compose/) configuration file that will spin up all the services required to run DoltLab.
+
+`start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
+
 <h1 id="start-doltlab"><ins>Step 2: Start DoltLab</ins></h1>
 
 The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set:
