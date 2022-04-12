@@ -289,6 +289,6 @@ As of DoltLab `v0.3.0`, [Prometheus](https://prometheus.io/) [gRPC](https://grpc
 
 These metrics are are published by [DoltLab's Envoy proxy](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-envoy-proxy-server), `doltlabenvoy`, on port `7770` at endpoints corresponding to their container name. 
 
-For example, you can view the `doltlabremoteapi` service metrics for our development DoltLab instance here, [http://doltlab.awsdev.ld-corp.com:7770/doltlabremoteapi](http://doltlab.awsdev.ld-corp.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.awsdev.ld-corp.com:7770/doltlabapi](http://doltlab.awsdev.ld-corp.com:7770/doltlabapi).
+For example, you can view the `doltlabremoteapi` service metrics for our DoltLab demo instance here, [http://doltlab.dolthub.com:7770/doltlabremoteapi](http://doltlab.dolthub.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.dolthub.com:7770/doltlabapi](http://doltlab.dolthub.com:7770/doltlabapi).
 
 Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
