@@ -263,7 +263,37 @@ If you need to connect to a DoltLab team member, the best way to do so is on [Di
 
 <h1 id="auth-dolt-client">Authenticate a Dolt Client to use a DoltLab Account</h1>
 
-To authenticate a Dolt client to use a DoltLab account, use the Dolt client and run the [dolt creds new](../../reference/cli#dolt-creds-new) command, which will output a new public key:
+As of Dolt `v0.39.0`, the [dolt login](../../reference/cli#dolt-login) command can be used to authenticate against DoltLab instances.
+
+To authenticate a client against DoltLab with this command, use the `--auth-endpoint`, `--login-url`, and `--insecure` arguments to point your Dolt client at the DoltLab instance you want to authenticate against.
+
+`--auth-endpoint` should point at the [DoltLab RemoteAPI Server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server) running on port `50051`.
+`--login-url` should point at the DoltLab instance's credentials page.
+`--insecure` a boolean flag, should be used since DoltLab does not currently support TLS `gRPC` connections.
+
+```bash
+dolt login --insecure --auth-endpoint doltlab.dolthub.com:50051 --login-url http://doltlab.dolthub.com/settings/credentials
+```
+
+Running the command will open your browser window to the `--login-url` with credentials populated in the "Public Key" field. Simply add a "Description" and click "Create", then return to your terminal to see your Dolt client successfully authenticated.
+
+```bash
+Credentials created successfully.
+pub key: 9pg8rrkaqouuno4rihdlkb6pvaf16t134dscb68dlg0u0261rmtg
+/.dolt/creds/cepi47m5sojotm8s2e8rkqm9fdjocidsc42canggvb8e0.jwk
+Opening a browser to:
+	http://doltlab.dolthub.com/settings/credentials#9pg8rrkaqouuno4rihdlkb6pvaf16t134dscb68dlg0u0261rmtg
+Please associate your key with your account.
+Checking remote server looking for key association.
+requesting update
+requesting update
+
+
+
+Key successfully associated with user: <user> email <email>
+```
+
+For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli#dolt-creds-new) command, which will output a new public key:
 
 ```bash
 dolt creds new
