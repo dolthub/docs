@@ -1029,22 +1029,31 @@ AWS profile to use
 
 ## `dolt login`
 
-Login to DoltHub
+Login to DoltHub or DoltLab
 
 ### Synopsis
 
 ```bash
-dolt login [<creds>]
+dolt login [--auth-endpoint <endpoint>] [--login-url <url>] [-i | --insecure] [<creds>]
 ```
 
 ### Description
 
-Login into DoltHub using the email in your config so you can pull from private repos and push to those you have permission to.
+Login into DoltHub or DoltLab using the email in your config so you can pull from private repos and push to those you have permission to.
 
 
 ### Arguments and options
 
-`<creds>`: A specific credential to use for login.
+`<creds>`: A specific credential to use for login. If omitted, new credentials will be generated.
+
+`-e`, `--auth-endpoint`:
+Specify the endpoint used to authenticate this client. Must be used with --login-url OR set in the configuration file as `creds.add_url`
+
+`-url`, `--login-url`:
+Specify the login url where the browser will add credentials.
+
+`-i`, `--insecure`:
+If set, makes insecure connection to remote authentication server
 
 
 
