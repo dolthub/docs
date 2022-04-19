@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 set -o pipefail
 
 version=""
@@ -15,7 +15,6 @@ new_table="updated.md"
 
 start_template="<!-- START_%s_RESULTS_TABLE -->"
 end_template="<!-- END_%s_RESULTS_TABLE -->"
-
 
 if [ "$#" -ne 2 ]; then
   echo "Must supply version and type, eg update-perf.sh 'v0.39.0' latency|correctness"
