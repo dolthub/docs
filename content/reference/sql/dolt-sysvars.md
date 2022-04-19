@@ -67,7 +67,7 @@ mysql> select name from dolt_remotes;
 | remote1 |
 | origin  |
 +---------+
-mysql> SET @@GLOBAL.dolt_replicate_to_remote remote1;
+mysql> SET @@GLOBAL.dolt_replicate_to_remote = remote1;
 mysql> select dolt_commit('-am', 'push on write');
 ```
 
@@ -81,7 +81,7 @@ Setting `dolt_replicate_heads` or `dolt_replicate_all_heads` is required.
 
 ```sql
 mysql> SET @@GLOBAL.dolt_read_replica_remote = origin;
-mysql> SET @@GLOBAL.dolt_replicate_heads main;
+mysql> SET @@GLOBAL.dolt_replicate_heads = main;
 mysql> START TRANSACTION;
 ```
 
@@ -103,8 +103,8 @@ Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 `dolt_replicate_all_heads`.
 
 ```sql
-mysql> SET @@GLOBAL.dolt_replicate_heads main;
-mysql> SET @@GLOBAL.dolt_replicate_heads main,feature1,feature2;
+mysql> SET @@GLOBAL.dolt_replicate_heads = main;
+mysql> SET @@GLOBAL.dolt_replicate_heads = "main,feature1,feature2";
 ```
 
 ## @@dolt_replicate_all_heads
