@@ -8,6 +8,11 @@ jobs:
   get-results:
     runs-on: ubuntu-18.04
     steps:
+     - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: gitbook-dev
+          token: ${{ secrets.REPO_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
      - name: pull-request
        uses: repo-sync/pull-request@v2
        with:
