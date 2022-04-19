@@ -30,7 +30,7 @@ columns show the median latency in milliseconds (ms) of each query
 during that 2 minute time window.
 
 The Dolt version is `0.39.0`.
-
+<!-- START_LATENCY_RESULTS_TABLE -->
 | Read Tests | Dolt | MySQL | Multiple |
 | :--- | :--- | :--- | :--- |
 | covering\_index\_scan | 7.43 | 1.7 | 4.4 |
@@ -56,4 +56,5 @@ The Dolt version is `0.39.0`.
 
 | Overall Mean Multiple | _4.3_ |
 | :--- | :--- |
+<!-- END_LATENCY_RESULTS_TABLE -->
 <br/>
