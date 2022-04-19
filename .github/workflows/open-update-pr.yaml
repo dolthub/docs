@@ -13,6 +13,6 @@ jobs:
        with:
          source_branch: ${{ github.event.client_payload.source_branch }}
          destination_branch: ${{ github.event.client_payload.destination_branch }}
-         github_token: ${{ secrets.REPO_ACCESS_TOKEN | secrets.GITHUB_TOKEN }}
+         github_token: ${{ secrets.REPO_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
          pr_title: ${{ github.event.client_payload.title }}
          pr_assignee: ${{ github.event.client_payload.assignee }}
