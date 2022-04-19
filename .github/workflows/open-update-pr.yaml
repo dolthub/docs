@@ -5,7 +5,7 @@ on:
     types: [ open-update-pr ]
 
 jobs:
-  get-results:
+  open-pr:
     runs-on: ubuntu-18.04
     steps:
      - name: Checkout code
@@ -20,4 +20,3 @@ jobs:
          destination_branch: ${{ github.event.client_payload.destination_branch }}
          github_token: ${{ secrets.REPO_ACCESS_TOKEN || secrets.GITHUB_TOKEN }}
          pr_title: ${{ github.event.client_payload.title }}
-         pr_assignee: ${{ github.event.client_payload.assignee }}
