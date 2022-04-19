@@ -60,4 +60,4 @@ echo "$updated_with_markers" > "$new_table"
 
 # replace table in the proper file
 sed -e '/\<!-- END/r '"$new_table"'' -e '/\<!-- START/,/\<!-- END/d' "$dest_file" > temp.md
-mv temp.md "$dest_file"
+# mv temp.md "$dest_file"
