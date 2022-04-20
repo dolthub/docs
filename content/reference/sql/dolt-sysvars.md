@@ -73,10 +73,12 @@ mysql> select dolt_commit('-am', 'push on write');
 
 ## @@dolt_async_replication
 This system variable can be enabled when using push-on-commit replication (i.e. `@@dolt_replicate_to_remote`). 
-When enabled, commits will be pushed asynchronously to the remote specified in the 
-`@@dolt_replicate_to_remote` system variable. This setting will cause 
-commits to complete faster since the push to remote is not synchronous, but
-may increase the remote replication delay.
+When enabled, Dolt commits will be pushed asynchronously to the remote specified in the 
+`@@dolt_replicate_to_remote` system variable, instead of synchronously completing the push before 
+returning from the Dolt commit operation. This setting can cause 
+commits to complete faster since the push to remote is not synchronous, but it 
+may also increase the remote replication delay. Because of the asynchronous nature, replication errors
+may also be less obvious.  
 
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_to_remote = remote1;
