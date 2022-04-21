@@ -437,7 +437,7 @@ In other words, if a row was changed in 10 separate commits, `dolt_diff_$TABLENA
 one for each individual delta. In contrast, `dolt_commit_diff_$TABLENAME` would show a single row that combines
 all the individual commit deltas into one diff.  
 
-The [`DOLT_DIFF()` table function](../dolt-sql-functions.md#dolt_diff) is an alternative to the 
+The [`DOLT_DIFF()` table function](dolt-sql-functions.md#dolt_diff) is an alternative to the 
 `dolt_commit_diff_$tablename` system table for cases where a table's schema has changed between the `to` and `from` 
 commits. Consider the `DOLT_DIFF()` table function if you need to see the schema from each of those commits, 
 instead of using the schema from the currently checked out branch. 
@@ -517,15 +517,14 @@ from our common ancestor E, without including the changes from F and G on main.
 SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('main', 'feature');
 ```
 
-[The `dolt_merge_base` function](../dolt-sql-functions.md#dolt_merge_base) 
+[The `dolt_merge_base` function](dolt-sql-functions.md#dolt_merge_base) 
 computes the closest ancestor E between `main` and `feature`.
 
 ### Additional Notes
 
 There is one special `to_commit` value `WORKING` which can be used to
 see what changes are in the working set that have yet to be committed
-to HEAD. It is often useful to use
-[the `HASHOF()` function](../dolt-sql-functions.md#hashof)
+to HEAD. It is often useful to use [the `HASHOF()` function](dolt-sql-functions.md#hashof)
 to get the commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
 
@@ -742,7 +741,7 @@ history. Using `to_commit` or `from_commit` will limit the data to
 specific commits. There is one special `to_commit` value `WORKING`
 which can be used to see what changes are in the working set that have
 yet to be committed to HEAD. It is often useful to use the 
-[`HASHOF()`](../dolt-sql-functions.md#hashof)
+[`HASHOF()`](dolt-sql-functions.md#hashof)
 function to get the commit hash of a branch, or an ancestor
 commit. For example, to get the differences between the last commit and its parent
 you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
