@@ -293,7 +293,7 @@ requesting update
 Key successfully associated with user: <user> email <email>
 ```
 
-For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli#dolt-creds-new) command, which will output a new public key:
+For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli.md#dolt-creds-new) command, which will output a new public key:
 
 ```bash
 dolt creds new
