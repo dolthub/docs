@@ -10,7 +10,7 @@ specific to version controlling. ([this blog is a good practical
 introduction](https://www.dolthub.com/blog/2021-03-12-dolt-sql-server-concurrency/)).
 
 The full set of MySQL commands that Dolt supports can be found
-[here](../../reference/sql/support).
+[here](../../reference/sql/sql-support/support.md).
 
 Integration examples:
 
