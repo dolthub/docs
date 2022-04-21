@@ -20,7 +20,7 @@ title: Supported Statements
 | `LOAD XML`          | ❌        | Use `dolt table import`                                                                                                   |
 | `REPLACE`           | ✅        |                                                                                                                           |
 | `SELECT`            | ✅        | Most select statements, including `UNION` and `JOIN`, are supported.                                                      |
-| `SELECT FROM AS OF` | ✅        | Selecting from a table as of any known revision or commit timestamp is supported. See [AS OF queries](../README.md#querying-non-head-revisions-of-a-database). |
+| `SELECT FROM AS OF` | ✅        | Selecting from a table as of any known revision or commit timestamp is supported.                                         |
 | `SELECT FOR UPDATE` | ❌        | Row-level locks are not supported.                                                                                        |
 | `SUBQUERIES`        | ✅        | Subqueries work, but must be given aliases. Some limitations apply.                                                       |
 | `TABLE`             | ❌        | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause.                                                             |
