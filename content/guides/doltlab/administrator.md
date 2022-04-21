@@ -301,7 +301,7 @@ Credentials created successfully.
 pub key: fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
 ```
 
-Copy the generated public key and run the [dolt creds use](../../reference/cli#dolt-creds-use) command:
+Copy the generated public key and run the [dolt creds use](../../reference/cli.md#dolt-creds-use) command:
 
 ```bash
 dolt creds use fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
