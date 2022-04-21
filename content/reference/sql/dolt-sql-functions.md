@@ -435,7 +435,7 @@ The `DOLT_DIFF()` table function calculates the differences in a table's data at
 Each row in the result set describes how a row in the underlying table has changed between the two commits,
 including the row's values at to and from commits and the type of change (i.e. `added`, `modified`, or `removed`).
 `DOLT_DIFF()` is an alternative to the 
-[`dolt_commit_diff_$tablename` system table](dolt-system-tables#dolt_commit_diff_usdtablename).
+[`dolt_commit_diff_$tablename` system table](dolt-system-tables.md#dolt_commit_diff_usdtablename).
 You should generally prefer the system tables when possible, since they have less restrictions on use. 
 However, some use cases, such as viewing a table data diff containing schema changes, can be easier to view 
 with the `DOLT_DIFF` table function.  
