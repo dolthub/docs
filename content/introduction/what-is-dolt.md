@@ -12,7 +12,7 @@ Dolt implements the Git command line and associated operations on table rows ins
 
 ## Version Controlled Database
 
-Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Connect to Dolt just like any MySQL database to run queries or update the data using SQL commands. 
+Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Connect to Dolt just like any MySQL database to run queries. Use Dolt system tables, functions, or stored procedures to access version control information and features. 
 
 ## Git for Data
 
