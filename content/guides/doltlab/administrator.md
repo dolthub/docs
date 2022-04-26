@@ -12,6 +12,7 @@ the following information can help DoltLab Admins manually perform some common a
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
 7. [View Service Metrics](#view-service-metrics)
+8. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -322,3 +323,70 @@ These metrics are are published by [DoltLab's Envoy proxy](https://www.dolthub.c
 For example, you can view the `doltlabremoteapi` service metrics for our DoltLab demo instance here, [http://doltlab.dolthub.com:7770/doltlabremoteapi](http://doltlab.dolthub.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.dolthub.com:7770/doltlabapi](http://doltlab.dolthub.com:7770/doltlabapi).
 
 Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
+
+<h1 id="troubleshoot-smtp-connection">Troubleshoot SMTP Server Connection Problems</h1>
+
+DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
+
+Starting with DoltLab `v0.4.1`, the [default user](./installation.md#doltlab-default-user) `admin` is created when DoltLab starts up, which allows admins to sign in to their DoltLab instance
+even if they are experiencing SMTP server connection issues.
+
+To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) to help diagnose the SMTP connection issues on the host running DoltLab.
+
+To get started using this tool, please make sure that `go` is in your `PATH` and is >= `1.18`:
+
+```bash
+go version
+go version go1.18 linux/amd64
+```
+
+Then, make a new directory, `smtp_connection_helper`, and `cd` into it. Copy the contents [main.go](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) into a file called `main.go`, then run:
+
+```bash
+go mod init smtp_connection_helper
+go mod tidy
+```
+
+The tool can now be run with `go run .` followed by the appropriate arguments to connect to your SMTP server. Here is the tool's `--help` text:
+
+```bash
+go run . --help
+
+
+'smtp_connection_helper' is a simple tool used to ensure you can successfully connect to an smtp server.
+If the connection is successful, this tool will send a test email to a single recipient from a single sender.
+
+Usage:
+
+go run . \
+--host <smtp hostname> \
+--port <smtp port> \
+--from <email address> \
+--to <email address> \
+--message {This is a test email message sent with smtp_connection_helper!} \
+--subject {Testing SMTP Server Connection} \
+--auth <plain|external|anonymous|oauthbearer|disable> \
+[--username smtp username] \
+[--password smtp password] \
+[--token smtp oauth token] \
+[--identity smtp identity] \
+[--trace anonymous trace]
+
+
+
+```
+
+To send and email using `plain` authentication, run:
+
+```bash
+go run . \
+--host existing.smtp.server.hostname \
+--port 587 \ # STARTTLS port
+--auth plain \
+--username XXXXXXXX \
+--password YYYYYYY \
+--from email@address.com \
+--to email@address.com
+Sending email with auth method: plain
+Successfully sent email!
+```
