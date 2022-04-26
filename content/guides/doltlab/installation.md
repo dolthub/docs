@@ -117,11 +117,13 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 `POSTGRES_USER` _must_ be "dolthubadmin".<br/>
 `EMAIL_USERNAME` should be a valid username authorized to use existing STMP server.<br/>
 `EMAIL_PASSWORD` should be the password for the aformentioned username of the SMTP server.<br/>
-`EMAIL_PORT` should be the port of the existing SMTP server.<br/>
+`EMAIL_PORT` should be a `STARTTLS` port of the existing SMTP server.<br/>
 `EMAIL_HOST` should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that receives noreply messages.<br/>
 
-<span id="doltlab-smtp-auth">Starting</span> in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
+<h5 id="doltlab-smtp-auth">Supported SMTP Authentication methods</h5>
+
+Starting in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
 SMTP server. By default, `./start-doltlab.sh` sets the environment variable `EMAIL_AUTH_METHOD` to `plain`.
 
 Supported `EMAIL_AUTH_METHOD` options are `plain`, `anonymous`, `external`, `oauthbearer`, or `disable`.
@@ -132,7 +134,9 @@ Supported `EMAIL_AUTH_METHOD` options are `plain`, `anonymous`, `external`, `oau
 `oauthbearer` requires the environment variables `EMAIL_USERNAME` and `EMAIL_OAUTH_TOKEN` to be set.
 `disable` will result in an unauthenticated SMTP server connection.
 
-<span id="doltlab-default-user">Starting</span> with DoltLab `v0.4.1`, the default user `admin` is created,
+<h5 id="doltlab-default-user">Default user `admin`</h5>
+
+Starting with DoltLab `v0.4.1`, the default user `admin` is created,
 when [DoltLab's API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-api-server) starts.
 
 This default user allows DoltLab admins to immediately sign in to DoltLab and begin using the product, even if their DoltLab instance is not successfully connected to an SMTP server.
