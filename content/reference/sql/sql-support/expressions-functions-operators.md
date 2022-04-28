@@ -540,6 +540,6 @@ Refer to the [MySQL Window Function Descriptions](https://dev.mysql.com/doc/refm
 | `LEAD()`                          | ❌        |                                                                                                |
 | `NTH_VALUE()`                     | ❌        |                                                                                                |
 | `NTILE()`                         | ❌        |                                                                                                |
-| `PERCENT_RANK(                    | ✅        |                                                                                                |
+| `PERCENT_RANK()`                  | ✅        |                                                                                                |
 | `RANK()`                          | ❌        |                                                                                                |
 | `ROW_NUMBER()`                    | ✅        |                                                                                                |
