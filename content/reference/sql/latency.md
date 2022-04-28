@@ -29,29 +29,29 @@ possible in a fixed 2 minute time window. The `Dolt` and `MySQL`
 columns show the median latency in milliseconds (ms) of each query 
 during that 2 minute time window.
 
-The Dolt version is `0.39.3`.
+The Dolt version is `0.39.4`.
 <!-- START_LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL | Dolt  | Multiple |
 |-------------------------|-------|-------|----------|
-| covering\_index\_scan   |  1.76 |  7.43 |      4.2 |
-| groupby\_scan           | 11.87 | 33.12 |      2.8 |
-| index\_scan             | 36.24 | 87.56 |      2.4 |
-| oltp\_point\_select     |  0.15 |  0.81 |      5.4 |
+| covering\_index\_scan   |   1.7 |   7.3 |      4.3 |
+| groupby\_scan           | 11.65 | 33.12 |      2.8 |
+| index\_scan             | 35.59 | 87.56 |      2.5 |
+| oltp\_point\_select     |  0.15 |  0.87 |      5.8 |
 | oltp\_read\_only        |  2.91 | 12.08 |      4.2 |
-| select\_random\_points  |  0.28 |  1.67 |      6.0 |
-| select\_random\_ranges  |  0.34 |  1.73 |      5.1 |
-| table\_scan             | 36.24 | 84.47 |      2.3 |
-| reads\_mean\_multiplier |       |       |      4.1 |
+| select\_random\_points  |  0.28 |   1.7 |      6.1 |
+| select\_random\_ranges  |  0.34 |  1.79 |      5.3 |
+| table\_scan             | 35.59 | 84.47 |      2.4 |
+| reads\_mean\_multiplier |       |       |      4.2 |
 
 |       Write Tests        | MySQL | Dolt  | Multiple |
 |--------------------------|-------|-------|----------|
 | bulk\_insert             | 0.001 | 0.001 |      1.0 |
 | oltp\_delete             |  0.14 |  1.34 |      9.6 |
-| oltp\_insert             |  2.86 |  8.28 |      2.9 |
+| oltp\_insert             |  2.76 |  8.13 |      2.9 |
 | oltp\_read\_write        |  6.79 | 39.65 |      5.8 |
-| oltp\_update\_index      |  2.86 |  9.56 |      3.3 |
-| oltp\_update\_non\_index |  2.86 |  6.79 |      2.4 |
-| oltp\_write\_only        |  4.03 | 27.17 |      6.7 |
+| oltp\_update\_index      |  2.91 |  9.56 |      3.3 |
+| oltp\_update\_non\_index |  2.91 |  6.67 |      2.3 |
+| oltp\_write\_only        |   4.1 | 27.17 |      6.6 |
 | writes\_mean\_multiplier |       |       |      4.5 |
 
 | Overall Mean Multiple | 4.3 |
