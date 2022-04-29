@@ -12,7 +12,9 @@ the following information can help DoltLab Admins manually perform some common a
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
 7. [View Service Metrics](#view-service-metrics)
-8. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
+8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
+9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
+10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -324,64 +326,68 @@ For example, you can view the `doltlabremoteapi` service metrics for our DoltLab
 
 Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
 
+<h1 id="smtp-implicit-tls">Connect to an SMTP Server with Implicit TLS</h1>
+
+Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implict TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
+
+```yaml
+...
+doltlabapi:
+  ...
+  command:
+    ...
+    -emailImplicitTLS
+    ...
+```
+
+After adding the argument, restart DoltLab for it to take effect. Additionally, TLS verification can be skipped by adding the additional argument `-emailInsecureTLS`.
+
 <h1 id="troubleshoot-smtp-connection">Troubleshoot SMTP Server Connection Problems</h1>
 
 DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
 
-Starting with DoltLab `v0.4.1`, the [default user](./installation.md#doltlab-default-user) `admin` is created when DoltLab starts up, which allows admins to sign in to their DoltLab instance
-even if they are experiencing SMTP server connection issues.
+Starting with DoltLab `v0.4.1`, the [default user](./installation.md#doltlab-default-user) `admin` is created when DoltLab starts up, which allows admins to sign in to their DoltLab instance even if they are experiencing SMTP server connection issues.
 
 To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) to help diagnose the SMTP connection issues on the host running DoltLab.
 
-To get started using this tool, please make sure that `go` is in your `PATH` and is >= `1.18`:
+Starting with DoltLab `v0.4.2`, this tool is now included as an executable binary in DoltLab's zip, called `smtp_connection_helper`.
+
+For usage run `./smtp_connection_helper --help` which will output:
 
 ```bash
-go version
-go version go1.18 linux/amd64
-```
-
-Then, make a new directory, `smtp_connection_helper`, and `cd` into it. Copy the contents [main.go](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) into a file called `main.go`, then run:
-
-```bash
-go mod init smtp_connection_helper
-go mod tidy
-```
-
-The tool can now be run with `go run .` followed by the appropriate arguments to connect to your SMTP server. Here is the tool's `--help` text:
-
-```bash
-go run . --help
-
 
 'smtp_connection_helper' is a simple tool used to ensure you can successfully connect to an smtp server.
 If the connection is successful, this tool will send a test email to a single recipient from a single sender.
+By default 'smtp_connection_helper' will attempt to connect to the SMTP server with STARTTLS. To use implicit TLS, use --implicit-tls
 
 Usage:
 
-go run . \
+./smtp_connection_helper \
 --host <smtp hostname> \
 --port <smtp port> \
 --from <email address> \
 --to <email address> \
 --message {This is a test email message sent with smtp_connection_helper!} \
 --subject {Testing SMTP Server Connection} \
+--client-hostname {localhost} \
 --auth <plain|external|anonymous|oauthbearer|disable> \
 [--username smtp username] \
 [--password smtp password] \
 [--token smtp oauth token] \
 [--identity smtp identity] \
-[--trace anonymous trace]
-
+[--trace anonymous trace] \
+[--implicit-tls] \
+[--insecure]
 
 
 ```
 
-To send and email using `plain` authentication, run:
+To send a test email using `plain` authentication, run:
 
 ```bash
-go run . \
+./smtp_connection_helper \
 --host existing.smtp.server.hostname \
---port 587 \ # STARTTLS port
+--port 587 \ #STARTTLS port
 --auth plain \
 --username XXXXXXXX \
 --password YYYYYYY \
@@ -389,4 +395,48 @@ go run . \
 --to email@address.com
 Sending email with auth method: plain
 Successfully sent email!
+```
+
+To send a test email using `plain` authentication with implicit TLS, run:
+
+```bash
+./smtp_connection_helper \
+--host existing.smtp.server.hostname \
+--port 465 \ #TLS Wrapper Port
+--implicit-tls \
+--auth plain \
+--username XXXXXXXX \
+--password YYYYYYY \
+--from email@address.com \
+--to email@address.com
+Sending email with auth method: plain
+Successfully sent email!
+```
+
+<h1 id="prevent-unauthorized-users">Prevent Unauthorized User Account Creation</h1>
+
+DoltLab for non-enterprise use currently supports explicit email whitelisting to prevent account creation by unauthorized users.
+
+To enable DoltLab's email whitelisting feature, edit the `docker-compose.yaml` file included in DoltLab's zip.
+
+Under the `doltlabapi` section, in the `command` block, remove the argument `-dolthubWhitelistAllowAll`. Restart your DoltLab instance for this to take effect.
+
+Once DoltLab is restarted, your DoltLab instance will now check a PostgreSQL table called `email_whitelist_elements` before permitting account creation. Only user's with email addresses present in this table will be able to create accounts on your DoltLab instance.
+
+To whitelist an email for account creation in your instance, you will need to insert their email address into the `email_whitelist_elements` table.
+
+As of DoltLab `v0.4.2`, a script to easily connect to your DoltLab instance's running PostgreSQL server is included in the zip, called `shell-db.sh`.
+
+Use this script by supplying the `POSTGRES_PASSWORD` you used to start your DoltLab instance, as `PGPASSWORD` here. Run:
+
+```bash
+PGPASSWORD=<your postgres password> ./shell-db.sh
+```
+
+You will see a `dolthubapi=#` PostgresSQL prompt connected to your DoltLab instance.
+
+You can now execute the following `INSERT` to allow a specific user with `example@address.com` to create an account on your DolLab instance:
+
+```sql
+INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VALUES ('example@address.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
