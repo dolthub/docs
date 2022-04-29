@@ -85,6 +85,7 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * gentokenenckey
 * send_doltlab_deployed_event
 * smtp_connection_helper
+* shell-db.sh
 * docker-compose.yaml
 * start-doltlab.sh
 
@@ -95,6 +96,8 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 `send_doltlab_deployed_event` is a binary that sends a single request to our metrics server, letting us track how many DoltLab instances get deployed each day. This information helps us properly fund and staff our DoltLab team. The source for this binary is [here](https://gist.github.com/coffeegoddd/cc1c7c765af56f6523bc5faffbc19e7a).
 
 `smtp_connection_helper` is a binary used to help troubleshoot any issues your DoltLab instance might have when establishing a connection to your existing SMTP server. This tool uses similar code to DoltLab's email service and should successfully send a test email if the connection to the SMTP server was configured correctly. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](./administrator.md#troubleshoot-smtp-connection).
+
+`shell-db.sh` is a script that will open a PostgreSQL shell to your running DoltLab's PostgreSQL server. The `POSTGRES_PASSWORD` you set when starting DoltLab is required by this script as `PGPASSWORD`. A successful connection will display a `dolthubapi=#` prompt.
 
 `docker-compose.yaml` is a complete [Docker Compose](https://docs.docker.com/compose/) configuration file that will spin up all the services required to run DoltLab.
 
