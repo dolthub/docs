@@ -345,60 +345,64 @@ After adding the argument, restart DoltLab for it to take effect. Additionally, 
 
 DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
 
-Starting with DoltLab `v0.4.1`, the [default user](./installation.md#doltlab-default-user) `admin` is created when DoltLab starts up, which allows admins to sign in to their DoltLab instance
-even if they are experiencing SMTP server connection issues.
+Starting with DoltLab `v0.4.1`, the [default user](./installation.md#doltlab-default-user) `admin` is created when DoltLab starts up, which allows admins to sign in to their DoltLab instance even if they are experiencing SMTP server connection issues.
 
 To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) to help diagnose the SMTP connection issues on the host running DoltLab.
 
-To get started using this tool, please make sure that `go` is in your `PATH` and is >= `1.18`:
+Starting with DoltLab `v0.4.2`, this tool is now included as an executable binary in DoltLab's zip, called `smtp_connection_helper`.
+
+For usage run `./smtp_connection_helper --help` which will output:
 
 ```bash
-go version
-go version go1.18 linux/amd64
-```
-
-Then, make a new directory, `smtp_connection_helper`, and `cd` into it. Copy the contents [main.go](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) into a file called `main.go`, then run:
-
-```bash
-go mod init smtp_connection_helper
-go mod tidy
-```
-
-The tool can now be run with `go run .` followed by the appropriate arguments to connect to your SMTP server. Here is the tool's `--help` text:
-
-```bash
-go run . --help
-
 
 'smtp_connection_helper' is a simple tool used to ensure you can successfully connect to an smtp server.
 If the connection is successful, this tool will send a test email to a single recipient from a single sender.
+By default 'smtp_connection_helper' will attempt to connect to the SMTP server with STARTTLS. To use implicit TLS, use --implicit-tls
 
 Usage:
 
-go run . \
+./smtp_connection_helper \
 --host <smtp hostname> \
 --port <smtp port> \
 --from <email address> \
 --to <email address> \
 --message {This is a test email message sent with smtp_connection_helper!} \
 --subject {Testing SMTP Server Connection} \
+--client-hostname {localhost} \
 --auth <plain|external|anonymous|oauthbearer|disable> \
 [--username smtp username] \
 [--password smtp password] \
 [--token smtp oauth token] \
 [--identity smtp identity] \
-[--trace anonymous trace]
-
+[--trace anonymous trace] \
+[--implicit-tls] \
+[--insecure]
 
 
 ```
 
-To send and email using `plain` authentication, run:
+To send a test email using `plain` authentication, run:
 
 ```bash
-go run . \
+./smtp_connection_helper \
 --host existing.smtp.server.hostname \
---port 587 \ # STARTTLS port
+--port 587 \ #STARTTLS port
+--auth plain \
+--username XXXXXXXX \
+--password YYYYYYY \
+--from email@address.com \
+--to email@address.com
+Sending email with auth method: plain
+Successfully sent email!
+```
+
+To send a test email using `plain` authentication with implicit TLS, run:
+
+```bash
+./smtp_connection_helper \
+--host existing.smtp.server.hostname \
+--port 465 \ #TLS Wrapper Port
+--implicit-tls \
 --auth plain \
 --username XXXXXXXX \
 --password YYYYYYY \
