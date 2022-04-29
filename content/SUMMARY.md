@@ -55,6 +55,7 @@
         * [Expressions, Functions, Operators](reference/sql/sql-support/expressions-functions-operators.md)
         * [Supported Statements](reference/sql/sql-support/supported-statements.md)
         * [Miscellaneous](reference/sql/sql-support/miscellaneous.md)
+    * [Dolt SQL Procedures](reference/sql/dolt-sql-procedures.md)
     * [Dolt SQL Functions](reference/sql/dolt-sql-functions.md)
     * [Dolt System Tables](reference/sql/dolt-system-tables.md)
     * [Dolt System Variables](reference/sql/dolt-sysvars.md)
