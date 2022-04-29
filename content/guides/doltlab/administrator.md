@@ -12,7 +12,8 @@ the following information can help DoltLab Admins manually perform some common a
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
 7. [View Service Metrics](#view-service-metrics)
-8. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
+8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
+9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -323,6 +324,22 @@ These metrics are are published by [DoltLab's Envoy proxy](https://www.dolthub.c
 For example, you can view the `doltlabremoteapi` service metrics for our DoltLab demo instance here, [http://doltlab.dolthub.com:7770/doltlabremoteapi](http://doltlab.dolthub.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.dolthub.com:7770/doltlabapi](http://doltlab.dolthub.com:7770/doltlabapi).
 
 Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
+
+<h1 id="smtp-implicit-tls">Connect to an SMTP Server with Implicit TLS</h1>
+
+Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implict TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
+
+```yaml
+...
+doltlabapi:
+  ...
+  command:
+    ...
+    -emailImplicitTLS
+    ...
+```
+
+After adding the argument, restart DoltLab for it to take effect. Additionally, TLS verification can be skipped by adding the additional argument `-emailInsecureTLS`.
 
 <h1 id="troubleshoot-smtp-connection">Troubleshoot SMTP Server Connection Problems</h1>
 

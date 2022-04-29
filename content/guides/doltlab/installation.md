@@ -61,8 +61,9 @@ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-<div id="download-doltlab">Next, download and unzip DoltLab:</div>
-To install the latest version of DoltLab run:
+<h1 id="download-doltlab"><ins>Step 2: Download DoltLab</ins></h1>
+
+Next, download and unzip DoltLab. To install the latest version of DoltLab run:
 
 ```bash
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip
@@ -96,7 +97,7 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 
 `start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
 
-<h1 id="start-doltlab"><ins>Step 2: Start DoltLab</ins></h1>
+<h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 
 The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set:
 
@@ -117,7 +118,7 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 `POSTGRES_USER` _must_ be "dolthubadmin".<br/>
 `EMAIL_USERNAME` should be a valid username authorized to use existing STMP server.<br/>
 `EMAIL_PASSWORD` should be the password for the aformentioned username of the SMTP server.<br/>
-`EMAIL_PORT` should be a `STARTTLS` port of the existing SMTP server.<br/>
+`EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
 `EMAIL_HOST` should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that receives noreply messages.<br/>
 
