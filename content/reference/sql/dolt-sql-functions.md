@@ -23,6 +23,11 @@ title: Dolt SQL Functions
 
 # Dolt SQL Functions
 
+## Deprecation Warning
+
+All of the functions in this section have been deprecated and replaced with their [stored procedure equivalents](dolt-sql-procedures.md).
+They will be removed in a future release.
+
 Dolt provides SQL functions to allow access to `dolt` CLI 
 commands from within a SQL session. Each function is named after the
 `dolt` command line command it matches, and takes arguments in an
@@ -52,6 +57,7 @@ directory.
 
 
 ## `DOLT_ADD()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_add) instead.
 
 Adds working changes to staged for this session. Works exactly like
 `dolt add` on the CLI, and takes the same arguments.
@@ -91,6 +97,7 @@ SELECT DOLT_COMMIT('-m', 'committing all changes');
 ```
 
 ## `DOLT_CHECKOUT()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_checkout) instead.
 
 Switches this session to a different branch.
 
@@ -134,6 +141,7 @@ SELECT DOLT_CHECKOUT('main');
 
 
 ## `DOLT_COMMIT()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_commit) instead.
 
 Commits staged tables to HEAD. Works exactly like `dolt commit` with
 each value directly following the flag.
@@ -179,6 +187,7 @@ SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndo
 
 
 ## `DOLT_FETCH()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_fetch) instead.
 
 Fetch refs, along with the objects necessary to complete their histories
 and update remote-tracking branches. Works exactly like `dolt fetch` on
@@ -210,6 +219,7 @@ SELECT DOLT_MERGE('origin/main');
 
 
 ## `DOLT_MERGE()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_merge) instead.
 
 Incorporates changes from the named commits \(since the time their
 histories diverged from the current branch\) into the current
@@ -271,6 +281,7 @@ SELECT DOLT_MERGE('feature-branch');
 
 
 ## `DOLT_RESET()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_reset) instead.
 
 Resets staged tables to their HEAD state. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
 
@@ -318,6 +329,7 @@ SELECT DOLT_RESET('table')
 ```
 
 ## `DOLT_PUSH()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_push) instead.
 
 Updates remote refs using local refs, while sending objects necessary to
 complete the given refs. Works exactly like `dolt push` on the CLI, and
@@ -350,6 +362,7 @@ SELECT DOLT_PUSH('origin', 'feature-branch');
 
 
 ## `DOLT_PULL()`
+**Deprecated**: Use the [stored procedure](dolt-sql-procedures.md#dolt_pull) instead.
 
 Fetch from and integrate with another database or a local branch. In
 its default mode, `dolt pull` is shorthand for `dolt fetch` followed by
