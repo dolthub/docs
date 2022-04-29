@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v0.4.1` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v0.4.2` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -31,7 +31,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v0.4.1
+export DOLTLAB_VERSION=v0.4.2
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -39,7 +39,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v0.4.1
+export DOLTLAB_VERSION=v0.4.2
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -61,8 +61,9 @@ docker ps
 CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
-<div id="download-doltlab">Next, download and unzip DoltLab:</div>
-To install the latest version of DoltLab run:
+<h1 id="download-doltlab"><ins>Step 2: Download DoltLab</ins></h1>
+
+Next, download and unzip DoltLab. To install the latest version of DoltLab run:
 
 ```bash
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip
@@ -72,7 +73,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v0.4.1
+export DOLTLAB_VERSION=v0.4.2
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
@@ -83,6 +84,8 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * envoy.tmpl
 * gentokenenckey
 * send_doltlab_deployed_event
+* smtp_connection_helper
+* shell-db.sh
 * docker-compose.yaml
 * start-doltlab.sh
 
@@ -92,11 +95,15 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 
 `send_doltlab_deployed_event` is a binary that sends a single request to our metrics server, letting us track how many DoltLab instances get deployed each day. This information helps us properly fund and staff our DoltLab team. The source for this binary is [here](https://gist.github.com/coffeegoddd/cc1c7c765af56f6523bc5faffbc19e7a).
 
+`smtp_connection_helper` is a binary used to help troubleshoot any issues your DoltLab instance might have when establishing a connection to your existing SMTP server. This tool uses similar code to DoltLab's email service and should successfully send a test email if the connection to the SMTP server was configured correctly. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](./administrator.md#troubleshoot-smtp-connection).
+
+`shell-db.sh` is a script that will open a PostgreSQL shell to your running DoltLab's PostgreSQL server. The `POSTGRES_PASSWORD` you set when starting DoltLab is required by this script as `PGPASSWORD`. A successful connection will display a `dolthubapi=#` prompt.
+
 `docker-compose.yaml` is a complete [Docker Compose](https://docs.docker.com/compose/) configuration file that will spin up all the services required to run DoltLab.
 
 `start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
 
-<h1 id="start-doltlab"><ins>Step 2: Start DoltLab</ins></h1>
+<h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 
 The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set:
 
@@ -117,7 +124,7 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 `POSTGRES_USER` _must_ be "dolthubadmin".<br/>
 `EMAIL_USERNAME` should be a valid username authorized to use existing STMP server.<br/>
 `EMAIL_PASSWORD` should be the password for the aformentioned username of the SMTP server.<br/>
-`EMAIL_PORT` should be a `STARTTLS` port of the existing SMTP server.<br/>
+`EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
 `EMAIL_HOST` should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that receives noreply messages.<br/>
 
@@ -133,6 +140,8 @@ Supported `EMAIL_AUTH_METHOD` options are `plain`, `anonymous`, `external`, `oau
 `external` uses the optional environment variable `EMAIL_IDENTITY`.
 `oauthbearer` requires the environment variables `EMAIL_USERNAME` and `EMAIL_OAUTH_TOKEN` to be set.
 `disable` will result in an unauthenticated SMTP server connection.
+
+If you are experiencing any SMTP server connection issues (or DoltLab account creation issues) please see [the SMTP troubleshooting guide](./administrator.md#troubleshoot-smtp-connection).
 
 <h5 id="doltlab-default-user">Default user `admin`</h5>
 
