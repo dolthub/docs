@@ -5,6 +5,7 @@ title: Dolt SQL Functions
 # Table of Contents
 
 * [Dolt SQL Functions](#dolt-sql-functions)
+  * [These are deprecated](#deprecation-warning), please use the [stored procedure versions](dolt-sql-procedures.md) instead.
   * [dolt\_add()](#dolt_add)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_commit()](#dolt_commit)
