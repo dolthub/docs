@@ -14,6 +14,7 @@ the following information can help DoltLab Admins manually perform some common a
 7. [View Service Metrics](#view-service-metrics)
 8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
 9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
+10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -410,4 +411,32 @@ To send a test email using `plain` authentication with implicit TLS, run:
 --to email@address.com
 Sending email with auth method: plain
 Successfully sent email!
+```
+
+<h1 id="prevent-unauthorized-users">Prevent Unauthorized User Account Creation</h1>
+
+DoltLab for non-enterprise use currently supports explicit email whitelisting to prevent account creation by unauthorized users.
+
+To enable DoltLab's email whitelisting feature, edit the `docker-compose.yaml` file included in DoltLab's zip.
+
+Under the `doltlabapi` section, in the `command` block, remove the argument `-dolthubWhitelistAllowAll`. Restart your DoltLab instance for this to take effect.
+
+Once DoltLab is restarted, your DoltLab instance will now check a PostgreSQL table called `email_whitelist_elements` before permitting account creation. Only user's with email addresses present in this table will be able to create accounts on your DoltLab instance.
+
+To whitelist an email for account creation in your instance, you will need to insert their email address into the `email_whitelist_elements` table.
+
+As of DoltLab `v0.4.2`, a script to easily connect to your DoltLab instance's running PostgreSQL server is included in the zip, called `shell-db.sh`.
+
+Use this script by supplying the `POSTGRES_PASSWORD` you used to start your DoltLab instance, as `PGPASSWORD` here. Run:
+
+```bash
+PGPASSWORD=<your postgres password> ./shell-db.sh
+```
+
+You will see a `dolthubapi=#` PostgresSQL prompt connected to your DoltLab instance.
+
+You can now execute the following `INSERT` to allow a specific user with `example@address.com` to create an account on your DolLab instance:
+
+```sql
+INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VALUES ('example@address.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
