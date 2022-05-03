@@ -3,7 +3,7 @@ title: "Administrator Guide"
 ---
 
 In DoltLab's current version, there is no Administrator (Admin) web-based UI or dashboard as it is still in development. In the meantime,
-the following information can help DoltLab Admins manually perform some common adminstration tasks, see below for details.
+the following information can help DoltLab Admins manually perform some common administration tasks, see below for details.
 
 1. [File Issues and View Release Notes](#issues-release-notes)
 2. [Backup DoltLab Data](#backup-restore-volumes)
@@ -18,7 +18,7 @@ the following information can help DoltLab Admins manually perform some common a
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
-DoltLab's source code is currenly closed, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
+DoltLab's source code is currently closed, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
@@ -328,7 +328,7 @@ Ensure that ingress connections to port `7770` are open on your DoltLab instance
 
 <h1 id="smtp-implicit-tls">Connect to an SMTP Server with Implicit TLS</h1>
 
-Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implict TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
+Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implicit TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
 
 ```yaml
 ...
