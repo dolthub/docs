@@ -3,7 +3,7 @@ title: "Administrator Guide"
 ---
 
 In DoltLab's current version, there is no Administrator (Admin) web-based UI or dashboard as it is still in development. In the meantime,
-the following information can help DoltLab Admins manually perform some common adminstration tasks, see below for details.
+the following information can help DoltLab Admins manually perform some common administration tasks, see below for details.
 
 1. [File Issues and View Release Notes](#issues-release-notes)
 2. [Backup DoltLab Data](#backup-restore-volumes)
@@ -11,14 +11,14 @@ the following information can help DoltLab Admins manually perform some common a
 4. [Send Service Logs To DoltLab Team](#send-service-logs)
 5. [Connect with the DoltLab Team](#connect-with-doltlab-team)
 6. [Authenticate a Dolt Client to use DoltLab Account](#auth-dolt-client)
-7. [View Service Metrics](#view-service-metrics)
+7. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
 8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
 9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
 10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
-DoltLab's source code is currenly closed, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
+DoltLab's source code is currently closed, but you can file DoltLab issues or view DoltLab's [release notes](https://github.com/dolthub/doltlab-issues/releases) in our [issues repository](https://github.com/dolthub/doltlab-issues).
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
@@ -316,19 +316,57 @@ Paste the public key into the "Public Key" field, write a description in the "De
 
 Your Dolt client is now authenticated for this DoltLab account.
 
-<h1 id="view-service-metrics">View Service Metrics</h1>
+<h1 id="prometheus">Monitor DoltLab with cAdvisor and Prometheus</h1>
 
-As of DoltLab `v0.3.0`, [Prometheus](https://prometheus.io/) [gRPC](https://grpc.io/) service metrics for [DoltLab's Remote API Server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), `doltlabremoteapi`, and [DoltLab's API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-api-server), `doltlabapi`, are available for viewing.
+As of DoltLab `v0.3.0`, [Prometheus](https://prometheus.io/) [gRPC](https://grpc.io/) service metrics for [DoltLab's Remote API Server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), `doltlabremoteapi`, and [DoltLab's Main API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-api-server), `doltlabapi`, are published on port `7770`.
 
-These metrics are are published by [DoltLab's Envoy proxy](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-envoy-proxy-server), `doltlabenvoy`, on port `7770` at endpoints corresponding to their container name. 
+The metrics endpoints for these services are available at endpoints corresponding to their container name. For DoltLab's Remote API, thats `:7770/doltlabremoteapi`, and for DoltLab's Main API that's `:7770/doltlabapi`.
 
-For example, you can view the `doltlabremoteapi` service metrics for our DoltLab demo instance here, [http://doltlab.dolthub.com:7770/doltlabremoteapi](http://doltlab.dolthub.com:7770/doltlabremoteapi). Or, you can view the `doltlabapi` service metrics here, [http://doltlab.dolthub.com:7770/doltlabapi](http://doltlab.dolthub.com:7770/doltlabapi).
+You can view the `doltlabremoteapi` service metrics for our DoltLab demo instance here, [http://doltlab.dolthub.com:7770/doltlabremoteapi](http://doltlab.dolthub.com:7770/doltlabremoteapi) and you can view the `doltlabapi` service metrics here [http://doltlab.dolthub.com:7770/doltlabapi](http://doltlab.dolthub.com:7770/doltlabapi).
 
-Ensure that ingress connections to port `7770` are open on your DoltLab instance's host to enable metrics viewing.
+To make these endpoints available to Prometheus, open port `7770` on your DoltLab host.
+
+We recommend monitoring DoltLab with [cAdvisor](https://github.com/google/cadvisor), which will expose container resource and performance metrics to Prometheus. Before running `cAdvisor`, open port `8080` on your DoltLab host as well. `cAdvisor` will display DoltLab's running containers via a web UI on `:8080/docker` and will publish Prometheus metrics for DoltLab's container at `:8080/metrics` by default.
+
+Run `cAdvisor` as a Docker container in daemon mode with:
+
+```bash
+docker run -d -v /:/rootfs:ro -v /var/run:/var/run:rw -v /sys:/sys:ro -v /var/lib/docker/:/var/lib/docker:ro -v /dev/disk/:/dev/disk:ro -p 8080:8080 --name=cadvisor --privileged gcr.io/cadvisor/cadvisor:v0.39.3
+```
+
+To run a Prometheus server on your DoltLab host machine, first open port `9090` on the DoltLab host. Then, write the following `prometheus.yml` file on the host:
+
+```yaml
+global:
+  scrape_interval:     5s
+  evaluation_interval: 10s
+scrape_configs:
+  - job_name: cadivsor
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: doltlabremoteapi
+    metrics_path: '/doltlabremoteapi'
+    static_configs:
+      - targets: ['host.docker.internal:7770']
+  - job_name: doltlabapi
+    metrics_path: '/doltlabapi'
+    static_configs:
+      - targets: ['host.docker.internal:7770']
+```
+
+Then, start the Prometheus server as a Docker container running in daemon mode:
+```bash
+docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 9090:9090 -v "$(pwd)"/prometheus.yml:/etc/prometheus/prometheus.yml:ro prom/prometheus:latest --config.file=/etc/prometheus/prometheus.yml
+ ```
+
+`--add-host host.docker.internal:host-gateway` is only required if running the Prometheus server on the DoltLab host. If running it elsewhere, this argument may be omitted, and the `host.docker.internal` hostname in `prometheus.yml` can be changed to the hostname of your DoltLab host.
 
 <h1 id="smtp-implicit-tls">Connect to an SMTP Server with Implicit TLS</h1>
 
-Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implict TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
+Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implicit TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
 
 ```yaml
 ...
