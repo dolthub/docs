@@ -45,7 +45,8 @@ message. Defaults to `0`.
 When set to `1`, this system variable allows transactions with merge
 conflicts to be committed. When set to `0`, merge conflicts must be
 resolved before committing a transaction, and attempting to commit a
-transaction with conflicts is an error. Defaults to `1`.
+transaction with conflicts fails and rolls back the
+transaction. Defaults to `0`.
 
 ## @@dolt_force_transaction_commit
 
