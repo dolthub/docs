@@ -31,11 +31,13 @@ are also supported. Each table in a query can use a different `AS OF`
 clause.
 
 In addition to this `AS OF` syntax for `SELECT` statements, Dolt also
-supports an extension to the standard MySQL syntax to examine the
-database schema for a previous revision:
+supports various extensions to the standard MySQL syntax to examine
+the schemas of snapshots:
 
 ```sql
 SHOW TABLES AS OF 'kfvpgcf8pkd6blnkvv8e0kle8j6lug7a';
+SHOW CREATE TABLE myTable AS OF 'myBranch';
+DESCRIBE myTable AS OF 'HEAD~';
 ```
 
 ## Specifying a commit hash for an entire connection
