@@ -44,6 +44,9 @@ SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
 SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
 ```
 
+_Note: after changing replication configuration options, the Dolt server process
+needs to be restarted before replication changes will take effect._ 
+
 ### Push (on write) from sources
 
 To push on write, a valid remote middleman must be configured:
