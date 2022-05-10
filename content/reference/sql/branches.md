@@ -233,18 +233,18 @@ themselves by picking which of the conflicting values to use for each
 row in conflict. You can build this workflow, or any other custom
 logic you want, with the SQL primitives above.
 
-### Commiting with conflicts
+### Commiting with merge conflicts
 
-By default, Dolt will allow you to commit transactions that have
-conflicts. Anyone else connected to the same branch will see these
-conflicts as well once you commit the transaction.  In a multi user
-environment, it may be necessary to prevent clients from committing
-working sets that contain conflicts. To force clients to resolve
-conflicts before committing their SQL transactions, set this system
-variable to off:
+By default, Dolt will not allow you to commit transactions that have
+merge conflicts, and will automatically rollback any transaction with
+merge conflicts when you attempt to `COMMIT` it. However, there may be
+times when you need to commit merge conflicts, for example to
+collaborate on resolving them with other people. To allow committing
+merge conflicts, change this system variable to `1` for every client
+that needs to commit merge conflicts:
 
 ```sql
-set GLOBAL @@dolt_allow_commit_conflicts = 0;
+set @@dolt_allow_commit_conflicts = 1;
 ```
 
 The server will not allow you to create new Dolt commits (with the
