@@ -272,8 +272,9 @@ transaction for any changes to affected tables to be visible to other
 clients.
 
 ```sql
-CALL DOLT_RESET('--hard', 'abc123');
-CALL DOLT_RESET('my-table'); -- soft reset
+CALL DOLT_RESET('--hard', 'featureBranch');
+CALL DOLT_RESET('--hard', 'commitHash123abc');
+CALL DOLT_RESET('myTable'); -- soft reset
 ```
 
 ### Options
