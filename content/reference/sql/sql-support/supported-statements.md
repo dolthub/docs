@@ -133,8 +133,8 @@ multiple clients per HEAD are required.
 
 | Statement | Supported | Notes and limitations |
 | :-------- | :-------- | :-------------------- |
-| `PREPARE` | ✅        |                       |
-| `EXECUTE` | ✅        |                       |
+| `PREPARE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. PREPARE in a query is not supported.                     |
+| `EXECUTE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. EXCEUTE in a query is not supported.                      |
 
 ## Access management statements
 

@@ -265,15 +265,16 @@ CALL DOLT_MERGE('feature-branch');
 
 ## `DOLT_RESET()`
 
-Resets staged tables to their HEAD state. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
+Default mode resets staged tables to their HEAD state. Can also be used to reset a database to a specific commit. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
 
 Like other data modifications, after a reset you must `COMMIT` the
 transaction for any changes to affected tables to be visible to other
 clients.
 
 ```sql
-CALL DOLT_RESET('--hard');
-CALL DOLT_RESET('my-table'); -- soft reset
+CALL DOLT_RESET('--hard', 'featureBranch');
+CALL DOLT_RESET('--hard', 'commitHash123abc');
+CALL DOLT_RESET('myTable'); -- soft reset
 ```
 
 ### Options
