@@ -1386,9 +1386,9 @@ Imports data into a dolt table
 ### Synopsis
 
 ```bash
-dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue] [--file-type <type>] <table> <file>
-dolt table import -u [--map <file>] [--continue] [--file-type <type>] <table> <file>
-dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
+dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue] [-ignore-skipped-rows] [--disable-fk-checks] [--file-type <type>] <table> <file>
+dolt table import -u [--map <file>] [--continue] [-ignore-skipped-rows] [--disable-fk-checks] [--file-type <type>] <table> <file>
+dolt table import -r [--map <file>] [-ignore-skipped-rows] [--disable-fk-checks] [--file-type <type>] <table> <file>
 ```
 
 ### Description
@@ -1438,6 +1438,12 @@ Replace existing table with imported data while preserving the original schema.
 
 `--continue`:
 Continue importing when row import errors are encountered.
+
+`--ignore-skipped-rows`:
+	Ignore the skipped rows printed by the --continue flag.
+
+`--disable-fk-checks`:
+	Disables foreign key checks.
 
 `-s`, `--schema`:
 The schema for the output data.
