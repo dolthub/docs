@@ -320,7 +320,7 @@ the changes in all the specified commits. If multiple commits are given, they ar
 ```sql
 CALL DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');
 CALL DOLT_REVERT('HEAD~2');
-CALL DOLT_REVERT('HEAD~2', '--author=reverter@rev.ert');
+CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ```
 
 ### Options
@@ -352,12 +352,12 @@ SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hasho
 CALL dolt_revert("HEAD~1");
     
 -- Check out the new commit created by dolt_revert
-SELECT * FROM dolt_log limit 1;
-+----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
-| commit_hash                      | committer | email                   | date                              | message                   |
-+----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
-| vbevrdghj3in3napcgdsch0mq7f8en4v | frankie   | fake.horse@dolthub.com  | 2022-05-20 15:54:39.352 -0700 PDT | Revert "Adding some data" |
-+----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
+SELECT commit_hash, message FROM dolt_log limit 1;
++----------------------------------+---------------------------+
+| commit_hash                      | message                   |
++----------------------------------+---------------------------+
+| vbevrdghj3in3napcgdsch0mq7f8en4v | Revert "Adding some data" |
++----------------------------------+---------------------------+
 
 -- View the exact changes made by the revert commit 
 SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD");
