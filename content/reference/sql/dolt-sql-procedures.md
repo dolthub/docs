@@ -325,7 +325,7 @@ CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 
 ### Options
 
-`--author=&lt;author&gt;`: Specify an explicit author using the standard A U Thor <author@example.com> format.
+`--author=<author>`: Specify an explicit author using the standard `A U Thor <author@example.com>` format.
 
 ### Example
 
