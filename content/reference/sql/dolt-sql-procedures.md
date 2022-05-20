@@ -13,6 +13,7 @@ title: Dolt SQL Procedures
   * [dolt\_pull()](#dolt_pull)
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
+  * [dolt\_revert()](#dolt_revert)
 
 # Dolt SQL Procedures
 
@@ -309,6 +310,64 @@ CALL DOLT_ADD('table')
 
 -- Unstage the table.
 CALL DOLT_RESET('table')
+```
+
+## `DOLT_REVERT()`
+
+Reverts the changes introduced in a commit, or set of commits. Creates a new commit from the current HEAD that reverses 
+the changes in all the specified commits. If multiple commits are given, they are applied in the order given. 
+
+```sql
+CALL DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');
+CALL DOLT_REVERT('HEAD~2');
+CALL DOLT_REVERT('HEAD~2', '--author=reverter@rev.ert');
+```
+
+### Options
+
+`--author=&lt;author&gt;`: Specify an explicit author using the standard A U Thor <author@example.com> format.
+
+### Example
+
+```sql
+-- Create a table and add data in multiple commits
+CREATE TABLE t1(pk INT PRIMARY KEY, c VARCHAR(255));
+CALL dolt_commit("-am", "Creating table t1");
+INSERT INTO t1 VALUES(1, "a"), (2, "b"), (3, "c");
+CALL dolt_commit("-am", "Adding some data");
+insert into t1 VALUES(10, "aa"), (20, "bb"), (30, "cc");
+CALL dolt_commit("-am", "Adding some more data");
+
+-- Examine the changes made in the commit immediately before the current HEAD commit
+SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD~1");
++-------+------+----------------------------------+-----------+
+| to_pk | to_c | to_commit                        | diff_type |
++-------+------+----------------------------------+-----------+
+| 1     | a    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
+| 2     | b    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
+| 3     | c    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
++-------+------+----------------------------------+-----------+
+
+-- Revert the commit immediately before the current HEAD commit  
+CALL dolt_revert("HEAD~1");
+    
+-- Check out the new commit created by dolt_revert
+SELECT * FROM dolt_log limit 1;
++----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
+| commit_hash                      | committer | email                   | date                              | message                   |
++----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
+| vbevrdghj3in3napcgdsch0mq7f8en4v | frankie   | fake.horse@dolthub.com  | 2022-05-20 15:54:39.352 -0700 PDT | Revert "Adding some data" |
++----------------------------------+-----------+-------------------------+-----------------------------------+---------------------------+
+
+-- View the exact changes made by the revert commit 
+SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD");
++---------+--------+----------------------------------+-----------+
+| from_pk | from_c | to_commit                        | diff_type |
++---------+--------+----------------------------------+-----------+
+| 1       | a      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
+| 2       | b      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
+| 3       | c      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
++---------+--------+----------------------------------+-----------+
 ```
 
 ## `DOLT_PUSH()`
