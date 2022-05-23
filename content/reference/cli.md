@@ -174,6 +174,39 @@ Resets the working tables and staged tables. Any changes to tracked tables in th
 Does not touch the working tables, but removes all tables staged to be committed.
 
 
+## `dolt clean`
+
+Deletes untracked tables in working set.
+
+### Synopsis
+
+```bash
+dolt clean [--dry-run]
+dolt clean [--dry-run] <tables>...
+```
+
+### Description
+
+
+`dolt clean [--dry-run]`
+
+Default (arguementless) form deletes any new untracked tables in the
+current database. Use the `--dry-run` flag to safely check whether the command
+will on foreign keys or unique constraint violations.
+
+`dolt clean [--dry-run] <tables>...`
+
+If table name arguments are passed, only the specified untracked tables will
+be considered for deletion.
+
+
+### Arguments and options
+
+`tables:...`: Names of tables for considering untracked tables for
+deletion.
+
+`--dry-run`: Test deleting untracked tables.
+
 
 ## `dolt commit`
 
