@@ -187,7 +187,7 @@ select * from dolt_status;
 | tracked    | true   | new table |
 +------------+--------+-----------+
 
--- Comitted and tracked tables are preserved
+-- Committed and tracked tables are preserved
 show tables;
 +----------------+
 | Tables_in_tmp3 |
