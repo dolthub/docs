@@ -7,6 +7,7 @@ title: Dolt SQL Procedures
 * [Dolt SQL Procedures](#dolt-sql-procedures)
   * [dolt\_add()](#dolt_add)
   * [dolt\_checkout()](#dolt_checkout)
+  * [dolt\_clean()](#dolt_clean)
   * [dolt\_commit()](#dolt_commit)
   * [dolt\_fetch()](#dolt_fetch)
   * [dolt\_merge()](#dolt_merge)
@@ -124,6 +125,76 @@ CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
 CALL DOLT_CHECKOUT('main');
+```
+
+## `DOLT_CLEAN()`
+
+Deletes untracked tables in the working set.
+
+Deletes only specified untracked tables if table names passed as
+arguments.
+
+With `--dry-run` flag, tests whether removing untracked tables will
+return with zero status.
+
+```sql
+CALL DOLT_CLEAN();
+CALL DOLT_CLEAN('untracked-table');
+CALL DOLT_CLEAN('--dry-run');
+```
+
+### Options
+
+`--dry-run`: Test removing untracked tables from working set.
+
+### Example
+
+```sql
+-- Create three new tables
+create table tracked (x int primary key);
+create table committed (x int primary key);
+create table untracked (x int primary key);
+
+-- Commit the first table
+call dolt_add('committed');
+call dolt_commit('-m', 'commit a table');
++----------------------------------+
+| hash                             |
++----------------------------------+
+| n7gle7jv6aqf72stbdicees6iduhuoo9 |
++----------------------------------+
+
+-- Track the second table
+call dolt_add('tracked');
+
+-- Observe database status
+select * from dolt_status;
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| tracked    | true   | new table |
+| untracked  | false  | new table |
++------------+--------+-----------+
+
+-- Clear untracked tables
+call dolt_clean('untracked');
+
+-- Observe final status
+select * from dolt_status;
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| tracked    | true   | new table |
++------------+--------+-----------+
+
+-- Committed and tracked tables are preserved
+show tables;
++----------------+
+| Tables_in_tmp3 |
++----------------+
+| committed      |
+| tracked        |
++----------------+
 ```
 
 
