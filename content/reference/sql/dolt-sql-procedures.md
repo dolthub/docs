@@ -143,7 +143,6 @@ select @@db1_head_ref;
 CALL DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
 ```
 
-
 ## `DOLT_CHECKOUT()`
 
 Switches this session to a different branch.
