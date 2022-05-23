@@ -150,11 +150,21 @@ CALL DOLT_CLEAN('--dry-run');
 ### Example
 
 ```sql
--- Create two new tables
+-- Create three new tables
 create table tracked (x int primary key);
+create table committed (x int primary key);
 create table untracked (x int primary key);
 
--- Track one table
+-- Commit the first table
+call dolt_add('committed');
+call dolt_commit('-m', 'commit a table');
++----------------------------------+
+| hash                             |
++----------------------------------+
+| n7gle7jv6aqf72stbdicees6iduhuoo9 |
++----------------------------------+
+
+-- Track the second table
 call dolt_add('tracked');
 
 -- Observe database status
@@ -176,6 +186,15 @@ select * from dolt_status;
 +------------+--------+-----------+
 | tracked    | true   | new table |
 +------------+--------+-----------+
+
+-- Comitted and tracked tables are preserved
+show tables;
++----------------+
+| Tables_in_tmp3 |
++----------------+
+| committed      |
+| tracked        |
++----------------+
 ```
 
 

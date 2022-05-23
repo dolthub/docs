@@ -187,7 +187,6 @@ dolt clean [--dry-run] <tables>...
 
 ### Description
 
-
 `dolt clean [--dry-run]`
 
 Default (arguementless) form deletes any new untracked tables in the
@@ -199,14 +198,12 @@ will violate foreign key or unique key constraints.
 If table name arguments are passed, only the specified untracked tables will
 be considered for deletion.
 
-
 ### Arguments and options
 
 `tables:...`: Names of tables for considering untracked tables for
 deletion.
 
 `--dry-run`: Test deleting untracked tables.
-
 
 ## `dolt commit`
 
@@ -219,7 +216,6 @@ dolt commit [options]
 ```
 
 ### Description
-
 
 	Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
 	
