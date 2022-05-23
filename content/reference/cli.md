@@ -192,7 +192,7 @@ dolt clean [--dry-run] <tables>...
 
 Default (arguementless) form deletes any new untracked tables in the
 current database. Use the `--dry-run` flag to safely check whether the command
-will on foreign keys or unique constraint violations.
+will violate foreign key or unique key constraints.
 
 `dolt clean [--dry-run] <tables>...`
 
