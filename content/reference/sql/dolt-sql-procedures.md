@@ -120,7 +120,7 @@ CALL dolt_backup('sync', 'my-backup')
 -- Restore named backup in file-system directory
 CALL dolt_backup('restore', 'my-backup', 'file:///restored_directory')
 
--- Remove a named backup (does not delete the directory)
+-- Remove a named backup (does not delete the file system directory)
 CALL dolt_backup('rm', 'my-backup')
 ```
 
