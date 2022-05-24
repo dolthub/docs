@@ -101,7 +101,7 @@ CALL DOLT_BACKUP('sync', 'name');
 ### Options
 
 `--aws-region`: Cloud provider region associated with this backup
-`--aws-creds-type`: Credential type.  Valid options are role, env, and file.  See the help section for additional details
+`--aws-creds-type`: Credential type. Valid options are role, env, and file.
 `--aws-creds-file`: AWS credentials file
 `--aws-creds-profile`: AWS profile to use
 
