@@ -6,6 +6,7 @@ title: Dolt SQL Procedures
 
 * [Dolt SQL Procedures](#dolt-sql-procedures)
   * [dolt\_add()](#dolt_add)
+  * [dolt\_backup()](#dolt_backup)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_clean()](#dolt_clean)
   * [dolt\_commit()](#dolt_commit)
@@ -83,6 +84,44 @@ CALL DOLT_ADD('-a');
 
 -- Commit the changes.
 CALL DOLT_COMMIT('-m', 'committing all changes');
+```
+
+## `DOLT_BACKUP()`
+
+Manage server backup endpoints, sync with a backup, or restore from a
+backup. Similar cloud provider configuration as `dolt remote`.
+
+```sql
+CALL DOLT_BACKUP('add', 'name', 'url');
+CALL DOLT_BACKUP('remove', 'name');
+CALL DOLT_BACKUP('restore', 'url', 'name');
+CALL DOLT_BACKUP('sync', 'name');
+```
+
+### Options
+
+`--aws-region`: Cloud provider region associated with this backup
+`--aws-creds-type`: Credential type.  Valid options are role, env, and file.  See the help section for additional details
+`--aws-creds-file`: AWS credentials file
+`--aws-creds-profile`: AWS profile to use
+
+### Example
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Specify a new named backup directory
+CALL dolt_backup('add', 'my-backup', 'file:///some_directory')
+
+-- Upload the current database contents to the named backup
+CALL dolt_backup('sync', 'my-backup')
+
+-- Restore named backup in file-system directory
+CALL dolt_backup('restore', 'my-backup', 'file:///restored_directory')
+
+-- Remove a named backup (does not delete the directory)
+CALL dolt_backup('rm', 'my-backup')
 ```
 
 ## `DOLT_CHECKOUT()`
