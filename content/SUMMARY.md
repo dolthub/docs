@@ -75,7 +75,8 @@
   * [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
   * [Notebooks](reference/sql/supported-clients/notebooks.md)
 
-## [CLI Reference](reference/cli.md)
+## CLI Reference
+* [CLI Command Reference](reference/cli.md)
 
 ## Architecture
 * [Overview](architecture/architecture.md)
