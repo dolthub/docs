@@ -8,7 +8,7 @@ title: Dolt SQL Functions
   * [active\_branch()](#active_branch)
   * [dolt\_merge\_base()](#dolt_merge_base)
   * [hashof()](#hashof)
-  # [dolt\_version()](#dolt_version)
+  * [dolt\_version()](#dolt_version)
 
 * [Table Functions](#table-functions)
   * [dolt_diff()](#dolt_diff)
