@@ -74,8 +74,8 @@
   * [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
   * [Notebooks](reference/sql/supported-clients/notebooks.md)
 * [Benchmarks and Metrics](reference/sql/benchmarks/README.md)
-  * [Correctness](reference/sql/correctness.md)
-  * [Latency](reference/sql/latency.md)
+  * [Correctness](reference/sql/benchmarks/correctness.md)
+  * [Latency](reference/sql/benchmarks/latency.md)
 
 ## CLI Reference
 * [CLI Command Reference](reference/cli.md)
