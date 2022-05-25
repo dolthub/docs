@@ -19,7 +19,7 @@ title: Dolt SQL Procedures
 
 # Dolt SQL Procedures
 
-Dolt provides SQL stored procedures to allow access to `dolt` CLI 
+Dolt provides native stored procedures to allow access to `dolt` CLI
 commands from within a SQL session. Each procedure is named after the
 `dolt` command line command it matches, and takes arguments in an
 identical form.
@@ -45,7 +45,6 @@ working HEAD for that database session. The right way to think of this
 is that the command line environment is effectively a session, one
 that happens to be shared with whomever runs CLI commands from that
 directory.
-
 
 ## `DOLT_ADD()`
 
