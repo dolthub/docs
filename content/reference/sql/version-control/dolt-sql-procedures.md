@@ -109,10 +109,18 @@ CALL dolt_backup('sync', 'my-backup')
 
 Create a new branch from the current HEAD, or create or replace a branch from an existing branch.  
 
-Note: The `DOLT_BRANCH()` stored procedure has a subset of functionality from the [`dolt branch` command line interface](../../cli.md#dolt-branch):
-* To list branches, use the [`DOLT_BRANCHES` system table](dolt-system-tables#dolt_branches), not the `DOLT_BRANCH()` stored procedure.
-* Renaming and deleting branches is not currently supported from the `DOLT_BRANCH()` stored procedure. Use these `dolt branch` command line interface instead.
-* To look up the current branch, use the [`@@<dbname>_head_ref` system variable](dolt-sysvars#dbname_head_ref) as shown in the examples section below. 
+Note: The `DOLT_BRANCH()` stored procedure has a subset of
+functionality from the [`dolt branch` command line
+interface](../../cli.md#dolt-branch):
+* To list branches, use the [`DOLT_BRANCHES` system
+  table](dolt-system-tables.md#dolt_branches), not the `DOLT_BRANCH()`
+  stored procedure.
+* Renaming and deleting branches is not currently supported from the
+  `DOLT_BRANCH()` stored procedure. Use these `dolt branch` command
+  line interface instead.
+* To look up the current branch, use the [`@@<dbname>_head_ref` system
+  variable](dolt-sysvars.md#dbname_head_ref) as shown in the examples
+  section below.
 
 ```sql
 -- Create a new branch from the current HEAD
