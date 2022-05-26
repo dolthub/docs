@@ -146,7 +146,7 @@ SELECT * FROM DOLT_BRANCHES;
 +--------+----------------------------------+
     
 -- Create a new branch for development work from the tip of head and switch to it
-CALL DOLT_BRANCH('myNewFeature')
+CALL DOLT_BRANCH('myNewFeature');
 CALL DOLT_CHECKOUT('myNewFeature');
 
 -- View your current branch 
