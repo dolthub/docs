@@ -7,6 +7,7 @@ title: Dolt SQL Procedures
 * [Dolt SQL Procedures](#dolt-sql-procedures)
   * [dolt\_add()](#dolt_add)
   * [dolt\_backup()](#dolt_backup)
+  * [dolt\_branch()](#dolt_branch)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_clean()](#dolt_clean)
   * [dolt\_commit()](#dolt_commit)
@@ -102,6 +103,63 @@ USE mydb;
 
 -- Upload the current database contents to the named backup
 CALL dolt_backup('sync', 'my-backup')
+```
+
+## `DOLT_BRANCH()`
+
+Create a new branch from the current HEAD, or create or replace a branch from an existing branch.  
+
+Note: The `DOLT_BRANCH()` stored procedure has a subset of functionality from the [`dolt branch` command line interface](../cli#dolt-branch):
+* To list branches, use the [`DOLT_BRANCHES` system table](dolt-system-tables#dolt_branches), not the `DOLT_BRANCH()` stored procedure.
+* Renaming and deleting branches is not currently supported from the `DOLT_BRANCH()` stored procedure. Use these `dolt branch` command line interface instead.
+* To look up the current branch, use the [`@@<dbname>_head_ref` system variable](dolt-sysvars#dbname_head_ref) as shown in the examples section below. 
+
+```sql
+-- Create a new branch from the current HEAD
+CALL DOLT_BRANCH('myNewBranch');
+
+-- Create a new branch by copying an existing branch
+-- Will fail if feature1 branch already exists
+CALL DOLT_BRANCH('-c', 'main', 'feature1');
+
+-- Create or replace a branch by copying an existing branch
+-- '-f' forces the copy, even if feature1 branch already exists 
+CALL DOLT_BRANCH('-c', '-f', 'main', 'feature1');
+```
+
+### Options
+
+`-c`, `--copy`: Create a copy of a branch. Must be followed by the name of the source branch to copy and the name of the new branch to create. Without the `--force` option, the copy will fail if the new branch already exists.  
+
+`-f`, `--force`: When used with the `--copy` option, allows for recreating a branch from another branch, even if the branch already exists.
+
+### Examples
+
+```sql
+-- List the available branches
+SELECT * FROM DOLT_BRANCHES;
++--------+----------------------------------+
+| name   | hash                             |
++--------+----------------------------------+
+| backup | nsqtc86d54kafkuf0a24s4hqircvg68g |
+| main   | dvtsgnlg7n9squriob3nq6kve6gnhkf2 |
++--------+----------------------------------+
+    
+-- Create a new branch for development work from the tip of head and switch to it
+CALL DOLT_BRANCH('myNewFeature');
+CALL DOLT_CHECKOUT('myNewFeature');
+
+-- View your current branch 
+-- Note: the 'db1` prefix is specific to the name of your database
+select @@db1_head_ref;
++-------------------------+
+| @@SESSION.db1_head_ref  |
++-------------------------+
+| refs/heads/myNewFeature |
++-------------------------+
+    
+-- Create a new branch from an existing branch 
+CALL DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
 ```
 
 ## `DOLT_CHECKOUT()`
