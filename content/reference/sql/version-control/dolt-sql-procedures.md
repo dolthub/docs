@@ -6,6 +6,7 @@ title: Dolt SQL Procedures
 
 * [Dolt SQL Procedures](#dolt-sql-procedures)
   * [dolt\_add()](#dolt_add)
+  * [dolt\_backup()](#dolt_backup)
   * [dolt\_branch()](#dolt_branch)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_clean()](#dolt_clean)
@@ -19,7 +20,7 @@ title: Dolt SQL Procedures
 
 # Dolt SQL Procedures
 
-Dolt provides SQL stored procedures to allow access to `dolt` CLI 
+Dolt provides native stored procedures to allow access to `dolt` CLI
 commands from within a SQL session. Each procedure is named after the
 `dolt` command line command it matches, and takes arguments in an
 identical form.
@@ -45,7 +46,6 @@ working HEAD for that database session. The right way to think of this
 is that the command line environment is effectively a session, one
 that happens to be shared with whomever runs CLI commands from that
 directory.
-
 
 ## `DOLT_ADD()`
 
@@ -84,6 +84,25 @@ CALL DOLT_ADD('-a');
 
 -- Commit the changes.
 CALL DOLT_COMMIT('-m', 'committing all changes');
+```
+
+## `DOLT_BACKUP()`
+
+Sync with a configured backup. Other backup commands not supported
+via SQL yet.
+
+```sql
+CALL DOLT_BACKUP('sync', 'name');
+```
+
+### Example
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Upload the current database contents to the named backup
+CALL dolt_backup('sync', 'my-backup')
 ```
 
 ## `DOLT_BRANCH()`
