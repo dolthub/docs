@@ -107,12 +107,13 @@ CALL dolt_backup('sync', 'my-backup')
 
 ## `DOLT_BRANCH()`
 
-Create a new branch from the current HEAD, or create or replace a branch from an existing branch.  
+Create, delete, and rename branches.  
 
-Note: The `DOLT_BRANCH()` stored procedure has a subset of functionality from the [`dolt branch` command line interface](../cli#dolt-branch):
-* To list branches, use the [`DOLT_BRANCHES` system table](dolt-system-tables#dolt_branches), not the `DOLT_BRANCH()` stored procedure.
-* Renaming and deleting branches is not currently supported from the `DOLT_BRANCH()` stored procedure. Use these `dolt branch` command line interface instead.
-* To look up the current branch, use the [`@@<dbname>_head_ref` system variable](dolt-sysvars#dbname_head_ref) as shown in the examples section below. 
+To list branches, use the [`DOLT_BRANCHES` system table](dolt-system-tables.md#dolt_branches), instead of the `DOLT_BRANCH()` stored procedure.
+
+To look up the current branch, use the [`@@<dbname>_head_ref` system variable](dolt-sysvars.md#dbname_head_ref), or the `active_branch()` SQL function, as shown in the examples section below.
+
+WARNING: In a multi-session server environment, Dolt will prevent you from deleting or renaming a branch in use in another session. You can force renaming or deletion by passing the `--force` option, but be aware that active clients on other sessions will no longer be able to execute statements after their active branch is removed and will need to end their session and reconnect. 
 
 ```sql
 -- Create a new branch from the current HEAD
@@ -125,13 +126,25 @@ CALL DOLT_BRANCH('-c', 'main', 'feature1');
 -- Create or replace a branch by copying an existing branch
 -- '-f' forces the copy, even if feature1 branch already exists 
 CALL DOLT_BRANCH('-c', '-f', 'main', 'feature1');
+
+-- Delete a branch
+CALL DOLT_BRANCH('-d', 'branchToDelete');
+
+-- Rename a branch
+CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 ```
 
 ### Options
 
 `-c`, `--copy`: Create a copy of a branch. Must be followed by the name of the source branch to copy and the name of the new branch to create. Without the `--force` option, the copy will fail if the new branch already exists.  
 
-`-f`, `--force`: When used with the `--copy` option, allows for recreating a branch from another branch, even if the branch already exists.
+`-m`, `--move`: Move/rename a branch. Must be followed by the current name of an existing branch and a new name for that branch. Without the `--force` option, renaming a branch in use on another server session will fail. Be aware that forcibly renaming or deleting a branch in use in another session will require that session to disconnect and reconnect before it can execute statements again.   
+
+`-d`, `--delete`: Delete a branch. Must be followed by the name of an existing branch to delete. Without the `--force` option, deleting a branch in use on another server session will fail. Be aware that forcibly renaming or deleting a branch in use in another session will require that session to disconnect and reconnect before it can execute statements again.
+
+`-f`, `--force`: When used with the `--copy` option, allows for recreating a branch from another branch, even if the branch already exists. When used with the `--move` or `--delete` options, force will allow you to rename or delete branches in use in other active server sessions, but be aware that this will require those other sessions to disconnect and reconnect before they can execute statements again.
+
+`-D`: Shortcut for `--delete --force`.
 
 ### Examples
 
@@ -150,16 +163,21 @@ CALL DOLT_BRANCH('myNewFeature');
 CALL DOLT_CHECKOUT('myNewFeature');
 
 -- View your current branch 
--- Note: the 'db1` prefix is specific to the name of your database
-select @@db1_head_ref;
-+-------------------------+
-| @@SESSION.db1_head_ref  |
-+-------------------------+
-| refs/heads/myNewFeature |
-+-------------------------+
+select active_branch();
++----------------+
+| active_branch  |
++----------------+
+| myNewFeature   |
++----------------+
     
 -- Create a new branch from an existing branch 
 CALL DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
+    
+-- Rename a branch
+CALL DOLT_BRANCH('-m', 'bugfix-3482', 'critical-bugfix-3482');
+
+-- Delete a branch
+CALL DOLT_BRANCH('-d', 'old-unused-branch');
 ```
 
 ## `DOLT_CHECKOUT()`
