@@ -11,7 +11,7 @@ dest_file=""
 
 os_type="darwin"
 
-sql_reference_dir="content/reference/sql"
+sql_reference_dir="content/reference/sql/benchmarks"
 
 new_table="updated.md"
 
