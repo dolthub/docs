@@ -8,9 +8,15 @@ title: Conflicts
 
 A conflict is a signal to a user that a [merge](./merge.md) has produced a database that requires further action. The merge algorithm could not infer the state of the database based on the merge rules after the merge. Further input is required to tell Dolt what the resulting merged database should contain.
 
-In Dolt, conflicts can occur on schema and data. On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. For schema, conflict detection is more complicated.
+In Dolt, conflicts can occur on schema and data. 
 
-The following rules are used to detect conflicts in schema:
+### Data
+
+On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. 
+
+### Schema
+
+For schema, conflict detection is more complicated. The following rules are used to detect conflicts in schema:
 
 1. If two branches add the same table, no conflict.
 1. If two branches add a similarly named table that has different schema, conflict.
