@@ -606,9 +606,8 @@ The `DOLT_DIFF` system table has the following columns
 
 ### Query Details
 
-Working set changes are **not** included in the `dolt_diff` system table results – only committed data 
-changes are listed in `dolt_diff`. If a commit did not make any changes to tables _(e.g. an empty commit)_, 
-it is not included in the `dolt_diff` results.
+`dolt_diff` displays the changes from the current branch HEAD, including any working set changes. If a commit did not 
+make any changes to tables _(e.g. an empty commit)_, it is not included in the `dolt_diff` results.
 
 ### Example Query
 
