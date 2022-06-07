@@ -191,6 +191,13 @@ When switching to a different branch, your session state must be
 clean. `COMMIT` or `ROLLBACK` any changes before switching to a
 different branch.
 
+Note, unlike the Git command-line, if you have a modified working set, 
+those changes remain on the branch you modified after a DOLT_CHECKOUT(). 
+The working set does not transfer to the new checked out branch. We 
+modified this behavior because Dolt assumes multiple users of a branch
+in SQL context. Having one user change the state of other users 
+working set was deemed undesirable behavior.
+
 ```sql
 CALL DOLT_CHECKOUT('-b', 'my-new-branch');
 CALL DOLT_CHECKOUT('my-existing-branch');
