@@ -582,11 +582,7 @@ LIMIT 5;
 
 ## `dolt_diff`
 
-The `dolt_diff` system table shows which tables in the current database were changed in each commit reachable from the active branch's HEAD.  
-When multiple tables are changed in a single commit, there is one row in the `dolt_diff` system table 
-for each table, all with the same commit hash. Any staged or unstaged changes in the working set are included with the 
-value `WORKING` for their `commit_hash`. After identifying the tables that changed in a commit, the
-`dolt_diff_$TABLENAME` system tables can be used to determine the data that changed in each table. 
+The `dolt_diff` system table shows which tables in the current database were changed in each commit reachable from the active branch's HEAD. When multiple tables are changed in a single commit, there is one row in the `dolt_diff` system table for each table, all with the same commit hash. Any staged or unstaged changes in the working set are included with the value `WORKING` for their `commit_hash`. After identifying the tables that changed in a commit, the `dolt_diff_$TABLENAME` system tables can be used to determine the data that changed in each table. 
 
 ### Schema
 
