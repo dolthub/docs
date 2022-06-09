@@ -29,30 +29,30 @@ possible in a fixed 2 minute time window. The `Dolt` and `MySQL`
 columns show the median latency in milliseconds (ms) of each query 
 during that 2 minute time window.
 
-The Dolt version is `0.40.6`.
+The Dolt version is `0.40.7`.
 <!-- START_LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL | Dolt  | Multiple |
 |-------------------------|-------|-------|----------|
-| covering\_index\_scan   |   1.7 |  7.43 |      4.4 |
-| groupby\_scan           | 11.87 | 32.53 |      2.7 |
-| index\_scan             | 36.24 | 84.47 |      2.3 |
+| covering\_index\_scan   |  1.76 |  7.56 |      4.3 |
+| groupby\_scan           | 12.08 | 33.12 |      2.7 |
+| index\_scan             | 36.24 |  86.0 |      2.4 |
 | oltp\_point\_select     |  0.15 |  0.86 |      5.7 |
-| oltp\_read\_only        |  2.97 | 12.08 |      4.1 |
-| select\_random\_points  |  0.29 |   1.7 |      5.9 |
+| oltp\_read\_only        |  2.91 |  12.3 |      4.2 |
+| select\_random\_points  |  0.28 |  1.73 |      6.2 |
 | select\_random\_ranges  |  0.34 |  1.82 |      5.4 |
-| table\_scan             | 36.24 | 81.48 |      2.2 |
-| reads\_mean\_multiplier |       |       |      4.1 |
+| table\_scan             | 36.24 | 82.96 |      2.3 |
+| reads\_mean\_multiplier |       |       |      4.2 |
 
 |       Write Tests        | MySQL | Dolt  | Multiple |
 |--------------------------|-------|-------|----------|
 | bulk\_insert             | 0.001 | 0.001 |      1.0 |
 | oltp\_delete             |  0.15 |  1.32 |      8.8 |
-| oltp\_insert             |  2.43 |  8.13 |      3.3 |
-| oltp\_read\_write        |  6.43 | 39.65 |      6.2 |
-| oltp\_update\_index      |  2.43 |  9.56 |      3.9 |
-| oltp\_update\_non\_index |  2.43 |  6.67 |      2.7 |
-| oltp\_write\_only        |  3.68 | 27.17 |      7.4 |
-| writes\_mean\_multiplier |       |       |      4.8 |
+| oltp\_insert             |  2.61 |  8.28 |      3.2 |
+| oltp\_read\_write        |  6.55 | 39.65 |      6.1 |
+| oltp\_update\_index      |  2.57 |  9.73 |      3.8 |
+| oltp\_update\_non\_index |  2.61 |  6.79 |      2.6 |
+| oltp\_write\_only        |  3.55 | 27.17 |      7.7 |
+| writes\_mean\_multiplier |       |       |      4.7 |
 
 | Overall Mean Multiple | 4.4 |
 |-----------------------|-----|
