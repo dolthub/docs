@@ -177,10 +177,10 @@ Now, I'm going to populate the database with a few employees here at DoltHub. Th
 ```
 mysql> insert into employees values
     (0, 'Sehn', 'Tim'),
-        (1, 'Hendriks', 'Brian'),
-	    (2, 'Son','Aaron'),
-	        (3, 'Fitzgerald', 'Brian');
-		Query OK, 4 rows affected (0.01 sec)
+    (1, 'Hendriks', 'Brian'),
+    (2, 'Son','Aaron'),
+    (3, 'Fitzgerald', 'Brian');
+Query OK, 4 rows affected (0.01 sec)
 
 mysql> select * from employees where first_name='Brian';
 +------+------------+------------+
@@ -193,42 +193,42 @@ mysql> select * from employees where first_name='Brian';
 
 mysql> mysql> insert into teams values
     (0, 'Engineering'),
-        (1, 'Sales');
-	Query OK, 2 rows affected (0.00 sec)
+    (1, 'Sales');
+Query OK, 2 rows affected (0.00 sec)
 
 mysql> insert into employees_teams values
     (0,0),
-        (1,0),
-	    (2,0),
-	        (0,1),
-		    (3,1);
-		    ERROR 1452 (HY000): cannot add or update a child row - Foreign key violation on fk: `rv9ek7ft`, table: `employees_teams`, referenced table: `teams`, key: `[2]`
-		    ```
+    (1,0),
+    (2,0),
+    (0,1),
+    (3,1);
+ERROR 1452 (HY000): cannot add or update a child row - Foreign key violation on fk: `rv9ek7ft`, table: `employees_teams`, referenced table: `teams`, key: `[2]`
+```
 
 Oops, I violated a constraint. It looks like I created the table with teams before employees. You should always specify your columns when you insert, not rely on natural ordering. Serves me right! Dolt comes with the full power of a modern SQL relational database to ensure data integrity.
 
 ```
 mysql> insert into employees_teams(employee_id, team_id) values
     (0,0),
-        (1,0),
-	    (2,0),
-	        (0,1),
-		    (3,1);
-		    Query OK, 5 rows affected (0.01 sec)
+    (1,0),
+    (2,0),
+    (0,1),
+    (3,1);
+Query OK, 5 rows affected (0.01 sec)
 
 mysql> select first_name, last_name, team_name from employees
     join employees_teams on (employees.id=employees_teams.employee_id)
-        join teams on (teams.id=employees_teams.team_id)
-	    where team_name='Engineering';
-	    +------------+-----------+-------------+
-	    | first_name | last_name | team_name   |
-	    +------------+-----------+-------------+
-	    | Tim        | Sehn      | Engineering |
-	    | Brian      | Hendriks  | Engineering |
-	    | Aaron      | Son       | Engineering |
-	    +------------+-----------+-------------+
-	    3 rows in set (0.00 sec)
-	    ```
+    join teams on (teams.id=employees_teams.team_id)\
+    where team_name='Engineering';
++------------+-----------+-------------+
+| first_name | last_name | team_name   |
++------------+-----------+-------------+
+| Tim        | Sehn      | Engineering |
+| Brian      | Hendriks  | Engineering |
+| Aaron      | Son       | Engineering |
++------------+-----------+-------------+
+3 rows in set (0.00 sec)
+```
 
 Looks like everything is inserted and correct. I was able to list the members of the engineering team using that three table `JOIN`. Dolt supports up to twelve table `JOIN`s. Again, Dolt is a modern SQL relational database paired with Git-style version control.
 
@@ -549,15 +549,15 @@ Data changes successful as well. As you can see, I am now "Timothy" instead of "
 ```
 mysql> select first_name, last_name, team_name from employees
     join employees_teams on (employees.id=employees_teams.employee_id)
-        join teams on (teams.id=employees_teams.team_id)
-	    where team_name='Sales';
-	    +------------+------------+-----------+
-	    | first_name | last_name  | team_name |
-	    +------------+------------+-----------+
-	    | Brian      | Fitzgerald | Sales     |
-	    +------------+------------+-----------+
-	    1 row in set (0.01 sec)
-	    ```
+    join teams on (teams.id=employees_teams.team_id)
+    where team_name='Sales';
++------------+------------+-----------+
+| first_name | last_name  | team_name |
++------------+------------+-----------+
+| Brian      | Fitzgerald | Sales     |
++------------+------------+-----------+
+1 row in set (0.01 sec)
+```
 
 I'm also gone from the Sales Team. Engineering is life.
 
@@ -612,16 +612,16 @@ mysql> select * from dolt_history_employees where id=0 order by commit_date;
 ```
 mysql> select to_commit,from_first_name,to_first_name from dolt_diff_employees
     where (from_id=0 or to_id=0) and (from_first_name <> to_first_name or from_first_name is NULL)
-        order by to_commit_date;
-	+----------------------------------+-----------------+---------------+
-	| to_commit                        | from_first_name | to_first_name |
-	+----------------------------------+-----------------+---------------+
-	| 13qfqa5rojq18j84d1n2htjkm6fletg4 | NULL            | Tim           |
-	| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim             | Timothy       |
-	| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim             | Timothy       |
-	+----------------------------------+-----------------+---------------+
-	3 rows in set (0.01 sec)
-	```
+    order by to_commit_date;
++----------------------------------+-----------------+---------------+
+| to_commit                        | from_first_name | to_first_name |
++----------------------------------+-----------------+---------------+
+| 13qfqa5rojq18j84d1n2htjkm6fletg4 | NULL            | Tim           |
+| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim             | Timothy       |
+| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim             | Timothy       |
++----------------------------------+-----------------+---------------+
+3 rows in set (0.01 sec)
+```
 
 Dolt provides powerful data audit capabilities down to individual cells. When, how, and why has each cell in your database changed over time?
 
