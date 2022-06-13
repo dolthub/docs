@@ -23,7 +23,7 @@ This function returns whether the merge was a fast-forward or not and whether or
 
 Note, if you are running `DOLT_MERGE()` with `AUTOCOMMIT` on (the default of most clients), the merge will fail in the presence of conflicts. You must merge and clear conflicts in the same SQL transaction with default Dolt settings. To do this, you must disable `AUTOCOMMIT` and call `COMMIT` manually to complete a transaction. [Later in this document](./merges.md#committing_with_merge_conflicts) we will tell you how to change this setting for advanced use cases.
 
-If your merge is not a fast-forward you are required to create a Dolt commit to persist the merge. For example by running, `call dolt_commit('Merged feature-branch')`.
+If your merge is not a fast-forward you are required to create a Dolt commit to persist the merge. For example, you can run `call dolt_commit('Merged feature-branch')`.
 
 # Conflicts
 
