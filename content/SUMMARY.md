@@ -55,7 +55,7 @@
   * [Access Management](reference/sql/server/access-management.md)
   * [Backups](reference/sql/server/backups.md)
   * [Replication](reference/sql/server/replication.md)
-  * [Debugging](reference/sql/server/debugging.md)
+  * [Troubleshooting](reference/sql/server/troubleshooting.md)
 * [Version Control Features](reference/sql/version-control/README.md)
   * [Using Branches](reference/sql/version-control/branches.md)
   * [Querying History](reference/sql/version-control/querying-history.md)

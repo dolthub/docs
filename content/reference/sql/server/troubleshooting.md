@@ -1,8 +1,8 @@
 ---
-title: Debugging
+title: Troubleshooting
 ---
 
-# Debugging
+# Troubleshooting
 
 Debugging a running Dolt server can be challenging. This document covers the debugging basics and how to diagnose what is happening from common symptoms.
 
@@ -20,11 +20,15 @@ Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources th
 
 ## Set your log level to TRACE
 
-To see queries being run against the server, query results, and query latency set your Dolt log level to `trace`. This can be done by starting the server like so `dolt sql-server --loglevel=trace` or by setting `log_level: trace` in your `config.yaml`.
+To see queries being run against the server, query results, and query latency set your Dolt log level to `DEBUG`. This can be done by starting the server like so `dolt sql-server --loglevel=DEBUG` or by setting `log_level: DEBUG` in your `config.yaml`.
 
 ## EXPLAIN for complex queries
 
 Dolt supports the SQL `EXPLAIN` operation in order for you to see the plan for complex queries. Rearranging your query to perform fewer `JOIN`s or make better use of indexes can help speed up complex queries.
+
+# Submitting Issues
+
+If you run into any issues requiring engineering attention, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues) to the Dolt project. Please be as detailed as possible in your report. Note the schema of the database and query or queries that can be used to trigger the issue.  If possible, push the database to [DoltHub](https://www.dolthub.com) so we can use a clone to reproduce the issue.
 
 # Problems
 
@@ -34,7 +38,9 @@ Dolt operational issues usually manifest as slow SQL queries. In rare occasions,
 
 Dolt creates disk garbage on write. This can sometimes become a substantial portion of the disk Dolt is consuming. Dolt ships with a garbage collection function. Running the garbage collection function can free disk.
 
-To run garbage collection, you should first stop your running server. It is not a safe operation to run concurrently with server write operations. Once stopped, navigate to the Dolt directory where your database is stored and run `dolt gc`. Once the operation is complete, restart your server using `dolt sql-server`. 
+To run garbage collection, you should first stop your running server. It is not a safe operation to run concurrently with server write operations. Once stopped, navigate to the Dolt directory where your database is stored and run `dolt gc`. Once the operation is complete, restart your server using `dolt sql-server`.
+
+Online garbage collection is on the roadmap and we will be implementing it in the back half of 2022.
 
 ## Server Consuming Memory
 
