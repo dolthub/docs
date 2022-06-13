@@ -12,7 +12,7 @@ Debugging a running Dolt server can be challenging. This document covers the deb
 
 Dolt is constantly evolving. We release a new Dolt approximately once a week. Connect to the SQL server and run `select dolt_version()`. Make sure the version matches the latest as seen on the [GitHub releases page](https://github.com/dolthub/dolt/releases). 
 
-To upgrade the server, download the latest Dolt binary for your platform, replace the current Dolt binary with the current one, and restart the Dolt server using `dolt sql-server`.
+To upgrade the server, download the latest Dolt binary for your platform and replace the Dolt binary on your `PATH` with the downloaded one. Running the install process on most platforms again will do this for you. Restart the Dolt server using `dolt sql-server` to have your running server start using the latest binary.
 
 ## Examine your CPU, Memory, and Disk usage
 
