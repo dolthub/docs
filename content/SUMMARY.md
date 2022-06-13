@@ -58,6 +58,7 @@
   * [Troubleshooting](reference/sql/server/troubleshooting.md)
 * [Version Control Features](reference/sql/version-control/README.md)
   * [Using Branches](reference/sql/version-control/branches.md)
+  * [Merges](reference/sql/version-control/merges.md)
   * [Querying History](reference/sql/version-control/querying-history.md)
   * [Procedures](reference/sql/version-control/dolt-sql-procedures.md)
   * [Functions](reference/sql/version-control/dolt-sql-functions.md)
