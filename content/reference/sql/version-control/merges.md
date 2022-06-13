@@ -30,8 +30,23 @@ If your merge is not a fast-forward you are required to create a Dolt commit to 
 Merging branches can create
 [conflicts](../../concepts/dolt/conflicts.md), which you must resolve
 before you can commit your transaction. If a merge creates conflicts,
-the `DOLT_MERGE()` function will return a non-zero result. You can
-find which tables are in conflict by querying the `dolt_conflicts`
+the `DOLT_MERGE()` function will return a non-zero result in the conflicts column.
+
+Merges can generate conflicts on schema or data. 
+
+## Schema
+
+Merges with schema conflicts cannot be resolved using SQL. The merge will fail. For instance a merge that adds the same column name with two different types will fail.
+
+```sql
+call dolt_merge('schema-change');
+Error 1105: schema conflicts for table test:
+	two columns with the name 'c2'
+```
+
+## Data
+
+Merges with data conflicts can be resolved using SQL. Conflicts must be resolved in the same SQL transaction by default. You can find which tables are in conflict by querying the `dolt_conflicts`
 system table:
 
 ```sql
