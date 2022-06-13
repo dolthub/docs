@@ -16,15 +16,15 @@ To upgrade the server, download the latest Dolt binary for your platform, replac
 
 ## Examine your CPU, Memory, and Disk usage
 
-Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources than the hos has available can lead to degraded performance. Use your systems built in resource monitoring systems to inspect Dolt's usage of these resources. You may need a larger host or additional [read replicas](./replication.md) to support your load.
+Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources than the host has available can lead to degraded performance. Use your system's built in resource monitoring systems to inspect Dolt's usage of these resources. You may need a larger host or additional [read replicas](./replication.md) to support your load.
 
 ## Set your log level to TRACE
 
-To see queries being run against the server, query results, and their latency set your Dolt log level to trace. This can be done by starting the server like so `dolt sql-server --loglevel=trace` or by setting `log_level: trace` in your `config.yaml`.
+To see queries being run against the server, query results, and query latency set your Dolt log level to `trace`. This can be done by starting the server like so `dolt sql-server --loglevel=trace` or by setting `log_level: trace` in your `config.yaml`.
 
 ## EXPLAIN for complex queries
 
-Dolt supports the SQL EXPLAIN operation in order for you to see the plan for complex queries. Rearranging your query to perform fewer JOINs or make better use of indexes can help speed up complex queries.
+Dolt supports the SQL `EXPLAIN` operation in order for you to see the plan for complex queries. Rearranging your query to perform fewer `JOIN`s or make better use of indexes can help speed up complex queries.
 
 # Problems
 
@@ -38,11 +38,11 @@ To run garbage collection, you should first stop your running server. It is not 
 
 ## Server Consuming Memory
 
-A Dolt server should require about 1% of the disk size of the database in memory at minimum. So, a 100GB database should have at least 1GB of RAM but preferably more. We recommend having about 10% of the disk size of the database as RAM.
+A Dolt server requires approximately 1% of the disk size of the database in memory at minimum. So, a 100GB database should have at least 1GB of RAM but preferably more. We recommend provisioning approximately 10% of the disk size of the database as memory.
 
-A query may cause Dolt to grow memory use unbounded and then eventually crash the server. If you discover one such queries, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). These should be rare but not impossible, especially with complex queries containing multiple JOINs.
+A query may cause Dolt to grow memory use unbounded and then eventually crash the server. If you discover one such queries, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). Such queries should be rare but not impossible, especially with complex queries containing multiple `JOIN`s.
 
-Dolt may not free memory efficiently. If your Dolt server grows memory use unbounded over time and then frees the memory upon restart, you have discoverd a memory leak. Again, please submit a [GitHub issue](https://github.com/dolthub/dolt/issues). Memory leaks should be rare and we treat memory leaks as high priority.
+Dolt may not free memory efficiently. If your Dolt server grows memory use unbounded over time and then frees the memory upon restart, you have discoverd a memory leak. Again, please submit a [GitHub issue](https://github.com/dolthub/dolt/issues). Memory leaks should be rare and we treat memory leak fixes as high priority.
 
 ## Server Consuming CPU
 
