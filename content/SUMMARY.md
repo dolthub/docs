@@ -9,6 +9,7 @@
     * [Build from Source](introduction/installation/source.md)
     * [Application Server](introduction/installation/application-server.md)
     * [Docker](introduction/installation/docker.md)
+    * [Upgrading](introduction/installation/upgrading.md)
 * [Getting Started](introduction/getting-started.md)
     * [Version Controlled Database](introduction/getting-started/database.md)
     * [Git For Data](introduction/getting-started/git-for-data.md)
