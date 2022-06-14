@@ -6,9 +6,11 @@ title: What is Dolt?
 
 ![](../.gitbook/assets/dolt-logo.png)
 
-Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. 
+Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. Dolt is a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Dolt is [Git for Data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/).
 
-Dolt implements the Git command line and associated operations on table rows instead of files. Data and schema are modified in the working set using SQL. When you want to permanently store a version of the working set, you make a commit. In SQL, dolt implements Git read operations (ie. diff, log) as system tables and write operations (ie. commit, merge) as stored procedures. Dolt produces cell-wise diffs and merges, making data debugging between versions tractable. Dolt is the only SQL database that has branches and merges. You can run Dolt offline, treating data and schema like source code. Or you can run Dolt online, like you would PostgreSQL or MySQL.
+Dolt implements the Git command line and associated operations on table rows instead of files. Data and schema are modified in the working set using SQL. When you want to permanently store a version of the working set, you make a commit. In SQL, dolt implements Git read operations (ie. diff, log) as system tables and write operations (ie. commit, merge) as stored procedures. Dolt produces cell-wise diffs and merges, making data debugging between versions tractable. Dolt is the only SQL database that has branches and merges. 
+
+You can run Dolt online, like you would PostgreSQL or MySQL. Or you can run Dolt offline, treating data and schema like source code. 
 
 ## Version Controlled Database
 
