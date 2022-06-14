@@ -39,7 +39,7 @@ If you want to get paid, you need to add some data, so let's turn to that!
 In order to make a pull request against the bounty database, you need to make some changes in your fork. There are a few ways to do this:
 
 - Use file upload or make changes using the SQL Console on DoltHub
-- Clone the database and use the command line, SQL, or [Doltpy](https://github.com/dolthub/doltpy) to make changes
+- Clone the database and use the command line or SQL to make changes
 
 It doesn't matter how you make changes, as long as they are correct.
 
