@@ -2,8 +2,6 @@
 title: Version Controlled Database
 ---
 
-# Version Controlled Database
-
 Dolt is a MySQL compatible database server. 
 
 # Navigate to the directory where you would like your data stored
