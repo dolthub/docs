@@ -97,24 +97,24 @@ mysql> use getting_started;
 Database changed
 mysql> create table employees (
     id int,
-        last_name varchar(255),
-	    first_name varchar(255),
-	        primary key(id));
-		Query OK, 0 rows affected (0.01 sec)
+    last_name varchar(255),
+    first_name varchar(255),
+    primary key(id));
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> create table teams (
     id int,
-        team_name varchar(255),
-	    primary key(id));
-	    Query OK, 0 rows affected (0.00 sec)
+    team_name varchar(255),
+    primary key(id));
+Query OK, 0 rows affected (0.00 sec)
 
 mysql> create table employees_teams(
     team_id int,
-        employee_id int,
-	    primary key(team_id, employee_id),
-	        foreign key (team_id) references teams(id),
-		    foreign key (employee_id) references employees(id));
-		    Query OK, 0 rows affected (0.01 sec)
+    employee_id int,
+    primary key(team_id, employee_id),
+    foreign key (team_id) references teams(id),
+    foreign key (employee_id) references employees(id));
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> show tables;
 +---------------------------+
