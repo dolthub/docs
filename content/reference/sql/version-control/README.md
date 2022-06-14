@@ -30,5 +30,5 @@ tables, system variables, functions, and stored procedures.
 * [System variables](./dolt-sysvars.md) documents all the
   Dolt-provided system variables that expose and control various
   aspects of Dolt's behavior.
-* [Saved Queries](./saved-queries) documents a Dolt feature to save
+* [Saved Queries](./saved-queries.md) documents a Dolt feature to save
   queries for later execution.
