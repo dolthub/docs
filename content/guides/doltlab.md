@@ -2,7 +2,7 @@
 title: "DoltLab"
 ---
 
-<h2 id="download-latest-doltlab"><u>Download the latest DoltLab <a href="https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip">here</a></u></h2>
+## Download the latest DoltLab [here](https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip)
 
 [DoltLab](https://www.doltlab.com) is the self-hosted version of DoltHub that allows you to deploy and manage your own DoltHub instance on-prem. We launched DoltLab in January of 2022 and are rapidly adding features to it that will make DoltLab simpler to manage and more user and administrator friendly.
 
