@@ -12,8 +12,9 @@ tables, system variables, functions, and stored procedures.
 # Version control overview
 
 * [Using Branches](./branches.md) explains how to work with different
-  branches in a running server, as well how to merge branches into one
-  another and resolve merge conflicts.
+  branches in a running server.
+* [Merges](./merges.md) explains how to merge branches into one
+  another and resolve merge conflicts using SQL.
 * [Querying History](./querying-history.md) describes how to query
   past revisions or different branches of a database.
 * [Stored procedures](./dolt-sql-procedures.md) documents all the
@@ -29,3 +30,5 @@ tables, system variables, functions, and stored procedures.
 * [System variables](./dolt-sysvars.md) documents all the
   Dolt-provided system variables that expose and control various
   aspects of Dolt's behavior.
+* [Saved Queries](./saved-queries) documents a Dolt feature to save
+  queries for later execution.
