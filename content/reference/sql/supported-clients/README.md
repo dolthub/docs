@@ -12,5 +12,4 @@ We have actively tested the following clients, separated by type.
 * [Programmatic Clients](clients.md)
 * [SQL Editors](sql-editors.md)
 * [Spreadsheets](spreadsheets.md)
-* [Notebooks](notebooks.md)
 
