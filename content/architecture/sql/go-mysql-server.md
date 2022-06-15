@@ -20,7 +20,7 @@ are only two notable backend implementations so far:
 - Dolt. In addition to the novel git-like storage engine, Dolt also
   adds a number of [system
   tables](../../reference/sql/dolt-system-tables.md), [custom
-  functions](../../reference/sql/dolt-sql-functions),
+  functions](../../reference/sql/dolt-sql-functions.md),
   and new connection semantics.
 
 # Project architecture
