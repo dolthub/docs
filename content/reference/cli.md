@@ -222,14 +222,13 @@ dolt commit [options]
 **Description**
 
 
-	Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
-	
-	The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified files must be \"added\").
-	
-	The log message can be added with the parameter `-m <msg>`.  If the `<-m>` parameter is not provided an editor will be opened where you can review the commit and provide a log message.
-	
-	The commit timestamp can be modified using the --date parameter.  Dates can be specified in the formats `<YYYY-MM-DD>`, `<YYYY-MM-DDTHH:MM:SS>`, or `<YYYY-MM-DDTHH:MM:SSZ07:00>` (where `<07:00>` is the time zone offset)."
-	
+Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
+
+The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified files must be \"added\").
+
+The log message can be added with the parameter `-m <msg>`.  If the `<-m>` parameter is not provided an editor will be opened where you can review the commit and provide a log message.
+
+The commit timestamp can be modified using the --date parameter.  Dates can be specified in the formats `<YYYY-MM-DD>`, `<YYYY-MM-DDTHH:MM:SS>`, or `<YYYY-MM-DDTHH:MM:SSZ07:00>` (where `<07:00>` is the time zone offset)."
 
 **Arguments and options**
 
@@ -246,7 +245,7 @@ Specify the date used in the commit. If not specified the current system time is
 Ignores any foreign key warnings and proceeds with the commit.
 
 `--author`:
-Specify an explicit author using the standard A U Thor <author@example.com> format.
+Specify an explicit author using the standard A U Thor `<author@example.com>` format.
 
 `-a`, `--all`:
 Adds all edited files in working to staged.
@@ -373,33 +372,33 @@ This is an example yaml configuration file showing all supported items and their
 
 SUPPORTED CONFIG FILE FIELDS:
 
-		`vlog_level` - Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
+`vlog_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
-		`behavior.read_only` - If true database modification is disabled
+`behavior.read_only`: If true database modification is disabled
 
-		`behavior.autocommit` - If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
+`behavior.autocommit`: If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
 
-		`user.name` - The username that connections should use for authentication
+`user.name`: The username that connections should use for authentication
 
-		`user.password` - The password that connections should use for authentication.
+`user.password`: The password that connections should use for authentication.
 
-		`listener.host` - The host address that the server will run on.  This may be `localhost` or an IPv4 or IPv6 address
+`listener.host`: The host address that the server will run on.  This may be `localhost` or an IPv4 or IPv6 address
 
-		`listener.port` - The port that the server should listen on
+`listener.port`: The port that the server should listen on
 
-		`listener.max_connections` - The number of simultaneous connections that the server will accept
+`listener.max_connections`: The number of simultaneous connections that the server will accept
 
-		`listener.read_timeout_millis` - The number of milliseconds that the server will wait for a read operation
+`listener.read_timeout_millis`: The number of milliseconds that the server will wait for a read operation
 
-		`listener.write_timeout_millis` - The number of milliseconds that the server will wait for a write operation
+`listener.write_timeout_millis`: The number of milliseconds that the server will wait for a write operation
 
-		`performance.query_parallelism` - Amount of go routines spawned to process each query
+`performance.query_parallelism`: Amount of go routines spawned to process each query
 
-		`databases` - a list of dolt data repositories to make available as SQL databases. If databases is missing or empty then the working directory must be a valid dolt data repository which will be made available as a SQL database
-		
-		`databases[i].path` - A path to a dolt data repository
-		
-		`databases[i].name` - The name that the database corresponding to the given path should be referenced via SQL
+`databases`: a list of dolt data repositories to make available as SQL databases. If databases is missing or empty then the working directory must be a valid dolt data repository which will be made available as a SQL database
+
+`databases[i].path`: A path to a dolt data repository
+
+`databases[i].name`: The name that the database corresponding to the given path should be referenced via SQL
 
 If a config file is not provided many of these settings may be configured on the command line.
 
@@ -767,20 +766,16 @@ dolt revert <revision>...
 
 **Description**
 
-Removes the changes made in a commit (or series of commits) from the working set, and then automatically commits the
-result. This is done by way of a three-way merge. Given a specific commit (e.g. HEAD\~1), this is similar to applying the
-patch from HEAD\~1..HEAD\~2, giving us a patch of what to remove to effectively remove the influence of the specified
-commit. If multiple commits are specified, then this process is repeated for each commit in the order specified. This
-requires a clean working set.
+Removes the changes made in a commit (or series of commits) from the working set, and then automatically commits the result. This is done by way of a three-way merge. Given a specific commit (e.g. `HEAD\~1`), this is similar to applying the patch from `HEAD\~1..HEAD\~2`, giving us a patch of what to remove to effectively remove the influence of the specified commit. If multiple commits are specified, then this process is repeated for each commit in the order specified. This requires a clean working set.
 
-For now, any conflicts or constraint violations that are brought by the merge cause the command to fail.
+Any conflicts or constraint violations caused by the merge cause the command to fail.
 
 **Arguments and options**
 
 `<revision>`: The commit revisions. If multiple revisions are given, they're applied in the order given.
 
 `--author`:
-Specify an explicit author using the standard A U Thor <author@example.com> format.
+Specify an explicit author using the standard A U Thor `<author@example.com>` format.
 
 
 
@@ -1577,7 +1572,7 @@ Renames a table
 **Synopsis**
 
 ```bash
-dolt table mv [-f] <oldtable` <newtable`
+dolt table mv [-f] <oldtable> <newtable>
 ```
 
 **Description**
