@@ -26,6 +26,8 @@ Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-f
 
 We also built [DoltHub](https://www.dolthub.com), a place to share Dolt databases. We host public data for free! DoltHub adds a modern, secure, always on database management web GUI to the Dolt ecosystem. Edit your database on the web, have another person review it via a pull request, and have the production database pull it to deploy.
 
+##
+
 ![](../.gitbook/assets/doltlab-logo.png)
 
 Not ready to put your databases on the internet, no matter the permissions? We have a self-hosted version of DoltHub we call [DoltLab](https://www.doltlab.com). DoltLab gives you all the features of DoltHub, wherever you want them, in your own network or on your development machine.
