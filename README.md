@@ -30,11 +30,5 @@ To recap:
 The following diagram illustrates the workflow:
 ![GitHub/GitBook Workflow](gitbook_workflow.png)
 
-## Outstanding Items
-There are few things that need doing to sync our documentation with our release automation process:
-- fix some dead links from the migration
-- Dolt to generate CLI docs
-- Doltpy to generate API docs
-
 ## Check Dead Links
 This [tool](https://www.deadlinkchecker.com/) is free and works quite well if you just pass the dev URL, `https://dolt.gitbook.io/dolt-dev/`, into it.

@@ -2,8 +2,6 @@
 title: Troubleshooting
 ---
 
-# Troubleshooting
-
 Debugging a running Dolt server can be challenging. This document covers the debugging basics and how to diagnose what is happening from common symptoms.
 
 # Basics
@@ -41,6 +39,12 @@ Dolt creates disk garbage on write. This can sometimes become a substantial port
 To run garbage collection, you should first stop your running server. It is not a safe operation to run concurrently with server write operations. Once stopped, navigate to the Dolt directory where your database is stored and run `dolt gc`. Once the operation is complete, restart your server using `dolt sql-server`.
 
 Online garbage collection is on the roadmap and we will be implementing it in the back half of 2022.
+
+Another potential cause is a commit-heavy workflow that uses a database design that is antagonistic to Dolt's structural sharing. We've written thoroughly about this [here](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/), but some examples include
+
+* Using primary keys with random values. Inserts into indexes with random values guarantees that edits will occur all throughout the index instead of being clustered around the same key space. This results in a rewrite of the prolly tree thereby increasing storage disproportionately to the delta of
+the changes.
+* Adding a column to a table. A new column forks the storage of the table resulting in a loss of structural sharing. Dolt is row major and builds chunks for each primary key, row values pair. The row values encodes the schema length so every row now requires a new chunk.
 
 ## Server Consuming Memory
 

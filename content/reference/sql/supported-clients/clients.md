@@ -26,7 +26,7 @@ We currently support two native Python MySQL connectors, [mysql.connector](https
 
 ### SQLAlchemy
 
-We also support the [SQLAlchemy](https://www.sqlalchemy.org/) library, and build on top of it in [Doltpy](https://pypi.org/project/doltpy/), our Python library. SQLAlchemy requires a connector that is specified in the connection string. Choose one of the supported connectors listed above, and then pass that to the SQLAlchemy connection string, as in the snippet taken from the connector test below:
+We also support the [SQLAlchemy](https://www.sqlalchemy.org/) library. SQLAlchemy requires a connector that is specified in the connection string. Choose one of the supported connectors listed above, and then pass that to the SQLAlchemy connection string, as in the snippet taken from the connector test below:
 
 ```python
 conn_string_base = "mysql+mysqlconnector://"

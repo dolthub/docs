@@ -12,7 +12,7 @@ isolation semantics (REPEATABLE_READ). In effect, each branch
 functions as its own isolated database instance, with changes only
 visible to other clients connected to the same branch.
 
-![A Dolt database server with multiple heads](../../.gitbook/assets/dolt-server-branches.png)
+![A Dolt database server with multiple heads](../../../.gitbook/assets/dolt-server-branches.png)
 
 A database server has a default branch, which is the checked-out
 branch at the time the server was started. Each client can choose a

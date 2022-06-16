@@ -24,9 +24,11 @@ Logs are useful in audit. If you would like to ensure a particular value in the 
 
 Conceptually and practically log on the command line is very similar between Git and Dolt. A table is akin to a file in Git.
 
-Dolt has additional log functionality beyond Git. You can log a particular cell using a SQL query. In this way, log in Dolt incorporates some elements of Git blame.
+Dolt has additional log functionality beyond Git. You can produce a log any cell (ie. row, column pair) in the database using a SQL query against the `dolt_history_<tablename>` system table.
 
 ## Example
+
+### Commit Log
 
 ```bash
 % dolt log
@@ -50,4 +52,18 @@ docs $ dolt sql -q "select * from dolt_log"
 | bo318l76dq3bdvu1ie84d4nmv4hpi4km | Tim Sehn  | tim@dolthub.com | 2021-12-02 16:55:00.101 -0800 PST | This is a commit           |
 | jcj6q9c9nsveh72eadsms9i9k9ii1e55 | Tim Sehn  | tim@dolthub.com | 2021-12-02 16:54:35.87 -0800 PST  | Initialize data repository |
 +----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
+```
+
+### Cell History
+
+```
+$ dolt sql -q "select * from dolt_history_employees where id=0 order by commit_date";
++------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
+| id   | last_name | first_name | start_date | commit_hash                      | committer | commit_date             |
++------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
+|    0 | Sehn      | Tim        | NULL       | 13qfqa5rojq18j84d1n2htjkm6fletg4 | Tim Sehn  | 2022-06-07 16:39:32.066 |
+|    0 | Sehn      | Timothy    | NULL       | uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim Sehn  | 2022-06-07 16:41:49.847 |
+|    0 | Sehn      | Tim        | 2018-09-08 | pg3nfi0j1dpc5pf1rfgckpmlteaufdrt | Tim Sehn  | 2022-06-07 16:44:37.513 |
+|    0 | Sehn      | Timothy    | 2018-09-08 | vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim Sehn  | 2022-06-07 17:10:02.07  |
++------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
 ```

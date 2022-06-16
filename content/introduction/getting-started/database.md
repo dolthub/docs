@@ -2,9 +2,9 @@
 title: Version Controlled Database
 ---
 
-# Version Controlled Database
-
 Dolt is a MySQL compatible database server. 
+
+This document will walk you through step-by-step on how to get Dolt running as a MySQL compatible server on your host. You will set up a schema, insert data, and compose read queries using SQL. The document will also cover a number of unique Git-like Dolt features like commits, logs, as of queries, roollback, branches, and merges.
 
 # Navigate to the directory where you would like your data stored
 
@@ -97,24 +97,24 @@ mysql> use getting_started;
 Database changed
 mysql> create table employees (
     id int,
-        last_name varchar(255),
-	    first_name varchar(255),
-	        primary key(id));
-		Query OK, 0 rows affected (0.01 sec)
+    last_name varchar(255),
+    first_name varchar(255),
+    primary key(id));
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> create table teams (
     id int,
-        team_name varchar(255),
-	    primary key(id));
-	    Query OK, 0 rows affected (0.00 sec)
+    team_name varchar(255),
+    primary key(id));
+Query OK, 0 rows affected (0.00 sec)
 
 mysql> create table employees_teams(
     team_id int,
-        employee_id int,
-	    primary key(team_id, employee_id),
-	        foreign key (team_id) references teams(id),
-		    foreign key (employee_id) references employees(id));
-		    Query OK, 0 rows affected (0.01 sec)
+    employee_id int,
+    primary key(team_id, employee_id),
+    foreign key (team_id) references teams(id),
+    foreign key (employee_id) references employees(id));
+Query OK, 0 rows affected (0.01 sec)
 
 mysql> show tables;
 +---------------------------+
