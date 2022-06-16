@@ -29,7 +29,6 @@
         * [Commits](concepts/dolt/git/commits.md)
         * [Log](concepts/dolt/git/log.md)
         * [Diff](concepts/dolt/git/diff.md)
-        * [Reset](concepts/dolt/git/reset.md)
         * [Branch](concepts/dolt/git/branch.md)
         * [Merge](concepts/dolt/git/merge.md)
         * [Conflicts](concepts/dolt/git/conflicts.md)

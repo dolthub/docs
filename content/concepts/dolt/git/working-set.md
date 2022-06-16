@@ -12,11 +12,13 @@ If you start a Dolt SQL server and start making changes, you are making changes 
 
 ## How to use Working Sets
 
-Working sets are used to make changes to your database. Each branch gets it's own working set so you can make changes in isolation. If you don't like the changes made to a working set, you can `reset` or `checkout` to the previous commit.
+Working sets are used to isolate changes to your database from committed schema or data. Each branch gets it's own working set so you can make changes in isolation. If you don't like the changes made to a working set, you can `reset` or `checkout` to the previous commit.
 
 ## Difference between Git Working Sets and Dolt Working Sets
 
-Git working sets change files. Dolt working sets change tables. In SQL server mode, changes to the working set are not persisted when you do a `dolt checkout`. The working set changes stay on the branch they were originally made. On the command line, working set changes do follow to the newly checked out branch, just like Git.
+Git working sets change files. Dolt working sets change tables. 
+
+On the command line, working set changes do follow to the newly checked out branch, just like Git. However, in SQL server mode, working set changes are not transferred to the newly checked out branch when you do a `dolt checkout`. The working set changes stay on the branch they were originally made. This change was made to account for multiple users using the same branch in SQL server mode.
 
 ## Example
 
@@ -70,5 +72,78 @@ docs $ dolt sql -q "select * from docs"
 | 0  | 0  |
 | 1  | 1  |
 | 2  | 2  |
++----+----+
+```
+
+### Checkout on the Command Line
+```
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+docs $ dolt branch
+  feature-branch                                	
+* main                                          	
+docs $ dolt sql -q "insert into docs values (3,0)";
+Query OK, 1 row affected
+docs $ dolt checkout -b follow-me
+Switched to branch 'follow-me'
+docs $ dolt sql -q "select * from docs"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
+| 3  | 0  |
++----+----+
+docs $ dolt status
+On branch follow-me
+Changes not staged for commit:
+  (use "dolt add <table>" to update what will be committed)
+  (use "dolt checkout <table>" to discard changes in working directory)
+	modified:       docs
+docs $ dolt diff
+diff --dolt a/docs b/docs
+--- a/docs @ c341qjl0eholuiu1k4pvujre7mc75qtc
++++ b/docs @ f7isl5tqm92ovogh6v8seq26lsjmiknk
++-----+----+----+
+|     | pk | c1 |
++-----+----+----+
+|  +  | 3  | 0  |
++-----+----+----+
+```
+
+### Checkout in SQL server
+```
+mysql> insert into docs values (4,4);
+mysql> select * from docs ;
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
+| 3  | 0  |
+| 4  | 4  |
++----+----+
+mysql> call dolt_checkout('follow-me');
++--------+
+| status |
++--------+
+| 0      |
++--------+
+mysql> select * from docs ;
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
+| 3  | 0  |
 +----+----+
 ```

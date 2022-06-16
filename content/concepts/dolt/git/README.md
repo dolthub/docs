@@ -19,3 +19,4 @@ In this section we explore the following Git concepts and explain how they work 
 5. [Merge](concepts/dolt/git/merge.md)
 6. [Conflicts](concepts/dolt/git/conflicts.md)
 7. [Remotes](concepts/dolt/git/remotes.md)
+8. [Working Set](concepts/dolt/git/working-set.md)
