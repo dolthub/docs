@@ -36,4 +36,4 @@ Not ready to put your databases on the internet, no matter the permissions? We h
 
 ![](../.gitbook/assets/hosted-log.png)
 
-[Hosted Dolt](https://hosted.doltdb.com) is a cloud-deployed Dolt SQL server. Choose the type of server and disk you need and we'll provision the resources and run Dolt for you. Connect with any MySQL client. Hosted Dolt is perfect for teams who want to build a Dolt-powered application. 
+[Hosted Dolt](https://hosted.doltdb.com) is a cloud-deployed Dolt database. Choose the type of server and disk you need and we'll provision the resources and run Dolt for you. Connect with any MySQL client. Hosted Dolt is perfect for teams who want to build a Dolt-powered application. 
