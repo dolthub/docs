@@ -31,3 +31,9 @@ We also built [DoltHub](https://www.dolthub.com), a place to share Dolt database
 ![](../.gitbook/assets/doltlab-logo.png)
 
 Not ready to put your databases on the internet, no matter the permissions? We have a self-hosted version of DoltHub we call [DoltLab](https://www.doltlab.com). DoltLab gives you all the features of DoltHub, wherever you want them, in your own network or on your development machine.
+
+##
+
+![](../.gitbook/assets/hosted-log.png)
+
+[Hosted Dolt](https://hosted.doltdb.com) is a cloud-deployed Dolt SQL server. Choose the type of server and disk you need and we'll provision the resources and run Dolt for you. Connect with any MySQL client. Hosted Dolt is perfect for teams who want to build a Dolt-powered application. 
