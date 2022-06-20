@@ -122,10 +122,30 @@ Import completed successfully.
 +----+------------+-----------+---------+
 ```
 
+3. You can also use the MySQL `LOAD DATA` command to work with data that is compatiable with the [LOAD DATA api](https://dev.mysql.com/doc/refman/8.0/en/load-data.html). For example
+you can load the above `file.csv` as follows:
+
+
+```sql
+create table test(pk int, val int);
+LOAD DATA INFILE '/Users/vinairachakonda/misc/test/file.csv' INTO table test FIELDS TERMINATED BY ',' IGNORE 1 LINES;
+```
+
+Selecting from above you get 
+
+```
+test> select * from test;
++----+-----+
+| pk | val |
++----+-----+
+| 2  | 3   |
+| 1  | 2   |
++----+-----+
+```
+
 ## MySQL Databases
 
-Migrating your MySQL database to dolt is easy. We recommend the `mysqldump` program. Let's say you have MySQL server with the
-following configurations
+Migrating your MySQL database to Dolt is easy. We recommend the `mysqldump` program. Let's say you have MySQL server with the following configurations
 
 ```yaml
 user: root
@@ -242,7 +262,7 @@ table import`.
 
 ## Import Best Practices
 
-There are some best practices to keep in mind inorder to make importing external data into Dolt as fast as possible. These performances differences are especially relevant with large database (~50GB+).
+There are some best practices to keep in mind in order to make importing external data into Dolt as fast as possible. These performances differences are especially relevant with large database (~50GB+).
 
 * Avoid adding foreign keys or unique indexes until after the import is completed.
 * Minimize your use of blob types
