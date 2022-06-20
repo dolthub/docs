@@ -15,7 +15,6 @@
     * [Git For Data](introduction/getting-started/git-for-data.md)
     * [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
     * [Data Bounties](introduction/getting-started/data-bounties.md)
-    * [Importing Data](introduction/getting-started/import.md)
 * [Use Cases](introduction/use-cases.md)
     * [Data Sharing](introduction/use-cases/data-sharing.md)
     * [Data Ingestion](introduction/use-cases/data-ingestion.md)

@@ -122,7 +122,7 @@ Import completed successfully.
 +----+------------+-----------+---------+
 ```
 
-3. You can also use the MySQL `LOAD DATA` command to work with data that is compatiable with the [LOAD DATA api](https://dev.mysql.com/doc/refman/8.0/en/load-data.html). For example
+3. You can also use the MySQL `LOAD DATA` command to work with data that is compatible with the [LOAD DATA api](https://dev.mysql.com/doc/refman/8.0/en/load-data.html). For example
 you can load the above `file.csv` as follows:
 
 
