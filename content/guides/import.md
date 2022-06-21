@@ -198,7 +198,7 @@ There are multiple ways to get spreadsheet data into Dolt. The first is with `do
 Just like a csv file we run the command `dolt table import -c --pk=id employees employees.xlsx` to load the excel file 
 into our Dolt. Be sure to give the same name for the table as the spreadsheet's name.
 
-The other way to work with spreadsheet data is with Dolthub's ["edit like a spreadsheet"](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/) feature. You can create a SQL table from scratch with by just inserting values into a spreadsheet.
+The other way to work with spreadsheet data is with Dolthub's ["edit like a spreadsheet"](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/) feature. You can create a SQL table from scratch with just typing values into a spreadsheet.
 
 ![Spreadsheet](../.gitbook/assets/spreadsheet.png)
 
@@ -213,6 +213,7 @@ from sqlalchemy import create_engine
 import pymysql
 import pandas as pd
 
+# Define a data frame
 employees = {
     "id": [0, 1, 2],
     "FirstName": ["Tim","Aaron","Brian"],
@@ -223,6 +224,7 @@ employees = {
 tableName = "employees"
 dataFrame = pd.DataFrame(data=employees)
 
+# Create an engine that connect to our dolt sql-server.
 sqlEngine = create_engine("mysql+pymysql://root:@127.0.0.1/test", pool_recycle=3600)
 dbConnection = sqlEngine.connect()
 
