@@ -19,3 +19,7 @@ Concepts will be tackled in the following order:
 5. [Views](concepts/dolt/sql/views.md)
 6. [Constraints](concepts/dolt/sql/views.md)
 7. [Users/Grants](concepts/dolt/sql/users-grants.md)
+8. [Triggers](concepts/dolt/sql/triggers.md)
+9. [Procedures](concepts/dolt/sql/procedures.md)
+10. [Sessions](concepts/dolt/sql/session.md)
+11. [Transactions](concepts/dolt/sql/transaction.md)
