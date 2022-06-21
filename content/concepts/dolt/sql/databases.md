@@ -8,7 +8,7 @@ title: Databases
 
 A database is a container for a set of schema: [tables](./table.md), [views](./views.md), [triggers](./triggers.md), [procedures](./procedures.md), etc. In relational databases, queries within a database are optimized, while queries across multiple databases are not. 
 
-A relational database management system or [RDBMS](../rdbms/README.md) allows you to access multiple databases from a single running server. Confusingly, "database" is also shorthand for RDBMS. Phrases like "Connect to this database" or "We run our database on AWS" refer to RDBMS, not the SQL concept of a schema container. 
+A relational database management system or [RDBMS](../rdbms/README.md) allows you to access multiple databases from a single running [server](../rdbms/server.md). Confusingly, "database" is also shorthand for RDBMS. Phrases like "Connect to this database" or "We run our database on AWS" refer to RDBMS, not the SQL concept of a schema container. 
 
 ## How to use Databases
 
