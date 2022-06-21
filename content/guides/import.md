@@ -62,11 +62,11 @@ We can query the table and see the new schema and data:
 +----+-----+
 ```
 
-You can reference the `dolt table import` documentation here to additional ways to modify your database with csv including updating your data, and replacing your existing data.
+You can reference the [`dolt table import`](https://pandas.pydata.org/docs/reference/api/pandas.read_sql.html) documenation for additional ways to modify your database such as updating or replacing your existing data.
 
 2. Importing with a schema
 
-In the case of  JSON or Parquet file we require you provide a schema in the form of a `CREATE TABLE` SQL statement. You can also specify a schema for a csv file. Let's walk through the following file.
+In the case of JSON or Parquet files we require you provide a schema in the form of a `CREATE TABLE` SQL statement. You can also specify a schema for a csv file. Let's walk through the following file.
 
 ```json
 {
@@ -145,7 +145,7 @@ test> select * from test;
 
 ## MySQL Databases
 
-Migrating your MySQL database to Dolt is easy. We recommend the `mysqldump` program. Let's say you have MySQL server with the following configurations
+Migrating your MySQL database to Dolt is easy. We recommend the `mysqldump` program. Let's say you have MySQL server with the following configuration
 
 ```yaml
 user: root
@@ -198,7 +198,7 @@ There are multiple ways to get spreadsheet data into Dolt. The first is with `do
 Just like a csv file we run the command `dolt table import -c --pk=id employees employees.xlsx` to load the excel file 
 into our Dolt. Be sure to give the same name for the table as the spreadsheet's name.
 
-The other way to work with spreadsheet data is with Dolthub ["edit-like-a-spreadsheet"](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/) feature. You can create a SQL table from scratch with by just inserting values into a spreadsheet.
+The other way to work with spreadsheet data is with Dolthub's ["edit like a spreadsheet"](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/) feature. You can create a SQL table from scratch with by just inserting values into a spreadsheet.
 
 ![Spreadsheet](../.gitbook/assets/spreadsheet.png)
 
@@ -235,8 +235,7 @@ finally:
     dbConnection.close()
 ```
 
-In the above example we are creating a data frame of employees and writing it to our Dolt database. We can then use
-the [read_sql](https://pandas.pydata.org/docs/reference/api/pandas.read_sql.html) function to read back data from our MySQL database into Dolt.
+In the above example we are creating a data frame of employees and writing it to our Dolt database with the `to_sql` function. We can then use the [read_sql](https://pandas.pydata.org/docs/reference/api/pandas.read_sql.html) function to read back data from our MySQL database into Dolt.
 
 ```py
 frame = pd.read_sql('SELECT * from employees', dbConnection)
@@ -262,8 +261,8 @@ table import`.
 
 ## Import Best Practices
 
-There are some best practices to keep in mind in order to make importing external data into Dolt as fast as possible. These performances differences are especially relevant with large database (~50GB+).
+There are some best practices to keep in mind in order to make importing external data into Dolt as fast as possible. These performance differences are especially relevant with large databases (~50GB+).
 
-* Avoid adding foreign keys or unique indexes until after the import is completed.
-* Minimize your use of blob types
-* If running multiple import jobs back to back, be sure to [garbage collect](https://docs.dolthub.com/cli-reference/cli#dolt-gc) the database
+* Avoid adding foreign keys or unique indexes until after the import is completed. These substantially increase import time.
+* Minimize your use of blob types. These are expensive to create.
+* If running multiple import jobs back to back, be sure to [garbage collect](https://docs.dolthub.com/cli-reference/cli#dolt-gc) the database. Imports can generate a substantial amount of garbage.
