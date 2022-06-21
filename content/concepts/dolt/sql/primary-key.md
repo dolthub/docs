@@ -6,7 +6,9 @@ title: Primary Key
 
 ## What is a Primary Key?
 
-A primary key is a column or set of columns that defines a unique row in a table. Often the primary key is a unique identification or id number. In most databases, a map of primary keys to the values  of the other columns in the table are how the data is laid out on disk or memory. This makes row lookups by primary key indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)). Thus, use of primary keys in table definition and queries is a common database performance optimization.
+A primary key is a column or set of columns that defines a unique row in a table. Often the primary key is a unique identification or id number. 
+
+In most databases, a map of primary keys to the values of the other columns in the table are how the data is laid out on disk or memory. This makes row lookups by primary key indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)).  Thus, use of primary keys in table definition and queries is a common database performance optimization. [Secondary Indexes](./indexes.md) are called "secondary" to distinguish them from primary keys.
 
 Tables without primary keys, or keyless tables, are implemented differently in databases. Usually, a keyless table is implemented as a map of every column in the table pointing to a counter of the number of rows with that value. When the counter goes to zero the index is deleted.
 
