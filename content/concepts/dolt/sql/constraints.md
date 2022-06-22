@@ -28,6 +28,8 @@ You can add constraints when running `CREATE TABLE` statements or add them to ex
 
 MySQL and Dolt constraints are functionally equivalent.
 
+## Interaction with Dolt Version Control
+
 However, in Dolt, foreign key constraints can cause merged databases to become inconsistent. [Explain]
 
 ## Example

@@ -22,7 +22,9 @@ It is generally desirable for most tables in a database to have a primary key fo
 
 MySQL and Dolt primary keys are functionally the same. You use the same syntax to define and alter them.
 
-Additionally in Dolt, primary keys are used produce modifications between rows across versions. A keyless table in Dolt only shows additions and deletions. Tables with primary keys additionally show modifications to non-primary key columns. Thus, Dolt can produce cell-wise diffs and logs across versions for tables with primary keys.
+## Interaction with Dolt Version Control
+
+In Dolt, primary keys are used produce modifications between rows across versions. A keyless table in Dolt only shows additions and deletions. Tables with primary keys additionally show modifications to non-primary key columns. Thus, Dolt can produce cell-wise diffs and logs across versions for tables with primary keys.
 
 ## Example
 

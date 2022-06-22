@@ -15,5 +15,7 @@ title: Stored Procedures
 ## Difference between MySQL Stored Procedures and Dolt Stored Procedures
 
 
+## Interaction with Dolt Version Control
+
 
 ## Example

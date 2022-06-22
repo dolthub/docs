@@ -16,6 +16,8 @@ Views allow you to derive tables using SQL instead of storing a copy of all the 
 
 There is no difference between MySQL and Dolt views. They are functionally equivalent.
 
+## Interaction with Dolt Version Control
+
 Dolt view definitions are versioned in the `dolt_schemas` system table. 
 
 If you would like to use a current view with an different version of the data, `as of` syntax works with views.

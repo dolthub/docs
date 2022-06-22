@@ -22,6 +22,8 @@ You create indexes using the `CREATE INDEX` SQL statement.
 
 Functionally, Dolt and MySQL indexes are equivalent.
 
+## Interaction with Dolt Version Control
+
 Dolt will merge indexes as part of a Dolt merge. This can be used to offload index creation to a branch or offline clone.
 
 ## Example

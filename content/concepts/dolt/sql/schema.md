@@ -28,6 +28,8 @@ Changing schema can be a costly operation. For instance, adding an index to a co
 
 Dolt supports [all MySQL schema elements at least partially](../../../reference/sql/sql-support/data-description.md) except charsets and collations.
 
+## Interaction with Dolt Version Control
+
 Dolt versions your schema and data. So, if you want to see the difference between the schema of two different versions, Dolt provides this using `diff` functionality. See individual SQL concepts for how Dolt handles each individual schema element with regards to versioning.
 
 ## Example

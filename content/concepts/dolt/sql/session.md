@@ -16,4 +16,7 @@ title: Session
 
 
 
+## Interaction with Dolt Version Control
+
+
 ## Example

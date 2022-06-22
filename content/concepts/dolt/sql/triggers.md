@@ -15,5 +15,7 @@ title: Triggers
 ## Difference between MySQL Triggers and Dolt Triggers
 
 
+## Interaction with Dolt Version Control
+
 
 ## Example

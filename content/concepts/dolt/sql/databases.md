@@ -18,7 +18,9 @@ When you connect a client to a running server, you can see the databases being s
 
 ## Difference between MySQL Databases and Dolt Databases
 
-In Dolt, databases act like they do in traditional SQL but have a couple additional properties.
+In Dolt, databases act like they do in MySQL.
+
+## Interaction with Dolt Version Control
 
 First, in Dolt, each database has it's own commit graph. So, Dolt version control is limited to a single database. You cannot commit changes across multiple databases in a single commit. You cannot share a log across multiple databases. Branches cannot be made across databases.
 

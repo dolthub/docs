@@ -22,7 +22,9 @@ When querying tables, the type of the column defines which operations can be use
 
 Dolt supports [a subset of MYSQL types](../../../reference/sql/sql-support/data-description.md#data-types) but otherwise shares the same behavior.
 
-Dolt can diff across some type changes and will make a best effort to do so. For some conversions, like string to blob, Dolt diff will error.
+## Interaction with Dolt Version Control
+
+A type change in Dolt is versioned and can cause conflicts when merged. Dolt can diff across some type changes and will make a best effort to do so. For some conversions, like string to blob, Dolt diff will error.
 
 ## Example
 ```

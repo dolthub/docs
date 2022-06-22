@@ -15,6 +15,8 @@ title: Users/Grants
 ## Difference between MySQL Users & Grants and Dolt Users & Grants
 
 
+## Interaction with Dolt Version Control
+
 
 ## Example
 
