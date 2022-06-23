@@ -52,7 +52,7 @@ needs to be restarted before replication changes will take effect._
 To push on write, a valid remote middleman must be configured:
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
+dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_to_remote = 'origin'"
 ```
 
 There are two ways to trigger pushing to a remote middleman: a Dolt commit,
@@ -70,15 +70,15 @@ UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND 
 Read replicas are instantiated with a remote:
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
+dolt sql -q "SET PERSIST @@GLOBAL.dolt_read_replica_remote = 'origin'"
 ```
 
 A complete replication setup requires a pull spec with either 1) a set
 of heads, or 2) all heads (but not both):
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_replicate_heads main,feature1
-dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
+dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'main,feature1'"
+dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_all_heads = 1'"
 ```
 
 On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
@@ -97,7 +97,9 @@ certain circumstances:
 
 2. `USE`ing a missing branch:
 
-`USE \`mydb/feature-branch\``
+```SQL
+USE `mydb/feature-branch`
+```
 
 In either case, a read replica will pull the indicated branch from
 the remote middleman. If the branch is not on the replica, a new remote
