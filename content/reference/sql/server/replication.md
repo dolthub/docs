@@ -61,8 +61,6 @@ trigger replication:
 
 ```SQL
 SELECT DOLT_COMMIT('-am', 'message')
-
-UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND hash = @@database_name_head
 ```
 
 ### Pull (on read) to replica
