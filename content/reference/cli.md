@@ -776,13 +776,7 @@ If applying the row data changes from the cherry-picked commit results in a data
 
 **Arguments and options**
 
-`--b`:
-Create a new branch named `<new_branch>` and start it at `<start_point>`.
-
-`-f`, `--force`:
-If there is any changes in working set, the force flag will wipe out the current changes and checkout the new branch.
-
-
+No options for this command.
 
 ## `dolt revert`
 
