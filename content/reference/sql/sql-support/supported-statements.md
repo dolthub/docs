@@ -6,28 +6,29 @@ title: Supported Statements
 
 ## Data manipulation statements
 
-| Statement           | Supported | Notes and limitations                                                                                                     |
-| :------------------ | :-------- | :------------------------------------------------------------------------------------------------------------------------ |
-| `CALL`              | ✅        |                                                                                                                           |
-| `CREATE TABLE AS`   | ❌        | `INSERT INTO SELECT *` is supported.                                                                                      |
-| `CREATE TABLE LIKE` | ✅        |                                                                                                                           |
-| `DO`                | ❌        |                                                                                                                           |
-| `DELETE`            | ✅        | No support for referring to more than one table in a single `DELETE` statement.                                           |
-| `HANDLER`           | ❌        |                                                                                                                           |
-| `IMPORT TABLE`      | ❌        | Use `dolt table import`                                                                                                   |
-| `INSERT`            | ✅        | Including support for `ON DUPLICATE KEY` clauses.                                                                         |
-| `LOAD DATA`         | ✅        |                                                                                                                           |
-| `LOAD XML`          | ❌        | Use `dolt table import`                                                                                                   |
-| `REPLACE`           | ✅        |                                                                                                                           |
-| `SELECT`            | ✅        | Most select statements, including `UNION` and `JOIN`, are supported.                                                      |
-| `SELECT FROM AS OF` | ✅        | Selecting from a table as of any known revision or commit timestamp is supported.                                         |
-| `SELECT FOR UPDATE` | ❌        | Row-level locks are not supported.                                                                                        |
-| `SUBQUERIES`        | ✅        | Subqueries work, but must be given aliases. Some limitations apply.                                                       |
-| `TABLE`             | ❌        | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause.                                                             |
-| `TRUNCATE`          | ✅        |                                                                                                                           |
-| `UPDATE`            | ✅        | No support for referring to more than one table in a single `UPDATE` statement.                                           |
-| `VALUES`            | ❌        |                                                                                                                           |
-| `WITH`              | ✅        |                                                                                                                           |
+| Statement           | Supported | Notes and limitations                                                             |
+|:--------------------| :------- |:----------------------------------------------------------------------------------|
+| `CALL`              | ✅        |                                                                                   |
+| `CREATE TABLE AS`   | ❌        | `INSERT INTO SELECT *` is supported.                                              |
+| `CREATE TABLE LIKE` | ✅        |                                                                                   |
+| `DO`                | ❌        |                                                                                   |
+| `DELETE`            | ✅        | No support for referring to more than one table in a single `DELETE` statement.   |
+| `HANDLER`           | ❌        |                                                                                   |
+| `IMPORT TABLE`      | ❌        | Use `dolt table import`                                                           |
+| `INSERT`            | ✅        | Including support for `ON DUPLICATE KEY` clauses.                                 |
+| `LOAD DATA`         | ✅        |                                                                                   |
+| `LOAD XML`          | ❌        | Use `dolt table import`                                                           |
+| `REPLACE`           | ✅        |                                                                                   |
+| `SELECT`            | ✅        | Most select statements, including `UNION` and `JOIN`, are supported.              |
+| `SELECT FROM AS OF` | ✅        | Selecting from a table as of any known revision or commit timestamp is supported. |
+| `SELECT FOR UPDATE` | ❌        | Row-level locks are not supported.                                                |
+| `SUBQUERIES`        | ✅        | Subqueries work, but must be given aliases. Some limitations apply.               |
+| `TABLE`             | ❌        | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause.                     |
+| `TRUNCATE`          | ✅        |                                                                                   |
+| `UPDATE`            | ✅        | No support for referring to more than one table in a single `UPDATE` statement.   |
+| `VALUES`            | ❌        |                                                                                   |
+| `WITH`              | ✅        |                                                                                   |
+| `SELECT INTO`       | ✅        | Selecting into a file is not supported.                                           |
 
 ## Data definition statements
 
@@ -169,3 +170,23 @@ More information on how Dolt handles access management may be found in the [acce
 | :-------- | :-------- | :-------------------- |
 | `EXPLAIN` | ✅        |                       |
 | `USE`     | ✅        |                       |
+
+## Compound statements
+
+| Statement          | Supported | Notes and limitations                                                           |
+|:-------------------|:---------|:--------------------------------------------------------------------------------|
+| `BEGIN END`        | ✅        |                                                                                 |
+| `STATEMENT LABELS` | ❌        |                                                                                 |
+| `DECLARE`          | ❌        | Only \`DECLARE CONDITION\` statements are supported under \`BEGIN/END\` blocks. |
+| `SET               | ✅        |                                                                                 |
+| `CASE`             | ✅        |                                                                                 |
+| `IF`               | ✅        |                                                                                 |
+| `ITERATE`          | ❌        |                                                                                 |
+| `LEAVE`            | ❌        |                                                                                 |
+| `LOOP`             | ❌        |                                                                                 |
+| `REPEAT`           | ✅        |                                                                                 |
+| `RETURN`           | ❌        |                                                                                 |
+| `WHILE`            | ❌        |                                                                                 |
+| `CLOSE`            | ❌        |                                                                                 |
+| `FETCH`            | ❌        |                                                                                 |
+| `OPEN`             | ❌        |                                                                                 |
