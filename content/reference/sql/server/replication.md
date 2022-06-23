@@ -35,7 +35,6 @@ Configs can be set in the CLI (limited to `--local` scope for now):
 ```bash
 dolt config --add --local sqlserver.global.dolt_replicate_to_remote <name>
 dolt config --add --local sqlserver.global.dolt_read_replica_remote <name>
-
 ```
 
 Configs can be set equivalently in an SQL session:
