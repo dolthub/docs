@@ -208,7 +208,7 @@ The other way to work with spreadsheet data is with Dolthub's ["edit like a spre
 We recommend standard MySQL + Python techniques when intergrating Dolt with Pandas. First you want to connect to your
 Dolt database with the [SQLAlchemy](https://www.sqlalchemy.org/) ORM. Here's some sample code below:
 
-```py
+```python
 from sqlalchemy import create_engine
 import pymysql
 import pandas as pd
@@ -239,7 +239,7 @@ finally:
 
 In the above example we are creating a data frame of employees and writing it to our Dolt database with the `to_sql` function. We can then use the [read_sql](https://pandas.pydata.org/docs/reference/api/pandas.read_sql.html) function to read back data from our MySQL database into Dolt.
 
-```py
+```python
 frame = pd.read_sql('SELECT * from employees', dbConnection)
 print(frame)
 
@@ -252,7 +252,7 @@ print(frame)
 The second way to do this is by exporting your pandas dataframe as a csv file which can then be imported with `dolt 
 table import`.
 
-```py
+```python
 >>> import pandas as pd
 >>> df = pd.DataFrame({'name': ['Raphael', 'Donatello'],
 ...                    'mask': ['red', 'purple'],
