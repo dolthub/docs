@@ -98,7 +98,7 @@ title: Supported Statements
 Dolt supports atomic transactions like other SQL databases. It's also
 possible for clients to connect to different heads, which means they
 will never see each other's edits until a merge between heads is
-performed. See [Working with branches](../branches.md) for more detail.
+performed. See [Using Branches](../branches.md) for more detail.
 
 Dolt has two levels of persistence:
 
@@ -108,18 +108,12 @@ Dolt has two levels of persistence:
 2. The Dolt commit layer, where commits are added to the Dolt commit
    graph with an author, a parent commit, etc.
 
-Merging these two layers is a work in progress, and some
-functionality, such as the `DOLT_COMMIT` function, currently violate
-ACID properties in a high concurrency environment. For safety, we
-recommend using the Dolt commit layer in a single-threaded fashion, or
-offline, and limiting SQL statements to the SQL transaction layer when
-multiple clients per HEAD are required.
 
 | Statement               | Supported | Notes and limitations                                                                                                                                                                                     |
 | :---------------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `BEGIN`                 | ✅        | Synonym for `START TRANSACTION`                                                                                                                                                                           |
 | `COMMIT`                | ✅        |                                                                                                                                                                                                           |
-| `DOLT_COMMIT()`         | ✅        | `DOLT_COMMIT()` commits the current SQL transaction, then creates a new Dolt commit on the current HEAD with the contents. [See docs on DOLT_COMMIT() for details.](../dolt-sql-functions.md#dolt_commit) |
+| `CALL DOLT_COMMIT()`    | ✅        | `DOLT_COMMIT()` creates a new Dolt commit using the content of the STAGED HEAD. [See docs on DOLT_COMMIT() for details.](../dolt-sql-procedures.md#dolt_commit) |
 | `LOCK TABLES`           | ❌        | `LOCK TABLES` parses correctly but does not prevent access to those tables from other sessions.                                                                                                           |
 | `ROLLBACK`              | ✅        |                                                                                                                                                                                                           |
 | `SAVEPOINT`             | ✅        |                                                                                                                                                                                                           |
@@ -134,8 +128,8 @@ multiple clients per HEAD are required.
 
 | Statement | Supported | Notes and limitations |
 | :-------- | :-------- | :-------------------- |
-| `PREPARE` | ✅        |                       |
-| `EXECUTE` | ✅        |                       |
+| `PREPARE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. PREPARE in a query is not supported.                     |
+| `EXECUTE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. EXCEUTE in a query is not supported.                      |
 
 ## Access management statements
 

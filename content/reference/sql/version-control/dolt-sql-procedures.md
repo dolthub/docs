@@ -6,17 +6,21 @@ title: Dolt SQL Procedures
 
 * [Dolt SQL Procedures](#dolt-sql-procedures)
   * [dolt\_add()](#dolt_add)
+  * [dolt\_backup()](#dolt_backup)
+  * [dolt\_branch()](#dolt_branch)
   * [dolt\_checkout()](#dolt_checkout)
+  * [dolt\_clean()](#dolt_clean)
   * [dolt\_commit()](#dolt_commit)
   * [dolt\_fetch()](#dolt_fetch)
   * [dolt\_merge()](#dolt_merge)
   * [dolt\_pull()](#dolt_pull)
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
+  * [dolt\_revert()](#dolt_revert)
 
 # Dolt SQL Procedures
 
-Dolt provides SQL stored procedures to allow access to `dolt` CLI 
+Dolt provides native stored procedures to allow access to `dolt` CLI
 commands from within a SQL session. Each procedure is named after the
 `dolt` command line command it matches, and takes arguments in an
 identical form.
@@ -42,7 +46,6 @@ working HEAD for that database session. The right way to think of this
 is that the command line environment is effectively a session, one
 that happens to be shared with whomever runs CLI commands from that
 directory.
-
 
 ## `DOLT_ADD()`
 
@@ -83,6 +86,100 @@ CALL DOLT_ADD('-a');
 CALL DOLT_COMMIT('-m', 'committing all changes');
 ```
 
+## `DOLT_BACKUP()`
+
+Sync with a configured backup. Other backup commands not supported
+via SQL yet.
+
+```sql
+CALL DOLT_BACKUP('sync', 'name');
+```
+
+### Example
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Upload the current database contents to the named backup
+CALL dolt_backup('sync', 'my-backup')
+```
+
+## `DOLT_BRANCH()`
+
+Create, delete, and rename branches.  
+
+To list branches, use the [`DOLT_BRANCHES` system table](dolt-system-tables.md#dolt_branches), instead of the `DOLT_BRANCH()` stored procedure.
+
+To look up the current branch, use the [`@@<dbname>_head_ref` system variable](dolt-sysvars.md#dbname_head_ref), or the `active_branch()` SQL function, as shown in the examples section below.
+
+WARNING: In a multi-session server environment, Dolt will prevent you from deleting or renaming a branch in use in another session. You can force renaming or deletion by passing the `--force` option, but be aware that active clients on other sessions will no longer be able to execute statements after their active branch is removed and will need to end their session and reconnect. 
+
+```sql
+-- Create a new branch from the current HEAD
+CALL DOLT_BRANCH('myNewBranch');
+
+-- Create a new branch by copying an existing branch
+-- Will fail if feature1 branch already exists
+CALL DOLT_BRANCH('-c', 'main', 'feature1');
+
+-- Create or replace a branch by copying an existing branch
+-- '-f' forces the copy, even if feature1 branch already exists 
+CALL DOLT_BRANCH('-c', '-f', 'main', 'feature1');
+
+-- Delete a branch
+CALL DOLT_BRANCH('-d', 'branchToDelete');
+
+-- Rename a branch
+CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
+```
+
+### Options
+
+`-c`, `--copy`: Create a copy of a branch. Must be followed by the name of the source branch to copy and the name of the new branch to create. Without the `--force` option, the copy will fail if the new branch already exists.  
+
+`-m`, `--move`: Move/rename a branch. Must be followed by the current name of an existing branch and a new name for that branch. Without the `--force` option, renaming a branch in use on another server session will fail. Be aware that forcibly renaming or deleting a branch in use in another session will require that session to disconnect and reconnect before it can execute statements again.   
+
+`-d`, `--delete`: Delete a branch. Must be followed by the name of an existing branch to delete. Without the `--force` option, deleting a branch in use on another server session will fail. Be aware that forcibly renaming or deleting a branch in use in another session will require that session to disconnect and reconnect before it can execute statements again.
+
+`-f`, `--force`: When used with the `--copy` option, allows for recreating a branch from another branch, even if the branch already exists. When used with the `--move` or `--delete` options, force will allow you to rename or delete branches in use in other active server sessions, but be aware that this will require those other sessions to disconnect and reconnect before they can execute statements again.
+
+`-D`: Shortcut for `--delete --force`.
+
+### Examples
+
+```sql
+-- List the available branches
+SELECT * FROM DOLT_BRANCHES;
++--------+----------------------------------+
+| name   | hash                             |
++--------+----------------------------------+
+| backup | nsqtc86d54kafkuf0a24s4hqircvg68g |
+| main   | dvtsgnlg7n9squriob3nq6kve6gnhkf2 |
++--------+----------------------------------+
+    
+-- Create a new branch for development work from the tip of head and switch to it
+CALL DOLT_BRANCH('myNewFeature');
+CALL DOLT_CHECKOUT('myNewFeature');
+
+-- View your current branch 
+select active_branch();
++----------------+
+| active_branch  |
++----------------+
+| myNewFeature   |
++----------------+
+    
+-- Create a new branch from an existing branch 
+CALL DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
+    
+-- Rename a branch
+CALL DOLT_BRANCH('-m', 'bugfix-3482', 'critical-bugfix-3482');
+
+-- Delete a branch
+CALL DOLT_BRANCH('-d', 'old-unused-branch');
+```
+
 ## `DOLT_CHECKOUT()`
 
 Switches this session to a different branch.
@@ -93,6 +190,13 @@ in the current HEAD.
 When switching to a different branch, your session state must be
 clean. `COMMIT` or `ROLLBACK` any changes before switching to a
 different branch.
+
+Note, unlike the Git command-line, if you have a modified working set, 
+those changes remain on the branch you modified after a DOLT_CHECKOUT(). 
+The working set does not transfer to the new checked out branch. We 
+modified this behavior because Dolt assumes multiple users of a branch
+in SQL context. Having one user change the state of other users 
+working set was deemed undesirable behavior.
 
 ```sql
 CALL DOLT_CHECKOUT('-b', 'my-new-branch');
@@ -123,6 +227,76 @@ CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
 CALL DOLT_CHECKOUT('main');
+```
+
+## `DOLT_CLEAN()`
+
+Deletes untracked tables in the working set.
+
+Deletes only specified untracked tables if table names passed as
+arguments.
+
+With `--dry-run` flag, tests whether removing untracked tables will
+return with zero status.
+
+```sql
+CALL DOLT_CLEAN();
+CALL DOLT_CLEAN('untracked-table');
+CALL DOLT_CLEAN('--dry-run');
+```
+
+### Options
+
+`--dry-run`: Test removing untracked tables from working set.
+
+### Example
+
+```sql
+-- Create three new tables
+create table tracked (x int primary key);
+create table committed (x int primary key);
+create table untracked (x int primary key);
+
+-- Commit the first table
+call dolt_add('committed');
+call dolt_commit('-m', 'commit a table');
++----------------------------------+
+| hash                             |
++----------------------------------+
+| n7gle7jv6aqf72stbdicees6iduhuoo9 |
++----------------------------------+
+
+-- Track the second table
+call dolt_add('tracked');
+
+-- Observe database status
+select * from dolt_status;
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| tracked    | true   | new table |
+| untracked  | false  | new table |
++------------+--------+-----------+
+
+-- Clear untracked tables
+call dolt_clean('untracked');
+
+-- Observe final status
+select * from dolt_status;
++------------+--------+-----------+
+| table_name | staged | status    |
++------------+--------+-----------+
+| tracked    | true   | new table |
++------------+--------+-----------+
+
+-- Committed and tracked tables are preserved
+show tables;
++----------------+
+| Tables_in_tmp3 |
++----------------+
+| committed      |
+| tracked        |
++----------------+
 ```
 
 
@@ -265,15 +439,16 @@ CALL DOLT_MERGE('feature-branch');
 
 ## `DOLT_RESET()`
 
-Resets staged tables to their HEAD state. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
+Default mode resets staged tables to their HEAD state. Can also be used to reset a database to a specific commit. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
 
 Like other data modifications, after a reset you must `COMMIT` the
 transaction for any changes to affected tables to be visible to other
 clients.
 
 ```sql
-CALL DOLT_RESET('--hard');
-CALL DOLT_RESET('my-table'); -- soft reset
+CALL DOLT_RESET('--hard', 'featureBranch');
+CALL DOLT_RESET('--hard', 'commitHash123abc');
+CALL DOLT_RESET('myTable'); -- soft reset
 ```
 
 ### Options
@@ -308,6 +483,64 @@ CALL DOLT_ADD('table')
 
 -- Unstage the table.
 CALL DOLT_RESET('table')
+```
+
+## `DOLT_REVERT()`
+
+Reverts the changes introduced in a commit, or set of commits. Creates a new commit from the current HEAD that reverses 
+the changes in all the specified commits. If multiple commits are given, they are applied in the order given. 
+
+```sql
+CALL DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');
+CALL DOLT_REVERT('HEAD~2');
+CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
+```
+
+### Options
+
+`--author=<author>`: Specify an explicit author using the standard `A U Thor <author@example.com>` format.
+
+### Example
+
+```sql
+-- Create a table and add data in multiple commits
+CREATE TABLE t1(pk INT PRIMARY KEY, c VARCHAR(255));
+CALL dolt_commit("-am", "Creating table t1");
+INSERT INTO t1 VALUES(1, "a"), (2, "b"), (3, "c");
+CALL dolt_commit("-am", "Adding some data");
+insert into t1 VALUES(10, "aa"), (20, "bb"), (30, "cc");
+CALL dolt_commit("-am", "Adding some more data");
+
+-- Examine the changes made in the commit immediately before the current HEAD commit
+SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD~1");
++-------+------+----------------------------------+-----------+
+| to_pk | to_c | to_commit                        | diff_type |
++-------+------+----------------------------------+-----------+
+| 1     | a    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
+| 2     | b    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
+| 3     | c    | fc4fks6jutcnee9ka6458nmuot7rl1r2 | added     |
++-------+------+----------------------------------+-----------+
+
+-- Revert the commit immediately before the current HEAD commit  
+CALL dolt_revert("HEAD~1");
+    
+-- Check out the new commit created by dolt_revert
+SELECT commit_hash, message FROM dolt_log limit 1;
++----------------------------------+---------------------------+
+| commit_hash                      | message                   |
++----------------------------------+---------------------------+
+| vbevrdghj3in3napcgdsch0mq7f8en4v | Revert "Adding some data" |
++----------------------------------+---------------------------+
+
+-- View the exact changes made by the revert commit 
+SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD");
++---------+--------+----------------------------------+-----------+
+| from_pk | from_c | to_commit                        | diff_type |
++---------+--------+----------------------------------+-----------+
+| 1       | a      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
+| 2       | b      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
+| 3       | c      | vbevrdghj3in3napcgdsch0mq7f8en4v | removed   |
++---------+--------+----------------------------------+-----------+
 ```
 
 ## `DOLT_PUSH()`

@@ -128,7 +128,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CONCAT_WS()`                     | ✅        |                                                                                                |
 | `CONNECTION_ID()`                 | ✅        |                                                                                                |
 | `CONV()`                          | ❌        |                                                                                                |
-| `CONVERT()`                       | ❌        |                                                                                                |
+| `CONVERT()`                       | ✅        | Convert between types supported. Convert between charsets is not.                              |
 | `CONVERT_TZ()`                    | ❌        |                                                                                                |
 | `COS()`                           | ✅        |                                                                                                |
 | `COT()`                           | ✅        |                                                                                                |
