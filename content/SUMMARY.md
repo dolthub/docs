@@ -46,6 +46,7 @@
 * [DoltLab](guides/doltlab.md)
     * [Install DoltLab](guides/doltlab/installation.md)
     * [Administrator Guide](guides/doltlab/administrator.md)
+* [Importing Data](guides/import.md)
 
 ## SQL Reference
 * [Running the Server](reference/sql/server/README.md)
