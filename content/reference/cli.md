@@ -100,13 +100,13 @@ dolt diff [options] <commit> <commit> [<tables>...]
 Show changes between the working and staged tables, changes between the working tables and the tables within a commit, or changes between tables at two commits.
 
 `dolt diff [--options] [<tables>...]`
-   This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
+This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
 
 `dolt diff [--options] <commit> [<tables>...]`
-   This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch.
+This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch.
 
 `dolt diff [--options] <commit> <commit> [<tables>...]`
-   This is to view the changes between two arbitrary `commit`.
+This is to view the changes between two arbitrary `commit`.
 
 The diffs displayed can be limited to show the first N by providing the parameter `--limit N` where `N` is the number of diffs to display.
 
@@ -125,7 +125,7 @@ Show only the schema changes, do not show the data changes (Both shown by defaul
 Show summary of data changes
 
 `-r`, `--result-format`:
-How to format diff output. Valid values are tabular & sql. Defaults to tabular. 
+How to format diff output. Valid values are tabular & sql. Defaults to tabular.
 
 `--where`:
 filters columns based on values in the diff.  See `dolt diff --help` for details.
@@ -272,7 +272,7 @@ dolt sql --list-saved
 
 Runs a SQL query you specify. With no arguments, begins an interactive shell to run queries and view the results. With the `-q` option, runs the given query and prints any results, then exits.
 
-Multiple SQL statements must be separated by semicolons. Use `-b` to enable batch mode to speed up large batches of INSERT / UPDATE statements. Pipe SQL files to dolt sql (no `-q`) to execute a SQL import or update script. 
+Multiple SQL statements must be separated by semicolons. Use `-b` to enable batch mode to speed up large batches of INSERT / UPDATE statements. Pipe SQL files to dolt sql (no `-q`) to execute a SQL import or update script.
 
 Queries can be saved to the query catalog with `-s`. Alternatively `-x` can be used to execute a saved query by name.
 
@@ -284,7 +284,7 @@ By default this command uses the dolt database in the current working directory,
 Runs a single query and exits
 
 `-r`, `--result-format`:
-How to format result output. Valid values are tabular, csv, json, vertical. Defaults to tabular. 
+How to format result output. Valid values are tabular, csv, json, vertical. Defaults to tabular.
 
 `-s`, `--save`:
 Used with --query, save the query to the query catalog with the name provided. Saved queries can be examined in the dolt_query_catalog system table.
@@ -302,7 +302,7 @@ Used with --query and --save, saves the query with the descriptive message given
 Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
 
 `--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within 
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within
 
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
@@ -640,14 +640,14 @@ dolt checkout -b <new-branch> [<start-point>]
 Updates tables in the working set to match the staged versions. If no paths are given, dolt checkout will also update HEAD to set the specified branch as the current branch.
 
 dolt checkout `<branch>`
-   To prepare for working on `<branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working
-   tree are kept, so that they can be committed to the `<branch>`.
+To prepare for working on `<branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working
+tree are kept, so that they can be committed to the `<branch>`.
 
 dolt checkout -b `<new_branch>` [`<start_point>`]
-   Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
+Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
 
 dolt checkout `<table>`...
-  To update table(s) with their values in HEAD 
+To update table(s) with their values in HEAD
 
 **Arguments and options**
 
@@ -675,7 +675,7 @@ dolt merge --abort
 
 Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.
 
-The second syntax (`<dolt merge --abort>`) can only be run after the merge has resulted in conflicts. dolt merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started (and especially if those changes were further modified after the merge was started), dolt merge `--abort` will in some cases be unable to reconstruct the original (pre-merge) changes. Therefore: 
+The second syntax (`<dolt merge --abort>`) can only be run after the merge has resulted in conflicts. dolt merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started (and especially if those changes were further modified after the merge was started), dolt merge `--abort` will in some cases be unable to reconstruct the original (pre-merge) changes. Therefore:
 
 `<Warning>`: Running dolt merge with non-trivial uncommitted changes is discouraged: while possible, it may leave you in a state that is hard to back out of in the case of a conflict.
 
@@ -734,7 +734,7 @@ dolt conflicts resolve --ours|--theirs <table>...
 
 
 When a merge operation finds conflicting changes, the rows with the conflicts are added to list of conflicts that must be resolved.  Once the value for the row is resolved in the working set of tables, then the conflict should be resolved.
-		
+
 In its first form `dolt conflicts resolve <table> <key>...`, resolve runs in manual merge mode resolving the conflicts whose keys are provided.
 
 In its second form `dolt conflicts resolve --ours|--theirs <table>...`, resolve runs in auto resolve mode. Where conflicts are resolved using a rule to determine which version of a row should be used.
@@ -753,6 +753,30 @@ For all conflicts, take the version from our branch and resolve the conflict
 For all conflicts, take the version from their branch and resolve the conflict
 
 
+
+## `dolt cherry-pick`
+
+Apply the changes introduced by an existing commit.
+
+**Synopsis**
+
+```bash
+dolt cherry-pick <commit>
+```
+
+**Description**
+
+
+Applies the changes from an existing commit and creates a new commit from the current HEAD. This requires your working tree to be clean (no modifications from the HEAD commit).
+
+Cherry-picking merge commits or commits with schema changes or rename or drop tables is not currently supported. Row data changes are allowed as long as the two table schemas are exactly identical.
+
+If applying the row data changes from the cherry-picked commit results in a data conflict, the cherry-pick operation is aborted and no changes are made to the working tree or committed.
+
+
+**Arguments and options**
+
+No options for this command.
 
 ## `dolt revert`
 
@@ -921,7 +945,7 @@ dolt config [--global|--local] --unset <name>...
 **Description**
 
 You can query/set/replace/unset options with this command.
-		
+
 	When reading, the values are read from the global and repository local configuration files, and options `<--global>`, and `<--local>` can be used to tell the command to read from only that location.
 	
 	When writing, the new value is written to the repository local configuration file by default, and options `<--global>`, can be used to tell the command to write to that location (you can say `<--local>` but that is the default).
@@ -977,7 +1001,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 	role: Use the credentials installed for the current user
 	env: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 	file: Uses the credentials file specified by the parameter aws-creds-file
-	
+
 GCP remote urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google.
 
 The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See https://en.wikipedia.org/wiki/File_URI_scheme
@@ -1039,7 +1063,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 	role: Use the credentials installed for the current user
 	env: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 	file: Uses the credentials file specified by the parameter aws-creds-file
-	
+
 GCP backup urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google.
 
 The local filesystem can be used as a backup by providing a repository url in the format file://absolute path. See https://en.wikipedia.org/wiki/File_URI_scheme
@@ -1052,7 +1076,7 @@ Restore a Dolt database from a given `<url>` into a specified directory `<url>`.
 
 `sync`
 Snapshot the database and upload to the backup `<name>`. This includes branches, tags, working sets, and remote tracking refs.
-	
+
 `sync-url`
 Snapshot the database and upload the backup to `<url>`. Like sync, this includes branches, tags, working sets, and remote tracking refs, but it does not require you to create a named backup
 
@@ -1451,7 +1475,7 @@ The schema for the new table can be specified explicitly by providing a SQL sche
 
 If `--update-table | -u` is given the operation will update `<table>` with the contents of file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
-During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--ignore-skipped-rows` flag to prevent the import utility from printing all the skipped rows. 
+During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--ignore-skipped-rows` flag to prevent the import utility from printing all the skipped rows.
 
 If `--replace-table | -r` is given the operation will replace `<table>` with the contents of the file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
@@ -1578,11 +1602,11 @@ dolt table mv [-f] <oldtable> <newtable>
 **Description**
 
 
-The dolt table mv command will rename a table. If a table exists with the target name this command will 
-fail unless the `--force|-f` flag is provided.  In that case the table at the target location will be overwritten 
+The dolt table mv command will rename a table. If a table exists with the target name this command will
+fail unless the `--force|-f` flag is provided.  In that case the table at the target location will be overwritten
 by the table being renamed.
 
-The result is equivalent of running `dolt table cp <old> <new>` followed by `dolt table rm <old>`, resulting 
+The result is equivalent of running `dolt table cp <old> <new>` followed by `dolt table rm <old>`, resulting
 in a new table and a deleted table in the working set. These changes can be staged using `dolt add` and committed
 using `dolt commit`.
 
@@ -1643,7 +1667,7 @@ dolt tag -d <tagname>
 
 If there are no non-option arguments, existing tags are listed.
 
-The command's second form creates a new tag named `<tagname>` which points to the current `HEAD`, or `<ref>` if given. Optionally, a tag message can be passed using the `-m` option. 
+The command's second form creates a new tag named `<tagname>` which points to the current `HEAD`, or `<ref>` if given. Optionally, a tag message can be passed using the `-m` option.
 
 With a `-d`, `<tagname>` will be deleted.
 
@@ -1809,17 +1833,28 @@ Export all tables.
 **Synopsis**
 
 ```bash
-dolt dump [-f] [-r <result-format>] 
+dolt dump [-f] [-r <result-format>] [-fn <file_name>]  [-d <directory>] [--batch] [--no-autocommit] 
 ```
 
 **Description**
 
-`dolt dump` dumps all tables in the working set. 
-If a dump file already exists then the operation will fail, unless the `--force | -f` flag 
-is provided. The force flag forces the existing dump file to be overwritten.
+`dolt dump` dumps all tables in the working set.
+If a dump file already exists then the operation will fail, unless the `--force | -f` flag
+is provided. The force flag forces the existing dump file to be overwritten. The `-r` flag
+is used to support different file formats of the dump. In the case of non .sql files each table is written to a separate
+csv,json or parquet file.
 
 
 **Arguments and options**
+
+`-r`, `--result-format`:
+Define the type of the output file. Defaults to sql. Valid values are sql, csv, json and parquet.
+
+`-fn`, `--file-name`:
+Define file name for dump file. Defaults to `doltdump.sql`.
+
+`-d`, `--directory`:
+Define directory name to dump the files in. Defaults to `doltdump/`.
 
 `-f`, `--force`:
 If data already exists in the destination, the force flag will allow the target to be overwritten.
@@ -1827,14 +1862,8 @@ If data already exists in the destination, the force flag will allow the target 
 `--batch`:
 Returns batch insert statements wherever possible.
 
-`-r`, `--result-format`:
-Define the type of the output file. Defaults to sql. Valid values are sql, csv, json and parquet.
-
-`--file-name`:
-Define file name for dump file. Defaults to `doltdump.sql`.
-
-`--directory`:
-Define directory name to dump the files in. Defaults to `doltdump/`.
+`-na`, `--no-autocommit`:
+Turns off autocommit for each dumped table. Used to speed up loading of outputted sql file
 
 
 
