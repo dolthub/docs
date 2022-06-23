@@ -4,7 +4,7 @@ title: Importing Data
 
 # Get data into Dolt
 
-You can easily load the following data formats into Dolt:
+You can load the following data formats into Dolt:
 
 * CSV, JSON, Parquet
 * MySQL databases
