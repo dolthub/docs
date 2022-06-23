@@ -78,7 +78,7 @@ A complete replication setup requires a pull spec with either 1) a set
 of heads, or 2) all heads (but not both):
 
 ```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'origin'"
+dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'main,feature1'"
 dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_all_heads = 1'"
 ```
 
