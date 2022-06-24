@@ -10,7 +10,7 @@ A secondary index can be added to any column or set of columns to convert lookup
 
 Secondary indexes are stored as separate data structures on disk or in memory. Thus, the use of secondary indexes uses more storage and increases insert and update time. 
 
-Secondary Indexes are called "secondary" to distinguish them from [primary keys](./primary-key.md) which also provide indexed lookups.
+Secondary indexes are called "secondary" to distinguish them from [primary keys](./primary-key.md) which also provide indexed lookups.
 
 ## How to use Secondary Indexes
 
