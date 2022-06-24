@@ -36,7 +36,7 @@ Changes not staged for commit:
 
 ### See what's changed in your working set
 ```
-docs $ dolt diff
+$ dolt diff
 diff --dolt a/docs b/docs
 --- a/docs @ c341qjl0eholuiu1k4pvujre7mc75qtc
 +++ b/docs @ f7isl5tqm92ovogh6v8seq26lsjmiknk
