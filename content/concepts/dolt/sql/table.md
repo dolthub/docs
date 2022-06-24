@@ -12,7 +12,7 @@ Table data is stored on disk. The way a database lays out it's table data on dis
 
 ## How to use Tables
 
-Structure the data you want to store and query in your database into tables. Define relationships between tables using foreign key [constraints](./constraints.md). Use `CREATE` statements to create tables and `ALTER` statements to change their schema.
+Structure the data in your database into tables. Define relationships between tables using foreign key [constraints](./constraints.md). Use `CREATE` statements to create tables and `ALTER` statements to change their schema.
 
 ## Difference between MySQL Table and Dolt Table
 
