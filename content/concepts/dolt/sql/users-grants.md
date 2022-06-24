@@ -14,7 +14,7 @@ As an administrator user, you create users and roles using `CREATE USER` and `CR
 
 ## Difference between MySQL Users & Grants and Dolt Users & Grants
 
-Users and grants are the same in MySQL and Dolt.
+The goal is for Dolt user and grants to match MySQL users and grants exactly. As of now, Dolt users and grants are missing some functionality, like [X]. [Submit an issue](https://github.com/dolthub/dolt/issues) if you need more functionality.
 
 ## Interaction with Dolt Version Control
 
