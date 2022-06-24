@@ -16,7 +16,7 @@ Moreover types act as a way to control the storage footprint of your database. A
 
 Each column in your tables must have a type. You use types when defining tables. You can change the type of a column with `ALTER` statements.
 
-When querying tables, the type of the column defines which operations can be used. For instance, a `>` (ie. greater than) operator can only be used on numerical types. To manipulate the type of a column when querying you use the `CAST()` function.
+When querying tables, the type of the column defines which functions can be used on the data retrieved. To manipulate the type of a column when querying you use the `CAST()` function.
 
 ## Difference between MySQL Types and Dolt Types
 
@@ -24,7 +24,7 @@ Dolt supports [a subset of MYSQL types](../../../reference/sql/sql-support/data-
 
 ## Interaction with Dolt Version Control
 
-A type change in Dolt is versioned and can cause conflicts when merged. Dolt can diff across some type changes and will make a best effort to do so. For some conversions, like string to blob, Dolt diff will error.
+A type change in Dolt is versioned and can cause conflicts when merged. Dolt can diff across some type changes and will make a best effort to do so.
 
 ## Example
 ```
