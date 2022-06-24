@@ -6,7 +6,7 @@ title: Views
 
 ## What is a View?
 
-Views look like tables when used in a select statement but the data in views is generated using SQL stored in the view definition. The data is actually stored in the tables the views reference not the view itself.
+Views look and act like tables, but the data in views is materialized on the fly using a view definition query that itself references concrete tables. The data is actually stored in the tables the views reference not the view itself.
 
 ## How to use Views
 
