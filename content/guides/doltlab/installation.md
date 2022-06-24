@@ -13,7 +13,7 @@ DoltLab is currently available for Linux and we recommend the following _minimum
 * 4 CPU and 16 GB of memory
 * 100 GBs of disk (DoltLab's container images alone require about 4 GBs of disk). Depending on your use case, this may not be enough to back all database data, and user uploaded files.
 * Ubuntu 18.04/20.04 Operating System
-* Host IP must be accessible on the public internet.
+* Host IP must be discoverable by the Dolt CLI and web browser.
 * Host should allow egress `TCP` connections.
 * The following `TCP` ports _must_ be open on the host:
   * `22`, for `ssh` connections.
