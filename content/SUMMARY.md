@@ -46,7 +46,6 @@
         * [Triggers](concepts/dolt/sql/triggers.md)
         * [Procedures](concepts/dolt/sql/procedures.md)
         * [Users/Grants](concepts/dolt/sql/users-grants.md)
-        * [Sessions](concepts/dolt/sql/session.md)
         * [Transactions](concepts/dolt/sql/transaction.md)
     * [RDBMS](concepts/dolt/rdbms/README.md)
         * [Server](concepts/dolt/rdbms/server.md)

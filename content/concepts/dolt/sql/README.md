@@ -23,5 +23,4 @@ Concepts will be tackled in the following order:
 9. [Triggers](concepts/dolt/sql/triggers.md)
 10. [Procedures](concepts/dolt/sql/procedures.md)
 11. [Users/Grants](concepts/dolt/sql/users-grants.md)
-12. [Sessions](concepts/dolt/sql/session.md)
-13. [Transactions](concepts/dolt/sql/transaction.md)
+12. [Transactions](concepts/dolt/sql/transaction.md)
