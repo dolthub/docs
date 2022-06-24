@@ -24,9 +24,9 @@ On the command line, working set changes do follow to the newly checked out bran
 
 ### Make changes in a working set
 ```
-docs $ dolt sql -q "insert into docs values (3,0)";
+$ dolt sql -q "insert into docs values (3,0)";
 Query OK, 1 row affected
-docs $ dolt status
+$ dolt status
 On branch main
 Changes not staged for commit:
   (use "dolt add <table>" to update what will be committed)
