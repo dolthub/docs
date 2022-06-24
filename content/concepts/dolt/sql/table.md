@@ -18,7 +18,7 @@ Structure the data in your database into tables. Define relationships between ta
 
 A MySQL and Dolt table function the same on the surface. `CREATE` and `ALTER` statements work the same on both.
 
-Dolt and MySQL are [row major](https://en.wikipedia.org/wiki/Row-_and_column-major_order), meaning row values are stored next to each other as best as possible. However, MySQL stores data in a binary tree structure while Dolt stores table data on disk using a content-addressed binary tree called a [prolly tree](../../../architecture/storage-engine/prolly-tree.md). This setup makes Dolt [fairly comparable in query performance to MySQL](../../../reference/sql/benchmarks/latency.md) while also providing history-independence and fast `diff` between versions. Fast `diff` powers Dolt's version control capabilities.
+Dolt and MySQL are [row major](https://en.wikipedia.org/wiki/Row-_and_column-major_order), meaning row values are stored next to each other. However, MySQL stores data in a binary tree structure while Dolt stores table data on disk using a content-addressed binary tree called a [prolly tree](../../../architecture/storage-engine/prolly-tree.md). This setup makes Dolt [fairly comparable in query performance to MySQL](../../../reference/sql/benchmarks/latency.md) while also providing history-independence and fast `diff` between versions. Fast `diff` powers Dolt's version control capabilities.
 
 ## Interaction with Dolt Version Control
 
