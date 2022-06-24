@@ -8,6 +8,8 @@ title: Triggers
 
 Triggers are SQL code snippets you can set to run every time a row is inserted, updated, or deleted from a particular table. Triggers receive the value of the row being inserted, updated, or deleted like a parameter, and can change it in some cases.
 
+Database users create triggers. Triggers are schema and are stored along with other schema elements in the database.
+
 ## How to use Triggers
 
 Triggers are a general tool, but they are most commonly used to enforce complex constraints that can't be expressed by foreign keys, nullness, types, or the `check` syntax. 
