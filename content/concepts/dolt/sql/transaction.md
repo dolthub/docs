@@ -18,11 +18,14 @@ Note, most clients operate by default with `AUTOCOMMIT` on. `AUTOCOMMIT` abstrac
 
 ## Difference between MySQL Transaction and Dolt Transaction
 
-Dolt can be thought of having two layers of transactions. The first layer accessed with `BEGIN` and `COMMIT` SQL statements is the same as MySQL. Dolt adds an additional second layer with branches and Dolt commits. Branches can be thought of as long running transactions that may or may not be merged. 
+DOlt uses the Read Committed transaction model whereas MySQL supports [all transaction isolation levels](https://dev.mysql.com/doc/refman/8.0/en/innodb-transaction-isolation-levels.html).
+
 
 ## Interaction with Dolt Version Control
 
 Traditional SQL transactions exist in isolation from Dolt version control features. 
+
+Dolt can be thought of having two layers of transactions. The first layer accessed with `BEGIN` and `COMMIT` SQL statements is the same as MySQL. Dolt adds an additional second layer with branches and Dolt commits. Branches can be thought of as long running transactions that may or may not be merged. 
 
 ## Example
 

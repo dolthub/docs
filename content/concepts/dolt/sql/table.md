@@ -6,7 +6,7 @@ title: Table
 
 ## What is a Table?
 
-Tables are the core unit of database [schema](./schema.md). Tables are defined by a set of columns. Columns can be [primary keys](./primary-key.md) which act as a unique identifier for each row. Once a table schema is defined, rows containing data can be inserted in to the table.
+Tables are the core unit of database [schema](./schema.md). Tables are defined by a set of columns. Columns can be [primary keys](./primary-key.md) which act as a unique identifier for each row. Once a table schema is defined, rows containing data can be inserted into the table.
 
 Table data is stored on disk. The way a database lays out it's table data on disk defines some of the performance characteristics of the database. 
 

@@ -6,11 +6,13 @@ title: Views
 
 ## What is a View?
 
-Views look and act like tables, but the data in views is materialized on the fly using a view definition query that itself references concrete tables. The data is actually stored in the tables the views reference not the view itself.
+Views look and act like tables, but the data in views is materialized on execution using a view definition query that itself references concrete tables. The data is stored in the tables the views reference not the view itself.
 
 ## How to use Views
 
 Views allow you to derive tables using SQL instead of storing a copy of all the data you might want to derive. As a simple example, in a table of employee's salaries, you may store yearly salary but when using the table to calculate monthly salary, you use a view that divides the yearly salary by 12.
+
+Note, accessing views is be slower than accessing a table itself because the database must compute the values returned.
 
 ## Difference between MySQL Views and Dolt Views
 
@@ -20,7 +22,7 @@ There is no difference between MySQL and Dolt views. They are functionally equiv
 
 Dolt view definitions are versioned in the `dolt_schemas` system table. 
 
-If you would like to use a current view with an different version of the data, `as of` syntax works with views.
+If you would like to use a current view with an different version of the data, `as of` syntax works with views. To use a past definition of the view, you must checkout a branch at the commit of the definition you would like to use.
 
 ## Example
 

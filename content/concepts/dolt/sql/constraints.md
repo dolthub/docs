@@ -20,7 +20,7 @@ Foreign key constraints allow you to reference and define relations between othe
 
 ## How to use Constraints
 
-Constraints add further definition to the shape of the data allowed in your database. Constraints programmatically enforce data quality rules as well as communicate to other database users what data to expect in the database.
+Constraints extend the definition of the data allowed in your database. Constraints programmatically enforce data quality rules as well as communicate to other database users what data to expect in the database.
 
 You can add constraints when running `CREATE TABLE` statements or add them to existing tables using `ALTER` statements.
 
@@ -32,7 +32,9 @@ MySQL and Dolt constraints are functionally equivalent.
 
 Constraints can cause merge conflicts. If two different constraints on the same column are merged, it is a merge conflict.
 
-Foreign key constraints can cause merged databases to become inconsistent. For instance, you have a foreign key relationship between two tables. On one branch you add a reference to a parent value that exists. On the other branch you delete the parent value. This will be a valid merge but the parent value will no longer exist. Another case is foreign key constraints that trigger changes on other tables like `DELETE CASCADE` are not triggered on merge. Merges happen at the storage layer, not at the SQL layer. This can get your database into a invalid state. Merge reports this invalid state and you must resolve it before making a Dolt commit. 
+Foreign key constraints can cause merged databases to become inconsistent. For instance, you have a foreign key relationship between two tables. On one branch, you add a reference to a parent value that exists. On the other branch you delete the parent value. This will be a valid merge but the parent value will no longer exist. 
+
+Another case is foreign key constraints that trigger changes on other tables like `DELETE CASCADE` are not triggered on merge. Merges happen at the storage layer, not at the SQL layer. This can get your database into a invalid state. Merge reports this invalid state and you must resolve it before making a Dolt commit. 
 
 ## Example
 

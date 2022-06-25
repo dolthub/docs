@@ -6,7 +6,7 @@ title: Stored Procedures
 
 ## What is a Stored Procedure?
 
-A stored procedure is SQL code that can be accessed using SQL call syntax. Much like a function in other programming languages, you can pass values into a stored procedures. Results are returned as a table.
+A stored procedure is SQL code that can be accessed using SQL `CALL` syntax. Much like a function in other programming languages, you can pass values into a stored procedures. Results are returned as a table.
 
 Database users create procedures. Procedures are schema and are stored along with other schema elements in the database.
 
@@ -16,7 +16,7 @@ Stored Procedures are used to store code you want the database to execute when a
 
 ## Difference between MySQL Stored Procedures and Dolt Stored Procedures
 
-The goal is for Dolt stored procedures to match MySQL stored procedures exactly. As of now, Dolt triggers are missing some functionality, like the DECLARE statement. [Submit an issue](https://github.com/dolthub/dolt/issues) if you need more functionality.
+The goal is for Dolt stored procedures to match MySQL stored procedures exactly. As of now, Dolt triggers are missing some functionality, like the `DECLARE` statement. [Submit an issue](https://github.com/dolthub/dolt/issues) if you need more functionality.
 
 ## Interaction with Dolt Version Control
 

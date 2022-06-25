@@ -22,9 +22,11 @@ In Dolt, databases act like they do in MySQL.
 
 ## Interaction with Dolt Version Control
 
-First, in Dolt, each database has it's own commit graph. So, Dolt version control is limited to a single database. You cannot commit changes across multiple databases in a single commit. You cannot share a log across multiple databases. Branches cannot be made across databases.
+In Dolt, each database has it's own commit graph. So, Dolt version control is limited to a single database. You cannot commit changes across multiple databases in a single commit. You cannot share a log across multiple databases. Branches cannot be made across databases.
 
-Secondly, Dolt databases are the unit of sharing. Clone, push, pull, and fetch act on individual databases. Thus, to create a copy of multiple databases, you must clone from multiple remotes. 
+Dolt databases are the unit of sharing. Clone, push, pull, and fetch act on individual databases. Thus, to create a copy of multiple databases, you must clone from multiple remotes. 
+
+The only SQL statement not versioned in Dolt is `DROP DATABASE`. This statement deletes the Dolt database on disk, removing the database and all of its history. `DROP DATABASE` works this way for SQL tool compatibility as it is common for import tools to issue a drop database to clear all database state before an import. Dolt implements [remotes](../git/remotes.md) like in Git so you can maintain an offline copy for backup using clone, fetch, push, and pull. Maintaining a remote copy allows you to restore in the case of an errant `DROP DATABASE` query.
 
 ## Example
 

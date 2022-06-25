@@ -8,13 +8,13 @@ title: Schema
 
 Schema defines the shape of the data in your database. 
 
-[Tables](./table.md) are the core unit of schema. Tables have columns and rows. Each column in a table has a [type](./types.md). A table can have one or many [primary keys](./primary-key.md), the combination of which identify the row and must be unique. Columns can also be assigned additional [constraints](./constraints.md), including foreign key constraints which are references to other tables in the database. 
+[Tables](./table.md) are the core unit of schema. Tables have columns and rows. Each column in a table has a [type](./types.md). A table can have one or more [primary keys](./primary-key.md), the combination of which identify the row and must be unique. Columns can also be assigned additional [constraints](./constraints.md), including foreign key constraints which are references to other tables in the database. 
 
 Schema also includes [views](./views.md). Views look like tables but the data in them is generated using SQL stored in the view definition. The data is stored in the tables the views reference not the view itself.
 
-[Indexes](./indexes.md) are a part of schema. An index allows read query performance to be improved at the expense of write performance and increased storage. 
+[Secondary Indexes](./indexes.md) are a part of schema. An index allows read query performance to be improved at the expense of write performance and increased storage. 
 
-Finally, schema includes [triggers](./triggers.md) and [procedures](./procedures.md). Triggers and procedures are code stored in your database that executes when a user asks or on specific conditions.
+Finally, schema includes [triggers](./triggers.md) and [procedures](./procedures.md). Triggers and procedures are code stored in your database that executes on specific conditions or when a user asks, respectively.
 
 ## How to use Schema
 

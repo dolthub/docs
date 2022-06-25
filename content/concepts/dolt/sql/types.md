@@ -8,7 +8,7 @@ title: Types
 
 A column in a SQL database has a defined type, like an integer or a string. Some databases are more strict on types than others. MySQL supports [a number of types](https://dev.mysql.com/doc/refman/8.0/en/data-types.html).
 
-Types act as built in [constraints](./constraints.md) to help define the shape of your data. Are you expecting this column to be an integer or will it sometimes have decimal values? Defining the type explains to other database users what you expected when you defined the table.
+Types act as built in [constraints](./constraints.md) to help define the shape of your data. Are you expecting this column to be an integer or will it sometimes have decimal values? Defining the type explains to other database users the shape of the data you expected when you defined the table.
 
 Moreover types act as a way to control the storage footprint of your database. A database must procure the maximum size of the type you define for each row when it stores your data on disk or memory.
 

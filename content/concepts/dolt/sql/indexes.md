@@ -2,7 +2,7 @@
 title: Secondary Indexes
 ---
 
-# Databases
+# Secondary Indexes
 
 ## What is a Secondary Index?
 
