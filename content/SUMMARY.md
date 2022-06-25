@@ -42,7 +42,7 @@
         * [Types](concepts/dolt/sql/types.md)
         * [Indexes](concepts/dolt/sql/indexes.md)
         * [Views](concepts/dolt/sql/views.md)
-        * [Constraints](concepts/dolt/sql/views.md)
+        * [Constraints](concepts/dolt/sql/constraints.md)
         * [Triggers](concepts/dolt/sql/triggers.md)
         * [Procedures](concepts/dolt/sql/procedures.md)
         * [Users/Grants](concepts/dolt/sql/users-grants.md)
