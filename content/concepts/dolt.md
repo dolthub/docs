@@ -31,4 +31,4 @@ We built Dolt using the following axioms:
 
 In order to achieve the above at scale, we needed to start at the bottom; the storage engine of the database. Dolt is built from the storage engine up to offer you the Git experience in a SQL database.  
 
-In this section of the documentation, we will explain Git concepts and how we applied them in Dolt using the above axioms.
+In this section of the documentation, we will explain [Git](./dolt/git/README.md), [SQL](./dolt/sql/README.md), and [Database](./dolt/database/README.md) concepts and how we applied them in Dolt using the above axioms.
