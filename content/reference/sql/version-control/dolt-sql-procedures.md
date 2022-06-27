@@ -17,6 +17,7 @@ title: Dolt SQL Procedures
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
   * [dolt\_revert()](#dolt_revert)
+  * [dolt\_verify\_constraints()](#dolt_verify_constraints)
 
 # Dolt SQL Procedures
 
