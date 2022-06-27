@@ -661,10 +661,11 @@ CREATE TABLE child (
 );
 ```
 
-1. A simple case:
+A simple case:
 
 ```sql
--- enable dolt_force_transaction_commit so that we can inspect the violation in our working set
+-- enable dolt_force_transaction_commit so that we can inspect the 
+-- violation in our working set
 SET dolt_force_transaction_commit = ON;
 SET FOREIGN_KEY_CHECKS = OFF;
 INSERT INTO PARENT VALUES (1);
@@ -699,7 +700,7 @@ SELECT violation_type, pk, parent_fk from dolt_constraint_violations_child;
 */
 ```
 
-2. Using `--all` to verify all rows:
+Using `--all` to verify all rows:
 
 ```sql
 SET DOLT_FORCE_TRANSACTION_COMMIT = ON;
@@ -748,7 +749,7 @@ SELECT * from dolt_constraint_violations_child;
 */
 ```
 
-3. Checking specific tables only:
+Checking specific tables only:
 
 ```sql
 SET DOLT_FORCE_TRANSACTION_COMMIT = ON;
