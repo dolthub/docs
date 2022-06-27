@@ -92,7 +92,9 @@ databases, we made the writable API asynchronous. Therefore we needed to add two
 endpoints for executing these kinds of queries using the SQL API.
 
 We can use our [SHAQ database](https://www.dolthub.com/repositories/dolthub/SHAQ) as an
-example. Let's say we want to update a player's id in the player stats table.
+example. These are the steps we'd take to update a player's id in the player stats table.
+
+#### 1. Run query
 
 First, we want to hit the write endpoint with our `UPDATE` query. This will start an
 asynchronous operation.
@@ -128,6 +130,8 @@ The yielded JSON results include an `operation_name`.
   "operation_name": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
 }
 ```
+
+#### 2. Poll operation
 
 `operation_name` can be used to poll the second endpoint to check if the operation is done.
 
@@ -172,6 +176,8 @@ A `done` operation will yield a response that includes some query metadata, incl
 }
 ```
 
+#### 3. View changes
+
 Since a lot of Dolt's functionality is exposed via SQL, we can use the commit ids to query
 the [`dolt_commit_diff_$tablename`
 table](../../reference/sql/dolt-system-tables.md#dolt_commit_diff_usdtablename) to view the
@@ -190,6 +196,8 @@ diff_res.json()
 
 We can repeat this process with as many queries as we want. Every query will create a
 commit on the `<from_branch>`.
+
+#### 4. Merge changes
 
 Once we're satisfied with our changes, we can merge our branches by hitting the first
 endpoint with an empty query.
