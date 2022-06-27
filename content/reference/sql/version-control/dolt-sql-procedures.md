@@ -17,6 +17,7 @@ title: Dolt SQL Procedures
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
   * [dolt\_revert()](#dolt_revert)
+  * [dolt\_verify\_constraints()](#dolt_verify_constraints)
 
 # Dolt SQL Procedures
 
@@ -617,4 +618,169 @@ CALL DOLT_PULL('origin');
 
 -- View a log of new commits
 SELECT * FROM dolt_log LIMIT 5;
+```
+
+## `DOLT_VERIFY_CONSTRAINTS()`
+
+Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
+defined table constraints. Currently, the command only verifies foreign key
+constraints. If any constraints are violated they are written to the
+[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations) table.
+
+`DOLT_VERIFY_CONSTRAINTS` by default does not detect constraints for row changes
+that have been previously committed. The `--all` option can be specified if you
+wish to validate all rows in the database. If `FOREIGN_KEY_CHECKS` has been disabled in prior commits,
+you may want to use the `--all` option to ensure that the current state is
+consistent and no violated constraints are missed.
+
+### Arguments and Options
+
+`<table>`: The table(s) to check constraints on. If omitted, checks all tables.
+
+`-a`, `--all`:
+ Verifies constraints against every row.
+
+`-o`, `--output-only`:
+Disables writing results to the
+[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
+system table.
+
+### Example
+
+For the below examples consider the following schema:
+
+```sql
+CREATE TABLE parent (
+  pk int PRIMARY KEY
+);
+
+CREATE TABLE child (
+  pk int PRIMARY KEY,
+  parent_fk int,
+  FOREIGN KEY (parent_fk) REFERENCES parent(pk)
+);
+```
+
+A simple case:
+
+```sql
+-- enable dolt_force_transaction_commit so that we can inspect the 
+-- violation in our working set
+SET dolt_force_transaction_commit = ON;
+SET FOREIGN_KEY_CHECKS = OFF;
+INSERT INTO PARENT VALUES (1);
+-- Violates child's foreign key constraint
+INSERT INTO CHILD VALUES (1, -1);
+
+CALL DOLT_VERIFY_CONSTRAINTS();
+/*
++------------+
+| violations |
++------------+
+| 1          |
++------------+
+*/
+
+SELECT * from dolt_constraint_violations;
+/*
++-------+----------------+
+| table | num_violations |
++-------+----------------+
+| child | 1              |
++-------+----------------+
+*/
+
+SELECT violation_type, pk, parent_fk from dolt_constraint_violations_child;
+/*
++----------------+----+-----------+
+| violation_type | pk | parent_fk |
++----------------+----+-----------+
+| foreign key    | 1  | -1        |
++----------------+----+-----------+
+*/
+```
+
+Using `--all` to verify all rows:
+
+```sql
+SET DOLT_FORCE_TRANSACTION_COMMIT = ON;
+SET FOREIGN_KEY_CHECKS = OFF;
+INSERT INTO PARENT VALUES (1);
+INSERT INTO CHILD VALUES (1, -1);
+CALL DOLT_COMMIT('-am', 'violating rows');
+
+CALL DOLT_VERIFY_CONSTRAINTS();
+/*
+No violations are returned since there are no changes in the working set.
+
++------------+
+| violations |
++------------+
+| 0          |
++------------+
+*/
+
+SELECT * from dolt_constraints_violations_child;
+/*
++----------------+----+-----------+----------------+
+| violation_type | pk | parent_fk | violation_info |
++----------------+----+-----------+----------------+
++----------------+----+-----------+----------------+
+*/
+
+CALL DOLT_VERIFY_CONSTRAINTS('--all');
+/*
+When all rows are considered, constraint violations are found.
+
++------------+
+| violations |
++------------+
+| 1          |
++------------+
+*/
+
+SELECT * from dolt_constraint_violations_child;
+/*
++----------------+----+-----------+
+| violation_type | pk | parent_fk |
++----------------+----+-----------+
+| foreign key    | 1  | -1        |
++----------------+----+-----------+
+*/
+```
+
+Checking specific tables only:
+
+```sql
+SET DOLT_FORCE_TRANSACTION_COMMIT = ON;
+SET FOREIGN_KEY_CHECKS = OFF;
+INSERT INTO PARENT VALUES (1);
+INSERT INTO CHILD VALUES (1, -1);
+
+CALL DOLT_VERIFY_CONSTRAINTS('parent');
+/*
++------------+
+| violations |
++------------+
+| 0          |
++------------+
+*/
+
+CALL DOLT_VERIFY_CONSTRAINTS('child');
+/*
++------------+
+| violations |
++------------+
+| 1          |
++------------+
+*/
+
+SELECT * from dolt_constraint_violations_child;
+/*
++----------------+----+-----------+
+| violation_type | pk | parent_fk |
++----------------+----+-----------+
+| foreign key    | 1  | -1        |
++----------------+----+-----------+
+*/
 ```
