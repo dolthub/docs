@@ -1669,9 +1669,17 @@ dolt constraints verify [--all] [--output-only] [<table>...]
 
 ### Description
 
-This command verifies that the defined constraints on the given table(s)—such as a foreign key—are correct and satisfied.
-By default, compares the working set to to the HEAD commit. Additionally, by default this updates this table's associated
-dolt_constraint_violations system table. Both of these default behaviors may be changed with the appropriate parameters.
+Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
+defined table constraints. Currently, the command only verifies foreign key
+constraints. If any constraints are violated they are written to the
+[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
+table.
+
+`dolt constraints verify` by default may not detect constraints for row changes
+that have been previously committed. The `--all` option can be specified if you
+wish to validate all rows in the database. If `FOREIGN_KEY_CHECKS` has been disabled in prior commits,
+you may want to use the `--all` option to ensure that the current state is
+consistent and no violated constraints are missed.
 
 ### Arguments and options
 
@@ -1681,9 +1689,9 @@ dolt_constraint_violations system table. Both of these default behaviors may be 
 Verifies constraints against every row.
 
 `-o`, `--output-only`:
-Disables writing the results to the constraint violations table.
-
-
+Disables writing results to the
+[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
+system table.
 
 ## `dolt read-tables`
 
