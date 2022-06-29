@@ -220,11 +220,11 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `IS_USED_LOCK()`                  | ✅        |                                                                                                |
 | `IS_UUID()`                       | ❌        |                                                                                                |
 | `IS`                              | ✅        |                                                                                                |
-| `JSON_ARRAY()`                    | ❌        |                                                                                                |
-| `JSON_ARRAYAGG()`                 | ❌        |                                                                                                |
+| `JSON_ARRAY()`                    | ✅        |                                                                                                |
+| `JSON_ARRAYAGG()`                 | ✅        |                                                                                                |
 | `JSON_ARRAY_APPEND()`             | ❌        |                                                                                                |
 | `JSON_ARRAY_INSERT()`             | ❌        |                                                                                                |
-| `JSON_CONTAINS()`                 | ❌        |                                                                                                |
+| `JSON_CONTAINS()`                 | ✅        |                                                                                                |
 | `JSON_CONTAINS_PATH()`            | ❌        |                                                                                                |
 | `JSON_DEPTH()`                    | ❌        |                                                                                                |
 | `JSON_EXTRACT()`                  | ✅        |                                                                                                |
@@ -233,9 +233,9 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_LENGTH()`                   | ❌        |                                                                                                |
 | `JSON_MERGE()`                    | ❌        |                                                                                                |
 | `JSON_MERGE_PATCH()`              | ❌        |                                                                                                |
-| `JSON_MERGE_PRESERVE()`           | ❌        |                                                                                                |
-| `JSON_OBJECT()`                   | ❌        |                                                                                                |
-| `JSON_OBJECTAGG()`                | ❌        |                                                                                                |
+| `JSON_MERGE_PRESERVE()`           | ✅        |                                                                                                |
+| `JSON_OBJECT()`                   | ✅        |                                                                                                |
+| `JSON_OBJECTAGG()`                | ✅        |                                                                                                |
 | `JSON_OVERLAPS()`                 | ❌        |                                                                                                |
 | `JSON_PRETTY()`                   | ❌        |                                                                                                |
 | `JSON_QUOTE()`                    | ❌        |                                                                                                |
