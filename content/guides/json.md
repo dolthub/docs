@@ -14,12 +14,23 @@ The first thing you have to decide is whether you actually want JSON in your dat
 
 This sounds like a lot of work and it is. Relationally structured data has a lot of built in type and shape constraints that often enhance data quality. This is sort of akin to the choice between strongly typed languages like Go or Java versus weakly typed languages like Python or Javascript. In weakly typed languages, you can get started very quickly because you don't have to worry about types. As the code gets big or more people are working on it, there are no types so it's easier to make mistakes. A similar trade off is made when choosing document style databases over relational databases. You get started easily but you have no schema so the document can contain anything.
 
-Moreover, 
+Moreover, in Dolt, the versioning primitive is tables. Currently, if you have a 1,000 value JSON object and you change one value, the diff in Dolt will be the entire 1,000 value object not the single value. In storage, we do a little better than this. We chunk the JSON object up so each version on disk may share some chunks. Obviously, if there is demand for better JSON diff capabilities, we can build them but currently Dolt handles relational data better.
 
+# I really want JSON!
 
-# Example
+OK. We'll stop trying to talk you out of it. 
 
-1. Create a dolt database and a table with a json column
+The way to add JSON to your Dolt database is to make a table containing a column with type `JSON`. Once the table is created you add JSON data using `INSERT` queries, modify JSON data using `UPDATE` queries, and delete JSON data using `DELETE` queries. 
+
+If you want to do anything more complicated with your JSON objects, you [use a built in function](https://dev.mysql.com/doc/refman/5.7/en/json-function-reference.html). For instance you can query a specific field using `JSON_EXTRACT`.
+
+Note, in this model, you can mix relational data with JSON data. You can kind of have the best of both worlds, descriptive data in columns and complicated hierarchical data in a JSON column. 
+
+# Just show me.
+
+I'm going to use the command line for the example but all the SQL statements work in the [SQL server context](../introduction/getting-started/database.md) as well. 
+
+1. Create a dolt database and a table with a JSON type column
 
 ```
 dolt $ mkdir json-example
@@ -57,13 +68,12 @@ Date:  Wed Jun 29 09:26:03 -0700 2022
         Created json example table
 
 ```
-4. Insert and read back dome json
+
+4. Insert and read back some json
 
 ```
 json-example $ dolt sql -q "insert into json_example values (0, '{\"this\": \"is\", \"json\": \"things\"}')";
 Query OK, 1 row affected
-json-example $ select * from json_example;
--bash: syntax error near unexpected token `from'
 json-example $ dolt sql -q "select * from json_example"
 +----+----------------------------------+
 | id | myjson                           |
@@ -72,7 +82,7 @@ json-example $ dolt sql -q "select * from json_example"
 +----+----------------------------------+
 ```
 
-NOTE: I needed to backtick the quotes to make it work in bash 
+NOTE: I needed to escape the double quotes to make it work in bash 
 
 5. use JSON_EXTRACT to read individual values
 
@@ -103,6 +113,11 @@ Date:  Wed Jun 29 09:35:46 -0700 2022
 json-example $ dolt sql -q "update  json_example set myjson='{\"this\": \"is\", \"json\": \"things\", \"different\":\"see\"}' where id=0";
 Query OK, 1 row affected
 Rows matched: 1  Changed: 1  Warnings: 0
+```
+
+8. See the diff
+
+```
 json-example $ dolt diff
 diff --dolt a/json_example b/json_example
 --- a/json_example @ shon7m83dohveufikt366p7krpmpn7tg
