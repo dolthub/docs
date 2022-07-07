@@ -144,6 +144,11 @@ This system variable controls the current staged root value. Setting
 it is an expert use case that can have very many unexpected
 consequences. Selecting it is useful for diagnostics.
 
+## @@dbname_default_branch
+
+This system variable controls the default branch that all new session
+working sets will be initialized at.
+
 # Persisting System Variables
 
 Dolt supports a limited form of system variable persistence. The same
