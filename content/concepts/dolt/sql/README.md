@@ -15,7 +15,7 @@ Concepts will be tackled in the following order:
 1. [Databases](./databases.md)
 2. [Schema](./schema.md)
 3. [Tables](./table.md)
-4. [Primary Keys]((./primary-key.md))
+4. [Primary Keys](./primary-key.md)
 5. [Types](./types.md)
 6. [Indexes](./indexes.md)
 7. [Views](./views.md)
