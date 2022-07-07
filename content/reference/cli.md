@@ -261,9 +261,9 @@ Runs a SQL query
 ```bash
 dolt sql 
 dolt sql < script.sql
-dolt sql [--multi-db-dir <directory>] [-r <result format>]
+dolt sql [--data-dir <directory>] [--doltcfg-dir <directory>] [-r <result format>]
 dolt sql -q <query> [-r <result format>] [-s <name> -m <message>] [-b]
-dolt sql -q <query> --multi-db-dir <directory> [-r <result format>] [-b]
+dolt sql -q <query> --data-dir <directory> --doltcfg-dir <directory> [-r <result format>] [-b]
 dolt sql -x <name>
 dolt sql --list-saved
 ```
@@ -276,7 +276,10 @@ Multiple SQL statements must be separated by semicolons. Use `-b` to enable batc
 
 Queries can be saved to the query catalog with `-s`. Alternatively `-x` can be used to execute a saved query by name.
 
-By default this command uses the dolt database in the current working directory, as well as any dolt databases that are found in the current directory. Any databases created with CREATE DATABASE are placed in the current directory as well. Running with `--multi-db-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored.
+By default this command uses the dolt database in the current working directory, as well as any dolt databases that are
+found in the current directory. Any databases created with CREATE DATABASE are placed in the current directory as well.
+Running with `--data-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must
+be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored.
 
 **Arguments and options**
 
@@ -301,8 +304,11 @@ Used with --query and --save, saves the query with the descriptive message given
 `-b`, `--batch`:
 Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
 
-`--multi-db-dir`:
+`--data-dir`:
 Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within
+
+`--doltcfg-dir`:
+Defines a directory that contains configuration files for dolt
 
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
@@ -311,7 +317,7 @@ Continue running queries on an error. Used for batch mode only.
 Execute statements from the file given
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Without this flag, the database has a single user with all permissions, and more cannot be added.
+Path to a file to load and store users and grants.
 
 
 
@@ -323,7 +329,7 @@ Start a MySQL-compatible server.
 
 ```bash
 dolt sql-server --config <file>
-dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
+dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--data-dir <directory>] [--doltcfg-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
 ```
 
 **Description**
@@ -430,8 +436,11 @@ Disable modification of the database
 Defines the level of logging provided
 Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
 
-`--multi-db-dir`:
+`--data-dir`:
 Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+
+`--doltcfg-dir`:
+Defines a directory that contains configuration files for dolt
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server
@@ -446,7 +455,7 @@ Set the number of connections handled by the server (default `100`)
 Indicate whether to `load` or `ignore` persisted global variables (default `load`)
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Without this flag, the database has a single user with all permissions, and more cannot be added.
+Path to a file to load and store users and grants.
 
 
 
@@ -458,7 +467,7 @@ Starts a built-in MySQL client.
 
 ```bash
 dolt sql-client [-d] --config <file>
-dolt sql-client [-d] [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--multi-db-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
+dolt sql-client [-d] [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--data-dir <directory>] [--doltcfg-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
 ```
 
 **Description**
@@ -497,8 +506,11 @@ Disable modification of the database
 Defines the level of logging provided
 Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
 
-`--multi-db-dir`:
+`--data-dir`:
 Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+
+`--doltcfg-dir`:
+Defines a directory that contains configuration files for dolt
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server
@@ -513,7 +525,7 @@ Set the number of connections handled by the server (default `100`)
 Indicate whether to `load` or `ignore` persisted global variables (default `load`)
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Without this flag, the database has a single user with all permissions, and more cannot be added.
+Path to a file to load and store users and grants.
 
 `-d`, `--dual`:
 Causes this command to spawn a dolt server that is automatically connected to.
