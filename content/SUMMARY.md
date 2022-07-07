@@ -47,6 +47,7 @@
         * [Procedures](concepts/dolt/sql/procedures.md)
         * [Users/Grants](concepts/dolt/sql/users-grants.md)
         * [Transactions](concepts/dolt/sql/transaction.md)
+        * [System Variables](concepts/dolt/sql/system-variables.md)
 * [DoltHub/DoltLab](concepts/dolthub.md)
     * [Permissions](concepts/dolthub/permissions.md)
     * [Pull Requests](concepts/dolthub/prs.md)
