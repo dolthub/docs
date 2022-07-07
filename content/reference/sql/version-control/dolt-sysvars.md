@@ -28,12 +28,6 @@ To switch heads, set this session variable. Use either
 
 `SET @@mydb_head_ref = 'feature-branch'`
 
-## @@dolt_default_branch
-
-This system variable toggles the default database branch on server
-(or SQL engine) instantiation. Setting this changes the active branch
-and working set new server sessions connect to.
-
 ## @@dolt_transaction_commit
 
 When set to `1`, this system variable creates a Dolt commit for every
@@ -143,6 +137,13 @@ consequences. Selecting it is useful for diagnostics.
 This system variable controls the current staged root value. Setting
 it is an expert use case that can have very many unexpected
 consequences. Selecting it is useful for diagnostics.
+
+## @@dbname_default_branch
+
+This system variable controls a database's default branch, defaulting
+to the `repo.json` HEAD. New session active branches and working sets will
+reflect the new default. Sessions started before a variable change are
+unimpacted.
 
 # Persisting System Variables
 

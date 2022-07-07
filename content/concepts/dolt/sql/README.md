@@ -24,3 +24,4 @@ Concepts will be tackled in the following order:
 10. [Procedures](./procedures.md)
 11. [Users/Grants](./users-grants.md)
 12. [Transactions](./transaction.md)
+13. [System Variables](./system-variables.md)
