@@ -146,8 +146,10 @@ consequences. Selecting it is useful for diagnostics.
 
 ## @@dbname_default_branch
 
-This system variable controls the default branch that all new session
-working sets will be initialized at.
+This system variable controls a specific database's default branch for
+the server, defaulting to the `repo.json` HEAD. Sessions at edit time
+will remain on their existing branches. New session working
+sets will beinitialized at the default branch.
 
 # Persisting System Variables
 
