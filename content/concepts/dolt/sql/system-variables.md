@@ -7,7 +7,7 @@ title: System Variables
 ## What is a System Variable?
 
 System variables are server-side key-value pairs.  These variables have
-lifecycles between server restarts (`PERSIST`), between session within a
+lifecycles between server restarts (`PERSIST`), between sessions within a
 single server lifetime (`GLOBAL`), and within a single client session
 (`SESSION`).  Variables for narrowing scopes are initialized
 hierarchically: `PERSIST` -> `GLOBAL` -> `SESSION`.
