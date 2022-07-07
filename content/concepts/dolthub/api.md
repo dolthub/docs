@@ -253,7 +253,8 @@ Download the table `incidents` from `main` branch:
 import requests
 local_file = 'incidents_main.csv'
 res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/main/incidents')
-with open(local_file, 'wb')as file: file.write(res.content)
+with open(local_file, 'wb') as file:
+  file.write(res.content)
 ```
 
 Download the table `incidents` at a commit hash:
