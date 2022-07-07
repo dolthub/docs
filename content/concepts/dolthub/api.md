@@ -4,13 +4,15 @@ title: API
 
 # API
 
-## What is the SQL API?
+## SQL API
+
+### What is the SQL API?
 
 DoltHub provides an API for accessing Dolt databases via web requests. A Dolt database can be attached to a DoltHub remote and pushed. At that point DoltHub provides an API against which users can execute Dolt SQL with results returned as JSON.
 
-## Example
+### Example
 
-### Reading
+#### Reading
 
 We will use an example DoltHub database, [dolthub/ip-to-country](https://www.dolthub.com/repositories/dolthub/ip-to-country/) and the Python `requests` library to explore it in the Python console:
 
@@ -85,7 +87,7 @@ You can also explore our SQL API on DoltHub whenever you execute a query:
 
 ![SQL API Tab](../../.gitbook/assets/sql-api-tab-dolthub.png)
 
-### Writing
+#### Writing
 
 Since adding, updating, and deleting data can take a bit of time to execute against larger
 databases, we made the writable API asynchronous. Therefore we needed to add two new HTTP
@@ -216,7 +218,7 @@ pollOperation(merge_json['operation_name'])
 You can learn more about using the writable SQL API
 [here](https://www.dolthub.com/blog/2022-01-12-sql-api-writes/).
 
-## Authentication
+### Authentication
 
 API tokens can be used to authenticate calls to the SQL API over Basic Authentication.
 This is useful for executing SQL queries against private databases or executing write queries.
@@ -242,3 +244,72 @@ res.json()
 ```
 
 Please note: You must include a ref name (branch, tag, commit hash, etc) when making authenticated calls to the SQL API using a token. Unauthenticated API requests do not require this. They use the default branch (`main` or `master`).
+
+## CSV API
+
+DoltHub also provides a CSV API for fetching table data as CSVs. You can request a CSV for an individual table or a zip of all table CSVs at a specified commit or branch.
+
+### Example
+
+We will use an example DoltHub database, [dolthub/us-jails](https://www.dolthub.com/repositories/dolthub/us-jails/) and the Python `requests` library to explore it in the Python console.
+
+#### One Table
+
+Download the table `incidents` from `main` branch:
+
+```python
+import requests
+local_file = 'incidents_main.csv'
+res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/main/incidents')
+with open(local_file, 'wb') as file:
+  file.write(res.content)
+```
+
+Download the table `incidents` at a commit hash:
+
+```python
+import requests
+local_file = 'incidents_commit.csv'
+res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/u8s83gapv7ghnbmrtpm8q5es0dbl7lpd/incidents')
+with open(local_file, 'wb') as file:
+  file.write(res.content)
+```
+
+#### All Tables
+
+Download a ZIP file of all database tables from the `main` branch:
+
+```python
+import requests
+local_file = 'us-jails_main.csv'
+res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/main')
+with open(local_file, 'wb') as file:
+  file.write(res.content)
+```
+
+Download a ZIP file of all database tables at a commit hash:
+
+```python
+import requests
+local_file = 'us-jails_commit.csv'
+res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/u8s83gapv7ghnbmrtpm8q5es0dbl7lpd')
+with open(local_file, 'wb') as file:
+  file.write(res.content)
+```
+
+### Authentication
+
+API tokens can be used to authenticate calls to the CSV API over Basic Authentication. This is useful for downloading data from private databases.
+
+You can use the token in the header when download CSVs from a private database.
+
+```python
+import requests
+local_file = 'private_db_main.csv'
+res = requests.get(
+  'https://www.dolthub.com/csv/owner/private-db/main',
+  headers={ "authorization": "token [TOKEN YOU COPIED]" },
+)
+with open(local_file, 'wb') as file:
+    file.write(res.content)
+```
