@@ -4,6 +4,14 @@ title: Mac
 
 # Mac
 
+## Install Script
+
+The download script for Linux can be used, as OSX is a `*nix` system. It will download the appropriate binary, and place it in `/usr/local/bin`:
+
+```text
+sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'
+```
+
 ## Homebrew
 
 We publish a Homebrew formula with every release, so Mac users using Homebrew for package management can build Dolt from source with a single command:
@@ -24,10 +32,10 @@ $ ls -ltr $(which dolt)
 lrwxr-xr-x  1 oscarbatori  admin  30 Aug 26 16:49 /usr/local/bin/dolt -> ../Cellar/dolt/0.18.3/bin/dolt
 ```
 
-## Install Script
+## MacPorts
 
-For non-Homebrew OSX users, the download script for Linux can be used, as OSX is a `*nix` system. It will download the appropriate binary, and place it in `/usr/local/bin`:
+On macOS, Dolt can also be installed via a [community-managed port](https://ports.macports.org/port/dolt/) via [MacPorts](https://www.macports.org):
 
-```text
-sudo bash -c 'curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash'
+```sh
+sudo port install dolt
 ```
