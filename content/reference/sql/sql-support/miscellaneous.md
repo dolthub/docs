@@ -6,15 +6,15 @@ title: Miscellaneous
 
 ## Misc features
 
-| Component                         | Supported | Notes and limitations                                                    |
-| :-------------------------------- | :-------- | :----------------------------------------------------------------------- |
-| Information schema                | ✅        |                                                                          |
-| Views                             | ✅        |                                                                          |
-| Window functions                  | 🟠        | Only `ROW_NUMBER()` is supported currently, and other limitations apply. |
-| Common table expressions \(CTEs\) | ✅        |                                                                          |
-| Stored procedures                 | ✅         | Currently in alpha release                                               |
-| Cursors                           | ❌        |                                                                          |
-| Triggers                          | ✅        |                                                                          |
+| Component                         | Supported  | Notes and limitations                                                                                           |
+| :-------------------------------- |:-----------|:----------------------------------------------------------------------------------------------------------------|
+| Information schema                | ✅          |                                                                                                                 |
+| Views                             | ✅          |                                                                                                                 |
+| Window functions                  | 🟠         | Some functions not supported, see [window function docs](./expressions-functions-operators.md#window-functions) |
+| Common table expressions \(CTEs\) | ✅          |                                                                                                                 |
+| Stored procedures                 | 🟠         | Not all statements supported, see [compound statements](./supported-statements.md#compound-statements)          |
+| Cursors                           | ❌          |                                                                                                                 |
+| Triggers                          | ✅          |                                                                                                                 |
 
 ## Collations and character sets
 

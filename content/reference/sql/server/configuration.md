@@ -33,7 +33,7 @@ performance:
 
 The full list of supported fields can be found in the [docs for the
 sql-server
-command](https://dolt.gitbook.io/dolt-dev/reference/cli.md#dolt-sql-server).
+command](../../cli.md#dolt-sql-server).
 
 ## System variables
 
