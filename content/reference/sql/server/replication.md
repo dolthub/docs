@@ -40,8 +40,8 @@ dolt config --add --local sqlserver.global.dolt_read_replica_remote <name>
 Configs can be set equivalently in an SQL session:
 
 ```SQL
-SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
-SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
+SET @@PERSIST.dolt_replicate_to_remote = '<name>'
+SET @@PERSIST.dolt_read_replica_remote = '<name>'
 ```
 
 _Note: after changing replication configuration options, the Dolt server process
@@ -52,7 +52,7 @@ needs to be restarted before replication changes will take effect._
 To push on write, a valid remote middleman must be configured:
 
 ```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_to_remote = 'origin'"
+dolt sql -q "SET @@PERSIST.dolt_replicate_to_remote = 'origin'"
 ```
 
 There are two ways to trigger pushing to a remote middleman: a Dolt commit,
@@ -68,15 +68,15 @@ SELECT DOLT_COMMIT('-am', 'message')
 Read replicas are instantiated with a remote:
 
 ```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_read_replica_remote = 'origin'"
+dolt sql -q "SET @@PERSIST.dolt_read_replica_remote = 'origin'"
 ```
 
 A complete replication setup requires a pull spec with either 1) a set
 of heads, or 2) all heads (but not both):
 
 ```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'main,feature1'"
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_all_heads = 1'"
+dolt sql -q "SET @@PERSIST.dolt_replicate_heads = 'main,feature1'"
+dolt sql -q "SET @@PERSIST.dolt_replicate_all_heads = 1'"
 ```
 
 On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
