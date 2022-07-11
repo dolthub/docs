@@ -625,14 +625,14 @@ SELECT * FROM dolt_log LIMIT 5;
 ## `DOLT_TAG()`
 
 Creates a new tag that points at specified commit ref. Works exactly like
-`dolt tag` on the CLI, and takes the same arguments except for listing tags. 
-To list existing tags, use `dolt_tags` system table.
+[`dolt tag`](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags. 
+To list existing tags, use [`dolt_tags`](./dolt-system-tables.md#dolt_tags) system table.
 
 ```sql
 
 CALL DOLT_TAG('tag_name','commit_ref');
 CALL DOLT_TAG('-m','message','tag_name','commit_ref');
-CALL DOLT_ADD('-d','tag_name');
+CALL DOLT_TAG('-d','tag_name');
 ```
 
 ### Options

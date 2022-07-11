@@ -110,7 +110,7 @@ This is to view the changes between two arbitrary `commit`.
 
 The diffs displayed can be limited to show the first N by providing the parameter `--limit N` where `N` is the number of diffs to display.
 
-In order to filter which diffs are displayed `--where key=value` can be used.  The key in this case would be either `to_COLUMN_NAME` or `from_COLUMN_NAME`. where `from_COLUMN_NAME=value` would filter based on the original value and `to_COLUMN_NAME` would select based on its updated value.
+To filter which data rows are displayed, use `--where <SQL expression>`. Table column names in the filter expression must be prefixed with `from_` or `to_`, e.g. `to_COLUMN_NAME > 100` or `from_COLUMN_NAME + to_COLUMN_NAME = 0`.
 
 
 **Arguments and options**
@@ -620,6 +620,9 @@ When in list mode, show only remote tracked branches. When with -d, delete a rem
 `--show-current`:
 Print the name of the current branch
 
+`-t`, `--track`:
+When creating a new branch, set up 'upstream' configuration.
+
 
 
 ## `dolt checkout`
@@ -632,6 +635,7 @@ Switch branches or restore working tree tables
 dolt checkout <branch>
 dolt checkout <table>...
 dolt checkout -b <new-branch> [<start-point>]
+dolt checkout --track <remote>/<branch>
 ```
 
 **Description**
@@ -656,6 +660,9 @@ Create a new branch named `<new_branch>` and start it at `<start_point>`.
 
 `-f`, `--force`:
 If there is any changes in working set, the force flag will wipe out the current changes and checkout the new branch.
+
+`-t`, `--track`:
+When creating a new branch, set up 'upstream' configuration.
 
 
 
@@ -1706,7 +1713,7 @@ No options for this command.
 
 ## `dolt constraints verify`
 
-Verifies a table's constraints
+Verifies that working set changes satisfy table constraints
 
 **Synopsis**
 
@@ -1716,29 +1723,21 @@ dolt constraints verify [--all] [--output-only] [<table>...]
 
 **Description**
 
-Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
-defined table constraints. Currently, the command only verifies foreign key
-constraints. If any constraints are violated they are written to the
-[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
-table.
-
-`dolt constraints verify` by default may not detect constraints for row changes
-that have been previously committed. The `--all` option can be specified if you
-wish to validate all rows in the database. If `FOREIGN_KEY_CHECKS` has been disabled in prior commits,
-you may want to use the `--all` option to ensure that the current state is
-consistent and no violated constraints are missed.
+Verifies that inserted or modified rows in the working set satisfy the defined table constraints.
+If any constraints are violated, they are documented in the dolt_constraint_violations system table.
+By default, this command does not consider row changes that have been previously committed.
 
 **Arguments and options**
 
 `<table>`: The table(s) to check constraints on. If omitted, checks all tables.
 
 `-a`, `--all`:
-Verifies constraints against every row.
+Verifies that all rows in the database do not violate constraints instead of just rows modified or inserted in the working set.
 
 `-o`, `--output-only`:
-Disables writing results to the
-[DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
-system table.
+Disables writing violated constraints to the constraint violations table.
+
+
 
 ## `dolt read-tables`
 
