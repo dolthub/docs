@@ -332,9 +332,9 @@ SELECT * FROM dolt_schemas;
 
 ## `dolt_tags`
 
-`dolt_tags` has all tags information created on the database.
+`dolt_tags` shows information for all active tags in the current database.
 
-DOLT_TAG() procedure can be used to INSERT and DELETE tags on the `dolt_remotes table.
+[DOLT_TAG()](./dolt-sql-procedures.md#dolt_tag) procedure can be used to INSERT and DELETE tags on the `dolt_tags` table.
 
 ### Schema
 
