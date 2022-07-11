@@ -16,7 +16,7 @@ For disaster recovery, if your master server goes offline, your database can sti
 
 To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your master still takes reads, each read replica serves 1/N+1 percent of the read traffic.
 
-## Difference between MySQL Replication and Dolt Replication
+## Differences between MySQL Replication and Dolt Replication
 
 Dolt does not support MySQL style replication. [MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt does not have a binary log.
 
