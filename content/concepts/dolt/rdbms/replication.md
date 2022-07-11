@@ -14,7 +14,7 @@ Replication is used for disaster recovery and to increase read throughput by dis
 
 For disaster recovery, if your master server goes offline, your database can still serve read traffic from its replicas. Often a manual or automated process can elect and configure a replica to be the master instance limiting downtime.
 
-To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your master still takes reads, each read replica serves 1/N+1 percent of the read traffic.
+To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your master still takes reads, each read replica serves 1/N+1 percent of the read traffic. Note, in this set up your application must be aware of the replicas. The database does not route requests automatically.  
 
 ## Differences between MySQL Replication and Dolt Replication
 
