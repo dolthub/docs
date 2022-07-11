@@ -25,7 +25,7 @@
 
 ## Concepts
 * [Dolt](concepts/dolt.md)
-    * [Git](concepts/git/README.md)
+    * [Git](concepts/dolt/git/README.md)
         * [Commits](concepts/dolt/git/commits.md)
         * [Log](concepts/dolt/git/log.md)
         * [Diff](concepts/dolt/git/diff.md)
