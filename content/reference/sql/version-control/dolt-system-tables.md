@@ -72,14 +72,14 @@ FROM dolt_branches
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 | name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| 2011   | t2sbbg3h6uo93002frfj3hguf22f1uvh | bheni            | brian@dolthub.com     | 2020-01-22 20:47:31.213 +0000 UTC | import 2011 column mappings   |
-| 2012   | 7gonpqhihgnv8tktgafsg2oovnf3hv7j | bheni            | brian@dolthub.com     | 2020-01-22 23:01:39.08 +0000 UTC  | import 2012 allnoagi data     |
-| 2013   | m9seqiabaefo3b6ieg90rr4a14gf6226 | bheni            | brian@dolthub.com     | 2020-01-22 23:50:10.639 +0000 UTC | import 2013 zipcodeagi data   |
-| 2014   | v932nm88f5g3pjmtnkq917r2q66jm0df | bheni            | brian@dolthub.com     | 2020-01-23 00:00:43.673 +0000 UTC | update 2014 column mappings   |
-| 2015   | c7h0jc23hel6qbh8ro5ertiv15to9g9o | bheni            | brian@dolthub.com     | 2020-01-23 00:04:35.459 +0000 UTC | import 2015 allnoagi data     |
-| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com     | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
-| 2017   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com     | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
-| main   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com     | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
+| 2011   | t2sbbg3h6uo93002frfj3hguf22f1uvh | bheni            | brian@dolthub.com      | 2020-01-22 20:47:31.213 +0000 UTC | import 2011 column mappings   |
+| 2012   | 7gonpqhihgnv8tktgafsg2oovnf3hv7j | bheni            | brian@dolthub.com      | 2020-01-22 23:01:39.08 +0000 UTC  | import 2012 allnoagi data     |
+| 2013   | m9seqiabaefo3b6ieg90rr4a14gf6226 | bheni            | brian@dolthub.com      | 2020-01-22 23:50:10.639 +0000 UTC | import 2013 zipcodeagi data   |
+| 2014   | v932nm88f5g3pjmtnkq917r2q66jm0df | bheni            | brian@dolthub.com      | 2020-01-23 00:00:43.673 +0000 UTC | update 2014 column mappings   |
+| 2015   | c7h0jc23hel6qbh8ro5ertiv15to9g9o | bheni            | brian@dolthub.com      | 2020-01-23 00:04:35.459 +0000 UTC | import 2015 allnoagi data     |
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
+| 2017   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
+| main   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 ```
 
@@ -95,7 +95,7 @@ WHERE hash = @@mydb_head
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 | name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com     | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 ```
 
@@ -327,6 +327,60 @@ SELECT * FROM dolt_schemas;
 +------+------+----------------------+
 | view | four | select 2+2 from dual |
 +------+------+----------------------+
+```
+
+
+## `dolt_tags`
+
+`dolt_tags` has all tags information created on the database.
+
+DOLT_TAG() procedure can be used to INSERT and DELETE tags on the `dolt_remotes table.
+
+### Schema
+
+```text
++----------+----------+
+| Field    | Type     |
++----------+----------+
+| tag_name | text     |
+| tag_hash | text     |
+| tagger   | text     |
+| email    | text     |
+| date     | datetime |
+| message  | text     |
++----------+----------+
+```
+
+### Example Query
+
+Create a tag using dolt_tag() stored procedure.
+
+```sql
+CALL DOLT_TAG('v2','head','-m','creating v2 tag');
+```
+
+```text
++--------+
+| status |
++--------+
+| 0      |
++--------+
+```
+
+Get all the tags.
+
+```sql
+SELECT * FROM dolt_tags;
+```
+
+```text
++----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
+| tag_name | tag_hash                         | tagger     | email                | date                    | message         |
++----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
+| v1       | av46ue6knfcf59b3621vtu69dfrkgdpv | jennifersp | jennifer@dolthub.com | 2022-07-10 12:45:23.135 | creating v1 tag |
++----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
+| v2       | ppjpdtj8hsvrmg2455qguduthrcfektu | jennifersp | jennifer@dolthub.com | 2022-07-11 16:36:05.461 | creating v2 tag |
++----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
 ```
 
 

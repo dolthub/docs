@@ -17,6 +17,7 @@ title: Dolt SQL Procedures
   * [dolt\_push()](#dolt_push)
   * [dolt\_reset()](#dolt_reset)
   * [dolt\_revert()](#dolt_revert)
+  * [dolt\_tag()](#dolt_tag)
   * [dolt\_verify\_constraints()](#dolt_verify_constraints)
 
 # Dolt SQL Procedures
@@ -620,6 +621,45 @@ CALL DOLT_PULL('origin');
 SELECT * FROM dolt_log LIMIT 5;
 ```
 
+
+## `DOLT_TAG()`
+
+Creates a new tag that points at specified commit ref. Works exactly like
+`dolt tag` on the CLI, and takes the same arguments except for listing tags. 
+To list existing tags, use `dolt_tags` system table.
+
+```sql
+
+CALL DOLT_TAG('tag_name','commit_ref');
+CALL DOLT_TAG('-m','message','tag_name','commit_ref');
+CALL DOLT_ADD('-d','tag_name');
+```
+
+### Options
+
+`-m`: Use the given message as the tag message.
+
+`-d`: Delete a tag.
+
+### Example
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Make modifications
+UPDATE table
+SET column = "new value"
+WHERE pk = "key";
+
+-- Stage and commit all changes.
+CALL DOLT_COMMIT('-am', 'committing all changes');
+
+-- Create a tag for the HEAD commit.
+CALL DOLT_TAG('v1','head','-m','creating v1 tag');
+```
+
+
 ## `DOLT_VERIFY_CONSTRAINTS()`
 
 Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
@@ -638,7 +678,7 @@ consistent and no violated constraints are missed.
 `<table>`: The table(s) to check constraints on. If omitted, checks all tables.
 
 `-a`, `--all`:
- Verifies constraints against every row.
+Verifies constraints against every row.
 
 `-o`, `--output-only`:
 Disables writing results to the
