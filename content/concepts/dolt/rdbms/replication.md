@@ -12,7 +12,7 @@ Replication is the ability for an RDBMS to synchronize a master server with one 
 
 Replication is used for disaster recovery and to increase read throughput by distributing read load.
 
-For the disaster recovery, if your master server goes offline, your database can still serve read traffic from its replicas. Often a manual or automated process can elect and configure a replica to be the master instance limiting downtime.
+For disaster recovery, if your master server goes offline, your database can still serve read traffic from its replicas. Often a manual or automated process can elect and configure a replica to be the master instance limiting downtime.
 
 To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your master still takes reads, each read replica serves 1/N+1 percent of the read traffic.
 
