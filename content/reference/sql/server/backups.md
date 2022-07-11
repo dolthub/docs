@@ -4,7 +4,7 @@ title: Backups
 
 # Backups
 
-Dolt has two options for [backup](../../../concepts/dolt/rdbms/backups.md): remotes and backups.
+Dolt has two options for [backups](../../../concepts/dolt/rdbms/backups.md): remotes and backups.
 
 ## Remotes
 
@@ -46,7 +46,7 @@ Using DoltHub or DoltLab as a remote provides a web UI to your backups.
 
 ## Backups
 
-Dolt also has backups, accessed with the [`dolt backup` command](../../cli.md#dolt-backup). These backups look more like traditional database backups. The entire state of the database, including uncommitted changes, are copied to another location.
+Dolt also has backups, accessed with the [`dolt backup` command](../../cli.md#dolt-backup). These backups look more like traditional database backups. The entire state of the database, including uncommitted changes on all branches, are copied to another location.
 
 ### Create a backup
 
@@ -69,7 +69,7 @@ mysql> call dolt_backup('sync', 'local-backup');
 +---------+
 | success |
 +---------+
-| 0       |
+| 1       |
 +---------+
 ```
 
