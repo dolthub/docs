@@ -24,7 +24,7 @@ Dolt leverages Git-style [remotes](../git/remotes.md) to facilitate replication.
 
 ## Interaction with Dolt Version Control
 
-Dolt uses remotes to synchronize between master and read replicas.
+Dolt uses remotes to synchronize between master and read replicas. Replication leverages Dolt's ability to produce differences between two versions of a database quickly.
 
 ## Example
 
