@@ -28,7 +28,7 @@ In this example I am going to use a DoltHub remote to facilitate replication.
 
 You can set up replication in your Dolt configuration. This configuration is read every time you start a SQL server or run `dolt sql`.
 
-```
+```bash
 $ dolt remote add origin timsehn/replication_example
 $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 ```
