@@ -204,7 +204,7 @@ Config successfully updated.
 Now I'm going to make a new branch on the master and insert a new value on it.
 
 ```bash
-$ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
+replication_example $ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
 +--------+
 | status |
 +--------+
@@ -214,29 +214,19 @@ Query OK, 1 row affected
 +----------------------------------+
 | hash                             |
 +----------------------------------+
-| 4nrcqks869nrg4jofvuk72iui6hbk1bs |
+| 0alihi9nll9986ossq9mc2n54j4kafhc |
 +----------------------------------+
 ```
 
-The read replica now has the change when I try and read it.
-
-(Found buggy behavior with dolt_checkout on replica)
+The read replica now has the change when I try and read the new branch.
 
 ```bash
-read_replica $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
+$ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
 +--------+
 | status |
 +--------+
 | 0      |
 +--------+
-error on line 1 for query  select * from test: replication failed: working set not found
-replication failed: working set not found
-read_replica $ dolt branch
-  branch1                                       	
-* main                                          	
-read_replica $ dolt checkout branch1
-Switched to branch 'branch1'
-read_replica $ dolt sql -q "select * from test;"
 +----+----+
 | pk | c1 |
 +----+----+
@@ -246,25 +236,6 @@ read_replica $ dolt sql -q "select * from test;"
 | 3  | 3  |
 +----+----+
 ```
-
-### Auto-fetching
-
-(Need to test this)
-
-Dolt supports auto-fetching branches on demand for read replication in
-certain circumstances:
-
-1. Clients that connect to a missing branch:
-
-`mysql://127.0.0.1:3306/mydb/feature-branch`
-
-2. `USE`ing a missing branch:
-
-```SQL
-USE `mydb/feature-branch`
-```
-
-In either case, a read replica will pull the indicated branch from the remote middleman. If the branch is not on the replica, a new remote tracking branch, head branch, and working set will be created.
 
 ## Failover
 
