@@ -16,7 +16,7 @@ Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md
 2. [`sqlserver.global.dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors) - Makes replication errors warnings not errors.
 3. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit) - Make every transaction `COMMIT` a Dolt commit to force all writes to replicate.
 4. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication) - Make replication asynchronous.
-5. [`@@dolt_read_replica_remote](../version-control/dolt-sysvars.md#doltreadreplicaremote) - Used to set up a remote.
+5. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#doltreadreplicaremote) - Used to set up a remote.
 6. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) - Used to configure specific branches (ie. HEADs) to replicate.
 7. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) - Replicate all branches (ie. HEADs).
 
@@ -124,7 +124,7 @@ Date:  Mon Jul 11 16:02:01 -0700 2022
 
 ### Asynchronous replication
 
-By default, replication is synchronous. The push must complete before the commit function is returned. You can enable asynchronous replication using the [`@@dolt_async_replication` system variable](../version-control/dolt-sysvars.md#doltasyncreplication). This setting will increase the speed of Dolt commits at the expense of consistency with replicas.
+By default, replication is synchronous. The push must complete before the commit procedure returns. You can enable asynchronous replication using the [`@@dolt_async_replication` system variable](../version-control/dolt-sysvars.md#doltasyncreplication). This setting will increase the speed of Dolt commits at the expense of consistency with replicas.
 
 ```
 $ dolt config --add --local sqlserver.global.dolt_async_replication 1
@@ -142,7 +142,7 @@ cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
 dolt $ cd read_replica/
 ```
 
-Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
+Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable`](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
 
 ```
 $ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
