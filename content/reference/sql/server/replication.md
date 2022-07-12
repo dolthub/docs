@@ -172,7 +172,7 @@ Query OK, 1 row affected
 
 And back to the replica.
 
-```
+```bash
 $ dolt sql -q "select * from test"
 +----+----+
 | pk | c1 |
