@@ -77,7 +77,7 @@ mysql> call dolt_backup('sync', 'local-backup');
 
 The backup command called with the restore option looks a lot like the [dolt clone command](../../cli.md#dolt-clone).
 
-```
+```bash
 $ dolt backup restore file:///Users/timsehn/liquidata/dolt/backups/backup-example backup-restore
 Downloaded 14 chunks, 3.5 kB @ 0 B/s.
 
