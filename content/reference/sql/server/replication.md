@@ -218,6 +218,8 @@ Query OK, 1 row affected
 +----------------------------------+
 ```
 
+The read replica now has the change when I try and read it.
+
 (Found buggy behavior with dolt_checkout on replica)
 
 ```
@@ -246,6 +248,8 @@ read_replica $ dolt sql -q "select * from test;"
 ```
 
 ### Auto-fetching
+
+(Need to test this)
 
 Dolt supports auto-fetching branches on demand for read replication in
 certain circumstances:
