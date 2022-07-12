@@ -103,7 +103,7 @@ Date:  Mon Jul 11 15:54:22 -0700 2022
 
 But if we set the `@@dolt_skip_replication_errors` variable, we get a warning instead.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_skip_replication_errors 1
 Config successfully updated.
 $ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
