@@ -126,7 +126,7 @@ Date:  Mon Jul 11 16:02:01 -0700 2022
 
 By default, replication is synchronous. The push must complete before the commit procedure returns. You can enable asynchronous replication using the [`@@dolt_async_replication` system variable](../version-control/dolt-sysvars.md#doltasyncreplication). This setting will increase the speed of Dolt commits at the expense of consistency with replicas.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_async_replication 1
 Config successfully updated.
 ```
