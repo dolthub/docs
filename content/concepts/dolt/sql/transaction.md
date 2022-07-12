@@ -27,7 +27,7 @@ Traditional SQL transactions exist in isolation from Dolt version control featur
 
 Dolt can be thought of having two layers of transactions. The first layer accessed with `BEGIN` and `COMMIT` SQL statements is the same as MySQL. Dolt adds an additional second layer with branches and Dolt commits. Branches can be thought of as long running transactions that may or may not be merged.
 
-Note, you can make every transaction COMMIT a Dolt commit by setting the [system variable](./system-variables.md), [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit)
+Note, you can make every transaction `COMMIT` a Dolt commit by setting the [system variable](./system-variables.md), [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit)
 
 ## Example
 
