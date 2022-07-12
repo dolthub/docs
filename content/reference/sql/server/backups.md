@@ -62,7 +62,7 @@ $
 
 ### Sync a backup from SQL
 
-```
+```sql
 mysql> use backup_example;
 mysql> insert into test values (1,1);
 mysql> call dolt_backup('sync', 'local-backup');
