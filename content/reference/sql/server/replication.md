@@ -35,7 +35,7 @@ $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 
 The next time you create a Dolt commit in a running SQL server or with a `dolt sql` command, Dolt will attempt to push the changes to the remote.
 
-```
+```bash
 $ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
 $ dolt sql -q "insert into test values (0,0)"
 Query OK, 1 row affected
