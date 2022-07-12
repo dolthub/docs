@@ -203,7 +203,7 @@ Config successfully updated.
 
 Now I'm going to make a new branch on the master and insert a new value on it.
 
-```
+```bash
 $ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
 +--------+
 | status |
