@@ -66,7 +66,7 @@ Note, if you have a running SQL server you must restart it so it can pick up the
 
 Often, a master would like to replicate all transaction `COMMIT`s, not just Dolt commits. You can make every transaction `COMMIT` a Dolt commit by setting the [system variable](./system-variables.md), [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With this setting, you lose the ability to enter commit messages.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_transaction_commit 1
 $ dolt sql -q "insert into test values (1,1)"
 Query OK, 1 row affected
