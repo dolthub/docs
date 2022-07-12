@@ -76,6 +76,7 @@ Author: Tim Sehn <tim@dolthub.com>
 Date:  Mon Jul 11 15:54:22 -0700 2022
 
         Transaction commit
+
 ```
 
 And now on the remote.
