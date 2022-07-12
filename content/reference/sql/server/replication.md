@@ -160,7 +160,7 @@ $ dolt sql -q "select * from test"
 
 Now on the master.
 
-```
+```bash
 $ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
 Query OK, 1 row affected
 +----------------------------------+
