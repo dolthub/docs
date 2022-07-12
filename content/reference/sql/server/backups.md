@@ -92,3 +92,5 @@ backup-restore $ dolt sql -q "select * from test"
 ```
 
 Note the working set changes were also restored.
+
+Configuration and [users/grants](../../../concepts/dolt/sql/users-grants.md) are not backed up and restored as these are not stored in the versioned part of Dolt.
