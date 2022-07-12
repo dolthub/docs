@@ -22,7 +22,7 @@ backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 
 ### Backup by Pushing a Branch
 
-```
+```sql
 mysql> use backup_example;
 mysql> create table test (pk int, c1 int, primary key(pk));
 mysql> insert into test values (0,0);
