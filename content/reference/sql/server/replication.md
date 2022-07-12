@@ -135,7 +135,7 @@ Config successfully updated.
 
 To start a replica, you first need a clone. I'm going to call my clone `read_replica`. 
 
-```
+```bash
 $ dolt clone timsehn/replication_example read_replica
 cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
 28 of 28 chunks complete. 0 chunks being downloaded currently.
