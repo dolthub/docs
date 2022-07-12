@@ -13,7 +13,7 @@ Note, read replication is only available in [Dolt SQL Server](../../../concepts/
 Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md) to configure replication. The following system variables effect replication:
 
 1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote) - Used to set up a master.
-2. [`sqlserver.global.dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors) - Makes replication errors warnings not errors.
+2. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors) - Makes replication errors warnings not errors.
 3. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit) - Make every transaction `COMMIT` a Dolt commit to force all writes to replicate.
 4. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication) - Make replication asynchronous.
 5. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#doltreadreplicaremote) - Used to set up a remote.
@@ -24,7 +24,7 @@ Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md
 
  To set up a master, you use the [`@@dolt_replicate_to_remote` system variable](../version-control/dolt-sysvars.md#doltreplicatetoremote). You set that variable to the name of the remote you would like to use for replication.
 
-In this example I am going to use a DoltHub remote to facilitate replication.
+In this example I am going to use a DoltHub remote to facilitate replication. I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
 
 You can set up replication in your Dolt configuration. This configuration is read every time you start a SQL server or run `dolt sql`.
 

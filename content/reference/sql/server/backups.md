@@ -12,7 +12,7 @@ Using remotes for backups should be suitable for some use cases. Using remotes f
 
 ### Configure a remote
 
-Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). 
+Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
 
 ```
 % dolt remote add backup https://doltremoteapi.dolthub.com/timsehn/backup-example
