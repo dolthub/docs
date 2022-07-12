@@ -88,7 +88,7 @@ Set the [`sqlserver.global.dolt_skip_replication_errors` system variable](../ver
 
 Without this set, if we have a replication error, it fails the action.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote broken
 $ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
 failure loading hook; remote not found: 'broken'
