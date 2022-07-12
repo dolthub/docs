@@ -76,8 +76,10 @@ of heads, or 2) all heads (but not both):
 
 ```bash
 dolt sql -q "SET @@PERSIST.dolt_replicate_heads = 'main,feature1'"
-dolt sql -q "SET @@PERSIST.dolt_replicate_all_heads = 1'"
+dolt sql -q "SET @@PERSIST.dolt_replicate_all_heads = '1'"
 ```
+> Set `dolt_replicate_all_heads` before `dolt_read_replica_remote`. The latter
+> triggers replication attempts that fail without the former.
 
 On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
 The first query in a session automatically starts a transaction. Setting
