@@ -194,7 +194,7 @@ Date:  Mon Jul 11 16:48:37 -0700 2022
 
 Only one of  [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads)  or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) can be set at a time. So I unset `@@dolt_replicate_heads` and set `@@dolt_replicate_all_heads`.
 
-```
+```bash
 read_replica $ dolt config --unset --local sqlserver.global.dolt_replicate_heads
 Config successfully updated.
 read_replica $ dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
