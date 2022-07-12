@@ -144,7 +144,7 @@ dolt $ cd read_replica/
 
 Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable`](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
 Config successfully updated.
 $ dolt config --add --local sqlserver.global.dolt_replicate_heads main
