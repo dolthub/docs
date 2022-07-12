@@ -52,7 +52,7 @@ Dolt also has backups, accessed with the [`dolt backup` command](../../cli.md#do
 
 To create a backup you first configure a backup using syntax similar to the [remote](../../../concepts/dolt/git/remotes.md) syntax.
 
-```
+```bash
 $ mkdir -p /Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup add local-backup file:///Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup sync local-backup
