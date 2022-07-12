@@ -133,11 +133,18 @@ Config successfully updated.
 
 ## Configuring a Replica
 
+To start a replica, you first need a clone. I'm going to call my clone `read_replica`. 
+
 ```
 $ dolt clone timsehn/replication_example read_replica
 cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
 28 of 28 chunks complete. 0 chunks being downloaded currently.
 dolt $ cd read_replica/
+```
+
+Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
+
+```
 $ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
 Config successfully updated.
 $ dolt config --add --local sqlserver.global.dolt_replicate_heads main
@@ -151,22 +158,92 @@ $ dolt sql -q "select * from test"
 +----+----+
 ```
 
-```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_read_replica_remote = 'origin'"
+Now on the master.
+
+```
+$ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
+Query OK, 1 row affected
++----------------------------------+
+| hash                             |
++----------------------------------+
+| i97i9f1a3vrvd09pphiq0bbdeuf8riid |
++----------------------------------+
 ```
 
-A complete replication setup requires a pull spec with either 1) a set
-of heads, or 2) all heads (but not both):
+And back to the replica.
 
-```bash
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'main,feature1'"
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_all_heads = 1'"
+```
+$ dolt sql -q "select * from test"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+$ dolt log -n 1
+commit i97i9f1a3vrvd09pphiq0bbdeuf8riid (HEAD -> main, origin/main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 16:48:37 -0700 2022
+
+        Inserted (2,2)
+
 ```
 
-On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
-The first query in a session automatically starts a transaction. Setting
-`autocommit = 1`, which begins every query with a transaction, is
-encouraged on read replicas for convenience.
+### Replicate all branches
+
+Only one of  [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads)  or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) can be set at a time. So I unset `@@dolt_replicate_heads` and set `@@dolt_replicate_all_heads`.
+
+```
+read_replica $ dolt config --unset --local sqlserver.global.dolt_replicate_heads
+Config successfully updated.
+read_replica $ dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
+Config successfully updated.
+```
+
+Now I'm going to make a new branch on the master and insert a new value on it.
+
+```
+$ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
++--------+
+| status |
++--------+
+| 0      |
++--------+
+Query OK, 1 row affected
++----------------------------------+
+| hash                             |
++----------------------------------+
+| 4nrcqks869nrg4jofvuk72iui6hbk1bs |
++----------------------------------+
+```
+
+(Found buggy behavior with dolt_checkout on replica)
+
+```
+read_replica $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
++--------+
+| status |
++--------+
+| 0      |
++--------+
+error on line 1 for query  select * from test: replication failed: working set not found
+replication failed: working set not found
+read_replica $ dolt branch
+  branch1                                       	
+* main                                          	
+read_replica $ dolt checkout branch1
+Switched to branch 'branch1'
+read_replica $ dolt sql -q "select * from test;"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
+| 3  | 3  |
++----+----+
+```
 
 ### Auto-fetching
 
@@ -183,18 +260,7 @@ certain circumstances:
 USE `mydb/feature-branch`
 ```
 
-In either case, a read replica will pull the indicated branch from
-the remote middleman. If the branch is not on the replica, a new remote
-tracking branch, head branch, and working set will be created.
-
-Read more about different head settings [here](./branches.md).
-
-### Quiet Warnings
-
-Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
-rather than error if replication is misconfigured.
-
-
+In either case, a read replica will pull the indicated branch from the remote middleman. If the branch is not on the replica, a new remote tracking branch, head branch, and working set will be created.
 
 ## Failover
 
