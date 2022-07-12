@@ -14,7 +14,7 @@ Using remotes for backups should be suitable for some use cases. Using remotes f
 
 Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
 
-```
+```bash
 % dolt remote add backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 $ dolt remote -v
 backup https://doltremoteapi.dolthub.com/timsehn/backup-example 
@@ -22,7 +22,7 @@ backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 
 ### Backup by Pushing a Branch
 
-```
+```sql
 mysql> use backup_example;
 mysql> create table test (pk int, c1 int, primary key(pk));
 mysql> insert into test values (0,0);
@@ -52,7 +52,7 @@ Dolt also has backups, accessed with the [`dolt backup` command](../../cli.md#do
 
 To create a backup you first configure a backup using syntax similar to the [remote](../../../concepts/dolt/git/remotes.md) syntax.
 
-```
+```bash
 $ mkdir -p /Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup add local-backup file:///Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup sync local-backup
@@ -62,7 +62,7 @@ $
 
 ### Sync a backup from SQL
 
-```
+```sql
 mysql> use backup_example;
 mysql> insert into test values (1,1);
 mysql> call dolt_backup('sync', 'local-backup');
@@ -77,7 +77,7 @@ mysql> call dolt_backup('sync', 'local-backup');
 
 The backup command called with the restore option looks a lot like the [dolt clone command](../../cli.md#dolt-clone).
 
-```
+```bash
 $ dolt backup restore file:///Users/timsehn/liquidata/dolt/backups/backup-example backup-restore
 Downloaded 14 chunks, 3.5 kB @ 0 B/s.
 

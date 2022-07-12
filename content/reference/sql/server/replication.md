@@ -28,14 +28,14 @@ In this example I am going to use a DoltHub remote to facilitate replication. I 
 
 You can set up replication in your Dolt configuration. This configuration is read every time you start a SQL server or run `dolt sql`.
 
-```
+```bash
 $ dolt remote add origin timsehn/replication_example
 $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 ```
 
 The next time you create a Dolt commit in a running SQL server or with a `dolt sql` command, Dolt will attempt to push the changes to the remote.
 
-```
+```bash
 $ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
 $ dolt sql -q "insert into test values (0,0)"
 Query OK, 1 row affected
@@ -66,7 +66,7 @@ Note, if you have a running SQL server you must restart it so it can pick up the
 
 Often, a master would like to replicate all transaction `COMMIT`s, not just Dolt commits. You can make every transaction `COMMIT` a Dolt commit by setting the [system variable](./system-variables.md), [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With this setting, you lose the ability to enter commit messages.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_transaction_commit 1
 $ dolt sql -q "insert into test values (1,1)"
 Query OK, 1 row affected
@@ -88,7 +88,7 @@ Set the [`sqlserver.global.dolt_skip_replication_errors` system variable](../ver
 
 Without this set, if we have a replication error, it fails the action.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote broken
 $ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
 failure loading hook; remote not found: 'broken'
@@ -103,7 +103,7 @@ Date:  Mon Jul 11 15:54:22 -0700 2022
 
 But if we set the `@@dolt_skip_replication_errors` variable, we get a warning instead.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_skip_replication_errors 1
 Config successfully updated.
 $ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
@@ -126,7 +126,7 @@ Date:  Mon Jul 11 16:02:01 -0700 2022
 
 By default, replication is synchronous. The push must complete before the commit procedure returns. You can enable asynchronous replication using the [`@@dolt_async_replication` system variable](../version-control/dolt-sysvars.md#doltasyncreplication). This setting will increase the speed of Dolt commits at the expense of consistency with replicas.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_async_replication 1
 Config successfully updated.
 ```
@@ -135,7 +135,7 @@ Config successfully updated.
 
 To start a replica, you first need a clone. I'm going to call my clone `read_replica`. 
 
-```
+```bash
 $ dolt clone timsehn/replication_example read_replica
 cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
 28 of 28 chunks complete. 0 chunks being downloaded currently.
@@ -144,7 +144,7 @@ dolt $ cd read_replica/
 
 Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable`](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
 
-```
+```bash
 $ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
 Config successfully updated.
 $ dolt config --add --local sqlserver.global.dolt_replicate_heads main
@@ -160,7 +160,7 @@ $ dolt sql -q "select * from test"
 
 Now on the master.
 
-```
+```bash
 $ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
 Query OK, 1 row affected
 +----------------------------------+
@@ -172,7 +172,7 @@ Query OK, 1 row affected
 
 And back to the replica.
 
-```
+```bash
 $ dolt sql -q "select * from test"
 +----+----+
 | pk | c1 |
@@ -194,7 +194,7 @@ Date:  Mon Jul 11 16:48:37 -0700 2022
 
 Only one of  [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads)  or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) can be set at a time. So I unset `@@dolt_replicate_heads` and set `@@dolt_replicate_all_heads`.
 
-```
+```bash
 read_replica $ dolt config --unset --local sqlserver.global.dolt_replicate_heads
 Config successfully updated.
 read_replica $ dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
@@ -203,7 +203,7 @@ Config successfully updated.
 
 Now I'm going to make a new branch on the master and insert a new value on it.
 
-```
+```bash
 $ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
 +--------+
 | status |
@@ -222,7 +222,7 @@ The read replica now has the change when I try and read it.
 
 (Found buggy behavior with dolt_checkout on replica)
 
-```
+```bash
 read_replica $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
 +--------+
 | status |
