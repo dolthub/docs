@@ -222,7 +222,7 @@ The read replica now has the change when I try and read it.
 
 (Found buggy behavior with dolt_checkout on replica)
 
-```
+```bash
 read_replica $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
 +--------+
 | status |
