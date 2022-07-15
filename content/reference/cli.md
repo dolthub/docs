@@ -305,10 +305,11 @@ Used with --query and --save, saves the query with the descriptive message given
 Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
+
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`.
 
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
@@ -317,7 +318,7 @@ Continue running queries on an error. Used for batch mode only.
 Execute statements from the file given
 
 `--privilege-file`:
-Path to a file to load and store users and grants.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`.
 
 
 
@@ -437,10 +438,10 @@ Defines the level of logging provided
 Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases. Defaults to the current directory.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`.
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server
@@ -455,7 +456,7 @@ Set the number of connections handled by the server (default `100`)
 Indicate whether to `load` or `ignore` persisted global variables (default `load`)
 
 `--privilege-file`:
-Path to a file to load and store users and grants.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`.
 
 
 
@@ -507,10 +508,11 @@ Defines the level of logging provided
 Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases. Defaults to the current directory.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`.
+
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server
@@ -525,7 +527,7 @@ Set the number of connections handled by the server (default `100`)
 Indicate whether to `load` or `ignore` persisted global variables (default `load`)
 
 `--privilege-file`:
-Path to a file to load and store users and grants.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`.
 
 `-d`, `--dual`:
 Causes this command to spawn a dolt server that is automatically connected to.
