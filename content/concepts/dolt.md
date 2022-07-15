@@ -27,8 +27,8 @@ We built Dolt using the following axioms:
 1. Git versions files. Dolt versions table schema and table data.
 2. Dolt will copy the Git command line exactly.
 3. Dolt will be MySQL compatible.
-4. Git features in SQL will extend MySQL SQL. Write operations will be SQL functions. Read operations will be system tables.
+4. Git features in SQL will extend MySQL SQL. Write operations will be procedures. Read operations will be system tables.
 
 In order to achieve the above at scale, we needed to start at the bottom; the storage engine of the database. Dolt is built from the storage engine up to offer you the Git experience in a SQL database.  
 
-In this section of the documentation, we will explain [Git](./dolt/git/README.md) and [SQL](./dolt/sql/README.md) concepts and how we applied them in Dolt using the above axioms.
+In this section of the documentation, we will explain [Git](./git/README.md), [SQL](./sql/README.md), and [Relational Database Management System (RDBMS)](./rdbms/README.md) concepts and how we applied them in Dolt using the above axioms.
