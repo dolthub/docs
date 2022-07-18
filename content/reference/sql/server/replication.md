@@ -4,142 +4,251 @@ title: Replication
 
 # Replication
 
-## Read Replication
+Dolt supports [replication](../../../concepts/dolt/rdbms/replication.md). Dolt uses a remote as a middleman to facilitate replication between the master and read replicas. Dolt replication triggers on a [Dolt commit](../../../concepts/dolt/git/commits.md).
 
-Replicating data between servers can increase your application's read query
-throughput. If a read replica fails, your application is
-still available. If a replication source fails, that is a bigger
-problem that requires a [failover](#failover) solution.
+![Read replication](../../../.gitbook/assets/dolt-read-replication.png)
 
-Dolt supports simple read replication with two caveats:
+Note, read replication is only available in [Dolt SQL Server](../../../concepts/dolt/rdbms/server.md) context. You cannot trigger replication with a CLI `dolt commit`. If you would like to trigger replication from the command line, use `dolt sql -q "call dolt_commit()"`.
 
-- A remote is a replication middleman.
+Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md) to configure replication. The following system variables effect replication:
 
-- Individual transactions are _not_ replicated, only commits.
+1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote) - Used to set up a master.
+2. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors) - Makes replication errors warnings not errors.
+3. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit) - Make every transaction `COMMIT` a Dolt commit to force all writes to replicate.
+4. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication) - Make replication asynchronous.
+5. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#doltreadreplicaremote) - Used to set up a remote.
+6. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) - Used to configure specific branches (ie. HEADs) to replicate.
+7. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) - Replicate all branches (ie. HEADs).
 
-In summary, we support replicating a source database by pushing
-on commit, and pulling to replicas on read. The stability of the middleman is
-required to maintain the thread of communication between a primary server
-and its replicas.
+## Configuring a Master
 
-Refer to the [read replication
-blog](https://www.dolthub.com/blog/2021-10-20-read-replication/) for a
-walkthrough.
+To set up a master, you use the [`@@dolt_replicate_to_remote` system variable](../version-control/dolt-sysvars.md#doltreplicatetoremote). You set that variable to the name of the remote you would like to use for replication.
 
-## Configuration
+In this example I am going to use a DoltHub remote to facilitate replication. I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
 
-### Persisting system variables
-
-Configs can be set in the CLI (limited to `--local` scope for now):
+You can set up replication in your Dolt configuration. This configuration is read every time you start a SQL server or run `dolt sql`.
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_replicate_to_remote <name>
-dolt config --add --local sqlserver.global.dolt_read_replica_remote <name>
+$ dolt remote add origin timsehn/replication_example
+$ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 ```
 
-Configs can be set equivalently in an SQL session:
-
-```SQL
-SET PERSIST @@GLOBAL.dolt_replicate_to_remote = '<name>'
-SET PERSIST @@GLOBAL.dolt_read_replica_remote = '<name>'
-```
-
-_Note: after changing replication configuration options, the Dolt server process
-needs to be restarted before replication changes will take effect._ 
-
-### Push (on write) from sources
-
-To push on write, a valid remote middleman must be configured:
+The next time you create a Dolt commit in a running SQL server or with a `dolt sql` command, Dolt will attempt to push the changes to the remote.
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
+$ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
+$ dolt sql -q "insert into test values (0,0)"
+Query OK, 1 row affected
+$ dolt sql -q "call dolt_commit('-am', 'trigger replication')"
++----------------------------------+
+| hash                             |
++----------------------------------+
+| 7on23n1h8k22062mbebbt0ejm3i7dakd |
++----------------------------------+
 ```
 
-There are two ways to trigger pushing to a remote middleman: a Dolt commit,
-or a branch head update. A standalone `COMMIT` or head set will not
-trigger replication:
+And we can see the changes are pushed to the remote.
 
-```SQL
-SELECT DOLT_COMMIT('-am', 'message')
+![DoltHub Replication Example](../../../.gitbook/assets/replication-example.png)
 
-UPDATE dolt_branches SET hash = COMMIT('-m', 'message') WHERE name = 'main' AND hash = @@database_name_head
+### Stopping Replication
+
+To stop replication unset the configuration variable.
+
+```
+dolt config --unset --local sqlserver.global.dolt_replicate_to_remote
+Config successfully updated.
 ```
 
-### Pull (on read) to replica
+Note, if you have a running SQL server you must restart it so it can pick up the new configuration.
 
-Read replicas are instantiated with a remote:
+### Making every Transaction Commit a Dolt Commit
+
+Often, a master would like to replicate all transaction `COMMIT`s, not just Dolt commits. You can make every transaction `COMMIT` a Dolt commit by setting the [system variable](./system-variables.md), [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With this setting, you lose the ability to enter commit messages.
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
+$ dolt config --add --local sqlserver.global.dolt_transaction_commit 1
+$ dolt sql -q "insert into test values (1,1)"
+Query OK, 1 row affected
+ $ dolt log -n 1
+commit u4shvua2st16btub8mimdd2lj7iv4sdu (HEAD -> main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 15:54:22 -0700 2022
+
+        Transaction commit
+
 ```
 
-A complete replication setup requires a pull spec with either 1) a set
-of heads, or 2) all heads (but not both):
+And now on the remote.
+
+![DoltHub Replication Example](../../../.gitbook/assets/replication-example-2.png)
+
+### Warn instead of fail on Replication Errors
+
+Set the [`sqlserver.global.dolt_skip_replication_errors` system variable](../version-control/dolt-sysvars.md#doltskipreplicationerrors) to print warnings rather than error if replication is misconfigured.
+
+Without this set, if we have a replication error, it fails the action.
 
 ```bash
-dolt config --add --local sqlserver.global.dolt_replicate_heads main,feature1
-dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
+$ dolt config --add --local sqlserver.global.dolt_replicate_to_remote broken
+$ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
+failure loading hook; remote not found: 'broken'
+replication_example $ dolt log -n 1
+commit u4shvua2st16btub8mimdd2lj7iv4sdu (HEAD -> main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 15:54:22 -0700 2022
+
+        Transaction commit
+
 ```
 
-On the replica end, pulling is triggered by an SQL `START TRANSACTION`.
-The first query in a session automatically starts a transaction. Setting
-`autocommit = 1`, which begins every query with a transaction, is
-encouraged on read replicas for convenience.
+But if we set the `@@dolt_skip_replication_errors` variable, we get a warning instead.
 
-### Auto-fetching
+```bash
+$ dolt config --add --local sqlserver.global.dolt_skip_replication_errors 1
+Config successfully updated.
+$ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
+failure loading hook; remote not found: 'broken'
++----------------------------------+
+| hash                             |
++----------------------------------+
+| jco517ifl1em82f5at2eo75el28dgglt |
++----------------------------------+
+$ dolt log --n 1
+commit jco517ifl1em82f5at2eo75el28dgglt (HEAD -> main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 16:02:01 -0700 2022
 
-Dolt supports auto-fetching branches on demand for read replication in
-certain circumstances:
+        empty commit
 
-1. Clients that connect to a missing branch:
+```
 
-`mysql://127.0.0.1:3306/mydb/feature-branch`
+### Asynchronous replication
 
-2. `USE`ing a missing branch:
+By default, replication is synchronous. The push must complete before the commit procedure returns. You can enable asynchronous replication using the [`@@dolt_async_replication` system variable](../version-control/dolt-sysvars.md#doltasyncreplication). This setting will increase the speed of Dolt commits at the expense of consistency with replicas.
 
-`USE \`mydb/feature-branch\``
+```bash
+$ dolt config --add --local sqlserver.global.dolt_async_replication 1
+Config successfully updated.
+```
 
-In either case, a read replica will pull the indicated branch from
-the remote middleman. If the branch is not on the replica, a new remote
-tracking branch, head branch, and working set will be created.
+## Configuring a Replica
 
-Read more about different head settings [here](./branches.md).
+To start a replica, you first need a clone. I'm going to call my clone `read_replica`. 
 
-### Quiet Warnings
+```bash
+$ dolt clone timsehn/replication_example read_replica
+cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
+28 of 28 chunks complete. 0 chunks being downloaded currently.
+dolt $ cd read_replica/
+```
 
-Set `sqlserver.global.dolt_skip_replication_errors = true` to print warnings
-rather than error if replication is misconfigured.
+Now, I'm going to configure my read replica to "pull on read" from origin. To do that I use the [`@@dolt_read_replica_remote system variable`](../version-control/dolt-sysvars.md#doltreadreplicaremote). I also must configure which branches (ie. HEADs) I would like to replicate using either [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads) to pick specific branches or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) to replicate all branches.
 
-![Read replication](../../.gitbook/assets/dolt-read-replication.png)
+```bash
+$ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
+Config successfully updated.
+$ dolt config --add --local sqlserver.global.dolt_replicate_heads main
+Config successfully updated.
+$ dolt sql -q "select * from test"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
++----+----+
+```
+
+Now on the master.
+
+```bash
+$ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
+Query OK, 1 row affected
++----------------------------------+
+| hash                             |
++----------------------------------+
+| i97i9f1a3vrvd09pphiq0bbdeuf8riid |
++----------------------------------+
+```
+
+And back to the replica.
+
+```bash
+$ dolt sql -q "select * from test"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+$ dolt log -n 1
+commit i97i9f1a3vrvd09pphiq0bbdeuf8riid (HEAD -> main, origin/main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 16:48:37 -0700 2022
+
+        Inserted (2,2)
+
+```
+
+### Replicate all branches
+
+Only one of  [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads)  or [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads) can be set at a time. So I unset `@@dolt_replicate_heads` and set `@@dolt_replicate_all_heads`.
+
+```bash
+read_replica $ dolt config --unset --local sqlserver.global.dolt_replicate_heads
+Config successfully updated.
+read_replica $ dolt config --add --local sqlserver.global.dolt_replicate_all_heads 1
+Config successfully updated.
+```
+
+Now I'm going to make a new branch on the master and insert a new value on it.
+
+```bash
+replication_example $ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
++--------+
+| status |
++--------+
+| 0      |
++--------+
+Query OK, 1 row affected
++----------------------------------+
+| hash                             |
++----------------------------------+
+| 0alihi9nll9986ossq9mc2n54j4kafhc |
++----------------------------------+
+```
+
+The read replica now has the change when I try and read the new branch.
+
+```bash
+$ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
++--------+
+| status |
++--------+
+| 0      |
++--------+
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
+| 3  | 3  |
++----+----+
+```
 
 ## Failover
 
-If the primary database processing writes
-fails, queries will either need to be routed to a standby server, or
-queue/fail until the primary restarts. We do not have a purpose-built
-solution or documentation for failover recovery yet.
+If the master database processing writes fails, queries will either need to be routed to a replica, or queue/fail until the master restarts. We do not have a purpose-built solution or documentation for failover recovery yet.
 
-In the meantime, it is possible to use push/pull replication to maintain
-a standby server. If the primary server fails, the standby and proxy
-would need to walk through a series of steps to create a new primary:
+In the meantime, it is possible to use push/pull replication to maintain a standby server. If the primary server fails, the standby and proxy would need to walk through a series of steps to create a new primary:
 
-- Standby server disables read-only mode if it was used as a read
-  replica previously.
-
-- Standby server recovers the most recent transactions, either from the
-  remote middleman or a primary backup.
-
-- Standby sets the replication source configuration to push on write.
-
-- Proxy layer directs write queries to the formerly standby, now primary
-  server.
+1. Standby server disables read-only mode if it was used as a read replica previously.
+2. Standby server recovers the most recent transactions, either from the remote middleman or a primary backup.
+3. Standby sets the replication source configuration to push on write.
+4. Proxy layer directs write queries to the formerly standby, now primary server.
 
 ## Multi-Master
 
-We do not have specific solutions or documentation to run Dolt as
-an OLTP database with multiple masters. It is possible to connect several
-write target with a common remote middleman, but they would need to reconcile
-merge conflicts in the same way an offline Dolt database does. Providing
-a transactional layer to enforce multi-master (to avoid merge conflicts)
-or a way to automatically resolve merge conflicts is necessary to run
-Dolt as a multi-master database effectively.
+We do not have specific solutions or documentation to run Dolt as an OLTP database with multiple masters. It is possible to connect several write targets with a common remote middleman, but they would need to reconcile merge conflicts in the same way an offline Dolt database does. Providing a transactional layer to enforce multi-master (to avoid merge conflicts) or a way to automatically resolve merge conflicts is necessary to run Dolt as a multi-master database effectively.

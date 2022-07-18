@@ -68,23 +68,23 @@ To switch to a read-only database at a commit hash:
 USE `mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
 ```
 
-## Switch branches with the `DOLT_CHECKOUT()` function
+## Switch branches with the `DOLT_CHECKOUT()` procedure
 
-The `DOLT_CHECKOUT()` SQL function provides identical functionality to
+The `DOLT_CHECKOUT()` SQL procedure provides identical functionality to
 the `dolt checkout` command on the command line, and accepts the same
 arguments.
 
-`SELECT DOLT_CHECKOUT('feature-branch');` switches the session to the
+`CALL DOLT_CHECKOUT('feature-branch');` switches the session to the
 `feature-branch` branch. You can also switch to a new branch, like so:
 
 ```sql
-SELECT DOLT_CHECKOUT('-b', 'new-branch');
+CALL DOLT_CHECKOUT('-b', 'new-branch');
 ```
 
 You can switch to a new branch with a starting commit as well:
 
 ```sql
-SELECT DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
+CALL DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
 ```
 
 ## Switch branches with a session variable

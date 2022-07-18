@@ -40,6 +40,12 @@ To run garbage collection, you should first stop your running server. It is not 
 
 Online garbage collection is on the roadmap and we will be implementing it in the back half of 2022.
 
+Another potential cause is a commit-heavy workflow that uses a database design that is antagonistic to Dolt's structural sharing. We've written thoroughly about this [here](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/), but some examples include
+
+* Using primary keys with random values. Inserts into indexes with random values guarantees that edits will occur all throughout the index instead of being clustered around the same key space. This results in a rewrite of the prolly tree thereby increasing storage disproportionately to the delta of
+the changes.
+* Adding a column to a table. A new column forks the storage of the table resulting in a loss of structural sharing. Dolt is row major and builds chunks for each primary key, row values pair. The row values encodes the schema length so every row now requires a new chunk.
+
 ## Server Consuming Memory
 
 A Dolt server requires approximately 1% of the disk size of the database in memory at minimum. So, a 100GB database should have at least 1GB of RAM but preferably more. We recommend provisioning approximately 10% of the disk size of the database as memory.

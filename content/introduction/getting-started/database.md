@@ -4,7 +4,7 @@ title: Version Controlled Database
 
 Dolt is a MySQL compatible database server. 
 
-This document will walk you through step-by-step on how to get Dolt running as a MySQL compatible server on your host. You will set up a schema, insert data, and compose read queries using SQL. The document will also cover a number of unique Git-like Dolt features like commits, logs, as of queries, roollback, branches, and merges.
+This document will walk you through step-by-step on how to get Dolt running as a MySQL compatible server on your host. You will set up a schema, insert data, and compose read queries using SQL. The document will also cover a number of unique Git-like Dolt features like commits, logs, as of queries, rollback, branches, and merges.
 
 # Navigate to the directory where you would like your data stored
 
