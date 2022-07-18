@@ -295,7 +295,7 @@ You can use the token in the header when download CSVs from a private database.
 
 ```python
 import requests
-local_file = 'private_db_main.csv'
+local_file = 'private_db_main.zip'
 res = requests.get(
   'https://www.dolthub.com/csv/owner/private-db/main',
   headers={ "authorization": "token [TOKEN YOU COPIED]" },
