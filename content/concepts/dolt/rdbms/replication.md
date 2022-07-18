@@ -28,22 +28,83 @@ Dolt uses remotes to synchronize between master and read replicas. Replication l
 
 ## Example
 
-### Set up master to "Push on Write"
-```
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_to_remote = 'origin'"
+### Configuring a Master
+
+In this example I use a DoltHub remote to facilitate replication. I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
+
+```bash
+$ dolt remote add origin timsehn/replication_example
+$ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
+$ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
+$ dolt sql -q "insert into test values (0,0)"
+Query OK, 1 row affected
+$ dolt sql -q "call dolt_commit('-am', 'trigger replication')"
++----------------------------------+
+| hash                             |
++----------------------------------+
+| 7on23n1h8k22062mbebbt0ejm3i7dakd |
++----------------------------------+
 ```
 
-### Set up replica to "Pull on Read"
-```
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_read_replica_remote = 'origin'"
+The changes are pushed to the remote.
+
+![DoltHub Replication Example](../../../.gitbook/assets/replication-example.png)
+
+## Configuring a Replica
+
+To start a replica, you first need a clone. 
+
+```bash
+$ dolt clone timsehn/replication_example read_replica
+cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
+28 of 28 chunks complete. 0 chunks being downloaded currently.
+dolt $ cd read_replica/
 ```
 
-### Set up which HEADS to replicate
-```
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_heads = 'main,feature1'"
+Now, I'm going to configure my read replica to "pull on read" the `main` branch from origin.
+
+```bash
+$ dolt config --add --local sqlserver.global.dolt_read_replica_remote origin
+Config successfully updated.
+$ dolt config --add --local sqlserver.global.dolt_replicate_heads main
+Config successfully updated.
+$ dolt sql -q "select * from test"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
++----+----+
 ```
 
-### Set up all HEADS to replicate
+Now on the master.
+
+```bash
+$ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
+Query OK, 1 row affected
++----------------------------------+
+| hash                             |
++----------------------------------+
+| i97i9f1a3vrvd09pphiq0bbdeuf8riid |
++----------------------------------+
 ```
-dolt sql -q "SET PERSIST @@GLOBAL.dolt_replicate_all_heads = 1'"
+
+And back to the replica.
+
+```bash
+$ dolt sql -q "select * from test"
++----+----+
+| pk | c1 |
++----+----+
+| 0  | 0  |
+| 1  | 1  |
+| 2  | 2  |
++----+----+
+$ dolt log -n 1
+commit i97i9f1a3vrvd09pphiq0bbdeuf8riid (HEAD -> main, origin/main) 
+Author: Tim Sehn <tim@dolthub.com>
+Date:  Mon Jul 11 16:48:37 -0700 2022
+
+        Inserted (2,2)
+
 ```

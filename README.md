@@ -15,8 +15,8 @@ Using GitBook requires us to adopt their model of content structuring in order t
 
 ## Contribution Workflow
 We have two GitBook "spaces", one for development and review, and one for production:
-- "Dolt", which `docs.dolthub.com` links to, and syncs off of `gitbook-publish`
-- "Dolt Dev", which is `dolt.gitbook.io/dolt-dev`, and syncs off of `gitbook-dev`
+- "Dolt", which [docs.dolthub.com](https://docs.dolthub.com/) links to, and syncs off of `gitbook-publish`
+- "Dolt Dev", which is [dolt.gitbook.io/dolt-dev](https://dolt.gitbook.io/dolt-dev/), and syncs off of `gitbook-dev`
 
 To make a contribution create a feature branch, either in a fork or in this repository, and then make a PR against `gitbook-dev`. This can be reviewed and merged, which will result in it being deployed to "Dolt Dev" space. Once it has been reviewed in GitBook we can merge `gitbook-dev` to `gitbook-publish`, and it will land in production.
 
