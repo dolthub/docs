@@ -281,7 +281,7 @@ Download a ZIP file of all database tables from the `main` branch:
 
 ```python
 import requests
-local_file = 'us-jails_main.csv'
+local_file = 'us-jails_main.zip'
 res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/main')
 with open(local_file, 'wb') as file:
   file.write(res.content)
@@ -291,7 +291,7 @@ Download a ZIP file of all database tables at a commit hash:
 
 ```python
 import requests
-local_file = 'us-jails_commit.csv'
+local_file = 'us-jails_commit.zip'
 res = requests.get('https://www.dolthub.com/csv/dolthub/us-jails/u8s83gapv7ghnbmrtpm8q5es0dbl7lpd')
 with open(local_file, 'wb') as file:
   file.write(res.content)
@@ -305,7 +305,7 @@ You can use the token in the header when download CSVs from a private database.
 
 ```python
 import requests
-local_file = 'private_db_main.csv'
+local_file = 'private_db_main.zip'
 res = requests.get(
   'https://www.dolthub.com/csv/owner/private-db/main',
   headers={ "authorization": "token [TOKEN YOU COPIED]" },
