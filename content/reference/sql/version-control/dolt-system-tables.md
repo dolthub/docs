@@ -11,6 +11,7 @@ title: Dolt System Tables
 * [dolt\_query\_catalog](#dolt_query_catalog)
 * [dolt\_remotes](#dolt_remotes)
 * [dolt\_schemas](#dolt_schemas)
+* [dolt\_tags](#dolt_tags)
 
 **Database History:**
 * [dolt\_blame\_$tablename](#dolt_blame_usdtablename)
