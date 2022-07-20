@@ -25,7 +25,7 @@
 
 ## Concepts
 * [Dolt](concepts/dolt.md)
-    * [Git](concepts/git/README.md)
+    * [Git](concepts/dolt/git/README.md)
         * [Commits](concepts/dolt/git/commits.md)
         * [Log](concepts/dolt/git/log.md)
         * [Diff](concepts/dolt/git/diff.md)
@@ -48,6 +48,10 @@
         * [Users/Grants](concepts/dolt/sql/users-grants.md)
         * [Transactions](concepts/dolt/sql/transaction.md)
         * [System Variables](concepts/dolt/sql/system-variables.md)
+    * [RDBMS](concepts/dolt/rdbms/README.md)
+        * [Server](concepts/dolt/rdbms/server.md)
+        * [Backups](concepts/dolt/rdbms/backups.md)
+        * [Replication](concepts/dolt/rdbms/replication.md)
 * [DoltHub/DoltLab](concepts/dolthub.md)
     * [Permissions](concepts/dolthub/permissions.md)
     * [Pull Requests](concepts/dolthub/prs.md)

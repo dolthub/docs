@@ -1743,8 +1743,8 @@ dolt constraints verify [--all] [--output-only] [<table>...]
 **Description**
 
 Verifies that inserted or modified rows in the working set satisfy the defined table constraints.
-               If any constraints are violated, they are documented in the dolt_constraint_violations system table.
-               By default, this command does not consider row changes that have been previously committed.
+If any constraints are violated, they are documented in the dolt_constraint_violations system table.
+By default, this command does not consider row changes that have been previously committed.
 
 **Arguments and options**
 
