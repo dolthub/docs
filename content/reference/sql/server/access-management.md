@@ -10,7 +10,9 @@ Access is determined by the privileges that a user has.
 For more information on the basics of how users and privileges work and how to use them, [please read our blog post from when we announced their inclusion into Dolt](https://www.dolthub.com/blog/2022-02-16-introducing-users-and-privileges/).
 This document will assume some familiarity with users and privileges.
 
-## Enabling Users
+## Configuring Privileges 
+
+Users and grants are on by default. Users and grants are stored in the `.doltcfg/privileges.db` file by default. You can reference a non-default privileges file if you want to share privileges between databases.
 
 ### CLI Argument
 
