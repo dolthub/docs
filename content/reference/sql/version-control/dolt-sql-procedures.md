@@ -491,13 +491,12 @@ CALL DOLT_RESET('table')
 
 ## `DOLT_REMOTE()`
 
-Adds a remote for a repository at given url, or removes an existing remote with its remote-tracking branches 
-and configuration settings. Works exactly like [`dolt remote`](../../cli.md#dolt-remote) on the CLI, and takes 
-the same arguments except for listing tags. To list existing tags, use 
-[`dolt_remotes`](./dolt-system-tables.md#dolt_remotes) system table.
+Adds a remote for a database at given url, or removes an existing remote with its remote-tracking branches 
+and configuration settings. Works exactly like [`dolt remote` command](../../cli.md#dolt-remote) on the CLI, and takes 
+the same arguments except for listing remotes. To list existing remotes, use the
+[`dolt_remotes` system table](./dolt-system-tables.md#dolt_remotes).
 
 ```sql
-
 CALL DOLT_REMOTE('add','remote_name','remote_url');
 CALL DOLT_REMOTE('remove','existing_remote_name');
 ```
@@ -518,6 +517,9 @@ CALL DOLT_REMOTE('remove','existing_remote_name');
 -- Add a HTTP remote 
 CALL DOLT_REMOTE('add','origin','https://doltremoteapi.dolthub.com/Dolthub/museum-collections');
 
+-- Add a HTTP remote with shorthand notation for the URL
+CALL DOLT_REMOTE('add','origin1','Dolthub/museum-collections');
+
 -- Add a filesystem based remote
 CALL DOLT_REMOTE('add','origin2','file:///Users/jennifer/datasets/museum-collections');
 
@@ -527,11 +529,12 @@ SELECT * FROM dolt_remotes;
 | name    | url                                                          | fetch_specs                             | params |
 +---------+--------------------------------------------------------------+-----------------------------------------+--------+
 | origin  | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin/*"]  | {}     |
+| origin1 | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin1/*"] | {}     |
 | origin2 | file:///Users/jennifer/datasets/museum-collections           | ["refs/heads/*:refs/remotes/origin2/*"] | {}     |
 +---------+--------------------------------------------------------------+-----------------------------------------+--------+
 
--- Add a filesystem based remote
-CALL DOLT_REMOTE('remove','origin2');
+-- Remove a remote
+CALL DOLT_REMOTE('remove','origin1');
 
 -- List remotes to check.
 SELECT * FROM dolt_remotes;
@@ -539,6 +542,7 @@ SELECT * FROM dolt_remotes;
 | name    | url                                                          | fetch_specs                             | params |
 +---------+--------------------------------------------------------------+-----------------------------------------+--------+
 | origin  | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin/*"]  | {}     |
+| origin2 | file:///Users/jennifer/datasets/museum-collections           | ["refs/heads/*:refs/remotes/origin2/*"] | {}     | 
 +---------+--------------------------------------------------------------+-----------------------------------------+--------+
 ```
 
@@ -680,8 +684,8 @@ SELECT * FROM dolt_log LIMIT 5;
 ## `DOLT_TAG()`
 
 Creates a new tag that points at specified commit ref, or deletes an existing tag. Works exactly like
-[`dolt tag`](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags. 
-To list existing tags, use [`dolt_tags`](./dolt-system-tables.md#dolt_tags) system table.
+[`dolt tag` command](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags. 
+To list existing tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
 
