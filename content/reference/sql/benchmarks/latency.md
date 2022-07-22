@@ -63,7 +63,7 @@ The Dolt version is `0.40.19`.
 # Bulk Import Benchmarking
 
 Dolt offers the [`table import`](../../cli.md#dolt-table-import) command to load large CSV, JSON, XLSX and Parquet files into the database. MySQL offers 
-similar functionality with its [`LOAD DATA`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) command. We created a custom benchmarks composed of 6 csv files to measure Dolt's import performance vis-a-vis MySQL.
+similar functionality with its [`LOAD DATA`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) command. We created a custom benchmark to measure Dolt's import performance vis-a-vis MySQL.
 
 ## Benchmark Design
 
@@ -95,7 +95,7 @@ The CSV files are designed as follows:
 - A CSV file with 10m rows in random key order
 
 For each CSV file we measured how long it took for the relevant file to get loaded in and the number of rows that were
-import per seconds. 
+imported per second.
 
 ## Benchmark Results
 
