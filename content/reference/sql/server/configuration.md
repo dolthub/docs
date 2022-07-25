@@ -46,4 +46,4 @@ set @@dolt_transaction_commit = 1;
 ```
 
 A full list of available system variables can be found in the [docs on
-system variables](dolt-sysvars.md).
+system variables](../version-control/dolt-sysvars.md).

@@ -10,11 +10,13 @@ title: Dolt SQL Procedures
   * [dolt\_branch()](#dolt_branch)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_clean()](#dolt_clean)
+  * [dolt\_clone()](#dolt_clone)
   * [dolt\_commit()](#dolt_commit)
   * [dolt\_fetch()](#dolt_fetch)
   * [dolt\_merge()](#dolt_merge)
   * [dolt\_pull()](#dolt_pull)
   * [dolt\_push()](#dolt_push)
+  * [dolt\_remote()](#dolt_remote)
   * [dolt\_reset()](#dolt_reset)
   * [dolt\_revert()](#dolt_revert)
   * [dolt\_tag()](#dolt_tag)
@@ -301,6 +303,71 @@ show tables;
 +----------------+
 ```
 
+## `DOLT_CLONE()`
+
+Clones an existing Dolt database into a new database within the current Dolt environment. The existing database must be specified as an argument, either as a file URL that points to an existing Dolt database on disk, or a `doltremote` URL for remote hosted database (e.g. a database hosted on DoltHub or DoltLab), or a `<org>/<database>` (e.g. `dolthub/us-jails`) as a shorthand for a database hosted on DoltHub. An additional argument can optionally be supplied to specify the name of the new, cloned database, otherwise the current name of the existing database will be used.
+
+NOTE: When cloning from a file URL, you must currently include the `.dolt/noms` subdirectories. For more details see the GitHub tracking issue, [dolt#1860](https://github.com/dolthub/dolt/issues/1860).   
+
+```sql
+CALL DOLT_CLONE('file:///myDatabasesDir/database/.dolt/noms');
+CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
+```
+
+### Options
+
+`--remote`: Name of the remote to be added to the new, cloned database. The default is 'origin'.
+
+`-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
+
+`--aws-region`: The cloud provider region associated with the remote database being cloned.
+
+`--aws-creds-type`: The credential type when cloning a remote database from AWS. Valid options are role, env, and file.
+
+`--aws-creds-file`: The AWS credentials file for use when cloning a remote database from AWS.
+
+`--aws-creds-profile`: The AWS profile name holding the credentials to use when cloning a remote database from AWS.
+
+### Examples
+
+```sql
+-- Clone the dolthub/us-jails database from DoltHub using the <org>/<database> notation.
+CALL DOLT_CLONE('dolthub/us-jails');
+-- Use the new, cloned database
+-- NOTE: backticks are required for database names with hyphens
+USE `us-jails`; 
+SHOW TABLES;
++-----------------------------+
+| Tables_in_us-jails          |
++-----------------------------+
+| incidents                   |
+| inmate_population_snapshots |
+| jails                       |
++-----------------------------+
+
+-- Clone the dolthub/museum-collections database, this time using a doltremoteapi URL, cloning 
+-- only a single branch, customizing the remote name, and providing a custom database name. 
+CALL DOLT_CLONE('-branch', 'prod', '-remote', 'dolthub', 
+                'https://doltremoteapi.dolthub.com/dolthub/ge-taxi-demo', 'taxis');
+
+-- Verify that only the prod branch was cloned 
+USE taxis;
+SELECT * FROM DOLT_BRANCHES;
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+| name | hash                             | latest_committer | latest_committer_email | latest_commit_date      | latest_commit_message        |
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+| prod | 1s61u4rbbd26u0tlpdhb46cuejd1dogj | oscarbatori      | oscarbatori@gmail.com  | 2021-06-14 17:52:58.702 | Added first cut of trip data |
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+
+-- Verify that the default remote for this new, cloned database is named "dolthub" (not "origin")
+SELECT * FROM DOLT_REMOTES;
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+| name    | url                                                    | fetch_specs                             | params |
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+| dolthub | https://doltremoteapi.dolthub.com/dolthub/ge-taxi-demo | ["refs/heads/*:refs/remotes/dolthub/*"] | {}     |
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+
+```
 
 ## `DOLT_COMMIT()`
 
@@ -487,6 +554,64 @@ CALL DOLT_ADD('table')
 CALL DOLT_RESET('table')
 ```
 
+
+## `DOLT_REMOTE()`
+
+Adds a remote for a database at given url, or removes an existing remote with its remote-tracking branches 
+and configuration settings. Works exactly like [`dolt remote` command](../../cli.md#dolt-remote) on the CLI, and takes 
+the same arguments except for listing remotes. To list existing remotes, use the
+[`dolt_remotes` system table](./dolt-system-tables.md#dolt_remotes).
+
+```sql
+CALL DOLT_REMOTE('add','remote_name','remote_url');
+CALL DOLT_REMOTE('remove','existing_remote_name');
+```
+
+### Options
+
+`--aws-region=<region>`: Specify a cloud provider region associated with this remote.
+
+`--aws-creds-type=<creds-type>`: Specify a credential type.  Valid options are role, env, and file.
+
+`--aws-creds-file=<file>`: Specify an AWS credentials file.
+
+`--aws-creds-profile=<profile>`: Specify an AWS profile to use.
+
+### Example
+
+```sql
+-- Add a HTTP remote 
+CALL DOLT_REMOTE('add','origin','https://doltremoteapi.dolthub.com/Dolthub/museum-collections');
+
+-- Add a HTTP remote with shorthand notation for the URL
+CALL DOLT_REMOTE('add','origin1','Dolthub/museum-collections');
+
+-- Add a filesystem based remote
+CALL DOLT_REMOTE('add','origin2','file:///Users/jennifer/datasets/museum-collections');
+
+-- List remotes to check.
+SELECT * FROM dolt_remotes;
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+| name    | url                                                          | fetch_specs                             | params |
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+| origin  | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin/*"]  | {}     |
+| origin1 | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin1/*"] | {}     |
+| origin2 | file:///Users/jennifer/datasets/museum-collections           | ["refs/heads/*:refs/remotes/origin2/*"] | {}     |
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+
+-- Remove a remote
+CALL DOLT_REMOTE('remove','origin1');
+
+-- List remotes to check.
+SELECT * FROM dolt_remotes;
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+| name    | url                                                          | fetch_specs                             | params |
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+| origin  | https://doltremoteapi.dolthub.com/Dolthub/museum-collections | ["refs/heads/*:refs/remotes/origin/*"]  | {}     |
+| origin2 | file:///Users/jennifer/datasets/museum-collections           | ["refs/heads/*:refs/remotes/origin2/*"] | {}     | 
++---------+--------------------------------------------------------------+-----------------------------------------+--------+
+```
+
 ## `DOLT_REVERT()`
 
 Reverts the changes introduced in a commit, or set of commits. Creates a new commit from the current HEAD that reverses 
@@ -624,9 +749,9 @@ SELECT * FROM dolt_log LIMIT 5;
 
 ## `DOLT_TAG()`
 
-Creates a new tag that points at specified commit ref. Works exactly like
-[`dolt tag`](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags. 
-To list existing tags, use [`dolt_tags`](./dolt-system-tables.md#dolt_tags) system table.
+Creates a new tag that points at specified commit ref, or deletes an existing tag. Works exactly like
+[`dolt tag` command](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags. 
+To list existing tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
 
