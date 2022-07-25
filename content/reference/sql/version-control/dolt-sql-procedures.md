@@ -317,10 +317,15 @@ CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 ### Options
 
 `--remote`: Name of the remote to be added to the new, cloned database. The default is 'origin'.
+
 `-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
+
 `--aws-region`: The cloud provider region associated with the remote database being cloned.
+
 `--aws-creds-type`: The credential type when cloning a remote database from AWS. Valid options are role, env, and file.
+
 `--aws-creds-file`: The AWS credentials file for use when cloning a remote database from AWS.
+
 `--aws-creds-profile`: The AWS profile name holding the credentials to use when cloning a remote database from AWS.
 
 ### Examples
