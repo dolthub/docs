@@ -10,6 +10,7 @@ title: Dolt SQL Procedures
   * [dolt\_branch()](#dolt_branch)
   * [dolt\_checkout()](#dolt_checkout)
   * [dolt\_clean()](#dolt_clean)
+  * [dolt\_clone()](#dolt_clone)
   * [dolt\_commit()](#dolt_commit)
   * [dolt\_fetch()](#dolt_fetch)
   * [dolt\_merge()](#dolt_merge)
@@ -302,6 +303,66 @@ show tables;
 +----------------+
 ```
 
+## `DOLT_CLONE()`
+
+Clones an existing Dolt database into a new database within the current Dolt environment. The existing database must be specified as an argument, either as a file URL that points to an existing Dolt database on disk, or a `doltremote` URL for remote hosted database (e.g. a database hosted on DoltHub or DoltLab), or a `<org>/<database>` (e.g. `dolthub/us-jails`) as a shorthand for a database hosted on DoltHub. An additional argument can optionally be supplied to specify the name of the new, cloned database, otherwise the current name of the existing database will be used.
+
+NOTE: When cloning from a file URL, you must currently include the `.dolt/noms` subdirectories. For more details see the GitHub tracking issue, [dolt#1860](https://github.com/dolthub/dolt/issues/1860).   
+
+```sql
+CALL DOLT_CLONE('file:///myDatabasesDir/database/.dolt/noms');
+CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
+```
+
+### Options
+
+`--remote`: Name of the remote to be added to the new, cloned database. The default is 'origin'.
+`-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
+`--aws-region`: The cloud provider region associated with the remote database being cloned.
+`--aws-creds-type`: The credential type when cloning a remote database from AWS. Valid options are role, env, and file.
+`--aws-creds-file`: The AWS credentials file for use when cloning a remote database from AWS.
+`--aws-creds-profile`: The AWS profile name holding the credentials to use when cloning a remote database from AWS.
+
+### Examples
+
+```sql
+-- Clone the dolthub/us-jails database from DoltHub using the <org>/<database> notation.
+CALL DOLT_CLONE('dolthub/us-jails');
+-- Use the new, cloned database
+-- NOTE: backticks are required for database names with hyphens
+USE `us-jails`; 
+SHOW TABLES;
++-----------------------------+
+| Tables_in_us-jails          |
++-----------------------------+
+| incidents                   |
+| inmate_population_snapshots |
+| jails                       |
++-----------------------------+
+
+-- Clone the dolthub/museum-collections database, this time using a doltremoteapi URL, cloning 
+-- only a single branch, customizing the remote name, and providing a custom database name. 
+CALL DOLT_CLONE('-branch', 'prod', '-remote', 'dolthub', 
+                'https://doltremoteapi.dolthub.com/dolthub/ge-taxi-demo', 'taxis');
+
+-- Verify that only the prod branch was cloned 
+USE taxis;
+SELECT * FROM DOLT_BRANCHES;
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+| name | hash                             | latest_committer | latest_committer_email | latest_commit_date      | latest_commit_message        |
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+| prod | 1s61u4rbbd26u0tlpdhb46cuejd1dogj | oscarbatori      | oscarbatori@gmail.com  | 2021-06-14 17:52:58.702 | Added first cut of trip data |
++------+----------------------------------+------------------+------------------------+-------------------------+------------------------------+
+
+-- Verify that the default remote for this new, cloned database is named "dolthub" (not "origin")
+SELECT * FROM DOLT_REMOTES;
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+| name    | url                                                    | fetch_specs                             | params |
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+| dolthub | https://doltremoteapi.dolthub.com/dolthub/ge-taxi-demo | ["refs/heads/*:refs/remotes/dolthub/*"] | {}     |
++---------+--------------------------------------------------------+-----------------------------------------+--------+
+
+```
 
 ## `DOLT_COMMIT()`
 
