@@ -714,6 +714,7 @@ can be committed or a new Dolt commit created.
 
 ```sql
 CALL DOLT_PULL('origin');
+CALL DOLT_PULL('origin', 'some-branch');
 CALL DOLT_PULL('feature-branch', '--force');
 ```
 
@@ -740,7 +741,12 @@ details.
 
 ```sql
 -- Update local working set with remote changes
+-- Note: this requires upstream tracking information to be set in order for 
+--       Dolt to know what remote branch to merge
 CALL DOLT_PULL('origin');
+
+-- Update local working set with remote changes from an explicit branch
+CALL DOLT_PULL('origin', 'some-branch');
 
 -- View a log of new commits
 SELECT * FROM dolt_log LIMIT 5;
