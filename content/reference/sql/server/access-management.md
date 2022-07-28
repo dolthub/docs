@@ -36,6 +36,7 @@ Rather than creating this super account during [`init`](../cli.md#dolt-init), we
 This leads to an interaction with the [privilege file](#privilege-file) that should be noted.
 A privilege file is only created when there is a modification to any of the grant tables.
 As soon as any statement that modifies the grant tables (`CREATE USER`, `GRANT`, `REVOKE`, etc.) executes, the users and all privileges will save to the privilege file.
+Superusers, including those created through `--user`, will not be persisted.
 This **includes** the super account as defined by the user and password arguments, therefore it is recommended that the super account is deleted after all users are set up, or it is given a strong password.
 On subsequent server starts, if the [privilege file](#privilege-file) _contains any data_, the user and password arguments are fully ignored.
 This behavior was chosen so that server should always have at least one user that a client may log into, otherwise the server would be completely inaccessible.
