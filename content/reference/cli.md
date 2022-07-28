@@ -281,43 +281,46 @@ By default this command uses the dolt database in the current working directory,
 **Arguments and options**
 
 `-q`, `--query`:
-Runs a single query and exits
+Runs a single query and exits.
 
 `-r`, `--result-format`:
-How to format result output. Valid values are tabular, csv, json, vertical. Defaults to tabular. 
+How to format result output. Valid values are tabular, csv, json, vertical. Defaults to tabular.
 
 `-s`, `--save`:
 Used with --query, save the query to the query catalog with the name provided. Saved queries can be examined in the dolt_query_catalog system table.
 
 `-x`, `--execute`:
-Executes a saved query with the given name
+Executes a saved query with the given name.
 
 `-l`, `--list-saved`:
-List all saved queries
+List all saved queries.
 
 `-m`, `--message`:
-Used with --query and --save, saves the query with the descriptive message given. See also --name
+Used with --query and --save, saves the query with the descriptive message given. See also `--name`.
 
 `-b`, `--batch`:
 Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
 
 `--multi-db-dir`:
-DEPRECATED: Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to $data-dir/.doltcfg.
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
 
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
 
 `--file`:
-Execute statements from the file given
+Execute statements from the file given.
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Defaults to $doltcfg-dir/privileges.db
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+
+`-u`, `--user`:
+Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
 
 
@@ -347,7 +350,7 @@ This is an example yaml configuration file showing all supported items and their
 	  disable_client_multi_statements: false
 	
 	user:
-	  name: root
+	  name: ""
 	  password: ""
 	
 	listener:
@@ -359,6 +362,8 @@ This is an example yaml configuration file showing all supported items and their
 	  tls_key: null
 	  tls_cert: null
 	  require_secure_transport: null
+	  allow_cleartext_passwords: null
+	  socket: null
 	
 	databases: []
 	
@@ -420,51 +425,57 @@ If a config file is not provided many of these settings may be configured on the
 When provided configuration is taken from the yaml config file and all command line parameters are ignored.
 
 `-H`, `--host`:
-Defines the host address that the server will run on (default `localhost`)
+Defines the host address that the server will run on. Defaults to `localhost`.
 
 `-P`, `--port`:
-Defines the port that the server will run on (default `3306`)
+Defines the port that the server will run on. Defaults to `3306`.
 
 `-u`, `--user`:
-Defines the server user (default `root`)
+Defines the server user. Defaults to ``. This should be explicit if desired.
 
 `-p`, `--password`:
-Defines the server password (default ``)
+Defines the server password. Defaults to ``
 
 `-t`, `--timeout`:
 Defines the timeout, in seconds, used for connections
-A value of `0` represents an infinite timeout (default `28800000`)
+A value of `0` represents an infinite timeout. Defaults to `28800000`.
 
 `-r`, `--readonly`:
-Disable modification of the database
+Disable modification of the database.
 
 `-l`, `--loglevel`:
 Defines the level of logging provided
-Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
+Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal`. Defaults to `info`.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
 
 `--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory. This is deprecated, you should use --data-dir instead.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to $data-dir/.doltcfg.
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
 
 `--no-auto-commit`:
-Set @@autocommit = off for the server
+Set @@autocommit = off for the server.
 
 `--query-parallelism`:
-Set the number of go routines spawned to handle each query (default `2`)
+Set the number of go routines spawned to handle each query. Defaults to `2`.
 
 `--max-connections`:
-Set the number of connections handled by the server (default `100`)
+Set the number of connections handled by the server. Defaults to `100`.
 
 `--persistence-behavior`:
-Indicate whether to `load` or `ignore` persisted global variables (default `load`)
+Indicate whether to `load` or `ignore` persisted global variables. Defaults to `load`.
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Defaults to $doltcfg-dir/privileges.db
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+
+`--allow-cleartext-passwords`:
+Allows use of cleartext passwords. Defaults to false.
+
+`--socket`:
+Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 
 
 
@@ -493,51 +504,57 @@ Similar to `dolt sql-server`, this command may use a YAML configuration file or 
 When provided configuration is taken from the yaml config file and all command line parameters are ignored.
 
 `-H`, `--host`:
-Defines the host address that the server will run on (default `localhost`)
+Defines the host address that the server will run on. Defaults to `localhost`.
 
 `-P`, `--port`:
-Defines the port that the server will run on (default `3306`)
+Defines the port that the server will run on. Defaults to `3306`.
 
 `-u`, `--user`:
-Defines the server user (default `root`)
+Defines the server user. Defaults to ``. This should be explicit if desired.
 
 `-p`, `--password`:
-Defines the server password (default ``)
+Defines the server password. Defaults to ``
 
 `-t`, `--timeout`:
 Defines the timeout, in seconds, used for connections
-A value of `0` represents an infinite timeout (default `28800000`)
+A value of `0` represents an infinite timeout. Defaults to `28800000`.
 
 `-r`, `--readonly`:
-Disable modification of the database
+Disable modification of the database.
 
 `-l`, `--loglevel`:
 Defines the level of logging provided
-Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal` (default `info`)
+Options are: `trace', `debug`, `info`, `warning`, `error`, `fatal`. Defaults to `info`.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
 
 `--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults the the current directory. This is deprecated, you should use --data-dir instead.
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to $data-dir/.doltcfg.
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
 
 `--no-auto-commit`:
-Set @@autocommit = off for the server
+Set @@autocommit = off for the server.
 
 `--query-parallelism`:
-Set the number of go routines spawned to handle each query (default `2`)
+Set the number of go routines spawned to handle each query. Defaults to `2`.
 
 `--max-connections`:
-Set the number of connections handled by the server (default `100`)
+Set the number of connections handled by the server. Defaults to `100`.
 
 `--persistence-behavior`:
-Indicate whether to `load` or `ignore` persisted global variables (default `load`)
+Indicate whether to `load` or `ignore` persisted global variables. Defaults to `load`.
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Defaults to $doltcfg-dir/privileges.db
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+
+`--allow-cleartext-passwords`:
+Allows use of cleartext passwords. Defaults to false.
+
+`--socket`:
+Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 
 `-d`, `--dual`:
 Causes this command to spawn a dolt server that is automatically connected to.
@@ -851,10 +868,10 @@ This default configuration is achieved by creating references to the remote bran
 **Arguments and options**
 
 `--remote`:
-Name of the remote to be added. Default will be 'origin'.
+Name of the remote to be added to the cloned database. The default is 'origin'.
 
 `-b`, `--branch`:
-The branch to be cloned.  If not specified all branches will be cloned.
+The branch to be cloned. If not specified all branches will be cloned.
 
 `--aws-region`
 
@@ -1743,8 +1760,8 @@ dolt constraints verify [--all] [--output-only] [<table>...]
 **Description**
 
 Verifies that inserted or modified rows in the working set satisfy the defined table constraints.
-If any constraints are violated, they are documented in the dolt_constraint_violations system table.
-By default, this command does not consider row changes that have been previously committed.
+               If any constraints are violated, they are documented in the dolt_constraint_violations system table.
+               By default, this command does not consider row changes that have been previously committed.
 
 **Arguments and options**
 
