@@ -255,7 +255,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `LAG()`                           | ❌        |                                                                                                |
 | `LAST()`                          | ✅        |                                                                                                |
 | `LAST_DAY`                        | ❌        |                                                                                                |
-| `LAST_INSERT_ID()`                | ❌        |                                                                                                |
+| `LAST_INSERT_ID()`                | ✅        |                                                                                                |
 | `LAST_VALUE()`                    | ❌        |                                                                                                |
 | `LCASE()`                         | ❌        |                                                                                                |
 | `LEAD()`                          | ❌        |                                                                                                |
