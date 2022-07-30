@@ -61,12 +61,12 @@ title: Data Description
 
 ## Indexes
 
-| Component            | Supported | Notes and limitations |
-| :------------------- | :-------- | :-------------------- |
-| Indexes              | ✅        |                       |
-| Multi-column indexes | ✅        |                       |
-| Full-text indexes    | ❌        |                       |
-| Spatial indexes      | ❌        |                       |
+| Component            | Supported | Notes and limitations                                                                                   |
+| :------------------- | :-------- | :------------------------------------------------------------------------------------------------------ |
+| Indexes              | ✅        | Unsupported on TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB data types |
+| Multi-column indexes | ✅        |                                                                                                         |
+| Full-text indexes    | ❌        |                                                                                                         |
+| Spatial indexes      | ❌        |                                                                                                         |
 
 ## Schema
 
