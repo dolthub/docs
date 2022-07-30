@@ -103,12 +103,12 @@ Below are the results of the import benchmark. Like the above latency section, o
 performance. 
 
 ```
-|      name       | program | version | from_time | from_rps | program | version | to_time | to_rps  | rps_multiplier |
-|-----------------|---------|---------|-----------|----------|---------|---------|---------|---------|----------------|
-| 100k-random.csv | dolt    | 0.40.19 | 13s       | 7528.9   | mysql   | 8.0.22  | 1s      | 71466.8 | 9.5            |
-| 100k-sorted.csv | dolt    | 0.40.19 | 13s       | 7561.9   | mysql   | 8.0.22  | 1s      | 74863.4 | 9.9            |
-| 1m-random.csv   | dolt    | 0.40.19 | 2m31s     | 6617.3   | mysql   | 8.0.22  | 13s     | 74216.1 | 11.2           |
-| 1m-sorted.csv   | dolt    | 0.40.19 | 2m30s     | 6646.1   | mysql   | 8.0.22  | 12s     | 81445.6 | 12.3           |
-| 10m-random.csv  | dolt    | 0.40.19 | 27m55s    | 5971.5   | mysql   | 8.0.22  | 2m16s   | 73594.2 | 12.3           |
-| 10m-sorted.csv  | dolt    | 0.40.19 | 28m1s     | 5950.1   | mysql   | 8.0.22  | 2m15s   | 73986.3 | 12.4           |
+|      name       | program | version | from_time | from_rps | program | version | to_time  | to_rps  | rps_multiplier |
+|-----------------|---------|---------|-----------|----------|---------|---------|----------|---------|----------------|
+| 100k-sorted.csv | dolt    | 0.40.20 | 13.03s    | 7672.1   | mysql   | 8.0.22  | 1.32s    | 75571.4 | 9.9            |
+| 100k-random.csv | dolt    | 0.40.20 | 13.23s    | 7556.0   | mysql   | 8.0.22  | 1.38s    | 72207.3 | 9.6            |
+| 1m-sorted.csv   | dolt    | 0.40.20 | 2m29.29s  | 6698.2   | mysql   | 8.0.22  | 13.3s    | 75173.9 | 11.2           |
+| 1m-random.csv   | dolt    | 0.40.20 | 2m29.48s  | 6689.9   | mysql   | 8.0.22  | 12.76s   | 78361.3 | 11.7           |
+| 10m-sorted.csv  | dolt    | 0.40.20 | 27m42.44s | 6015.2   | mysql   | 8.0.22  | 2m14.22s | 74505.5 | 12.4           |
+| 10m-random.csv  | dolt    | 0.40.20 | 27m48.16s | 5994.6   | mysql   | 8.0.22  | 2m13.41s | 74956.6 | 12.5           |
 ```
