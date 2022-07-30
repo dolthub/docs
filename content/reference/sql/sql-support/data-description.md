@@ -63,7 +63,7 @@ title: Data Description
 
 | Component            | Supported | Notes and limitations                                                                                   |
 | :------------------- | :-------- | :------------------------------------------------------------------------------------------------------ |
-| Indexes              | ✅        | Unsupported on TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB data types |
+| Indexes              | 🟠        | Unsupported on TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB data types |
 | Multi-column indexes | ✅        |                                                                                                         |
 | Full-text indexes    | ❌        |                                                                                                         |
 | Spatial indexes      | ❌        |                                                                                                         |
