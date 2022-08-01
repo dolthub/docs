@@ -29,4 +29,4 @@ redirects:
   reference/sql/benchmarks: reference/sql/benchmarks/README.md
   reference/sql/benchmarks/correctness: reference/sql/benchmarks/correctness.md
   reference/sql/benchmarks/latency: reference/sql/benchmarks/latency.md
-  reference/sql/benchmarks/imports: reference/sql/benchmarks/import.md
+  reference/sql/benchmarks/import: reference/sql/benchmarks/import.md
