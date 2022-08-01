@@ -1,3 +1,7 @@
+---
+title: Imports
+---
+
 # Bulk Import Benchmarking
 
 Dolt offers the [`table import`](../../cli.md#dolt-table-import) command to load large CSV, JSON, XLSX and Parquet files into the database. MySQL offers 
