@@ -97,6 +97,7 @@
 * [Benchmarks and Metrics](reference/sql/benchmarks/README.md)
     * [Correctness](reference/sql/benchmarks/correctness.md)
     * [Latency](reference/sql/benchmarks/latency.md)
+    * [Import](reference/sql/benchmarks/import.md)
 
 ## CLI Reference
 * [CLI Command Reference](reference/cli.md)
