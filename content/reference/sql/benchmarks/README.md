@@ -13,4 +13,4 @@ To learn more, click on a subsection heading.
 * [Server latency](./latency.md) uses `sysbench` to compare Dolt's read
   and write latencies against MySQL.
 * [Import latency](./import.md) uses a custom benchmark to compare Dolt's bulk import performance
-  against MySQL's `LOAD DATA` command.
+  against MySQL's `LOAD DATA` command's performance.
