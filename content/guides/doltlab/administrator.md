@@ -15,6 +15,8 @@ the following information can help DoltLab Admins manually perform some common a
 8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
 9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
 10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
+11. [Use an external PostgreSQL server with DoltLab](#use-external-postgres)
+12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -478,3 +480,34 @@ You can now execute the following `INSERT` to allow a specific user with `exampl
 ```sql
 INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VALUES ('example@address.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
+
+<h1 id="use-external-postgres">Use an external PostgreSQL server with DoltLab</h1>
+
+To connect an external PostgreSQL server to DoltLab, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
+
+```yaml
+  doltlabapi:
+    ...
+    command:
+      ...
+      -pghost <host>
+      -pgport <port>
+      ...
+```
+
+You can also remove the `doltlabdb` section and all references to it in the `docker-compose.yaml` file.
+
+Before (re)starting DoltLab with this change, you will also need to execute the following statements in your external PostgreSQL server:
+
+```sql
+CREATE ROLE dolthubadmin WITH LOGIN PASSWORD '$DOLTHUBAPI_PASSWORD';
+CREATE DATABASE dolthubapi;
+GRANT ALL PRIVILEGES ON DATABASE dolthubapi TO dolthubadmin;
+CREATE EXTENSION citext SCHEMA public;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dolthubadmin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO dolthubadmin;
+```
+
+<h1 id="expose-doltlab-ngrok">Expose a DoltLab instance with ngrok</h1>
+
+As of DoltLab `v0.5.5`, DoltLab instances can be exposed with [ngrok](https://ngrok.com/). ["How to expose DoltLab with ngrok"]() contains the instructions for this process, however, we do not recommend doing this for production DoltLab instances. This process requires one of DoltLab's services to be run _without_ authentication, which may expose sensitive data. Do this at your own risk.
