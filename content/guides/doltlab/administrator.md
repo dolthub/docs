@@ -410,7 +410,7 @@ Usage:
 --message {This is a test email message sent with smtp_connection_helper!} \
 --subject {Testing SMTP Server Connection} \
 --client-hostname {localhost} \
---auth <plain|external|anonymous|oauthbearer|disable> \
+--auth <plain|login|external|anonymous|oauthbearer|disable> \
 [--username smtp username] \
 [--password smtp password] \
 [--token smtp oauth token] \
