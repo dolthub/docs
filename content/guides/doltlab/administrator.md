@@ -483,7 +483,7 @@ INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VAL
 
 <h1 id="use-external-postgres">Use an external PostgreSQL server with DoltLab</h1>
 
-To connect an external PostgreSQL server to DoltLab, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
+You can connect a DoltLab instance to an external PostgreSQL server version `13` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
 
 ```yaml
   doltlabapi:
