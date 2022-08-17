@@ -103,11 +103,11 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BETWEEN ... AND ...`             | ✅         |                                                                                                |
 | `BIN()`                           | ✅         |                                                                                                |
 | `BIN_TO_UUID()`                   | ✅         |                                                                                                |
-| `BIT_AND()`                       | ❌         |                                                                                                |
+| `BIT_AND()`                       | ✅          |                                                                                                |
 | `BIT_COUNT()`                     | ❌         |                                                                                                |
 | `BIT_LENGTH()`                    | ✅         |                                                                                                |
-| `BIT_OR()`                        | ❌         | `\|` is supported                                                                              |
-| `BIT_XOR()`                       | ❌         | `^` is supported                                                                               |
+| `BIT_OR()`                        | ✅         | `\|` is supported                                                                              |
+| `BIT_XOR()`                       | ✅         | `^` is supported                                                                               |
 | `CAN_ACCESS_COLUMN()`             | ❌         |                                                                                                |
 | `CAN_ACCESS_DATABASE()`           | ❌         |                                                                                                |
 | `CAN_ACCESS_TABLE()`              | ❌         |                                                                                                |
@@ -351,7 +351,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `RLIKE`                           | ❌         | `REGEXP` is supported                                                                          |
 | `ROLES_GRAPHML()`                 | ❌         |                                                                                                |
 | `ROUND()`                         | ✅         |                                                                                                |
-| `ROW_COUNT()`                     | ✅          |                                                                                                |
+| `ROW_COUNT()`                     | ✅         |                                                                                                |
 | `ROW_NUMBER()`                    | ✅         |                                                                                                |
 | `RPAD()`                          | ✅         |                                                                                                |
 | `RTRIM()`                         | ✅         |                                                                                                |
