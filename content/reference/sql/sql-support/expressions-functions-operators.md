@@ -503,26 +503,26 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 Refer to the [MySQL Aggregate Function Documentation](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html) for more info.
 
 | Component                         | Supported | Notes and limitations                                                                          |
-| :-------------------------------- | :-------- | :--------------------------------------------------------------------------------------------- |
-| `AVG()`                           | ✅        |                                                                                                |
-| `BIT_AND()`                       | ❌        |                                                                                                |
-| `BIT_OR()`                        | ❌        |                                                                                                |
-| `BIT_XOR()`                       | ❌        |                                                                                                |
-| `COUNT()`                         | ✅        |                                                                                                |
-| `COUNT(DISTINCT)`                 | ✅        |                                                                                                |
-| `GROUP_CONCAT()`                  | ✅        |                                                                                                |
-| `JSON_OBJECT_AGG()`               | ✅        |                                                                                                |
-| `JSON_ARRAY_AGG()`                | ✅        |                                                                                                |
-| `MAX()`                           | ✅        |                                                                                                |
-| `MIN()`                           | ✅        |                                                                                                |
-| `STD()`                           | ❌        |                                                                                                |
-| `STDDEV()`                        | ❌        |                                                                                                |
-| `STDDEV_POP()`                    | ❌        |                                                                                                |
-| `STDDEV_SAMP()`                   | ❌        |                                                                                                |
-| `SUM()`                           | ✅        |                                                                                                |
-| `VAR_POP()`                       | ❌        |                                                                                                |
-| `VAR_SAMP()`                      | ❌        |                                                                                                |
-| `VARIANCE()`                      | ❌        |                                                                                                |
+| :-------------------------------- |:----------| :--------------------------------------------------------------------------------------------- |
+| `AVG()`                           | ✅         |                                                                                                |
+| `BIT_AND()`                       | ✅         |                                                                                                |
+| `BIT_OR()`                        | ✅         |                                                                                                |
+| `BIT_XOR()`                       | ✅         |                                                                                                |
+| `COUNT()`                         | ✅         |                                                                                                |
+| `COUNT(DISTINCT)`                 | ✅         |                                                                                                |
+| `GROUP_CONCAT()`                  | ✅         |                                                                                                |
+| `JSON_OBJECT_AGG()`               | ✅         |                                                                                                |
+| `JSON_ARRAY_AGG()`                | ✅         |                                                                                                |
+| `MAX()`                           | ✅         |                                                                                                |
+| `MIN()`                           | ✅         |                                                                                                |
+| `STD()`                           | ❌         |                                                                                                |
+| `STDDEV()`                        | ❌         |                                                                                                |
+| `STDDEV_POP()`                    | ❌         |                                                                                                |
+| `STDDEV_SAMP()`                   | ❌         |                                                                                                |
+| `SUM()`                           | ✅         |                                                                                                |
+| `VAR_POP()`                       | ❌         |                                                                                                |
+| `VAR_SAMP()`                      | ❌         |                                                                                                |
+| `VARIANCE()`                      | ❌         |                                                                                                |
 
 ## Window Functions
 
