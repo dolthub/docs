@@ -500,11 +500,11 @@ You can also remove the `doltlabdb` section and all references to it in the `doc
 Before (re)starting DoltLab with this change, you will also need to execute the following statements in your external PostgreSQL server:
 
 ```sql
-CREATE ROLE dolthubadmin WITH LOGIN PASSWORD '$DOLTHUBAPI_PASSWORD';
+CREATE ROLE dolthubapi WITH LOGIN PASSWORD '$DOLTHUBAPI_PASSWORD';
 CREATE DATABASE dolthubapi;
-GRANT ALL PRIVILEGES ON DATABASE dolthubapi TO dolthubadmin;
+GRANT ALL PRIVILEGES ON DATABASE dolthubapi TO dolthubapi;
 CREATE EXTENSION citext SCHEMA public;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dolthubadmin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dolthubapi;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO dolthubadmin;
 ```
 
