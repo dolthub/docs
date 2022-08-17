@@ -59,7 +59,7 @@ title: "Expressions, Functions, and Operators"
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
 | Component                         | Supported | Notes and limitations                                             |
-| :-------------------------------- |:----------|:------------------------------------------------------------------|
+|:----------------------------------|:----------|:------------------------------------------------------------------|
 | `%`                               | ✅         |                                                                   |
 | `&`                               | ✅         |                                                                   |
 | \`                                | ✅         |                                                                   |
@@ -106,7 +106,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BIT_AND()`                       | ✅         |                                                                   |
 | `BIT_COUNT()`                     | ❌         |                                                                   |
 | `BIT_LENGTH()`                    | ✅         |                                                                   |
-| `BIT_OR()`                        | ✅         | `\                                                                |` is supported                                                                              |
+| `BIT_OR()`                        | ✅         | `\|` is supported                                                 |
 | `BIT_XOR()`                       | ✅         | `^` is supported                                                  |
 | `CAN_ACCESS_COLUMN()`             | ❌         |                                                                   |
 | `CAN_ACCESS_DATABASE()`           | ❌         |                                                                   |
