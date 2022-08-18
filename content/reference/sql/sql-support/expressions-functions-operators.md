@@ -113,7 +113,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CAN_ACCESS_TABLE()`              | ❌         |                                                                   |
 | `CAN_ACCESS_VIEW()`               | ❌         |                                                                   |
 | `CASE`                            | ✅         |                                                                   |
-| `CAST()`                          | ❌         |                                                                   |
+| `CAST()`                          | ✅         | Convert between types supported. Convert between charsets is not. |
 | `CEIL()`                          | ✅         |                                                                   |
 | `CEILING()`                       | ✅         |                                                                   |
 | `CHAR()`                          | ❌         |                                                                   |

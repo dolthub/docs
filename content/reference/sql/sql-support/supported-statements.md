@@ -172,7 +172,7 @@ More information on how Dolt handles access management may be found in the [acce
 | `BEGIN END`        | ✅        |                                                                                 |
 | `STATEMENT LABELS` | ❌        |                                                                                 |
 | `DECLARE`          | ❌        | Only \`DECLARE CONDITION\` statements are supported under \`BEGIN/END\` blocks. |
-| `SET               | ✅        |                                                                                 |
+| `SET`              | ✅        |                                                                                 |
 | `CASE`             | ✅        |                                                                                 |
 | `IF`               | ✅        |                                                                                 |
 | `ITERATE`          | ❌        |                                                                                 |
