@@ -113,7 +113,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CAN_ACCESS_TABLE()`              | ❌         |                                                                   |
 | `CAN_ACCESS_VIEW()`               | ❌         |                                                                   |
 | `CASE`                            | ✅         |                                                                   |
-| `CAST()`                          | ❌         |                                                                   |
+| `CAST()`                          | ✅         |                                                                   |
 | `CEIL()`                          | ✅         |                                                                   |
 | `CEILING()`                       | ✅         |                                                                   |
 | `CHAR()`                          | ❌         |                                                                   |
@@ -128,7 +128,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CONCAT_WS()`                     | ✅         |                                                                   |
 | `CONNECTION_ID()`                 | ✅         |                                                                   |
 | `CONV()`                          | ❌         |                                                                   |
-| `CONVERT()`                       | ✅         | Convert between types supported. Convert between charsets is not. |
+| `CONVERT()`                       | ✅         |                                                                   |
 | `CONVERT_TZ()`                    | ❌         |                                                                   |
 | `COS()`                           | ✅         |                                                                   |
 | `COT()`                           | ✅         |                                                                   |
