@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 156 of 438 MySQL functions.**
+**Currently supporting 159 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -161,7 +161,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `DAYOFYEAR()`                     | ✅         |                                                                   |
 | `DEFAULT()`                       | ❌         |                                                                   |
 | `DEGREES()`                       | ✅         |                                                                   |
-| `DENSE_RANK()`                    | ❌         |                                                                   |
+| `DENSE_RANK()`                    | ✅         |                                                                   |
 | `DIV`                             | ✅         |                                                                   |
 | `ELT()`                           | ❌         |                                                                   |
 | `EXP()`                           | ❌         |                                                                   |
@@ -319,7 +319,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `OCTET_LENGTH()`                  | ❌         |                                                                   |
 | `ORD()`                           | ❌         |                                                                   |
 | `OR`                              | ✅         |                                                                   |
-| `PERCENT_RANK()`                  | ❌         |                                                                   |
+| `PERCENT_RANK()`                  | ✅         |                                                                   |
 | `PERIOD_ADD()`                    | ❌         |                                                                   |
 | `PERIOD_DIFF()`                   | ❌         |                                                                   |
 | `PI()`                            | ❌         |                                                                   |
@@ -335,7 +335,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `RADIANS()`                       | ✅         |                                                                   |
 | `RAND()`                          | ✅         |                                                                   |
 | `RANDOM_BYTES()`                  | ❌         |                                                                   |
-| `RANK()`                          | ❌         |                                                                   |
+| `RANK()`                          | ✅         |                                                                   |
 | `REGEXP_INSTR()`                  | ❌         |                                                                   |
 | `REGEXP_LIKE()`                   | ❌         |                                                                   |
 | `REGEXP_MATCHES()`                | ✅         |                                                                   |
@@ -531,7 +531,7 @@ Refer to the [MySQL Window Function Descriptions](https://dev.mysql.com/doc/refm
 | Component                         | Supported | Notes and limitations                                                                          |
 | :-------------------------------- | :-------- | :--------------------------------------------------------------------------------------------- |
 | `CUME_DIST()`                     | ❌        |                                                                                                |
-| `DENSE_RANK()`                    | ❌        |                                                                                                |
+| `DENSE_RANK()`                    | ✅        |                                                                                                |
 | `FIRST()`                         | ✅        |                                                                                                |
 | `FIRST_VALUE`                     | ✅        |                                                                                                |
 | `LAG`                             | ✅        |                                                                                                |
@@ -541,5 +541,5 @@ Refer to the [MySQL Window Function Descriptions](https://dev.mysql.com/doc/refm
 | `NTH_VALUE()`                     | ❌        |                                                                                                |
 | `NTILE()`                         | ❌        |                                                                                                |
 | `PERCENT_RANK()`                  | ✅        |                                                                                                |
-| `RANK()`                          | ❌        |                                                                                                |
+| `RANK()`                          | ✅        |                                                                                                |
 | `ROW_NUMBER()`                    | ✅        |                                                                                                |
