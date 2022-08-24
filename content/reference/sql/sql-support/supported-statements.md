@@ -78,7 +78,7 @@ title: Supported Statements
 | `SHOW COLUMNS`          | ✅        |                                                                                                                                                    |
 | `SHOW CONSTRAINTS`      | ❌        |                                                                                                                                                    |
 | `SHOW CREATE FUNCTION`  | ❌        |                                                                                                                                                    |
-| `SHOW CREATE PROCEDURE` | ❌        |                                                                                                                                                    |
+| `SHOW CREATE PROCEDURE` | ✅        |                                                                                                                                                    |
 | `SHOW CREATE TABLE`     | ✅        |                                                                                                                                                    |
 | `SHOW CREATE VIEW`      | ✅        |                                                                                                                                                    |
 | `SHOW DATABASES`        | ✅        |                                                                                                                                                    |
