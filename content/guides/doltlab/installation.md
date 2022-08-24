@@ -111,7 +111,7 @@ The recommended way to run DoltLab is with the `start-doltlab.sh` script include
 export HOST_IP=<Host IP>
 export POSTGRES_PASSWORD=<Password>
 export DOLTHUBAPI_PASSWORD=<Password>
-export POSTGRES_USER="dolthubadmin"
+export POSTGRES_USER="dolthubapi"
 export EMAIL_USERNAME=<SMTP Email Username>
 export EMAIL_PASSWORD=<SMTP Email Password>
 export EMAIL_PORT=<STMP Email Port>
@@ -121,7 +121,7 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 
 `HOST_IP` should be the IP address or DNS name of the Linux host running DoltLab.<br/>
 `POSTGRES_PASSWORD` and `DOLTHUBAPI_PASSWORD` may be set to any valid PostgreSQL password.<br/>
-`POSTGRES_USER` _must_ be "dolthubadmin".<br/>
+`POSTGRES_USER` _must_ be "dolthubapi".<br/>
 `EMAIL_USERNAME` should be a valid username authorized to use existing SMTP server.<br/>
 `EMAIL_PASSWORD` should be the password for the aforementioned username of the SMTP server.<br/>
 `EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
