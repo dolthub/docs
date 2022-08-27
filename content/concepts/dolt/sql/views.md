@@ -42,6 +42,7 @@ mysql> select * from monthly_salaries order by monthly_pay asc;
 
 ### Using `as of` with Views
 ```
+mysql> call dolt_add('-A');
 mysql> call dolt_commit('-am', 'Created table and view');
 +----------------------------------+
 | hash                             |

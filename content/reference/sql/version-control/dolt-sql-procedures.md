@@ -632,7 +632,8 @@ CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ```sql
 -- Create a table and add data in multiple commits
 CREATE TABLE t1(pk INT PRIMARY KEY, c VARCHAR(255));
-CALL dolt_commit("-am", "Creating table t1");
+CALL dolt_add("t1")
+CALL dolt_commit("-m", "Creating table t1");
 INSERT INTO t1 VALUES(1, "a"), (2, "b"), (3, "c");
 CALL dolt_commit("-am", "Adding some data");
 insert into t1 VALUES(10, "aa"), (20, "bb"), (30, "cc");
