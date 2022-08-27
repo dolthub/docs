@@ -44,6 +44,11 @@ instead of a branch name. The database will be read-only in this case.
 `mysql://127.0.0.1:3306/mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
 `mysql://127.0.0.1:3306/mydb/v1.0`
 
+You can also use the same ancestry syntax as Git to reference specific parent commits in a connection
+string, or anywhere else you would use a database revision specifier. For example,
+`mysql://127.0.0.1:3306/mydb/feature-branch~2` will connect you to a read-only database for the
+grandparent commit of the `feature-branch` branch.
+
 This also works with the standard MySQL command line client:
 
 ```sh
