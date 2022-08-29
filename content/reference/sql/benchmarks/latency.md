@@ -103,4 +103,6 @@ To get this performance, create your database with `dolt init --new-format`.
 | Overall Mean Multiple | 3.2 |
 |-----------------------|-----|
 
+As you can see, the new format is about 3X faster than the current default format.
+
 <br/>
