@@ -69,7 +69,7 @@ Below are the results of running `sysbench` MySQL tests against Dolt
 SQL Server for the most recent release of Dolt in the [new 
 storage format](https://www.dolthub.com/blog/2022-08-12-new-format-migraiton/).
 This is not updated automatically with each release yet.
-To get this performance, craete your database with `dolt init --new-format`. 
+To get this performance, create your database with `dolt init --new-format`. 
 
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |------------------------ |-------|--------|----------|
