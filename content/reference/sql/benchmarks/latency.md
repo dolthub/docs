@@ -62,6 +62,7 @@ The Dolt version is `0.40.29`.
 | Overall Mean Multiple | 8.2 |
 |-----------------------|-----|
 <!-- END_LATENCY_RESULTS_TABLE -->
+<br/>
 
 ### New Format (`__DOLT__`)
 
@@ -101,4 +102,4 @@ To get this performance, create your database with `dolt init --new-format`.
 | Overall Mean Multiple | 3.2 |
 |-----------------------|-----|
 
-<br/>
+
