@@ -75,6 +75,7 @@ To get this performance, craete your database with `dolt init --new-format`.
 |------------------------ |-------|--------|----------|
 | covering\_index_scan    |   2.0 |  2.81  |      1.5 |
 | groupby\_scan           |  12.3 | 24.83  |      2.0 |
+| index\_join             |  1.18 |  6.32  |      5.4 |
 | index\_join_scan        |  1.12 |  7.98  |      7.0 |
 | index\_scan             | 30.26 | 44.17  |      1.4 |
 | oltp\_point_select      |  0.15 |  0.50  |      3.3 |
