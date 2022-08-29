@@ -99,6 +99,7 @@ To get this performance, create your database with `dolt init --new-format`.
 | types\_delete\_insert    |  3.07 |  12.75 |      4.2 |
 | writes\_mean\_multiplier |       |        |      3.0 |
 
+<br/>
 
 | Overall Mean Multiple | 3.2 |
 |-----------------------|-----|
