@@ -59,7 +59,6 @@ The Dolt version is `0.40.29`.
 | types\_delete\_insert    |  2.81 | 158.63 |     56.5 |
 | writes\_mean\_multiplier |       |        |     12.6 |
 
-|-----------------------|-----|
 | Overall Mean Multiple | 8.2 |
 |-----------------------|-----|
 <!-- END_LATENCY_RESULTS_TABLE -->
@@ -100,7 +99,7 @@ To get this performance, create your database with `dolt init --new-format`.
 | types\_delete\_insert    |  3.07 |  12.75 |      4.2 |
 | writes\_mean\_multiplier |       |        |      3.0 |
 
-|-----------------------|-----|
+
 | Overall Mean Multiple | 3.2 |
 |-----------------------|-----|
 
