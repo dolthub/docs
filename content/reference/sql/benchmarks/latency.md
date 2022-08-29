@@ -99,7 +99,10 @@ To get this performance, create your database with `dolt init --new-format`.
 | types\_delete\_insert    |  3.07 |  12.75 |      4.2 |
 | writes\_mean\_multiplier |       |        |      3.0 |
 
-| Overall Mean Multiple | 3.2 | | |
-|-----------------------|-----|-|-|
+| Overall Mean Multiple | 3.2 |
+|-----------------------|-----|
+<br/>
+<br/>
+<br/>
 <br/>
 As you can see, the new format is about 3X faster than the current default format.
