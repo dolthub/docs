@@ -100,6 +100,5 @@ To get this performance, create your database with `dolt init --new-format`.
 | writes\_mean\_multiplier |       |        |      3.0 |
 
 | Overall Mean Multiple | 3.2 |
-|-----------------------|-----|
-
+<br/>
 
