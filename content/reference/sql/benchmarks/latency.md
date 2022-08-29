@@ -62,7 +62,6 @@ The Dolt version is `0.40.29`.
 | Overall Mean Multiple | 8.2 |
 |-----------------------|-----|
 <!-- END_LATENCY_RESULTS_TABLE -->
-<br/>
 
 ### New Format (`__DOLT__`)
 
