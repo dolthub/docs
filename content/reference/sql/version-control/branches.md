@@ -87,28 +87,6 @@ You can switch to a new branch with a starting commit as well:
 CALL DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
 ```
 
-## Switch branches with a session variable
-
-Each session defines a system variable that controls the current
-session head. For a database called `mydb` as above, this variable
-will be called `@@mydb_head_ref` and be set to the current head.
-
-```sql
-mydb> select @@mydb_head_ref;
-+-------------------------+
-| @@SESSION.mydb_head_ref |
-+-------------------------+
-| refs/heads/main       |
-+-------------------------+
-```
-
-To switch branches, set this session variable. Use either
-`refs/heads/branchName` or just `branchName`:
-
-```sql
-SET @@mydb_head_ref = 'feature-branch'
-```
-
 ## Notes on switching branches
 
 If you have outstanding changes in your session (because you have
