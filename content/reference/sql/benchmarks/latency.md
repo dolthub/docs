@@ -32,7 +32,7 @@ window. The `Dolt` and `MySQL` columns show the median latency in
 milliseconds (ms) of each query during that 2 minute time window.
 
 The Dolt version is `0.40.29`.
-<!-- START_LATENCY_RESULTS_TABLE -->
+<!-- START___LD_1__LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |-------------------------|-------|--------|----------|
 | covering\_index\_scan   |  1.93 |   6.43 |      3.3 |
@@ -61,7 +61,7 @@ The Dolt version is `0.40.29`.
 
 | Overall Mean Multiple | 8.2 |
 |-----------------------|-----|
-<!-- END_LATENCY_RESULTS_TABLE -->
+<!-- END___LD_1__LATENCY_RESULTS_TABLE -->
 
 ### New Format (`__DOLT__`)
 
@@ -70,7 +70,7 @@ SQL Server for the most recent release of Dolt in the [new
 storage format](https://www.dolthub.com/blog/2022-08-12-new-format-migraiton/).
 This is not updated automatically with each release yet.
 To get this performance, create your database with `dolt init --new-format`. 
-
+<!-- START___DOLT__LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |------------------------ |-------|--------|----------|
 | covering\_index_scan    |   2.0 |  2.81  |      1.5 |
@@ -100,4 +100,5 @@ To get this performance, create your database with `dolt init --new-format`.
 
 | Overall Mean Multiple | 3.2 |
 |-----------------------|-----|
+<!-- END___DOLT__LATENCY_RESULTS_TABLE -->
 <br/>
