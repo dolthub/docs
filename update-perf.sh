@@ -4,6 +4,7 @@ set -ex
 set -o pipefail
 
 version=""
+storage_format=""
 sed_cmd_i=""
 start_marker=""
 end_marker=""
@@ -15,16 +16,17 @@ sql_reference_dir="content/reference/sql/benchmarks"
 
 new_table="updated.md"
 
-start_template='<!-- START_%s_RESULTS_TABLE -->'
-end_template='<!-- END_%s_RESULTS_TABLE -->'
+start_template='<!-- START_%s_%s_RESULTS_TABLE -->'
+end_template='<!-- END_%s_%s_RESULTS_TABLE -->'
 
-if [ "$#" -ne 2 ]; then
-  echo "Must supply version and type, eg update-perf.sh 'v0.39.0' latency|correctness"
+if [ "$#" -ne 3 ]; then
+  echo "Must supply version and type, eg update-perf.sh 'v0.39.0' '__LD_1__|__DOLT__' 'latency|correctness'"
   exit 1;
 fi
 
 version="$1"
-type="$2"
+storage_format="$2"
+type="$3"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   os_type="linux"
@@ -42,8 +44,8 @@ then
     sed -i '' "s/The Dolt version is \\\`.*\\\`/The Dolt version is \\\`$version\\\`/" "$dest_file"
   fi
 
-  start_marker=$(printf "$start_template" "LATENCY")
-  end_marker=$(printf "$end_template" "LATENCY")
+  start_marker=$(printf "$start_template" "$storage_format" "LATENCY")
+  end_marker=$(printf "$end_template" "$storage_format" "LATENCY")
 
 else
   dest_file="$sql_reference_dir/correctness.md"
@@ -56,8 +58,8 @@ else
     sed -i '' 's/Here are Dolt'"'"'s sqllogictest results for version `'".*"'`./Here are Dolt'"'"'s sqllogictest results for version `'"$version"'`./' "$dest_file"
   fi
 
-  start_marker=$(printf "$start_template" "CORRECTNESS")
-  end_marker=$(printf "$end_template" "CORRECTNESS")
+  start_marker=$(printf "$start_template" "$storage_format" "CORRECTNESS")
+  end_marker=$(printf "$end_template" "$storage_format" "CORRECTNESS")
 fi
 
 # store in variable
@@ -69,9 +71,9 @@ echo "$updated_with_markers" > "$new_table"
 # replace table in the proper file
 if [ "$os_type" == "linux" ]
 then
-  sed -e '/<!-- END/r '"$new_table"'' -e '/<!-- START/,/<!-- END/d' "$dest_file" > temp.md
+  sed -e '/<!-- END_'"$storage_format"'/r '"$new_table"'' -e '/<!-- START_'"$storage_format"'/,/<!-- END_'"$storage_format"'/d' "$dest_file" > temp.md
 else
-  sed -e '/\<!-- END/r '"$new_table"'' -e '/\<!-- START/,/\<!-- END/d' "$dest_file" > temp.md
+  sed -e '/\<!-- END_'"$storage_format"'/r '"$new_table"'' -e '/\<!-- START_'"$storage_format"'/,/\<!-- END_'"$storage_format"'/d' "$dest_file" > temp.md
 fi
 
 mv temp.md "$dest_file"
