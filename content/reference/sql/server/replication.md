@@ -39,7 +39,8 @@ The next time you create a Dolt commit in a running SQL server or with a `dolt s
 $ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
 $ dolt sql -q "insert into test values (0,0)"
 Query OK, 1 row affected
-$ dolt sql -q "call dolt_commit('-am', 'trigger replication')"
+$ dolt add -A
+$ dolt sql -q "call dolt_commit('-m', 'trigger replication')"
 +----------------------------------+
 | hash                             |
 +----------------------------------+

@@ -261,7 +261,7 @@ mysql> select * from dolt_diff_employees;
 
 As you can see from the diff I've added the correct values to the `employees` table. The values were previously `NULL` and now they are populated.
 
-Let's finish off with another Dolt commit this time adding all effected tables using `-am`.
+Let's finish off with another Dolt commit this time adding all modified tables using `-am`.
 
 ```
 mysql> call dolt_commit('-am', 'Populated tables with data');
