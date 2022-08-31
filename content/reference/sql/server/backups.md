@@ -26,7 +26,8 @@ backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 mysql> use backup_example;
 mysql> create table test (pk int, c1 int, primary key(pk));
 mysql> insert into test values (0,0);
-mysql> call dolt_commit('-am', "Created table and inserted values to be backed up");
+mysql> call dolt_add('test');    
+mysql> call dolt_commit('-m', "Created table and inserted values to be backed up");
 +----------------------------------+
 | hash                             |
 +----------------------------------+

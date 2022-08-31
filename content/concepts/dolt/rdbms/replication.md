@@ -38,7 +38,8 @@ $ dolt config --add --local sqlserver.global.dolt_replicate_to_remote origin
 $ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
 $ dolt sql -q "insert into test values (0,0)"
 Query OK, 1 row affected
-$ dolt sql -q "call dolt_commit('-am', 'trigger replication')"
+$ dolt add test 
+$ dolt sql -q "call dolt_commit('-m', 'trigger replication')"
 +----------------------------------+
 | hash                             |
 +----------------------------------+
