@@ -103,8 +103,7 @@ Create a new commit, and then create a branch from that commit
 ```sql
 SET @@mydb_head = COMMIT("my commit message")
 
-INSERT INTO dolt_branches (name, hash)
-VALUES ("my branch name", @@mydb_head);
+CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
 ```
 
 ## `dolt_docs`
