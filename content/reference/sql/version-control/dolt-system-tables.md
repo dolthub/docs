@@ -41,7 +41,7 @@ title: Dolt System Tables
 
 Because the branch information is global to all clients, not just your
 session, `dolt_branches` system table is read-only. Branches can be created
-or deleted with [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#dolt_branch).
+or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#dolt_branch).
 
 ### Schema
 
