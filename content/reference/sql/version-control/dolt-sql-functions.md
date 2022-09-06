@@ -44,7 +44,7 @@ mysql> select active_branch();
 ## `DOLT_MERGE_BASE()`
 
 `DOLT_MERGE_BASE()` returns the hash of the common ancestor between
-two branches. Given the following branch structure:
+two branches.
 
 Consider the following branch structure:
 
@@ -57,7 +57,12 @@ D---E---F---G main
 The following would return the hash of commit `E`:
 
 ```sql
-SELECT DOLT_MERGE_BASE('feature', 'main');
+mysql> SELECT DOLT_MERGE_BASE('feature', 'main');
++------------------------------------+
+| DOLT_MERGE_BASE('feature', 'main') |
++------------------------------------+
+| tjj1kp2mnoad8crv6b94mh4a4jiq7ab2   |
++------------------------------------+
 ```
 
 ## `HASHOF()`
