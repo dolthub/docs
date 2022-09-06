@@ -123,6 +123,9 @@ WARNING: In a multi-session server environment, Dolt will prevent you from delet
 -- Create a new branch from the current HEAD
 CALL DOLT_BRANCH('myNewBranch');
 
+-- Create a new branch from start point of tip of feature1 branch.
+CALL DOLT_BRANCH('myNewBranch', 'feature1');
+
 -- Create a new branch by copying an existing branch
 -- Will fail if feature1 branch already exists
 CALL DOLT_BRANCH('-c', 'main', 'feature1');

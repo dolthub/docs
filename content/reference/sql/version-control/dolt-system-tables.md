@@ -39,11 +39,9 @@ title: Dolt System Tables
 
 `dolt_branches` contains information about branches known to the database.
 
-Branches can be created, modified, or deleted with `INSERT`, `UPDATE`,
-or `DELETE` statements.
-
 Because the branch information is global to all clients, not just your
-session, it's recommended to lock the table before modifying it.
+session, `dolt_branches` system table is read-only. Branches can be created
+or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#dolt_branch).
 
 ### Schema
 
@@ -105,8 +103,7 @@ Create a new commit, and then create a branch from that commit
 ```sql
 SET @@mydb_head = COMMIT("my commit message")
 
-INSERT INTO dolt_branches (name, hash)
-VALUES ("my branch name", @@mydb_head);
+CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
 ```
 
 ## `dolt_docs`
