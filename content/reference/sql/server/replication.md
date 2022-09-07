@@ -12,11 +12,15 @@ commit](../../../concepts/dolt/git/commits.md).
 
 ![Read replication](../../../.gitbook/assets/dolt-read-replication.png)
 
-Note, read replication is only available in [Dolt SQL
+Note: replication is only available in the [Dolt SQL
 Server](../../../concepts/dolt/rdbms/server.md) context. You cannot
-trigger replication with a CLI `dolt commit`. If you would like to
-trigger replication from the command line, use `dolt sql -q "call
-dolt_commit()"`.
+trigger replication with a CLI `dolt commit`, `dolt merge`, or other
+command line invocations. If you would like to trigger replication
+from the command line, use `dolt sql` and the SQL equivalent of the
+CLI command you want, e.g. `dolt sql -q "call dolt_commit(...)"`. This
+gap will be addressed in future releases of the tool.
+
+# Configuration
 
 Dolt relies on [system
 variables](../../../concepts/dolt/sql/system-variables.md) to
@@ -35,6 +39,10 @@ replication:
 1. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads).
    **Either this variable or `@@dolt_replicate_heads` must be set.**
    Replicate all branches (ie. HEADs). Defaults to 0.
+1. [`@@dolt_replication_remote_url_template`](../version-control/dolt-sysvars.md#doltreplicationremoteurltemplate).
+   *Optional.* Set to a URL template to configure the replication
+   remote for newly created databases. Without this variable set, only
+   databases that existed at server start time will replicate.
 1. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors).
    Makes replication errors warnings, instead of errors. Defaults to 0.
 1. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit).
@@ -42,7 +50,6 @@ replication:
 1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication).
    Make replication asynchronous, which means that read replicas will
    be eventually consistent with the primary. Defaults to 0.
-
 
 ## Configuring a Primary
 
@@ -286,6 +293,47 @@ $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
 | 3  | 3  |
 +----+----+
 ```
+
+## Replicating multiple databases
+
+By running the SQL server with the `--data-dir` option, you can manage
+multiple Dolt databases in the same server environment. If replication
+is enabled, all databases are replicated. A remote with the name given
+by `@@dolt_read_replica_remote` must exist for every database in the
+server.
+
+Whenever working with more than one database in a server with
+replication enabled, it's recommended to set
+`@@dolt_replication_remote_url_template` so that newly created
+databases are replicated as well. Without this setting, newly created
+databases won't begin replicating until they have an individual remote
+configured and the server is restarted. With this setting, newly
+created databases on a primary automatically get a remote configured
+using the URL template provided and begin pushing to it.
+
+`@@dolt_replication_remote_url_template` must be a valid Dolt remote
+URL, with the replacement token `{database}` in it. Some examples:
+
+```sql
+set @@persist.dolt_replication_remote_url_template = 'file:///share/doltRemotes/{database}'; -- file based remote
+set @@persist.dolt_replication_remote_url_template = 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
+set @@persist.dolt_replication_remote_url_template = 'gs://mybucket/remotes/{database}'; -- GCP remote
+```
+
+For some remotes, additional configuration for authorization may be
+required in your environment. **Note**: not all remote types support
+automatic database creation yet. In particular,
+[DoltHub](https://dolthub.com) remotes do not yet support
+automatically creating remotes for new databases.
+
+On read replicas, setting `@@dolt_replication_remote_url_template`
+will cause new databases created on the primary to be cloned to the
+replica when they are first used.
+
+## Deleting branches
+
+Branches deleted on a primary database will also be deleted on any
+read replicas.
 
 ## Failover
 
