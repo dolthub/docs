@@ -84,7 +84,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage all changes.
-CALL DOLT_ADD('-a');
+CALL DOLT_ADD('-A');
 
 -- Commit the changes.
 CALL DOLT_COMMIT('-m', 'committing all changes');
