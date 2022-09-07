@@ -63,10 +63,11 @@ mysql> select name from dolt_remotes;
 | origin  |
 +---------+
 mysql> SET @@GLOBAL.dolt_replicate_to_remote = remote1;
-mysql> select dolt_commit('-am', 'push on write');
+mysql> CALL dolt_commit('-am', 'push on write');
 ```
 
 ## @@dolt_async_replication
+
 This system variable can be enabled when using push-on-commit replication (i.e. `@@dolt_replicate_to_remote`). 
 When enabled, Dolt commits will be pushed asynchronously to the remote specified in the 
 `@@dolt_replicate_to_remote` system variable, instead of synchronously completing the push before 
@@ -82,27 +83,16 @@ mysql> SET @@GLOBAL.dolt_async_replication = 1;
 
 ## @@dolt_read_replica_remote
 
-This system variable is used to pull updates to read replicas.
-Pulling is triggered on SQL `START TRANSACTION`. Setting `autocommit = 1`
-will wrap every query in a transaction.
+This system variable is used to pull updates to read replicas. New
+data is pulled every time a transaction begins.
 
-Setting `dolt_replicate_heads` or `dolt_replicate_all_heads` is required.
+Setting either `dolt_replicate_heads` or `dolt_replicate_all_heads` is
+also required.
 
 ```sql
 mysql> SET @@GLOBAL.dolt_read_replica_remote = origin;
 mysql> SET @@GLOBAL.dolt_replicate_heads = main;
 mysql> START TRANSACTION;
-```
-
-## @@dolt_skip_replication_errors
-
-This system variable is used to quiet replication
-errors that would otherwise halt query execution. Missing or malformed
-configuration is the main target of replication warnings. Faults
-unrelated to replication should still error.
-
-```sql
-mysql> SET @@GLOBAL.dolt_skip_replication_errors = 1;
 ```
 
 ## @@dolt_replicate_heads
@@ -124,6 +114,33 @@ with `dolt_replicate_heads`.
 
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
+```
+
+## @@dolt_replication_remote_url_template
+
+This system variable indicates that newly created databases should
+have a remote created according to the URL template supplied. This URL
+template must include the `{database}` placeholder. Some examples:
+
+```sql
+set @@persist.dolt_replication_remote_url_template = 'file:///share/doltRemotes/{database}'; -- file based remote
+set @@persist.dolt_replication_remote_url_template = 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
+set @@persist.dolt_replication_remote_url_template = 'gs://mybucket/remotes/{database}'; -- GCP remote
+```
+
+On a read replica, setting this variable will cause the server to
+attempt to clone any unknown database used in a query or connection
+string by constructing a remote URL.
+
+## @@dolt_skip_replication_errors
+
+This system variable is used to quiet replication
+errors that would otherwise halt query execution. Missing or malformed
+configuration is the main target of replication warnings. Faults
+unrelated to replication should still error.
+
+```sql
+mysql> SET @@GLOBAL.dolt_skip_replication_errors = 1;
 ```
 
 ## @@dbname_working
@@ -180,14 +197,9 @@ SET @@PERSIST_ONLY.back_log = 1000;
 ## CLI
 
 ```bash
-$ dolt config --local --add sqlserver.global.max_connections 1000
+$ dolt sql -q "set @@persist.max_connections = 1000"
 ```
 
 ## Limitations
 
-1. Deleting variables with `RESET PERSIST` is not supported.
-
-2. Persistence in multi-db mode is not supported.
-
-3. Loading variables from the Dolt global config on server startup is
-   not supported.
+Deleting variables with `RESET PERSIST` is not supported.

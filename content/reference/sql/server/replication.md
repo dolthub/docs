@@ -299,8 +299,9 @@ $ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
 By running the SQL server with the `--data-dir` option, you can manage
 multiple Dolt databases in the same server environment. If replication
 is enabled, all databases are replicated. A remote with the name given
-by `@@dolt_read_replica_remote` must exist for every database in the
-server.
+by `@@dolt_read_replica_remote` (for replicas) or
+`@@dolt_replicate_to_remote` (for primaries) must exist for every
+database in the server.
 
 Whenever working with more than one database in a server with
 replication enabled, it's recommended to set
