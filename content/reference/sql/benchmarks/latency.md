@@ -76,30 +76,30 @@ To get this performance, create your database with `dolt init --new-format`.
 |-------------------------|-------|--------|----------|
 | covering\_index\_scan   |   2.0 |   2.66 |      1.3 |
 | groupby\_scan           | 12.52 |  24.38 |      1.9 |
-| index\_join             |  1.21 |   5.88 |      4.9 |
-| index\_join\_scan       |  1.16 |   5.18 |      4.5 |
-| index\_scan             | 30.81 |  47.47 |      1.5 |
+| index\_join             |  1.18 |   5.88 |      5.0 |
+| index\_join\_scan       |  1.14 |   5.28 |      4.6 |
+| index\_scan             | 30.81 |  46.63 |      1.5 |
 | oltp\_point\_select     |  0.15 |   0.49 |      3.3 |
-| oltp\_read\_only        |  3.02 |   8.74 |      2.9 |
+| oltp\_read\_only        |  3.02 |   8.58 |      2.8 |
 | select\_random\_points  |   0.3 |   0.81 |      2.7 |
 | select\_random\_ranges  |  0.35 |   1.16 |      3.3 |
-| table\_scan             | 30.81 |  56.84 |      1.8 |
-| types\_table\_scan      | 69.29 | 569.67 |      8.2 |
+| table\_scan             | 30.81 |  54.83 |      1.8 |
+| types\_table\_scan      | 70.55 | 549.52 |      7.8 |
 | reads\_mean\_multiplier |       |        |      3.3 |
 
 |       Write Tests        | MySQL | Dolt  | Multiple |
 |--------------------------|-------|-------|----------|
 | bulk\_insert             | 0.001 | 0.001 |      1.0 |
-| oltp\_delete\_insert     |  3.02 | 10.09 |      3.3 |
-| oltp\_insert             |  1.64 |  2.86 |      1.7 |
-| oltp\_read\_write        |  5.09 | 17.01 |      3.3 |
-| oltp\_update\_index      |  1.44 |  4.49 |      3.1 |
-| oltp\_update\_non\_index |  1.42 |  4.74 |      3.3 |
-| oltp\_write\_only        |  2.22 |  8.28 |      3.7 |
-| types\_delete\_insert    |  2.86 | 12.52 |      4.4 |
-| writes\_mean\_multiplier |       |       |      3.0 |
+| oltp\_delete\_insert     |  2.86 |  9.91 |      3.5 |
+| oltp\_insert             |  1.47 |  2.86 |      1.9 |
+| oltp\_read\_write        |  5.28 | 17.01 |      3.2 |
+| oltp\_update\_index      |  1.55 |  4.49 |      2.9 |
+| oltp\_update\_non\_index |  1.55 |  4.74 |      3.1 |
+| oltp\_write\_only        |  2.26 |  8.28 |      3.7 |
+| types\_delete\_insert    |  3.07 | 12.08 |      3.9 |
+| writes\_mean\_multiplier |       |       |      2.9 |
 
-| Overall Mean Multiple | 3.2 |
+| Overall Mean Multiple | 3.1 |
 |-----------------------|-----|
 <!-- END___DOLT___LATENCY_RESULTS_TABLE -->
 <br/>
