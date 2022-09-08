@@ -256,7 +256,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `LAST()`                          | ✅         |                                                                   |
 | `LAST_DAY`                        | ❌         |                                                                   |
 | `LAST_INSERT_ID()`                | ✅         |                                                                   |
-| `LAST_VALUE()`                    | ❌         |                                                                   |
+| `LAST_VALUE()`                    | ✅         |                                                                   |
 | `LCASE()`                         | ❌         |                                                                   |
 | `LEAD()`                          | ❌         |                                                                   |
 | `LEAST()`                         | ✅         |                                                                   |
@@ -535,7 +535,7 @@ Refer to the [MySQL Window Function Descriptions](https://dev.mysql.com/doc/refm
 | `FIRST()`                         | ✅        |                                                                                                |
 | `FIRST_VALUE`                     | ✅        |                                                                                                |
 | `LAG`                             | ✅        |                                                                                                |
-| `LAST_VALUE()`                    | ❌        |                                                                                                |
+| `LAST_VALUE()`                    | ✅        |                                                                                                |
 | `LAST()`                          | ❌        |                                                                                                |
 | `LEAD()`                          | ❌        |                                                                                                |
 | `NTH_VALUE()`                     | ❌        |                                                                                                |
