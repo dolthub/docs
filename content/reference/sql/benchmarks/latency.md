@@ -74,30 +74,30 @@ To get this performance, create your database with `dolt init --new-format`.
 <!-- START___DOLT___LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |-------------------------|-------|--------|----------|
-| covering\_index\_scan   |   2.0 |   2.66 |      1.3 |
-| groupby\_scan           | 12.52 |  24.38 |      1.9 |
-| index\_join             |  1.18 |   5.88 |      5.0 |
-| index\_join\_scan       |  1.14 |   5.28 |      4.6 |
-| index\_scan             | 30.81 |  46.63 |      1.5 |
+| covering\_index\_scan   |  1.96 |   2.71 |      1.4 |
+| groupby\_scan           |  12.3 |  23.95 |      1.9 |
+| index\_join             |  1.18 |   5.28 |      4.5 |
+| index\_join\_scan       |  1.14 |   4.33 |      3.8 |
+| index\_scan             | 30.26 |  46.63 |      1.5 |
 | oltp\_point\_select     |  0.15 |   0.49 |      3.3 |
-| oltp\_read\_only        |  3.02 |   8.58 |      2.8 |
-| select\_random\_points  |   0.3 |   0.81 |      2.7 |
+| oltp\_read\_only        |  2.91 |   8.74 |      3.0 |
+| select\_random\_points  |   0.3 |    0.8 |      2.7 |
 | select\_random\_ranges  |  0.35 |   1.16 |      3.3 |
-| table\_scan             | 30.81 |  54.83 |      1.8 |
-| types\_table\_scan      | 70.55 | 549.52 |      7.8 |
-| reads\_mean\_multiplier |       |        |      3.3 |
+| table\_scan             | 30.81 |  55.82 |      1.8 |
+| types\_table\_scan      | 69.29 | 549.52 |      7.9 |
+| reads\_mean\_multiplier |       |        |      3.2 |
 
 |       Write Tests        | MySQL | Dolt  | Multiple |
 |--------------------------|-------|-------|----------|
 | bulk\_insert             | 0.001 | 0.001 |      1.0 |
 | oltp\_delete\_insert     |  2.86 |  9.91 |      3.5 |
-| oltp\_insert             |  1.47 |  2.86 |      1.9 |
-| oltp\_read\_write        |  5.28 | 17.01 |      3.2 |
-| oltp\_update\_index      |  1.55 |  4.49 |      2.9 |
-| oltp\_update\_non\_index |  1.55 |  4.74 |      3.1 |
-| oltp\_write\_only        |  2.26 |  8.28 |      3.7 |
-| types\_delete\_insert    |  3.07 | 12.08 |      3.9 |
-| writes\_mean\_multiplier |       |       |      2.9 |
+| oltp\_insert             |  1.58 |  2.91 |      1.8 |
+| oltp\_read\_write        |  5.09 | 17.32 |      3.4 |
+| oltp\_update\_index      |  1.42 |  4.49 |      3.2 |
+| oltp\_update\_non\_index |  1.44 |  4.74 |      3.3 |
+| oltp\_write\_only        |  2.22 |  8.28 |      3.7 |
+| types\_delete\_insert    |  3.07 | 11.65 |      3.8 |
+| writes\_mean\_multiplier |       |       |      3.0 |
 
 | Overall Mean Multiple | 3.1 |
 |-----------------------|-----|
