@@ -111,7 +111,7 @@ We support the legacy [RMySQL](https://github.com/r-dbi/RMySQL) and newer [RMari
 - [RMariaDB Official Client Documentation](https://rmariadb.r-dbi.org)
 - [RMariaDB test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/r/rmariadb-test.r)
 
-There is also an open-source, third-party wrapper for working with Dolt, called [DoltR](https://ecohealthalliance.github.io/doltr/). This tool is well-maintained by EcoHealth Alliance and provides an easy way to work with local or remote Dolt databases from within R Studio.
+There is also an open-source, third-party wrapper for working with Dolt, called [DoltR](https://ecohealthalliance.github.io/doltr/). This tool is well-maintained by [EcoHealth Alliance](https://www.ecohealthalliance.org/) and provides an easy way to work with local or remote Dolt databases from within R Studio.
 
 - [Getting Started with Doltr](https://ecohealthalliance.github.io/doltr/articles/doltr.html)
 - [DoltR on GitHub](https://github.com/ecohealthalliance/doltr)
