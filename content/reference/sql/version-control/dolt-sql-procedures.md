@@ -389,7 +389,9 @@ CALL DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@exampl
 
 `-m`, `--message`: Use the given `<msg>` as the commit message. **Required**
 
-`-a`: Stages all modified tables (but not newly created tables) before committing
+`-a`, `--all`: Stages all modified tables (but not newly created tables) before committing.
+
+`-A`, `--ALL`: Stages all tables (including new tables) before committing.
 
 `--allow-empty`: Allow recording a commit that has the exact same data
 as its sole parent. This is usually a mistake, so it is disabled by
