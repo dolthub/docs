@@ -363,12 +363,13 @@ Ignores any foreign key warnings and proceeds with the commit.
 Specify an explicit author using the standard A U Thor `<author@example.com>` format.
 
 `-a`, `--all`:
-Adds all existing, changed tables (but not new tables) in the working set to the staged set.
+Stages all modified tables (but not newly created tables) before committing.
+
+`-A`, `--ALL`:
+Stages all tables (including new tables) before committing.
 
 `--amend`:
 Amend previous commit
-
-
 
 ## `dolt config`
 
