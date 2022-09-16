@@ -27,6 +27,7 @@ title: Dolt System Tables
 * [dolt\_conflicts](#dolt_conflicts)
 * [dolt\_conflicts\_$tablename](#dolt_conflicts_usdtablename)
 * [dolt\_status](#dolt_status)
+* [dolt\_merge\_status](#dolt_merge_status)
 
 **Constraint Validation:**
 * [dolt\_constraint\_violations](#dolt_constraint_violations)
@@ -1059,6 +1060,54 @@ WHERE staged=false;
 +------------+--------+-----------+
 ```
 
+## `dolt_merge_status`
+
+The dolt_merge_status system table tells a user if a merge is active. It has the following schema:
+```sql
+CREATE TABLE `dolt_merge_status` (
+-- Whether a merge is currently active or not
+  `is_merging` tinyint NOT NULL, 
+ -- The commit spec that was used to initiate the merge
+  `source` text,
+-- The commit that the commit spec resolved to at the time of merge
+  `source_commit` text, 
+-- The target destination working set
+  `target` text, 
+-- A list of tables that have conflicts or constraint violations
+  `unmerged_tables` text 
+)
+```
+
+### Example
+
+Let's create a simple conflict:
+```bash
+dolt sql -q "CREATE TABLE t (a INT PRIMARY KEY, b INT);"
+dolt add .
+dolt commit -am "base"
+
+dolt checkout -b right
+dolt sql <<SQL
+ALTER TABLE t ADD c INT;
+INSERT INTO t VALUES (1, 2, 1);
+SQL
+dolt commit -am "right"
+
+dolt checkout main
+dolt sql -q "INSERT INTO t values (1, 3);"
+dolt commit -am "left"
+
+dolt merge right
+```
+
+Output of `SELECT * from dolt_merge_status;`:
+```
++------------+--------+----------------------------------+-----------------+-----------------+
+| is_merging | source | source_commit                    | target          | unmerged_tables |
++------------+--------+----------------------------------+-----------------+-----------------+
+| true       | right  | fbghslue1k9cfgbi00ti4r8417frgbca | refs/heads/main | t               |
++------------+--------+----------------------------------+-----------------+-----------------+
+```
 
 ## `dolt_constraint_violations`
 
