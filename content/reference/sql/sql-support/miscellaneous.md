@@ -18,4 +18,8 @@ title: Miscellaneous
 
 ## Collations and character sets
 
-Dolt currently only supports a single collation and character set, the same one that Go uses: `utf8_bin` and `utf8mb4`. We will add support for more character sets and collations as required by customers. Please [file an issue](https://github.com/dolthub/dolt/issues) explaining your use case if current character set and collation support isn't sufficient.
+Dolt supports a subset of the character sets and collations that MySQL supports.
+Notably, the default character set is `utf8mb4`, while the default collation is `utf8mb4_0900_bin` (a case-sensitive collation).
+This default was chosen as it has the fastest implementation, and also from a legacy perspective, as before proper collation support was added, it was the only real collation that we supported.
+This differs from a standard MySQL instance, which defaults to `utf8mb4_0900_ai_ci` (a case-insensitive collation).
+Character sets and collations are added upon request, so please [file an issue](https://github.com/dolthub/dolt/issues) if a character set or collation that you need is missing.
