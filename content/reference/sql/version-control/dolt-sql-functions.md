@@ -224,12 +224,12 @@ The results from `DOLT_DIFF()` show how the data has changed going from `main` t
 
 ## `DOLT_DIFF_SUMMARY()`
 
-The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary in a table's data at any two commits 
+The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits 
 in the database. Each row in the result set describes a diff summary for a single table with statistics information of
-number of rows modified, added, deleted and modified, number of cells added, deleted and modified and total number of
+number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 `DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits must be 
-defined to use `DOLT_DIFF_SUMMARY()` table function, but the table name is optional. This table function only provides 
+defined to use `DOLT_DIFF_SUMMARY()` table function and the table name is optional. This table function only provides 
 rows added and deleted information for keyless tables. It returns empty result for tables with no data changes.
 
 Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it can be used in queries. It does not
@@ -240,7 +240,7 @@ support aliasing or joining with other tables, and argument values must be liter
 ```sql
 DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
 ```
-The `DOLT_DIFF_SUMMARY()` table function takes three required arguments:
+The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 * `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
 * `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
 * `tablename`  —  the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
