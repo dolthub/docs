@@ -328,9 +328,9 @@ The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from 
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 ```
 
-Table specific result can be obtained by running the following query:
+To get a table specific changes going from the current working set to tip of `main`, we run the following query:
 ```sql
-SELECT * FROM DOLT_DIFF_SUMMARY('main', 'WORKING', 'inventory');
+SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
 ```
 
 With result of single row:
@@ -338,7 +338,7 @@ With result of single row:
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 | table_name | rows_unmodified | rows_added | rows_deleted | rows_modified | cells_added | cells_deleted | cells_modified | old_row_count | new_row_count | old_cell_count | new_cell_count |
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
-| inventory  | 1               | 1          | 0            | 1             | 6           | 0             | 1              | 2             | 3             | 6              | 12             |
+| inventory  | 1               | 0          | 1            | 1             | 0           | 6             | 1              | 3             | 2             | 12             | 6              |
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 ```
 
