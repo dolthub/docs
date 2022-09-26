@@ -125,12 +125,12 @@ support aliasing or joining with other tables, and argument values must currentl
 ### Options
 
 ```sql
-DOLT_DIFF(<tablename>, <from_revision>, <to_revision>)
+DOLT_DIFF(<from_revision>, <to_revision>, <tablename>)
 ```
 The `DOLT_DIFF()` table function takes three required arguments:
-* `tablename`  —  the name of the table containing the data to diff
 * `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
 * `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+* `tablename`  —  the name of the table containing the data to diff.
 
 ### Schema 
 
@@ -207,7 +207,7 @@ Based on the schemas at the two revision above, the resulting schema from `DOLT_
 To calculate the diff and view the results, we run the following query: 
 
 ```sql
-SELECT * FROM DOLT_DIFF("inventory", "main", "feature_branch")
+SELECT * FROM DOLT_DIFF("main", "feature_branch", "inventory")
 ```
 
 The results from `DOLT_DIFF()` show how the data has changed going from `main` to `feature_branch`:
@@ -248,8 +248,8 @@ for the defined table only.
 DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
 ```
 The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
-* `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
-* `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+* `from_revision`  — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+* `to_revision`    — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
 * `tablename`  —  the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
 
 ### Schema
