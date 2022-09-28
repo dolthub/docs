@@ -458,7 +458,9 @@ branch. Works exactly like `dolt merge` on the CLI, and takes the same
 arguments.
 
 Any resulting merge conflicts must be resolved before the transaction
-can be committed or a new Dolt commit created.
+can be committed or a new Dolt commit created. `DOLT_MERGE()` creates
+a new commit for any successful merge with auto-generated commit
+message if not defined.
 
 ```sql
 CALL DOLT_MERGE('feature-branch'); -- Optional --squash parameter
@@ -478,6 +480,9 @@ is only useful for --non-ff commits.
 
 `--abort`: Abort the current conflict resolution process, and try to
 reconstruct the pre-merge state.
+
+`--author`: Specify an explicit author using the standard "A U Thor
+author@example.com" format.
 
 When merging a branch, your session state must be clean. `COMMIT`
 or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new dolt
@@ -507,7 +512,7 @@ WHERE pk = "key";
 CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
-CALL DOLT_MERGE('feature-branch');
+CALL DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 
