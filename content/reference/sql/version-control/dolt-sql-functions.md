@@ -12,6 +12,7 @@ title: Dolt SQL Functions
 
 * [Table Functions](#table-functions)
   * [dolt_diff()](#dolt_diff)
+  * [dolt_diff_summary()](#dolt_diff_summary)
 
 * [Version Control Functions](#version-control-functions) (deprecated)
   * [These are deprecated](#deprecation-warning), please use the
@@ -124,12 +125,12 @@ support aliasing or joining with other tables, and argument values must currentl
 ### Options
 
 ```sql
-DOLT_DIFF(<tablename>, <from_revision>, <to_revision>)
+DOLT_DIFF(<from_revision>, <to_revision>, <tablename>)
 ```
 The `DOLT_DIFF()` table function takes three required arguments:
-* `tablename`  —  the name of the table containing the data to diff
 * `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
 * `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+* `tablename`  —  the name of the table containing the data to diff.
 
 ### Schema 
 
@@ -206,7 +207,7 @@ Based on the schemas at the two revision above, the resulting schema from `DOLT_
 To calculate the diff and view the results, we run the following query: 
 
 ```sql
-SELECT * FROM DOLT_DIFF("inventory", "main", "feature_branch")
+SELECT * FROM DOLT_DIFF("main", "feature_branch", "inventory")
 ```
 
 The results from `DOLT_DIFF()` show how the data has changed going from `main` to `feature_branch`:
@@ -219,6 +220,133 @@ The results from `DOLT_DIFF()` show how the data has changed going from `main` t
 | pants   | 3     | 30      | blue     | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | pants     | 3       | 150           | main        | 2022-03-23 18:51:48.333 +0000 UTC | modified  |
 | hat     | 4     | 6       | grey     | feature_branch | 2022-03-23 18:57:38.476 +0000 UTC | NULL      | NULL    | NULL          | main        | 2022-03-23 18:51:48.333 +0000 UTC | added     |
 +---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
+```
+
+## `DOLT_DIFF_SUMMARY()`
+
+The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits 
+in the database. Schema changes such as creating a new table with no rows, or deleting a table with no rows will 
+return empty result. Each row in the result set describes a diff summary for a single table with statistics information of
+number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
+rows and cells the table has at each commit.
+
+`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits must be 
+defined to use `DOLT_DIFF_SUMMARY()` table function and the table name is optional. This table function only provides 
+rows added and deleted information for keyless tables. It returns empty result for tables with no data changes.
+
+Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it can be used in queries. It does not
+support aliasing or joining with other tables, and argument values must be literal values. 
+
+### Privileges
+
+`DOLT_DIFF_SUMMARY()` table function requires `SELECT` privilege for all tables if no table is defined or 
+for the defined table only.
+
+### Options
+
+```sql
+DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
+```
+The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
+* `from_revision`  — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+* `to_revision`    — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+* `tablename`  —  the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
+
+### Schema
+
+```text
++-----------------+--------+
+| field           | type   |
++-----------------+--------+
+| table_name      | TEXT   |
+| rows_unmodified | BIGINT |
+| rows_added      | BIGINT |
+| rows_deleted    | BIGINT |
+| rows_modified   | BIGINT |
+| cells_added     | BIGINT |
+| cells_deleted   | BIGINT |
+| cells_modified  | BIGINT |
+| old_row_count   | BIGINT |
+| new_row_count   | BIGINT |
+| old_cell_count  | BIGINT |
+| new_cell_count  | BIGINT |
++-----------------+--------+
+```
+
+### Example
+
+Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use 
+the `DOLT_DIFF_SUMMARY()` function to calculate a diff of the table data or all tables with data changes across specific 
+commits.
+
+Here is the schema of `inventory` at the tip of `main`:
+```text
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pk       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(50) | YES  |     | NULL    |       |
+| quantity | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+```
+
+Here is what table `inventory` has at the tip of `main`:
+```text
++----+-------+----------+
+| pk | name  | quantity |
++----+-------+----------+
+| 1  | shirt | 15       |
+| 2  | shoes | 10       |
++----+-------+----------+
+```
+
+We perform some changes to the `inventory` table and create new keyless table:
+```text
+ALTER TABLE inventory ADD COLUMN color VARCHAR(10);
+INSERT INTO inventory VALUES (3, 'hat', 6, 'red');
+UPDATE inventory SET quantity=0 WHERE pk=1;
+CREATE TABLE items (name varchar(50));
+INSERT INTO items VALUES ('shirt'),('pants');
+```
+
+Here is what table `inventory` has in the current working set:
+```text
++----+-------+----------+-------+
+| pk | name  | quantity | color |
++----+-------+----------+-------+
+| 1  | shirt | 0        | NULL  |
+| 2  | shoes | 10       | NULL  |
+| 3  | hat   | 6        | red   |
++----+-------+----------+-------+
+```
+
+To calculate the diff and view the results, we run the following query:
+```sql
+SELECT * FROM DOLT_DIFF_SUMMARY('main', 'WORKING');
+```
+
+The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from tip of `main` to our current working set:
+```text
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+| table_name | rows_unmodified | rows_added | rows_deleted | rows_modified | cells_added | cells_deleted | cells_modified | old_row_count | new_row_count | old_cell_count | new_cell_count |
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+| inventory  | 1               | 1          | 0            | 1             | 6           | 0             | 1              | 2             | 3             | 6              | 12             |
+| items      | NULL            | 2          | 0            | NULL          | NULL        | NULL          | NULL           | NULL          | NULL          | NULL           | NULL           |
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+```
+
+To get a table specific changes going from the current working set to tip of `main`, we run the following query:
+```sql
+SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
+```
+
+With result of single row:
+```text
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+| table_name | rows_unmodified | rows_added | rows_deleted | rows_modified | cells_added | cells_deleted | cells_modified | old_row_count | new_row_count | old_cell_count | new_cell_count |
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+| inventory  | 1               | 0          | 1            | 1             | 0           | 6             | 1              | 3             | 2             | 12             | 6              |
++------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 ```
 
 # Version Control Functions 
