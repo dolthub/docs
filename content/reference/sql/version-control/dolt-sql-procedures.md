@@ -12,6 +12,7 @@ title: Dolt SQL Procedures
   * [dolt\_clean()](#dolt_clean)
   * [dolt\_clone()](#dolt_clone)
   * [dolt\_commit()](#dolt_commit)
+  * [dolt\_conflicts\_resolve()](#dolt_conflicts_resolve)
   * [dolt\_fetch()](#dolt_fetch)
   * [dolt\_merge()](#dolt_merge)
   * [dolt\_pull()](#dolt_pull)
@@ -416,6 +417,41 @@ WHERE pk = "key";
 
 -- Stage all changes and commit.
 CALL DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
+```
+
+
+## `DOLT_CONFLICTS_RESOLVE()`
+
+When a merge finds conflicting changes, it documents them in the dolt_conflicts table.
+A conflict is between two versions: ours (the rows at the destination branch head) and theirs
+(the rows at the source branch head).
+`dolt conflicts resolve` will automatically resolve the conflicts by taking either
+the ours or theirs versions for each row.
+
+```sql
+CALL DOLT_COMMIT('--ours', <table>);
+CALL DOLT_COMMIT('--theirs', <table>);
+```
+
+### Options
+
+`<table>`: List of tables to be resolved. '.' can be used to resolve all tables.
+
+`--ours`: For all conflicts, take the version from our branch and resolve the conflict.
+
+`--theirs`: For all conflicts, take the version from their branch and resolve the conflict.
+
+### Examples
+
+```sql
+-- Set the current database for the session
+USE mydb;
+
+-- Attempt merge
+CALL DOLT_MERGE('feature-branch');
+
+-- Resolve conflicts for tables t1 and t2 with rows from our branch.
+CALL DOLT_CONFLICTS_RESOLVE('--ours', 't1', 't2');
 ```
 
 
