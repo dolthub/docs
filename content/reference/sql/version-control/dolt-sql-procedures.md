@@ -429,8 +429,8 @@ A conflict is between two versions: ours (the rows at the destination branch hea
 the ours or theirs versions for each row.
 
 ```sql
-CALL DOLT_COMMIT('--ours', <table>);
-CALL DOLT_COMMIT('--theirs', <table>);
+CALL DOLT_CONFLICTS_RESOLVE('--ours', <table>);
+CALL DOLT_CONFLICTS_RESOLVE('--theirs', <table>);
 ```
 
 ### Options
