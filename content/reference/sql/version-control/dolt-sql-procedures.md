@@ -450,6 +450,9 @@ USE mydb;
 -- Attempt merge
 CALL DOLT_MERGE('feature-branch');
 
+-- Check for conflicts
+SELECT * FROM dolt_conflicts;
+
 -- Resolve conflicts for tables t1 and t2 with rows from our branch.
 CALL DOLT_CONFLICTS_RESOLVE('--ours', 't1', 't2');
 ```
