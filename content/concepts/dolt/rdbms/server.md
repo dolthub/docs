@@ -14,7 +14,7 @@ Database servers are used to allow multiple users to access the same database ov
 
 ## Difference between the MySQL database server and the Dolt database server
 
-Dolt behaves the same way as the MySQL database server started using `mysqld`. By default, Dolt starts on the same port as MySQL, `3306`. Currently Dolt does not support the MySQL socket interface for local clients. All connections must be routed over TCP.
+Dolt behaves the same way as the MySQL database server started using `mysqld`. By default, Dolt starts on the same port as MySQL, `3306`.
 
 ## Interaction with Dolt Version Control
 
