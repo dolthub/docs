@@ -51,7 +51,7 @@ below. Once resolved, you will need to make a dolt commit.
 # Conflicts
 
 Merging branches can create
-[conflicts](../../concepts/dolt/conflicts.md), which you must resolve
+[conflicts](../../concepts/dolt/git/conflicts.md), which you must resolve
 before you can commit your transaction. If a merge creates conflicts,
 the `DOLT_MERGE()` function will return a non-zero result in the conflicts column.
 

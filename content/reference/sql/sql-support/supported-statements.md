@@ -98,7 +98,7 @@ title: Supported Statements
 Dolt supports atomic transactions like other SQL databases. It's also
 possible for clients to connect to different heads, which means they
 will never see each other's edits until a merge between heads is
-performed. See [Using Branches](../branches.md) for more detail.
+performed. See [Using Branches](../version-control/branches.md) for more detail.
 
 Dolt has two levels of persistence:
 
@@ -133,7 +133,7 @@ Dolt has two levels of persistence:
 
 ## Access management statements
 
-More information on how Dolt handles access management may be found in the [access management page](../access-management.md).
+More information on how Dolt handles access management may be found in the [access management page](../server/access-management.md).
 
 | Statement          | Supported | Notes and limitations |
 | :----------------- | :-------- | :-------------------- |

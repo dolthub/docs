@@ -27,7 +27,7 @@ By default, privileges will be stored in `.doltcfg/privileges.db` file, you may 
 ### User and Password Arguments
 
 Before the introduction of users and privileges, Dolt supported only a single user with an accompanying password.
-This was done using the `--user` and `--password` arguments ([see the docs for their defaults](../cli.md#dolt-sql-server), also available using YAML configuration), whereby a server would only allow connections that supplied that singular user and password combination.
+This was done using the `--user` and `--password` arguments ([see the docs for their defaults](../../cli.md#dolt-sql-server), also available using YAML configuration), whereby a server would only allow connections that supplied that singular user and password combination.
 Although Dolt now supports users in a similar fashion to MySQL, we still retain the user and password arguments.
 In MySQL, the default super account (generally called the root user) is created during installation and configuration.
 Rather than creating a parallel with [`init`](../cli.md#dolt-init), we handle the super account creation when starting a server via the arguments.
