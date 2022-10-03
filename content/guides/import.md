@@ -6,11 +6,11 @@ title: Importing Data
 
 You can load the following data formats into Dolt:
 
-* CSV, JSON, Parquet
-* MySQL databases
-* Postgres
-* Spreadsheets
-* Pandas dataframes
+- CSV, JSON, Parquet
+- MySQL databases
+- Postgres
+- Spreadsheets
+- Pandas dataframes
 
 We support several commands for this including:
 
@@ -20,7 +20,7 @@ We support several commands for this including:
 
 ## CSV, JSON, and Parquet Files
 
-The easiest sources of data to work with are CSV, JSON, and Parquet files. These pair best with the custom `dolt table import` 
+The easiest sources of data to work with are CSV, JSON, and Parquet files. These pair best with the custom `dolt table import`
 command.
 
 1. Importing with no schema
@@ -62,7 +62,7 @@ We can query the table and see the new schema and data:
 +----+-----+
 ```
 
-You can reference the [`dolt table import`](https://pandas.pydata.org/docs/reference/api/pandas.read_sql.html) documenation for additional ways to modify your database such as updating or replacing your existing data.
+You can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documenation for additional ways to modify your database such as updating or replacing your existing data.
 
 2. Importing with a schema
 
@@ -123,15 +123,14 @@ Import completed successfully.
 ```
 
 3. You can also use the MySQL `LOAD DATA` command to work with data that is compatible with the [LOAD DATA api](https://dev.mysql.com/doc/refman/8.0/en/load-data.html). For example
-you can load the above `file.csv` as follows:
-
+   you can load the above `file.csv` as follows:
 
 ```sql
 create table test(pk int, val int);
 LOAD DATA INFILE '/Users/vinairachakonda/misc/test/file.csv' INTO table test FIELDS TERMINATED BY ',' IGNORE 1 LINES;
 ```
 
-Selecting from above you get 
+Selecting from above you get
 
 ```
 test> select * from test;
@@ -149,7 +148,7 @@ Migrating your MySQL database to Dolt is easy. We recommend the `mysqldump` prog
 
 ```yaml
 user: root
-password: 
+password:
 host: 0.0.0.0
 port: 3306
 database: test
@@ -169,8 +168,8 @@ dolt sql < dump.sql
 
 ## Postgres
 
-You can load a postgres database into dolt with our custom [pg2mysql](https://github.com/dolthub/pg2mysql) tool. If you have 
-a postgres database you can export a postgres dump file with the [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html#:~:text=pg_dump%20is%20a%20utility%20for,only%20dumps%20a%20single%20database) utility. 
+You can load a postgres database into dolt with our custom [pg2mysql](https://github.com/dolthub/pg2mysql) tool. If you have
+a postgres database you can export a postgres dump file with the [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html#:~:text=pg_dump%20is%20a%20utility%20for,only%20dumps%20a%20single%20database) utility.
 
 With the a postgres dump file of `file.pgdump` you can convert it into a mysql dump as follows.
 
@@ -188,20 +187,18 @@ dolt sql < mysql.sql
 
 There are multiple ways to get spreadsheet data into Dolt. The first is with `dolt table import`. Consider the following excel file: `employees.xlsx`
 
-
 ```bash
 0,tim,sehn,ceo
 1,aaron,son,founder
 2,brian,hendricks,founder
 ```
 
-Just like a csv file we run the command `dolt table import -c --pk=id employees employees.xlsx` to load the excel file 
+Just like a csv file we run the command `dolt table import -c --pk=id employees employees.xlsx` to load the excel file
 into our Dolt. Be sure to give the same name for the table as the spreadsheet's name.
 
 The other way to work with spreadsheet data is with Dolthub's ["edit like a spreadsheet"](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/) feature. You can create a SQL table from scratch with just typing values into a spreadsheet.
 
 ![Spreadsheet](../.gitbook/assets/spreadsheet.png)
-
 
 ## Pandas Dataframe
 
@@ -249,8 +246,7 @@ print(frame)
 # 2      1   1     Aaron       Son  Founder
 ```
 
-The second way to do this is by exporting your pandas dataframe as a csv file which can then be imported with `dolt 
-table import`.
+The second way to do this is by exporting your pandas dataframe as a csv file which can then be imported with `dolt table import`.
 
 ```python
 >>> import pandas as pd
@@ -260,11 +256,10 @@ table import`.
 >>> df.to_csv('out.csv', index=False)
 ```
 
-
 ## Import Best Practices
 
 There are some best practices to keep in mind in order to make importing external data into Dolt as fast as possible. These performance differences are especially relevant with large databases (~50GB+).
 
-* Avoid adding foreign keys or unique indexes until after the import is completed. These substantially increase import time.
-* Minimize your use of blob types. These are expensive to create.
-* If running multiple import jobs back to back, be sure to [garbage collect](https://docs.dolthub.com/cli-reference/cli#dolt-gc) the database. Imports can generate a substantial amount of garbage.
+- Avoid adding foreign keys or unique indexes until after the import is completed. These substantially increase import time.
+- Minimize your use of blob types. These are expensive to create.
+- If running multiple import jobs back to back, be sure to [garbage collect](https://docs.dolthub.com/cli-reference/cli#dolt-gc) the database. Imports can generate a substantial amount of garbage.
