@@ -24,11 +24,11 @@ Dolt can produce diffs at scale because the Dolt storage engine breaks the rows 
 
 Diffs are an invaluable tool for data debugging. 
 
-In human readable form, seeing what cells in your database changed can help you instantly spot problems in the data that may have gone overlooked. You can see diffs in human readable form via the [Dolt CLI](../../../reference/cli.md) or through a SQL query of the [`dolt_diff_<tablename>` system table](../../../reference/sql/dolt-system-tables.md). 
+In human readable form, seeing what cells in your database changed can help you instantly spot problems in the data that may have gone overlooked. You can see diffs in human readable form via the [Dolt CLI](../../../reference/cli.md) or through a SQL query of the [`dolt_diff_<tablename>` system table](../../../reference/sql/version-control/dolt-system-tables.md). 
 
 For instance, are you expecting no `NULL` cells but have some? This indicates a bug in your data creation process. Simply looking at a summary of how many rows were added, modified, and deleted in a specific change can be fruitful. Expecting only row additions in a change but got some modifications? A deeper dive into that import job may be required.
 
-Programmatically, you can use SQL to explore very large diffs using the [`dolt_diff_<tablename>` system tables](../../../reference/sql/dolt-system-tables.md).
+Programmatically, you can use SQL to explore very large diffs using the [`dolt_diff_<tablename>` system tables](../../../reference/sql/version-control/dolt-system-tables.md).
 
 ## Difference between Git diffs and Dolt diffs
 
