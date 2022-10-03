@@ -182,7 +182,7 @@ A `done` operation will yield a response that includes some query metadata, incl
 
 Since a lot of Dolt's functionality is exposed via SQL, we can use the commit ids to query
 the [`dolt_commit_diff_$tablename`
-table](../../reference/sql/dolt-system-tables.md#dolt_commit_diff_usdtablename) to view the
+table](../../reference/sql/version-control/dolt-system-tables.md#dolt_commit_diff_usdtablename) to view the
 resulting diff from our `UPDATE` query.
 
 ```python

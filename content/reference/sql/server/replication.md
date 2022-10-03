@@ -107,7 +107,7 @@ changing replication configuration.
 
 Often, a primary would like to replicate all transaction `COMMIT`s,
 not just Dolt commits. You can make every transaction `COMMIT` a Dolt
-commit by setting the [system variable](./system-variables.md),
+commit by setting the [system variable](../../../concepts/dolt/sql/system-variables.md),
 [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With
 this setting, you lose the ability to enter commit messages.
 
