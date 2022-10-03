@@ -18,7 +18,7 @@ If no primary key exists, all changes look like inserts and deletes. Effectively
 
 Dolt can produce diffs on the command line, as tables, or as a SQL patch.
 
-Dolt can produce diffs at scale because the Dolt storage engine breaks the rows in the database down into chunks. Each chunk is content-addressed and stored in a tree called [a Prolly Tree](../../../architectecture/storage-engine/prolly-tree). Thus, to calculate data diffs, Dolt walks the trees at both commits, exposing the chunks that are different. For instance, if nothing has changed, the content address of the root of the table is unchanged. 
+Dolt can produce diffs at scale because the Dolt storage engine breaks the rows in the database down into chunks. Each chunk is content-addressed and stored in a tree called [a Prolly Tree](../../../architecture/storage-engine/prolly-tree.md). Thus, to calculate data diffs, Dolt walks the trees at both commits, exposing the chunks that are different. For instance, if nothing has changed, the content address of the root of the table is unchanged. 
 
 ## How to use diffs
 
