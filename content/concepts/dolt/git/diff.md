@@ -8,25 +8,27 @@ title: Diff
 
 Diff, short for difference, is used to display the differences between two references, usually commits. Dolt produces diffs of schema and data.
 
-Dolt produces diffs of table schema. Schema diffs appear as raw textual differences between the `CREATE TABLE` statements used to define the table schema at each commit. 
+Dolt produces diffs of table schema. 
 
-Dolt produces cell-wise diffs between table data. If a primary key exists, rows are identified across commits via primary key. Non-primary key changes will appear as updates. Primary key changes will appear as inserts and corresponding deletes. 
+Schema diffs appear as raw textual differences between the `CREATE TABLE` statements used to define the table schema at each commit. The can be produced on the command line using `dolt diff --schema`. No way to generate schema diffs in SQL exists yet.
+
+Dolt produces cell-wise diffs for table data. If a primary key exists, rows are identified across commits using the primary key. Changes to columns that are not in the primary key will appear as updates. Changes to primary key columns will appear as inserts and corresponding deletes. 
 
 If no primary key exists, all changes look like inserts and deletes. Effectively, for diff purposes, the keys of the table with no primary keys are the entire form.
 
-Dolt can produce diffs in command line readable form, table form, or as a SQL patch.
+Dolt can produce diffs on the command line, as tables, or as a SQL patch.
 
-Dolt can produce diffs at scale because the Dolt storage engine breaks the rows in the database down into chunks. Each chunk is content-addressed and stored in a tree called [a Prolly Tree](). Thus, to calculate data diffs, Dolt walks the trees at both commits, exposing the chunks that are different. For instance, if nothing has changed, the content address of the root of the table is unchanged. 
+Dolt can produce diffs at scale because the Dolt storage engine breaks the rows in the database down into chunks. Each chunk is content-addressed and stored in a tree called [a Prolly Tree](../../../architectecture/storage-engine/prolly-tree). Thus, to calculate data diffs, Dolt walks the trees at both commits, exposing the chunks that are different. For instance, if nothing has changed, the content address of the root of the table is unchanged. 
 
 ## How to use diffs
 
 Diffs are an invaluable tool for data debugging. 
 
-In human readable form, seeing what cells in your database changed can help you instantly spot problems in the data that may have gone overlooked. You can see diffs in human readable form via the [Dolt CLI](../../reference/cli.md) or through a SQL query of the [`dolt_diff_<tablename>` system table](../../reference/sql/dolt-system-tables.md). 
+In human readable form, seeing what cells in your database changed can help you instantly spot problems in the data that may have gone overlooked. You can see diffs in human readable form via the [Dolt CLI](../../../reference/cli.md) or through a SQL query of the [`dolt_diff_<tablename>` system table](../../../reference/sql/version-control/dolt-system-tables.md). 
 
 For instance, are you expecting no `NULL` cells but have some? This indicates a bug in your data creation process. Simply looking at a summary of how many rows were added, modified, and deleted in a specific change can be fruitful. Expecting only row additions in a change but got some modifications? A deeper dive into that import job may be required.
 
-Programmatically, you can use SQL to explore very large diffs using the [`dolt_diff_<tablename>` system tables](../../reference/sql/dolt-system-tables.md).
+Programmatically, you can use SQL to explore very large diffs using the [`dolt_diff_<tablename>` system tables](../../../reference/sql/version-control/dolt-system-tables.md).
 
 ## Difference between Git diffs and Dolt diffs
 

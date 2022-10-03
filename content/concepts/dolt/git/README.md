@@ -12,11 +12,11 @@ In SQL, Dolt becomes a bit more complicated because no Git-equivalent to SQL exi
 
 In this section we explore the following Git concepts and explain how they work in Dolt:
 
-1. [Commits](concepts/dolt/git/commits.md)
-2. [Log](concepts/dolt/git/log.md)
-3. [Diff](concepts/dolt/git/diff.md)
-4. [Branch](concepts/dolt/git/branch.md)
-5. [Merge](concepts/dolt/git/merge.md)
-6. [Conflicts](concepts/dolt/git/conflicts.md)
-7. [Remotes](concepts/dolt/git/remotes.md)
-8. [Working Set](concepts/dolt/git/working-set.md)
+1. [Commits](./commits.md)
+2. [Log](./log.md)
+3. [Diff](./diff.md)
+4. [Branch](./branch.md)
+5. [Merge](./merge.md)
+6. [Conflicts](./conflicts.md)
+7. [Remotes](./remotes.md)
+8. [Working Set](./working-set.md)
