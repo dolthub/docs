@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 161 of 438 MySQL functions.**
+**Currently supporting 163 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -106,7 +106,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BIT_AND()`                       | ✅         |                                                                   |
 | `BIT_COUNT()`                     | ❌         |                                                                   |
 | `BIT_LENGTH()`                    | ✅         |                                                                   |
-| `BIT_OR()`                        | ✅         | `\|` is supported                                                 |
+| `BIT_OR()`                        | ✅         | `\                                                                |` is supported                                                 |
 | `BIT_XOR()`                       | ✅         | `^` is supported                                                  |
 | `CAN_ACCESS_COLUMN()`             | ❌         |                                                                   |
 | `CAN_ACCESS_DATABASE()`           | ❌         |                                                                   |
@@ -377,7 +377,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `STDDEV_SAMP()`                   | ❌         |                                                                   |
 | `STRCMP()`                        | ❌         |                                                                   |
 | `STR_TO_DATE()`                   | ❌         |                                                                   |
-| `ST_Area()`                       | ❌         |                                                                   |
+| `ST_Area()`                       | ✅         | Geodetic not yet supported                                        |
 | `ST_AsBinary()`                   | ✅         |                                                                   |
 | `ST_AsGeoJSON()`                  | ✅         |                                                                   |
 | `ST_AsText()`                     | ✅         |                                                                   |
@@ -415,7 +415,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_IsValid()`                    | ❌         |                                                                   |
 | `ST_LatFromGeoHash()`             | ❌         |                                                                   |
 | `ST_Latitude()`                   | ✅         |                                                                   |
-| `ST_Length()`                     | ❌         |                                                                   |
+| `ST_Length()`                     | ✅         | Geodetic not yet supported                                        |
 | `ST_LineFromText()`               | ✅         |                                                                   |
 | `ST_LineFromWKB()`                | ✅         |                                                                   |
 | `ST_LongFromGeoHash()`            | ❌         |                                                                   |
@@ -431,6 +431,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_NumInteriorRing()`            | ❌         |                                                                   |
 | `ST_NumPoints()`                  | ❌         |                                                                   |
 | `ST_Overlaps()`                   | ❌         |                                                                   |
+| `ST_Perimeter()`                  | ✅         | Geodetic not yet supported                                        |
 | `ST_PointFromGeoHash()`           | ❌         |                                                                   |
 | `ST_PointFromText()`              | ✅         |                                                                   |
 | `ST_PointFromWKB()`               | ✅         |                                                                   |
