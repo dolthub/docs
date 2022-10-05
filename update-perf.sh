@@ -32,6 +32,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   os_type="linux"
 fi
 
+if [[ "$storage_format" != "__DOLT__" ]]; then
+  exit 0
+fi
+
 if [ "$type" == "latency" ]
 then
   dest_file="$sql_reference_dir/latency.md"
