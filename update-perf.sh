@@ -33,7 +33,8 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 fi
 
 if [[ "$storage_format" != "__DOLT__" ]]; then
-  exit 0
+  echo "only __DOLT__ supported in docs"
+  exit 1
 fi
 
 if [ "$type" == "latency" ]
