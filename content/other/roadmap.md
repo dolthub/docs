@@ -43,7 +43,7 @@ Roadmap last updated Oct 2022, next update Jan 2023.
 | Automatic garbage collection            | Unscheduled |
 | More function coverage                  | Ongoing     |
 
-## Recently launched major features
+## Selection of recent feature launches
 
 | Feature                                   | Launch Date |
 | -------                                   | ---         |
@@ -73,9 +73,3 @@ Roadmap last updated Oct 2022, next update Jan 2023.
 | `RANGE` window definitions                | Jan 2022    |
 | `ROWS` window definitions                 | Jan 2022    |
 | Hosted Dolt Alpha                         | Jan 2022    |
-| CREATE / DROP DATABASE                    | Dec 2021    |
-| Persistent SQL configuration              | Dec 2021    |
-| Commit graph performance                  | Nov 2021    |
-| Backup and replication                    | Nov 2021    |
-| Join for update                           | Oct 2021    |
-
