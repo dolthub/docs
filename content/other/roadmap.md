@@ -13,25 +13,23 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
-Roadmap last updated July 2022, next update Oct 2022.
+Roadmap last updated Oct 2022, next update Jan 2023.
 
 ## Upcoming features
 
 | Feature                                 | Estimate    |
 | -------                                 | ---         |
-| New storage launch                      | Q3 2022     |
-| `JSON_TABLE()`                          | Q3 2022     |
-| Table / index statistics                | Q3 2022     |
 | 99.9% SQL correctness                   | Q4 2022     |
 | Hash join strategy                      | Q4 2022     |
 | Universal SQL path for CLI              | Q4 2022     |
-| Row-level locking (`SELECT FOR UPDATE`) | Q4 2022     |
-| All transaction isolation levels        | Q4 2022     |
-| Collation and charset support           | Q4 2022     |
-| Postgres Support                        | 2023        |
+| Hot standby replication                 | Q4 2022     |
+| Clone from running database             | Q4 2022     |
+| Row-level locking (`SELECT FOR UPDATE`) | 2023        |
+| All transaction isolation levels        | 2023        |
+| Full text indexes                       | 2023        |
+| Spatial indexes                         | 2023        |
+| Postgres Support                        | Unscheduled |
 | Virtual columns and json indexing       | Unscheduled |
-| Full text indexes                       | Unscheduled |
-| Spatial indexes                         | Unscheduled |
 | Multiple DBs in one repo                | Unscheduled |
 | Embedded Dolt                           | Unscheduled |
 | Signed commits                          | Unscheduled |
@@ -45,10 +43,18 @@ Roadmap last updated July 2022, next update Oct 2022.
 | Automatic garbage collection            | Unscheduled |
 | More function coverage                  | Ongoing     |
 
-## Recently launched features
+## Selection of recent feature launches
 
 | Feature                                   | Launch Date |
 | -------                                   | ---         |
+| Socket file support                       | Sep 2022    |
+| Collation and charset support             | Sep 2022    |
+| `dolt_merge_status` system table          | Sep 2022    |
+| New storage launch (3x speedup)           | Aug 2022    |
+| Global auto_increment tracking            | Aug 2022    |
+| Users, roles, and grants                  | Aug 2022    |
+| `JSON_TABLE()`                            | Jul 2022    |
+| Table / index statistics                  | Jul 2022    |
 | `DESCRIBE` for views                      | Jun 2022    |
 | `MOD()` function                          | Jun 2022    |
 | Delete branches in running server         | Jun 2022    |
@@ -67,9 +73,3 @@ Roadmap last updated July 2022, next update Oct 2022.
 | `RANGE` window definitions                | Jan 2022    |
 | `ROWS` window definitions                 | Jan 2022    |
 | Hosted Dolt Alpha                         | Jan 2022    |
-| CREATE / DROP DATABASE                    | Dec 2021    |
-| Persistent SQL configuration              | Dec 2021    |
-| Commit graph performance                  | Nov 2021    |
-| Backup and replication                    | Nov 2021    |
-| Join for update                           | Oct 2021    |
-
