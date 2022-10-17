@@ -582,7 +582,7 @@ One further case can arise. If at any point, two servers communicate and they
 see that they are both configured as role primary in the same configuration
 epoch, that represents a fundamental misconfiguration of the cluster. The
 servers will transition to a special role, `detected_broken_config`. In this
-role, the servers will server read-only traffic, will reject writes of SQL, and
+role, the servers will serve read-only traffic, will reject writes of SQL, and
 will reject replication requests from other servers which may think they are
 primary at the same epoch. The role is somewhat viral &mdash; if other servers
 communicate with these servers and see the `detected_broken_config` role at the
@@ -667,7 +667,7 @@ availability.
 
 2) Direct replication requires distinct configuration on each server in the
 cluster and it requires tight coupling and deployment of new configuration for
-any changes cluster topology. Replication through a remote is much more
+any changes to cluster topology. Replication through a remote is much more
 decoupled. There is no need to change any configuration in order to add a new
 read replica, for example.
 
