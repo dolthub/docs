@@ -439,7 +439,7 @@ bootstrap configuration.
 
 If databases already exist when the `dolt sql-server` instance is started, they
 will need to have corresponding remotes as configured in the
-`cluster.standby_remotes` configuration. Any databsae created database through
+`cluster.standby_remotes` configuration. Any database created database through
 SQL `CREATE DATABASE` will automatically have remotes created corresponding to
 the `remote_url_templates`. The recommended way to run `dolt sql-server` in
 cluster mode is in a newly empty directory with:
