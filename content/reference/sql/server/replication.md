@@ -8,7 +8,7 @@ Dolt supports two forms of
 [replication](../../../concepts/dolt/rdbms/replication.md).
 
 In one, Dolt uses a remote as a middleman to facilitate replication between the
-primary and read replicas. In this most, Dolt replication triggers on a [Dolt
+primary and read replicas. In this mode, Dolt replication triggers on a [Dolt
 commit](../../../concepts/dolt/git/commits.md).
 
 ![Read replication](../../../.gitbook/assets/dolt-read-replication.png)
@@ -499,7 +499,7 @@ at a lower configuration epoch, or a different role at the current
 configuration epoch, will fail.
 
 A server's configured role can be manually changed by calling a stored procedure,
-`dolt_assume_cluster_role`. This can be used for controlled and loss-less
+`dolt_assume_cluster_role`. This can be used for controlled and lossless
 failover from a primary to a standby. It can also be used to promote a standby
 to a primary when a primary is lost, although in that case the failover is not
 guaranteed to be lossless.
@@ -632,6 +632,22 @@ For monitoring the health of replication, we recommend alerting on:
 
 4) Any server in the cluster in role `detected_broken_config`.
 
+## A Note on Security
+
+As currently implemented, enabling cluster replication on a dolt sql-server
+instance will expose an unauthenticated dolt remote endpoint on port
+`cluster.remotesapi.port` of the sql-server host. The endpoint will perform no
+peer authentication and will perform no authorization checks. Anyone with
+access to that TCP port on any IP address of that host will be able to connect
+to the endpoint and perform reads and writes against any database in the
+sql-server, including deleting all the data in the database.
+
+The only way to safely deploy dolt sql-server cluster replication currently is
+with some form of network firewall or behind an authenticating proxy. For
+example, [envoy](https://www.envoyproxy.io/) can be used to front both the
+inbound and outbound traffic replication traffic, and the envoy proxies in the
+cluster can authenticate each other using mTLS or some other shared secret.
+
 # Direct vs. Remote Replication
 
 The above presents two different ways of achieving replication and running
@@ -667,6 +683,13 @@ itself is responsible for pushing each write to each standby server.
 the creation of dolt commits on a dolt branch. This may make it more
 appropriate for your use case, depending on how your application creates and
 manages dolt commits.
+
+5) As mentioned above, the default security posture of replication through a
+remote and direct replication are currently quite different. While the
+configuration shown on this page for direct replication is relatively
+straightforward, to deploy in the real world requires bringing some form of
+external authentication and authorization, possibly in the form of PKI,
+certificates and a sidecar, or externally configured firewall rules.
 
 Lastly, depending on your use case, it may be appropriate to utilize both forms
 of replication at the same time. You might do so, for example, if you need
