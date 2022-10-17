@@ -6,29 +6,33 @@ title: Replication
 
 ## What is Replication?
 
-Replication is the ability for an RDBMS to synchronize a master server with one or more read replicas. In this configuration, the master database serves reads and writes while the replicas serve just reads.
+Replication is the ability for an RDBMS to synchronize a primary server with one or more read replicas. In this configuration, the primary database serves reads and writes while the replicas serve just reads.
 
 ## How to use Replication
 
 Replication is used for disaster recovery and to increase read throughput by distributing read load.
 
-For disaster recovery, if your master server goes offline, your database can still serve read traffic from its replicas. Often a manual or automated process can elect and configure a replica to be the master instance limiting downtime.
+For disaster recovery, if your primary server goes offline, your database can still serve read traffic from its replicas. Often a manual or automated process can elect and configure a replica to be the primary instance limiting downtime.
 
-To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your master still takes reads, each read replica serves 1/N+1 percent of the read traffic. Note, in this set up your application must be aware of the replicas. The database does not route requests automatically.  
+To increase read throughput, multiple replicas can be used to scale reads horizontally. If you have N replicas and your primary still takes reads, each read replica serves 1/N+1 percent of the read traffic. Note, in this set up your application must be aware of the replicas. The database does not route requests automatically.
 
 ## Differences between MySQL Replication and Dolt Replication
 
 Dolt does not support MySQL style replication. [MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt does not have a binary log.
 
-Dolt leverages Git-style [remotes](../git/remotes.md) to facilitate replication. The master and replicas configure the same remote. On the master, you configure "push on write" and on the replicas you configure "pull on read". 
+Dolt supports two types of primary-backup replication. In one mode, the primary and the read replicas are completely decoupled. They both leverage a Git-style [remotes](../git/remotes.md) to facilitate replication. The primary and the read replicas configure the same remote. On the primary, you configure "push on write" and on the replicas you configure "pull on read".  This mode only replicates branch heads, which means that new dolt commits are required in order to replicate writes.
+
+The second mode configures a cluster of dolt sql-server instances to replicate all writes to each other. Each server is configured to replicate writes to all other servers in the cluster. One server is configured as the primary replica and it accepts writes. All other servers are configured as standbys and only accept read requests.
 
 ## Interaction with Dolt Version Control
 
-Dolt uses remotes to synchronize between master and read replicas. Replication leverages Dolt's ability to produce differences between two versions of a database quickly.
+Dolt uses remotes to synchronize between primary and read replicas. Replication leverages Dolt's ability to produce differences between two versions of a database quickly.
 
 ## Example
 
-### Configuring a Master
+The following example shows write replication from a primary and read replicas using a Git-style remote to rendezvous and maintain loose coupling. For more details on clustering in sql-server, see [the documentation for sql-server replication](../reference/sql/server/replication.md).
+
+### Configuring a Primary
 
 In this example I use a DoltHub remote to facilitate replication. I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
 
@@ -78,7 +82,7 @@ $ dolt sql -q "select * from test"
 +----+----+
 ```
 
-Now on the master.
+Now on the primary.
 
 ```bash
 $ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
