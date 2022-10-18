@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 163 of 438 MySQL functions.**
+**Currently supporting 178 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -191,8 +191,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GROUP_CONCAT()`                  | ❌         |                                                                       |
 | `GTID_SUBSET()`                   | ❌         |                                                                       |
 | `GTID_SUBTRACT()`                 | ❌         |                                                                       |
-| `GeomCollection()`                | ❌         |                                                                       |
-| `GeometryCollection()`            | ❌         |                                                                       |
+| `GeomCollection()`                | ✅         |                                                                       |
+| `GeometryCollection()`            | ✅         |                                                                       |
 | `HASHOF()`                        | ✅         | Returns the hash of a reference, e.g. `HASHOF("master")`)             |     |
 | `HEX()`                           | ✅         |                                                                       |
 | `HOUR()`                          | ✅         |                                                                       |
@@ -299,9 +299,9 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `MOD()`                           | ❌         | `%` is supported                                                      |
 | `MONTH()`                         | ✅         |                                                                       |
 | `MONTHNAME()`                     | ✅         |                                                                       |
-| `MultiLineString()`               | ❌         |                                                                       |
-| `MultiPoint()`                    | ❌         |                                                                       |
-| `MultiPolygon()`                  | ❌         |                                                                       |
+| `MultiLineString()`               | ✅         |                                                                       |
+| `MultiPoint()`                    | ✅         |                                                                       |
+| `MultiPolygon()`                  | ✅         |                                                                       |
 | `NAME_CONST()`                    | ❌         |                                                                       |
 | `NOT`, `!`                        | ✅         |                                                                       |
 | `NOT BETWEEN ... AND ...`         | ✅         |                                                                       |
