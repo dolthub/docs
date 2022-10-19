@@ -3,28 +3,31 @@ title: Dolt SQL Functions
 ---
 
 # Table of Contents
-  
-* [Informational Functions](#informational-functions)
-  * [active\_branch()](#active_branch)
-  * [dolt\_merge\_base()](#dolt_merge_base)
-  * [hashof()](#hashof)
-  * [dolt\_version()](#dolt_version)
 
-* [Table Functions](#table-functions)
-  * [dolt_diff()](#dolt_diff)
-  * [dolt_diff_summary()](#dolt_diff_summary)
+- [Informational Functions](#informational-functions)
 
-* [Version Control Functions](#version-control-functions) (deprecated)
-  * [These are deprecated](#deprecation-warning), please use the
+  - [active_branch()](#active_branch)
+  - [dolt_merge_base()](#dolt_merge_base)
+  - [hashof()](#hashof)
+  - [dolt_version()](#dolt_version)
+
+- [Table Functions](#table-functions)
+
+  - [dolt_diff()](#dolt_diff)
+  - [dolt_diff_summary()](#dolt_diff_summary)
+  - [dolt_log()](#dolt_log)
+
+- [Version Control Functions](#version-control-functions) (deprecated)
+  - [These are deprecated](#deprecation-warning), please use the
     equivalent [stored procedures](dolt-sql-procedures.md) instead.
-  * [dolt\_add()](#dolt_add)
-  * [dolt\_checkout()](#dolt_checkout)
-  * [dolt\_commit()](#dolt_commit)
-  * [dolt\_fetch()](#dolt_fetch)
-  * [dolt\_merge()](#dolt_merge)
-  * [dolt\_pull()](#dolt_pull)
-  * [dolt\_push()](#dolt_push)
-  * [dolt\_reset()](#dolt_reset)
+  - [dolt_add()](#dolt_add)
+  - [dolt_checkout()](#dolt_checkout)
+  - [dolt_commit()](#dolt_commit)
+  - [dolt_fetch()](#dolt_fetch)
+  - [dolt_merge()](#dolt_merge)
+  - [dolt_pull()](#dolt_pull)
+  - [dolt_push()](#dolt_push)
+  - [dolt_reset()](#dolt_reset)
 
 # Informational Functions
 
@@ -98,41 +101,43 @@ mysql> select dolt_version();
 
 Table functions operate like regular SQL functions, but instead of returning a single, scalar value, a
 table function returns rows of data, just like a table. Dolt's table function support is currently limited
-to only the `DOLT_DIFF()` function and table functions have several restrictions in how they can be used in 
+to only the `DOLT_DIFF()` function and table functions have several restrictions in how they can be used in
 queries. For example, you cannot currently alias a table function or join a table function with another table
-or table function. 
+or table function.
 
 ## `DOLT_DIFF()`
 
 The `DOLT_DIFF()` table function calculates the differences in a table's data at any two commits in the database.
 Each row in the result set describes how a row in the underlying table has changed between the two commits,
 including the row's values at to and from commits and the type of change (i.e. `added`, `modified`, or `removed`).
-`DOLT_DIFF()` is an alternative to the 
+`DOLT_DIFF()` is an alternative to the
 [`dolt_commit_diff_$tablename` system table](dolt-system-tables.md#dolt_commit_diff_usdtablename).
-You should generally prefer the system tables when possible, since they have less restrictions on use. 
-However, some use cases, such as viewing a table data diff containing schema changes, can be easier to view 
-with the `DOLT_DIFF` table function.  
+You should generally prefer the system tables when possible, since they have less restrictions on use.
+However, some use cases, such as viewing a table data diff containing schema changes, can be easier to view
+with the `DOLT_DIFF` table function.
 
 The main difference between the results of the `DOLT_DIFF()` table function and the `dolt_commit_diff_$tablename`
 system table is the schema of the returned results. `dolt_commit_diff_$tablename` generates the resulting schema
 based on the table's schema at the currently checked out branch. `DOLT_DIFF()` will use the schema at the `from_commit`
-for the `from_` columns and the schema at the `to_commit` for the `to_` columns. This can make it easier to view 
-diffs where the schema of the underlying table has changed. 
+for the `from_` columns and the schema at the `to_commit` for the `to_` columns. This can make it easier to view
+diffs where the schema of the underlying table has changed.
 
 Note that the `DOLT_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
-support aliasing or joining with other tables, and argument values must currently be literal values. 
+support aliasing or joining with other tables, and argument values must currently be literal values.
 
 ### Options
 
 ```sql
 DOLT_DIFF(<from_revision>, <to_revision>, <tablename>)
 ```
-The `DOLT_DIFF()` table function takes three required arguments:
-* `from_revision`  — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
-* `to_revision`    — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
-* `tablename`  —  the name of the table containing the data to diff.
 
-### Schema 
+The `DOLT_DIFF()` table function takes three required arguments:
+
+- `from_revision` — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+- `to_revision` — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+- `tablename` — the name of the table containing the data to diff.
+
+### Schema
 
 ```text
 +------------------+----------+
@@ -147,21 +152,22 @@ The `DOLT_DIFF()` table function takes three required arguments:
 +------------------+----------+
 ```
 
-The remaining columns are dependent on the schema of the user table as it existed at the `from_commit` and at 
-the `to_commit`. For every column `X` in your table at the `from_commit` revision, there is a column in the result 
+The remaining columns are dependent on the schema of the user table as it existed at the `from_commit` and at
+the `to_commit`. For every column `X` in your table at the `from_commit` revision, there is a column in the result
 set named `from_X`. Likewise, for every column `Y` in your table at the `to_commit` revision, there is a column
 in the result set named `to_Y`. This is the major difference between the `DOLT_DIFF()` table function and the
-`dolt_commit_diff_$tablename` system table – `DOLT_DIFF()` uses the two schemas at the `to_commit` and 
+`dolt_commit_diff_$tablename` system table – `DOLT_DIFF()` uses the two schemas at the `to_commit` and
 `from_commit` revisions to form the to and from columns of the result set, while `dolt_commit_diff_$tablename` uses
-only the table schema of the currently checked out branch to form the to and from columns of the result set.   
+only the table schema of the currently checked out branch to form the to and from columns of the result set.
 
-### Example 
+### Example
 
 Consider a table named `inventory` in a database with two branches: `main` and `feature_branch`. We can use the
 `DOLT_DIFF()` function to calculate a diff of the table data from the `main` branch to the `feature_branch` branch
-to see how our data has changed on the feature branch. 
+to see how our data has changed on the feature branch.
 
 Here is the schema of `inventory` at the tip of `main`:
+
 ```text
 +----------+------+
 | field    | type |
@@ -173,6 +179,7 @@ Here is the schema of `inventory` at the tip of `main`:
 ```
 
 Here is the schema of `inventory` at the tip of `feature_branch`:
+
 ```text
 +----------+------+
 | field    | type |
@@ -185,6 +192,7 @@ Here is the schema of `inventory` at the tip of `feature_branch`:
 ```
 
 Based on the schemas at the two revision above, the resulting schema from `DOLT_DIFF()` will be:
+
 ```text
 +------------------+----------+
 | field            | type     |
@@ -204,13 +212,14 @@ Based on the schemas at the two revision above, the resulting schema from `DOLT_
 +------------------+----------+
 ```
 
-To calculate the diff and view the results, we run the following query: 
+To calculate the diff and view the results, we run the following query:
 
 ```sql
 SELECT * FROM DOLT_DIFF("main", "feature_branch", "inventory")
 ```
 
 The results from `DOLT_DIFF()` show how the data has changed going from `main` to `feature_branch`:
+
 ```text
 +---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
 | to_name | to_pk | to_size | to_color | to_commit      | to_commit_date                    | from_name | from_pk | from_quantity | from_commit | from_commit_date                  | diff_type |
@@ -224,22 +233,22 @@ The results from `DOLT_DIFF()` show how the data has changed going from `main` t
 
 ## `DOLT_DIFF_SUMMARY()`
 
-The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits 
-in the database. Schema changes such as creating a new table with no rows, or deleting a table with no rows will 
+The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits
+in the database. Schema changes such as creating a new table with no rows, or deleting a table with no rows will
 return empty result. Each row in the result set describes a diff summary for a single table with statistics information of
 number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 
-`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits must be 
-defined to use `DOLT_DIFF_SUMMARY()` table function and the table name is optional. This table function only provides 
+`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits must be
+defined to use `DOLT_DIFF_SUMMARY()` table function and the table name is optional. This table function only provides
 rows added and deleted information for keyless tables. It returns empty result for tables with no data changes.
 
 Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it can be used in queries. It does not
-support aliasing or joining with other tables, and argument values must be literal values. 
+support aliasing or joining with other tables, and argument values must be literal values.
 
 ### Privileges
 
-`DOLT_DIFF_SUMMARY()` table function requires `SELECT` privilege for all tables if no table is defined or 
+`DOLT_DIFF_SUMMARY()` table function requires `SELECT` privilege for all tables if no table is defined or
 for the defined table only.
 
 ### Options
@@ -247,10 +256,12 @@ for the defined table only.
 ```sql
 DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
 ```
+
 The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
-* `from_revision`  — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
-* `to_revision`    — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
-* `tablename`  —  the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
+
+- `from_revision` — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `to_revision` — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `tablename` — the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
 
 ### Schema
 
@@ -275,11 +286,12 @@ The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 
 ### Example
 
-Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use 
-the `DOLT_DIFF_SUMMARY()` function to calculate a diff of the table data or all tables with data changes across specific 
+Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use
+the `DOLT_DIFF_SUMMARY()` function to calculate a diff of the table data or all tables with data changes across specific
 commits.
 
 Here is the schema of `inventory` at the tip of `main`:
+
 ```text
 +----------+-------------+------+-----+---------+-------+
 | Field    | Type        | Null | Key | Default | Extra |
@@ -291,6 +303,7 @@ Here is the schema of `inventory` at the tip of `main`:
 ```
 
 Here is what table `inventory` has at the tip of `main`:
+
 ```text
 +----+-------+----------+
 | pk | name  | quantity |
@@ -301,6 +314,7 @@ Here is what table `inventory` has at the tip of `main`:
 ```
 
 We perform some changes to the `inventory` table and create new keyless table:
+
 ```text
 ALTER TABLE inventory ADD COLUMN color VARCHAR(10);
 INSERT INTO inventory VALUES (3, 'hat', 6, 'red');
@@ -310,6 +324,7 @@ INSERT INTO items VALUES ('shirt'),('pants');
 ```
 
 Here is what table `inventory` has in the current working set:
+
 ```text
 +----+-------+----------+-------+
 | pk | name  | quantity | color |
@@ -321,11 +336,13 @@ Here is what table `inventory` has in the current working set:
 ```
 
 To calculate the diff and view the results, we run the following query:
+
 ```sql
 SELECT * FROM DOLT_DIFF_SUMMARY('main', 'WORKING');
 ```
 
 The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from tip of `main` to our current working set:
+
 ```text
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 | table_name | rows_unmodified | rows_added | rows_deleted | rows_modified | cells_added | cells_deleted | cells_modified | old_row_count | new_row_count | old_cell_count | new_cell_count |
@@ -336,11 +353,13 @@ The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from 
 ```
 
 To get a table specific changes going from the current working set to tip of `main`, we run the following query:
+
 ```sql
 SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
 ```
 
 With result of single row:
+
 ```text
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 | table_name | rows_unmodified | rows_added | rows_deleted | rows_modified | cells_added | cells_deleted | cells_modified | old_row_count | new_row_count | old_cell_count | new_cell_count |
@@ -349,7 +368,100 @@ With result of single row:
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 ```
 
-# Version Control Functions 
+## `DOLT_LOG()`
+
+The `DOLT_LOG` table function gets the commit log for all commits reachable from the
+provided revision's `HEAD` (or the current `HEAD` if no revisions provided). `DOLT_LOG()`
+works like [CLI `dolt log` command](../../cli.md#dolt-log).
+
+Note that the `DOLT_LOG()` table function currently has restrictions on how it can be used
+in queries. It does not support aliasing or joining with other tables, and argument values
+must be literal values.
+
+### Privileges
+
+`DOLT_LOG()` table function requires `SELECT` privilege for all tables.
+
+### Options
+
+```sql
+DOLT_LOG(<optional_revision>, <optional_revision>)
+```
+
+The `DOLT_LOG()` table function takes up to two optional revision arguments:
+
+- `optional_revision` — all commits reachable from the revision `HEAD`. If you'd like to
+  exclude commits from another revision (two dot log), you can use `..` between revisions
+  (`DOLT_LOG('main..feature')`) or `^` in front of the revision you'd like to exclude
+  (`DOLT_LOG('feature', '^main')`). Note: if providing two revisions, one must contain
+  `^`.
+
+### Schema
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+--------- +
+| commit_hash | text     |
+| committer   | text     |
+| email       | text     |
+| date        | datetime |
+| message     | text     |
++-------------+--------- +
+```
+
+### Example
+
+Consider we have the following commit graph:
+
+```text
+A - B - C - D (main)
+         \
+          E - F (feature)
+```
+
+To get the commit log for the `main` branch, we can use the query:
+
+```sql
+SELECT * FROM DOLT_LOG('main');
+```
+
+And it would return commits in reverse-chronological order - `D`,`C`, `B`, and `A`. The
+output will look something like:
+
+```text
++----------------------------------+-----------+--------------------+-----------------------------------+---------------+
+| commit_hash                      | committer | email              | date                              | message       |
++----------------------------------+-----------+--------------------+-----------------------------------+---------------+
+| qi331vjgoavqpi5am334cji1gmhlkdv5 | bheni     | brian@dolthub.com | 2019-06-07 00:22:24.856 +0000 UTC | update rating  |
+| 137qgvrsve1u458briekqar5f7iiqq2j | bheni     | brian@dolthub.com | 2019-04-04 22:43:00.197 +0000 UTC | change rating  |
+| rqpd7ga1nic3jmc54h44qa05i8124vsp | bheni     | brian@dolthub.com | 2019-04-04 21:07:36.536 +0000 UTC | fixes          |
+| qfk3bpan8mtrl05n8nihh2e3t68t3hrk | bheni     | brian@dolthub.com | 2019-04-04 21:01:16.649 +0000 UTC | test           |
++----------------------------------+-----------+--------------------+-----------------------------------+---------------+
+```
+
+To get the commit log for the `feature` branch, we can change the revision in the above
+query:
+
+```sql
+SELECT * FROM DOLT_LOG('feature');
+```
+
+And it would return all commits reachable from the `HEAD` of `feature` - `F`, `E`, `C`,
+`B`, and `A`.
+
+We also support two dot log, which returns commits from a revision, excluding commits from
+another revision. If we want all commits in `feature`, excluding commits from `main`, we
+can use either of these queries:
+
+```sql
+SELECT * FROM DOLT_LOG('main..feature');
+SELECT * FROM DOLT_LOG('feature', '^main');
+```
+
+And it would return commits `F` and `E`.
+
+# Version Control Functions
 
 ## Deprecation Warning
 
@@ -359,7 +471,7 @@ They will be removed in a future release.
 
 ## `DOLT_ADD()`
 
-Deprecated. Use the [DOLT\_ADD stored
+Deprecated. Use the [DOLT_ADD stored
 procedure](dolt-sql-procedures.md#dolt_add).
 
 ```sql
@@ -369,7 +481,8 @@ SELECT DOLT_ADD('table1', 'table2');
 ```
 
 ## `DOLT_CHECKOUT()`
-Deprecated. Use the [DOLT\_CHECKOUT stored
+
+Deprecated. Use the [DOLT_CHECKOUT stored
 procedure](dolt-sql-procedures.md#dolt_checkout) instead.
 
 ```sql
@@ -379,7 +492,8 @@ SELECT DOLT_CHECKOUT('my-table');
 ```
 
 ## `DOLT_COMMIT()`
-Deprecated. Use the [DOLT\_COMMIT stored
+
+Deprecated. Use the [DOLT_COMMIT stored
 procedure](dolt-sql-procedures.md#dolt_commit) instead.
 
 ```sql
@@ -390,7 +504,7 @@ SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@exam
 
 ## `DOLT_FETCH()`
 
-Deprecated. Use the [DOLT\_FETCH stored
+Deprecated. Use the [DOLT_FETCH stored
 procedure](dolt-sql-procedures.md#dolt_fetch) instead.
 
 ```sql
@@ -401,7 +515,7 @@ SELECT DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
 
 ## `DOLT_MERGE()`
 
-Deprecated. Use the [DOLT\_MERGE stored
+Deprecated. Use the [DOLT_MERGE stored
 procedure](dolt-sql-procedures.md#dolt_merge) instead.
 
 ```sql
@@ -412,7 +526,7 @@ SELECT DOLT_MERGE('--abort');
 
 ## `DOLT_RESET()`
 
-Deprecated. Use the [DOLT\_RESET stored
+Deprecated. Use the [DOLT_RESET stored
 procedure](dolt-sql-procedures.md#dolt_reset) instead.
 
 ```sql
@@ -422,7 +536,7 @@ SELECT DOLT_RESET('my-table'); -- soft reset
 
 ## `DOLT_PUSH()`
 
-Deprecated. Use the [DOLT\_PUSH stored
+Deprecated. Use the [DOLT_PUSH stored
 procedure](dolt-sql-procedures.md#dolt_push) instead.
 
 ```sql
@@ -432,7 +546,7 @@ SELECT DOLT_PUSH('--force', 'origin', 'main');
 
 ## `DOLT_PULL()`
 
-Deprecated. Use the [DOLT\_PULL stored
+Deprecated. Use the [DOLT_PULL stored
 procedure](dolt-sql-procedures.md#dolt_pull) instead.
 
 ```sql
