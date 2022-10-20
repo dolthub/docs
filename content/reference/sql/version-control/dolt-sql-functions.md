@@ -99,11 +99,11 @@ mysql> select dolt_version();
 
 # Table Functions
 
-Table functions operate like regular SQL functions, but instead of returning a single, scalar value, a
-table function returns rows of data, just like a table. Dolt's table function support is currently limited
-to only the `DOLT_DIFF()` function and table functions have several restrictions in how they can be used in
-queries. For example, you cannot currently alias a table function or join a table function with another table
-or table function.
+Table functions operate like regular SQL functions, but instead of returning a single,
+scalar value, a table function returns rows of data, just like a table. Dolt's table
+functions have several restrictions in how they can be used in queries. For example, you
+cannot currently alias a table function or join a table function with another table or
+table function.
 
 ## `DOLT_DIFF()`
 
@@ -371,7 +371,7 @@ With result of single row:
 ## `DOLT_LOG()`
 
 The `DOLT_LOG` table function gets the commit log for all commits reachable from the
-provided revision's `HEAD` (or the current `HEAD` if no revisions provided). `DOLT_LOG()`
+provided revision's `HEAD` (or the current `HEAD` if no revision is provided). `DOLT_LOG()`
 works like [CLI `dolt log` command](../../cli.md#dolt-log).
 
 Note that the `DOLT_LOG()` table function currently has restrictions on how it can be used
@@ -390,11 +390,14 @@ DOLT_LOG(<optional_revision>, <optional_revision>)
 
 The `DOLT_LOG()` table function takes up to two optional revision arguments:
 
-- `optional_revision` — all commits reachable from the revision `HEAD`. If you'd like to
-  exclude commits from another revision (two dot log), you can use `..` between revisions
-  (`DOLT_LOG('main..feature')`) or `^` in front of the revision you'd like to exclude
-  (`DOLT_LOG('feature', '^main')`). Note: if providing two revisions, one must contain
-  `^`.
+- `optional_revision` — a branch name, tag, or commit ref (with or without an ancestor
+  spec) that specifies which ancestor commits to include in the results. If no revisions
+  are specified, the default is the current branch `HEAD`. If you'd like to get [two dot
+  logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html) (all commits
+  reachable by `revision2`, but NOT reachable by `revision1`), you can use `..` between
+  revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of the revision you'd
+  like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
+  revisions, one must contain `^`.
 
 ### Schema
 
