@@ -390,7 +390,7 @@ DOLT_LOG(<optional_revision>, <optional_revision>)
 
 The `DOLT_LOG()` table function takes up to two optional revision arguments:
 
-- `optional_revision` — a branch name, tag, or commit ref (with or without an ancestor
+- `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
   are specified, the default is the current branch `HEAD`. If you'd like to get [two dot
   logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html) (all commits
@@ -398,6 +398,14 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
   revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of the revision you'd
   like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
   revisions, one must contain `^`.
+- `--min-parents`: The minimum number of parents a commit must have to be included in the log.
+- `--merges`: Equivalent to min-parents == 2, this will limit the log to commits with 2 or
+  more parents.
+- `--parents`: Shows all parents of each commit in the log.
+- `--decorate`: Shows refs next to commits. Valid options are short, full, no, and auto.
+  Note: the CLI `dolt log` command defaults to "short", while this table function defaults
+  to "no".
+- `--not`: Excludes commits reachable by revision.
 
 ### Schema
 
@@ -410,6 +418,8 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
 | email       | text     |
 | date        | datetime |
 | message     | text     |
+| parents     | text     | -- column hidden unless `--parents` flag provided
+| refs        | text     | -- column hidden unless `--decorate` is "short" or "full"
 +-------------+--------- +
 ```
 
@@ -455,11 +465,12 @@ And it would return all commits reachable from the `HEAD` of `feature` - `F`, `E
 
 We also support two dot log, which returns commits from a revision, excluding commits from
 another revision. If we want all commits in `feature`, excluding commits from `main`, we
-can use either of these queries:
+can use any of these queries:
 
 ```sql
 SELECT * FROM DOLT_LOG('main..feature');
 SELECT * FROM DOLT_LOG('feature', '^main');
+SELECT * FROM DOLT_LOG('feature', '--not', 'main');
 ```
 
 And it would return commits `F` and `E`.
