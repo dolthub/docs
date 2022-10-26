@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v0.6.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v0.7.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -27,6 +27,8 @@ DoltLab is currently available for Linux and we recommend the following _minimum
   * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
   * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server).
 
+> Starting with DoltLab `v0.7.0`, DoltLab uses more variable disk and memory on its host in order to run DoltLab Jobs. As a result, the minimum memory and disk requirements listed above might be too low for your use case. Please read the section on [DoltLab Jobs](./administrator.md#doltlab-jobs) in the Administrator Guide to find out more about how Jobs can impact your DoltLab instance.
+
 <h1 id="install-doltlab-dependencies"><ins>Step 1: Install DoltLab's Dependencies on the Host</ins></h1>
 
 Once you've provisioned a Linux host and [properly configured it's networking interface](#recommended-minimum-hardware), you can now install DoltLab's dependencies. 
@@ -36,7 +38,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v0.6.0
+export DOLTLAB_VERSION=v0.7.0
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -44,7 +46,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v0.6.0
+export DOLTLAB_VERSION=v0.7.0
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -78,7 +80,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v0.6.0
+export DOLTLAB_VERSION=v0.7.0
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab

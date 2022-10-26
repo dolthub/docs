@@ -17,6 +17,8 @@ the following information can help DoltLab Admins manually perform some common a
 10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
 11. [Use an external PostgreSQL server with DoltLab](#use-external-postgres)
 12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
+13. [DoltLab Jobs](#doltlab-jobs)
+14. [Disable Usage Metrics](#disable-metrics)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -511,3 +513,35 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO dolthubadmin;
 <h1 id="expose-doltlab-ngrok">Expose a DoltLab instance with ngrok</h1>
 
 As of DoltLab `v0.5.5`, DoltLab instances can be exposed with [ngrok](https://ngrok.com/). ["How to expose DoltLab with ngrok"](https://www.dolthub.com/blog/2022-08-08-expose-doltlab-with-ngrok/) contains the instructions for this process, however, we do not recommend doing this for production DoltLab instances. This process requires one of DoltLab's services to be run _without_ authentication, which may expose sensitive data. Do this at your own risk.
+
+<h1 id="doltlab-jobs">DoltLab Jobs</h1>
+
+Jobs were [recently introduced](https://www.dolthub.com/blog/2022-10-07-dolthub-jobs-and-doltlab-v0.6.0/) on [DoltHub](https://www.dolthub.com) and are available now on DoltLab ^`v0.7.0`. DoltLab Jobs are stand-alone, long-running Docker containers that perform specific tasks for DoltLab users behind the scenes. DoltLab `v0.7.0` includes a single Job type, the Import Job, for large file imports. But, additional Jobs will be added in subsequent versions of DoltLab.
+
+As a result of the new Jobs infrastructure, DoltLab now requires more memory and disk. The amount of each of these depends on how users will use your instance. Here are the current end user limits of DoltLab Jobs as of `v0.7.0`:
+
+| Job Type | Database Size Limit | File Size Limit |
+|---|---|---|
+| File Import | 150 GB| 1 GB for `.csv`, 200 MB for `.sql` |
+
+If you want to run a DoltLab instance that can support these end user limits, we recommend running DoltLab on a host with at least 64 GB of memory, and 20 TBs of disk. These recommended amounts will decrease as we continue to improve Dolt's resource efficiency and utilization.
+
+<h2 id="doltlab-job-import"><ins>Import Jobs</ins></h2>
+
+Under the hood, when a user uploads a file to DoltLab, a new Job is kicked off that copies that file into a new Docker container running a `dolt` binary. This Job container executes `dolt table import <file>` or `dolt sql < <file>`, depending on the file type of the uploaded file, which imports the data into a clone of the target database. The container finishes by opening a pull request containing the imported data.
+
+What's import to note about the Import Job process is how it can impact disk and memory utilization on a DoltLab host. 
+
+For example, let's say a user uploads a 100 MB `.csv` on a 10 GB DoltLab database. First, the uploaded file is downloaded into the Job container, writing, temporarily, the 100 MB file to disk. Second, the target database is cloned into the container, using an additional 10 GB's of disk. Finally, the import process begins with `dolt table import <file>`, which uses additional disk (a variable amount), in the form of [temporary files](https://www.dolthub.com/blog/2021-08-13-generational-gc/) that Dolt writes to disk in order to perform the import. 
+
+Importing also uses a variable amount of memory depending on the size of the cloned database and the size of the file being imported. In our example, the import completes in about 30 seconds, but uses about 5 GB of memory at its peak.
+
+For this reason, we recommend running DoltLab on a host with as much disk and memory as you can, especially if your users plan on doing large file imports, or a large number of imports in parallel.
+
+Import performance, memory and disk utilization are all areas of concentration for our team in the coming months. We are committed to bringing all of these down for Dolt, DoltHub, and DoltLab, so stay tuned for updates.
+
+<h1 id="disable-metrics">Disable Usage Metrics</h1>
+
+By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
+
+As of `v0.7.0`, DoltLab does not collect third-party metrics, and additionally, DoltLab's first-party metrics can be disabled. To disable metrics, edit the `start-doltlab.sh` script and remove `run_with_metrics` from the `_main` function.
