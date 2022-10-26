@@ -18,6 +18,7 @@ the following information can help DoltLab Admins manually perform some common a
 11. [Use an external PostgreSQL server with DoltLab](#use-external-postgres)
 12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
 13. [DoltLab Jobs](#doltlab-jobs)
+14. [Disable Usage Metrics](#disable-metrics)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -538,3 +539,9 @@ Importing also uses a variable amount of memory depending on the size of the clo
 For this reason, we recommend running DoltLab on a host with as much disk and memory as you can, especially if your users plan on doing large file imports, or a large number of imports in parallel.
 
 Import performance, memory and disk utilization are all areas of concentration for our team in the coming months. We are committed to bringing all of these down for Dolt, DoltHub, and DoltLab, so stay tuned for updates.
+
+<h1 id="disable-metrics">Disable Usage Metrics</h1>
+
+By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
+
+As of `v0.7.0`, DoltLab does not collect third-party metrics, and additionally, DoltLab's first-party metrics can be disabled. To disable metrics, edit the `start-doltlab.sh` script and remove `run_with_metrics` from the `_main` function.
