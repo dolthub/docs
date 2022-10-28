@@ -4,8 +4,8 @@ title: Docker
 
 # Docker
 
-You can get Dolt Docker container from building your own Docker Image or using our [official Docker images](https://hub.docker.com/u/dolthub).
-Both the images supports `linux/amd64` and `linux/arm64` platforms.
+You can get a Dolt Docker container by building your own Docker image or using our [official Docker images on Docker Hub](https://hub.docker.com/u/dolthub).
+Both images support `linux/amd64` and `linux/arm64` platforms.
 
 ## Quickstart
 
@@ -192,10 +192,10 @@ database with importing data by providing SQL dump file.
 
 ### Let's look at an example
 
-Here is how I set up my directories to be mounted. I have three directory to mount in directory called `shared`, 
-- `databases` is empty and for storing my data,
-- `dolt` has single `.json` file and for dolt configuration
-- `server` has a single `.yaml` file and for server configuration
+Here is how I set up my directories to be mounted. I have three directories to mount in a directory called `shared`, 
+- `databases` is empty and is used for storing my data,
+- `dolt` has a single `.json` file that stores my dolt configuration
+- `server` has a single `.yaml` file that stores my server configuration
 
 ```bash
 shared > ls
@@ -214,7 +214,7 @@ Starting server with Config HP="0.0.0.0:3306"|T="28800000"|R="false"|L="debug"
 
 ```
 
-We can see both the config file was used successfully.
+We can see both config files were used successfully.
 
 We can verify that we have the data we create through the server in our local directory we mounted.
 
