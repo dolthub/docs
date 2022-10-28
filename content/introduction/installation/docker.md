@@ -4,44 +4,19 @@ title: Docker
 
 # Docker
 
-You can get a Dolt Docker container by building your own Docker image or using our [official Docker images on Docker Hub](https://hub.docker.com/u/dolthub).
-Both images support `linux/amd64` and `linux/arm64` platforms.
-
-## Quickstart
-
-Building your own Dolt Docker image is very simple. Dolt can be run in Docker with a few short commands.
-
-1. Install Dolt in your `Dockerfile` (refer below for complete [sample Dockerfiles](#samples)):
-```Dockerfile
-RUN curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
-```
-
-2. Build a `dolt-test` image:
-```bash
-> docker build -t dolt-test . -f Dockerfile
-```
-
-3. Run your image as an interactive container:
-```bash
-> docker run --rm -ti dolt-test /bin/bash
-```
-
-4. Verify Docker is installed and exit:
-```bash
-[root@cf04a2e8c538 /]# dolt version
-dolt version 0.50.10
-[root@cf04a2e8c538 /]# exit
-exit
->
-```
+You can get Dolt Docker container using our [official Docker images](https://hub.docker.com/u/dolthub).
+Both the images supports `linux/amd64` and `linux/arm64` platforms and updated on every release of [Dolt repository](https://doltdb.com).
+Older versions are also available as tagged with its Dolt version. The source of the Dockerfiles can be found [here](https://github.com/dolthub/dolt/tree/main/docker)
 
 ## Docker Image for Dolt CLI
 
-Above image is available on DockerHub as well. [Dolt CLI Docker Image](https://hub.docker.com/r/dolthub/dolt) is updated on 
-every release of Dolt repository. Older versions are also available as tagged with its Dolt version. Running this image
-is equivalent as running `dolt` command.
+[The Dolt CLI Docker image](https://hub.docker.com/r/dolthub/dolt) is useful if you need a container that already has 
+the Dolt CLI installed on it. For example, this image is a good fit if you are performing data analysis and want to 
+work in a containerized environment, or if you are building an application that needs to invoke Dolt from the command 
+line and also needs to run in a container. 
 
-You can get the latest version with `latest` tag, or you can get specific version that works for you with e.g. `0.50.8` tag.
+Running this image is equivalent as running `dolt` command. You can get the latest version with `latest` tag, 
+or you can get specific version that works for you with e.g. `0.50.8` tag.
 
 ```shell
 > docker pull dolthub/dolt:latest
@@ -53,79 +28,10 @@ dolt version 0.50.10
 dolt version 0.50.8
 ```
 
-## Dolt SQL-Server <a name="sql-server"></a>
-
-A `Dockerfile` that runs Dolt in server mode by default might look like:
-```Dockerfile
-FROM centos
-
-RUN yum install -y curl \
-    && curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash \
-    && dolt config --global --add user.name "FIRST LAST" \
-    && dolt config --global --add user.email "FIRST@LAST.com"
-
-EXPOSE 3306
-ENTRYPOINT ["dolt"]
-CMD ["sql-server", "-l", "trace", "--host", "0.0.0.0"]
-```
-
-If our current directory has a valid Dolt repo `test`:
-```bash
-> docker run -p 3306:3306 -v $PWD/test:/home/test -w /home/test dolt-test
-Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
-```
-
-If we run the command above with `-d` or switch to a separate window we can connect with MySQL (empty password by default):
-```bash
-> mysql --user=root --host=0.0.0.0 -t test -p
-mysql> select * from t1;
-+------+
-| a    |
-+------+
-|    0 |
-|    1 |
-+------+
-2 rows in set (0.01 sec)
-```
-
-## Docker-Compose SQL-Server
-
-The `Dockerfile` from the [SQL-Server](#sql-server) example can be used in a `docker-compose.yml`:
-```yaml
-version: '3.3'
-services:
-  db:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - '3306:3306'
-    expose:
-      - '3306'
-    volumes:
-      - ./test:/home/test
-    working_dir: /home/test
-volumes:
-  test:
-```
-
-Up'ing the resources exposes a server on port 3306, accessed with `mysql` as shown the last example.
-```bash
-> docker-compose up
-Starting tmp_db_1 ... done
-Attaching to tmp_db_1
-db_1  | Starting server with Config HP="0.0.0.0:3306"|U="root"|P=""|T="28800000"|R="false"|L="trace"
-db_1  | TRACE: received query select * from t1
-db_1  | DEBUG: executing query
-db_1  | TRACE: returning result row [INT64(0)]
-db_1  | TRACE: returning result row [INT64(1)]
-```
-
 ## Docker Image for Dolt SQL-Server
 
-We have [a Docker Image](https://hub.docker.com/r/dolthub/dolt-sql-server) for `dolt sql-server` creates a container 
-with dolt installed in it and starts a SQL Server when running the container. It is similar to MySQL Docker Image. 
+We have [a Docker image](https://hub.docker.com/r/dolthub/dolt-sql-server) for `dolt sql-server` creates a container 
+with dolt installed in it and starts a SQL Server when running the container. It is similar to MySQL Docker image. 
 Running this image without any arguments is equivalent to running `dolt sql-server --host 0.0.0.0 --port 3306` 
 command locally, which is a default setting for the server in the container. The reason for persisted host
 and port is that it allows user to connect to the server inside the container from the local host system through
@@ -275,45 +181,4 @@ Database changed
 | 2  | second row |
 +----+------------+
 
-```
-
-## Sample Dockerfiles <a name="samples"></a>
-
-Here are a simple Dockerfiles that installs the latest version of Dolt to start with if you want customized Dockerfile for your use case.
-
-Ubuntu:
-```Dockerfile
-FROM ubuntu
-
-RUN apt update \
-    && apt update \
-    && apt install -y curl \
-    && curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
-```
-
-Debian:
-```Dockerfile
-FROM debian
-
-RUN apt update \
-    && apt update \
-    && apt install -y curl \
-    && curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
-```
-
-CentOS:
-```Dockerfile
-FROM centos
-
-RUN yum install -y curl \
-    && curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash
-```
-
-Alpine:
-```Dockerfile
-FROM alpine
-
-RUN apk add --no-cache bash curl \
-    && curl -L https://github.com/dolthub/dolt/releases/latest/download/install.sh | bash \
-    && mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 ```
