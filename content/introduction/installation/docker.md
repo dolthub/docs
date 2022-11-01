@@ -4,9 +4,9 @@ title: Docker
 
 # Docker
 
-You can get Dolt Docker container using our [official Docker images](https://hub.docker.com/u/dolthub).
-Both the images supports `linux/amd64` and `linux/arm64` platforms and updated on every release of [Dolt repository](https://doltdb.com).
-Older versions are also available as tagged with its Dolt version. The source of the Dockerfiles can be found [here](https://github.com/dolthub/dolt/tree/main/docker)
+You can get a Dolt Docker container using our [official Docker images](https://hub.docker.com/u/dolthub).
+Both images support `linux/amd64` and `linux/arm64` platforms and updated on every release of [Dolt](https://doltdb.com).
+Older versions are also available, and tagged with the Dolt version they contain. The source of the Dockerfiles can be found [here](https://github.com/dolthub/dolt/tree/main/docker)
 
 ## Docker Image for Dolt CLI
 
@@ -15,8 +15,8 @@ the Dolt CLI installed on it. For example, this image is a good fit if you are p
 work in a containerized environment, or if you are building an application that needs to invoke Dolt from the command 
 line and also needs to run in a container. 
 
-Running this image is equivalent as running `dolt` command. You can get the latest version with `latest` tag, 
-or you can get specific version that works for you with e.g. `0.50.8` tag.
+Running this image is equivalent to running the `dolt` command. You can get the latest version with `latest` tag, 
+or you can get a specific, older version by using the Dolt version you want as the image's tag (e.g. `0.50.8`).
 
 ```shell
 > docker pull dolthub/dolt:latest
@@ -30,11 +30,11 @@ dolt version 0.50.8
 
 ## Docker Image for Dolt SQL-Server
 
-We have [a Docker image](https://hub.docker.com/r/dolthub/dolt-sql-server) for `dolt sql-server` creates a container 
-with dolt installed in it and starts a SQL Server when running the container. It is similar to MySQL Docker image. 
+[The Dolt sql-server Docker image](https://hub.docker.com/r/dolthub/dolt-sql-server) creates a container 
+with dolt installed and starts a Dolt SQL server when running the container. It is similar to MySQL's Docker image. 
 Running this image without any arguments is equivalent to running `dolt sql-server --host 0.0.0.0 --port 3306` 
-command locally, which is a default setting for the server in the container. The reason for persisted host
-and port is that it allows user to connect to the server inside the container from the local host system through
+command locally, which is the default settings for the server in the container. The persisted host
+and port allows user to connect to the server from inside the container and from the local host system through
 port-mapping.
 
 To check out supported options for `dolt sql-server`, you can run the image with `--help` flag.
@@ -61,8 +61,8 @@ If we run the command above with -d or switch to a separate window we can connec
 
 ### Define configuration for the server
 
-You can either define server configuration as commandline arguments, or you can use yaml configuration file.
-For the commandline argument definition you can simply define arguments after whole docker command.
+You can either define server configuration as command line arguments, or you can use yaml configuration file.
+For the command line argument definition you can simply define arguments at the end of the docker command. See [the Dolt server configuration documentation](https://docs.dolthub.com/sql-reference/server/configuration) for more details and available options. 
 
 ```bash
 > docker run -p 3307:3306 dolthub/dolt-sql-server:latest -l debug --no-auto-commit
