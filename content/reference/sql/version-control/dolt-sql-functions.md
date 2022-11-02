@@ -113,8 +113,8 @@ including the row's values at to and from commits and the type of change (i.e. `
 `DOLT_DIFF()` is an alternative to the
 [`dolt_commit_diff_$tablename` system table](dolt-system-tables.md#dolt_commit_diff_usdtablename).
 You should generally prefer the system tables when possible, since they have less restrictions on use.
-However, some use cases, such as viewing a table data diff containing schema changes, can be easier to view
-with the `DOLT_DIFF` table function.
+However, some use cases, such as viewing a table data diff containing schema changes or viewing the [three dot diff](https://matthew-brett.github.io/pydagogue/git_diff_dots.html),
+can be easier to view with the `DOLT_DIFF` table function.
 
 The main difference between the results of the `DOLT_DIFF()` table function and the `dolt_commit_diff_$tablename`
 system table is the schema of the returned results. `dolt_commit_diff_$tablename` generates the resulting schema
@@ -129,12 +129,16 @@ support aliasing or joining with other tables, and argument values must currentl
 
 ```sql
 DOLT_DIFF(<from_revision>, <to_revision>, <tablename>)
+DOLT_DIFF(<from_revision..to_revision>, <tablename>)
+DOLT_DIFF(<from_revision...to_revision>, <tablename>)
 ```
 
-The `DOLT_DIFF()` table function takes three required arguments:
+The `DOLT_DIFF()` table function takes either two or three required arguments:
 
 - `from_revision` — the revision of the table data for the start of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
 - `to_revision` — the revision of the table data for the end of the diff. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~").
+- `from_revision..to_revision` — gets the two dot diff, or revision of table data between the `from_revision` and `to_revision`. This is equivalent to `dolt_diff(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot diff, or revision of table data between the `from_revision` and `to_revision`, _starting at the last common commit_.
 - `tablename` — the name of the table containing the data to diff.
 
 ### Schema
@@ -231,6 +235,25 @@ The results from `DOLT_DIFF()` show how the data has changed going from `main` t
 +---------+-------+---------+----------+----------------+-----------------------------------+-----------+---------+---------------+-------------+-----------------------------------+-----------+
 ```
 
+#### Three dot `DOLT_DIFF`
+
+Let's say the above database has a commit graph that looks like this:
+
+```text
+A - B - C - D (main)
+         \
+          E - F (feature_branch)
+```
+
+The example above gets the two dot diff, or differences between two revisions: `main` and `feature_branch`.
+`dolt_diff('main', 'feature_branch', 'inventory')` (equivalent to `dolt_diff('main..feature_branch', 'inventory')`)
+outputs the difference from F to D (i.e. with effects of E and F).
+
+Three dot diff is useful for showing differences introduced by a feature branch from the point at which it _diverged_
+from the main branch. Three dot diff is used to show pull request diffs.
+
+Therefore, `dolt_diff('main...feature_branch')` outputs just the differences in `feature_branch` (i.e. E and F).
+
 ## `DOLT_DIFF_SUMMARY()`
 
 The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits
@@ -239,9 +262,7 @@ return empty result. Each row in the result set describes a diff summary for a s
 number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 
-`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits must be
-defined to use `DOLT_DIFF_SUMMARY()` table function and the table name is optional. This table function only provides
-rows added and deleted information for keyless tables. It returns empty result for tables with no data changes.
+`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
 
 Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it can be used in queries. It does not
 support aliasing or joining with other tables, and argument values must be literal values.
@@ -255,12 +276,16 @@ for the defined table only.
 
 ```sql
 DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
+DOLT_DIFF_SUMMARY(<from_revision..to_revision>, <optional_tablename>)
+DOLT_DIFF_SUMMARY(<from_revision...to_revision>, <optional_tablename>)
 ```
 
 The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 
 - `from_revision` — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
 - `to_revision` — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `from_revision..to_revision` — gets the two dot diff summary, or revision of table data between the `from_revision` and `to_revision`. This is equivalent to `dolt_diff_summary(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot diff summary, or revision of table data between the `from_revision` and `to_revision`, _starting at the last common commit_.
 - `tablename` — the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
 
 ### Schema
