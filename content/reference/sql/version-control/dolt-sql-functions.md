@@ -417,12 +417,16 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
 
 - `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
-  are specified, the default is the current branch `HEAD`. If you'd like to get [two dot
-  logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html) (all commits
-  reachable by `revision2`, but NOT reachable by `revision1`), you can use `..` between
-  revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of the revision you'd
-  like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
+  are specified, the default is the current branch `HEAD`. 
+    - If you'd like to get [two dot logs]([https://matthew-brett.github.io/pydagogue/git_log_dots.html](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots)) 
+      (all commits reachable by `revision2`, but NOT reachable by `revision1`), you can 
+      use `..` between revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of 
+      the revision you'dclike to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
   revisions, one must contain `^`.
+    - If you'd like to get [three dot logs]([https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots)) 
+      (all commits reachable by `revision1` or `revision2`, excluding commits reachable by 
+      BOTH `revision1` AND `revision2`), you can use `...` between revisions 
+      (`DOLT_LOG('revision1...revision2')`. 
 - `--min-parents`: The minimum number of parents a commit must have to be included in the log.
 - `--merges`: Equivalent to min-parents == 2, this will limit the log to commits with 2 or
   more parents.
@@ -488,9 +492,11 @@ SELECT * FROM DOLT_LOG('feature');
 And it would return all commits reachable from the `HEAD` of `feature` - `F`, `E`, `C`,
 `B`, and `A`.
 
-We also support two dot log, which returns commits from a revision, excluding commits from
-another revision. If we want all commits in `feature`, excluding commits from `main`, we
-can use any of these queries:
+#### Two and three dot log
+
+We also support two and three dot log. Two dot log returns commits from a revision, 
+excluding commits from another revision. If we want all commits in `feature`, excluding 
+commits from `main`, all of these queries will return commits `F` and `E`.
 
 ```sql
 SELECT * FROM DOLT_LOG('main..feature');
@@ -498,7 +504,18 @@ SELECT * FROM DOLT_LOG('feature', '^main');
 SELECT * FROM DOLT_LOG('feature', '--not', 'main');
 ```
 
-And it would return commits `F` and `E`.
+Three dot log returns commits in either revision, excluding commits in BOTH revisions. If
+we want commits in `main` OR `feature`, excluding commits in `main` AND `feature`, this
+query would return commits `F`, `E`, and `D`.
+
+```sql
+SELECT * FROM DOLT_LOG('main...feature');
+```
+
+Note: The order of revisions in two dot log matters, but not for three dot log.
+`DOLT_LOG('main..feature')` returns `F` and `E`, while `DOLT_LOG('feature..main')`
+returns just `D`. `DOLT_LOG('main...feature')` and `DOLT_LOG('feature...main')`
+both return `F`, `E`, and `D`.
 
 # Version Control Functions
 
