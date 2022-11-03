@@ -418,12 +418,12 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
 - `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
   are specified, the default is the current branch `HEAD`. 
-    - If you'd like to get [two dot logs]([https://matthew-brett.github.io/pydagogue/git_log_dots.html](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots)) 
+    - If you'd like to get [two dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots) 
       (all commits reachable by `revision2`, but NOT reachable by `revision1`), you can 
       use `..` between revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of 
       the revision you'd like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
   revisions, one must contain `^`.
-    - If you'd like to get [three dot logs]([https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots)) 
+    - If you'd like to get [three dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots) 
       (all commits reachable by `revision1` or `revision2`, excluding commits reachable by 
       BOTH `revision1` AND `revision2`), you can use `...` between revisions 
       (`DOLT_LOG('revision1...revision2')`. 
