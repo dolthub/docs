@@ -332,7 +332,7 @@ OSS profile to use.
 
 ## `dolt commit`
 
-Record changes to the repository
+Record changes to the database
 
 **Synopsis**
 
@@ -956,16 +956,20 @@ The command takes options to control what is shown and how.
 `dolt log`
   Lists commit logs from current HEAD when no options provided.
 	
-`dolt log <revision>`
-  Lists commit logs starting from revision.
+`dolt log [<revisions>...]`
+  Lists commit logs starting from revision. If multiple revisions provided, lists logs reachable by all revisions.
 	
-`dolt log <revision> <table>`
-  Lists commit logs starting from revision, only including commits with changes to table.
+`dolt log [<revisions>...] <table>`
+  Lists commit logs starting from revisions, only including commits with changes to table.
 	
 `dolt log <revisionB>..<revisionA>`
 `dolt log <revisionA> --not <revisionB>`
 `dolt log ^<revisionB> <revisionA>`
   Different ways to list two dot logs. These will list commit logs for revisionA, while excluding commits from revisionB. The table option is not supported for two dot log.
+	
+`dolt log <revisionB>...<revisionA>`
+`dolt log <revisionA> <revisionB> --not $(dolt merge-base <revisionA> <revisionB>)`
+  Different ways to list three dot logs. These will list commit logs reachable by revisionA OR revisionB, while excluding commits reachable by BOTH revisionA AND revisionB.
 
 **Arguments and options**
 
