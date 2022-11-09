@@ -92,6 +92,6 @@ it! Our goal is to be a 100% drop-in replacement for MySQL.
 
 Previosly, Dolt automitically synced doc files from the file system to the 
 `dolt_docs table. This process is now manual and performed with the `dolt docs`
-CLI command. `dolt docs read [doc name] [file name]` reads a file into the 
-`dolt_docs` table with the given name. `dolt docs write [doc name]` prints a 
+CLI command. `dolt docs upload [doc name] [file name]` reads a file into the 
+`dolt_docs` table with the given name. `dolt docs print [doc name]` prints a 
 doc with the given name to stdout.
