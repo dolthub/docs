@@ -417,16 +417,16 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
 
 - `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
-  are specified, the default is the current branch `HEAD`. 
-    - If you'd like to get [two dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots) 
-      (all commits reachable by `revision2`, but NOT reachable by `revision1`), you can 
-      use `..` between revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of 
-      the revision you'd like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
-  revisions, one must contain `^`.
-    - If you'd like to get [three dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots) 
-      (all commits reachable by `revision1` or `revision2`, excluding commits reachable by 
-      BOTH `revision1` AND `revision2`), you can use `...` between revisions 
-      (`DOLT_LOG('revision1...revision2')`. 
+  are specified, the default is the current branch `HEAD`.
+  - If you'd like to get [two dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots)
+    (all commits reachable by `revision2`, but NOT reachable by `revision1`), you can
+    use `..` between revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of
+    the revision you'd like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
+    revisions, one must contain `^`.
+  - If you'd like to get [three dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots)
+    (all commits reachable by `revision1` or `revision2`, excluding commits reachable by
+    BOTH `revision1` AND `revision2`), you can use `...` between revisions
+    (`DOLT_LOG('revision1...revision2')`.
 - `--min-parents`: The minimum number of parents a commit must have to be included in the log.
 - `--merges`: Equivalent to min-parents == 2, this will limit the log to commits with 2 or
   more parents.
@@ -494,8 +494,8 @@ And it would return all commits reachable from the `HEAD` of `feature` - `F`, `E
 
 #### Two and three dot log
 
-We also support two and three dot log. Two dot log returns commits from a revision, 
-excluding commits from another revision. If we want all commits in `feature`, excluding 
+We also support two and three dot log. Two dot log returns commits from a revision,
+excluding commits from another revision. If we want all commits in `feature`, excluding
 commits from `main`, all of these queries will return commits `F` and `E`.
 
 ```sql
@@ -580,16 +580,6 @@ SELECT DOLT_MERGE('feature-branch', '-no-ff', '-m', 'This is a msg for a non fas
 SELECT DOLT_MERGE('--abort');
 ```
 
-## `DOLT_RESET()`
-
-Deprecated. Use the [DOLT_RESET stored
-procedure](dolt-sql-procedures.md#dolt_reset) instead.
-
-```sql
-SELECT DOLT_RESET('--hard');
-SELECT DOLT_RESET('my-table'); -- soft reset
-```
-
 ## `DOLT_PUSH()`
 
 Deprecated. Use the [DOLT_PUSH stored
@@ -608,4 +598,14 @@ procedure](dolt-sql-procedures.md#dolt_pull) instead.
 ```sql
 SELECT DOLT_PULL('origin');
 SELECT DOLT_PULL('feature-branch', '--force');
+```
+
+## `DOLT_RESET()`
+
+Deprecated. Use the [DOLT_RESET stored
+procedure](dolt-sql-procedures.md#dolt_reset) instead.
+
+```sql
+SELECT DOLT_RESET('--hard');
+SELECT DOLT_RESET('my-table'); -- soft reset
 ```
