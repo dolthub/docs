@@ -162,6 +162,10 @@ In addition, some early versions have different database schemas than newer ones
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
 
+<h2 id="upgrade-v060-v070"><ins>Upgrade from DoltLab <code>v0.6.0</code> to <code>v0.7.0+</code></ins></h2>
+
+Starting with DoltLab `v0.7.0`, the `./start-doltlab.sh` script will create a `doltlab` docker network externally, instead of allowing Docker Compose to create the network automatically. If you're upgrading to `v0.7.0` or higher from an earlier DoltLab version, remove any `doltlab` or `*_doltlab` networks on the host before installing `v0.7.0`.
+
 <h2 id="upgrade-v030-plus"><ins>Upgrade from DoltLab <code>v0.3.0+</code></ins></h2>
 
 DoltLab versions >= `v0.3.0` support schema migrations without data loss. To upgrade to a DoltLab version after `v0.3.0`, simply stop your old version of DoltLab, then download and unzip the newer DoltLab version to the same location as your previous version. This will ensure that when you [start the new version](./installation.md#start-doltlab) of DoltLab using the `start-doltlab.sh` script, the old DoltLab version's Docker volumes get attached to the new version's containers.

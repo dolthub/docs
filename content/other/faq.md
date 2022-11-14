@@ -87,3 +87,11 @@ us know with an issue](https://github.com/dolthub/dolt/issues) or in
 we can do. A lot of times we can fix small compatibility issues really
 quick, like the same week. And even if we can't, we want to know about
 it! Our goal is to be a 100% drop-in replacement for MySQL.
+
+## How does Dolt Docs work? What happened to my `README.md` and `LICENSE.md`?
+
+Previosly, Dolt automitically synced doc files from the file system to the 
+`dolt_docs table. This process is now manual and performed with the `dolt docs`
+CLI command. `dolt docs upload [doc name] [file name]` reads a file into the 
+`dolt_docs` table with the given name. `dolt docs print [doc name]` prints a 
+doc with the given name to stdout.
