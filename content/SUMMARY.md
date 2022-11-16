@@ -77,6 +77,7 @@
 - [Running the Server](reference/sql/server/README.md)
   - [Configuration](reference/sql/server/configuration.md)
   - [Access Management](reference/sql/server/access-management.md)
+  - [Branch Permissions](reference/sql/server/branch-permissions.md)
   - [Backups](reference/sql/server/backups.md)
   - [Replication](reference/sql/server/replication.md)
   - [Troubleshooting](reference/sql/server/troubleshooting.md)
