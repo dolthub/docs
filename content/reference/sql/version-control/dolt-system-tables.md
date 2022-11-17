@@ -309,7 +309,7 @@ than using this table directly.
 +-------------+--------- +
 ```
 
-Currently on view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
+Currently only view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
 
 The values in this table are partly implementation details associated with the implementation of the underlying database objects.
 
