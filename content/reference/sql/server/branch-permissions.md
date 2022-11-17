@@ -163,3 +163,210 @@ The rules for selecting a `branch_control.db` file [are the same as for the priv
 Currently, all operations are written to a binlog that is stored alongside the system tables.
 There are no ways of accessing the binlog for now, but in the future support will be added.
 The binlog is intended for correcting mistakes, as well as providing history on how the system tables have changed.
+
+## Examples
+
+The following examples are a small snippet that shows branch permissions in action.
+It is assumed that this document has been read in full, as concepts that are explained in previous sections are not explained in-depth.
+The [setup section](#setup) is run before each example, therefore remember to have a dedicated terminal window for [setup](#setup) if you want to try any of these examples yourself.
+All examples other than [setup](#setup) will exclusively use the second terminal window.
+In addition, all examples will use Dolt's built-in client, accessible using `dolt sql-client`.
+It is not required to use that client, as it is just a standard MySQL client.
+Feel free to use your desired MySQL client.
+
+### Setup
+
+This handles the creation of the directory, along with starting the server.
+As we are running these examples locally, we will use two terminal windows.
+The first window will contain the server, which we are starting here.
+It is worth noting that the examples use the default host and port of `localhost:3306`.
+If these are already in use for your system, then you may supply the arguments `--host="<your_host_here>"` and `--port=<your_port_here>` to change them.
+`dolt sql-client` also takes these same arguments.
+
+As explained in the [default state section](#default-state), we automatically add a row to the `dolt_branch_control` table that allows all users to modify all branches by default.
+For these examples, we remove that default row.
+This allows us to demonstrate the desired functionality a bit more easily.
+
+By supplying the argument `--user=root`, we add a password-less user named `root` that has every global privilege.
+This makes it very easy to get your database set up, and we will be taking advantage of this user in these examples.
+We also, however, want a user that does _not_ have every privilege, and is more representative of a standard user.
+We name that user `testuser` in the examples.
+Although it appears that we grant them every global privilege, this is not the case, as they are still missing the `GRANT OPTION` privilege.
+This means that they are not considered an admin, however we do not have to worry about assigning privileges to allow for basic table operations.
+[You may read more about this behavior in an earlier section.](#editing-the-system-tables)
+
+```
+$ mkdir example
+
+$ cd example
+
+$ dolt init
+Successfully initialized dolt data repository.
+
+$ dolt sql -q "DELETE FROM dolt_branch_control;"
+Query OK, 0 rows affected (0.00 sec)
+
+$ dolt sql -q "CREATE USER testuser@localhost;"
+Query OK, 0 rows affected (0.00 sec)
+
+$ dolt sql -q "GRANT ALL ON *.* TO testuser@localhost;"
+Query OK, 0 rows affected (0.00 sec)
+
+$ dolt sql-server --user=root
+Starting server with Config HP="localhost:3306"|T="28800000"|R="false"|L="info"
+```
+
+### The `write` Permission
+
+Please refer to the [setup section](#setup) before continuing this example.
+This example shows the `write` permission in action.
+We add the `write` permission to the `testuser` user, which allows that user to modify the contents of our `main` (default) branch, while the `root` user does not have the permission and cannot make any modifications.
+
+```
+$ dolt sql-client --user=root
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> INSERT INTO dolt_branch_control VALUES ('%', 'main', 'testuser', '%', 'write');
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+Error 1105: `root`@`%` does not have the correct permissions on branch `main`
+mysql> exit;
+
+$ dolt sql-client --user=testuser
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+mysql> exit;
+```
+
+### The `admin` Permission
+
+Please refer to the [setup section](#setup) before continuing this example.
+This example shows the `admin` permission in action.
+`admin` functions similarly to the `write` permission, however it also allows the user to `INSERT`/`UPDATE`/`DELETE` entries that match the database and branch (or the resulting set of potential matches from the database and branch match expressions are a subset of the one that contains the `admin` permission).
+We show this by demonstrating that `testuser` cannot modify the `main` (default) branch at first, nor can they modify the `dolt_branch_control` and `dolt_branch_namespace_control` tables.
+We then switch to `root` (who is a [global admin](#editing-the-system-tables)) and give `testuser` an `admin` permission over the `main%` branch.
+The [special "zero or more" character](#pattern-matching) means that they may add additional entries of `main`, as well as other branches that begin with `main`.
+The users added are all fake, and are just used to demonstrate the capability.
+We end by showing that this only applies to the exact match expression, as the very similar `_main` branch name is still off-limits.
+
+```
+$ dolt sql-client --user=testuser
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+Error 1105: `testuser`@`localhost` does not have the correct permissions on branch `main`
+mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
+Error 1105: `testuser`@`localhost` cannot add the row ["example", "main", "newuser", "%", "write"]
+mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main', 'newuser', '%');
+Error 1105: `testuser`@`localhost` cannot add the row ["example", "main", "newuser", "%"]
+mysql> exit;
+
+$ dolt sql-client --user=root
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main%', 'testuser', '%', 'admin');
+mysql> exit;
+
+$ dolt sql-client --user=testuser
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
+mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main_new', 'otheruser', '%', 'write');
+mysql> INSERT INTO dolt_branch_control VALUES ('example', '_main', 'someuser', '%', 'write');
+Error 1105: `testuser`@`localhost` cannot add the row ["example", "_main", "someuser", "%", "write"]
+mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main1', 'theuser', '%');
+mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', '_main', 'anotheruser', '%');
+Error 1105: `testuser`@`localhost` cannot add the row ["example", "_main", "anotheruser", "%"]
+mysql> exit;
+```
+
+### Restricting Branch Names
+Please refer to the [setup section](#setup) before continuing this example.
+This example shows how to [restrict which users are able to use branch names](#branch-creation) with the `main` prefix.
+To do this, we insert a `main%` entry into the `dolt_branch_namespace_control` table, assigning the `testuser` user.
+We create another entry with `mainroot%` as the branch name, and assign that to `root`.
+This means that `root` is able to create any branches with names that **do not** start with `main`, but is unable to create branches that **do** start with `main`.
+The exception being `mainroot`, which while having `main` as a prefix, it is considered [the longest match](#longest-match), and therefore takes precedence over the `main%` entry.
+Consequently, `testuser` cannot use `mainroot` as a prefix, as [the longest match](#longest-match) overrides their `main%` entry.
+
+```
+$ dolt sql-client --user=root
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'main%', 'testuser', '%');
+mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'mainroot%', 'root', '%');
+mysql> CALL DOLT_BRANCH('does_not_start_with_main');
++--------+
+| status |
++--------+
+| 0      |
++--------+
+1 row in set (0.00 sec)
+
+mysql> CALL DOLT_BRANCH('main1');
+Error 1105: `root`@`%` cannot create a branch named `main1`
+mysql> CALL DOLT_BRANCH('mainroot');
++--------+
+| status |
++--------+
+| 0      |
++--------+
+1 row in set (0.00 sec)
+
+mysql> exit;
+
+$ dolt sql-client --user=testuser
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> CALL DOLT_BRANCH('main1');
++--------+
+| status |
++--------+
+| 0      |
++--------+
+1 row in set (0.00 sec)
+
+mysql> CALL DOLT_BRANCH('mainroot1');
+Error 1105: `testuser`@`localhost` cannot create a branch named `mainroot1`
+mysql> exit;
+```
+
+### Multiple Databases
+
+Please refer to the [setup section](#setup) before continuing this example.
+This example simply shows how an entry in each system table is scoped to a database.
+Our pre-existing database is `example`, as Dolt uses the directory's name for its database name.
+Therefore, we create another database named `newdb`, which the user `root` will not have any permissions on.
+
+```
+dolt sql-client --user=root
+# Welcome to the Dolt MySQL client.
+# Statements must be terminated with ';'.
+# "exit" or "quit" (or Ctrl-D) to exit.
+mysql> USE example;
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+Error 1105: `root`@`%` does not have the correct permissions on branch `main`
+mysql> INSERT INTO dolt_branch_control VALUES ('example', '%', 'root', '%', 'write');
+mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+mysql> DROP TABLE test;
+mysql> CREATE DATABASE newdb;
+mysql> USE newdb;
+mysql> CREATE TABLE test2 (pk BIGINT PRIMARY KEY);
+Error 1105: `root`@`%` does not have the correct permissions on branch `main`
+mysql> exit;
+```
