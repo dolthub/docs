@@ -14,6 +14,7 @@ title: Dolt SQL Procedures
   - [dolt_commit()](#dolt_commit)
   - [dolt_conflicts_resolve()](#dolt_conflicts_resolve)
   - [dolt_fetch()](#dolt_fetch)
+  - [dolt_gc()](#dolt_gc)
   - [dolt_merge()](#dolt_merge)
   - [dolt_pull()](#dolt_pull)
   - [dolt_push()](#dolt_push)
@@ -483,6 +484,16 @@ SELECT HASHOF('origin/main');
 
 -- Merge remote main with current branch
 CALL DOLT_MERGE('origin/main');
+```
+
+## `DOLT_GC()`
+
+Cleans up unreferenced data from the database. The current implementation uses a faster
+but less thorough garbage collection. A more thorough garbage collection will be available
+soon.
+
+```sql
+CALL DOLT_GC();
 ```
 
 ## `DOLT_MERGE()`
