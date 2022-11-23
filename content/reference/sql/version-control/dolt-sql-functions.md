@@ -113,7 +113,7 @@ including the row's values at to and from commits and the type of change (i.e. `
 `DOLT_DIFF()` is an alternative to the
 [`dolt_commit_diff_$tablename` system table](dolt-system-tables.md#dolt_commit_diff_usdtablename).
 You should generally prefer the system tables when possible, since they have less restrictions on use.
-However, some use cases, such as viewing a table data diff containing schema changes or viewing the [three dot diff](https://matthew-brett.github.io/pydagogue/git_diff_dots.html),
+However, some use cases, such as viewing a table data diff containing schema changes or viewing the [three dot diff](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#three-dot-diff),
 can be easier to view with the `DOLT_DIFF` table function.
 
 The main difference between the results of the `DOLT_DIFF()` table function and the `dolt_commit_diff_$tablename`
@@ -253,6 +253,8 @@ Three dot diff is useful for showing differences introduced by a feature branch 
 from the main branch. Three dot diff is used to show pull request diffs.
 
 Therefore, `dolt_diff('main...feature_branch')` outputs just the differences in `feature_branch` (i.e. E and F).
+
+Learn more about two vs three dot diff [here](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log).
 
 ## `DOLT_DIFF_SUMMARY()`
 
@@ -418,12 +420,12 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
 - `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
   are specified, the default is the current branch `HEAD`.
-  - If you'd like to get [two dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-two-dots)
+  - If you'd like to get [two dot logs](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#two-dot-log)
     (all commits reachable by `revision2`, but NOT reachable by `revision1`), you can
     use `..` between revisions (`DOLT_LOG('revision1..revision2')`) or `^` in front of
     the revision you'd like to exclude (`DOLT_LOG('revision2', '^revision1')`). Note: if providing two
     revisions, one must contain `^`.
-  - If you'd like to get [three dot logs](https://matthew-brett.github.io/pydagogue/git_log_dots.html#logging-with-three-dots)
+  - If you'd like to get [three dot logs](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#three-dot-log)
     (all commits reachable by `revision1` or `revision2`, excluding commits reachable by
     BOTH `revision1` AND `revision2`), you can use `...` between revisions
     (`DOLT_LOG('revision1...revision2')`.
@@ -516,6 +518,8 @@ Note: The order of revisions in two dot log matters, but not for three dot log.
 `DOLT_LOG('main..feature')` returns `F` and `E`, while `DOLT_LOG('feature..main')`
 returns just `D`. `DOLT_LOG('main...feature')` and `DOLT_LOG('feature...main')`
 both return `F`, `E`, and `D`.
+
+Learn more about two vs three dot log [here](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log).
 
 # Version Control Functions
 
