@@ -84,6 +84,8 @@ docker run --rm --volumes-from doltlab_doltlabfileserviceapi_1 -v $(pwd):/backup
 
 For backing up data from DoltLab's postgres server, we recommend executing a data dump with `pg_dump`. To do so, keep DoltLab's services up and run:
 
+> For DoltLab `v0.7.0` and later, use `--network doltlab` below.
+
 ```bash
 # dump postgres to postgres-dump.sql
 docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd):/doltlab-db-dumps postgres:13-bullseye bash -c "pg_dump --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi > /doltlab-db-dumps/postgres-dump.sql"
@@ -125,6 +127,8 @@ SET session_replication_role = replica;
 ```
 
 [Start DoltLab's services](./installation.md#start-doltlab) again using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `postgres-dump.sql` file and run:
+
+> For DoltLab `v0.7.0` and later, use `--network doltlab` below.
 
 ```bash
 # import the postgres dump into the running server
