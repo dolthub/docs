@@ -58,8 +58,7 @@ With the `-q` flag, it executes queries specified as arguments.
 ```
 
 You can also use `STDIN` to the `dolt sql` command to execute many SQL
-statements at once. This is useful for importing a dump from another
-database.
+statements at once. This is useful for [importing a dump from another database](../../../guides/import.md#mysql-databases).
 
 ```bash
 % dolt sql < mysqldump.sql
