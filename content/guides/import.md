@@ -157,8 +157,10 @@ database: test
 You can dump the database `test` as follows:
 
 ```
-mysqldump test -P 3306 -h 0.0.0.0 -u root -p > dump.sql
+mysqldump --databases test -P 3306 -h 0.0.0.0 -u root -p > dump.sql
 ```
+
+**Note**: Using the `--databases` flag will cause `mysqldump` to include a command to create the database for you if it doesn't exist yet. Without this flag, you will need to ensure you have already created your database (e.g. `create database test;`) before you can load in the `mysqldump` file.    
 
 To load into dolt:
 
@@ -171,13 +173,13 @@ dolt sql < dump.sql
 You can load a postgres database into dolt with our custom [pg2mysql](https://github.com/dolthub/pg2mysql) tool. If you have
 a postgres database you can export a postgres dump file with the [pg_dump](https://www.postgresql.org/docs/current/app-pgdump.html#:~:text=pg_dump%20is%20a%20utility%20for,only%20dumps%20a%20single%20database) utility.
 
-With the a postgres dump file of `file.pgdump` you can convert it into a mysql dump as follows.
+With a postgres dump file of `file.pgdump` you can convert it into a mysql dump as follows.
 
 ```
 ./pg2mysql.pl < file.pgdump > mysql.sql
 ```
 
-Finally you can load the mysql file into dolt.
+Finally, you can load the mysql file into dolt.
 
 ```
 dolt sql < mysql.sql
