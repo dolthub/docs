@@ -18,7 +18,7 @@ Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources th
 
 ## Set your log level to TRACE
 
-To see queries being run against the server, query results, and query latency set your Dolt log level to `DEBUG`. This can be done by starting the server like so `dolt sql-server --loglevel=DEBUG` or by setting `log_level: DEBUG` in your `config.yaml`.
+To see queries being run against the server, query results, and query latency set your Dolt log level to `DEBUG`. This can be done by starting the server like so `dolt sql-server --loglevel=debug` or by setting `log_level: debug` in your `config.yaml`.
 
 ## EXPLAIN for complex queries
 
@@ -30,7 +30,7 @@ If you run into any issues requiring engineering attention, please submit a [Git
 
 # Problems
 
-Dolt operational issues usually manifest as slow SQL queries. In rare occasions, Dolt may consume more of the your system's resources than you expect. In these cases, this document has some recommendations.
+Dolt operational issues usually manifest as slow SQL queries. In rare occasions, Dolt may consume more of your system's resources than you expect. In these cases, this document has some recommendations.
 
 ## Server Consuming Disk
 
