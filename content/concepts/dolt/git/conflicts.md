@@ -38,7 +38,7 @@ If you would like to manually resolve conflicts, you can set the value of the ro
 
 ## Difference between Git conflicts and Dolt conflicts
 
-Conflicts are a major divergence from Git in Dolt. Conceptually, Dolt and Git conflicts are similar, but in practice Dolt the Dolt conflict management workflow and user interface is very different.
+Conflicts are a major divergence from Git in Dolt. Conceptually, Dolt and Git conflicts are similar, but in practice the Dolt conflict management workflow and user interface is very different.
 
 In Dolt, conflicts are stored in the `dolt_conflicts` set of tables. Each table in your database has an associated `dolt_conflicts` table. For instance if you have a table named `docs`, there is a system table named `dolt_conflicts_docs`. This replaces the `>>>` and `<<<` syntax that is inserted into your files in Git when conflicts occur. 
 
