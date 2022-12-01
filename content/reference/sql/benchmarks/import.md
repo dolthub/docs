@@ -16,7 +16,7 @@ We recommend (1) > (2) > (3) for large import peformance. `dolt table import` is
 
 Each result row reports the runtime for a MySQL import of a certain table schema (`test_name` and `detail`), row count (`row_cnt`), and sorting (`sorting`). `sql_mult` and `cli_mult` distinguish the Dolt SQL (sql-server `LOAD DATA`) and CLI (`dolt table import`) latencys as a multiple of the MySQL latency for the same test conditions. All MySQL tests report the `LOAD DATA` latency.
 
-We are about 2x slower than MySQL for most import conditions. We are slightly slower importing blobs, reflecting how Dolt chunks blobs individual as prolly trees rather than a single byte array. Both Dolt and MySQL are less efficient importing sql scripts with standalone INSERT rows compared to batched insert script (we have a tool [here](https://github.com/dolthub/insert-batcher) to batch INSERT scripts).
+We are about 2x slower than MySQL for most import conditions. We are slightly slower importing blobs, reflecting how Dolt chunks blobs individually as prolly trees rather than a single byte array. Both Dolt and MySQL are less efficient importing sql scripts with standalone INSERT rows compared to batched insert script (we have a tool [here](https://github.com/dolthub/insert-batcher) to batch INSERT scripts).
 
 
 | test_name       | detail       | row_cnt | sorted | mysql_time | sql_mult | cli_mult |
