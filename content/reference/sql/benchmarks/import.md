@@ -1,55 +1,46 @@
 ---
-title: Imports
+title: Import
 ---
 
 # Bulk Import Benchmarking
 
-Dolt offers the [`table import`](../../cli.md#dolt-table-import) command to load large CSV, JSON, XLSX and Parquet files into the database. MySQL offers 
-similar functionality with its [`LOAD DATA`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) command. We created a custom benchmark to measure Dolt's import performance vis-a-vis MySQL.
+Dolt supports three modes of import:
 
-## Benchmark Design
+1) [`LOAD DATA INFILE`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) SQL-server command.
+2) [`dolt table import`](../../cli.md#dolt-table-import) CLI command.
+3) `dolt sql < import.sql` batch script import.
 
-The current benchmark consists of 6 CSV files according to the following schema:
+We recommend (1) > (2) > (3) for large import peformance. `dolt table import` is the most convenient and only slightly slower than `LOAD DATA INFILE`. Refer to the [import tutorial blog](https://www.dolthub.com/blog/2022-11-21-import-perf/) for a walkthrough of the different techniques.
 
-```sql
-CREATE TABLE `test` (
-  `pk` int NOT NULL,
-  `c1` bigint DEFAULT NULL,
-  `c2` char(1) DEFAULT NULL,
-  `c3` datetime DEFAULT NULL,
-  `c4` double DEFAULT NULL,
-  `c5` tinyint DEFAULT NULL,
-  `c6` float DEFAULT NULL,
-  `c7` varchar(255) DEFAULT NULL,
-  `c8` varbinary(255) DEFAULT NULL,
-  `c9` text DEFAULT NULL,
-  PRIMARY KEY (`pk`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin;
+## Import comparison
 
-```
-The CSV files are designed as follows:
+Each result row reports the runtime for a MySQL import of a certain table schema (`test_name` and `detail`), row count (`row_cnt`), and sorting (`sorting`). `sql_mult` and `cli_mult` distinguish the Dolt SQL (sql-server `LOAD DATA`) and CLI (`dolt table import`) latencys as a multiple of the MySQL latency for the same test conditions. All MySQL tests report the `LOAD DATA` latency.
 
-- A CSV file with 100k rows in sorted key order
-- A CSV file with 100k rows in random key order
-- A CSV file with 1m rows in sorted key order
-- A CSV file with 1m rows in random key order
-- A CSV file with 10m rows in sorted key order
-- A CSV file with 10m rows in random key order
+We are about 2x slower than MySQL for most import conditions. We are slightly slower importing blobs, reflecting how Dolt chunks blobs individually as prolly trees rather than a single byte array. Both Dolt and MySQL are less efficient importing sql scripts with standalone INSERT rows compared to batched insert script (we have a tool [here](https://github.com/dolthub/insert-batcher) to batch INSERT scripts).
 
-For each CSV file we measured how long it took for the relevant file to get loaded in and the number of rows that were
-imported per second.
 
-## Benchmark Results
-
-Below are the results of the import benchmark. Like the [latency](latency.md) section, our goal is to get this to within 2-4x MySQL's performance. 
-
-```
-|      name       | program | version | from_time | from_rps | program | version | to_time  | to_rps  | rps_multiplier |
-|-----------------|---------|---------|-----------|----------|---------|---------|----------|---------|----------------|
-| 100k-sorted.csv | dolt    | 0.40.20 | 13.03s    | 7672.1   | mysql   | 8.0.22  | 1.32s    | 75571.4 | 9.9            |
-| 100k-random.csv | dolt    | 0.40.20 | 13.23s    | 7556.0   | mysql   | 8.0.22  | 1.38s    | 72207.3 | 9.6            |
-| 1m-sorted.csv   | dolt    | 0.40.20 | 2m29.29s  | 6698.2   | mysql   | 8.0.22  | 13.3s    | 75173.9 | 11.2           |
-| 1m-random.csv   | dolt    | 0.40.20 | 2m29.48s  | 6689.9   | mysql   | 8.0.22  | 12.76s   | 78361.3 | 11.7           |
-| 10m-sorted.csv  | dolt    | 0.40.20 | 27m42.44s | 6015.2   | mysql   | 8.0.22  | 2m14.22s | 74505.5 | 12.4           |
-| 10m-random.csv  | dolt    | 0.40.20 | 27m48.16s | 5994.6   | mysql   | 8.0.22  | 2m13.41s | 74956.6 | 12.5           |
-```
+| test_name       | detail       | row_cnt | sorted | mysql_time | sql_mult | cli_mult |
+| --------------- | ------------ | ------- | ------ | ---------- | -------- | -------- |
+| batching        | LOAD DATA    | 10000   | 1      | 0.08       | 0.88     |          |
+| batching        | batch sql    | 10000   | 1      | 0.13       | 1.62     |          |
+| batching        | by line sql  | 10000   | 1      | 0.13       | 1.54     |          |
+| blob            | 1 blob       | 200000  | 1      | 1.29       | 3.52     | 3.78     |
+| blob            | 2 blobs      | 200000  | 1      | 1.29       | 4.85     | 4.92     |
+| blob            | no blob      | 200000  | 1      | 1.3        | 1.58     | 1.67     |
+| col type        | datetime     | 200000  | 1      | 1.21       | 2.01     | 2.14     |
+| col type        | varchar      | 200000  | 1      | 1          | 2.26     | 2.44     |
+| config width    | 2 cols       | 200000  | 1      | 1.13       | 1.51     | 1.55     |
+| config width    | 32 cols      | 200000  | 1      | 2.61       | 1.78     | 2.62     |
+| config width    | 8 cols       | 200000  | 1      | 1.39       | 1.71     | 1.95     |
+| pk type         | float        | 200000  | 1      | 1.28       | 1.37     | 1.38     |
+| pk type         | int          | 200000  | 1      | 1.15       | 1.47     | 1.57     |
+| pk type         | varchar      | 200000  | 1      | 2.22       | 1.7      | 1.92     |
+| row count       | 1.6mm        | 1600000 | 1      | 8.02       | 1.78     | 1.85     |
+| row count       | 400k         | 400000  | 1      | 2.06       | 1.66     | 1.68     |
+| row count       | 800k         | 800000  | 1      | 4.1        | 1.75     | 1.79     |
+| secondary index | four index   | 200000  | 1      | 5.86       | 1.29     | 1.39     |
+| secondary index | no secondary | 200000  | 1      | 1.34       | 1.46     | 1.6      |
+| secondary index | one index    | 200000  | 1      | 1.73       | 1.6      | 1.7      |
+| secondary index | two index    | 200000  | 1      | 3.19       | 1.37     | 1.46     |
+| sorting         | shuffled 1mm | 1000000 | 0      | 8.01       | 1.86     | 1.92     |
+| sorting         | sorted 1mm   | 1000000 | 1      | 8.57       | 1.71     | 1.8      |
