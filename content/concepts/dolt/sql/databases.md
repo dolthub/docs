@@ -14,7 +14,7 @@ A relational database management system or [RDBMS](../rdbms/README.md) allows yo
 
 Databases logically divide up your schema. Permissions can be applied to databases as a logical entity.
 
-When you connect a client to a running server, you can see the databases being stored on a server using the `show databases` command. To use a specific database, you issue a `use <database>` statement. You can also specify the database in the connection string to connect to a particular database.
+When you connect a client to a running server, you can see the databases being served using the `show databases` command. To use a specific database, you issue a `use <database>` statement. You can also specify the database in the connection string to connect to a particular database.
 
 ## Difference between MySQL Databases and Dolt Databases
 
@@ -22,7 +22,7 @@ In Dolt, databases act like they do in MySQL.
 
 ## Interaction with Dolt Version Control
 
-In Dolt, each database has it's own commit graph. So, Dolt version control is limited to a single database. You cannot commit changes across multiple databases in a single commit. You cannot share a log across multiple databases. Branches cannot be made across databases.
+In Dolt, each database has its own commit graph. So, Dolt version control is limited to a single database. You cannot commit changes across multiple databases in a single commit. You cannot share a log across multiple databases. Branches cannot be made across databases.
 
 Dolt databases are the unit of sharing. Clone, push, pull, and fetch act on individual databases. Thus, to create a copy of multiple databases, you must clone from multiple remotes. 
 
