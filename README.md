@@ -8,7 +8,7 @@ This repository contains Dolt and DoltHub documentation.
 
 ## GitBook Hosting
 
-We use [GitBook](https://www.gitbook.com/) to publish our documentation, and delegate the subdomain `docs.dolthub.com` to `dolt.gitbook.io`. GitBook operates by syncing the contents of this repository. The GitBook/GitHub integration is documented [here](https://docs.gitbook.com/integrations/github).
+We use [GitBook](https://www.gitbook.com/) to publish our documentation, and delegate the subdomain `docs.dolthub.com` to `dolt.gitbook.io`. GitBook operates by syncing the contents of this repository. The GitBook/GitHub integration is documented [here](https://docs.gitbook.com).
 
 Using GitBook requires us to adopt their model of content structuring in order to properly render our markdown. The restrictions are as follows:
 

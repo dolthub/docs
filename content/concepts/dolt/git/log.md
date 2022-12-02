@@ -16,7 +16,7 @@ Log is usually filtered by branch. Any commits not reachable in the graph from t
 
 Logs are useful in reverting the database to a previous state. You determine the state of the database you want via log and then use other Dolt commands to change the database to a different state.
 
-Logs are useful when trying to track down why the database is in a particular state. You use log to find the commits in question and usually follow up with diffs (ie. differences) between two commits you found in the log.
+Logs are useful when trying to track down why the database is in a particular state. You use log to find the commits in question and usually follow up with diffs (i.e. differences) between two commits you found in the log.
 
 Logs are useful in audit. If you would like to ensure a particular value in the database has not changed since the last time you read it, log is useful in verifying this.
 
@@ -24,7 +24,7 @@ Logs are useful in audit. If you would like to ensure a particular value in the 
 
 Conceptually and practically log on the command line is very similar between Git and Dolt. A table is akin to a file in Git.
 
-Dolt has additional log functionality beyond Git. You can produce a log any cell (ie. row, column pair) in the database using a SQL query against the `dolt_history_<tablename>` system table.
+Dolt has additional log functionality beyond Git. You can produce a log of any cell (i.e. row, column pair) in the database using a SQL query against the `dolt_history_<tablename>` system table.
 
 ## Example
 

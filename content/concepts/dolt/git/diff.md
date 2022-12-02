@@ -34,7 +34,7 @@ Programmatically, you can use SQL to explore very large diffs using the [`dolt_d
 
 Git and Dolt diffs are conceptually the same. Display the differences between two sets of files in Git's case and tables in Dolt's case. 
 
-The Git diff command supports many more file specific options. Dolt diffs can be queried using SQL Dolt diffs produce diffs for schema and data. There is no schema diff equivalent in Git.
+The Git diff command supports many more file specific options. Dolt diffs can be queried using SQL. Dolt diffs produce diffs for schema and data. There is no schema diff equivalent in Git.
 
 ## Example
 

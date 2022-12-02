@@ -14,7 +14,7 @@ A relational database management system or [RDBMS](../rdbms/README.md) allows yo
 
 Databases logically divide up your schema. Permissions can be applied to databases as a logical entity.
 
-When you connect a client to a running server, you can see the databases being server using the `show databases` command. To use a specific database, you issue a `use <database>` statement. You can also specify the database in the connection string to connect to a particular database.
+When you connect a client to a running server, you can see the databases being stored on a server using the `show databases` command. To use a specific database, you issue a `use <database>` statement. You can also specify the database in the connection string to connect to a particular database.
 
 ## Difference between MySQL Databases and Dolt Databases
 

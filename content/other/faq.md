@@ -59,7 +59,7 @@ new dolt commit on the current branch. It's the same as if you run
 We are glad you asked! This is a common use case, and giving each user
 their own branch is something we've spent a lot of time getting
 right. For more details on how to use this pattern effectively, see
-[using branches](../reference/sql/branches.md).
+[using branches](../reference/sql/version-control/branches.md).
 
 ## Does Dolt support transactions?
 
@@ -68,12 +68,12 @@ for competing writes.
 
 It's also possible for different sessions to connect to different
 branches on the same server. See [using
-branches](../reference/sql/branches.md) for details.
+branches](../reference/sql/version-control/branches.md) for details.
 
 ## What SQL features / syntax are supported?
 
 Most of them! Check out [the docs for the full list of supported
-features](../reference/sql/sql-support/support.md).
+features](../reference/sql/sql-support/supported-statements.md).
 
 You can check out what we're working on next on our
 [roadmap](./roadmap.md). Paying customers get their feature requests
@@ -90,8 +90,8 @@ it! Our goal is to be a 100% drop-in replacement for MySQL.
 
 ## How does Dolt Docs work? What happened to my `README.md` and `LICENSE.md`?
 
-Previosly, Dolt automitically synced doc files from the file system to the 
-`dolt_docs table. This process is now manual and performed with the `dolt docs`
+Previously, Dolt automatically synced doc files from the file system to the 
+`dolt_docs` table. This process is now manual and performed with the `dolt docs`
 CLI command. `dolt docs upload [doc name] [file name]` reads a file into the 
 `dolt_docs` table with the given name. `dolt docs print [doc name]` prints a 
 doc with the given name to stdout.
