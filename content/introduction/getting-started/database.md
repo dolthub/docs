@@ -16,7 +16,7 @@ Dolt needs a place to store your databases. I'm going to put my databases in `~/
 % cd dolt
 ```
 
-Any databases you create will be stored in this directory. So, for this example, a directory named `getting_started` will be created here once you run `create database getting_started`. Navigating to `~/dolt/getting_started` will allow you to access this database using the Dolt command line.
+Any databases you create will be stored in this directory. So, for this example, a directory named `getting_started` will be created here once you run `create database getting_started` in a SQL shell. Navigating to `~/dolt/getting_started` will allow you to access this database using the Dolt command line.
 
 # Start a MySQL-compatible database server
 
@@ -61,7 +61,7 @@ mysql  Ver 8.0.29 for macos12.2 on x86_64 (Homebrew)
 Now, to connect the mysql client to Dolt, you are going to force the MySQL client through the TCP interface by passing in a host and port. The default is the socket interface which Dolt supports, but is only available on `localhost`. So, it's better to show off the TCP interface. The MySQL client also requires you specify a user, in this case `root`.
 
 ```bash
-% mysql --host 127.0.0.1 --port 3306 -uroot
+% mysql --host 127.0.0.1 --port 3306 -u root
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 2
 Server version: 5.7.9-Vitess

@@ -12,7 +12,7 @@ A branch is a named reference that starts with a parent commit. When creating a 
 
 You can merge two branches together using the merge command. This creates a commit in the graph with two parents.
 
-You Dolt database starts with one named branch, `main`. The name is configurable.
+Your Dolt database starts with one named branch, `main`. The name is configurable.
 
 Branches differ from tags which is a named commit that does not change.
 
@@ -22,13 +22,13 @@ Branches can be used on a running Dolt server for write isolation or parallelism
 
 In traditional SQL databases, transactions are designed to be short lived. The rows you change in a transaction are essentially locked for the duration of the transaction. Because Dolt allows for merge and more complex conflict resolution than traditional SQL databases, Dolt can essentially support long running transactions on branches.
 
-See [the branches section in reference](../../reference/sql/branches.md) for a deeper dive into how to use branches in the SQL server context.
+See [the branches section in reference](../../../reference/sql/version-control/branches.md) for a deeper dive into how to use branches in the SQL server context.
 
 ## Difference between Git branch and Dolt branch
 
 Conceptually Git branches and Dolt branches are the same.
 
-In Dolt, branches become a slightly more important concept is server mode. In Git, you often are working on a clone of your repository locally. Thus, you're write isolation can be at the clone level. With Dolt in server mode, your application will be coordinating writes to a single server through branches. 
+In Dolt, branches become a slightly more important concept in server mode. In Git, you often are working on a clone of your repository locally. Thus, your write isolation can be at the clone level. With Dolt in server mode, your application will be coordinating writes to a single server through branches. 
 
 ## Example
 

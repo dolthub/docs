@@ -30,7 +30,7 @@ Dolt uses remotes to synchronize between primary and read replicas. Replication 
 
 ## Example
 
-The following example shows write replication from a primary and read replicas using a Git-style remote to rendezvous and maintain loose coupling. For more details on clustering in sql-server, see [the documentation for sql-server replication](../reference/sql/server/replication.md).
+The following example shows write replication from a primary and read replicas using a Git-style remote to rendezvous and maintain loose coupling. For more details on clustering in sql-server, see [the documentation for sql-server replication](../../../reference/sql/server/replication.md).
 
 ### Configuring a Primary
 
