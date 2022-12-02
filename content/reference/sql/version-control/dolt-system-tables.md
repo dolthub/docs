@@ -1000,13 +1000,13 @@ If we attempt a merge that creates conflicts in this table, I can
 examine them with the following query:
 
 ```sql
-mydb> select * from dolt_conflicts_mytable;
-+--------+--------+-------+-------+---------+---------+
-| base_a | base_b | our_a | our_b | their_a | their_b |
-+--------+--------+-------+-------+---------+---------+
-| NULL   | NULL   | 3     | 3     | 3       | 1       |
-| NULL   | NULL   | 4     | 4     | 4       | 2       |
-+--------+--------+-------+-------+---------+---------+
+mydb> select dolt_conflict_id, base_a, base_b, our_a, our_b, their_a, their_b from dolt_conflicts_mytable;
++------------------------+--------+--------+-------+-------+---------+---------+
+| dolt_conflict_id       | base_a | base_b | our_a | our_b | their_a | their_b |
++------------------------+--------+--------+-------+-------+---------+---------+
+| hWDLmYufTrm+eVjFSVzPWw | NULL   | NULL   | 3     | 3     | 3       | 1       |
+| gi2p1YbSwu8oUV/WRSpr3Q | NULL   | NULL   | 4     | 4     | 4       | 2       |
++------------------------+--------+--------+-------+-------+---------+---------+
 ```
 
 To mark conflicts as resolved, delete them from the corresponding
@@ -1022,8 +1022,33 @@ If I wanted to keep all `their` values, I would first run this statement:
 mydb> replace into mytable (select their_a, their_b from dolt_conflicts_mytable);
 ```
 
+For convenience, you can also modify the `our_` columns of the
+`dolt_conflicts_mytable` to update the corresponding row in `mytable`. The above
+replace statement can be rewritten as:
+```sql
+mydb> update dolt_conflicts_mytable set our_a = their_a, our_b = their_b;
+```
+
 And of course you can use any combination of `ours`, `theirs` and
-`base` rows in these replacements.
+`base` rows in these statements.
+
+{% hint style="info" %}
+### Notes
+
+- Updates made to the `our_` columns are applied to the original table using the
+primary key (or keyless hash). If the row does not exist, it will be inserted.
+Updates made to `our_` columns will never delete a row however.
+
+- `dolt_conflict_id` is a unique identifier for the conflict. It is particulary
+  useful when writing software that needs to resolve conflicts automatically.
+
+- `from_root_ish` is the commit hash of the "from branch" of the merge. 
+`dolt merge feature-a` creates a merge from `feature-a` into the currently checked out
+branch. This hash can be used to identify which merge produced a conflict because
+conflicts can be accumulated across merges.
+
+{% endhint %}
+
 
 ## `dolt_merge_status`
 
