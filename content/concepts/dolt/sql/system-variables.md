@@ -78,7 +78,7 @@ mysql> select @@max_connections;
 +---------------------------+
 ```
 
-### Writing System Varaibles
+### Writing System Variables
 
 ```SQL
 -- some variables are read only
@@ -132,7 +132,7 @@ mysql> select @@GLOBAL.max_connections;
 +---------------------------+
 ```
 
-### Show dolt variables
+### Show Dolt Variables
 
 ```SQL
 mysql> show variables like 'dolt_%';
@@ -152,7 +152,7 @@ mysql> show variables like 'dolt_%';
 +-------------------------------+-------+
 ```
 
-### Show database variables
+### Show Database Variables
 
 ```SQL
 mydb> show variables like 'mydb_%' ;

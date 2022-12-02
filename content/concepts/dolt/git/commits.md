@@ -8,7 +8,7 @@ title: Commits
 
 A commit signals to Dolt that you would like to save the state of the current database permanently for future reference. In practice, this stores the root hash (or reference) of the database in a graph of all the commits with a link to its parent commit. If the commit is a merge commit, the commit will have multiple parents.
 
-![](../../.gitbook/assets/dolt-commit-graph.png)
+![](../../../.gitbook/assets/dolt-commit-graph.png)
 
 Commit hashes are SHA-256 encoded hashes of the entire database. Commit hashes look like `t5d5inj4bpc1fltrdm9uoscjdsgebaih`. These are abbreviations of the entire hash that Dolt understands. When referring to a specific commit, this is the identifier you use.
 
@@ -68,7 +68,7 @@ docs $ dolt sql -q "select dolt_commit('-a', '-m', 'Added docs_sql example table
 +-------------------------------------------------------------------------------------------------------------------+
 ```
 
-### Creating and empty commit
+### Creating an empty commit
 
 ```
 docs $ dolt commit --allow-empty -m "This is a commit"
