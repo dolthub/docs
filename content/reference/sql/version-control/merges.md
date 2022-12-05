@@ -168,8 +168,9 @@ DELETE FROM dolt_conflicts_people;
 ```
 
 It's also possible to modify a table through the `dolt_conflicts_$table_name`
-table. If you update any column prefixed with `our_` that will update rows on
-the source table. This allows the `REPLACE` statement above to be re-written as:
+table. If you update any column prefixed with `our_`, that will update the
+corresponding rows in the source table. This allows the `REPLACE` statement
+above to be re-written as:
 
 ```sql
 UPDATE dolt_conflicts_people

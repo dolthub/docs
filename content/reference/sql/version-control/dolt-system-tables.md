@@ -1037,15 +1037,14 @@ And of course you can use any combination of `ours`, `theirs` and
 
 - Updates made to the `our_` columns are applied to the original table using the
 primary key (or keyless hash). If the row does not exist, it will be inserted.
-Updates made to `our_` columns will never delete a row however.
+Updates made to `our_` columns will never delete a row, however.
 
 - `dolt_conflict_id` is a unique identifier for the conflict. It is particulary
   useful when writing software that needs to resolve conflicts automatically.
 
-- `from_root_ish` is the commit hash of the "from branch" of the merge. 
-`dolt merge feature-a` creates a merge from `feature-a` into the currently checked out
-branch. This hash can be used to identify which merge produced a conflict because
-conflicts can be accumulated across merges.
+- `from_root_ish` is the commit hash of the "from branch" of the merge. This
+hash can be used to identify which merge produced a conflict, since conflicts
+can accumalate across merges.
 
 {% endhint %}
 
