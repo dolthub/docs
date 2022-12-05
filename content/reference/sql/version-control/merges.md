@@ -167,6 +167,21 @@ DELETE FROM PEOPLE WHERE id IN (
 DELETE FROM dolt_conflicts_people;
 ```
 
+It's also possible to modify a table through the `dolt_conflicts_$table_name`
+table. If you update any column prefixed with `our_`, that will update the
+corresponding rows in the source table. This allows the `REPLACE` statement
+above to be re-written as:
+
+```sql
+UPDATE dolt_conflicts_people
+SET    our_first_name = their_first_name,
+       our_last_name = their_last_name,
+       our_age = their_age
+WHERE  their_id IS NOT NULL;
+```
+
+See [dolt_conflicts_$tablename](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
+
 ### Custom logic
 
 It's also possible that you want your users to resolve conflicts
