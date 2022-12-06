@@ -1106,7 +1106,7 @@ Perform the merge and stop just before creating a merge commit. Note this will n
 Use an auto-generated commit message when creating a merge commit. The default for interactive CLI sessions is to open an editor.
 
 `--author`:
-Specify an explicit author using the standard A U Thor `<author@example.com>` format.
+Specify an explicit author using the standard `A U Thor <author@example.com>` format.
 
 
 
