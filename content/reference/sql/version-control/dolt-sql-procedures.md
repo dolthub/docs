@@ -510,7 +510,7 @@ message if not defined.
 
 ```sql
 CALL DOLT_MERGE('feature-branch'); -- Optional --squash parameter
-CALL DOLT_MERGE('feature-branch', '-no-ff', '-m', 'This is a msg for a non fast forward merge');
+CALL DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast forward merge');
 CALL DOLT_MERGE('--abort');
 ```
 
@@ -527,8 +527,8 @@ is only useful for --non-ff commits.
 `--abort`: Abort the current conflict resolution process, and try to
 reconstruct the pre-merge state.
 
-`--author`: Specify an explicit author using the standard "A U Thor
-author@example.com" format.
+`--author`: Specify an explicit author using the standard `A U Thor
+<author@example.com>` format.
 
 When merging a branch, your session state must be clean. `COMMIT`
 or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new dolt
