@@ -510,7 +510,7 @@ message if not defined.
 
 ```sql
 CALL DOLT_MERGE('feature-branch'); -- Optional --squash parameter
-CALL DOLT_MERGE('feature-branch', '-no-ff', '-m', 'This is a msg for a non fast forward merge');
+CALL DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast forward merge');
 CALL DOLT_MERGE('--abort');
 ```
 
