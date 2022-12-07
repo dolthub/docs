@@ -445,7 +445,7 @@ the `remote_url_templates`. The recommended way to run `dolt sql-server` in
 cluster mode is in a newly empty directory with:
 
 ```sh
-$ dolt --config server.yaml --data-dir .
+$ dolt sql-server --config server.yaml --data-dir .
 ```
 
 and then to create databases through the SQL interface.
