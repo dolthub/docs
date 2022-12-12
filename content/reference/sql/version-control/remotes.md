@@ -14,21 +14,17 @@ Remotes are configured using the [`remote` command](../../cli.md#dolt-remote). Y
 
 Sync functionality is supported via the [`clone`](../../cli.md#dolt-clone), [`fetch`](../../cli.md#dolt-fetch), [`push`](../../cli.md#dolt-push), and [`pull`](../../cli.md#dolt-pull).
 
-## Clone
-
-## Fetch
-
-## Push
-
-## Pull
-
 # Remote Options
 
 ## DoltHub
 
+[DoltHub](https://www.dolthub.com) is a remote we DoltHub Inc host. Public repositories are free. Private repositories are free up to a Gigabyte. After a Gigabyte, private repositories are $50.month and scale up in cost after 100GB. DoltHub adds a web GUI to your remotes along with Forks, Pull Requests, and Issues.
+
+See the [Getting Started Guide for DoltHub](../../../introduction/getting-started/data-sharing.md) on how to get started with a DoltHub remote.
+
 ## DoltLab
 
-## Use your Main SQL Server
+[DoltLab](https://www.doltlab.com) is a version of [DoltHub](https://www.dolthub.com) you can deploy in your own network. It looks very similar to DoltHub. See the [DoltLab Guide](../../../guides/doltlab/installation.md) if you are interested in using DoltLab as a remote.
 
 ## Filesystem
 
