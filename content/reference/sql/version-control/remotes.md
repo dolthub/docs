@@ -56,7 +56,7 @@ It's important to note that a directory-based remote is not the same as a worksp
 
 ## AWS
 
-AWS remotes use a combination of Dynamo DB and S3. The Dynamo table can be created with any name but must have a primary
+AWS remotes use a combination of DynamoDB and S3. The Dynamo table can be created with any name but must have a primary
 key with the name "db".
 
 ![Create a Dynamo Table with a primary key of: db](../images/create_dynamo_table.png)
