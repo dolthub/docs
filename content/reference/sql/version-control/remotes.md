@@ -28,7 +28,7 @@ See the [Getting Started Guide for DoltHub](../../../introduction/getting-starte
 
 ## Filesystem
 
-Filesystem based remotes allow you to push/pull data from any location that can be accessed via the filesystem. This may be a directory on your local disk, or any other storage location that can be mounted to the filesystem. To add afilesystem based remote you need a URL with the `file://` protocol.
+Filesystem based remotes allow you to push/pull data from any location that can be accessed via the filesystem. This may be a directory on your local disk, or any other storage location that can be mounted to the filesystem. To add a filesystem based remote use a URL with the `file://` protocol.
 
 **Linux / OSX Examples**
 
