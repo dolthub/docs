@@ -18,7 +18,6 @@ title: Using remotes
 
 ## Pull
 
-
 # Remote Options
 
 ## DoltHub
