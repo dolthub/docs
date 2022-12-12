@@ -61,7 +61,7 @@ key with the name "db".
 
 ![Create a Dynamo Table with a primary key of: db](../images/create_dynamo_table.png)
 
-This single dynamo table can be used for multiple unrelated remote repositories.  Once you have a Dynamo DB table, and an S3 bucket setup you can add an aws remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a Dynamo DB table named `dolt_dynamo_table` you would run:
+This single DynamoDB table can be used for multiple unrelated remote repositories.  Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
 
 ```
 dolt remote add origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
