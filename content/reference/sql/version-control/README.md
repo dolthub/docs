@@ -17,6 +17,8 @@ tables, system variables, functions, and stored procedures.
   another and resolve merge conflicts using SQL.
 * [Querying History](./querying-history.md) describes how to query
   past revisions or different branches of a database.
+* [Using Remotes](./remotes.md) describes how to use remotes to
+  coordinate between Dolt clones.
 * [Stored procedures](./dolt-sql-procedures.md) documents all the
   stored procedures that implement version control operations such as
   `DOLT_COMMIT`, `DOLT_CHECKOUT`, `DOLT_MERGE`, etc.
