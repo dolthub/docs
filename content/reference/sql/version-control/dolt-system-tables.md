@@ -945,7 +945,7 @@ The following query shows the commits reachable from the current checked out hea
 SELECT *
 FROM dolt_log
 WHERE committer = "bheni" and date > "2019-04-01"
-ORDER BY "date";
+ORDER BY date;
 ```
 
 ```text
