@@ -375,7 +375,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `STDDEV()`                        | ❌         |                                                                       |
 | `STDDEV_POP()`                    | ❌         |                                                                       |
 | `STDDEV_SAMP()`                   | ❌         |                                                                       |
-| `STRCMP()`                        | ❌         |                                                                       |
+| `STRCMP()`                        | ✅         |                                                                       |
 | `STR_TO_DATE()`                   | ❌         |                                                                       |
 | `ST_Area()`                       | ✅         | Geodetic not yet supported                                            |
 | `ST_AsBinary()`                   | ✅         |                                                                       |
