@@ -177,6 +177,9 @@ When in list mode, show the hash and commit subject line for each head
 `-a`, `--all`:
 When in list mode, shows remote tracked branches
 
+`--datasets`:
+List all datasets in the database
+
 `-r`, `--remote`:
 When in list mode, show only remote tracked branches. When with -d, delete a remote tracking branch.
 
@@ -401,16 +404,28 @@ When reading, the values are read from the global and repository local configura
 When writing, the new value is written to the repository local configuration file by default, and options `<--global>`, can be used to tell the command to write to that location (you can say `<--local>` but that is the default).
 
 Valid configuration variables:
+
 	- core.editor - lets you edit 'commit' or 'tag' messages by launching the set editor.
+
 	- creds.add_url - sets the endpoint used to authenticate a client for 'dolt login'.
+
 	- doltlab.insecure - boolean flag used to authenticate a client against DoltLab.
+
 	- init.defaultbranch - allows overriding the default branch name e.g. when initializing a new repository.
+
 	- metrics.disabled - boolean flag disables sending metrics when true.
-	- user.creds - sets user keypairs for authenticating with doltremoteapi
-	- user.email - sets name used in the author and committer field of commit objects
-	- user.name - sets email used in the author and committer field of commit objects
-	- remotes.default_host - sets default host for authenticating eith doltremoteapi
-	- remotes.default_port - sets default port for authenticating eith doltremoteapi
+
+	- user.creds - sets user keypairs for authenticating with doltremoteapi.
+
+	- user.email - sets name used in the author and committer field of commit objects.
+
+	- user.name - sets email used in the author and committer field of commit objects.
+
+	- remotes.default_host - sets default host for authenticating eith doltremoteapi.
+
+	- remotes.default_port - sets default port for authenticating eith doltremoteapi.
+
+	- push.autoSetupRemote - if set to "true" assume --set-upstream on default push when no upstream tracking exists for the current branch.
 
 
 **Arguments and options**
@@ -740,45 +755,45 @@ Diffs Dolt Docs
 
 
 
-## `dolt docs read`
+## `dolt docs print`
 
-Reads Dolt Docs from the file system into the database
+Prints Dolt Docs to stdout
 
 **Synopsis**
 
 ```bash
-dolt docs read <doc> <file>
+dolt docs print <doc>
 ```
 
 **Description**
 
-Reads Dolt Docs from the file system into the database
+Prints Dolt Docs to stdout
+
+**Arguments and options**
+
+`<doc>`: Dolt doc to be read.
+
+
+
+## `dolt docs upload`
+
+Uploads Dolt Docs from the file system into the database
+
+**Synopsis**
+
+```bash
+dolt docs upload <doc> <file>
+```
+
+**Description**
+
+Uploads Dolt Docs from the file system into the database
 
 **Arguments and options**
 
 `<doc>`: Dolt doc name to be updated in the database.
 
 `<file>`: file to read Dolt doc from.
-
-
-
-## `dolt docs write`
-
-Writes Dolt Docs to stdout
-
-**Synopsis**
-
-```bash
-dolt docs write <doc>
-```
-
-**Description**
-
-Writes Dolt Docs to stdout
-
-**Arguments and options**
-
-`<doc>`: Dolt doc to be read.
 
 
 
@@ -865,13 +880,21 @@ Traverses the commit history to the initial commit starting at the current HEAD 
 
 If a `<commit-spec>` is provided, the traversal will stop when the commit is reached and rewriting will begin at that commit, or will error if the commit is not found.
 
-If the `--all` flag is supplied, the traversal starts with the HEAD commits of all branches.
+If the `--branches` flag is supplied, filter-branch traverses and rewrites commits for all branches.
+
+If the `--all` flag is supplied, filter-branch traverses and rewrites commits for all branches and tags.
 
 
 **Arguments and options**
 
-`-a`, `--all`:
+`-v`, `--verbose`:
+logs more information
+
+`-b`, `--branches`:
 filter all branches
+
+`-a`, `--all`:
+filter all branches and tags
 
 
 
@@ -1106,7 +1129,7 @@ Perform the merge and stop just before creating a merge commit. Note this will n
 Use an auto-generated commit message when creating a merge commit. The default for interactive CLI sessions is to open an editor.
 
 `--author`:
-Specify an explicit author using the standard `A U Thor <author@example.com>` format.
+Specify an explicit author using the standard A U Thor `<author@example.com>` format.
 
 
 
@@ -1505,6 +1528,34 @@ A list of tables can optionally be provided.  If it is omitted then all tables w
 
 `-r`, `--result-format`:
 How to format result output. Valid values are tabular, csv, json. Defaults to tabular.
+
+
+
+## `dolt schema update-tag`
+
+Update the tag of the specified column
+
+**Synopsis**
+
+```bash
+dolt schema update-tag <table> <column> <tag>
+```
+
+**Description**
+
+`dolt schema update-tag`
+
+Update tag of the specified column. Useful to fix a merge that is throwing a
+schema tag conflict.
+
+
+**Arguments and options**
+
+`<table>`: The name of the table
+
+`<column>`: The name of the column
+
+`<tag>`: The new tag value
 
 
 
@@ -1943,8 +1994,8 @@ Imports data into a dolt table
 **Synopsis**
 
 ```bash
-dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue]  [--ignore-skipped-rows] [--disable-fk-checks] [--file-type <type>] <table> <file>
-dolt table import -u [--map <file>] [--continue] [--ignore-skipped-rows] [--file-type <type>] <table> <file>
+dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue]  [--quiet] [--disable-fk-checks] [--file-type <type>] <table> <file>
+dolt table import -u [--map <file>] [--continue] [--quiet] [--file-type <type>] <table> <file>
 dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
 ```
 
@@ -1956,7 +2007,7 @@ The schema for the new table can be specified explicitly by providing a SQL sche
 
 If `--update-table | -u` is given the operation will update `<table>` with the contents of file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
-During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--ignore-skipped-rows` flag to prevent the import utility from printing all the skipped rows. 
+During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--quiet` flag to prevent the import utility from printing all the skipped rows. 
 
 If `--replace-table | -r` is given the operation will replace `<table>` with the contents of the file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
@@ -1996,8 +2047,8 @@ Replace existing table with imported data while preserving the original schema.
 `--continue`:
 Continue importing when row import errors are encountered.
 
-`--ignore-skipped-rows`:
-Ignore the skipped rows printed by the --continue flag.
+`--quiet`:
+Suppress any warning messages about invalid rows when using the --continue flag.
 
 `--disable-fk-checks`:
 Disables foreign key checks.
