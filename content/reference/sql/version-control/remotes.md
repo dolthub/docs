@@ -59,7 +59,7 @@ It's important to note that a directory-based remote is not the same as a worksp
 AWS remotes use a combination of DynamoDB and S3. The Dynamo table can be created with any name but must have a primary
 key with the name "db".
 
-![Create a Dynamo Table with a primary key of: db](../images/create_dynamo_table.png)
+![Create a Dynamo Table with a primary key of: db](../../../.gitbook/assets/create_dynamo_table.png)
 
 This single DynamoDB table can be used for multiple unrelated remote repositories.  Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
 
