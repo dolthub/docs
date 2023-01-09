@@ -392,9 +392,9 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_Difference()`                 | ❌         |                                                                       |
 | `ST_Dimension()`                  | ✅         |                                                                       |
 | `ST_Disjoint()`                   | ❌         |                                                                       |
-| `ST_Distance()`                   | ❌         |                                                                       |
+| `ST_Distance()`                   | ✅         | Geodetic not yet supported                                            |
 | `ST_Distance_Sphere()`            | ❌         |                                                                       |
-| `ST_EndPoint()`                   | ❌         |                                                                       |
+| `ST_EndPoint()`                   | ✅         |                                                                       |
 | `ST_Envelope()`                   | ❌         |                                                                       |
 | `ST_Equals()`                     | ❌         |                                                                       |
 | `ST_ExteriorRing()`               | ❌         |                                                                       |
@@ -409,7 +409,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_InteriorRingN()`              | ❌         |                                                                       |
 | `ST_Intersection()`               | ❌         |                                                                       |
 | `ST_Intersects()`                 | ❌         |                                                                       |
-| `ST_IsClosed()`                   | ❌         |                                                                       |
+| `ST_IsClosed()`                   | ✅         |                                                                       |
 | `ST_IsEmpty()`                    | ❌         |                                                                       |
 | `ST_IsSimple()`                   | ❌         |                                                                       |
 | `ST_IsValid()`                    | ❌         |                                                                       |
@@ -440,7 +440,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_PolyFromWKB()`                | ✅         |                                                                       |
 | `ST_SRID()`                       | ✅         |                                                                       |
 | `ST_Simplify()`                   | ❌         |                                                                       |
-| `ST_StartPoint()`                 | ❌         |                                                                       |
+| `ST_StartPoint()`                 | ✅         |                                                                       |
 | `ST_SwapXY()`                     | ✅         |                                                                       |
 | `ST_SymDifference()`              | ❌         |                                                                       |
 | `ST_Touches()`                    | ❌         |                                                                       |
