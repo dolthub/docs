@@ -13,21 +13,20 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
-Roadmap last updated Oct 2022, next update Jan 2023.
+Roadmap last updated Jan 2023, next update Apr 2023.
 
 ## Upcoming features
 
 | Feature                                 | Estimate    |
 | -------                                 | ---         |
-| 99.9% SQL correctness                   | Q4 2022     |
-| Hash join strategy                      | Q4 2022     |
-| Universal SQL path for CLI              | Q4 2022     |
-| Hot standby replication                 | Q4 2022     |
-| Clone from running database             | Q4 2022     |
+| Spatial indexes                         | Q1 2023     |
+| MySQL binlog replication                | Q1 2023     |
+| Clone from running database             | Q1 2023     |
+| 99.9% SQL correctness                   | 2023        |
+| Universal SQL path for CLI              | 2023        |
 | Row-level locking (`SELECT FOR UPDATE`) | 2023        |
 | All transaction isolation levels        | 2023        |
 | Full text indexes                       | 2023        |
-| Spatial indexes                         | 2023        |
 | Postgres Support                        | Unscheduled |
 | Virtual columns and json indexing       | Unscheduled |
 | Multiple DBs in one repo                | Unscheduled |
@@ -47,6 +46,12 @@ Roadmap last updated Oct 2022, next update Jan 2023.
 
 | Feature                                   | Launch Date |
 | -------                                   | ---         |
+| ACID transactions alpha                   | Dec 2022    |
+| Hash join strategy                        | Dec 2022    |
+| Better stored procedure support           | Dec 2022    |
+| Branch protections                        | Nov 2022    |
+| Hot standby replication                   | Nov 2022    |
+| Prefix indexes for `TEXT` columns         | Oct 2022    |
 | Socket file support                       | Sep 2022    |
 | Collation and charset support             | Sep 2022    |
 | `dolt_merge_status` system table          | Sep 2022    |
