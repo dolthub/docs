@@ -19,6 +19,7 @@ the following information can help DoltLab Admins manually perform some common a
 12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
 13. [DoltLab Jobs](#doltlab-jobs)
 14. [Disable Usage Metrics](#disable-metrics)
+15. [Migrate Old Format DoltLab Databases](#migrate-doltlab-databases)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -553,3 +554,13 @@ Import performance, memory and disk utilization are all areas of concentration f
 By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
 
 As of `v0.7.0`, DoltLab does not collect third-party metrics, and additionally, DoltLab's first-party metrics can be disabled. To disable metrics, edit the `start-doltlab.sh` script and remove `run_with_metrics` from the `_main` function.
+
+<h1 id="migrate-doltlab-databases">Migrate Old Format DoltLab Databases</h1>
+
+Unlike [DoltHub](https://www.dolthub.com), DoltLab does not support automatic database migration for old format Dolt databases. Instead, old format database hosted on DoltLab need to be migrated manually. To migrate a DoltLab database:
+
+1. Create a new database on DoltLab.
+2. Clone the database you want to migrate.
+3. Run `dolt migrate` in the cloned database.
+4. Add the remote of the new DoltLab database to the cloned database with `dolt remote add <remote name> http://<host ip>:50051/<owner>/<new db name>`.
+5. Push the migrated clone to the new database with `dolt push <remote name> <branch name>`.
