@@ -140,9 +140,10 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 Starting in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
 SMTP server. By default, `./start-doltlab.sh` sets the environment variable `EMAIL_AUTH_METHOD` to `plain`.
 
-Supported `EMAIL_AUTH_METHOD` options are `plain`, `anonymous`, `external`, `oauthbearer`, or `disable`.
+Supported `EMAIL_AUTH_METHOD` options are `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`.
 
 `plain` requires the environment variables `EMAIL_USERNAME` and `EMAIL_PASSWORD` to be set and uses the optional environment variable `EMAIL_IDENTITY`.
+`login` requires the environment variables `EMAIL_USERNAME` and `EMAIL_PASSWORD` to be set. This is used by Microsoft 365 (`smtp.office365.com`).
 `anonymous` uses the optional environment variable `EMAIL_TRACE`.
 `external` uses the optional environment variable `EMAIL_IDENTITY`.
 `oauthbearer` requires the environment variables `EMAIL_USERNAME` and `EMAIL_OAUTH_TOKEN` to be set.
