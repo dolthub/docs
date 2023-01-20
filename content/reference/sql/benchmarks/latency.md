@@ -31,20 +31,20 @@ attempt to run as many queries as possible in a fixed 2 minute time
 window. The `Dolt` and `MySQL` columns show the median latency in 
 milliseconds (ms) of each query during that 2 minute time window.
 
-The Dolt version is `0.52.6`.
+The Dolt version is `0.52.8`.
 
 <!-- START___DOLT___LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |-------------------------|-------|--------|----------|
-| covering\_index\_scan   |  1.93 |   2.71 |      1.4 |
+| covering\_index\_scan   |  1.93 |   2.76 |      1.4 |
 | groupby\_scan           |  12.3 |  16.41 |      1.3 |
-| index\_join             |  1.18 |   4.65 |      3.9 |
-| index\_join\_scan       |  1.14 |   4.03 |      3.5 |
-| index\_scan             | 30.81 |  53.85 |      1.7 |
-| oltp\_point\_select     |  0.16 |   0.48 |      3.0 |
-| oltp\_read\_only        |  3.02 |   8.43 |      2.8 |
-| select\_random\_points  |  0.31 |   0.77 |      2.5 |
-| select\_random\_ranges  |  0.36 |   1.14 |      3.2 |
+| index\_join             |  1.16 |   4.65 |      4.0 |
+| index\_join\_scan       |  1.12 |   3.96 |      3.5 |
+| index\_scan             | 30.26 |  53.85 |      1.8 |
+| oltp\_point\_select     |  0.15 |   0.49 |      3.3 |
+| oltp\_read\_only        |  2.97 |   8.58 |      2.9 |
+| select\_random\_points  |   0.3 |   0.77 |      2.6 |
+| select\_random\_ranges  |  0.35 |   1.16 |      3.3 |
 | table\_scan             | 30.81 |  63.32 |      2.1 |
 | types\_table\_scan      | 69.29 | 189.93 |      2.7 |
 | reads\_mean\_multiplier |       |        |      2.6 |
@@ -52,16 +52,16 @@ The Dolt version is `0.52.6`.
 |       Write Tests        | MySQL | Dolt  | Multiple |
 |--------------------------|-------|-------|----------|
 | bulk\_insert             | 0.001 | 0.001 |      1.0 |
-| oltp\_delete\_insert     |  2.71 | 18.95 |      7.0 |
-| oltp\_insert             |  1.44 |  3.82 |      2.7 |
+| oltp\_delete\_insert     |  2.81 | 16.71 |      5.9 |
+| oltp\_insert             |  1.37 |  3.68 |      2.7 |
 | oltp\_read\_write        |  5.18 |  26.2 |      5.1 |
-| oltp\_update\_index      |  1.47 |  8.58 |      5.8 |
-| oltp\_update\_non\_index |  1.47 |  9.56 |      6.5 |
-| oltp\_write\_only        |  2.26 | 15.27 |      6.8 |
-| types\_delete\_insert    |  2.81 | 20.74 |      7.4 |
-| writes\_mean\_multiplier |       |       |      5.3 |
+| oltp\_update\_index      |  1.52 |  8.13 |      5.3 |
+| oltp\_update\_non\_index |  1.44 |   8.9 |      6.2 |
+| oltp\_write\_only        |  2.22 | 15.27 |      6.9 |
+| types\_delete\_insert    |  2.91 | 18.28 |      6.3 |
+| writes\_mean\_multiplier |       |       |      4.9 |
 
-| Overall Mean Multiple | 3.7 |
+| Overall Mean Multiple | 3.6 |
 |-----------------------|-----|
 <!-- END___DOLT___LATENCY_RESULTS_TABLE -->
 <br/>
