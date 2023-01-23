@@ -408,7 +408,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_GeometryType()`               | ❌         |                                                                       |
 | `ST_InteriorRingN()`              | ❌         |                                                                       |
 | `ST_Intersection()`               | ❌         |                                                                       |
-| `ST_Intersects()`                 | ❌         |                                                                       |
+| `ST_Intersects()`                 | ✅         |                                                                       |
 | `ST_IsClosed()`                   | ✅         |                                                                       |
 | `ST_IsEmpty()`                    | ❌         |                                                                       |
 | `ST_IsSimple()`                   | ❌         |                                                                       |
