@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 243 of 438 MySQL functions.**
+**Currently supporting 245 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -408,7 +408,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_GeometryType()`               | ❌         |                                                                       |
 | `ST_InteriorRingN()`              | ❌         |                                                                       |
 | `ST_Intersection()`               | ❌         |                                                                       |
-| `ST_Intersects()`                 | ❌         |                                                                       |
+| `ST_Intersects()`                 | ✅         |                                                                       |
 | `ST_IsClosed()`                   | ✅         |                                                                       |
 | `ST_IsEmpty()`                    | ❌         |                                                                       |
 | `ST_IsSimple()`                   | ❌         |                                                                       |
@@ -447,7 +447,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_Transform()`                  | ❌         |                                                                       |
 | `ST_Union()`                      | ❌         |                                                                       |
 | `ST_Validate()`                   | ❌         |                                                                       |
-| `ST_Within()`                     | ❌         |                                                                       |
+| `ST_Within()`                     | ✅         | Only supported for Point vs Geometry comparisons                      |
 | `ST_X()`                          | ✅         |                                                                       |
 | `ST_Y()`                          | ✅         |                                                                       |
 | `SUBDATE()`                       | ❌         |                                                                       |
