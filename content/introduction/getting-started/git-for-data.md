@@ -2,8 +2,6 @@
 title: Git for Data
 ---
 
-# Git for Data
-
 Dolt is Git for Data. You can use Dolt's command line interface to
 version control data like you version control files with Git. Git
 versions files, Dolt versions tables.
