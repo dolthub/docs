@@ -304,7 +304,7 @@ Your terminal will just hang there. This means the server is running. Any errors
 Now we can connect with TablePlus. Download and open TablePlus. Click "Create a new connection...". Select MySQL and click "Create". You'll be granted with a set of options. Fill it i
 n like so.
 
-![TablePlus Connect](../images/tableplus-connect.png)
+![TablePlus Connect](../../../content/.gitbook/assets/tableplus-connect.png)
 
 Click connect and you'll be presented with a familiar database workbench GUI.
 
