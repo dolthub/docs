@@ -447,7 +447,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_Transform()`                  | ❌         |                                                                       |
 | `ST_Union()`                      | ❌         |                                                                       |
 | `ST_Validate()`                   | ❌         |                                                                       |
-| `ST_Within()`                     | ❌         |                                                                       |
+| `ST_Within()`                     | ✅         | Only supported for Point vs Geometry comparisons                      |
 | `ST_X()`                          | ✅         |                                                                       |
 | `ST_Y()`                          | ✅         |                                                                       |
 | `SUBDATE()`                       | ❌         |                                                                       |
