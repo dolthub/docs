@@ -488,17 +488,13 @@ CALL DOLT_MERGE('origin/main');
 
 ## `DOLT_GC()`
 
-Cleans up unreferenced data from the database. Running the `dolt_gc` procedure on a Dolt
-sql-server will block all writes while garbage collection is in progress.
+Cleans up unreferenced data from the database. The current implementation uses a faster
+but less thorough garbage collection. A more thorough garbage collection will be available
+soon.
 
 ```sql
 CALL DOLT_GC();
-CALL DOLT_GC('--shallow');
 ```
-
-### Options
-
-`--shallow` Performs a faster but less thorough garbage collection.
 
 ## `DOLT_MERGE()`
 
