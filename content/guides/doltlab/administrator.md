@@ -27,7 +27,7 @@ DoltLab's source code is currently closed, but you can file DoltLab issues or vi
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
-DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#backup-restore-or-migrate-data-volumes), with the exception of DoltLab's postgres server. To backup the postgres server we recommend dumping the database with `pg_dump` and restoring the database from the dump using `psql`.
+DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#back-up-restore-or-migrate-data-volumes), with the exception of DoltLab's postgres server. To backup the postgres server we recommend dumping the database with `pg_dump` and restoring the database from the dump using `psql`.
 
 <h2 id="backup-restore-remote-data-user-data"><ins>Backing Up and Restoring Remote Data and User Uploaded Data</ins></h2>
 
