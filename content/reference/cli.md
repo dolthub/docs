@@ -859,10 +859,7 @@ When no refspec(s) are specified on the command line, the fetch_specs for the de
 
 **Arguments and options**
 
-`-f`, `--force`:
-Update refs to remote branches with the current state of the remote, overwriting any conflicting history.
-
-
+No options for this command.
 
 ## `dolt filter-branch`
 
