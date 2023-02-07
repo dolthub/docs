@@ -14,7 +14,7 @@ To upgrade the server, download the latest Dolt binary for your platform and rep
 
 ## Examine your CPU, Memory, and Disk usage
 
-Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources than the host has available can lead to degraded performance. Use your system's built in resource monitoring systems to inspect Dolt's usage of these resources. You may need a larger host or additional [read replicas](./replication.md) to support your load.
+Dolt consumes CPU, Memory, and Disk. Consuming more of these resources than the host has available can lead to degraded performance. Use your system's built in resource monitoring tools to inspect Dolt's usage of these resources. You may need a larger host or additional [read replicas](./replication/README.md) to support your load.
 
 ## Set your log level to TRACE
 
@@ -56,7 +56,7 @@ Dolt may not free memory efficiently. If your Dolt server grows memory use unbou
 
 ## Server Consuming CPU
 
-Under too much concurrent load, Dolt may consume all the CPU on a host. This is likely caused by too much read concurrency. In this case, create more [read replicas](./replication.md) and load balance your reads among your replicas.
+Under too much concurrent load, Dolt may consume all the CPU on a host. This is likely caused by too much read concurrency. In this case, create more [read replicas](./replication/README.md) and load balance your reads among your replicas.
 
 If you discover a query consuming all of your CPU, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). On rare occasions, this could be a Dolt bug.
 

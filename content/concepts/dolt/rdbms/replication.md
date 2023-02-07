@@ -6,7 +6,7 @@ title: Replication
 
 ## What is Replication?
 
-Replication is the ability for an RDBMS to synchronize a primary server with one or more read replicas. In this configuration, the primary database serves reads and writes while the replicas serve just reads.
+Replication is the ability for an RDBMS to synchronize a primary server with one or more read replicas. In this configuration, the primary database serves reads and writes while the replicas only serve reads.
 
 ## How to use Replication
 
@@ -18,11 +18,13 @@ To increase read throughput, multiple replicas can be used to scale reads horizo
 
 ## Differences between MySQL Replication and Dolt Replication
 
-[MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt supports receiving MySQL binlog events and can be set up as a replica for an existing MySQL or MariaDB database. Dolt does not create binary logs and can **NOT** act as a primary for binlog replication. 
+[MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt supports a [MySQL binlog replication mode](../../../content/reference/sql/server/replication/binlog-replication.md), where you configure a Dolt sql-server as a replica for an existing MySQL or MariaDB database. Dolt does not create binary logs and can **NOT** act as a primary for binlog replication. 
 
-Dolt supports two additional types of primary-backup replication. In one mode, the primary and the read replicas are completely decoupled. They both leverage a Git-style [remotes](../git/remotes.md) to facilitate replication. The primary and the read replicas configure the same remote. On the primary, you configure "push on write" and on the replicas you configure "pull on read".  This mode only replicates branch heads, which means that new dolt commits are required in order to replicate writes.
+Dolt supports two replication modes where Dolt can act as a primary and replicate to other Dolt sql-servers. The first is called 
+[Remote-Based Replication](../../../content/reference/sql/server/replication/remote-based-replication.md). In this mode the primary and the read replicas are completely decoupled. The primary and the read replicas leverage a
+shared, Git-style [remote](../git/remotes.md) to facilitate replication. On the primary, you configure "push on write" and on the replicas you configure "pull on read".  This mode only replicates branch heads, which means that new dolt commits are required in order to replicate writes.
 
-The second mode configures a cluster of dolt sql-server instances to replicate all writes to each other. Each server is configured to replicate writes to all other servers in the cluster. One server is configured as the primary replica and it accepts writes. All other servers are configured as standbys and only accept read requests.
+The second mode is called [Direct-to-Standby Replication](../../../content/reference/sql/server/replication/direct-to-standby-replication.md). In this mode, you configure a cluster of dolt sql-server instances to replicate **all** writes to each other. Each server is configured to replicate writes to all other servers in the cluster. One server is configured as the primary replica and it accepts writes. All other servers are configured as standbys and only accept read requests.
 
 ## Interaction with Dolt Version Control
 
@@ -30,7 +32,7 @@ Dolt uses remotes to synchronize between primary and read replicas. Replication 
 
 ## Example
 
-The following example shows write replication from a primary and read replicas using a Git-style remote to rendezvous and maintain loose coupling. For more details on clustering in sql-server, see [the documentation for sql-server replication](../../../reference/sql/server/replication.md).
+The following example shows write replication from a primary and read replicas using a Git-style remote to rendezvous and maintain loose coupling. For more details on clustering in sql-server, see [the documentation for sql-server replication](../../../reference/sql/server/replication/README.md).
 
 ### Configuring a Primary
 
