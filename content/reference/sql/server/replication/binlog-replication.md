@@ -32,8 +32,6 @@ You should see the results below, although your `server_id` may be different:
 
 ## Configuration
 
-For more details and description, see the [official MySQL documentation for configuring replication with GTIDs](https://dev.mysql.com/doc/refman/8.0/en/replication-gtids-howto.html) and the [MySQL documentation for warming a replica](https://dev.mysql.com/doc/refman/8.0/en/replication-gtids-failover.html).
-
 If your source database has not purged all of its binlog history and is already operating in GTID mode, then you can rely on the replication process to pull all changes from your source server, with no need to perform a manual data import. You can check this by running 
 `SELECT @@GLOBAL.GTID_MODE, @@GLOBAL.GTID_PURGED;` on your source database and confirming that `GTID_MODE` is `ON` and `GTID_PURGED` is empty.
 However, it is more likely that you will need to first export the data from your source server and import it into your Dolt replica before you can configure and start replication. This is called "warming the replica" and synchronizes it with the primary database before binlog change events start being received. 
@@ -41,11 +39,11 @@ However, it is more likely that you will need to first export the data from your
 ### Replica Warming
 To warm the replica with the state of the source database before starting replication, perform the following steps:
 
-If `gtid_mode` is not already enabled, stop the MySQL source server, enable `gtid_mode`, and restart the source server. This is necessary, otherwise the data dump will not contain the required GTID metadata.
+**Enable `GTID_MODE`**: Ensure [the `gtid_mode` system variable](https://dev.mysql.com/doc/refman/5.7/en/replication-options-gtids.html#sysvar_gtid_mode) and [the `enforce_gtid_consistency` system variable](https://dev.mysql.com/doc/refman/8.0/en/replication-options-gtids.html#sysvar_enforce_gtid_consistency) are both set to `ON`. [MySQL's documentation has a great walkthrough on how to safely enable these two settings](https://dev.mysql.com/doc/refman/8.0/en/replication-mode-change-online-enable-gtids.html) for a running database, and the process is safe to use in production.
 
-With the server stopped, use `mysqldump` to export the data from all databases on the source MySQL server. Make sure to use the `–all-databases` flag so that all databases are exported. For example: `mysqldump -uroot --protocol TCP --port 54322 --all-databases > mysql_dump.sql`
+**Export databases**: With the server running, use [the `mysqldump` utility](https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html) to export the data from all databases on your source MySQL server. Make sure to use the `--single-transaction` flag as well as the `–-all-databases` flag (if you want all databases exported). The `--single-transaction` flag is important for safely exporting data while the database is running, and ensures that exported table data is consistent. Note that `--single-transaction` only works with InnoDB databases (the default engine for MySQL since 5.5.5). For example: `mysqldump -uroot --single-transaction --protocol TCP --port 54322 --all-databases > mysql_dump.sql`
 
-Transfer the dump file from the previous step to the new Dolt replica server, start the Dolt sql-server (e.g. `dolt sql-server -uroot –port 11223`), and load the data into the replica server by running `mysql -uroot –protocol TCP –port 111223 < myDumpFile`. See the [Dolt Data Import Guide](https://docs.dolthub.com/guides/import#mysql-databases) for more details.
+**Load databases**: Transfer the dump file from the previous step to the new Dolt replica server, start the Dolt sql-server (e.g. `dolt sql-server -uroot –port 11223`), and load the data into the replica server by running `mysql -uroot –protocol TCP –port 111223 < myDumpFile`. See the [Dolt Data Import Guide](https://docs.dolthub.com/guides/import#mysql-databases) for more details. Note that it is important to load this into a running dolt sql-server (and not just `dolt sql`) so that the server has the GTID position information from the dump loaded into memory and is ready to pull binlog events at the correct position.  
 
 ### Starting Replication 
 After warming the replica (if necessary), start the Dolt sql-server if you haven’t already, so we can configure it as a replica: `dolt sql-server -uroot –port 11223`
