@@ -41,7 +41,7 @@ However, it is more likely that you will need to first export the data from your
 ### Replica Warming
 To warm the replica with the state of the source database before starting replication, perform the following steps:
 
-If `gtid_mode` is not already enabled, stop the MySQL source server, enable `gtid_mode`, and restart the source server. This is necessary, otherwise the data dump will not contain the required GTID metadata.
+If [the `gtid_mode` system variable](https://dev.mysql.com/doc/refman/5.7/en/replication-options-gtids.html#sysvar_gtid_mode) is not already set to `ON`, stop the MySQL source server, enable GTID tracking, and restart the source server. Enabling GTID mode is necessary, otherwise the data dump will not contain the required GTID metadata. Note that MySQL requires moving from `OFF` to `OFF_PERMISSIVE` to `ON_PERMISSIVE` and then to `ON`. 
 
 With the server stopped, use `mysqldump` to export the data from all databases on the source MySQL server. Make sure to use the `–all-databases` flag so that all databases are exported. For example: `mysqldump -uroot --protocol TCP --port 54322 --all-databases > mysql_dump.sql`
 
