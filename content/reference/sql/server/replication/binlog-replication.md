@@ -74,7 +74,7 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 
 
 ## Limitations
-**No Source support** – Dolt can only consume binlog events as a replica; it cannot act as a primary and produce binlog events.
+**Replica mode only** – Dolt can only consume binlog events as a replica; it cannot act as a primary and produce binlog events.
 **Replication channels** – only the default replication channel ("") is supported.
 **mysql_native_password auth plugin** – The current version of the library we use for reading and deserializing binlog events only supports the `mysql_native_password` auth plugin. The default auth plugin for recent versions of MySQL has changed to `caching_sha2_password`. Until we update that dependency, the source server needs to run with the mysql_native_password auth plugin as the default, for example, by setting passing this flag when starting the MySQL server: `--default-authentication-plugin=mysql_native_password`.
 **Replica filters** – We currently support only the `REPLICATE_DO_TABLE` and `REPLICATE_IGNORE_TABLE` filtering options. These will filter the data in a table, but in the current implementation you will still see DDL statements for all tables applied, even if you have filtered out their data. For example, even if you have configured filtering to ignore table `db01.t1`, the `CREATE TABLE` statement for `db01.t1` will still be applied to the replica.

@@ -6,10 +6,8 @@ title: Remote-Based Replication
 
 ## Configuration
 
-Dolt relies on [system
-variables](../../../concepts/dolt/sql/system-variables.md) to
-configure replication. The following system variables affect
-replication:
+Remote-based replication relies on the following [system variables](../../../concepts/dolt/sql/system-variables.md) to
+configure replication:
 
 1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote).
    **Required for a primary.** The primary will push to the remote named on writes.
