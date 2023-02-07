@@ -18,9 +18,9 @@ To increase read throughput, multiple replicas can be used to scale reads horizo
 
 ## Differences between MySQL Replication and Dolt Replication
 
-Dolt does not support MySQL style replication. [MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt does not have a binary log.
+[MySQL supports multiple types of replication](https://dev.mysql.com/doc/refman/8.0/en/replication.html), most based on the [MySQL binary log](https://dev.mysql.com/doc/refman/8.0/en/replication-howto.html). Dolt supports receiving MySQL binlog events and can be set up as a replica for an existing MySQL or MariaDB database. Dolt does not create binary logs and can **NOT** act as a primary for binlog replication. 
 
-Dolt supports two types of primary-backup replication. In one mode, the primary and the read replicas are completely decoupled. They both leverage a Git-style [remotes](../git/remotes.md) to facilitate replication. The primary and the read replicas configure the same remote. On the primary, you configure "push on write" and on the replicas you configure "pull on read".  This mode only replicates branch heads, which means that new dolt commits are required in order to replicate writes.
+Dolt supports two additional types of primary-backup replication. In one mode, the primary and the read replicas are completely decoupled. They both leverage a Git-style [remotes](../git/remotes.md) to facilitate replication. The primary and the read replicas configure the same remote. On the primary, you configure "push on write" and on the replicas you configure "pull on read".  This mode only replicates branch heads, which means that new dolt commits are required in order to replicate writes.
 
 The second mode configures a cluster of dolt sql-server instances to replicate all writes to each other. Each server is configured to replicate writes to all other servers in the cluster. One server is configured as the primary replica and it accepts writes. All other servers are configured as standbys and only accept read requests.
 

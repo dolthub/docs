@@ -42,3 +42,12 @@ The following diagram illustrates the workflow:
 ## Check Dead Links
 
 This [tool](https://www.deadlinkchecker.com/) is free and works quite well if you just pass the dev URL, `https://dolt.gitbook.io/dolt-dev/`, into it.
+
+## Styling Tips
+You can create a styled info box for a note callout by including the following:
+```
+{% hint style="info" %}
+### Note
+My styled note! 
+{% endhint %}
+```
