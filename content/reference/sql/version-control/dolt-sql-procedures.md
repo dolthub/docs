@@ -470,8 +470,7 @@ CALL DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
 
 ### Options
 
-`--force`: Update refs to remote branches with the current state of the
-remote, overwriting any conflicting history
+No options for this procedure.
 
 ### Example
 
