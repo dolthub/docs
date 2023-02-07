@@ -39,8 +39,7 @@ MariaDB database and track changes to your data in the Dolt sql-server without
 having to commit to migrating your entire database to Dolt. Note that binlog replication is one way,
 so any changes made on the dolt sql-server will not replicate back to the primary.
 
-TODO: binlog image
-![Binlog replication](../../../../.gitbook/assets/dolt-standby-replication.png)
+![Binlog replication](../../../../.gitbook/assets/dolt-binlog-replication.png)
 
 Use this form of replication when you have an existing MySQL or MariaDB database and you want an
 easy way to get your data replicated to a Dolt database where you can use Dolt's time travel, diff,
@@ -56,6 +55,3 @@ from the command line, use `dolt sql` and the SQL equivalent of the
 CLI command you want, e.g. `dolt sql -q "call dolt_commit(...)"`. This
 gap will be addressed in future releases of the tool.
 {% endhint %}
-
-
-
