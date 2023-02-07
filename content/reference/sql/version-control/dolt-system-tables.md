@@ -7,6 +7,7 @@ title: Dolt System Tables
 - [Database Metadata](#database-metadata-system-tables)
 
   - [dolt_branches](#dolt_branches)
+  - [dolt_remote_branches](#dolt_remote_branches)
   - [dolt_docs](#dolt_docs)
   - [dolt_procedures](#dolt_procedures)
   - [dolt_query_catalog](#dolt_query_catalog)
@@ -107,7 +108,196 @@ Create a new commit, and then create a branch from that commit
 ```sql
 SET @@mydb_head = COMMIT("my commit message")
 
+
 CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
+```
+
+## `dolt_branches`
+
+`dolt_branches` contains information about branches known to the database.
+
+Because the branch information is global to all clients, not just your
+session, `dolt_branches` system table is read-only. Branches can be created
+or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#dolt_branch).
+
+### Schema
+
+```text
++------------------------+----------+
+| Field                  | Type     |
++------------------------+----------+
+| name                   | TEXT     |
+| hash                   | TEXT     |
+| latest_committer       | TEXT     |
+| latest_committer_email | TEXT     |
+| latest_commit_date     | DATETIME |
+| latest_commit_message  | TEXT     |
++------------------------+----------+
+```
+
+### Example Queries
+
+Get all the branches.
+
+```sql
+SELECT *
+FROM dolt_branches
+```
+
+```text
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| 2011   | t2sbbg3h6uo93002frfj3hguf22f1uvh | bheni            | brian@dolthub.com      | 2020-01-22 20:47:31.213 +0000 UTC | import 2011 column mappings   |
+| 2012   | 7gonpqhihgnv8tktgafsg2oovnf3hv7j | bheni            | brian@dolthub.com      | 2020-01-22 23:01:39.08 +0000 UTC  | import 2012 allnoagi data     |
+| 2013   | m9seqiabaefo3b6ieg90rr4a14gf6226 | bheni            | brian@dolthub.com      | 2020-01-22 23:50:10.639 +0000 UTC | import 2013 zipcodeagi data   |
+| 2014   | v932nm88f5g3pjmtnkq917r2q66jm0df | bheni            | brian@dolthub.com      | 2020-01-23 00:00:43.673 +0000 UTC | update 2014 column mappings   |
+| 2015   | c7h0jc23hel6qbh8ro5ertiv15to9g9o | bheni            | brian@dolthub.com      | 2020-01-23 00:04:35.459 +0000 UTC | import 2015 allnoagi data     |
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
+| 2017   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
+| main   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+```
+
+Get the current branch for a database named "mydb".
+
+```sql
+SELECT *
+FROM dolt_branches
+WHERE hash = @@mydb_head
+```
+
+```text
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+```
+
+Create a new commit, and then create a branch from that commit
+
+```sql
+SET @@mydb_head = COMMIT("my commit message")
+
+CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
+```
+
+## `dolt_branches`
+
+`dolt_branches` contains information about branches known to the database.
+
+Because the branch information is global to all clients, not just your
+session, `dolt_branches` system table is read-only. Branches can be created
+or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#dolt_branch).
+
+### Schema
+
+```text
++------------------------+----------+
+| Field                  | Type     |
++------------------------+----------+
+| name                   | TEXT     |
+| hash                   | TEXT     |
+| latest_committer       | TEXT     |
+| latest_committer_email | TEXT     |
+| latest_commit_date     | DATETIME |
+| latest_commit_message  | TEXT     |
++------------------------+----------+
+```
+
+### Example Queries
+
+Get all the branches.
+
+```sql
+SELECT *
+FROM dolt_branches
+```
+
+```text
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| 2011   | t2sbbg3h6uo93002frfj3hguf22f1uvh | bheni            | brian@dolthub.com      | 2020-01-22 20:47:31.213 +0000 UTC | import 2011 column mappings   |
+| 2012   | 7gonpqhihgnv8tktgafsg2oovnf3hv7j | bheni            | brian@dolthub.com      | 2020-01-22 23:01:39.08 +0000 UTC  | import 2012 allnoagi data     |
+| 2013   | m9seqiabaefo3b6ieg90rr4a14gf6226 | bheni            | brian@dolthub.com      | 2020-01-22 23:50:10.639 +0000 UTC | import 2013 zipcodeagi data   |
+| 2014   | v932nm88f5g3pjmtnkq917r2q66jm0df | bheni            | brian@dolthub.com      | 2020-01-23 00:00:43.673 +0000 UTC | update 2014 column mappings   |
+| 2015   | c7h0jc23hel6qbh8ro5ertiv15to9g9o | bheni            | brian@dolthub.com      | 2020-01-23 00:04:35.459 +0000 UTC | import 2015 allnoagi data     |
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
+| 2017   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
+| main   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+```
+
+Get the current branch for a database named "mydb".
+
+```sql
+SELECT *
+FROM dolt_branches
+WHERE hash = @@mydb_head
+```
+
+```text
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
++--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
+```
+
+Create a new commit, and then create a branch from that commit
+
+```sql
+SET @@mydb_head = COMMIT("my commit message")
+
+CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
+```
+
+`dolt_branches` only contains information about local branches. For
+branches on a remote you have fetched, see
+[`dolt_remote_branches`](#dolt_remote_branches).
+
+## `dolt_remote_branches`
+
+`dolt_remote_branches` contains information about branches on remotes
+you have fetched. It has the same schema as `dolt_branches`, but
+contains only branches found on remotes, not any local branches.
+
+### Schema
+
+```text
++------------------------+----------+
+| Field                  | Type     |
++------------------------+----------+
+| name                   | TEXT     |
+| hash                   | TEXT     |
+| latest_committer       | TEXT     |
+| latest_committer_email | TEXT     |
+| latest_commit_date     | DATETIME |
+| latest_commit_message  | TEXT     |
++------------------------+----------+
+```
+
+### Example Queries
+
+Get all local and remote branches in a single query. Remote branches
+will have the prefix `remotes/<remoteName>` on their names.
+
+```sql
+SELECT *
+FROM dolt_branches
+UNION 
+SELECT * FROM dolt_remote_branches;
+```
+
+```text
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
+| name            | hash                             | latest_committer | latest_committer_email | latest_commit_date      | latest_commit_message      |
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
+| main            | r3flrdqk73lkcrugtbohcdbb3hmr2bev | Zach Musgrave    | zach@dolthub.com       | 2023-02-01 18:59:55.156 | Initialize data repository |
+| remotes/rem1/b1 | r3flrdqk73lkcrugtbohcdbb3hmr2bev | Zach Musgrave    | zach@dolthub.com       | 2023-02-01 18:59:55.156 | Initialize data repository |
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
 ```
 
 ## `dolt_docs`
