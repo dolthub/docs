@@ -7,6 +7,7 @@ title: Dolt System Tables
 - [Database Metadata](#database-metadata-system-tables)
 
   - [dolt_branches](#dolt_branches)
+  - [dolt_remote_branches](#dolt_remote_branches)
   - [dolt_docs](#dolt_docs)
   - [dolt_procedures](#dolt_procedures)
   - [dolt_query_catalog](#dolt_query_catalog)
@@ -107,7 +108,54 @@ Create a new commit, and then create a branch from that commit
 ```sql
 SET @@mydb_head = COMMIT("my commit message")
 
+
 CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
+```
+
+`dolt_branches` only contains information about local branches. For
+branches on a remote you have fetched, see
+[`dolt_remote_branches`](#dolt_remote_branches).
+
+## `dolt_remote_branches`
+
+`dolt_remote_branches` contains information about branches on remotes
+you have fetched. It has the same schema as `dolt_branches`, but
+contains only branches found on remotes, not any local branches.
+
+### Schema
+
+```text
++------------------------+----------+
+| Field                  | Type     |
++------------------------+----------+
+| name                   | TEXT     |
+| hash                   | TEXT     |
+| latest_committer       | TEXT     |
+| latest_committer_email | TEXT     |
+| latest_commit_date     | DATETIME |
+| latest_commit_message  | TEXT     |
++------------------------+----------+
+```
+
+### Example Queries
+
+Get all local and remote branches in a single query. Remote branches
+will have the prefix `remotes/<remoteName>` in their names.
+
+```sql
+SELECT *
+FROM dolt_branches
+UNION 
+SELECT * FROM dolt_remote_branches;
+```
+
+```text
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
+| name            | hash                             | latest_committer | latest_committer_email | latest_commit_date      | latest_commit_message      |
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
+| main            | r3flrdqk73lkcrugtbohcdbb3hmr2bev | Zach Musgrave    | zach@dolthub.com       | 2023-02-01 18:59:55.156 | Initialize data repository |
+| remotes/rem1/b1 | r3flrdqk73lkcrugtbohcdbb3hmr2bev | Zach Musgrave    | zach@dolthub.com       | 2023-02-01 18:59:55.156 | Initialize data repository |
++-----------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
 ```
 
 ## `dolt_docs`

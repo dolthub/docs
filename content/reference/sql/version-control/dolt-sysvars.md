@@ -28,6 +28,40 @@ To switch heads, set this session variable. Use either
 
 `SET @@mydb_head_ref = 'feature-branch'`
 
+## @@dolt_show_branch_databases
+
+When set to `1`, this system variable causes all branches to be
+represented as separate databases in `show databases`, the
+`information_schema` tables, and other places where databases are
+enumerated. Defaults to `0`, which means that by default
+branch-derived databases are not displayed (although they can still be
+used).
+
+```sql
+fresh> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fresh              |
+| information_schema |
+| mysql              |
++--------------------+
+3 rows in set (0.00 sec)
+
+fresh> set @@dolt_show_branch_databases = 1;
+fresh> show databases;
++--------------------+
+| Database           |
++--------------------+
+| fresh              |
+| fresh/b1           |
+| fresh/main         |
+| information_schema |
+| mysql              |
++--------------------+
+5 rows in set (0.00 sec)
+```
+
 ## @@dolt_transaction_commit
 
 When set to `1`, this system variable creates a Dolt commit for every
