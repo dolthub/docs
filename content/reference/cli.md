@@ -1806,7 +1806,7 @@ This is an example yaml configuration file showing all supported items and their
 
 SUPPORTED CONFIG FILE FIELDS:
 
-`vlog_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
+`log_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
 `behavior.read_only`: If true database modification is disabled
 
