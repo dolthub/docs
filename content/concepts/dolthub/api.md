@@ -332,6 +332,15 @@ res = requests.post(
 
 res_json = res.json()
 ```
+This yields the results as JSON
+```text
+{'status': 'Success', 
+'message': '', 
+ 'repository_owner': 'dolthub', 
+ 'repository_name': 'new-database-name', 
+ 'description': 'database description', 
+ 'visibility': 'public'}
+```
 
 ## Pull request API
 
@@ -353,6 +362,21 @@ res = requests.post(
 
 res_json = res.json()
 ```
+This yields the results as JSON with a pull ID:
+```text
+{'status': 'Success', 
+'message': '', '
+repository_owner': 'dolthub', 
+'repository_name': 'repo_name', 
+'to_branch_name': 'main', 
+'to_owner_name': 'dolthub', 
+'to_repository_name': 'repo_name', 
+'from_branch_name': 'from_branch_name', 
+'from_owner_name': 'dolthub', 
+'from_repository_name': 'repo_name', 
+'pull_id': '66'}
+```
+
 
 ### Create a comment on a pull request
 
@@ -372,6 +396,15 @@ res = requests.post(
 
 res_json = res.json()
 ```
+This yields the results as JSON:
+```text
+{'status': 'Success', 
+'message': '', 
+'repository_owner': 'owner_name', 
+'repository_name': 'repo_name', 
+'pull_id': 'pull_id', 
+'comment': 'pull comment'}
+```
 
 ### Merge a pull request
 
@@ -390,13 +423,22 @@ res = requests.post(
 res_json = res.json()
 ```
 
-The JSON results include an `operation_name`.
+This yields the results as JSON with an `operation_name`:
+```text
+{'status': 'Success', 
+'message': '', 
+'repository_owner': 'owner_name', 
+'repository_name': 'repo_name', 
+'pull_id': 'pull_id', 
+'operation_name': 'operations/b09a9221-9dcb-4a15-9ca8-a64656946f12'}
+```
+
 
 We can poll the operation to check if the merge operation is done.
 
 ```python
 import requests
-data={"operationName":"<operation_name_from_the_json_result>"}
+data={"operationName":"operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"}
 headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
@@ -407,4 +449,16 @@ res = requests.get(
       )
 
 res_json = res.json()
+```
+This yields the results as JSON:
+
+```text
+{'status': 'Success', 
+'message': '', 
+'operationName': 'operations/b09a9221-9dcb-4a15-9ca8-a64656946f12', 
+'done': True, 
+'job_id': '4d785ea4-487b-4065-8365-9229f2fedf5c', 
+'repository_owner': 'owner', 
+'repository_name': 'repo', 
+'pull_id': '65'}
 ```
