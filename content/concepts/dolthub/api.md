@@ -320,17 +320,19 @@ Creates a new database. Python sample code:
 
 ```python
 import requests
-data={"description":"database description" ,"ownerName":"dolthub","repoName":"new-database-name","visibility":"public"}
+data = {"description": "database description", "ownerName": "dolthub",
+        "repoName": "new-database-name", "visibility": "public"}
 headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
 res = requests.post(
-        f'https://www.dolthub.com/api/v1alpha1/database',
-        json=data,
-        headers=headers,
-      )
+    f'https://www.dolthub.com/api/v1alpha1/database',
+    json=data,
+    headers=headers,
+)
 
 res_json = res.json()
+
 ```
 
 This yields the results as JSON
@@ -352,17 +354,19 @@ Creates a pull request. Python sample code:
 
 ```python
 import requests
-data={ "title":"pull request title", "description":"pull request description","fromBranchName":"from_branch_name","fromBranchOwnerName":"dolthub","fromBranchRepoName":"repo_name","toBranchName":"main","toBranchOwnerName":"dolthub","toBranchRepoName":"repo_name"}
+data = {"title": "pull request title", "description": "pull request description", "fromBranchName": "from_branch_name", "fromBranchOwnerName": "dolthub",
+        "fromBranchRepoName": "repo_name", "toBranchName": "main", "toBranchOwnerName": "dolthub", "toBranchRepoName": "repo_name"}
 headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
 res = requests.post(
-        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls',
-        json=data,
-        headers=headers,
-      )
+    f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls',
+    json=data,
+    headers=headers,
+)
 
 res_json = res.json()
+
 ```
 
 This yields the results as JSON with a pull ID:
@@ -387,15 +391,15 @@ Creates a pull request comment. Python sample code:
 
 ```python
 import requests
-data={"comment":"pull comment"}
+data = {"comment": "pull comment"}
 headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
 res = requests.post(
-        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/comments',
-        json=data,
-        headers=headers,
-      )
+    f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/comments',
+    json=data,
+    headers=headers,
+)
 
 res_json = res.json()
 ```
@@ -421,11 +425,12 @@ headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
 res = requests.post(
-        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
-        headers=headers,
-      )
+    f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
+    headers=headers,
+)
 
 res_json = res.json()
+
 ```
 
 This yields the results as JSON with an `operation_name`:
@@ -444,15 +449,15 @@ We can poll the operation to check if the merge operation is done.
 
 ```python
 import requests
-data={"operationName":"operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"}
+data = {"operationName": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"}
 headers = {
     'authorization': 'token [see Authentication section below for token]'
 }
 res = requests.get(
-        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
-        json=data,
-        headers=headers,
-      )
+    f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
+    json=data,
+    headers=headers,
+)
 
 res_json = res.json()
 ```
