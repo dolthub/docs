@@ -313,3 +313,98 @@ res = requests.get(
 with open(local_file, 'wb') as file:
     file.write(res.content)
 ```
+
+## Database API
+
+Creates a new database. Python sample code:
+
+```python
+import requests
+data={"description":"database description" ,"ownerName":"dolthub","repoName":"new-database-name","visibility":"public"}
+headers = {
+    'authorization': 'token [see Authentication section below for token]'
+}
+res = requests.post(
+        f'https://www.dolthub.com/api/v1alpha1/database',
+        json=data,
+        headers=headers,
+      )
+
+res_json = res.json()
+```
+
+## Pull request API
+
+### Create a pull request
+
+Creates a pull request. Python sample code:
+
+```python
+import requests
+data={ "title":"pull request title", "description":"pull request description","fromBranchName":"from_branch_name","fromBranchOwnerName":"dolthub","fromBranchRepoName":"repo_name","toBranchName":"main","toBranchOwnerName":"dolthub","toBranchRepoName":"repo_name"}
+headers = {
+    'authorization': 'token [see Authentication section below for token]'
+}
+res = requests.post(
+        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls',
+        json=data,
+        headers=headers,
+      )
+
+res_json = res.json()
+```
+
+### Create a comment on a pull request
+
+Creates a pull request comment. Python sample code:
+
+```python
+import requests
+data={"comment":"pull comment"}
+headers = {
+    'authorization': 'token [see Authentication section below for token]'
+}
+res = requests.post(
+        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/comments',
+        json=data,
+        headers=headers,
+      )
+
+res_json = res.json()
+```
+
+### Merge a pull request
+
+First, we post to the merge endpoint, this will start an asynchronous operation.
+
+```python
+import requests
+headers = {
+    'authorization': 'token [see Authentication section below for token]'
+}
+res = requests.post(
+        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
+        headers=headers,
+      )
+
+res_json = res.json()
+```
+
+The JSON results include an `operation_name`.
+
+We can poll the operation to check if the merge operation is done.
+
+```python
+import requests
+data={"operationName":"<operation_name_from_the_json_result>"}
+headers = {
+    'authorization': 'token [see Authentication section below for token]'
+}
+res = requests.get(
+        f'https://www.dolthub.com/api/v1alpha1/{owner}/{repo}/pulls/{pull_id}/merge',
+        json=data,
+        headers=headers,
+      )
+
+res_json = res.json()
+```
