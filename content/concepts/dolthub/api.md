@@ -332,7 +332,9 @@ res = requests.post(
 
 res_json = res.json()
 ```
+
 This yields the results as JSON
+
 ```text
 {'status': 'Success', 
 'message': '', 
@@ -362,7 +364,9 @@ res = requests.post(
 
 res_json = res.json()
 ```
+
 This yields the results as JSON with a pull ID:
+
 ```text
 {'status': 'Success', 
 'message': '', '
@@ -376,7 +380,6 @@ repository_owner': 'dolthub',
 'from_repository_name': 'repo_name', 
 'pull_id': '66'}
 ```
-
 
 ### Create a comment on a pull request
 
@@ -396,7 +399,9 @@ res = requests.post(
 
 res_json = res.json()
 ```
+
 This yields the results as JSON:
+
 ```text
 {'status': 'Success', 
 'message': '', 
@@ -424,6 +429,7 @@ res_json = res.json()
 ```
 
 This yields the results as JSON with an `operation_name`:
+
 ```text
 {'status': 'Success', 
 'message': '', 
@@ -450,6 +456,7 @@ res = requests.get(
 
 res_json = res.json()
 ```
+
 This yields the results as JSON:
 
 ```text
