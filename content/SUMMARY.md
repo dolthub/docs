@@ -71,6 +71,7 @@
   - [Install DoltLab](guides/doltlab/installation.md)
   - [Administrator Guide](guides/doltlab/administrator.md)
 - [Importing Data](guides/import.md)
+- [MySQL Replication](guides/binlog-replication.md)
 
 ## SQL Reference
 
@@ -79,11 +80,7 @@
   - [Access Management](reference/sql/server/access-management.md)
   - [Branch Permissions](reference/sql/server/branch-permissions.md)
   - [Backups](reference/sql/server/backups.md)
-  - [Replication](reference/sql/server/replication/README.md)
-    - [Remote-Based Replication](reference/sql/server/replication/remote-based-replication.md)
-    - [Direct-to-Standby Replication](reference/sql/server/replication/direct-to-standby-replication.md)
-    - [MySQL Binlog Replication](reference/sql/server/replication/binlog-replication.md)
-    - [Choosing a Replication Mode](reference/sql/server/replication/choosing-replication-mode.md)
+  - [Replication](reference/sql/server/replication.md)
   - [Troubleshooting](reference/sql/server/troubleshooting.md)
 - [Version Control Features](reference/sql/version-control/README.md)
   - [Using Branches](reference/sql/version-control/branches.md)
