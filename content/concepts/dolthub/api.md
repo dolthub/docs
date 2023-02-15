@@ -316,6 +316,8 @@ with open(local_file, 'wb') as file:
 
 ## Database API
 
+### Create a database
+
 Creates a new database. Python sample code:
 
 ```python
