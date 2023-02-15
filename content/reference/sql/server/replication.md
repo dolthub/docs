@@ -4,32 +4,45 @@ title: Replication
 
 # Replication
 
-Dolt supports two forms of
-[replication](../../../concepts/dolt/rdbms/replication.md).
+Dolt can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more Dolt servers, or can be a read-replica for a MySQL server. This page describes the two supported replication modes between a Dolt primary server and Dolt replica servers. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) for more information on setting up a Dolt server as a read-replica for a MySQL server.
 
-In one, Dolt uses a remote as a middleman to facilitate replication between the
+In **Remote-Based Replication**, Dolt uses a remote as a middleman to facilitate replication between the
 primary and read replicas. In this mode, Dolt replication triggers on a [Dolt
 commit](../../../concepts/dolt/git/commits.md).
 
 ![Read replication](../../../.gitbook/assets/dolt-read-replication.png)
 
-In the second, the primary dolt sql-server instance replicates all writes to a
+This is the simplest form of replication to configure and administer. Use this form of replication
+when you do **not** need the hot-standby support of Direct-to-Standby Replication. See
+[Direct vs Remote Replication](replication.md#direct-vs.-remote-replication) for more
+details on the differences between Remote-Based Replication and Hot Standby Replication.
+
+
+In **Direct-to-Standby Replication**, the primary dolt sql-server instance replicates all writes to a
 set of configured standby servers. In this mode, there is no intermediate
 [remote](../../../concepts/dolt/git/remotes.md) and all SQL transaction commits
 are replicated, not just Dolt commits.
 
 ![Standby replication](../../../.gitbook/assets/dolt-standby-replication.png)
 
-This page describes configuration and considerations for both types of
+Use this form of replication when you have high-availability requirements, and need a hot standby
+server ready to swap in for the primary. See
+[Direct vs Remote Replication](replication.md#direct-vs.-remote-replication) for more
+details on the differences between Remote-Based Replication and Hot Standby Replication.
+
+The rest of this page describes configuration and considerations for both types of
 replication, starting with replication through a remote.
 
-Note: replication is only available in the [Dolt SQL
+{% hint style="info" %}
+### Note
+Replication is only available in the [Dolt SQL
 Server](../../../concepts/dolt/rdbms/server.md) context. You cannot
 trigger replication with a CLI `dolt commit`, `dolt merge`, or other
 command line invocations. If you would like to trigger replication
 from the command line, use `dolt sql` and the SQL equivalent of the
 CLI command you want, e.g. `dolt sql -q "call dolt_commit(...)"`. This
 gap will be addressed in future releases of the tool.
+{% endhint %}
 
 # Replication Through a Remote
 
@@ -702,3 +715,10 @@ in this mode, only the primary replicates its writes to the configured remote
 &mdash; standby servers in the cluster will be available to become primary and
 take over write responsibilities, at which point the new primary will start
 replicating new writes to the remote.
+
+# MySQL to Dolt Replication
+
+If you have an existing MySQL or MariaDB server, you can configure Dolt as a read-replica. As the Dolt read-replica
+consumes data changes from the primary server, it creates Dolt commits, giving you a read-replica with a 
+versioned history of your data changes. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) 
+for more details on how to configure this. 

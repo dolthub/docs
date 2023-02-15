@@ -71,6 +71,7 @@
   - [Install DoltLab](guides/doltlab/installation.md)
   - [Administrator Guide](guides/doltlab/administrator.md)
 - [Importing Data](guides/import.md)
+- [MySQL to Dolt Replication](guides/binlog-replication.md)
 
 ## SQL Reference
 
