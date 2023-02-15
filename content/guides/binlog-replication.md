@@ -1,8 +1,6 @@
 ---
-title: Binlog Replication (Preview)
+title: MySQL to Dolt Replication (Preview)
 ---
-
-# Binlog Replication (Preview)
 
 Dolt binlog replication allows a Dolt SQL Server to consume binlog replication events from a MySQL or MariaDB source database. This is a convenient way to try out Dolt in an existing system – there is no need to migrate your database, just configure Dolt as a replica and as your data replicates to the Dolt server, it will build up a commit history. You can access all the data versioning features of Dolt from the Dolt replica to audit how your data has changed, recover deleted data, or view the state of your data at any point in time.
 
@@ -12,7 +10,9 @@ Dolt binlog replication allows a Dolt SQL Server to consume binlog replication e
 ## Requirements for MySQL Primary Server
 
 **Row-Based Replication** – MySQL provides two main formats for binlog event recording (and a third, “mixed” format that combines the two). Dolt's binlog replication requires that binlog events are configured for row-based replication (the default in MySQL 8.0+). Other binlog formats (e.g. statement based replication) will not work correctly.
+
 **GTID-Based Auto-positioning** – MySQL provides two ways for coordinating the replication position in a binlog event stream. The older method relies on specifying the binlog file name and file position; the newer, recommended version relies on Global Transaction Identifiers (GTIDs). Auto-positioning allows the replica to find its position from the binlog event stream, without requiring additional configuration.
+
 **Server_id** – Your MySQL source server must have a non-zero value configured for @@GLOBAL.server_id, or it will not allow replication to start.
 
 You can check the status of all these settings on your MySQL server by running:
@@ -76,9 +76,13 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 
 ## Limitations
 **Replica mode only** – Dolt can only consume binlog events as a replica; it cannot act as a primary and produce binlog events.
+
 **Replication channels** – only the default replication channel ("") is supported.
+
 **Replica filters** – We currently support only the `REPLICATE_DO_TABLE` and `REPLICATE_IGNORE_TABLE` filtering options. These will filter the data in a table, but in the current implementation you will still see DDL statements for all tables applied, even if you have filtered out their data. For example, even if you have configured filtering to ignore table `db01.t1`, the `CREATE TABLE` statement for `db01.t1` will still be applied to the replica.
+
 **Replication checksums** – We do not currently support replication checksums due to a limitation in the library we use to deserialize binlog events. If the source server sends events with checksums, they will be ignored. You can optionally configure the source server to not send replication checksums by passing the `--binlog-checksum=NONE` flag when you start mysql.
+
 **Replication privileges** – We do not currently check SQL privileges for replication operations.
 
 Please [cut us an issue](https://github.com/dolthub/dolt/issues/new) if any of the above limitations are an issue for you, and we'll be happy to dig in and see how we can make Dolt’s binlog replication work for your environment.

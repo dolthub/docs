@@ -4,7 +4,7 @@ title: Replication
 
 # Replication
 
-Dolt supports two forms of [replication](../../../concepts/dolt/rdbms/replication.md) where a Dolt primary sql-server replicates changes to Dolt sql-server replicas. If you're looking to replicate changes from a MySQL primary server to a Dolt replica, check out the guide to [MySQL Replication to Dolt](../../../guides/binlog-replication.md). 
+Dolt can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more Dolt servers, or can be a read-replica for a MySQL server. This page describes the two supported replication modes between a Dolt primary server and Dolt replica servers. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) for more information on setting up a Dolt server as a read-replica for a MySQL server.
 
 In **Remote-Based Replication**, Dolt uses a remote as a middleman to facilitate replication between the
 primary and read replicas. In this mode, Dolt replication triggers on a [Dolt
@@ -25,9 +25,9 @@ are replicated, not just Dolt commits.
 
 ![Standby replication](../../../.gitbook/assets/dolt-standby-replication.png)
 
-Use this form of replication when you have high-availability requirements, need a hot standby
-server ready to swap in for the primary, and you do **not** need to replicate from a MySQL primary
-using MySQL's binlog protocol. See [Direct vs Remote Replication](choosing-replication-mode.md) for more
+Use this form of replication when you have high-availability requirements, and need a hot standby
+server ready to swap in for the primary. See
+[Direct vs Remote Replication](replication.md#direct-vs.-remote-replication) for more
 details on the differences between Remote-Based Replication and Hot Standby Replication.
 
 The rest of this page describes configuration and considerations for both types of
@@ -715,3 +715,10 @@ in this mode, only the primary replicates its writes to the configured remote
 &mdash; standby servers in the cluster will be available to become primary and
 take over write responsibilities, at which point the new primary will start
 replicating new writes to the remote.
+
+# MySQL to Dolt Replication
+
+If you have an existing MySQL or MariaDB server, you can configure Dolt as a read-replica. As the Dolt read-replica
+consumes data changes from the primary server, it creates Dolt commits, giving you a read-replica with a 
+versioned history of your data changes. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) 
+for more details on how to configure this. 
