@@ -341,7 +341,6 @@ This yields the results as JSON
 
 ```text
 {'status': 'Success', 
-'message': '', 
  'repository_owner': 'dolthub', 
  'repository_name': 'new-database-name', 
  'description': 'database description', 
@@ -375,9 +374,6 @@ This yields the results as JSON with a pull ID:
 
 ```text
 {'status': 'Success', 
-'message': '', '
-repository_owner': 'dolthub', 
-'repository_name': 'repo_name', 
 'to_branch_name': 'main', 
 'to_owner_name': 'dolthub', 
 'to_repository_name': 'repo_name', 
@@ -410,7 +406,6 @@ This yields the results as JSON:
 
 ```text
 {'status': 'Success', 
-'message': '', 
 'repository_owner': 'owner_name', 
 'repository_name': 'repo_name', 
 'pull_id': 'pull_id', 
@@ -439,7 +434,6 @@ This yields the results as JSON with an `operation_name`:
 
 ```text
 {'status': 'Success', 
-'message': '', 
 'repository_owner': 'owner_name', 
 'repository_name': 'repo_name', 
 'pull_id': 'pull_id', 
@@ -468,8 +462,7 @@ This yields the results as JSON:
 
 ```text
 {'status': 'Success', 
-'message': '', 
-'operationName': 'operations/b09a9221-9dcb-4a15-9ca8-a64656946f12', 
+'operation_name': 'operations/b09a9221-9dcb-4a15-9ca8-a64656946f12', 
 'done': True, 
 'job_id': '4d785ea4-487b-4065-8365-9229f2fedf5c', 
 'repository_owner': 'owner', 
