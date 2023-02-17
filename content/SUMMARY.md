@@ -60,7 +60,6 @@
   - [Issues](concepts/dolthub/issues.md)
   - [Forks](concepts/dolthub/forks.md)
   - [Hooks](concepts/dolthub/hooks.md)
-  - [API](concepts/dolthub/api.md)
 
 ## Guides
 
