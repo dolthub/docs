@@ -1,0 +1,234 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Create a New Pull Request",
+    "description": "API to create a new pull request",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{repo}/pulls": {
+      "post": {
+        "summary": "Create a new pull request",
+        "description": "This API allows you to create a new pull request.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the owner of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The pull request information.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the pull request.",
+                    "example":"LACMA data"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the pull request.",
+                    "example":"Records from the Los Angeles County of Museum."
+                  },
+                  "fromBranchOwnerName": {
+                    "type": "string",
+                    "description": "The name of the owner of the source branch.",
+                    "example":"liuliu"
+                  },
+                  "fromBranchRepoName": {
+                    "type": "string",
+                    "description": "The name of the database containing the source branch.",
+                    "example":"museum-collections"
+                  },
+                  "fromBranchName": {
+                    "type": "string",
+                    "description": "The name of the source branch.",
+                    "example":"lacma"
+                  },
+                  "toBranchOwnerName": {
+                    "type": "string",
+                    "description": "The name of the owner of the destination branch.",
+                    "example":"dolthub"
+                  },
+                  "toBranchRepoName": {
+                    "type": "string",
+                    "description": "The name of the database containing the destination branch.",
+                    "example":"museum-collections"
+                  },
+                  "toBranchName": {
+                    "type": "string",
+                    "description": "The name of the destination branch.",
+                    "example":"main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pull request created successfully.",
+            "content": {
+              "application/json": {
+              "schema":{
+                "type": "object",
+              "properties": {
+                "status":{
+                  "type":"string",
+                  "example":"Success"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "The title of the pull request.",
+                  "example":"LACMA data"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "The description of the pull request.",
+                  "example":"Records from the Los Angeles County of Museum."
+                },
+                "from_owner_name": {
+                  "type": "string",
+                  "description": "The name of the owner of the source branch.",
+                  "example":"liuliu"
+                },
+                "from_repository_name": {
+                  "type": "string",
+                  "description": "The name of the database containing the source branch.",
+                  "example":"museum-collections"
+                },
+                "from_branch_name": {
+                  "type": "string",
+                  "description": "The name of the source branch.",
+                  "example":"lacma"
+                },
+                "to_owner_name": {
+                  "type": "string",
+                  "description": "The name of the owner of the destination branch.",
+                  "example":"dolthub"
+                },
+                "to_repository_name": {
+                  "type": "string",
+                  "description": "The name of the database containing the destination branch.",
+                  "example":"museum-collections"
+                },
+                "to_branch_name": {
+                  "type": "string",
+                  "description": "The name of the destination branch.",
+                  "example":"main"
+                },
+                "pull_id": {
+                  "type": "string",
+                  "description": "The id of the created pull request.",
+                  "example":"66"
+                }
+              
+              }
+            }
+          }}
+            
+          },
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+              "schema":{
+                "type": "object",
+              "properties": {
+                "status":{
+                  "type":"string",
+                  "example":"Error"
+                },
+                "message":{
+                  "type":"string",
+                  "example":"Error creating a pull request."
+                },
+                "title": {
+                  "type": "string",
+                  "description": "The title of the pull request.",
+                  "example":"LACMA data"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "The description of the pull request.",
+                  "example":"Records from the Los Angeles County of Museum."
+                },
+                "from_owner_name": {
+                  "type": "string",
+                  "description": "The name of the owner of the source branch.",
+                  "example":"liuliu"
+                },
+                "from_repository_name": {
+                  "type": "string",
+                  "description": "The name of the database containing the source branch.",
+                  "example":"museum-collections"
+                },
+                "from_branch_name": {
+                  "type": "string",
+                  "description": "The name of the source branch.",
+                  "example":"lacma"
+                },
+                "to_owner_name": {
+                  "type": "string",
+                  "description": "The name of the owner of the destination branch.",
+                  "example":"dolthub"
+                },
+                "to_repository_name": {
+                  "type": "string",
+                  "description": "The name of the database containing the destination branch.",
+                  "example":"museum-collections"
+                },
+                "to_branch_name": {
+                  "type": "string",
+                  "description": "The name of the destination branch.",
+                  "example":"main"
+                }
+              }
+            }
+          }}
+          }
+         
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Create a New Dolt Database",
+    "description": "API to create a new Dolt database",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com"
+    }
+  ],
+  "paths": {
+    "/api/v1alpha1/database": {
+      "post": {
+        "summary": "Create a new Dolt database",
+        "description": "This API allows you to create a new Dolt database.",
+        "requestBody": {
+          "description": "The database information.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "example":"Records from museums around the world.",
+                    "description": "A description of the database."
+                  },
+                  "ownerName": {
+                    "type": "string",
+                    "example":"dolthub",
+                    "description": "The name of the owner of the database."
+                  },
+                  "repoName": {
+                    "type": "string",
+                    "example":"museum-collections",
+                    "description": "The name of the repository for the database."
+                  },
+                  "visibility": {
+                    "type": "string",
+                    "example":"public",
+                    "description": "The visibility of the database (public or private)."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Database created successfully.",
+            "content": {
+              "application/json": {
+              "schema":{
+                "type": "object",
+              "properties": {
+                "status":{
+                  "type":"string",
+                  "example":"Success"
+                },
+                "description": {
+                  "type": "string",
+                  "example":"Records from museums around the world."
+                },
+                "repository_owner": {
+                  "type": "string",
+                  "example":"dolthub"
+                },
+                "repository_name": {
+                  "type": "string",
+                  "example":"museum-collections"
+                },
+                "visibility": {
+                  "type": "string",
+                  "example":"public"
+                }
+              }
+            }
+          }}},
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+              "schema":{
+                "type": "object",
+              "properties": {
+                "status":{
+                  "type":"string",
+                  "example":"Error"
+                },
+                "message":{
+                  "type":"string",
+                  "example":"Error creating a database."
+                },
+                "description": {
+                  "type": "string",
+                  "example":"Records from museums around the world."
+                },
+                "repository_owner": {
+                  "type": "string",
+                  "example":"dolthub"
+                },
+                "repository_name": {
+                  "type": "string",
+                  "example":"museum-collections"
+                },
+                "visibility": {
+                  "type": "string",
+                  "example":"public"
+                }
+              }
+            }
+          }}
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}
