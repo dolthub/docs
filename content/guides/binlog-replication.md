@@ -75,6 +75,9 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 
 
 ## Limitations
+
+**Syntax gaps** – Dolt aims for 100% compatibility with MySQL, but there are still some gaps in supported syntax that we're actively working on filling in. Overall, Dolt supports the **vast** majority of MySQL's syntax, although you may still find a statement that executes on the MySQL primary, but won't execute on the Dolt read-replica because of a syntax gap. Please [let us know](https://github.com/dolthub/dolt/issues/new) if you hit this so we can help find a temporary workaround and fill in the syntax gap for you.    
+
 **Replica mode only** – Dolt can only consume binlog events as a replica; it cannot act as a primary and produce binlog events.
 
 **Replication channels** – only the default replication channel ("") is supported.
