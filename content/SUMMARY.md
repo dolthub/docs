@@ -71,6 +71,11 @@
   - [Install DoltLab](guides/doltlab/installation.md)
   - [Administrator Guide](guides/doltlab/administrator.md)
 - [Importing Data](guides/import.md)
+* [DoltHub API](guides/dolthub-api/README.md)
+  * [Authentication](guides/dolthub-api/authentication.md)
+  * [SQL](guides/dolthub-api/sql.md)
+  * [CSV](guides/dolthub-api/csv.md)
+  * [Database](guides/dolthub-api/database.md)
 - [MySQL to Dolt Replication](guides/binlog-replication.md)
 
 ## SQL Reference
