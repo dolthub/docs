@@ -19,7 +19,7 @@ res.json()
 
 This shows our repository metadata as a dictionary:
 
-```json
+```python
 {'query_execution_status': 'Success',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
@@ -42,7 +42,7 @@ res.json()
 
 This yields the results as JSON, with both schema and data:
 
-```json
+```python
 {'query_execution_status': 'RowLimit',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
