@@ -1,12 +1,8 @@
----
-title: Working Set
----
-
 # Working Set
 
 ## What is a Working Set?
 
-Dolt has three kinds of changes: committed, staged and working. The working set is the set of changes that has not been staged or committed. To stage a change in a table you `add` it to the staging set. The staging set is committed by issuing a `commit` command and supplying the appropriate metadata. 
+Dolt has three kinds of changes: committed, staged and working. The working set is the set of changes that has not been staged or committed. To stage a change in a table you `add` it to the staging set. The staging set is committed by issuing a `commit` command and supplying the appropriate metadata.
 
 If you start a Dolt SQL server and start making changes, you are making changes to the working set. If you never make a commit, your working set is a standard MySQL database. So, a way to think about your working set is Dolt without version control features, just a standard MySQL relational database.
 
@@ -16,13 +12,14 @@ Working sets are used to isolate changes to your database from committed schema 
 
 ## Difference between Git Working Sets and Dolt Working Sets
 
-Git working sets change files. Dolt working sets change tables. 
+Git working sets change files. Dolt working sets change tables.
 
 On the command line, working set changes do follow to the newly checked out branch, just like Git. However, in SQL server mode, working set changes are not transferred to the newly checked out branch when you do a `dolt checkout`. The working set changes stay on the branch they were originally made. This change was made to account for multiple users using the same branch in SQL server mode.
 
 ## Example
 
 ### Make changes in a working set
+
 ```
 $ dolt sql -q "insert into docs values (3,0)";
 Query OK, 1 row affected
@@ -35,6 +32,7 @@ Changes not staged for commit:
 ```
 
 ### See what's changed in your working set
+
 ```
 $ dolt diff
 diff --dolt a/docs b/docs
@@ -54,6 +52,7 @@ docs $ dolt sql -q "select * from dolt_diff_docs where to_commit='WORKING'"
 ```
 
 ### Reset a change to your working set
+
 ```
 docs $ dolt status
 On branch main
@@ -76,6 +75,7 @@ docs $ dolt sql -q "select * from docs"
 ```
 
 ### Checkout on the Command Line
+
 ```
 docs $ dolt sql -q "select * from docs"
 +----+----+
@@ -119,6 +119,7 @@ diff --dolt a/docs b/docs
 ```
 
 ### Checkout in SQL server
+
 ```
 mysql> insert into docs values (4,4);
 mysql> select * from docs ;

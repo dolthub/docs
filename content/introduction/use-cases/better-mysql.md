@@ -1,7 +1,3 @@
----
-title: Better MySQL
----
-
 # Better MySQL
 
 Do you have a database problem in production? Do you feel comfortable logging in with privileges to the production host? What if you need to make a change, like add an index? How can you be sure you're not going to break anything?

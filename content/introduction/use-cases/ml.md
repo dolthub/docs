@@ -1,7 +1,3 @@
----
-title: Machine Learning
----
-
 # Machine Learning
 
 In Machine Learning use cases, data is code. Andrej Karpathy call this [Software 2.0](https://karpathy.medium.com/software-2-0-a64152b37c35). What if you treated data like code?

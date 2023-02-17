@@ -1,7 +1,3 @@
----
-title: Permissions
----
-
 # Permissions
 
 It's important that you have full control over can access or change your data. There are a few ways to control users' roles for your database on DoltHub.

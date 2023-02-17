@@ -1,7 +1,3 @@
----
-title: Remotes
----
-
 # Remotes
 
 ## What is a remote?
@@ -10,7 +6,7 @@ A remote is a Dolt database in another location, usually on a different, network
 
 DoltHub is a hosted Dolt remote with an additional discovery and management user interface. [DoltLab](https://www.dolthub.com/blog/2022-01-14-announcing-doltlab/) is a self-hosted version of DoltHub. [Dolt also supports filesystem, HTTPS, AWS, and GCS remotes](https://www.dolthub.com/blog/2021-07-19-remotes/).
 
-You configure a storage location as a remote. Once configured, you can perform Dolt's distributed operations using that remote: clone, fetch, push, and pull. 
+You configure a storage location as a remote. Once configured, you can perform Dolt's distributed operations using that remote: clone, fetch, push, and pull.
 
 Clone creates a copy of remote database in your current directory. In the case of clone, the remote you cloned from is automatically configured as the `origin` remote.
 
@@ -19,7 +15,7 @@ Fetch gathers all the changes made to the remote since you last fetched.
 Push performs a merge of your current branch and the remote branch you are pushing to. It sends all the associated changed data and schema to the remote and updates the commit log to reflect the push.
 
 Pull performs a fetch then a merge of the remote branch to your local branch. Essentially pull merges the changes on the remote branch into your local branch.
- 
+
 ## How to use remotes
 
 A remote is the basis for all the distributed collaboration features of Dolt.

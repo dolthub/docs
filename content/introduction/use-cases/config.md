@@ -1,7 +1,3 @@
----
-title: Configuration Management
----
-
 # Configuration Management
 
 It is common practice to store this YAML configuration in Git. Unfortunately, a file based UI becomes unwieldy at scale because it's not queryable. For large scale configuration management, you often grow out of YAML. Your configuration becomes data and you need a database to store it, not files.

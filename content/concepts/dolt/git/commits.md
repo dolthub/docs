@@ -1,7 +1,3 @@
----
-title: Commits
----
-
 # Commits
 
 ## What is a Commit?
@@ -40,6 +36,7 @@ In Dolt, you can create a commit via the SQL interface. There is no analogue in 
 ### Adding a table and making a commit
 
 #### CLI
+
 ```
 docs $ dolt sql -q "create table docs (pk int, primary key(pk))"
 docs $ dolt add .
@@ -58,6 +55,7 @@ Date:   Mon Dec 06 13:25:55 -0800 2021
 ```
 
 #### SQL
+
 ```
 docs $ dolt sql -q "create table docs_sql (pk int, primary key(pk))"
 docs $ dolt sql -q "select dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add')"

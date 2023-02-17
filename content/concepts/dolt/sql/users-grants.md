@@ -1,7 +1,3 @@
----
-title: Users/Grants
----
-
 # Users/Grants
 
 ## What are Users and Grants?
@@ -25,6 +21,7 @@ Grants can only apply to traditional SQL access to Dolt tables as of now. Our ro
 ## Example
 
 ### Create a user and grant permissions
+
 ```
 $ dolt sql-client --user="root"
 # Welcome to the Dolt MySQL client.
@@ -38,6 +35,7 @@ mysql> exit;
 ```
 
 ### Access data as a user
+
 ```
 $ dolt sql-client --user="testuser" --password="password123"
 # Welcome to the Dolt MySQL client.

@@ -1,7 +1,3 @@
----
-title: Views
----
-
 # Views
 
 ## What is a View?
@@ -20,7 +16,7 @@ There is no difference between MySQL and Dolt views. They are functionally equiv
 
 ## Interaction with Dolt Version Control
 
-Dolt view definitions are versioned in the `dolt_schemas` system table. 
+Dolt view definitions are versioned in the `dolt_schemas` system table.
 
 If you would like to use a current view with an different version of the data, `as of` syntax works with views. To use a past definition of the view, you must checkout a branch at the commit of the definition you would like to use.
 
@@ -41,6 +37,7 @@ mysql> select * from monthly_salaries order by monthly_pay asc;
 ```
 
 ### Using `as of` with Views
+
 ```
 mysql> call dolt_add('-A');
 mysql> call dolt_commit('-am', 'Created table and view');
@@ -68,4 +65,3 @@ mysql> select * from monthly_salaries as of 'HEAD' order by monthly_pay asc;
 | Sally | 30000       |
 +-------+-------------+
 ```
-

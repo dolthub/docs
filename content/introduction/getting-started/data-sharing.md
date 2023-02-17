@@ -1,7 +1,3 @@
----
-title: Data Sharing on DoltHub
----
-
 # Data Sharing on DoltHub
 
 ## Find data on DoltHub
@@ -12,7 +8,7 @@ Our [discover page](https://www.dolthub.com/discover) on DoltHub lets you find p
 
 ## Clone data locally
 
-See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../installation.md)), which is found on every database page:
+See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../installation/)), which is found on every database page:
 
 ![Clone button](../../.gitbook/assets/dolt-clone-corona-virus.png)
 
@@ -44,7 +40,7 @@ corona_virus> exit;
 Bye
 ```
 
-You can see how the insert query changed the `cases` table by viewing the [diff](../../concepts/dolt/diff.md):
+You can see how the insert query changed the `cases` table by viewing the [diff](../../concepts/dolt/git/diff.md):
 
 ```
 % dolt diff
@@ -67,7 +63,6 @@ Author: Taylor Bantle <taylor@liquidata.co>
 Date:   Tue Dec 07 11:43:56 -0800 2021
 
 	Add new case for today
-
 ```
 
 ### Fork the database on DoltHub

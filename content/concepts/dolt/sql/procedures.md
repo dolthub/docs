@@ -1,8 +1,4 @@
----
-title: Stored Procedures
----
-
-# Stored Procedures
+# Procedures
 
 ## What is a Stored Procedure?
 

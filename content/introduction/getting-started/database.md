@@ -1,14 +1,12 @@
----
-title: Version Controlled Database
----
+# Version Controlled Database
 
-Dolt is a MySQL compatible database server. 
+Dolt is a MySQL compatible database server.
 
 This document will walk you through step-by-step on how to get Dolt running as a MySQL compatible server on your host. You will set up a schema, insert data, and compose read queries using SQL. The document will also cover a number of unique Git-like Dolt features like commits, logs, as of queries, rollback, branches, and merges.
 
-# Navigate to the directory where you would like your data stored
+## Navigate to the directory where you would like your data stored
 
-Dolt needs a place to store your databases. I'm going to put my databases in `~/dolt`. 
+Dolt needs a place to store your databases. I'm going to put my databases in `~/dolt`.
 
 ```bash
 % cd ~
@@ -16,11 +14,11 @@ Dolt needs a place to store your databases. I'm going to put my databases in `~/
 % cd dolt
 ```
 
-Any databases you create will be stored in this directory. So, for this example, a directory named `getting_started` will be created here later in this walkthrough, after you run `create database getting_started;` in a SQL shell (see section [Create a schema](#create-a-schema)). Navigating to `~/dolt/getting_started` will then allow you to access this database using the Dolt command line.
+Any databases you create will be stored in this directory. So, for this example, a directory named `getting_started` will be created here later in this walkthrough, after you run `create database getting_started;` in a SQL shell (see section [Create a schema](database.md#create-a-schema)). Navigating to `~/dolt/getting_started` will then allow you to access this database using the Dolt command line.
 
-# Start a MySQL-compatible database server
+## Start a MySQL-compatible database server
 
-Dolt ships with a MySQL compatible database server built in. To start it you use the command `dolt sql-server`. Running this command starts the server on port 3306. 
+Dolt ships with a MySQL compatible database server built in. To start it you use the command `dolt sql-server`. Running this command starts the server on port 3306.
 
 ```bash
 dolt sql-server
@@ -29,9 +27,9 @@ Starting server with Config HP="localhost:3306"|T="28800000"|R="false"|L="info"
 
 Your terminal will just hang there. This means the server is running. Any errors will be printed in this terminal. Just leave it there and open a new terminal.
 
-# Connect with any MySQL client
+## Connect with any MySQL client
 
-In the new terminal, we will now connect to the running database server using a client. Dolt also ships with a MySQL compatible client. 
+In the new terminal, we will now connect to the running database server using a client. Dolt also ships with a MySQL compatible client.
 
 ```bash
 % dolt sql-client
@@ -85,7 +83,7 @@ Again, to ensure the client actually connected, you should see the following in 
 
 As you can see, Dolt supports any MySQL-compatible client. Dolt ships with a client but you can use any MySQL client, like the one that comes with MySQL.
 
-# Create a schema
+## Create a schema
 
 Now we're actually ready to do something interesting. I'll stay in the `mysql` client and execute the following SQL statements to create a database called `getting_started`. The `getting_started` database will have three tables: `employees`, `teams`, and `employees_teams`.
 
@@ -129,7 +127,7 @@ mysql> show tables;
 
 Dolt supports foreign keys, secondary indexes, triggers, check constraints, and stored procedures. It's a modern, feature-rich SQL database.
 
-# Make a Dolt commit
+## Make a Dolt commit
 
 It's time to use your first Dolt feature. We're going to make a Dolt [commit](https://docs.dolthub.com/concepts/dolt/commits). A Dolt commit allows you to time travel and see lineage. Make a Dolt commit whenever you want to restore or compare to this point in time.
 
@@ -168,9 +166,9 @@ mysql> select * from dolt_log;
 
 There you have it. Your schema is created and you have a Dolt commit tracking the creation, as seen in the `dolt_log` system table.
 
-Note, a Dolt commit is different than a standard SQL transaction `COMMIT`. In this case, I am running the database with [`AUTOCOMMIT`](https://dev.mysql.com/doc/refman/5.6/en/innodb-autocommit-commit-rollback.html) on, so each SQL statement is automatically generating a transaction `COMMIT`. If you want a system to generate a Dolt commit for every transaction use the system variable,[`@@dolt_transaction_commit`](https://docs.dolthub.com/sql-reference/version-control/dolt-sysvars#dolt_transaction_commit).
+Note, a Dolt commit is different than a standard SQL transaction `COMMIT`. In this case, I am running the database with [`AUTOCOMMIT`](https://dev.mysql.com/doc/refman/5.6/en/innodb-autocommit-commit-rollback.html) on, so each SQL statement is automatically generating a transaction `COMMIT`. If you want a system to generate a Dolt commit for every transaction use the system variable,[`@@dolt_transaction_commit`](https://docs.dolthub.com/sql-reference/version-control/dolt-sysvars#dolt\_transaction\_commit).
 
-# Insert some data
+## Insert some data
 
 Now, I'm going to populate the database with a few employees here at DoltHub. Then, I'll assign the employees to two teams: engineering and sales. The CEO wears many hats at a start up so he'll be assigned to multiple teams.
 
@@ -232,7 +230,7 @@ mysql> select first_name, last_name, team_name from employees
 
 Looks like everything is inserted and correct. I was able to list the members of the engineering team using that three table `JOIN`. Dolt supports up to twelve table `JOIN`s. Again, Dolt is a modern SQL relational database paired with Git-style version control.
 
-# Examine the diff
+## Examine the diff
 
 Now, what if you want to see what changed in your working set before you make a commit? You use the `dolt_status` and `dolt_diff_<tablename>` system tables.
 
@@ -300,7 +298,7 @@ mysql> select * from dolt_diff;
 6 rows in set (0.00 sec)
 ```
 
-# Oh no! I made a mistake.
+## Oh no! I made a mistake.
 
 Dolt supports undoing changes via `call dolt_reset()`. Let's imagine I accidentally drop a table.
 
@@ -340,11 +338,11 @@ mysql> show tables;
 3 rows in set (0.01 sec)
 ```
 
-Dolt makes operating databases less error prone. You can always back out changes you have in progress or rewind to a known good state. You also have the ability to undo specific commits using [`dolt_revert()`](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures#dolt_revert).
+Dolt makes operating databases less error prone. You can always back out changes you have in progress or rewind to a known good state. You also have the ability to undo specific commits using [`dolt_revert()`](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures#dolt\_revert).
 
 Note, the only unrecoverable SQL statement in Dolt is `drop database`. This deletes the database and all of it's history on disk. `drop database` works this way for SQL tool compatibility as it is common for import tools to issue a `drop database` to clear all database state before an import. Dolt implements [remotes](https://docs.dolthub.com/concepts/dolt/remotes) like in Git so you can maintain an offline copy for backup using clone, fetch, push, and pull. Maintaining a remote copy allows you to restore in the case of an errant `drop database` query.
 
-# See the data in a SQL Workbench
+## See the data in a SQL Workbench
 
 Hate the command line? Let's use [Tableplus](https://tableplus.com/) to make some modifications. Tableplus is a free SQL Workbench. Follow the installation instructions from their website.
 
@@ -356,13 +354,13 @@ Click connect and you'll be presented with a familiar database workbench GUI.
 
 ![Tableplus](../../.gitbook/assets/getting-started-tp.png)
 
-# Make changes on a branch
+## Make changes on a branch
 
 To make changes on a branch, I use the `dolt_checkout()` stored procedure. Using the `-b` option creates a branch, just like in Git.
 
 Tableplus gives me the ability to enter a multiple line SQL script on the SQL tab. I entered the following SQL to checkout a branch, update, insert, delete, and finally Dolt commit my changes.
 
-```SQL
+```
 call dolt_checkout('-b','modifications');
 update employees SET first_name='Timothy' where first_name='Tim';
 insert INTO employees (id, first_name, last_name) values (4,'Daylon', 'Wilkins');
@@ -438,7 +436,7 @@ mysql> select * from dolt_diff('main', 'modifications', 'employees');
 
 As you can see, you have the full power of Git-style branches and diffs in a SQL database with Dolt.
 
-# Make a schema change on another branch
+## Make a schema change on another branch
 
 I can also make schema changes on branches for isolated testing of new schema. I'm going to add a `start_date` column on a new branch and populate it.
 
@@ -484,7 +482,7 @@ mysql> call dolt_commit('-am', 'Added start_date column to employees');
 
 Changing schema on a branch gives you a new method for doing isolated integration testing of new schema changes.
 
-# Merge it all together
+## Merge it all together
 
 Let's assume all the testing of the new schema on the `schema_changes` branch and data on the `modifications` branch completed flawlessly. It's time to merge all our edits together onto `main`. This is done using the `dolt_merge` stored procedure.
 
@@ -588,7 +586,7 @@ mysql> select * from dolt_log;
 
 Now, we have a database with all the schema and data changes merged and ready for use.
 
-# Audit Cell Lineage
+## Audit Cell Lineage
 
 Which commit changed my first name? With Dolt you have lineage for every cell in your database. Let's use the `dolt_history_<tablename>` and `dolt_diff_<tablename>` to explore the lineage features in Dolt.
 
@@ -625,11 +623,12 @@ mysql> select to_commit,from_first_name,to_first_name from dolt_diff_employees
 
 Dolt provides powerful data audit capabilities down to individual cells. When, how, and why has each cell in your database changed over time?
 
-# Conclusion
+## Conclusion
 
 That should be enough to get you started. We covered installation, starting a SQL server, connecting with various clients, creating a database and schema, inserting and updating data on main, using branches for change isolation, rollback, diffs and logs, merge, and cell lineage. You had the grand tour. Hopefully you are starting to imagine the possibilities for your Dolt-backed applications.
 
 Want to dive even deeper? Here are some links to advanced topics:
+
 * [Permissions](https://docs.dolthub.com/sql-reference/server/access-management)
 * [Connecting from application code](https://docs.dolthub.com/sql-reference/supported-clients/clients)
 * [Backups](https://www.dolthub.com/blog/2021-10-08-backups/)

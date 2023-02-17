@@ -1,7 +1,3 @@
----
-title: Data Sharing
----
-
 # Data Sharing
 
 Dolt was built for sharing. Dolt is the database you can copy/paste. A copy or clone in Git parlance creates a copy of data and schema for truly decentralized reads and writes. A paste or merge allows these decentralized writes to be shared amongst various copies of the database. These features make Dolt the ideal database for sharing because each user gets to operate on their own copy and collaborate asynchronously when he or she chooses to adopt another person's changes.

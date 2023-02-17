@@ -1,7 +1,3 @@
----
-title: Triggers
----
-
 # Triggers
 
 ## What is a Trigger?
@@ -12,7 +8,7 @@ Database users create triggers. Triggers are schema. Triggers are stored along w
 
 ## How to use Triggers
 
-Triggers are a general tool, but they are most commonly used to enforce complex constraints that can't be expressed by foreign keys, nullness, types, or the `check` syntax. 
+Triggers are a general tool, but they are most commonly used to enforce complex constraints that can't be expressed by foreign keys, nullness, types, or the `check` syntax.
 
 ## Difference between MySQL Triggers and Dolt Triggers
 
@@ -20,7 +16,7 @@ The goal is for Dolt triggers to match MySQL triggers exactly. As of now, Dolt t
 
 ## Interaction with Dolt Version Control
 
-Triggers are versioned in the `dolt_schemas` table just like [views](./views.md). You add and commit that table just like any other changed table after you create or modify a trigger.
+Triggers are versioned in the `dolt_schemas` table just like [views](views.md). You add and commit that table just like any other changed table after you create or modify a trigger.
 
 ## Example
 
@@ -55,6 +51,7 @@ mysql> select * from b;
 ```
 
 ### `dolt_schemas` table
+
 ```
 mysql> select * from dolt_status;
 +--------------+--------+-----------+

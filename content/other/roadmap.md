@@ -1,24 +1,15 @@
----
-title: Roadmap
----
-
 # Roadmap
 
-Full details on [supported SQL
-features](../reference/sql/sql-support/README.md) are
-available on the docs site.
+Full details on [supported SQL features](../sql-reference/sql-support/) are available on the docs site.
 
-This is a selection of unimplemented features we're working on. Don't
-see what you need on here? [Let us
-know!](https://github.com/dolthub/dolt/issues) Paying customers get
-their feature requests implemented first.
+This is a selection of unimplemented features we're working on. Don't see what you need on here? [Let us know!](https://github.com/dolthub/dolt/issues) Paying customers get their feature requests implemented first.
 
 Roadmap last updated Jan 2023, next update Apr 2023.
 
 ## Upcoming features
 
 | Feature                                 | Estimate    |
-| -------                                 | ---         |
+| --------------------------------------- | ----------- |
 | Spatial indexes                         | Q1 2023     |
 | MySQL binlog replication                | Q1 2023     |
 | Clone from running database             | Q1 2023     |
@@ -45,7 +36,7 @@ Roadmap last updated Jan 2023, next update Apr 2023.
 ## Selection of recent feature launches
 
 | Feature                                   | Launch Date |
-| -------                                   | ---         |
+| ----------------------------------------- | ----------- |
 | ACID transactions alpha                   | Dec 2022    |
 | Hash join strategy                        | Dec 2022    |
 | Better stored procedure support           | Dec 2022    |
@@ -56,7 +47,7 @@ Roadmap last updated Jan 2023, next update Apr 2023.
 | Collation and charset support             | Sep 2022    |
 | `dolt_merge_status` system table          | Sep 2022    |
 | New storage launch (3x speedup)           | Aug 2022    |
-| Global auto_increment tracking            | Aug 2022    |
+| Global auto\_increment tracking           | Aug 2022    |
 | Users, roles, and grants                  | Aug 2022    |
 | `JSON_TABLE()`                            | Jul 2022    |
 | Table / index statistics                  | Jul 2022    |

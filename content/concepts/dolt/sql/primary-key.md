@@ -1,20 +1,16 @@
----
-title: Primary Key
----
-
-# Primary Key
+# Primary Keys
 
 ## What is a Primary Key?
 
-A primary key is a column or set of columns that defines a unique row in a table. Often the primary key is a unique identification or id number. 
+A primary key is a column or set of columns that defines a unique row in a table. Often the primary key is a unique identification or id number.
 
-In most databases, a map of primary keys to the values of the other columns in the table is how the data is laid out on disk or memory. This makes row lookups by primary key indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)).  Thus, use of primary keys in table definition and queries is a common database performance optimization. [Secondary Indexes](./indexes.md) are called "secondary" to distinguish them from primary keys.
+In most databases, a map of primary keys to the values of the other columns in the table is how the data is laid out on disk or memory. This makes row lookups by primary key indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)). Thus, use of primary keys in table definition and queries is a common database performance optimization. [Secondary Indexes](indexes.md) are called "secondary" to distinguish them from primary keys.
 
 Tables without primary keys, or keyless tables, are implemented differently in databases. Usually, a keyless table is implemented as a map of every column in the table pointing to a counter of the number of rows with that value. When the counter goes to zero the index is deleted.
 
 ## How to use Primary Keys
 
-You can add one or many primary keys to a table at creation time. Rows in the table cannot share the same primary key. Each set of primary keys must be unique. Also, primary keys must not be `NULL`. You can add primary keys to a table using `alter table <table> add primary key`. 
+You can add one or many primary keys to a table at creation time. Rows in the table cannot share the same primary key. Each set of primary keys must be unique. Also, primary keys must not be `NULL`. You can add primary keys to a table using `alter table <table> add primary key`.
 
 It is generally desirable for most tables in a database to have a primary key for performance. Most database applications assign a primary key, usually called `id`, on row creation. Databases also support auto incrementing (ie. `AUTO_INCREMENT`) ids and random ids using the `UUID()` function.
 
@@ -29,6 +25,7 @@ In Dolt, primary keys are used to produce modifications between rows across vers
 ## Example
 
 ### Create a table with a primary key
+
 ```
 mysql> create table keyed (c1 int, c2 int, c3 int, c4 int, primary key(c1, c2));
 mysql> show create table keyed;
@@ -46,6 +43,7 @@ mysql> show create table keyed;
 ```
 
 ### Alter a table's primary keys
+
 ```
 mysql> alter table keyed drop primary key;
 mysql> alter table keyed add primary key(c1);
@@ -81,6 +79,7 @@ mysql> show create table keyless;
 ```
 
 ### Diff for keyed and keyless table
+
 ```
 mysql> insert into keyed values (0,0,0,0), (1,1,1,1), (2,2,2,2);
 mysql> insert into keyless values (0,0,0,0), (1,1,1,1), (2,2,2,2);

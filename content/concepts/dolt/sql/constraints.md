@@ -1,12 +1,8 @@
----
-title: Constraints
----
-
 # Constraints
 
 ## What is a Constraint?
 
-Constraints restrict the values allowed in a column. There are multiple forms of constraints: 
+Constraints restrict the values allowed in a column. There are multiple forms of constraints:
 
 1. `NOT NULL` or `UNIQUE` in the column definition
 2. Check constraints
@@ -14,9 +10,9 @@ Constraints restrict the values allowed in a column. There are multiple forms of
 
 Simple constraints like `NOT NULL` and `UNIQUE` can be added when defining a column. These constrain the column to not be NULL and only contain unique values, respectively.
 
-Check constraints allow the database user to define more complex constraints, like ranges on numerical values. 
+Check constraints allow the database user to define more complex constraints, like ranges on numerical values.
 
-Foreign key constraints allow you to reference and define relations between other tables in your database. 
+Foreign key constraints allow you to reference and define relations between other tables in your database.
 
 ## How to use Constraints
 
@@ -32,9 +28,9 @@ MySQL and Dolt constraints are functionally equivalent.
 
 Constraints can cause merge conflicts. If two different constraints on the same column are merged, it is a merge conflict.
 
-Foreign key constraints can cause merged databases to become inconsistent. For instance, you have a foreign key relationship between two tables. On one branch, you add a reference to a parent value that exists. On the other branch you delete the parent value. This will be a valid merge but the parent value will no longer exist. 
+Foreign key constraints can cause merged databases to become inconsistent. For instance, you have a foreign key relationship between two tables. On one branch, you add a reference to a parent value that exists. On the other branch you delete the parent value. This will be a valid merge but the parent value will no longer exist.
 
-Another case is foreign key constraints that trigger changes on other tables like `DELETE CASCADE` are not triggered on merge. Merges happen at the storage layer, not at the SQL layer. This can get your database into a invalid state. Merge reports this invalid state and you must resolve it before making a Dolt commit. 
+Another case is foreign key constraints that trigger changes on other tables like `DELETE CASCADE` are not triggered on merge. Merges happen at the storage layer, not at the SQL layer. This can get your database into a invalid state. Merge reports this invalid state and you must resolve it before making a Dolt commit.
 
 ## Example
 

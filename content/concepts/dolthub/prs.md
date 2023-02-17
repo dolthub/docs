@@ -1,18 +1,12 @@
----
-title: Pull Requests
----
-
 # Pull Requests
 
 ## What is a pull request?
 
-Pull requests are a way to propose changes to a database. A pull request is created from a [branch](../dolt/branch.md) with new changes that a user would like to make to another branch (commonly the `main` or `master` branch). Once the pull request is opened, the reviewer can easily review the [diff](../dolt/diff.md) of the proposed changes and discuss potential improvements or implications of the change. If approved, the pull request can be merged, which will update the base branch with the changes from the feature branch.
-
-![Diagram of pull request]()
+Pull requests are a way to propose changes to a database. A pull request is created from a [branch](../dolt/git/branch.md) with new changes that a user would like to make to another branch (commonly the `main` or `master` branch). Once the pull request is opened, the reviewer can easily review the [diff](../dolt/git/diff.md) of the proposed changes and discuss potential improvements or implications of the change. If approved, the pull request can be merged, which will update the base branch with the changes from the feature branch.
 
 ## How to use pull requests
 
-You can use pull requests to propose changes for another branch. To create a pull request, you should make changes to a branch on your database or a [fork](./forks.md) of another database. Then you can use the new pull request form to choose your base branch. You can also add a title (required) and description (optional).
+You can use pull requests to propose changes for another branch. To create a pull request, you should make changes to a branch on your database or a [fork](forks.md) of another database. Then you can use the new pull request form to choose your base branch. You can also add a title (required) and description (optional).
 
 ## Difference between GitHub pull requests and DoltHub pull requests
 
@@ -24,7 +18,7 @@ Due to the difference in nature of reviewing data vs reviewing code, diffs on Do
 
 We will use our [`dolthub/us-schools`](https://www.dolthub.com/repositories/dolthub/us-schools) database as an example. This database was created through one of our [bounties](../../introduction/getting-started/data-bounties.md).
 
-First, we [fork](./forks.md) the database and clone our fork.
+First, we [fork](forks.md) the database and clone our fork.
 
 ```
 % dolt clone taylor/us-schools
@@ -57,7 +51,7 @@ us_schools> exit;
 Bye
 ```
 
-We can look at the [diff](../dolt/diff.md) of our changes. If they look good we add and [commit](../dolt/commits.md) the changed table and push our branch to DoltHub.
+We can look at the [diff](../dolt/git/diff.md) of our changes. If they look good we add and [commit](../dolt/git/commits.md) the changed table and push our branch to DoltHub.
 
 ```
 % dolt diff

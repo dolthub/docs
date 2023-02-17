@@ -1,7 +1,3 @@
----
-title: Data Ingestion
----
-
 # Data Ingestion
 
 Are customers or vendors sharing data with you? When new data is shared, do downstream systems break? In my career, receiving shared data from outside my organization has often caused problems.

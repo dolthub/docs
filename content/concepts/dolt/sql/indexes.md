@@ -1,16 +1,12 @@
----
-title: Secondary Indexes
----
-
-# Secondary Indexes
+# Indexes
 
 ## What is a Secondary Index?
 
-A secondary index can be added to any column or set of columns to convert lookup queries involving those columns into indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)). 
+A secondary index can be added to any column or set of columns to convert lookup queries involving those columns into indexed lookups. Indexed lookups can be accomplished in constant time (ie. O(1)).
 
-Secondary indexes are stored as separate data structures on disk or in memory. Thus, the use of secondary indexes uses more storage and increases insert and update time. 
+Secondary indexes are stored as separate data structures on disk or in memory. Thus, the use of secondary indexes uses more storage and increases insert and update time.
 
-Secondary indexes are called "secondary" to distinguish them from [primary keys](./primary-key.md) which also provide indexed lookups.
+Secondary indexes are called "secondary" to distinguish them from [primary keys](https://github.com/dolthub/docs/blob/gitbook-dev/content/concepts/dolt/sql/primary-key.md) which also provide indexed lookups.
 
 ## How to use Secondary Indexes
 
@@ -27,6 +23,7 @@ Functionally, Dolt and MySQL indexes are equivalent.
 Dolt will merge indexes as part of a Dolt merge. This can be used to offload index creation to a branch or offline clone.
 
 ## Example
+
 ```
 mysql> create index index1 on complex(c1);
 mysql> show create table complex;
