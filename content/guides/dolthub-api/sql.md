@@ -1,12 +1,12 @@
 # SQL
 
-#### What is the SQL API?
+## What is the SQL API?
 
 DoltHub provides an API for accessing Dolt databases via web requests. A Dolt database can be attached to a DoltHub remote and pushed. At that point DoltHub provides an API against which users can execute Dolt SQL with results returned as JSON.
 
 #### Example
 
-**Reading**
+### Reading
 
 We will use an example DoltHub database, [dolthub/ip-to-country](https://www.dolthub.com/repositories/dolthub/ip-to-country/) and the Python `requests` library to explore it in the Python console:
 
@@ -42,7 +42,7 @@ res.json()
 
 This yields the results as JSON, with both schema and data:
 
-```
+```json
 {'query_execution_status': 'RowLimit',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
@@ -78,7 +78,7 @@ As a reminder, this API is in Alpha version, and we will continue to flesh this 
 
 You can also explore our SQL API on DoltHub whenever you execute a query:
 
-**Writing**
+### Writing
 
 Since adding, updating, and deleting data can take a bit of time to execute against larger databases, we made the writable API asynchronous. Therefore we needed to add two new HTTP endpoints for executing these kinds of queries using the SQL API.
 

@@ -6,7 +6,7 @@ DoltHub provides a database API for fetching and creating data on your database.
 Please make sure to send your requests to `https://www.dolthub.com` instead of `https://dolthub.com`.
 {% endhint %}
 
-### Create database
+## Create database
 
 Here's an example of how to create a new database called `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
 
@@ -24,7 +24,7 @@ headers = {
 
 
 
-### Creates pull request
+## Creates pull request
 
 Here is an example of opening a pull request on the `museum-collections` database with data from the Los Angeles County Museum of Art. This data was added to the `lacma` branch on a fork database, whose `owner` is `liuliu`, we would like to eventually merge `lacma` branch into the `main` branch using an [authorization token](authentication.md).
 
@@ -42,7 +42,7 @@ headers = {
 
 
 
-### Create a pull request comment&#x20;
+## Create a pull request comment&#x20;
 
 Here is an example of adding a pull request comment using an [authorization token](authentication.md).
 
@@ -60,7 +60,7 @@ headers = {
 
 
 
-### Merge pull request
+## Merge pull request
 
 Here is an example of merging a pull request `#66` on a database `museum-collections` using an [authorization token](authentication.md). Note that the merge operation is asynchronous and creates an operation that can be polled to get the result.
 
