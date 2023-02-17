@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Check Merge Operation Status API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com/api/v1alpha1",
+      "description": "DoltHub API v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{repo}/pulls/{pull_id}/merge": {
+      "get": {
+        "summary": "Check merge operation status",
+        "description": "Poll the operation to check if the merge operation is done",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The owner of the database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "repo",
+            "in": "path",
+            "description": "The database name",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          },
+          {
+            "name": "pull_id",
+            "in": "path",
+            "description": "The ID of the pull request",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"66"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request body for checking merge operation status",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "operationName": {
+                    "type": "string",
+                    "description": "The operation name to check",
+                    "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                  }
+                },
+                "required": [
+                  "operationName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The status of the merge operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the operation, Success if the merge was successful",
+                      "example":"Success"
+                    },
+                    "operation_name": {
+                      "type": "string",
+                      "description": "The operation name",
+                      "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                    },
+                    "done": {
+                      "type": "boolean",
+                      "description": "True if the operation is done, False otherwise",
+                      "example":true
+                    },
+                    "job_id": {
+                      "type": "string",
+                      "description": "The job ID of the merge operation",
+                      "example":"1"
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "description": "The owner of the database",
+                      "example":"dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "description": "The name of the database",
+                      "example":"museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "description": "The ID of the pull request",
+                      "example":"66"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message":{
+                      "type":"string",
+                      "example":"Error polling an operation status."
+                    },
+                    "operation_name": {
+                      "type": "string",
+                      "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}
+
+
