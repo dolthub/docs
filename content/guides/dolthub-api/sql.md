@@ -19,7 +19,7 @@ res.json()
 
 This shows our repository metadata as a dictionary:
 
-```
+```json
 {'query_execution_status': 'Success',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
