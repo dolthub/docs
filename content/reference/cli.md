@@ -721,6 +721,9 @@ Show only the schema changes, do not show the data changes (Both shown by defaul
 `--stat`:
 Show stats of data changes
 
+`--summary`:
+Show summary of data and schema changes
+
 `-r`, `--result-format`:
 How to format diff output. Valid values are tabular, sql, json. Defaults to tabular.
 
