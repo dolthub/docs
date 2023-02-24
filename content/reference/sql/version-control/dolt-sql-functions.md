@@ -392,8 +392,8 @@ _The previous version of `dolt_diff_summary` was renamed to `dolt_diff_stat`._
 
 The `DOLT_DIFF_SUMMARY()` table function is a summary of what tables changed and how
 between any two commits in the database. Only changed tables will be listed in the result,
-along with the diff type ('added', 'dropped', 'modified') and whether there are data and
-schema changes.
+along with the diff type ('added', 'dropped', 'modified', 'renamed') and whether there are
+data and schema changes.
 
 `DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff),
 but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table
@@ -435,14 +435,14 @@ The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 ### Schema
 
 ```text
-+--------------------+---------+
-| field              | type    |
-+--------------------+---------+
-| table_name         | TEXT    |
-| diff_type          | TEXT    |
-| has_data_changes   | BOOLEAN |
-| has_schema_changes | BOOLEAN |
-+--------------------+---------+
++---------------+---------+
+| field         | type    |
++---------------+---------+
+| table_name    | TEXT    |
+| diff_type     | TEXT    |
+| data_change   | BOOLEAN |
+| schema_change | BOOLEAN |
++---------------+---------+
 ```
 
 ### Example
@@ -505,12 +505,12 @@ The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from 
 `main` to our current working set:
 
 ```text
-+--------------+-----------+------------------+--------------------+
-| table_name   | diff_type | has_data_changes | has_schema_changes |
-+--------------+-----------+------------------+--------------------+
-| inventory    | modified  | true             | true               |
-| items        | added     | false            | true               |
-+--------------+-----------+------------------+--------------------+
++--------------+-----------+-------------+---------------+
+| table_name   | diff_type | data_change | schema_change |
++--------------+-----------+-------------+---------------+
+| inventory    | modified  | true        | true          |
+| items        | added     | false       | true          |
++--------------+-----------+-------------+---------------+
 ```
 
 To get a table specific changes going from the current working set to tip of `main`, we
@@ -523,11 +523,11 @@ SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
 With result of single row:
 
 ```text
-+--------------+-----------+------------------+--------------------+
-| table_name   | diff_type | has_data_changes | has_schema_changes |
-+--------------+-----------+------------------+--------------------+
-| inventory    | modified  | true             | true               |
-+--------------+-----------+------------------+--------------------+
++--------------+-----------+-------------+---------------+
+| table_name   | diff_type | data_change | schema_change |
++--------------+-----------+-------------+---------------+
+| inventory    | modified  | true        | true          |
++--------------+-----------+-------------+---------------+
 ```
 
 ## `DOLT_LOG()`
