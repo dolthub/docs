@@ -36,7 +36,7 @@ headers = {
 }
 ```
 
-{% swagger src="../../.gitbook/assets/pullrequest.json" path="/{owner}/{database}/pulls" method="post" %}
+{% swagger src="../../.gitbook/assets/pullrequest.json" path="/{owner}/{repo}/pulls" method="post" %}
 [pullrequest.json](../../.gitbook/assets/pullrequest.json)
 {% endswagger %}
 
@@ -54,7 +54,7 @@ headers = {
 }
 ```
 
-{% swagger src="../../.gitbook/assets/pullcomment.json" path="/{owner}/{database}/pulls/{pull_id}/comments" method="post" %}
+{% swagger src="../../.gitbook/assets/pullcomment.json" path="/{owner}/{repo}/pulls/{pull_id}/comments" method="post" %}
 [pullcomment.json](../../.gitbook/assets/pullcomment.json)
 {% endswagger %}
 
@@ -76,12 +76,12 @@ headers = {
 }
 ```
 
-{% swagger src="../../.gitbook/assets/mergePull.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="post" %}
+{% swagger src="../../.gitbook/assets/mergePull.json" path="/{owner}/{repo}/pulls/{pull_id}/merge" method="post" %}
 [mergePull.json](../../.gitbook/assets/mergePull.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the merge operation is done.
 
-{% swagger src="../../.gitbook/assets/pollMergeJob.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="get" %}
+{% swagger src="../../.gitbook/assets/pollMergeJob.json" path="/{owner}/{repo}/pulls/{pull_id}/merge" method="get" %}
 [pollMergeJob.json](../../.gitbook/assets/pollMergeJob.json)
 {% endswagger %}
