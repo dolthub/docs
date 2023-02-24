@@ -12,7 +12,7 @@
   ],
   
     "paths": {
-      "/{owner}/{repo}/pulls/{pull_id}/merge": {
+      "/{owner}/{database}/pulls/{pull_id}/merge": {
         "post": {
           "summary": "Merge a pull request",
           "description": "This endpoint merges a pull request into the destination branch.",
