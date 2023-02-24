@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/{owner}/{database}/pulls/{pull_id}/merge": {
+    "/{owner}/{repo}/pulls/{pull_id}/merge": {
       "get": {
         "summary": "Check merge operation status",
         "description": "Poll the operation to check if the merge operation is done",
