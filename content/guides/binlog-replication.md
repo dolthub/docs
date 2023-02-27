@@ -46,7 +46,13 @@ To warm the replica with the state of the source database before starting replic
 
 **Export databases**: With the server running, use [the `mysqldump` utility](https://dev.mysql.com/doc/refman/8.0/en/mysqldump.html) to export the data from all databases on your source MySQL server. Make sure to use the `--single-transaction` flag as well as the `--all-databases` flag (if you want all databases exported). The `--single-transaction` flag is important for safely exporting data while the database is running, and ensures that exported table data is consistent. Note that `--single-transaction` only works with InnoDB databases (the default engine for MySQL since 5.5.5). For example: `mysqldump -uroot --single-transaction --protocol TCP --port 54322 --all-databases > mysql_dump.sql`
 
-**Load databases**: Transfer the dump file from the previous step to the new Dolt replica server, start the Dolt sql-server (e.g. `dolt sql-server -uroot --port 11223`), and load the data into the replica server by running `mysql -uroot --protocol TCP --port 111223 < myDumpFile`. See the [Dolt Data Import Guide](https://docs.dolthub.com/guides/import#mysql-databases) for more details. Note that it is important to load this into a running dolt sql-server (and not just `dolt sql`) so that the server has the GTID position information from the dump loaded into memory and is ready to pull binlog events at the correct position.
+**Load databases**: Transfer the dump file from the previous step to the new Dolt replica server, start the Dolt sql-server (e.g. `dolt sql-server -uroot --port 11223`), and load the data into the replica server by running `mysql -uroot --protocol TCP --port 111223 < myDumpFile`. See the [Dolt Data Import Guide](https://docs.dolthub.com/guides/import#mysql-databases) for more details. 
+
+{% hint style="info" %}
+#### Note
+- Make sure you load this into a **running** dolt sql-server (i.e. not just `dolt sql`) so that the server has the GTID position information from the dump loaded into memory and is ready to pull binlog events at the correct position.
+- If you are testing locally with MySQL and Dolt running on the same host, make sure you use the `--protocol TCP` flag when using the `mysql` client so that it uses a TCP connection and doesn't try to use a socket file. Otherwise, the `mysql` client may not connect to the server you want.  
+{% endhint %}
 
 ### Starting Replication
 After warming the replica (if necessary), start the Dolt sql-server if you haven’t already, so we can configure it as a replica: `dolt sql-server -uroot --port 11223`
@@ -84,9 +90,7 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 
 **Replica filters** – We currently support only the `REPLICATE_DO_TABLE` and `REPLICATE_IGNORE_TABLE` filtering options. These will filter the data in a table, but in the current implementation you will still see DDL statements for all tables applied, even if you have filtered out their data. For example, even if you have configured filtering to ignore table `db01.t1`, the `CREATE TABLE` statement for `db01.t1` will still be applied to the replica.
 
-**Replication checksums** – We do not currently support replication checksums due to a limitation in the library we use to deserialize binlog events. If the source server sends events with checksums, they will be ignored. You can optionally configure the source server to not send replication checksums by passing the `--binlog-checksum=NONE` flag when you start mysql.
-
-**Replication privileges** – We do not currently check SQL privileges for replication operations.
+**Replication checksums** – We do not currently validate replication checksums due to a limitation in the library we use to deserialize binlog events. If the source server sends events with checksums, they will be ignored. 
 
 Please [cut us an issue](https://github.com/dolthub/dolt/issues/new) if any of the above limitations are an issue for you, and we'll be happy to dig in and see how we can make Dolt’s binlog replication work for your environment.
 
@@ -97,8 +101,6 @@ _Subject to change based on customer feedback._
 **Configurable Dolt commit threshold** – The current Dolt binlog replication implementation creates a Dolt commit for every transaction sent by the source server. This work will give customers control over the frequency of Dolt commits, so that they can be created at specific periods of time (e.g. one commit every 24 hours). Customers can also already manually create Dolt commits by logging into the replica’s SQL shell and using the dolt_commit() stored procedure.
 
 **Replica data loading experience** – The current experience for loading data into a MySQL replica involves getting a dump of the data from the primary, applying that dump to the replica, configuring the replica with the right replication settings, and then turning on replication. Ideally, we would provide an experience where customers can point us at their primary database, and we automatically handle creating the schema, loading the data, and then configuring and enabling replication. This gives customers a very easy way to add Dolt into their system to test out Dolt's versioned history features. This may require a separate process, outside of the DoltDB process, that manages the data import.
-
-**Replication privileges** – No SQL privileges are currently required for replication operations. This work will add support for the standard MySQL replication privileges.
 
 **Replication throughput enhancements** – The initial support for MySQL binlog replication handles all replication events on a single go routine/thread. If customers need higher throughput, there are straightforward ways to parallelize the processing of binlog events.
 
