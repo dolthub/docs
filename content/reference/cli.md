@@ -153,9 +153,6 @@ With a `-d`, `<branchname>` will be deleted. You may specify more than one branc
 
 `<start-point>`: A commit that a new branch should point at.
 
-`--list`:
-List branches
-
 `-f`, `--force`:
 Reset `<branchname>` to `<startpoint>`, even if `<branchname>` exists already. Without `-f`, `dolt branch` refuses to change an existing branch. In combination with `-d` (or `--delete`), allow deleting the branch irrespective of its merged status. In combination with -m (or `--move`), allow renaming the branch even if the new branch name already exists, the same applies for `-c` (or `--copy`).
 
@@ -171,6 +168,12 @@ Delete a branch. The branch must be fully merged in its upstream branch.
 `--D`:
 Shortcut for `--delete --force`.
 
+`-t`, `--track`:
+When creating a new branch, set up 'upstream' configuration.
+
+`--list`:
+List branches
+
 `-v`, `--verbose`:
 When in list mode, show the hash and commit subject line for each head
 
@@ -185,9 +188,6 @@ When in list mode, show only remote tracked branches. When with -d, delete a rem
 
 `--show-current`:
 Print the name of the current branch
-
-`-t`, `--track`:
-When creating a new branch, set up 'upstream' configuration.
 
 
 
@@ -391,6 +391,7 @@ Get and set repository or global options
 ```bash
 dolt config [--global|--local] --list
 dolt config [--global|--local] --add <name> <value>
+dolt config [--global|--local] --set <name> <value>
 dolt config [--global|--local] --get <name>
 dolt config [--global|--local] --unset <name>...
 ```
@@ -421,9 +422,9 @@ Valid configuration variables:
 
 	- user.name - sets email used in the author and committer field of commit objects.
 
-	- remotes.default_host - sets default host for authenticating eith doltremoteapi.
+	- remotes.default_host - sets default host for authenticating with doltremoteapi.
 
-	- remotes.default_port - sets default port for authenticating eith doltremoteapi.
+	- remotes.default_port - sets default port for authenticating with doltremoteapi.
 
 	- push.autoSetupRemote - if set to "true" assume --set-upstream on default push when no upstream tracking exists for the current branch.
 
@@ -437,6 +438,9 @@ Use global config.
 Use repository local config.
 
 `--add`:
+Set the value of one or more config parameters
+
+`--set`:
 Set the value of one or more config parameters
 
 `--list`:
@@ -703,6 +707,8 @@ The diffs displayed can be limited to show the first N by providing the paramete
 
 To filter which data rows are displayed, use `--where <SQL expression>`. Table column names in the filter expression must be prefixed with `from_` or `to_`, e.g. `to_COLUMN_NAME > 100` or `from_COLUMN_NAME + to_COLUMN_NAME = 0`.
 
+The `--diff-mode` argument controls how modified rows are presented when the format output is set to `tabular`. When set to `row`, modified rows are presented as old and new rows. When set to `line`, modified rows are presented as a single row, and changes are presented using "+" and "-" within the column. When set to `in-place`, modified rows are presented as a single row, and changes are presented side-by-side with a color distinction (requires a color-enabled terminal). When set to `context`, rows that contain at least one column that spans multiple lines uses `line`, while all other rows use `row`. The default value is `context`.
+
 
 **Arguments and options**
 
@@ -712,8 +718,11 @@ Show only the data changes, do not show the schema changes (Both shown by defaul
 `-s`, `--schema`:
 Show only the schema changes, do not show the data changes (Both shown by default).
 
+`--stat`:
+Show stats of data changes
+
 `--summary`:
-Show summary of data changes
+Show summary of data and schema changes
 
 `-r`, `--result-format`:
 How to format diff output. Valid values are tabular, sql, json. Defaults to tabular.
@@ -732,6 +741,9 @@ Shows only primary key columns and any columns with data changes.
 
 `--merge-base`:
 Uses merge base of the first commit and second commit (or HEAD if not supplied) as the first commit
+
+`--diff-mode`:
+Determines how to display modified rows with tabular output. Valid values are row, line, in-place, context. Defaults to context.
 
 
 
@@ -804,7 +816,7 @@ Export all tables.
 **Synopsis**
 
 ```bash
-dolt dump [-f] [-r <result-format>] [-fn <file_name>]  [-d <directory>] [--batch] [--no-autocommit] 
+dolt dump [-f] [-r <result-format>] [-fn <file_name>]  [-d <directory>] [--batch] [--no-batch] [--no-autocommit] [--no-create-db] 
 ```
 
 **Description**
@@ -831,10 +843,19 @@ Define directory name to dump the files in. Defaults to `doltdump/`.
 If data already exists in the destination, the force flag will allow the target to be overwritten.
 
 `--batch`:
-Returns batch insert statements wherever possible.
+Return batch insert statements wherever possible, enabled by default.
+
+`--no-batch`:
+Emit one row per statement, instead of batching multiple rows into each statement.
 
 `-na`, `--no-autocommit`:
-Turns off autocommit for each dumped table. Used to speed up loading of outputted sql file
+Turn off autocommit for each dumped table. Useful for speeding up loading of output SQL file.
+
+`--schema-only`:
+Dump a table's schema, without including any data, to the output SQL file.
+
+`--no-create-db`:
+Do not write `CREATE DATABASE` statements in SQL files.
 
 
 
@@ -1293,9 +1314,6 @@ Remove the remote named `<name>`. All remote-tracking branches and configuration
 
 `<profile>`: AWS profile to use.
 
-`-v`, `--verbose`:
-When printing the list of remotes adds additional details.
-
 `--aws-region`
 
 `--aws-creds-type`
@@ -1305,6 +1323,9 @@ AWS credentials file
 
 `--aws-creds-profile`:
 AWS profile to use
+
+`-v`, `--verbose`:
+When printing the list of remotes adds additional details.
 
 `--oss-creds-file`:
 OSS credentials file
@@ -1451,7 +1472,7 @@ If the parameter `--dry-run` is supplied a sql statement will be generated showi
 Create a table with the schema inferred from the `<file>` provided.
 
 `-u`, `--update`:
-Update a table to match the inferred schema of the `<file>` provided
+Update a table to match the inferred schema of the `<file>` provided. All previous data will be lost.
 
 `-r`, `--replace`:
 Replace a table with a new schema that has the inferred schema from the `<file>` provided. All previous data will be lost.
@@ -1751,6 +1772,8 @@ This is an example yaml configuration file showing all supported items and their
 
 	log_level: info
 	
+	max_logged_query_len: null
+	
 	behavior:
 	  read_only: false
 	  autocommit: true
@@ -1806,7 +1829,7 @@ This is an example yaml configuration file showing all supported items and their
 
 SUPPORTED CONFIG FILE FIELDS:
 
-`log_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
+`vlog_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
 `behavior.read_only`: If true database modification is disabled
 
@@ -2021,6 +2044,19 @@ A mapping file is json in the format:
 
 where source_field_name is the name of a field in the file being imported and dest_field_name is the name of a field in the table being imported to.
 
+The expected JSON input file format is:
+
+	{ "rows":
+		[
+			{
+				"column_name":"value"
+				...
+			}, ...
+		]
+	}
+
+where column_name is the name of a column of the table being imported and value is the data for that column in the table.
+
 In create, update, and replace scenarios the file's extension is used to infer the type of the file.  If a file does not have the expected extension then the `--file-type` parameter should be used to explicitly define the format of the file in one of the supported formats (csv, psv, json, xlsx).  For files separated by a delimiter other than a ',' (type csv) or a '|' (type psv), the --delim parameter can be used to specify a delimiter
 
 **Arguments and options**
@@ -2151,6 +2187,9 @@ list tags along with their metadata.
 
 `-d`, `--delete`:
 Delete a tag.
+
+`--author`:
+Specify an explicit author using the standard A U Thor `<author@example.com>` format.
 
 
 

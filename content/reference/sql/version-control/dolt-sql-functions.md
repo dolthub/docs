@@ -14,6 +14,7 @@ title: Dolt SQL Functions
 - [Table Functions](#table-functions)
 
   - [dolt_diff()](#dolt_diff)
+  - [dolt_diff_stat()](#dolt_diff_stat)
   - [dolt_diff_summary()](#dolt_diff_summary)
   - [dolt_log()](#dolt_log)
 
@@ -244,38 +245,40 @@ Therefore, `dolt_diff('main...feature_branch')` outputs just the differences in 
 
 Learn more about two vs three dot diff [here](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log).
 
-## `DOLT_DIFF_SUMMARY()`
+## `DOLT_DIFF_STAT()`
 
-The `DOLT_DIFF_SUMMARY()` table function calculates the data difference summary between any two commits
+_Previously `dolt_diff_summary()`_
+
+The `DOLT_DIFF_STAT()` table function calculates the data difference stat between any two commits
 in the database. Schema changes such as creating a new table with no rows, or deleting a table with no rows will
-return empty result. Each row in the result set describes a diff summary for a single table with statistics information of
+return empty result. Each row in the result set describes a diff stat for a single table with statistics information of
 number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 
-`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
+`DOLT_DIFF_STAT()` works like [CLI `dolt diff --stat` command](../../cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_STAT()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
 
-Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it can be used in queries. It does not
+Note that the `DOLT_DIFF_STAT()` table function currently has restrictions on how it can be used in queries. It does not
 support aliasing or joining with other tables, and argument values must be literal values.
 
 ### Privileges
 
-`DOLT_DIFF_SUMMARY()` table function requires `SELECT` privilege for all tables if no table is defined or
+`DOLT_DIFF_STAT()` table function requires `SELECT` privilege for all tables if no table is defined or
 for the defined table only.
 
 ### Options
 
 ```sql
-DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
-DOLT_DIFF_SUMMARY(<from_revision..to_revision>, <optional_tablename>)
-DOLT_DIFF_SUMMARY(<from_revision...to_revision>, <optional_tablename>)
+DOLT_DIFF_STAT(<from_revision>, <to_revision>, <optional_tablename>)
+DOLT_DIFF_STAT(<from_revision..to_revision>, <optional_tablename>)
+DOLT_DIFF_STAT(<from_revision...to_revision>, <optional_tablename>)
 ```
 
-The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
+The `DOLT_DIFF_STAT()` table function takes three arguments:
 
 - `from_revision` — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
 - `to_revision` — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
-- `from_revision..to_revision` — gets the two dot diff summary, or revision of table data between the `from_revision` and `to_revision`. This is equivalent to `dolt_diff_summary(<from_revision>, <to_revision>, <tablename>)`.
-- `from_revision...to_revision` — gets the three dot diff summary, or revision of table data between the `from_revision` and `to_revision`, _starting at the last common commit_.
+- `from_revision..to_revision` — gets the two dot diff stat, or revision of table data between the `from_revision` and `to_revision`. This is equivalent to `dolt_diff_stat(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot diff stat, or revision of table data between the `from_revision` and `to_revision`, _starting at the last common commit_.
 - `tablename` — the name of the table containing the data to diff. This argument is optional. When it's not defined, all tables with data diff will be returned.
 
 ### Schema
@@ -302,7 +305,7 @@ The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 ### Example
 
 Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use
-the `DOLT_DIFF_SUMMARY()` function to calculate a diff of the table data or all tables with data changes across specific
+the `DOLT_DIFF_STAT()` function to calculate a diff of the table data or all tables with data changes across specific
 commits.
 
 Here is the schema of `inventory` at the tip of `main`:
@@ -353,10 +356,10 @@ Here is what table `inventory` has in the current working set:
 To calculate the diff and view the results, we run the following query:
 
 ```sql
-SELECT * FROM DOLT_DIFF_SUMMARY('main', 'WORKING');
+SELECT * FROM DOLT_DIFF_STAT('main', 'WORKING');
 ```
 
-The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from tip of `main` to our current working set:
+The results from `DOLT_DIFF_STAT()` show how the data has changed going from tip of `main` to our current working set:
 
 ```text
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
@@ -370,7 +373,7 @@ The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from 
 To get a table specific changes going from the current working set to tip of `main`, we run the following query:
 
 ```sql
-SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
+SELECT * FROM DOLT_DIFF_STAT('WORKING', 'main', 'inventory');
 ```
 
 With result of single row:
@@ -381,6 +384,150 @@ With result of single row:
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
 | inventory  | 1               | 0          | 1            | 1             | 0           | 6             | 1              | 3             | 2             | 12             | 6              |
 +------------+-----------------+------------+--------------+---------------+-------------+---------------+----------------+---------------+---------------+----------------+----------------+
+```
+
+## `DOLT_DIFF_SUMMARY()`
+
+_The previous version of `dolt_diff_summary` was renamed to `dolt_diff_stat`._
+
+The `DOLT_DIFF_SUMMARY()` table function is a summary of what tables changed and how
+between any two commits in the database. Only changed tables will be listed in the result,
+along with the diff type ('added', 'dropped', 'modified', 'renamed') and whether there are
+data and schema changes.
+
+`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff),
+but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table
+name is optional. It returns empty result if there are no tables with changes.
+
+Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it
+can be used in queries. It does not support aliasing or joining with other tables, and
+argument values must be literal values.
+
+### Privileges
+
+`DOLT_DIFF_SUMMARY()` table function requires `SELECT` privilege for all tables if no
+table is defined or for the defined table only.
+
+### Options
+
+```sql
+DOLT_DIFF_SUMMARY(<from_revision>, <to_revision>, <optional_tablename>)
+DOLT_DIFF_SUMMARY(<from_revision..to_revision>, <optional_tablename>)
+DOLT_DIFF_SUMMARY(<from_revision...to_revision>, <optional_tablename>)
+```
+
+The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
+
+- `from_revision` — the revision of the table data for the start of the diff. This
+  argument is required. This may be a commit, tag, branch name, or other revision
+  specifier (e.g. "main~", "WORKING", "STAGED").
+- `to_revision` — the revision of the table data for the end of the diff. This argument is
+  required. This may be a commit, tag, branch name, or other revision specifier (e.g.
+  "main~", "WORKING", "STAGED").
+- `from_revision..to_revision` — gets the two dot diff summary, or revision of table data
+  between the `from_revision` and `to_revision`. This is equivalent to
+  `dolt_diff_summary(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot diff summary, or revision of table data
+  between the `from_revision` and `to_revision`, _starting at the last common commit_.
+- `tablename` — the name of the table containing the data to diff. This argument is
+  optional. When it's not defined, all tables with data diff will be returned.
+
+### Schema
+
+```text
++---------------+---------+
+| field         | type    |
++---------------+---------+
+| table_name    | TEXT    |
+| diff_type     | TEXT    |
+| data_change   | BOOLEAN |
+| schema_change | BOOLEAN |
++---------------+---------+
+```
+
+### Example
+
+Consider we start with a table `inventory` in a database on `main` branch. When we make
+any changes, we can use the `DOLT_DIFF_SUMMARY()` function to calculate a diff of the
+table data or all tables with data changes across specific commits.
+
+Here is the schema of `inventory` at the tip of `main`:
+
+```text
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pk       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(50) | YES  |     | NULL    |       |
+| quantity | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+```
+
+Here is what table `inventory` has at the tip of `main`:
+
+```text
++----+-------+----------+
+| pk | name  | quantity |
++----+-------+----------+
+| 1  | shirt | 15       |
+| 2  | shoes | 10       |
++----+-------+----------+
+```
+
+We perform some changes to the `inventory` table and create new keyless table:
+
+```text
+ALTER TABLE inventory ADD COLUMN color VARCHAR(10);
+INSERT INTO inventory VALUES (3, 'hat', 6, 'red');
+UPDATE inventory SET quantity=0 WHERE pk=1;
+CREATE TABLE items (name varchar(50));
+```
+
+Here is what table `inventory` has in the current working set:
+
+```text
++----+-------+----------+-------+
+| pk | name  | quantity | color |
++----+-------+----------+-------+
+| 1  | shirt | 0        | NULL  |
+| 2  | shoes | 10       | NULL  |
+| 3  | hat   | 6        | red   |
++----+-------+----------+-------+
+```
+
+To calculate the diff and view the results, we run the following query:
+
+```sql
+SELECT * FROM DOLT_DIFF_SUMMARY('main', 'WORKING');
+```
+
+The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from tip of
+`main` to our current working set:
+
+```text
++--------------+-----------+-------------+---------------+
+| table_name   | diff_type | data_change | schema_change |
++--------------+-----------+-------------+---------------+
+| inventory    | modified  | true        | true          |
+| items        | added     | false       | true          |
++--------------+-----------+-------------+---------------+
+```
+
+To get a table specific changes going from the current working set to tip of `main`, we
+run the following query:
+
+```sql
+SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
+```
+
+With result of single row:
+
+```text
++--------------+-----------+-------------+---------------+
+| table_name   | diff_type | data_change | schema_change |
++--------------+-----------+-------------+---------------+
+| inventory    | modified  | true        | true          |
++--------------+-----------+-------------+---------------+
 ```
 
 ## `DOLT_LOG()`
