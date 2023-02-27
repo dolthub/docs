@@ -90,9 +90,7 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 
 **Replica filters** – We currently support only the `REPLICATE_DO_TABLE` and `REPLICATE_IGNORE_TABLE` filtering options. These will filter the data in a table, but in the current implementation you will still see DDL statements for all tables applied, even if you have filtered out their data. For example, even if you have configured filtering to ignore table `db01.t1`, the `CREATE TABLE` statement for `db01.t1` will still be applied to the replica.
 
-**Replication checksums** – We do not currently support replication checksums due to a limitation in the library we use to deserialize binlog events. If the source server sends events with checksums, they will be ignored. You can optionally configure the source server to not send replication checksums by passing the `--binlog-checksum=NONE` flag when you start mysql.
-
-**Replication privileges** – We do not currently check SQL privileges for replication operations.
+**Replication checksums** – We do not currently validate replication checksums due to a limitation in the library we use to deserialize binlog events. If the source server sends events with checksums, they will be ignored. 
 
 Please [cut us an issue](https://github.com/dolthub/dolt/issues/new) if any of the above limitations are an issue for you, and we'll be happy to dig in and see how we can make Dolt’s binlog replication work for your environment.
 
@@ -103,8 +101,6 @@ _Subject to change based on customer feedback._
 **Configurable Dolt commit threshold** – The current Dolt binlog replication implementation creates a Dolt commit for every transaction sent by the source server. This work will give customers control over the frequency of Dolt commits, so that they can be created at specific periods of time (e.g. one commit every 24 hours). Customers can also already manually create Dolt commits by logging into the replica’s SQL shell and using the dolt_commit() stored procedure.
 
 **Replica data loading experience** – The current experience for loading data into a MySQL replica involves getting a dump of the data from the primary, applying that dump to the replica, configuring the replica with the right replication settings, and then turning on replication. Ideally, we would provide an experience where customers can point us at their primary database, and we automatically handle creating the schema, loading the data, and then configuring and enabling replication. This gives customers a very easy way to add Dolt into their system to test out Dolt's versioned history features. This may require a separate process, outside of the DoltDB process, that manages the data import.
-
-**Replication privileges** – No SQL privileges are currently required for replication operations. This work will add support for the standard MySQL replication privileges.
 
 **Replication throughput enhancements** – The initial support for MySQL binlog replication handles all replication events on a single go routine/thread. If customers need higher throughput, there are straightforward ways to parallelize the processing of binlog events.
 
