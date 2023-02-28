@@ -435,14 +435,15 @@ The `DOLT_DIFF_SUMMARY()` table function takes three arguments:
 ### Schema
 
 ```text
-+---------------+---------+
-| field         | type    |
-+---------------+---------+
-| table_name    | TEXT    |
-| diff_type     | TEXT    |
-| data_change   | BOOLEAN |
-| schema_change | BOOLEAN |
-+---------------+---------+
++-----------------+---------+
+| field           | type    |
++-----------------+---------+
+| from_table_name | TEXT    |
+| to_table_name   | TEXT    |
+| diff_type       | TEXT    |
+| data_change     | BOOLEAN |
+| schema_change   | BOOLEAN |
++-----------------+---------+
 ```
 
 ### Example
@@ -505,12 +506,12 @@ The results from `DOLT_DIFF_SUMMARY()` show how the data has changed going from 
 `main` to our current working set:
 
 ```text
-+--------------+-----------+-------------+---------------+
-| table_name   | diff_type | data_change | schema_change |
-+--------------+-----------+-------------+---------------+
-| inventory    | modified  | true        | true          |
-| items        | added     | false       | true          |
-+--------------+-----------+-------------+---------------+
++-----------------+---------------+-----------+-------------+---------------+
+| from_table_name | to_table_name | diff_type | data_change | schema_change |
++-----------------+---------------+-----------+-------------+---------------+
+| inventory       | inventory     | modified  | true        | true          |
+| items           | items         | added     | false       | true          |
++-----------------+---------------+-----------+-------------+---------------+
 ```
 
 To get a table specific changes going from the current working set to tip of `main`, we
@@ -523,11 +524,11 @@ SELECT * FROM DOLT_DIFF_SUMMARY('WORKING', 'main', 'inventory');
 With result of single row:
 
 ```text
-+--------------+-----------+-------------+---------------+
-| table_name   | diff_type | data_change | schema_change |
-+--------------+-----------+-------------+---------------+
-| inventory    | modified  | true        | true          |
-+--------------+-----------+-------------+---------------+
++-----------------+---------------+-----------+-------------+---------------+
+| from_table_name | to_table_name | diff_type | data_change | schema_change |
++-----------------+---------------+-----------+-------------+---------------+
+| inventory       | inventory     | modified  | true        | true          |
++-----------------+---------------+-----------+-------------+---------------+
 ```
 
 ## `DOLT_LOG()`
