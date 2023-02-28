@@ -59,7 +59,6 @@
   - [Pull Requests](concepts/dolthub/prs.md)
   - [Issues](concepts/dolthub/issues.md)
   - [Forks](concepts/dolthub/forks.md)
-  - [Hooks](concepts/dolthub/hooks.md)
 
 ## Guides
 
@@ -74,6 +73,8 @@
   * [SQL](guides/dolthub-api/sql.md)
   * [CSV](guides/dolthub-api/csv.md)
   * [Database](guides/dolthub-api/database.md)
+  * [Hooks](guides/dolthub-api/hooks.md)
+
 - [MySQL to Dolt Replication](guides/binlog-replication.md)
 - [Importing Data](guides/import.md)
 
