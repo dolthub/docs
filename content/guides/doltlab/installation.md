@@ -88,6 +88,7 @@ cd doltlab
 
 Inside the unzipped `doltlab` directory, you'll find the following items:
 
+* templates
 * envoy.tmpl
 * gentokenenckey
 * send_doltlab_deployed_event
@@ -95,6 +96,9 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * shell-db.sh
 * docker-compose.yaml
 * start-doltlab.sh
+
+`templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
+editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
 
 `envoy.tmpl` is an template file used to create the [Envoy](https://www.envoyproxy.io/) proxy configuration file called `envoy.yaml`.
 
