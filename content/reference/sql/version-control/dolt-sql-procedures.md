@@ -566,7 +566,7 @@ CALL DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
 
 ## `DOLT_PATCH()`
 
-Get SQL statements on table diffs between revisions. This command is
+Generate the SQL statements needed to patch a table (or all tables) from a starting revision to a target revision. This can be useful when you want to import data into Dolt from an external source, compare differences, and generate the SQL statements needed to patch the original source. This command is
 equivalent of [`dolt diff -r sql` CLI command](../../cli.md#dolt-diff). 
 It does not support two or three dots between revisions inputs yet.
 Both schema and data diff statements are returned. Some data diff cannot be
