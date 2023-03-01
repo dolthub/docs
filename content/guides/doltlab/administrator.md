@@ -20,6 +20,8 @@ the following information can help DoltLab Admins manually perform some common a
 13. [DoltLab Jobs](#doltlab-jobs)
 14. [Disable Usage Metrics](#disable-metrics)
 15. [Migrate Old Format DoltLab Databases](#migrate-doltlab-databases)
+16. [Use custom Logo on DoltLab instance](#use-custom-logo)
+17. [Customize automated emails](#customize-automated-emails)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -563,3 +565,139 @@ Unlike [DoltHub](https://www.dolthub.com), DoltLab does not support automatic da
 3. Run `dolt migrate` in the cloned database.
 4. Add the remote of the new DoltLab database to the cloned database with `dolt remote add <remote name> http://<host ip>:50051/<owner>/<new db name>`.
 5. Push the migrated clone to the new database with `dolt push <remote name> <branch name>`.
+
+<h1 id="use-custom-logo">Use custom logo on DoltLab instance</h1>
+
+Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos used on DoltLab can have a maximum height of `24px` and a maximum width of `112px`. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab" below the custom logo.
+
+You can use a custom logo on DoltLab by creating an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
+
+```yaml
+# admin-config.yaml
+logo: /path/to/custom/logo.png
+```
+
+Add the field `logo` to the `admin-config.yaml` file with the absolute path of custom logo. `png`, `svg`, and `jpeg` are the supported image file types for the custom logo.
+
+Save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom logo in place of the DoltLab logo.
+
+<h1 id="customize-automated-emails">Customize automated emails</h1>
+
+Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
+
+* `email/collabInvite.txt` sent to invite user to be a database collaborator.
+* `email/invite.txt` sent to invite a user to join an organization.
+* `email/issueComment.txt` sent to notify user that an issue received a comment.
+* `email/issueState.txt` sent to notify user that an issue's state has changed.
+* `email/pullComment.txt` sent to notify user that a pull request received a comment.
+* `email/pullCommits.txt` sent to notify user that a pull request received a commit.
+* `email/pullReview.txt` sent to notify user that a pull request review's state has changed.
+* `email/pullState.txt` sent to notify user that a pull request's state has changed.
+* `email/recoverPassword.txt` sent to provide user with a link to reset their password.
+* `email/resetPassword.txt` sent to notify a user that their password has been reset.
+* `email/verify.txt` sent to a user to verify their email account.
+
+To alter the text within one of the above files, we recommend only changing the hardcoded text between the [Actions](https://pkg.go.dev/text/template#hdr-Actions) and replacing the use of `{{.App}}`, which normally evaluates to "DoltLab", with the name of your company or team.
+
+You should not change any template definitions, indicated with `{{define "some-template-name"}}` syntax, within these files as `doltlabapi` specifically uses these
+definitions.
+
+To better illustrate how to modify these files, let's look at an example. Here is the default `email/verify.txt` template:
+
+```
+{{define "verifySubject" -}}
+[{{.App}}] Please verify your email address.
+{{- end}}
+
+{{define "verifyHTML" -}}
+<html>
+	<body>
+		<p>To secure access to your {{.App}} account, we need you to verify your email address: {{.Address}}.
+		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
+		<p>You’re receiving this email because you created a new {{.App}} account or added a new email address. If this wasn’t you, please ignore this email.
+	</body>
+</html>
+{{- end}}
+
+{{define "verifyText" -}}
+Hi,
+
+To secure access to your {{.App}} account, we need you to verify your email address: {{.Address}}.
+
+Click the link below to verify your email address:
+
+{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
+
+You're receiving the email because you created a new {{.App}} account or added a new email address. If this wasn't you, please ignore this email.
+{{- end}}
+```
+
+Above, three templates are defined `verifySubject`, `verifyHTML`, and `verifyText`. We will not add or remove any of these templates and we won't change their names, but we will replace the `{{.App}}` field with the name of our company, Acme, Inc.'s DoltLab instance, "AcmeLab". We'll also modify the hardcoded text to be specific to our DoltLab instance's users.
+
+After replacing `{{.App}}` with "AcmeLab", our file looks like:
+
+```
+{{define "verifySubject" -}}
+[AcmeLab] Please verify your email address.
+{{- end}}
+
+{{define "verifyHTML" -}}
+<html>
+	<body>
+		<p>To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
+		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
+		<p>You’re receiving this email because you created a new AcmeLab account or added a new email address. If this wasn’t you, please ignore this email.
+	</body>
+</html>
+{{- end}}
+
+{{define "verifyText" -}}
+Hi,
+
+To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
+
+Click the link below to verify your email address:
+
+{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
+
+You're receiving the email because you created a new AcmeLab account or added a new email address. If this wasn't you, please ignore this email.
+{{- end}}
+```
+
+Lastly, let's customize this email with the contact information of our AcmeLab admin, in case users have any questions. We want to add the same
+information to the `verifyHTML` template and the `verifyText` template so that it appears for either supported email format:
+
+```
+{{define "verifySubject" -}}
+[AcmeLab] Please verify your email address.
+{{- end}}
+
+{{define "verifyHTML" -}}
+<html>
+	<body>
+    <p>Thank you for signing up for AcmeLab!
+		<p>To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
+		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
+		<p>You’re receiving this email because you created a new AcmeLab account or added a new email address. If this wasn’t you, please ignore this email.
+    <p> If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
+	</body>
+</html>
+{{- end}}
+
+{{define "verifyText" -}}
+Thank you for signing up for AcmeLab!
+
+To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
+
+Click the link below to verify your email address:
+
+{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
+
+You're receiving the email because you created a new AcmeLab account or added a new email address. If this wasn't you, please ignore this email.
+
+If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
+
+{{- end}}
+```
+
+Once we save our edits, we can restart our DoltLab instance for the changes to take affect.
