@@ -16,7 +16,7 @@ Stored Procedures are used to store code you want the database to execute when a
 
 ## Difference between MySQL Stored Procedures and Dolt Stored Procedures
 
-The goal is for Dolt stored procedures to match MySQL stored procedures exactly. As of now, Dolt triggers are missing some functionality, like the `DECLARE` statement. [Submit an issue](https://github.com/dolthub/dolt/issues) if you need more functionality.
+Dolt stored procedures match MySQL stored procedures exactly. 
 
 ## Interaction with Dolt Version Control
 
