@@ -26,7 +26,7 @@ Changing schema can be a costly operation. For instance, adding an index to a co
 
 ## Difference between MySQL Schema and Dolt Schema
 
-Dolt supports [all MySQL schema elements at least partially](../../../reference/sql/sql-support/data-description.md) except charsets and collations.
+Dolt supports [all MySQL schema elements at least partially](../../../reference/sql/sql-support/data-description.md).
 
 ## Interaction with Dolt Version Control
 
