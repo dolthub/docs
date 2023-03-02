@@ -20,7 +20,9 @@ You create indexes using the `CREATE INDEX` SQL statement.
 
 ## Difference between MySQL Secondary Indexes and Dolt Secondary Indexes
 
-Functionally, Dolt and MySQL indexes are equivalent.
+Functionally, Dolt and MySQL indexes are equivalent. 
+
+Additionally, Dolt indexes are versioned along with the core table they reference. Practically, this means querying a historical version is as fast as querying the current version because the index is intact for the historical version.
 
 ## Interaction with Dolt Version Control
 
