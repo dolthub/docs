@@ -16,7 +16,7 @@ Triggers are a general tool, but they are most commonly used to enforce complex 
 
 ## Difference between MySQL Triggers and Dolt Triggers
 
-The goal is for Dolt triggers to match MySQL triggers exactly. As of now, Dolt triggers are missing some functionality, like `IF/ELSE` syntax. [Submit an issue](https://github.com/dolthub/dolt/issues) if you need more functionality.
+Dolt triggers match MySQL triggers exactly. 
 
 ## Interaction with Dolt Version Control
 
