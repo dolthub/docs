@@ -16,9 +16,9 @@ To upgrade the server, download the latest Dolt binary for your platform and rep
 
 Dolt consumes CPU, Memory, and Disk. Consuming more of any of these resources than the host has available can lead to degraded performance. Use your system's built in resource monitoring systems to inspect Dolt's usage of these resources. You may need a larger host or additional [read replicas](./replication.md) to support your load.
 
-## Set your log level to TRACE
+## Set your log level to DEBUG or TRACE
 
-To see queries being run against the server, query results, and query latency set your Dolt log level to `DEBUG`. This can be done by starting the server like so `dolt sql-server --loglevel=debug` or by setting `log_level: debug` in your `config.yaml`.
+To see queries being run against the server, query results, and query latency set your Dolt log level to `DEBUG` or `TRACE`. This can be done by starting the server like so `dolt sql-server --loglevel=debug` or by setting `log_level: debug` in your `config.yaml`. Your logs should be visible in the shell you started `dolt sql-server` in.
 
 ## EXPLAIN for complex queries
 
