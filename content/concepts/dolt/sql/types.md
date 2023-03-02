@@ -20,7 +20,7 @@ When querying tables, the type of the column defines which functions can be used
 
 ## Difference between MySQL Types and Dolt Types
 
-Dolt supports [a subset of MYSQL types](../../../reference/sql/sql-support/data-description.md#data-types) but otherwise shares the same behavior.
+Dolt supports [all MYSQL types](../../../reference/sql/sql-support/data-description.md#data-types).
 
 ## Interaction with Dolt Version Control
 
