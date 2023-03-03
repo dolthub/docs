@@ -16,6 +16,7 @@ title: Dolt SQL Procedures
   - [dolt_fetch()](#dolt_fetch)
   - [dolt_gc()](#dolt_gc)
   - [dolt_merge()](#dolt_merge)
+  - [dolt_patch()](#dolt_patch)
   - [dolt_pull()](#dolt_pull)
   - [dolt_push()](#dolt_push)
   - [dolt_remote()](#dolt_remote)
