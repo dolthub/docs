@@ -18,12 +18,12 @@ A Dolt commit is different from a standard SQL transaction commit. Dolt supports
 
 Dolt uses commits as the basis of comparison between two versions of a database. You can ask Dolt to do things like:
 
-* Show me the differences between these two commits
-* Give me the common ancestor of these two commits
-* Make my current database look like this commit
-* Show me the difference between my current database and the last commit
-* Show me all the commits since this database was created
-* Show me who created this commit and the message they left when he or she made it
+- Show me the differences between these two commits
+- Give me the common ancestor of these two commits
+- Make my current database look like this commit
+- Show me the difference between my current database and the last commit
+- Show me all the commits since this database was created
+- Show me who created this commit and the message they left when he or she made it
 
 You should make a commit when you want to be able to use the current version of the database to do one of the above things.
 
@@ -40,6 +40,7 @@ In Dolt, you can create a commit via the SQL interface. There is no analogue in 
 ### Adding a table and making a commit
 
 #### CLI
+
 ```
 docs $ dolt sql -q "create table docs (pk int, primary key(pk))"
 docs $ dolt add .
@@ -58,9 +59,10 @@ Date:   Mon Dec 06 13:25:55 -0800 2021
 ```
 
 #### SQL
+
 ```
 docs $ dolt sql -q "create table docs_sql (pk int, primary key(pk))"
-docs $ dolt sql -q "select dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add')"
+docs $ dolt sql -q "call dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add')"
 +-------------------------------------------------------------------------------------------------------------------+
 | dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add') |
 +-------------------------------------------------------------------------------------------------------------------+
@@ -78,7 +80,7 @@ Date:   Thu Dec 02 16:55:00 -0800 2021
 
 	This is a commit
 
-docs $ dolt sql -q "select dolt_commit('-a', '--allow-empty', '-m', 'This is a commit')"
+docs $ dolt sql -q "call dolt_commit('-a', '--allow-empty', '-m', 'This is a commit')"
 +--------------------------------------------------------------+
 | dolt_commit('-a', '--allow-empty', '-m', 'This is a commit') |
 +--------------------------------------------------------------+

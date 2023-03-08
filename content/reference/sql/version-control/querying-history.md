@@ -106,14 +106,14 @@ docs](dolt-system-tables.md).
 Database views are an edge case for historical queries. When you have
 a database view whose definition has changed, querying it with `AS OF`
 will use the current definition of the view, but use rows from the
-tables as they existed at the revision provided. 
+tables as they existed at the revision provided.
 
 To query the historical definition of a view, you must checkout the
 database at a particular commit. You can do this by [changing your
 branch](./branches.md), e.g.:
 
 ```sql
-select dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
+call dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
 ```
 
 You can also do this without changing your session's branch by using a
@@ -170,7 +170,7 @@ view_test> select * from `view_test/81223g1cpmib215gmov8686b6310p37d`.v1;
 | 2 | 2 |
 +---+---+
 -- Select past data using past view definition by checking out a new branch
-view_test> select dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
+view_test> call dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
 view_test> select * from v1;
 +---+---+
 | a | b |
