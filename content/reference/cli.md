@@ -1946,7 +1946,7 @@ dolt stash drop <stash>
 
 Use dolt stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. 
 
-The command saves your local modifications away and reverts the working directory to match the HEAD commit.
+The command saves your local modifications away and reverts the working directory to match the HEAD commit. The stash entries that are saved away can be listed with 'dolt stash list'.
 
 
 **Arguments and options**
@@ -1962,12 +1962,15 @@ Remove all the stash entries.
 
 **Synopsis**
 
-
+```bash
+dolt stash clear 
+```
 
 **Description**
 
+Removes all the stash entries from the current stash list. This command cannot be reverted and stash entries may not be recoverable.
 
-Removes all the stash entries from the current stash list.
+This command does not apply the stash on current working directory, use 'dolt stash pop' to apply a stash on current working directory.
 
 **Arguments and options**
 
@@ -1985,8 +1988,9 @@ dolt stash drop <stash>
 
 **Description**
 
+Removes a single stash entry at given index from the list of stash entries (e.g. 'dolt stash drop stash@{1}' will drop the stash entry at index 1 in the stash list). 
 
-Removes a single stash entry at given index from the list of stash entries.
+This command does not apply the stash on current working directory, use 'dolt stash pop' to apply a stash on current working directory.
 
 **Arguments and options**
 
@@ -1998,11 +2002,15 @@ List the stash entries that you currently have.
 
 **Synopsis**
 
-
+```bash
+dolt stash list 
+```
 
 **Description**
 
-Each stash entry is listed with its name (e.g. stash@{0} is the latest entry, stash@{1} is the one before, etc.), the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.
+Each stash entry is listed with its name (e.g. stash@{0} is the latest entry, stash@{1} is the one before, etc.), 
+
+the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.
 
 
 **Arguments and options**
@@ -2021,9 +2029,9 @@ dolt stash pop <stash>
 
 **Description**
 
-Applying the state can fail with conflicts; in this case, it is not removed from the stash list. 
+Apply a single stash at given index and drop that stash entry from the stash list (e.g. 'dolt stash pop stash@{1}' will apply and drop the stash entry at index 1 in the stash list).
 
-You need to resolve the conflicts by hand and call dolt stash drop manually afterwards.
+Applying the stash entry can fail with conflicts; in this case, the stash entry is not removed from the stash list. You need to resolve the conflicts by hand and call dolt stash drop manually afterwards.
 
 
 **Arguments and options**
