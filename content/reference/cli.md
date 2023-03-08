@@ -734,7 +734,7 @@ filters columns based on values in the diff.  See `dolt diff --help` for details
 limits to the first N diffs.
 
 `-c`, `--cached`:
-Show only the unstaged data changes.
+Show only the staged data changes.
 
 `-sk`, `--skinny`:
 Shows only primary key columns and any columns with data changes.
@@ -1927,6 +1927,116 @@ Sets the port for a server which can expose the databases in this sql-server ove
 Provides a connection string to a MySQL instance to be user to validate query results
 
 
+
+## `dolt stash`
+
+Stash the changes in a dirty working directory away.
+
+**Synopsis**
+
+```bash
+dolt stash 
+dolt stash list
+dolt stash pop <stash>
+dolt stash clear
+dolt stash drop <stash>
+```
+
+**Description**
+
+Use dolt stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. 
+
+The command saves your local modifications away and reverts the working directory to match the HEAD commit. The stash entries that are saved away can be listed with 'dolt stash list'.
+
+
+**Arguments and options**
+
+`-u`, `--include-untracked`:
+All untracked files (added tables) are also stashed.
+
+
+
+## `dolt stash clear`
+
+Remove all the stash entries.
+
+**Synopsis**
+
+```bash
+dolt stash clear 
+```
+
+**Description**
+
+Removes all the stash entries from the current stash list. This command cannot be reverted and stash entries may not be recoverable.
+
+This command does not apply the stash on current working directory, use 'dolt stash pop' to apply a stash on current working directory.
+
+**Arguments and options**
+
+No options for this command.
+
+## `dolt stash drop`
+
+Remove a single stash entry.
+
+**Synopsis**
+
+```bash
+dolt stash drop <stash>
+```
+
+**Description**
+
+Removes a single stash entry at given index from the list of stash entries (e.g. 'dolt stash drop stash@{1}' will drop the stash entry at index 1 in the stash list). 
+
+This command does not apply the stash on current working directory, use 'dolt stash pop' to apply a stash on current working directory.
+
+**Arguments and options**
+
+No options for this command.
+
+## `dolt stash list`
+
+List the stash entries that you currently have.
+
+**Synopsis**
+
+```bash
+dolt stash list 
+```
+
+**Description**
+
+Each stash entry is listed with its name (e.g. stash@{0} is the latest entry, stash@{1} is the one before, etc.), 
+
+the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.
+
+
+**Arguments and options**
+
+No options for this command.
+
+## `dolt stash pop`
+
+Remove a single stash from the stash list and apply it on top of the current working set.
+
+**Synopsis**
+
+```bash
+dolt stash pop <stash>
+```
+
+**Description**
+
+Apply a single stash at given index and drop that stash entry from the stash list (e.g. 'dolt stash pop stash@{1}' will apply and drop the stash entry at index 1 in the stash list).
+
+Applying the stash entry can fail with conflicts; in this case, the stash entry is not removed from the stash list. You need to resolve the conflicts by hand and call dolt stash drop manually afterwards.
+
+
+**Arguments and options**
+
+No options for this command.
 
 ## `dolt status`
 
