@@ -50,7 +50,7 @@ title: Supported Statements
 | `CREATE DATABASE`       | ✅         | Creates a new dolt database rooted relative to the server directory                     |
 | `CREATE EVENT`          | ❌         |                                                                                         |
 | `CREATE FUNCTION`       | ❌         |                                                                                         |
-| `CREATE INDEX`          | 🟠        | Fulltext and spatial indexes are not supported.                                         |
+| `CREATE INDEX`          | 🟠         | Fulltext indexes are not supported.                                         |
 | `CREATE SCHEMA`         | ✅         | Creates a new dolt database rooted relative to the server directory                     |
 | `CREATE TABLE`          | ✅         |                                                                                         |
 | `CREATE TABLE AS`       | ❌         |                                                                                         |
