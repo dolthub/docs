@@ -17,6 +17,7 @@ title: Dolt SQL Functions
   - [dolt_diff_stat()](#dolt_diff_stat)
   - [dolt_diff_summary()](#dolt_diff_summary)
   - [dolt_log()](#dolt_log)
+  - [dolt_patch()](#dolt_patch)
 
 # Informational Functions
 
@@ -656,3 +657,159 @@ returns just `D`. `DOLT_LOG('main...feature')` and `DOLT_LOG('feature...main')`
 both return `F`, `E`, and `D`.
 
 Learn more about two vs three dot log [here](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log).
+
+## `DOLT_PATCH()`
+
+Generate the SQL statements needed to patch a table (or all tables) from a starting revision 
+to a target revision. This can be useful when you want to import data into Dolt from an external source, 
+compare differences, and generate the SQL statements needed to patch the original source. This command is
+equivalent of [`dolt diff -r sql` CLI command](../../cli.md#dolt-diff).
+Both schema and/or data diff statements are returned if applicable. Some data diff cannot be
+produced from incompatible schema changes; these are shown as warnings containing
+which table this occurred on.
+
+The order of the statements is that the schema patch comes first after the data patch. If patching all tables,
+then we recommend to turn off the foreign key checks before applying these patch statements in order of
+them returned to avoid conflicts.
+
+Getting SQL patch statements is only available as table function for now;
+the CLI `dolt patch` command will be supported in the future.
+
+### Privileges
+
+`DOLT_PATCH()` table function requires `SELECT` privilege for all tables if no table is defined or
+for the defined table only.
+
+### Options
+
+```sql
+DOLT_PATCH(<from_revision>, <to_revision>, <optional_tablename>)
+DOLT_PATCH(<from_revision..to_revision>, <optional_tablename>)
+DOLT_PATCH(<from_revision...to_revision>, <optional_tablename>)
+```
+
+The `DOLT_PATCH()` table function takes three arguments:
+
+- `from_revision` — the revision of the table data for the start of the patch. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `to_revision` — the revision of the table data for the end of the patch. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `from_revision..to_revision` — gets the two dot patch, or revision of table data between the `from_revision` and `to_revision`. This is equivalent to `dolt_patch(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot patch, or revision of table data between the `from_revision` and `to_revision`, _starting at the last common commit_.
+- `tablename` — the name of the table containing the data and/or schema to patch. This argument is optional. When it's not defined, all tables with data and/or schema patch will be returned.
+
+### Schema
+
+```text
++------------------+--------+
+| field            | type   |
++------------------+--------+
+| statement_order  | BIGINT |
+| from_commit_hash | TEXT   |
+| to_commit_hash   | TEXT   |
+| table_name       | TEXT   |
+| diff_type        | TEXT   |
+| statement        | TEXT   |
++------------------+--------+
+```
+
+### Example
+
+```sql
+-- Get schema and data diffs on all table changes from head of main branch to head of feature branch
+CALL DOLT_PATCH('main', 'feature');
++-------------------------------------------------------------------+
+| statement                                                         |
++-------------------------------------------------------------------+
+| CREATE TABLE `my_table` (                                         |
+|   `name` text                                                     |
+| ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
+| UPDATE `test_table` SET `col1`='Dolt' WHERE `id`=1;               |
+| INSERT INTO `test_table` (`id`,`col1`) VALUES (2,'DoltHub');      |
+| INSERT INTO `test_table` (`id`,`col1`) VALUES (3,'DoltLab');      |
++-------------------------------------------------------------------+
+```
+
+Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use
+the `DOLT_PATCH()` function to get SQL patch statements of the table data or all tables with data changes across specific
+commits.
+
+Here is the schema of `inventory` at the tip of `main`:
+
+```text
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| pk       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(50) | YES  |     | NULL    |       |
+| quantity | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+```
+
+Here is what table `inventory` has at the tip of `main`:
+
+```text
++----+-------+----------+
+| pk | name  | quantity |
++----+-------+----------+
+| 1  | shirt | 15       |
+| 2  | shoes | 10       |
++----+-------+----------+
+```
+
+We perform some changes to the `inventory` table and create new keyless table:
+
+```text
+INSERT INTO inventory VALUES (3, 'hat', 6);
+UPDATE inventory SET quantity=0 WHERE pk=1;
+CREATE TABLE items (name varchar(50));
+INSERT INTO items VALUES ('shirt'),('pants');
+```
+
+Here is what table `inventory` has in the current working set:
+
+```text
++----+-------+----------+
+| pk | name  | quantity |
++----+-------+----------+
+| 1  | shirt | 0        |
+| 2  | shoes | 10       |
+| 3  | hat   | 6        |
++----+-------+----------+
+```
+
+To get SQL patch statements, we run the following query:
+
+```sql
+SELECT * FROM DOLT_PATCH('main', 'WORKING');
+```
+
+The results from `DOLT_PATCH()` show how the data has changed going from tip of `main` to our current working set:
+
+```text
++-----------------+----------------------------------+----------------+------------+-----------+----------------------------------------------------------------------+
+| statement_order | from_commit_hash                 | to_commit_hash | table_name | diff_type | statement                                                            |
++-----------------+----------------------------------+----------------+------------+-----------+----------------------------------------------------------------------+
+| 1               | gg4kasjl6tgrtoag8tnn1der09sit4co | WORKING        | inventory  | data      | UPDATE `inventory` SET `quantity`=0 WHERE `pk`=1;                    |
+| 2               | gg4kasjl6tgrtoag8tnn1der09sit4co | WORKING        | inventory  | data      | INSERT INTO `inventory` (`pk`,`name`,`quantity`) VALUES (3,'hat',6); |
+| 3               | gg4kasjl6tgrtoag8tnn1der09sit4co | WORKING        | items      | schema    | CREATE TABLE `items` (                                               |
+|                 |                                  |                |            |           |   `name` varchar(50)                                                 |
+|                 |                                  |                |            |           | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin;    |
+| 4               | gg4kasjl6tgrtoag8tnn1der09sit4co | WORKING        | items      | data      | INSERT INTO `items` (`name`) VALUES ('shirt');                       |
+| 5               | gg4kasjl6tgrtoag8tnn1der09sit4co | WORKING        | items      | data      | INSERT INTO `items` (`name`) VALUES ('pants');                       |
++-----------------+----------------------------------+----------------+------------+-----------+----------------------------------------------------------------------+
+```
+
+To get a table specific schema patch going from the current working set to tip of `main`, we run the following query:
+
+```sql
+SELECT * FROM DOLT_PATCH('WORKING', 'main', 'items') WHERE diff_type = 'schema';
+```
+
+With result of single row:
+
+```text
++-----------------+------------------+----------------------------------+------------+-----------+---------------------+
+| statement_order | from_commit_hash | to_commit_hash                   | table_name | diff_type | statement           |
++-----------------+------------------+----------------------------------+------------+-----------+---------------------+
+| 1               | WORKING          | gg4kasjl6tgrtoag8tnn1der09sit4co | items      | schema    | DROP TABLE `items`; |
++-----------------+------------------+----------------------------------+------------+-----------+---------------------+
+```
