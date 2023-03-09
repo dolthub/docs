@@ -22,7 +22,7 @@ Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-f
 
 ## Versioned MySQL Replica
 
-Dolt can be deployed as a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/). Because Dolt is 100% MySQL compatible, Dolt can be configured just like any other MySQL replica. This allows you to get most of the features of a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/) without migrating from MySQL.
+Dolt can be deployed as a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/). Because Dolt is MySQL compatible, Dolt can be configured just like any other MySQL replica. This allows you to get most of the features of a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/) without migrating from MySQL.
 
 ##
 
