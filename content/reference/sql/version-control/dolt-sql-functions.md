@@ -713,21 +713,6 @@ The `DOLT_PATCH()` table function takes the following arguments:
 
 ### Example
 
-```sql
--- Get schema and data diffs on all table changes from head of main branch to head of feature branch
-CALL DOLT_PATCH('main', 'feature');
-+-------------------------------------------------------------------+
-| statement                                                         |
-+-------------------------------------------------------------------+
-| CREATE TABLE `my_table` (                                         |
-|   `name` text                                                     |
-| ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
-| UPDATE `test_table` SET `col1`='Dolt' WHERE `id`=1;               |
-| INSERT INTO `test_table` (`id`,`col1`) VALUES (2,'DoltHub');      |
-| INSERT INTO `test_table` (`id`,`col1`) VALUES (3,'DoltLab');      |
-+-------------------------------------------------------------------+
-```
-
 Consider we start with a table `inventory` in a database on `main` branch. When we make any changes, we can use
 the `DOLT_PATCH()` function to get SQL patch statements of the table data or all tables with data changes across specific
 commits.
