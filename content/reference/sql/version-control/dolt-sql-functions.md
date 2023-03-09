@@ -669,7 +669,7 @@ produced from incompatible schema changes; these are shown as warnings containin
 which table this occurred on.
 
 The order of the statements is that the schema patch comes first after the data patch. If patching all tables,
-then we recommend to turn off the foreign key checks before applying these patch statements in order of
+then we recommend to turn off the foreign key checks (`SET foreign_key_checks=0;`) before applying these patch statements in order of
 them returned to avoid conflicts.
 
 Getting SQL patch statements is only available as table function for now;
@@ -688,7 +688,7 @@ DOLT_PATCH(<from_revision..to_revision>, <optional_tablename>)
 DOLT_PATCH(<from_revision...to_revision>, <optional_tablename>)
 ```
 
-The `DOLT_PATCH()` table function takes three arguments:
+The `DOLT_PATCH()` table function takes the following arguments:
 
 - `from_revision` — the revision of the table data for the start of the patch. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
 - `to_revision` — the revision of the table data for the end of the patch. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
