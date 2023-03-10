@@ -16,7 +16,6 @@ title: Dolt SQL Procedures
   - [dolt_fetch()](#dolt_fetch)
   - [dolt_gc()](#dolt_gc)
   - [dolt_merge()](#dolt_merge)
-  - [dolt_patch()](#dolt_patch)
   - [dolt_pull()](#dolt_pull)
   - [dolt_push()](#dolt_push)
   - [dolt_remote()](#dolt_remote)
@@ -563,46 +562,6 @@ CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
 CALL DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
-```
-
-## `DOLT_PATCH()`
-
-Generate the SQL statements needed to patch a table (or all tables) from a starting revision to a target revision. This can be useful when you want to import data into Dolt from an external source, compare differences, and generate the SQL statements needed to patch the original source. This command is
-equivalent of [`dolt diff -r sql` CLI command](../../cli.md#dolt-diff). 
-It does not support two or three dots between revisions inputs yet.
-Both schema and data diff statements are returned. Some data diff cannot be
-produced from incompatible schema changes; these are shown as warnings containing
-which table this occurred on.
-
-This command is only available as stored procedure for now;
-the CLI `dolt patch` command will be supported in the future.
-
-```sql
-CALL DOLT_PATCH('--cached');
-CALL DOLT_PATCH('HEAD~2', 'my_table');
-CALL DOLT_PATCH('main', 'feature-branch');
-CALL DOLT_PATCH('main', 'feature-branch', 'test_table');
-```
-
-### Options
-
-`--cached`: Show only the staged data changes.
-
-### Example
-
-```sql
--- Get schema and data diffs on all table changes from head of main branch to head of feature branch
-CALL DOLT_PATCH('main', 'feature');
-+-------------------------------------------------------------------+
-| statement                                                         |
-+-------------------------------------------------------------------+
-| CREATE TABLE `my_table` (                                         |
-|   `name` text                                                     |
-| ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
-| UPDATE `test_table` SET `col1`='Dolt' WHERE `id`=1;               |
-| INSERT INTO `test_table` (`id`,`col1`) VALUES (2,'DoltHub');      |
-| INSERT INTO `test_table` (`id`,`col1`) VALUES (3,'DoltLab');      |
-+-------------------------------------------------------------------+
 ```
 
 ## `DOLT_PULL()`
