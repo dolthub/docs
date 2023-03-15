@@ -14,6 +14,7 @@
 - [Getting Started](introduction/getting-started.md)
   - [Version Controlled Database](introduction/getting-started/database.md)
   - [Git For Data](introduction/getting-started/git-for-data.md)
+  - [Versioned MySQL Replica](introduction/getting-started/versioned-mysql-replica.md)
   - [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
   - [Data Bounties](introduction/getting-started/data-bounties.md)
 - [Use Cases](introduction/use-cases.md)
