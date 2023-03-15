@@ -549,9 +549,9 @@ Take a minute to marvel at what we just did. We were able to identify what chang
 
 # Revert a bad change
 
-If you were running Dolt as the primary database, reverting a bad change is as simple as calling [`dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_revert). But since we're running Dolt as a replica, we need Dolt to produce a SQL patch to revert the bad changes. To do this, we're going to make a branch on the replica, revert the change, and then use the [`dolt_patch()` function](../../reference/sql/version-control/dolt-sql-functions#dolt_patch) to get the SQL we need to apply to our primary database.
+If you were running Dolt as the primary database, reverting a bad change is as simple as calling [`dolt_revert()`](reference/sql/version-control/dolt-sql-procedures#dolt_revert). But since we're running Dolt as a replica, we need Dolt to produce a SQL patch to revert the bad changes. To do this, we're going to make a branch on the replica, revert the change, and then use the [`dolt_patch()` function](reference/sql/version-control/dolt-sql-functions#dolt_patch) to get the SQL we need to apply to our primary database.
 
-First, we use [`call dolt_checkout()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_checkout) to create a branch. Our revert changes will now be isolated from the replicating branch, `main`.
+First, we use [`call dolt_checkout()`](reference/sql/version-control/dolt-sql-procedures#dolt_checkout) to create a branch. Our revert changes will now be isolated from the replicating branch, `main`.
 
 ```sql
 mysql> call dolt_checkout('-b', 'revert_bad_change');
@@ -563,7 +563,7 @@ mysql> call dolt_checkout('-b', 'revert_bad_change');
 1 row in set (0.02 sec)
 ```
 
-Then we revert the bad commit using [`call dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_revert).
+Then we revert the bad commit using [`call dolt_revert()`](reference/sql/version-control/dolt-sql-procedures#dolt_revert).
 
 ```sql
 mysql> call dolt_revert('123d9jc85evssjcrv6u5mlt5dg4lk6ss');
