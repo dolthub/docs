@@ -256,7 +256,7 @@ The new database `foo` and the table `t` along with it's single row have replica
 
 Now to show off the first new feature, the Dolt Commit log. The Dolt replica makes a Dolt commit after every transaction sent from the primary so you can see what changed and when.
 
-Dolt has a number of [system tables](../../reference/sql/version-control/dolt-system-tables#database-history-system-tables), [functions](../../reference/sql/version-control/dolt-sql-functions#table-functions), and [procedures](../../reference/sql/version-control/dolt-sql-procedures) to expose the version control features. These tables, functions, and procedures are inspired by their Git equivalents, so `git log` becomes the `dolt_log` system table. 
+Dolt has a number of [system tables](../../reference/sql/version-control/dolt-system-tables.md#database-history-system-tables), [functions](../../reference/sql/version-control/dolt-sql-functions.md#table-functions), and [procedures](../../reference/sql/version-control/dolt-sql-procedures.md) to expose the version control features. These tables, functions, and procedures are inspired by their Git equivalents, so `git log` becomes the `dolt_log` system table. 
 
 ```sql
 mysql> select * from dolt_log;
@@ -274,7 +274,7 @@ As you can see, we have a full audit history of the database going back to incep
 
 # Inspect a Diff
 
-Let's see what happened in the last transaction. I'm going to see what changed in table in the last commit using the [`dolt_diff()` table function](../../reference/sql/version-control/dolt-sql-functions#dolt_diff).
+Let's see what happened in the last transaction. I'm going to see what changed in table in the last commit using the [`dolt_diff()` table function](../../reference/sql/version-control/dolt-sql-functions.md#dolt_diff).
 
 ```sql
 mysql> select * from dolt_diff('t3bp704udfjcuo83hb7qjat8ltv1osea', 'h9hsr5ij8u9gml4nkqenm8alep1la1r9', 't');
@@ -478,7 +478,7 @@ Records: 2  Duplicates: 0  Warnings: 0
 
 Let's say in this case, people are reporting their historical salaries have changed. We have a clue that something is wrong in the database. Let's head over to the Dolt replica and see what's up.
 
-First, we want to find the changes in the last 10 transactions that touched the salaries table. To do this we use the unscoped [`dolt_diff` table](../../reference/sql/version-control/dolt-system-tables#dolt_diff) to see what tables changes in each commit.
+First, we want to find the changes in the last 10 transactions that touched the salaries table. To do this we use the unscoped [`dolt_diff` table](../../reference/sql/version-control/dolt-system-tables.md#dolt_diff) to see what tables changes in each commit.
 
 ```sql
 mysql> select * from dolt_diff where table_name='salaries' limit 10;
@@ -549,9 +549,9 @@ Take a minute to marvel at what we just did. We were able to identify what chang
 
 # Revert a bad change
 
-If you were running Dolt as the primary database, reverting a bad change is as simple as calling [`dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_revert). But since we're running Dolt as a replica, we need Dolt to produce a SQL patch to revert the bad changes. To do this, we're going to make a branch on the replica, revert the change, and then use the [`dolt_patch()` function](../../reference/sql/version-control/dolt-sql-functions#dolt_patch) to get the SQL we need to apply to our primary database.
+If you were running Dolt as the primary database, reverting a bad change is as simple as calling [`dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures.md#dolt_revert). But since we're running Dolt as a replica, we need Dolt to produce a SQL patch to revert the bad changes. To do this, we're going to make a branch on the replica, revert the change, and then use the [`dolt_patch()` function](../../reference/sql/version-control/dolt-sql-functions.md#dolt_patch) to get the SQL we need to apply to our primary database.
 
-First, we use [`call dolt_checkout()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_checkout) to create a branch. Our revert changes will now be isolated from the replicating branch, `main`.
+First, we use [`call dolt_checkout()`](../../reference/sql/version-control/dolt-sql-procedures.md#dolt_checkout) to create a branch. Our revert changes will now be isolated from the replicating branch, `main`.
 
 ```sql
 mysql> call dolt_checkout('-b', 'revert_bad_change');
@@ -563,7 +563,7 @@ mysql> call dolt_checkout('-b', 'revert_bad_change');
 1 row in set (0.02 sec)
 ```
 
-Then we revert the bad commit using [`call dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures#dolt_revert).
+Then we revert the bad commit using [`call dolt_revert()`](../../reference/sql/version-control/dolt-sql-procedures.md#dolt_revert).
 
 ```sql
 mysql> call dolt_revert('123d9jc85evssjcrv6u5mlt5dg4lk6ss');
@@ -587,7 +587,7 @@ mysql> select * from dolt_diff('HEAD^', 'HEAD', 'salaries');
 5 rows in set (0.00 sec)
 ```
 
-We use the `dolt_patch()` function to generate the sql we want to run on our primary.
+We use the [`dolt_patch()`](../../reference/sql/version-control/dolt-sql-functions.md#dolt_patch) function to generate the sql we want to run on our primary.
 
 ```sql
 mysql> call dolt_patch('HEAD^', 'HEAD');
