@@ -331,6 +331,9 @@ OSS credentials file.
 `--oss-creds-profile`:
 OSS profile to use.
 
+`-u`, `--user`:
+User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
+
 
 
 ## `dolt commit`
@@ -880,7 +883,10 @@ When no refspec(s) are specified on the command line, the fetch_specs for the de
 
 **Arguments and options**
 
-No options for this command.
+`-u`, `--user`:
+User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
+
+
 
 ## `dolt filter-branch`
 
@@ -975,6 +981,8 @@ Specify this flag to use the new storage format (__DOLT__).
 
 `--old-format`:
 Specify this flag to use the old storage format (__LD_1__).
+
+`--fun`
 
 
 
@@ -1209,6 +1217,9 @@ Perform the merge and stop just before creating a merge commit. Note this will n
 
 `--no-edit`:
 Use an auto-generated commit message when creating a merge commit. The default for interactive CLI sessions is to open an editor.
+
+`-u`, `--user`:
+User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
 
 
 
@@ -1574,6 +1585,63 @@ schema tag conflict.
 `<column>`: The name of the column
 
 `<tag>`: The new tag value
+
+
+
+## `dolt show`
+
+Show information about a specific commit
+
+**Synopsis**
+
+```bash
+dolt show [<revision>]
+```
+
+**Description**
+
+Show information about a specific commit
+
+**Arguments and options**
+
+`--parents`:
+Shows all parents of each commit in the log.
+
+`--decorate`:
+Shows refs next to commits. Valid options are short, full, no, and auto
+
+`-d`, `--data`:
+Show only the data changes, do not show the schema changes (Both shown by default).
+
+`-s`, `--schema`:
+Show only the schema changes, do not show the data changes (Both shown by default).
+
+`--stat`:
+Show stats of data changes
+
+`--summary`:
+Show summary of data and schema changes
+
+`-r`, `--result-format`:
+How to format diff output. Valid values are tabular, sql, json. Defaults to tabular.
+
+`--where`:
+filters columns based on values in the diff.  See `dolt diff --help` for details.
+
+`--limit`:
+limits to the first N diffs.
+
+`-c`, `--cached`:
+Show only the staged data changes.
+
+`-sk`, `--skinny`:
+Shows only primary key columns and any columns with data changes.
+
+`--merge-base`:
+Uses merge base of the first commit and second commit (or HEAD if not supplied) as the first commit
+
+`--diff-mode`:
+Determines how to display modified rows with tabular output. Valid values are row, line, in-place, context. Defaults to context.
 
 
 
@@ -2008,9 +2076,7 @@ dolt stash list
 
 **Description**
 
-Each stash entry is listed with its name (e.g. stash@{0} is the latest entry, stash@{1} is the one before, etc.), 
-
-the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.
+Each stash entry is listed with its name (e.g. stash@{0} is the latest entry, stash@{1} is the one before, etc.), the name of the branch that was current when the entry was made, and a short description of the commit the entry was based on.
 
 
 **Arguments and options**
