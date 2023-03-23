@@ -16,6 +16,47 @@ title: Miscellaneous
 | Cursors                           | ✅         |                                                                                                                       |
 | Triggers                          | ✅         |                                                                                                                       |
 
+## Join hints
+
+Dolt supports the following join hints:
+
+| name                     | supported | detail                                                                                           |
+|--------------------------|-----------|--------------------------------------------------------------------------------------------------|
+| JOIN_ORDER(<table1>,...) | ✅         | Join tree in scope should use the following join execution order. Must include all table names. |
+| LOOKUP_JOIN(<t1>,<t2>)   | ✅         | Use LOOKUP strategy joining two tables.                                                         |
+| MERGE_JOIN(<t1>,<t2>)    | ✅         | Use MERGE strategy joining two tables.                                                          |
+| HASH_JOIN(<t1>,<t2>)     | ✅         | Use HASH strategy joining two tables.                                                           |
+| INNER_JOIN(<t1>,<t2>)    | ✅         | Use INNER strategy joining two tables.                                                          |
+| SEMI_JOIN(<t1>,<t2>)     | ❌         | Use SEMI strategy joining two tables.                                                           |
+| ANTI_JOIN(<t1>,<t2>)     | ❌         | Use ANTI strategy joining two tables.                                                           |
+| JOIN_FIXED_ORDER         | ❌         | Join tree uses in-place table order for execution.                                              |
+| NO_ICP                   | ❌         | Disable indexed range scans on index using filters.                                             |
+
+Join hints are indicated immediately after a `SELECT` token in a special
+comment format `/*+ */`. Multiple hints should be separated by spaces:
+
+```sql
+SELECT /*+ JOIN_ORDER(arg1,arg2) */ 1
+SELECT /*+ JOIN_ORDER(arg1,arg2) NO_ICP */ 1
+```
+
+Join hints currently require a full set of valid hints for all to be
+applied. For example, if we have a three table join we can enforce
+JOIN_ORDER on its own, join strategies on their own, or both order
+and strategy:
+
+```sql
+SELECT /*+ JOIN_ORDER(xy,uv,ab) LOOKUP_JOIN(xy,uv) HASH_JOIN(uv,ab) */ 1
+FROM xy
+JOIN uv on x = u
+JOIN ab on a = u;
+```
+
+Additional notes:
+- If one hint is invalid given the execution options, no hints are applied and the engine falls back to default costing.
+- Join operator hints are order-insensitive
+- Join operator hints apply as long as the indicated tables are subsets of the join left/right.
+
 ## Collations and character sets
 
 Dolt supports a subset of the character sets and collations that MySQL supports.
