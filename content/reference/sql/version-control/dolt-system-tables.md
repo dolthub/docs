@@ -22,6 +22,7 @@ title: Dolt System Tables
   - [dolt_commit_diff\_$tablename](#dolt_commit_diff_usdtablename)
   - [dolt_commits](#dolt_commits)
   - [dolt_diff](#dolt_diff)
+  - [dolt_column_diff](#dolt_column_diff)
   - [dolt_diff\_$tablename](#dolt_diff_usdtablename)
   - [dolt_history\_$tablename](#dolt_history_usdtablename)
   - [dolt_log](#dolt_log)
@@ -754,6 +755,141 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 +--------------------+
 | 4501               |
 +--------------------+
+```
+
+## `dolt_column_diff`
+
+The `dolt_column_diff` system table shows which columns and tables in the current database were changed in each commit 
+reachable from the active branch's HEAD. When multiple columns are changed in a single commit, there is one row in the 
+`dolt_column_diff` system table for each column, all with the same commit hash. Any staged or unstaged changes in the 
+working set are included with the value `WORKING` for their `commit_hash`.
+
+### Schema
+
+The `DOLT_COLUMN_DIFF` system table has the following columns
+
+```text
++-------------+----------+
+| field       | Type     |
++-------------+----------+
+| commit_hash | text     |
+| table_name  | text     |
+| column_name | text     |
+| committer   | text     |
+| email       | text     |
+| date        | datetime |
+| message     | text     |
++-------------+----------+
+```
+
+### Query Details
+
+`dolt_column_diff` displays the changes from the current branch HEAD, including any working set changes. If a commit did not
+make any changes to tables _(e.g. an empty commit)_, it is not included in the `dolt_column_diff` results.
+
+### Example Query
+
+Taking the
+[`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players)
+database from [DoltHub](https://www.dolthub.com/) as our
+example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the game played stat was updated.
+
+```sql
+SELECT commit_hash, table_name
+FROM   dolt_column_diff
+WHERE  column_name = 'gp';
+```
+
+```text
++----------------------------------+------------------------------+-------------+
+| commit_hash                      | table_name                   | column_name |
++----------------------------------+------------------------------+-------------+
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_allstar        | gp          |
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_post_season    | gp          |
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_regular_season | gp          |
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_allstar        | gp          |
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_post_season    | gp          |
+| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_regular_season | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_allstar        | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_post_season    | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_regular_season | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_allstar        | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_post_season    | gp          |
+| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_regular_season | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_allstar        | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_post_season    | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_regular_season | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_post_season         | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_regular_season      | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_allstar        | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_post_season    | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_regular_season | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_allstar        | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_post_season    | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_regular_season | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_post_season         | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_regular_season      | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_allstar        | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_post_season    | gp          |
+| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_regular_season | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_allstar        | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_post_season    | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_regular_season | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | rankings_post_season         | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | rankings_regular_season      | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_allstar        | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_post_season    | gp          |
+| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_regular_season | gp          |
+| ii54ianm3v79gn67r90uj9usm2fsm1v2 | career_totals_post_season    | gp          |
+| ii54ianm3v79gn67r90uj9usm2fsm1v2 | career_totals_regular_season | gp          |
+| ii54ianm3v79gn67r90uj9usm2fsm1v2 | season_totals_post_season    | gp          |
+| ii54ianm3v79gn67r90uj9usm2fsm1v2 | season_totals_regular_season | gp          |
++----------------------------------+------------------------------+-------------+
+```
+
+From these results, we can see there were five unique commits to this database that updated the `gp` statistic. If we
+wanted to narrow in on a specific table in this list, we could use the following query to see how many times each statistic
+was updated over the course of all our commits:
+
+```sql
+SELECT column_name, count(commit_hash) as total_column_changes 
+FROM dolt_column_diff 
+WHERE table_name = 'rankings_regular_season' 
+GROUP BY column_name;
+```
+
+```text
++-------------------+----------------------+
+| column_name       | total_column_changes |
++-------------------+----------------------+
+| rank_fg3_pct      | 6                    |
+| rank_eff          | 6                    |
+| season_id         | 6                    |
+| team_id           | 6                    |
+| team_abbreviation | 6                    |
+| rank_ft_pct       | 6                    |
+| rank_reb          | 6                    |
+| rank_fg_pct       | 6                    |
+| rank_fga          | 6                    |
+| rank_ftm          | 6                    |
+| player_id         | 6                    |
+| rank_fgm          | 6                    |
+| rank_dreb         | 6                    |
+| rank_fg3a         | 6                    |
+| rank_stl          | 6                    |
+| rank_oreb         | 6                    |
+| rank_blk          | 6                    |
+| rank_fg3m         | 6                    |
+| rank_min          | 6                    |
+| rank_tov          | 6                    |
+| league_id         | 6                    |
+| rank_ast          | 6                    |
+| rank_pts          | 6                    |
+| rank_fta          | 6                    |
+| player_age        | 3                    |
+| gp                | 3                    |
+| gs                | 3                    |
++-------------------+----------------------+
 ```
 
 ## `dolt_diff_$TABLENAME`
