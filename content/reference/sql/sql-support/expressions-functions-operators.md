@@ -65,7 +65,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | \`                                | ✅         |                                                                       |
 | `*`                               | ✅         |                                                                       |
 | `+`                               | ✅         |                                                                       |
-| `->>`                             | ✅         |                                                                       |
+| `->>`                             | ❌         | Use equivalent JSON_UNQUOTE(JSON_EXTRACT()                            |
 | `->`                              | ✅         |                                                                       |
 | `-`                               | ✅         |                                                                       |
 | `/`                               | ✅         |                                                                       |
