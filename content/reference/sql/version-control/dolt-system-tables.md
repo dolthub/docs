@@ -22,6 +22,7 @@ title: Dolt System Tables
   - [dolt_commit_diff\_$tablename](#dolt_commit_diff_usdtablename)
   - [dolt_commits](#dolt_commits)
   - [dolt_diff](#dolt_diff)
+  - [dolt_column_diff](#dolt_column_diff)
   - [dolt_diff\_$tablename](#dolt_diff_usdtablename)
   - [dolt_history\_$tablename](#dolt_history_usdtablename)
   - [dolt_log](#dolt_log)
@@ -755,6 +756,128 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 | 4501               |
 +--------------------+
 ```
+
+## `dolt_column_diff`
+
+The `dolt_column_diff` system table shows which columns and tables in the current database were changed in each commit 
+reachable from the active branch's HEAD. When multiple columns are changed in a single commit, there is one row in the 
+`dolt_column_diff` system table for each column, all with the same commit hash. Any staged changes in the working set 
+are included with the value `STAGED` for their `commit_hash`. Any unstaged changes in the working set are included with 
+the value `WORKING` for their `commit_hash`.
+
+### Schema
+
+The `DOLT_COLUMN_DIFF` system table has the following columns
+
+```text
++-------------+----------+
+| field       | Type     |
++-------------+----------+
+| commit_hash | text     |
+| table_name  | text     |
+| column_name | text     |
+| committer   | text     |
+| email       | text     |
+| date        | datetime |
+| message     | text     |
++-------------+----------+
+```
+
+### Query Details
+
+`dolt_column_diff` displays the changes from the current branch HEAD, including any working set changes. If a commit did not
+make any changes to tables _(e.g. an empty commit)_, it is not included in the `dolt_column_diff` results.
+
+### Example Query
+
+Taking the
+[`dolthub/us-jails`](https://www.dolthub.com/repositories/dolthub/us-jails)
+database from [DoltHub](https://www.dolthub.com/) as our
+example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the source url was updated.
+
+```sql
+SELECT commit_hash, date 
+FROM dolt_column_diff 
+WHERE column_name = 'source_url';
+```
+
+```text
++----------------------------------+-------------------------+
+| commit_hash                      | date                    |
++----------------------------------+-------------------------+
+| i3f3orlfmbjgqnst90c8r96jps7tdtv9 | 2022-06-14 19:11:58.402 |
+| ubu61jhc3qp1d28035ee3kd105ao10q1 | 2022-06-14 06:40:23.19  |
+| gora1aioouji9j3858n928g84en6b17b | 2022-06-02 19:25:54.407 |
+| bg7c1miq9rpbhfhnlebtlmpdvt3u898j | 2022-05-28 04:56:12.894 |
+| 4dgdn1ur42cuk18sin7olt8fnaik5d9b | 2022-05-19 19:28:49.013 |
+| 3c2mb901bm3m1erc3k3ojad950v694ad | 2022-05-18 18:09:27.142 |
+| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
+| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
+| dj11kqhja290f9vut5i8jhdg3hun4e1v | 2022-05-19 19:26:53.179 |
+| 6p9ho1qgjbsgaf810k6u4f5mhqfti82o | 2022-05-18 00:26:43.743 |
+| ...                              |                         |
++----------------------------------+-------------------------+
+```
+
+If we narrow in on the `inmate_population_snapshots` table we can count the number of commits that updated each column
+over the course of all our commits.
+
+```sql
+SELECT column_name, count(commit_hash) as total_column_changes 
+FROM dolt_column_diff 
+WHERE table_name = 'inmate_population_snapshots' 
+GROUP BY column_name;
+```
+
+```text
++----------------------------+----------------------+
+| column_name                | total_column_changes |
++----------------------------+----------------------+
+| source_url_2               | 34                   |
+| id                         | 63                   |
+| snapshot_date              | 63                   |
+| total                      | 62                   |
+| male                       | 25                   |
+| source_url                 | 64                   |
+| total_off_site             | 16                   |
+| female                     | 25                   |
+| on_probation               | 3                    |
+| technical_parole_violators | 16                   |
+| federal_offense            | 22                   |
+| convicted_or_sentenced     | 26                   |
+| detained_or_awaiting_trial | 33                   |
+| civil_offense              | 7                    |
+| awaiting_trial             | 4                    |
+| convicted                  | 4                    |
+| other_gender               | 4                    |
+| white                      | 7                    |
+| back                       | 1                    |
+| hispanic                   | 4                    |
+| asian                      | 7                    |
+| american_indian            | 7                    |
+| mexican_american           | 1                    |
+| multi_racial               | 4                    |
+| other_race                 | 7                    |
+| on_parole                  | 1                    |
+| felony                     | 18                   |
+| misdemeanor                | 18                   |
+| other_offense              | 6                    |
+| first_time_incarcerated    | 1                    |
+| employed                   | 1                    |
+| unemployed                 | 1                    |
+| citizen                    | 1                    |
+| noncitizen                 | 1                    |
+| juvenile                   | 4                    |
+| juvenile_male              | 1                    |
+| juvenile_female            | 1                    |
+| death_row_condemned        | 1                    |
+| solitary_confinement       | 1                    |
+| black                      | 6                    |
++----------------------------+----------------------+
+```
+
+From these results, we can see that fields describing the reasons an inmate is being held are being updated far more 
+frequently than the fields holding demographic information about inmates.
 
 ## `dolt_diff_$TABLENAME`
 
