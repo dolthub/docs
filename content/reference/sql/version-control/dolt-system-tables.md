@@ -761,8 +761,9 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 
 The `dolt_column_diff` system table shows which columns and tables in the current database were changed in each commit 
 reachable from the active branch's HEAD. When multiple columns are changed in a single commit, there is one row in the 
-`dolt_column_diff` system table for each column, all with the same commit hash. Any staged or unstaged changes in the 
-working set are included with the value `WORKING` for their `commit_hash`.
+`dolt_column_diff` system table for each column, all with the same commit hash. Any staged changes in the working set 
+are included with the value `STAGED` for their `commit_hash`. Any unstaged changes in the working set are included with 
+the value `WORKING` for their `commit_hash`.
 
 ### Schema
 
@@ -790,107 +791,93 @@ make any changes to tables _(e.g. an empty commit)_, it is not included in the `
 ### Example Query
 
 Taking the
-[`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players)
+[`dolthub/us-jails`](https://www.dolthub.com/repositories/dolthub/us-jails)
 database from [DoltHub](https://www.dolthub.com/) as our
-example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the game played stat was updated.
+example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the source url was updated.
 
 ```sql
-SELECT commit_hash, table_name
-FROM   dolt_column_diff
-WHERE  column_name = 'gp';
+SELECT commit_hash, date 
+FROM dolt_column_diff 
+WHERE column_name = 'source_url';
 ```
 
 ```text
-+----------------------------------+------------------------------+-------------+
-| commit_hash                      | table_name                   | column_name |
-+----------------------------------+------------------------------+-------------+
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_allstar        | gp          |
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_post_season    | gp          |
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | career_totals_regular_season | gp          |
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_allstar        | gp          |
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_post_season    | gp          |
-| jm0d2j8doi3mj1n4nu1lr530r5fqle5r | season_totals_regular_season | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_allstar        | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_post_season    | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | career_totals_regular_season | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_allstar        | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_post_season    | gp          |
-| 41il57n6opimpubmacng9cvh1hmi92t5 | season_totals_regular_season | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_allstar        | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_post_season    | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_regular_season | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_post_season         | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_regular_season      | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_allstar        | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_post_season    | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_regular_season | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_allstar        | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_post_season    | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | career_totals_regular_season | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_post_season         | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | rankings_regular_season      | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_allstar        | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_post_season    | gp          |
-| chcg5skg8gb1be475bmab5uuucsb8ps7 | season_totals_regular_season | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_allstar        | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_post_season    | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | career_totals_regular_season | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | rankings_post_season         | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | rankings_regular_season      | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_allstar        | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_post_season    | gp          |
-| o7p3tki7kc7v8s40s0dtn1mf6rksh1qt | season_totals_regular_season | gp          |
-| ii54ianm3v79gn67r90uj9usm2fsm1v2 | career_totals_post_season    | gp          |
-| ii54ianm3v79gn67r90uj9usm2fsm1v2 | career_totals_regular_season | gp          |
-| ii54ianm3v79gn67r90uj9usm2fsm1v2 | season_totals_post_season    | gp          |
-| ii54ianm3v79gn67r90uj9usm2fsm1v2 | season_totals_regular_season | gp          |
-+----------------------------------+------------------------------+-------------+
++----------------------------------+-------------------------+
+| commit_hash                      | date                    |
++----------------------------------+-------------------------+
+| i3f3orlfmbjgqnst90c8r96jps7tdtv9 | 2022-06-14 19:11:58.402 |
+| ubu61jhc3qp1d28035ee3kd105ao10q1 | 2022-06-14 06:40:23.19  |
+| gora1aioouji9j3858n928g84en6b17b | 2022-06-02 19:25:54.407 |
+| bg7c1miq9rpbhfhnlebtlmpdvt3u898j | 2022-05-28 04:56:12.894 |
+| 4dgdn1ur42cuk18sin7olt8fnaik5d9b | 2022-05-19 19:28:49.013 |
+| 3c2mb901bm3m1erc3k3ojad950v694ad | 2022-05-18 18:09:27.142 |
+| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
+| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
+| dj11kqhja290f9vut5i8jhdg3hun4e1v | 2022-05-19 19:26:53.179 |
+| 6p9ho1qgjbsgaf810k6u4f5mhqfti82o | 2022-05-18 00:26:43.743 |
+| ...                              |                         |
++----------------------------------+-------------------------+
 ```
 
-From these results, we can see there were five unique commits to this database that updated the `gp` statistic. If we
-wanted to narrow in on a specific table in this list, we could use the following query to see how many times each statistic
-was updated over the course of all our commits:
+If we narrow in on the `inmate_population_snapshots` table we can count the number of commits that updated each column
+over the course of all our commits.
 
 ```sql
 SELECT column_name, count(commit_hash) as total_column_changes 
 FROM dolt_column_diff 
-WHERE table_name = 'rankings_regular_season' 
+WHERE table_name = 'inmate_population_snapshots' 
 GROUP BY column_name;
 ```
 
 ```text
-+-------------------+----------------------+
-| column_name       | total_column_changes |
-+-------------------+----------------------+
-| rank_fg3_pct      | 6                    |
-| rank_eff          | 6                    |
-| season_id         | 6                    |
-| team_id           | 6                    |
-| team_abbreviation | 6                    |
-| rank_ft_pct       | 6                    |
-| rank_reb          | 6                    |
-| rank_fg_pct       | 6                    |
-| rank_fga          | 6                    |
-| rank_ftm          | 6                    |
-| player_id         | 6                    |
-| rank_fgm          | 6                    |
-| rank_dreb         | 6                    |
-| rank_fg3a         | 6                    |
-| rank_stl          | 6                    |
-| rank_oreb         | 6                    |
-| rank_blk          | 6                    |
-| rank_fg3m         | 6                    |
-| rank_min          | 6                    |
-| rank_tov          | 6                    |
-| league_id         | 6                    |
-| rank_ast          | 6                    |
-| rank_pts          | 6                    |
-| rank_fta          | 6                    |
-| player_age        | 3                    |
-| gp                | 3                    |
-| gs                | 3                    |
-+-------------------+----------------------+
++----------------------------+----------------------+
+| column_name                | total_column_changes |
++----------------------------+----------------------+
+| source_url_2               | 34                   |
+| id                         | 63                   |
+| snapshot_date              | 63                   |
+| total                      | 62                   |
+| male                       | 25                   |
+| source_url                 | 64                   |
+| total_off_site             | 16                   |
+| female                     | 25                   |
+| on_probation               | 3                    |
+| technical_parole_violators | 16                   |
+| federal_offense            | 22                   |
+| convicted_or_sentenced     | 26                   |
+| detained_or_awaiting_trial | 33                   |
+| civil_offense              | 7                    |
+| awaiting_trial             | 4                    |
+| convicted                  | 4                    |
+| other_gender               | 4                    |
+| white                      | 7                    |
+| back                       | 1                    |
+| hispanic                   | 4                    |
+| asian                      | 7                    |
+| american_indian            | 7                    |
+| mexican_american           | 1                    |
+| multi_racial               | 4                    |
+| other_race                 | 7                    |
+| on_parole                  | 1                    |
+| felony                     | 18                   |
+| misdemeanor                | 18                   |
+| other_offense              | 6                    |
+| first_time_incarcerated    | 1                    |
+| employed                   | 1                    |
+| unemployed                 | 1                    |
+| citizen                    | 1                    |
+| noncitizen                 | 1                    |
+| juvenile                   | 4                    |
+| juvenile_male              | 1                    |
+| juvenile_female            | 1                    |
+| death_row_condemned        | 1                    |
+| solitary_confinement       | 1                    |
+| black                      | 6                    |
++----------------------------+----------------------+
 ```
+
+From these results, we can see that fields describing the reasons an inmate is being held are being updated far more 
+frequently than the fields holding demographic information about inmates.
 
 ## `dolt_diff_$TABLENAME`
 
