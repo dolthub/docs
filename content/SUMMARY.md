@@ -78,6 +78,7 @@
 
 - [MySQL to Dolt Replication](guides/binlog-replication.md)
 - [Importing Data](guides/import.md)
+- [Transforming File Uploads](guides/transform-uploads.md)
 
 ## SQL Reference
 
