@@ -713,14 +713,14 @@ You can specify custom RGB values for DoltLab's assets by defining them in an `a
 # admin-config.yaml
 theme:
   custom:
-    rbg_accent_1: "252, 66, 201"
-    rbg_background_accent_1: "24, 33, 52"
-    rbg_background_gradient_start: "31, 41, 66",
-    rbg_button_1: "61, 145, 240"
-    rbg_button_2: "31, 109, 198"
-    rbg_link_1: "31, 109, 198"
-    rbg_link_2: "61, 145, 240"
-    rbg_link_light: "109, 176, 252"
+    rgb_accent_1: "252, 66, 201"
+    rgb_background_accent_1: "24, 33, 52"
+    rgb_background_gradient_start: "31, 41, 66"
+    rgb_button_1: "61, 145, 240"
+    rgb_button_2: "31, 109, 198"
+    rgb_link_1: "31, 109, 198"
+    rgb_link_2: "61, 145, 240"
+    rgb_link_light: "109, 176, 252"
 ```
 
 Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
