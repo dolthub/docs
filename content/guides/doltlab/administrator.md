@@ -22,6 +22,7 @@ the following information can help DoltLab Admins manually perform some common a
 15. [Migrate Old Format DoltLab Databases](#migrate-doltlab-databases)
 16. [Use custom Logo on DoltLab instance](#use-custom-logo)
 17. [Customize automated emails](#customize-automated-emails)
+18. [Customize DoltLab colors](#customize-colors)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -701,3 +702,27 @@ If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
 ```
 
 Once we save our edits, we can restart our DoltLab instance for the changes to take affect.
+
+<h1 id="customize-colors">Customize DoltLab colors</h1>
+
+Starting with DoltLab `v0.8.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
+
+You can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
+
+```yaml
+# admin-config.yaml
+theme:
+  custom:
+    rbg_accent_1: "252, 66, 201"
+    rbg_background_accent_1: "24, 33, 52"
+    rbg_background_gradient_start: "31, 41, 66",
+    rbg_button_1: "61, 145, 240"
+    rbg_button_2: "31, 109, 198"
+    rbg_link_1: "31, 109, 198"
+    rbg_link_2: "61, 145, 240"
+    rbg_link_light: "109, 176, 252"
+```
+
+Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
+
+After adding your custom values, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom colors across the site.
