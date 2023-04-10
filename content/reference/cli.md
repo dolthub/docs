@@ -4,6 +4,53 @@ title: CLI
 
 # CLI
 
+```
+$ dolt
+Valid commands for dolt are
+                init - Create an empty Dolt data repository.
+              status - Show the working tree status.
+                 add - Add table changes to the list of staged table changes.
+                diff - Diff a table.
+               reset - Remove table changes from the list of staged table changes.
+               clean - Remove untracked tables from working set.
+              commit - Record changes to the repository.
+                 sql - Run a SQL query against tables in repository.
+          sql-server - Start a MySQL-compatible server.
+          sql-client - Starts a built-in MySQL client.
+                 log - Show commit logs.
+                show - Show information about a specific commit.
+              branch - Create, list, edit, delete branches.
+            checkout - Checkout a branch or overwrite a table from HEAD.
+               merge - Merge a branch.
+           conflicts - Commands for viewing and resolving merge conflicts.
+         cherry-pick - Apply the changes introduced by an existing commit.
+              revert - Undo the changes introduced in a commit.
+               clone - Clone from a remote data repository.
+               fetch - Update the database from a remote data repository.
+                pull - Fetch from a dolt remote data repository and merge.
+                push - Push to a dolt remote.
+              config - Dolt configuration.
+              remote - Manage set of tracked repositories.
+              backup - Manage a set of server backups.
+               login - Login to a dolt remote host.
+               creds - Commands for managing credentials.
+                  ls - List tables in the working set.
+              schema - Commands for showing and importing table schemas.
+               table - Commands for copying, renaming, deleting, and exporting tables.
+                 tag - Create, list, delete tags.
+               blame - Show what revision and author last modified each row of a table.
+         constraints - Commands for handling constraints.
+             migrate - Executes a database migration to use the latest Dolt data format.
+         read-tables - Fetch table(s) at a specific commit into a new dolt repo
+                  gc - Cleans up unreferenced data from the repository.
+       filter-branch - Edits the commit history using the provided query.
+          merge-base - Find the common ancestor of two commits.
+             version - Displays the current Dolt cli version.
+                dump - Export all tables in the working set into a file.
+                docs - Commands for working with Dolt documents.
+               stash - Stash the changes in a dirty working directory away.
+```
+
 ## `dolt add`
 
 Add table contents to the list of staged tables
