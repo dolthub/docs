@@ -18,6 +18,8 @@ Stored Procedures are used to store code you want the database to execute when a
 
 Dolt stored procedures match MySQL stored procedures exactly. 
 
+Dolt exposes custom [stored procedures for version control operations](../../../reference/sql/version-control/dolt-sql-procedures.md). These are named after the corresponding Dolt commands.  
+
 ## Interaction with Dolt Version Control
 
 Procedures are versioned in the `dolt_procedures` table. You add and commit that table just like any other changed table after you create or modify a trigger.
