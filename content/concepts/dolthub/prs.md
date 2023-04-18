@@ -57,7 +57,7 @@ us_schools> exit;
 Bye
 ```
 
-We can look at the [diff](../dolt/diff.md) of our changes. If they look good we add and [commit](../dolt/commits.md) the changed table and push our branch to DoltHub.
+We can look at the [diff](../dolt/git/diff.md) of our changes. If they look good we add and [commit](../dolt/git/commits.md) the changed table and push our branch to DoltHub.
 
 ```
 % dolt diff
