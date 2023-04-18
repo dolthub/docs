@@ -8,7 +8,7 @@ olt is the world's first version controlled SQL database.
 
 How would you build a version controlled SQL database? This article will start with some of the high level requirements, explain some possible architecture options, and then explain the actual building blocks used to build Dolt. 
 
-![Architecture Icon](../images/architecture-icon.png)
+![Architecture Icon](../.gitbook/assets/architecture-icon.png)
 
 # Requirements
 
@@ -26,7 +26,7 @@ So, to recap, to make data sharing easier, we needed a modern SQL relational dat
 
 ## SQL Database
 
-![SQL Database Icon](../images/sql-icon.png)
+![SQL Database Icon](../.gitbook/assets/sql-icon.png)
 
 ### Tables
 
@@ -42,7 +42,7 @@ Modern databases support concurrent access via multiple clients. Dolt could work
 
 ## Version Control
 
-![Version Control Icon](../images/version-control-icon.png)
+![Version Control Icon](../.gitbook/assets/version-control-icon.png)
 
 ### Storage Compression
 
@@ -74,13 +74,13 @@ Not really. We leveraged three existing open source packages:
 
 Dolt itself implements all the glue code to stitch these three open source projects into world's first version controlled SQL database. As you can see there is no Git or MySQL code in Dolt though Dolt implements Git and MySQL interfaces.
 
-![Dolt Architecture](../images/dolt-architecture.png)
+![Dolt Architecture](../.gitbook/assets/dolt-architecture.png)
 
 We've been working on Dolt since 2018. We've forked and heavily modified all three of these packages since to fit our use case. Our forks are [also open source](https://github.com/dolthub).
 
 ## Noms
 
-![Noms](../images/noms.png)
+![Noms](../.gitbook/assets/noms.png)
 
 [Noms](https://github.com/attic-labs/noms) pioneered a data storage engine with Git properties. Noms built a content-addressed B-tree called a [Prolly tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree) that had seek performance characteristics of a B-tree but also provided fast diff. You could stick the root content addresses of Prolly trees in a Merkle DAG to achieve versioning similar to Git with shared storage across versions.
 
@@ -92,7 +92,7 @@ We heavily modified Noms to fit the SQL database use case. We kept the Noms mode
 
 ## `go-mysql-server`
 
-![go-mysql-server](../images/go-mysql-server-small.png)
+![go-mysql-server](../.gitbook/assets/go-mysql-server-small.png)
 
 Originally developed by [src-d](https://github.com/src-d), [`go-mysql-server`](https://github.com/dolthub/go-mysql-server) is a pure Golang embeddable SQL engine. src-d went out of business in 2018 and [with src-d's blessing our fork of `go-mysql-server`](https://www.dolthub.com/blog/2020-05-04-adopting-go-mysql-server/) became the primary `go-mysql-server` project. 
 
@@ -104,7 +104,7 @@ Most other users of `go-mysql-server` use it to test their MySQL applications wi
 
 ## Vitess
 
-![Vitess Logo](../images/vitess-horizontal.png)
+![Vitess Logo](../.gitbook/assets/vitess-horizontal.png)
 
 Vitess is used by `go-mysql-server` for SQL parsing and serving. We quickly forked it to [remove 90% of the functionality we did not need](https://www.dolthub.com/blog/2020-09-23-vitess-pruning/). We've heavily modified our fork since to support much more SQL syntax.
 
