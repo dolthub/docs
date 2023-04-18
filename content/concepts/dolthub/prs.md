@@ -6,7 +6,7 @@ title: Pull Requests
 
 ## What is a pull request?
 
-Pull requests are a way to propose changes to a database. A pull request is created from a [branch](../dolt/branch.md) with new changes that a user would like to make to another branch (commonly the `main` or `master` branch). Once the pull request is opened, the reviewer can easily review the [diff](../dolt/diff.md) of the proposed changes and discuss potential improvements or implications of the change. If approved, the pull request can be merged, which will update the base branch with the changes from the feature branch.
+Pull requests are a way to propose changes to a database. A pull request is created from a [branch](../dolt/git/branch.md) with new changes that a user would like to make to another branch (commonly the `main` or `master` branch). Once the pull request is opened, the reviewer can easily review the [diff](../dolt/git/diff.md) of the proposed changes and discuss potential improvements or implications of the change. If approved, the pull request can be merged, which will update the base branch with the changes from the feature branch.
 
 ![Diagram of pull request]()
 
