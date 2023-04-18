@@ -6,15 +6,15 @@ title: Architecture
 
 Dolt is the world's first version controlled SQL database.
 
-How would you build a version controlled SQL database? We will start with some of the high level requirements, explain some possible architecture options, and then explain the actual building blocks used to build Dolt. 
+How would you build a version controlled SQL database? We will start with some of the high level requirements, explain some possible architecture options, and then explain the actual building blocks used to build Dolt.
 
-![Architecture Icon](../.gitbook/assets/architecture-icon.png)
+![](../.gitbook/assets/architecture-icon.png)
 
 # Requirements
 
-Dolt started with the idea that data was too hard to share. "Share" is a loaded word here. Share in this context means distribute, collaborate on, change, buy, and sell. 
+Dolt started with the idea that data was too hard to share. "Share" is a loaded word here. Share in this context means distribute, collaborate on, change, buy, and sell.
 
-Most data was and still is shared as comma separated value (CSV) files. CSVs are easy to build and consume but hard to change. If you need to modify data distributed as a CSV, it becomes a pain to merge those changes back into the "main" copy. You can do it with a tool like Git but the rows and columns must be sorted in the same way as you received them or you will get nonsensical diffs and merge conflicts. 
+Most data was and still is shared as comma separated value (CSV) files. CSVs are easy to build and consume but hard to change. If you need to modify data distributed as a CSV, it becomes a pain to merge those changes back into the "main" copy. You can do it with a tool like Git but the rows and columns must be sorted in the same way as you received them or you will get nonsensical diffs and merge conflicts.
 
 We thought if we added diff, branch, and merge to data in some way, data would be easier to share. The standard for diff, branch, and merge is Git. We wanted to mimic the Git model of version control for data because almost every developer is at least passingly familiar with Git.
 
@@ -22,11 +22,11 @@ The more complicated the data, the harder sharing becomes. CSVs map to individua
 
 Much farther along on the journey of building Dolt we realized a version controlled database was a generally useful tool beyond data sharing. Now, Dolt is used to power reproducible models, add version control to an application, provide audit history of sensitive data, or as a version controlled replica of an existing database. Dolt can be used instead of or in addition to your existing database for powerful version control features like diff, branch, and merge, not just to share the data inside it.
 
-So, to recap, to make data sharing easier, we needed a modern SQL relational database with version control capabilities in the style of Git. Let's break those two requirements a bit further. 
+So, to recap, to make data sharing easier, we needed a modern SQL relational database with version control capabilities in the style of Git. Let's break those two requirements a bit further.
 
 ## SQL Database
 
-![SQL Database Icon](../.gitbook/assets/sql-icon.png)
+![](../.gitbook/assets/sql-icon.png)
 
 ### Tables
 
@@ -34,7 +34,7 @@ A SQL database is a collection of tables. Tables have rows and columns. The colu
 
 ### Performance at Scale
 
-A modern relational database must be performant at large scale. In particular, sub-linear worst case scaling on seek (ie. select) is a must. 
+A modern relational database must be performant at large scale. In particular, sub-linear worst case scaling on seek (ie. select) is a must.
 
 ### Concurrent Access
 
@@ -42,7 +42,7 @@ Modern databases support concurrent access via multiple clients. Dolt could work
 
 ## Version Control
 
-![Version Control Icon](../.gitbook/assets/version-control-icon.png)
+![](../.gitbook/assets/version-control-icon.png)
 
 ### Storage Compression
 
@@ -54,7 +54,7 @@ Comparing and producing the differences between two versions must be fast. Displ
 
 ### Single Program
 
-We also wanted to mimic the Git command line interface but for data. Git is intended to be used in a decentralized manner. Every user has a copy of Git and the files Git is operating on on their local machine. We wanted to keep this model with Dolt. So, we wanted Dolt to be a single, easily installed program. 
+We also wanted to mimic the Git command line interface but for data. Git is intended to be used in a decentralized manner. Every user has a copy of Git and the files Git is operating on on their local machine. We wanted to keep this model with Dolt. So, we wanted Dolt to be a single, easily installed program.
 
 # Where we Started
 
@@ -66,7 +66,7 @@ To achieve the SQL database requirements, we looked at the most popular open sou
 
 # Oh God. You built a SQL database from scratch?!?
 
-Not really. We leveraged three existing open source packages: 
+Not really. We leveraged three existing open source packages:
 
 1. [Noms](https://github.com/attic-labs/noms) for version controlled storage.
 2. [go-mysql-server](https://github.com/dolthub/go-mysql-server) for our SQL engine.
@@ -80,7 +80,7 @@ We've been working on Dolt since 2018. We've forked and heavily modified all thr
 
 ## Noms
 
-![Noms](../.gitbook/assets/noms.png)
+![](../.gitbook/assets/noms.png)
 
 [Noms](https://github.com/attic-labs/noms) pioneered a data storage engine with Git properties. Noms built a content-addressed B-tree called a [Prolly tree](./storage-engine/prolly-tree.md) that had seek performance characteristics of a B-tree but also provided fast diff. You could stick the root content addresses of Prolly trees in a Merkle DAG to achieve versioning similar to Git with shared storage across versions.
 
@@ -92,9 +92,9 @@ We heavily modified Noms to fit the SQL database use case. We kept the Noms mode
 
 ## `go-mysql-server`
 
-![go-mysql-server](../.gitbook/assets/go-mysql-server-small.png)
+![](../.gitbook/assets/go-mysql-server-small.png)
 
-Originally developed by [src-d](https://github.com/src-d), [`go-mysql-server`](https://github.com/dolthub/go-mysql-server) is a pure Golang embeddable SQL engine. src-d went out of business in 2018 and [with src-d's blessing our fork of `go-mysql-server`](https://www.dolthub.com/blog/2020-05-04-adopting-go-mysql-server/) became the primary `go-mysql-server` project. 
+Originally developed by [src-d](https://github.com/src-d), [`go-mysql-server`](https://github.com/dolthub/go-mysql-server) is a pure Golang embeddable SQL engine. src-d went out of business in 2018 and [with src-d's blessing our fork of `go-mysql-server`](https://www.dolthub.com/blog/2020-05-04-adopting-go-mysql-server/) became the primary `go-mysql-server` project.
 
 Since we adopted `go-mysql-server`, we have added support for triggers, check constraints, character sets, collations, and many more features. We've also improved join performance and correctness by improving the analyzer. `go-mysql-server` is fast becoming a modern, credible SQL engine.
 
@@ -104,7 +104,7 @@ Most other users of `go-mysql-server` use it to test their MySQL applications wi
 
 ## Vitess
 
-![Vitess Logo](../.gitbook/assets/vitess-horizontal.png)
+![](../.gitbook/assets/vitess-horizontal.png)
 
 Vitess is used by `go-mysql-server` for SQL parsing and serving. We quickly forked it to [remove 90% of the functionality we did not need](https://www.dolthub.com/blog/2020-09-23-vitess-pruning/). We've heavily modified our fork since to support much more SQL syntax.
 
@@ -114,4 +114,3 @@ Continue reading for a deeper dive into the Dolt storage engine and SQL implemen
 
 1. [The Storage Engine](./storage-engine.md)
 2. [The SQL Implementation](./sql.md)
-
