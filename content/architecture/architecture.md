@@ -4,9 +4,9 @@ title: Architecture
 
 # Architecture
 
-olt is the world's first version controlled SQL database.
+Dolt is the world's first version controlled SQL database.
 
-How would you build a version controlled SQL database? This article will start with some of the high level requirements, explain some possible architecture options, and then explain the actual building blocks used to build Dolt. 
+How would you build a version controlled SQL database? We will start with some of the high level requirements, explain some possible architecture options, and then explain the actual building blocks used to build Dolt. 
 
 ![Architecture Icon](../.gitbook/assets/architecture-icon.png)
 
@@ -82,7 +82,7 @@ We've been working on Dolt since 2018. We've forked and heavily modified all thr
 
 ![Noms](../.gitbook/assets/noms.png)
 
-[Noms](https://github.com/attic-labs/noms) pioneered a data storage engine with Git properties. Noms built a content-addressed B-tree called a [Prolly tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree) that had seek performance characteristics of a B-tree but also provided fast diff. You could stick the root content addresses of Prolly trees in a Merkle DAG to achieve versioning similar to Git with shared storage across versions.
+[Noms](https://github.com/attic-labs/noms) pioneered a data storage engine with Git properties. Noms built a content-addressed B-tree called a [Prolly tree](./storage-engine/prolly-tree.md) that had seek performance characteristics of a B-tree but also provided fast diff. You could stick the root content addresses of Prolly trees in a Merkle DAG to achieve versioning similar to Git with shared storage across versions.
 
 Noms was implemented in Golang. Dolt was implemented in Golang to take advantage of Noms work. Additionally, Golang is compiled so we could ship Dolt as a single program, satisfying that requirement.
 
@@ -98,7 +98,7 @@ Originally developed by [src-d](https://github.com/src-d), [`go-mysql-server`](h
 
 Since we adopted `go-mysql-server`, we have added support for triggers, check constraints, character sets, collations, and many more features. We've also improved join performance and correctness by improving the analyzer. `go-mysql-server` is fast becoming a modern, credible SQL engine.
 
-`go-mysql-server` allowed Dolt full control of the SQL dialect and engine while also allowing Dolt to be a single compiled Golang program. We implemented [custom procedures for version control write operations](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures) and custom [system tables and functions for version control read operations](https://docs.dolthub.com/sql-reference/version-control/dolt-system-tables). No Postgres flavored alternative allowing for this level of control existed so Dolt is MySQL flavored.
+`go-mysql-server` allowed Dolt full control of the SQL dialect and engine while also allowing Dolt to be a single compiled Golang program. We implemented [custom procedures for version control write operations](../reference/sql/version-control/dolt-sql-procedures.md) and custom [system tables and functions for version control read operations](../reference/sql/version-control/dolt-system-tables.md). No Postgres flavored alternative allowing for this level of control existed so Dolt is MySQL flavored.
 
 Most other users of `go-mysql-server` use it to test their MySQL applications without a running MySQL server. We're the only people we know of intrepid enough to build a full-fledged database on top of it.
 
