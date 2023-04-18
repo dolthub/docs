@@ -44,7 +44,7 @@ corona_virus> exit;
 Bye
 ```
 
-You can see how the insert query changed the `cases` table by viewing the [diff](../../concepts/dolt/diff.md):
+You can see how the insert query changed the `cases` table by viewing the [diff](../../concepts/dolt/git/diff.md):
 
 ```
 % dolt diff
