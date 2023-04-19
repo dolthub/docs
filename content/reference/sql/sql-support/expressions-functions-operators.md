@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 246 of 438 MySQL functions.**
+**Currently supporting 248 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -170,7 +170,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `EXTRACT()`                       | ✅         |                                                                       |
 | `ExtractValue()`                  | ❌         |                                                                       |
 | `FIELD()`                         | ❌         |                                                                       |
-| `FIND_IN_SET()`                   | ❌         |                                                                       |
+| `FIND_IN_SET()`                   | ✅         |                                                                       |
 | `FIRST()`                         | ✅         |                                                                       |
 | `FIRST_VALUE()`                   | ❌         |                                                                       |
 | `FLOOR()`                         | ✅         |                                                                       |
@@ -396,7 +396,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ST_Distance_Sphere()`            | ❌         |                                                                       |
 | `ST_EndPoint()`                   | ✅         |                                                                       |
 | `ST_Envelope()`                   | ❌         |                                                                       |
-| `ST_Equals()`                     | ❌         |                                                                       |
+| `ST_Equals()`                     | ✅         | Only supported for `POINT`s                                           |
 | `ST_ExteriorRing()`               | ❌         |                                                                       |
 | `ST_GeoHash()`                    | ❌         |                                                                       |
 | `ST_GeomCollFromText()`           | ✅         |                                                                       |

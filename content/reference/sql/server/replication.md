@@ -647,19 +647,83 @@ For monitoring the health of replication, we recommend alerting on:
 
 ## A Note on Security
 
-As currently implemented, enabling cluster replication on a dolt sql-server
-instance will expose an unauthenticated dolt remote endpoint on port
-`cluster.remotesapi.port` of the sql-server host. The endpoint will perform no
-peer authentication and will perform no authorization checks. Anyone with
-access to that TCP port on any IP address of that host will be able to connect
-to the endpoint and perform reads and writes against any database in the
-sql-server, including deleting all the data in the database.
+Enabling cluster replication on a dolt sql-server exposes a remotesapi port on
+the sql-server instance. Attempts are made to authenticate and authorize the
+traffic on this port so that only servers which are configured to replicate to
+each other can communicate over it.
 
-The only way to safely deploy dolt sql-server cluster replication currently is
-with some form of network firewall or behind an authenticating proxy. For
-example, [envoy](https://www.envoyproxy.io/) can be used to front both the
-inbound and outbound traffic replication traffic, and the envoy proxies in the
-cluster can authenticate each other using mTLS or some other shared secret.
+On startup, the sql-server instance creates an ephemeral asymmetric encryption
+key and publishes its public key as a JWKS at an unauthenticated endpoint on
+the `remotesapi.port`. For outgoing requests to any standby remote, the server
+signs its requests with its private key. For incoming requests, the server
+trusts any inbound request which is signed by a private key which corresponds
+to any public key which it was able to fetch from the published JWKSs of any of
+its configured standy remote peers.
+
+The security of this scheme relies on the security of the network which is used
+to fetch the trusted keys from the JWKSes of the configured peers and on the
+inability of the authentication credentials signed with the private keys to be
+intercepted. The authentication credentials used are relatively short-lived but
+they are not secure against things like replay attacks.
+
+If the network between the standby replicas is not entirely trusted,
+server-side TLS can be used to improve the security posture of the
+communication. In this case, the URLs of the remotes used for standby
+replication should have scheme `https`. The `remotesapi:` fragment of the
+`cluster:` configuration is able to configure some server-side and client-side
+settings for its TLS communication:
+
+```yaml
+cluster:
+  standby_remotes:
+  - name: standby_replica_one
+    remote_url_template: https://standby_replica_one.svc.cluster.local:50051/{database}
+  - name: standby_replica_two
+    remote_url_template: https://standby_replica_two.svc.cluster.local:50051/{database}
+  boostrap_role: ...
+  boostrap_epoch: ...
+  remotesapi:
+    # The listening address. By default all listenable interfaces.
+    address: "127.0.0.1" | "::1" | "..."
+    # The TCP port to listen on.
+    port: 50051
+
+    # A file path to a file containing the PEM-encoded private key to be used by
+    # this server's TLS listener.
+    tls_key: "remotesapi_key.pem"
+    # A file path to a file containing the PEM-encoded certificate chain to be
+    # presented by this server's TLS listener.
+    tls_cert: "remotesapi_chain.pem"
+
+    # A file path to a file containing a list of PEM-encoded CA certificates
+    # to be trusted by this sql-server when establishing outbound TLS
+    # connections. If this is not set, default certificate verification and
+    # trusted certificate roots are used.
+    tls_ca: "standby_cas.pem"
+    # A list of server name URLs, one of which must appear in the SANs of the
+    # presented leaf certificate for the certificate to pass verification. If
+    # this list is empty, no assertions are made against SAN URLs. This should
+    # only be set when `tls_ca` is set.
+    server_name_urls:
+    - "https://standby_replica_one.svc.cluster.local"
+    - "https://standby_replica_two.svc.cluster.local"
+    # A list of server DNS names, one of which must appear in the SANs of the
+    # presented leaf certificate for the certificate to pass verification. If
+    # this list is empty, no assertions are made against SAN DNS entries. This
+    # should only be set when `tls_ca` is set.
+    server_name_dns:
+    - "standby_replica_one.svc.cluster.local"
+    - "standby_replica_two.svc.cluster.local"
+```
+
+Typically only one of `server_name_urls` or `server_name_dns` will be set. URLs
+are commonly used for certificates issued as part of
+[SPIFFE](https://spiffe.io/), for example, while DNS names are commonly used in
+WebPKI and typically supported by browsers. If neither are set, but `tls_ca` is
+set, the presented certificate chains of peers will be validated against things
+like isCa, key usage, validity windows and the signatures chaining to a trusted
+root, but no assertions will be made against the identity presented in the
+certificates themselves.
 
 # Direct vs. Remote Replication
 
