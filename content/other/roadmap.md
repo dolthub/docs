@@ -13,17 +13,17 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
-Roadmap last updated Jan 2023, next update Apr 2023.
+Roadmap last updated Apr 2023, next update Jul 2023.
 
 ## Upcoming features
 
 | Feature                                 | Estimate    |
 | -------                                 | ---         |
-| Spatial indexes                         | Q1 2023     |
-| MySQL binlog replication                | Q1 2023     |
-| Clone from running database             | Q1 2023     |
+| Better schema merging                   | Q2 2023     |
+| dolt_ignore table                       | Q2 2023     |
+| Collation regex support                 | Q2 2023     |
+| Server / CLI compatibility              | Q2 2023     |
 | 99.9% SQL correctness                   | 2023        |
-| Universal SQL path for CLI              | 2023        |
 | Row-level locking (`SELECT FOR UPDATE`) | 2023        |
 | All transaction isolation levels        | 2023        |
 | Full text indexes                       | 2023        |
@@ -46,6 +46,15 @@ Roadmap last updated Jan 2023, next update Apr 2023.
 
 | Feature                                   | Launch Date |
 | -------                                   | ---         |
+| dolt_column_diff system table             | Apr 2023    |
+| Clone from running database               | Apr 2023    |
+| ACID transactions                         | Mar 2023    |
+| dolt_patch() procedure                    | Mar 2023    |
+| Spatial indexes                           | Mar 2023    |
+| Complete information_schema support       | Feb 2023    |
+| MySQL binlog replication                  | Feb 2023    |
+| Additional join types                     | Feb 2023    |
+| Online garbage collection                 | Jan 2022    |
 | ACID transactions alpha                   | Dec 2022    |
 | Hash join strategy                        | Dec 2022    |
 | Better stored procedure support           | Dec 2022    |
@@ -69,12 +78,3 @@ Roadmap last updated Jan 2023, next update Apr 2023.
 | `XOR` operator                            | Apr 2022    |
 | Unique constraints for keyless tables     | Apr 2022    |
 | Stored procedures for `dolt` functions    | Apr 2022    |
-| New storage alpha                         | Mar 2022    |
-| Better `dolt_diff` table experience       | Mar 2022    |
-| Geometry types and functions              | Feb 2022    |
-| Users / grants                            | Feb 2022    |
-| `dolt dump` command                       | Jan 2022    |
-| DoltLab (on-prem DoltHub)                 | Jan 2022    |
-| `RANGE` window definitions                | Jan 2022    |
-| `ROWS` window definitions                 | Jan 2022    |
-| Hosted Dolt Alpha                         | Jan 2022    |
