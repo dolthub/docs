@@ -467,6 +467,23 @@ Sending email with auth method: plain
 Successfully sent email!
 ```
 
+To quickly get up and running with an existing SMTP server, we recommend using [Gmail's](https://www.gmail.com). Once you've created a Gmail account, navigate to [your account page](https://myaccount.google.com/) and click the [Security](https://myaccount.google.com/security) tab. Under the section "How you sign in to Google", click `2-Step Verification`. If you have not yet setup 2-Step Verification, follow the prompts on this page to enable it.
+
+After 2-Step Verification is set up, at the bottom of the page click "App passwords". Select app `Mail` and select a device, then click "Generate" to generate a password. This generated password can be supplied along with your Gmail email address to send emails with `smtp_connection_helper` and DoltLab.
+
+```bash
+./smtp_connection_helper \
+--host smtp.gmail.com \
+--port 587 \
+--auth plain \
+--username example@gmail.com \
+--password <generated App password> \
+--from example@gmail.com \
+--to email@address.com
+Sending email with auth method: plain
+Successfully sent email!
+```
+
 <h1 id="prevent-unauthorized-users">Prevent Unauthorized User Account Creation</h1>
 
 DoltLab for non-enterprise use currently supports explicit email whitelisting to prevent account creation by unauthorized users.
