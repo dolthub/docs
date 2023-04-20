@@ -131,3 +131,4 @@
 
 - [FAQ](other/faq.md)
 - [Roadmap](other/roadmap.md)
+- [Versioning](other/versioning.md)
