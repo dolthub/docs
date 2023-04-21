@@ -16,7 +16,7 @@ Backups have additional uses. Taking a backup of a database is often the easiest
 
 ## Difference between MySQL Backups and Dolt Backups
 
-Dolt does not support any of the [MySQL backup methods](https://dev.mysql.com/doc/refman/8.0/en/backup-methods.html) except the `mysqldump` method. Dolt can create a dump using the [`dolt dump` command](../../../reference/cli.md#dolt-dump). 
+Dolt does not support any of the [MySQL backup methods](https://dev.mysql.com/doc/refman/8.0/en/backup-methods.html) except the `mysqldump` method. Dolt can create a dump using the [`dolt dump` command](../../../reference/cli.md#dolt-dump) or `mysqldump` connected to the running Dolt server. 
 
 ## Interaction with Dolt Version Control
 
