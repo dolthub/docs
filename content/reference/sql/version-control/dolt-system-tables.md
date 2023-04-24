@@ -780,6 +780,7 @@ The `DOLT_COLUMN_DIFF` system table has the following columns
 | email       | text     |
 | date        | datetime |
 | message     | text     |
+| diff_type   | text     |
 +-------------+----------+
 ```
 
