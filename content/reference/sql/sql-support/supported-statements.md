@@ -128,8 +128,8 @@ Dolt has two levels of persistence:
 
 | Statement | Supported | Notes and limitations                                                                                      |
 |:----------|:----------|:-----------------------------------------------------------------------------------------------------------|
-| `PREPARE` | 🟠        | Prepared statements do not work inside of a STORED PROCEDURE. |
-| `EXECUTE` | 🟠        | Execute statments do not work inside of a STORED PROCEDURE. |
+| `PREPARE` | ✅        | Prepared statements do not work inside of a STORED PROCEDURE. |
+| `EXECUTE` | ✅        | Execute statments do not work inside of a STORED PROCEDURE. |
 
 ## Access management statements
 
