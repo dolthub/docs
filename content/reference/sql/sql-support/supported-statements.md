@@ -128,8 +128,8 @@ Dolt has two levels of persistence:
 
 | Statement | Supported | Notes and limitations                                                                                      |
 |:----------|:----------|:-----------------------------------------------------------------------------------------------------------|
-| `PREPARE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. PREPARE in a query is not supported. |
-| `EXECUTE` | 🟠        | Prepared statements work in the SQL server context using com_prepare. EXCEUTE in a query is not supported. |
+| `PREPARE` | ✅        | Prepared statements do not work inside of a STORED PROCEDURE. |
+| `EXECUTE` | ✅        | Execute statments do not work inside of a STORED PROCEDURE. |
 
 ## Access management statements
 
