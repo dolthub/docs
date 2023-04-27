@@ -104,15 +104,6 @@ WHERE hash = @@mydb_head
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 ```
 
-Create a new commit, and then create a branch from that commit
-
-```sql
-SET @@mydb_head = COMMIT("my commit message")
-
-
-CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
-```
-
 `dolt_branches` only contains information about local branches. For
 branches on a remote you have fetched, see
 [`dolt_remote_branches`](#dolt_remote_branches).
