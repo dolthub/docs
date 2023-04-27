@@ -88,30 +88,7 @@ FROM dolt_branches
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 ```
 
-Get the current branch for a database named "mydb".
-
-```sql
-SELECT *
-FROM dolt_branches
-WHERE hash = @@mydb_head
-```
-
-```text
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-```
-
-Create a new commit, and then create a branch from that commit
-
-```sql
-SET @@mydb_head = COMMIT("my commit message")
-
-
-CALL DOLT_BRANCH("my_branch_name", @@mydb_head);
-```
+To find the current active branch us, [`select active_branch()`](./dolt-sql-functions.md#active_branch).
 
 `dolt_branches` only contains information about local branches. For
 branches on a remote you have fetched, see
