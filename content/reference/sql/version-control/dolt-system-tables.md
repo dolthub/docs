@@ -88,7 +88,7 @@ FROM dolt_branches
 +--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
 ```
 
-To find the current active branch us, [`select active_branch()`](./dolt-sql-functions.md#active_branch).
+To find the current active branch use [`select active_branch()`](./dolt-sql-functions.md#active_branch).
 
 `dolt_branches` only contains information about local branches. For
 branches on a remote you have fetched, see
