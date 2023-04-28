@@ -8,7 +8,9 @@ title: What is Dolt?
 
 Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. Dolt is a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Dolt is [Git for Data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). Dolt is a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/).
 
-Dolt implements the Git command line and associated operations on table rows instead of files. Data and schema are modified in the working set using SQL. When you want to permanently store a version of the working set, you make a commit. In SQL, Dolt implements Git read operations (ie. diff, log) as system tables and write operations (ie. commit, merge) as stored procedures. Dolt produces cell-wise diffs and merges, making data debugging between versions tractable. Dolt is the only SQL database that has branches and merges. 
+Dolt implements the Git command line and associated operations on tables instead of files. Dolt version controls schema and data. Tables are modified in the working set using SQL. When you want to permanently store a version of the working set, you make a Dolt commit. 
+
+In SQL, Dolt implements Git read operations (ie. diff, log) as [functions](../reference/sql/version-control/dolt-sql-functions.md) and [system tables](../reference/sql/version-control/dolt-system-tables.md) and write operations (ie. commit, merge) as [procedures](../reference/sql/version-control/dolt-sql-procedures.md). Dolt produces cell-wise diffs and merges, making data debugging between versions tractable. Dolt is the only SQL database that has branches and merges. 
 
 You can run Dolt online, like you would PostgreSQL or MySQL. Or you can run Dolt offline, treating data and schema like source code. 
 
