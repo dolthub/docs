@@ -62,7 +62,7 @@
 ## Products
 
 - [Hosted Dolt](products/hosted/README.md)
-- [DoltHub](products/dolthub.com/README.md)
+- [DoltHub](products/dolthub/README.md)
   - [Data Sharing](products/dolthub/data-sharing.md)
   - [Data Bounties](products/dolthub/data-bounties.md)
   - [DoltHub API](products/dolthub/dolthub-api/README.md)
