@@ -61,8 +61,8 @@
 
 ## Products
 
-- [Hosted Dolt]()
-- [DoltHub]()
+- [Hosted Dolt](products/hosted/README.md)
+- [DoltHub](products/dolthub.com/README.md)
   - [Data Sharing](products/dolthub/data-sharing.md)
   - [Data Bounties](products/dolthub/data-bounties.md)
   - [DoltHub API](products/dolthub/dolthub-api/README.md)
@@ -72,7 +72,7 @@
     - [Database](products/dolthub/dolthub-api/database.md)
     - [Hooks](products/dolthub/dolthub-api/hooks.md)
   - [Transform File Uploads](products/dolthub/transform-uploads.md)
-- [DoltLab](products/doltlab.md)
+- [DoltLab](products/doltlab/README.md)
   - [Install DoltLab](products/doltlab/installation.md)
   - [Administrator Guide](products/doltlab/administrator.md)
 
