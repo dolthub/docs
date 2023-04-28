@@ -11,5 +11,5 @@ Check out these blogs for more details:
 * [Built In Workbench](https://www.dolthub.com/blog/2022-08-24-hosted-sql-workbench/)
 * [Support for Google Cloud Platform](https://www.dolthub.com/blog/2023-02-27-hosted-doltdb-gcp-launch/)
 * [Cloning a Hosted](https://www.dolthub.com/blog/2023-04-17-cloning-a-hosted-database/)
-* [Building and App using Hosted and AWS Amplify](https://www.dolthub.com/blog/2023-03-31-dolt-amplify-webapp/)
+* [Building an App using Hosted and AWS Amplify](https://www.dolthub.com/blog/2023-03-31-dolt-amplify-webapp/)
 * [Replicating an AWS RDS MySQL Instance to Hosted Dolt](https://www.dolthub.com/blog/2023-04-05-versioned-mysql-replicas-on-hosted-dolt/)
