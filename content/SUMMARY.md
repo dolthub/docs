@@ -15,8 +15,6 @@
   - [Version Controlled Database](introduction/getting-started/database.md)
   - [Git For Data](introduction/getting-started/git-for-data.md)
   - [Versioned MySQL Replica](introduction/getting-started/versioned-mysql-replica.md)
-  - [Data Sharing on DoltHub](introduction/getting-started/data-sharing.md)
-  - [Data Bounties](introduction/getting-started/data-bounties.md)
 - [Use Cases](introduction/use-cases.md)
   - [Data Sharing](introduction/use-cases/data-sharing.md)
   - [Data Ingestion](introduction/use-cases/data-ingestion.md)
@@ -61,24 +59,22 @@
   - [Issues](concepts/dolthub/issues.md)
   - [Forks](concepts/dolthub/forks.md)
 
-## Guides
+## Products
 
-- [Contributing](guides/contributing.md)
-  - [dolt](guides/contributing/dolt.md)
-  - [go-mysql-server](guides/contributing/go-mysql-server.md)
-- [DoltLab](guides/doltlab.md)
-  - [Install DoltLab](guides/doltlab/installation.md)
-  - [Administrator Guide](guides/doltlab/administrator.md)
-* [DoltHub API](guides/dolthub-api/README.md)
-  * [Authentication](guides/dolthub-api/authentication.md)
-  * [SQL](guides/dolthub-api/sql.md)
-  * [CSV](guides/dolthub-api/csv.md)
-  * [Database](guides/dolthub-api/database.md)
-  * [Hooks](guides/dolthub-api/hooks.md)
-
-- [MySQL to Dolt Replication](guides/binlog-replication.md)
-- [Importing Data](guides/import.md)
-- [Transforming File Uploads](guides/transform-uploads.md)
+- [Hosted Dolt](products/hosted/README.md)
+- [DoltHub](products/dolthub.com/README.md)
+  - [Data Sharing](products/dolthub/data-sharing.md)
+  - [Data Bounties](products/dolthub/data-bounties.md)
+  - [DoltHub API](products/dolthub/dolthub-api/README.md)
+    - [Authentication](products/dolthub/dolthub-api/authentication.md)
+    - [SQL](products/dolthub/dolthub-api/sql.md)
+    - [CSV](products/dolthub/dolthub-api/csv.md)
+    - [Database](products/dolthub/dolthub-api/database.md)
+    - [Hooks](products/dolthub/dolthub-api/hooks.md)
+  - [Transform File Uploads](products/dolthub/transform-uploads.md)
+- [DoltLab](products/doltlab/README.md)
+  - [Install DoltLab](products/doltlab/installation.md)
+  - [Administrator Guide](products/doltlab/administrator.md)
 
 ## SQL Reference
 
@@ -126,6 +122,14 @@
 - [SQL](architecture/sql.md)
   - [Go MySQL Server](architecture/sql/go-mysql-server.md)
   - [Vitess](architecture/sql/vitess.md)
+
+## Guides
+
+- [Contributing](guides/contributing.md)
+  - [dolt](guides/contributing/dolt.md)
+  - [go-mysql-server](guides/contributing/go-mysql-server.md)
+- [MySQL to Dolt Replication](guides/binlog-replication.md)
+- [Importing Data](guides/import.md)
 
 ## Other
 
