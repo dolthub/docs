@@ -96,8 +96,13 @@ We support the [go-sql-driver/mysql](https://github.com/go-sql-driver/mysql) pac
 
 ## Ruby
 
-We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library. The [mysql/ruby](http://www.tmtm.org/en/mysql/ruby/) package uses the MySQL C API and [has not been ported to MySQL client version 8](https://github.com/luislavena/mysql-gem/issues/35). Thus, we do not support `mysql/ruby`.
+We support the native [ruby/mysql](http://www.tmtm.org/en/ruby/mysql/) library and the native [mysql2](https://github.com/brianmario/mysql2) library. The [mysql/ruby](http://www.tmtm.org/en/mysql/ruby/) package uses the MySQL C API and [has not been ported to MySQL client version 8](https://github.com/luislavena/mysql-gem/issues/35). Thus, we do not support `mysql/ruby`.
 
+### mysql2
+- [Official Client Documentation](https://www.rubydoc.info/gems/mysql2)
+- [mysql2 test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/ruby/mysql2-test.rb)
+
+### ruby/mysql
 - [Official Client Documentation](http://www.tmtm.org/en/ruby/mysql/)
 - [ruby/mysql test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/ruby/ruby-mysql-test.rb)
 
