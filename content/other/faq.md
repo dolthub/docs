@@ -23,14 +23,14 @@ not taken in the standard command line lexicon. So,
 
 Dolt is MySQL-compatible. Dolt is a replacement for MySQL or Postgres. 
 [Dolt does not contain any MySQL code](../architecture/architecture.md) 
-but you connect to it with a  MySQL client. It is usually not difficult 
+but you connect to it with a MySQL client. It is usually not difficult 
 to convert Postgres SQL to MySQL SQL.
 
 All that said, many people have asked for a Postgres-flavored version
 of Dolt. We published [a blog responding to this request](https://www.dolthub.com/blog/2022-03-28-have-postgres-want-dolt/) 
-and made [the Postgres `msql_fdw` work with Dolt](https://www.dolthub.com/blog/2023-04-12-dolt-with-mysql_fdw/).
+and made [the Postgres `msql_fdw` work with Dolt](https://www.dolthub.com/blog/2023-04-12-dolt-with-mysql_fdw/). We support an [open source `pg2mysql` tool](https://github.com/dolthub/pg2mysql) to convert Postgres dumps to MySQL dumps.
 
-We investigated plugging [Dolt's storage layer](../architecture/storage-engine.md) into Postgres using the [foreign data wrapper interface](https://www.dolthub.com/blog/2022-01-26-creating-a-postgres-foreign-data-wrapper/) to make a true [DoltgreSQL](https://www.doltgresql.com). Building this would take a year or so. We need the MySQL flavored version of Dolt to get enough adoption to fund the DoltgreSQL project.
+We investigated plugging [Dolt's storage layer](../architecture/storage-engine.md) into Postgres using the [foreign data wrapper interface](https://www.dolthub.com/blog/2022-01-26-creating-a-postgres-foreign-data-wrapper/) to make a true [DoltgreSQL](https://www.doltgresql.com). Building this would take a year or so. We need the MySQL-flavored version of Dolt to get enough adoption to fund the DoltgreSQL project.
 
 ## What does `@@autocommit` do?
 
