@@ -1,7 +1,3 @@
----
-title: "DoltLab"
----
-
 ![](../../.gitbook/assets/doltlab-logo.png)
 
 Download the latest DoltLab [here](https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zip).
