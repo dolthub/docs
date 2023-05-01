@@ -22,9 +22,9 @@ If two branches modify the same named schema element, consult the following tabl
 
 | Schema Element    | Left Branch | Right Branch | Caveat                                       | Mergeable       |
 | ----------------- | ----------- | ------------ | -------------------------------------------- | --------------- |
-| Table             | Add t1      | Add t1       | Same primary keys                            | Yes             |
-|                   | Delete t1   | Delete t1    |                                              | Yes             |
+| Table             | Add t1      | Add t1       | Same Schema                                  | Yes             |
 |                   | Add t1      | Add t1       | Different Schema                             | Schema Conflict |
+|                   | Delete t1   | Delete t1    |                                              | Yes             |
 |                   | Modify t1   | Delete t1    |                                              | Schema Conflict |
 |                   | Modify t1   | Modify t1    | Same Schema                                  | Yes             |
 |                   | Modify t1   | Modify t1    | Different Schema                             | Schema Conflict |
@@ -57,7 +57,6 @@ If two branches modify the same named schema element, consult the following tabl
 |                   | Modify ck1  | Delete ck1   |                                              | Schema Conflict |
 |                   | Modify ck1  | Modify ck1   | Same definition                              | Yes             |
 |                   | Modify ck1  | Modify ck1   | Different definition                         | Schema Conflict |
-
 
 ## How to use Conflicts
 
