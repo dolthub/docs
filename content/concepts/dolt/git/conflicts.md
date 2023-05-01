@@ -16,17 +16,48 @@ On data, conflicts are detected on a cell-level. If two operations modify the sa
 
 ### Schema
 
-For schema, conflict detection is more complicated. The following rules are used to detect conflicts in schema:
+Two branches must add, delete or modify a similarly named table, column, index or constraint to generate a schema conflict, otherwise the changes are mergeable.
 
-1. If two branches add the same table, no conflict.
-1. If two branches add a similarly named table that has different schema, conflict.
-1. If the two merged branches add two differently named columns to the same table, no conflict.
-1. If the two merged branches add similarly named columns to the same table with the same data, no conflict.
-1. If the two merged branches add similarly named columns in the same table with different data, conflict.
-1. If one branch deletes a column and the other branch does not modify that column in the same table, no conflict.
-1. If one branch deletes a column and the other branch modifies that column in the same table, conflict.
-1. If the two branches alter a column similarly in the same table, no conflict.
-1. If two branches alter a column differently in the same table, conflict.
+If two branches modify the same named schema element, consult the following table for conflict detection.
+
+| Schema Element    | Left Branch | Right Branch | Caveat                                       | Mergeable       |
+| ----------------- | ----------- | ------------ | -------------------------------------------- | --------------- |
+| Table             | Add t1      | Add t1       | Same primary keys                            | Yes             |
+|                   | Delete t1   | Delete t1    |                                              | Yes             |
+|                   | Add t1      | Add t1       | Different Schema                             | Schema Conflict |
+|                   | Modify t1   | Delete t1    |                                              | Schema Conflict |
+|                   | Modify t1   | Modify t1    | Same Schema                                  | Yes             |
+|                   | Modify t1   | Modify t1    | Different Schema                             | Schema Conflict |
+| Column            | Delete c1   | Delete c1    |                                              | Yes             |
+|                   | Modify c1   | Delete c1    |                                              | Schema Conflict |
+|                   | Add c1      | Add c1       | Same Type, Same Constraints, Same Data       | Yes             |
+|                   | Add c1      | Add c1       | Different Type                               | Schema Conflict |
+|                   | Add c1      | Add c1       | Same Type, Different Constraints             | Schema Conflict |
+|                   | Add c1      | Add c1       | Same Type, Same Constraints, Different Data  | Data Conflict   |
+|                   | Modify c1   | Modify c1    | Same Type, Same Constraints, Same Data       | Yes             |
+|                   | Modify c1   | Modify c1    | Incompatible Type Change                     | Schema Conflict |
+|                   | Modify c1   | Modify c1    | Compatible Type Change                       | Yes             |
+|                   | Modify c1   | Modify c1    | Same Type, Different Constraints             | Schema Conflict |
+|                   | Modify c1   | Modify c1    | Same Type, Same Constraints, Different Data  | Data Conflict   |
+| Foreign keys      | Add fk1     | Add fk1      | Same definition                              | Yes             |
+|                   | Add fk1     | Add fk1      | Different definition                         | Schema Conflict |
+|                   | Delete t1   | Delete t1    |                                              | Yes             |
+|                   | Modify fk1  | Delete fk1   |                                              | Schema Conflict |
+|                   | Modify fk1  | Modify fk1   | Same definition                              | Yes             |
+|                   | Modify fk1  | Modify fk1   | Different definition                         | Schema Conflict |
+| Indexes           | Add i1      | Add i1       | Same definition                              | Yes             |
+|                   | Add i1      | Add i1       | Different definition                         | Schema Conflict |
+|                   | Delete i1   | Delete i1    |                                              | Yes             |
+|                   | Modify i1   | Delete i1    |                                              | Schema Conflict |
+|                   | Modify i1   | Modify i1    | Same definition                              | Yes             |
+|                   | Modify i1   | Modify i1    | Different definition                         | Schema Conflict |
+| Check Constraints | Add ck1     | Add ck1      | Same definition                              | Yes             |
+|                   | Add ck1     | Add ck1      | Different definition                         | Schema Conflict |
+|                   | Delete ck1  | Delete ck1   |                                              | Yes             |
+|                   | Modify ck1  | Delete ck1   |                                              | Schema Conflict |
+|                   | Modify ck1  | Modify ck1   | Same definition                              | Yes             |
+|                   | Modify ck1  | Modify ck1   | Different definition                         | Schema Conflict |
+
 
 ## How to use Conflicts
 
