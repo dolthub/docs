@@ -1378,6 +1378,8 @@ If a table name matches multiple patterns with different values for `ignored`, t
 
 Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `dolt add` or `CALL dolt_add`.
 
+`dolt diff` won't display ignored tables, and `dolt show` won't display ignored tables unless the additional `--ignored` flag is passed.
+
 ### Example Query
 
 ```sql
