@@ -75,7 +75,10 @@ The dolt status command can be used to obtain a summary of which tables have cha
 `<table>`: Working table(s) to add to the list tables staged to be committed. The abbreviation '.' can be used to add all tables.
 
 `-A`, `--all`:
-Stages any and all changes (adds, deletes, and modifications).
+Stages any and all changes (adds, deletes, and modifications) except for ignored tables.
+
+`-f`, `--force`:
+Allow adding otherwise ignored tables.
 
 
 
@@ -511,12 +514,12 @@ print conflicts
 **Synopsis**
 
 ```bash
-dolt conflicts cat [<commit>] <table>...
+dolt conflicts cat <table>...
 ```
 
 **Description**
 
-The dolt conflicts cat command reads table conflicts and writes them to the standard output.
+The dolt conflicts cat command reads table conflicts from the working set and writes them to the standard output.
 
 **Arguments and options**
 
@@ -794,6 +797,9 @@ Uses merge base of the first commit and second commit (or HEAD if not supplied) 
 
 `--diff-mode`:
 Determines how to display modified rows with tabular output. Valid values are row, line, in-place, context. Defaults to context.
+
+`-R`, `--reverse`:
+Reverses the direction of the diff.
 
 
 
@@ -1657,6 +1663,9 @@ Shows all parents of each commit in the log.
 `--decorate`:
 Shows refs next to commits. Valid options are short, full, no, and auto
 
+`--no-pretty`:
+Show the object without making it pretty.
+
 `-d`, `--data`:
 Show only the data changes, do not show the schema changes (Both shown by default).
 
@@ -1852,7 +1861,7 @@ Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 Sets the port for a server which can expose the databases in this sql-server over remotesapi.
 
 `--golden`:
-Provides a connection string to a MySQL instance to be user to validate query results
+Provides a connection string to a MySQL instance to be used to validate query results
 
 `-d`, `--dual`:
 Causes this command to spawn a dolt server that is automatically connected to.
@@ -1887,8 +1896,6 @@ This is an example yaml configuration file showing all supported items and their
 
 	log_level: info
 	
-	max_logged_query_len: null
-	
 	behavior:
 	  read_only: false
 	  autocommit: true
@@ -1909,16 +1916,11 @@ This is an example yaml configuration file showing all supported items and their
 	  tls_cert: null
 	  require_secure_transport: null
 	  allow_cleartext_passwords: null
-	  socket: null
 	
 	databases: []
 	
 	performance:
 	  query_parallelism: null
-	
-	data_dir: null
-	
-	cfg_dir: null
 	
 	metrics:
 	  labels: {}
@@ -1928,17 +1930,9 @@ This is an example yaml configuration file showing all supported items and their
 	remotesapi:
 	  port: null
 	
-	cluster: null
-	
-	privilege_file: null
-	
-	branch_control_file: null
-	
 	user_session_vars: []
 	
 	jwks: []
-	
-	golden_mysql_conn: null
 
 
 
@@ -2039,7 +2033,7 @@ Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 Sets the port for a server which can expose the databases in this sql-server over remotesapi.
 
 `--golden`:
-Provides a connection string to a MySQL instance to be user to validate query results
+Provides a connection string to a MySQL instance to be used to validate query results
 
 
 
@@ -2067,7 +2061,10 @@ The command saves your local modifications away and reverts the working director
 **Arguments and options**
 
 `-u`, `--include-untracked`:
-All untracked files (added tables) are also stashed.
+Untracked tables are also stashed.
+
+`-a`, `--all`:
+All tables are stashed, including untracked and ignored tables.
 
 
 
@@ -2167,7 +2164,10 @@ Displays working tables that differ from the current HEAD commit, tables that di
 
 **Arguments and options**
 
-No options for this command.
+`--ignored`:
+Show tables that are ignored (according to dolt_ignore)
+
+
 
 ## `dolt table cp`
 
