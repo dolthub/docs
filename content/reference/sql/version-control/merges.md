@@ -59,13 +59,37 @@ Merges can generate conflicts on schema or data.
 
 ## Schema
 
-Merges with schema conflicts cannot be resolved using SQL. The merge will fail. For instance a merge that adds the same column name with two different types will fail.
+Merges with schema conflicts will prevent the merge from completing and populate
+schema conflicts rows into the `dolt_schema_conflicts` system table. This system
+table describes the conflicted table's schema on each side of the merge: `ours`
+and `theirs`. Additionally, it shows the table's schema at the 
+[common-ancestor](../cli#dolt-merge-base) and describes why the `ours` and `theirs`
+schemas cannot be automatically merged. 
 
 ```sql
-CALL DOLT_MERGE('schema-change');
-Error 1105: schema conflicts for table test:
-	two columns with the name 'c2'
+> SELECT table_name, description, base_schema, our_schema, their_schema FROM dolt_schema_conflicts;
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| table_name | description                          | base_schema                                                       | our_schema                                                        | their_schema                                                      |
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| people     | different column definitions for our | CREATE TABLE `people` (                                           | CREATE TABLE `people` (                                           | CREATE TABLE `people` (                                           |
+|            | column age and their column age      |   `id` int NOT NULL,                                              |   `id` int NOT NULL,                                              |   `id` int NOT NULL,                                              |
+|            |                                      |   `last_name` varchar(120),                                       |   `last_name` varchar(120),                                       |   `last_name` varchar(120),                                       |
+|            |                                      |   `first_name` varchar(120),                                      |   `first_name` varchar(120),                                      |   `first_name` varchar(120),                                      |
+|            |                                      |   `birthday` datetime(6),                                         |   `birthday` datetime(6),                                         |   `birthday` datetime(6),                                         |
+|            |                                      |   `age` int DEFAULT '0',                                          |   `age` float,                                                    |   `age` bigint,                                                   |
+|            |                                      |   PRIMARY KEY (`id`)                                              |   PRIMARY KEY (`id`)                                              |   PRIMARY KEY (`id`)                                              |
+|            |                                      | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 ```
+
+Merges that result in schema conflicts will leave an active merge state until 
+the schema conflicts are resolved. Users can either `--abort` the active merge
+or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-procedures#dolt_conflicts_resolve).
+`dolt_conflicts_resolve()` takes as arguments a table name and an option `--ours`
+or `--theirs` to specify which side of the merge should be accepted. It is important
+to note that this resolution strategy takes the _entire_ table from the choosen side
+of the merge, not only its schema. Schema and data changes from the unchosed side of
+the merge are discarded with the resolution strategy. 
 
 ## Data
 
