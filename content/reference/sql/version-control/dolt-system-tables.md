@@ -31,6 +31,7 @@ title: Dolt System Tables
 
   - [dolt_conflicts](#dolt_conflicts)
   - [dolt_conflicts\_$tablename](#dolt_conflicts_usdtablename)
+  - [dolt_schema_conflicts](#dolt_schema_conflicts)
   - [dolt_merge_status](#dolt_merge_status)
   - [dolt_status](#dolt_status)
 
@@ -1201,6 +1202,29 @@ can accumalate across merges.
 
 {% endhint %}
 
+## `dolt_schema_conflicts`
+
+dolt_schema_conflicts is a system table that has a row for every table in the working
+set that has an unresolved schema conflict.
+
+```sql
+> SELECT table_name, description, base_schema, our_schema, their_schema FROM dolt_schema_conflicts;
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| table_name | description                          | base_schema                                                       | our_schema                                                        | their_schema                                                      |
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| people     | different column definitions for our | CREATE TABLE `people` (                                           | CREATE TABLE `people` (                                           | CREATE TABLE `people` (                                           |
+|            | column age and their column age      |   `id` int NOT NULL,                                              |   `id` int NOT NULL,                                              |   `id` int NOT NULL,                                              |
+|            |                                      |   `last_name` varchar(120),                                       |   `last_name` varchar(120),                                       |   `last_name` varchar(120),                                       |
+|            |                                      |   `first_name` varchar(120),                                      |   `first_name` varchar(120),                                      |   `first_name` varchar(120),                                      |
+|            |                                      |   `birthday` datetime(6),                                         |   `birthday` datetime(6),                                         |   `birthday` datetime(6),                                         |
+|            |                                      |   `age` int DEFAULT '0',                                          |   `age` float,                                                    |   `age` bigint,                                                   |
+|            |                                      |   PRIMARY KEY (`id`)                                              |   PRIMARY KEY (`id`)                                              |   PRIMARY KEY (`id`)                                              |
+|            |                                      | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+```
+
+Query this table when resolving schema conflicts in a SQL session. For more information on
+resolving schema conflicts during merge, see the docs on [conflicts](./merges#conflicts).
 
 ## `dolt_merge_status`
 
