@@ -39,6 +39,10 @@ title: Dolt System Tables
   - [dolt_constraint_violations](#dolt_constraint_violations)
   - [dolt_constraint_violations\_$tablename](#dolt_constraint_violations_usdtablename)
 
+- [Configuration Tables](#configuration_tables)
+
+  - [dolt_ignore](#dolt_ignore)
+
 # Database Metadata System Tables
 
 ## `dolt_branches`
@@ -1342,3 +1346,56 @@ The `violation_info` field is a JSON payload describing the violation.
 
 As with `dolt_conflicts`, delete rows from the corresponding `dolt_constraint_violations` table to signal to dolt that
 you have resolved any such violations before committing.
+
+# Configuration Tables
+
+Configuration Tables can be staged and versioned just like user tables. They always exist, even in an empty database.
+
+## `dolt_ignore`
+
+`dolt_ignore` stores a list of "table name patterns", and a boolean flag for each pattern indicating whether tables that match the patterns should not be staged for commit.
+
+### Schema
+
+```text
++------------+---------+------+-----+
+| Field      | Type    | Null | Key |
++------------+---------+------+-----+
+| pattern    | text    | NO   | PRI |
+| ignored    | tinyint | NO   |     |
++------------+---------+------+-----+
+```
+
+### Notes
+
+The format of patterns is a simplified version of gitignore’s patterns:
+
+- An asterisk "*" matches any number of characters.
+- The character "?" matches any one character.
+- All other characters match exactly.
+
+If a table name matches multiple patterns with different values for `ignored`, the most specific pattern is chosen (a pattern A is more specific than a pattern B if all names that match A also match pattern B, but not vice versa.) If no pattern is most specific, then attempting to stage that table will result in an error.
+
+Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `dolt add` or `CALL dolt_add`.
+
+### Example Query
+
+```sql
+INSERT INTO dolt_ignore VALUES ("generated_*", true), ("generated_exception", false);
+CREATE TABLE foo (pk int);
+CREATE TABLE generated_foo (pk int);
+CREATE TABLE generated_exception (pk int);
+CALL dolt_add("-A");
+SELECT *
+FROM dolt_status
+WHERE staged=true;
+```
+
+```text
++---------------------+--------+-----------+
+| table_name          | staged | status    |
++---------------------+--------+-----------+
+| foo                 | true   | new table |
+| generated_exception | true   | new table |
++---------------------+--------+-----------+
+```
