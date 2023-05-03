@@ -14,7 +14,7 @@ In Dolt, conflicts can occur on data and schema.
 
 On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. Primary key values are used to identify rows across versions for the purpose of diff and merge.
 
-In the case of keyless tables, every column is considered a primary key for merge. Thus, conflicts can only be generated in keyless tables if one side of the merge deletes a row and the other side adds the same row.
+In the case of keyless tables, every column is considered part of the primary key for merge. Thus, conflicts can only be generated in keyless tables if one side of the merge deletes a row and the other side adds the same row.
 
 ### Schema
 
