@@ -1371,7 +1371,7 @@ This only affects the staging of new tables. Tables that have already been stage
 
 The format of patterns is a simplified version of gitignore’s patterns:
 
-- An asterisk "*" matches any number of characters.
+- An asterisk "*"  or ampersand "%" matches any number of characters.
 - The character "?" matches any one character.
 - All other characters match exactly.
 
