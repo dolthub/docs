@@ -88,7 +88,7 @@ or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-pro
 `dolt_conflicts_resolve()` takes as arguments a table name and an option `--ours`
 or `--theirs` to specify which side of the merge should be accepted. It is important
 to note that this resolution strategy takes the _entire_ table from the choosen side
-of the merge, not only its schema. Schema and data changes from the unchosed side of
+of the merge, not only its schema. Schema and data changes from the side of the merge not chosen
 the merge are discarded with the resolution strategy. 
 
 ## Data
