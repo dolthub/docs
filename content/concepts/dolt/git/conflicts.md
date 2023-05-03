@@ -8,11 +8,13 @@ title: Conflicts
 
 A conflict is a signal to a user that a [merge](./merge.md) has produced a database that requires further action. The merge algorithm could not infer the state of the database based on the merge rules after the merge. Further input is required to tell Dolt what the resulting merged database should contain.
 
-In Dolt, conflicts can occur on schema and data. 
+In Dolt, conflicts can occur on data and schema. 
 
 ### Data
 
-On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. 
+On data, conflicts are detected on a cell-level. If two operations modify the same row, column pair to be different values, a conflict is detected. Primary key values are used to identify rows across versions for the purpose of diff and merge.
+
+In the case of keyless tables, every column is considered a primary key for merge. Thus, conflicts can only be generated in keyless tables if one side of the merge deletes a row and the other side adds the same row.
 
 ### Schema
 
