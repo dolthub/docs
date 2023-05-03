@@ -1355,6 +1355,7 @@ Configuration Tables can be staged and versioned just like user tables. They alw
 
 `dolt_ignore` stores a list of "table name patterns", and a boolean flag for each pattern indicating whether tables that match the patterns should not be staged for commit.
 
+This only affects the staging of new tables. Tables that have already been staged or committed are not affected the contents of `dolt_ignore`, and changes to those tables can still be staged.
 ### Schema
 
 ```text
