@@ -89,7 +89,7 @@ or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-pro
 or `--theirs` to specify which side of the merge should be accepted. It is important
 to note that this resolution strategy takes the _entire_ table from the choosen side
 of the merge, not only its schema. Schema and data changes from the side of the merge not chosen
-the merge are discarded with the resolution strategy. 
+ are discarded with the resolution strategy.  The schema and data changes still exist on the branch if you want to access them after the merge.
 
 ## Data
 
