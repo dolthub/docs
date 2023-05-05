@@ -6,27 +6,25 @@ title: What is Dolt?
 
 ![](../.gitbook/assets/dolt-logo.png)
 
-Dolt is the first and only SQL database that you can fork, clone, branch, merge, push and pull just like a Git repository. Dolt is a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Dolt is [Git for Data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). Dolt is a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/).
+Dolt is a SQL database you can fork, clone, branch, merge, push and pull just like a Git repository. Connect to Dolt just like any MySQL database to run SQL queries. Use the command line interface to import CSV files, commit your changes, push them to a remote, or merge your teammate's changes.
 
-Dolt implements the Git command line and associated operations on tables instead of files. Dolt version controls schema and data. Tables are modified in the working set using SQL. When you want to permanently store a version of the working set, you make a Dolt commit. 
+All the commands you know from Git work exactly the same in Dolt. Git versions files, Dolt versions tables. It's like Git and MySQL had a baby.
 
-In SQL, Dolt implements Git read operations (ie. diff, log) as [functions](../reference/sql/version-control/dolt-sql-functions.md) and [system tables](../reference/sql/version-control/dolt-system-tables.md) and write operations (ie. commit, merge) as [procedures](../reference/sql/version-control/dolt-sql-procedures.md). Dolt produces cell-wise diffs and merges, making data debugging between versions tractable. Dolt is the only SQL database that has branches and merges. 
-
-You can run Dolt online, like you would PostgreSQL or MySQL. Or you can run Dolt offline, treating data and schema like source code. 
+Dolt is a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Dolt is [Git for Data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). Dolt is a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/).
 
 {% embed url="https://youtu.be/3F6LwZt6e-A" %}
 
 ## Version Controlled Database
 
-Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Connect to Dolt just like any MySQL database to run queries. Use Dolt system tables, functions, or stored procedures to access version control information and features. 
+Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Connect to Dolt just like any MySQL database to run SQL queries. Use Dolt [system tables](../reference/sql/version-control/dolt-system-tables.md), [functions](../reference/sql/version-control/dolt-sql-functions.md), or [procedures](../reference/sql/version-control/dolt-sql-procedures.md) to access version control information and features. 
 
 ## Git for Data
 
-Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). Use the command line interface to import CSV files, commit your changes, push them to a remote, or merge your teammate's changes.
+Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). [Dolt matches the Git CLI exactly](../reference/cli.md). When you would have run `git add`, you run `dolt add`. When you would have run `git commit`, you run `dolt commit`.
 
 ## Versioned MySQL Replica
 
-Dolt can be deployed as a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/). Because Dolt is MySQL compatible, Dolt can be configured just like any other MySQL replica. This allows you to get most of the features of a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/) without migrating from MySQL.
+Dolt can be deployed as a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/). Because Dolt is MySQL compatible, Dolt can be configured just like any other MySQL replica. A Dolt replica gives you features of a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/) without migrating from MySQL.
 
 ##
 
