@@ -331,13 +331,14 @@ than using this table directly.
 ### Schema
 
 ```text
-+-------------+----------+
-| field       | type     |
-+-------------+--------- +
-| type        | text     |
-| name        | text     |
-| fragment    | text     |
-+-------------+--------- +
++----------+----------------------------------------+------+-----+---------+-------+
+| Field    | Type                                   | Null | Key | Default | Extra |
++----------+----------------------------------------+------+-----+---------+-------+
+| type     | varchar(64) COLLATE utf8mb4_0900_ai_ci | NO   | PRI | NULL    |       |
+| name     | varchar(64) COLLATE utf8mb4_0900_ai_ci | NO   | PRI | NULL    |       |
+| fragment | longtext                               | YES  |     | NULL    |       |
+| extra    | json                                   | YES  |     | NULL    |       |
++----------+----------------------------------------+------+-----+---------+-------+
 ```
 
 Currently only view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
@@ -352,11 +353,11 @@ SELECT * FROM dolt_schemas;
 ```
 
 ```text
-+------+------+----------------------+
-| type | name | fragment             |
-+------+------+----------------------+
-| view | four | select 2+2 from dual |
-+------+------+----------------------+
++------+------+------------------------------------------+-----------------+
+| type | name | fragment                                 | extra           |
++------+------+------------------------------------------+-----------------+
+| view | four | CREATE VIEW four AS SELECT 2+2 FROM dual | {"CreatedAt":0} |
++------+------+------------------------------------------+-----------------+
 ```
 
 ## `dolt_tags`
