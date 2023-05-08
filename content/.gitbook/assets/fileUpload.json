@@ -1,197 +1,197 @@
 {
-"openapi": "3.0.0",
-"info":{
-  "title": "File Upload",
-  "description": "API for uploading files to DoltHub",
-  "version": "1.0.0"
-},
-"servers":[
-  { 
-    "url": "https://www.dolthub.com/api/v1alpha1"
-    }
-  ],
-"paths":{
-  "/{owner}/{database}/upload/{branch}":{
-    "post":{
-      "summary": "Upload a file to a DoltHub database",
-      "description": "This endpoint allows you to upload a file to DoltHub to create or update a table.",
-      "parameters":[
-        {
-          "name": "owner",
-          "in": "path",
-          "description": "The name of the database owner.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example":"dolthub"
-          }
-        },
-        {
-          "name": "database",
-          "in": "path",
-          "description": "The name of the database.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example":"museum-collections"
-          }
-        },
-        {
-          "name": "branch",
-          "in": "path",
-          "description": "The name of the branch to upload the file to.",
-          "required": true,
-          "schema": {
-            "type": "string",
-            "example":"main"
-          }
-        }],
-        "requestBody": {
-          "description": "The file upload information.",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "tableName": {
-                    "type": "string",
-                    "description": "The name of the table to create or update.",
-                    "example": "test_upload"
-                  },
-                  "fileName": {
-                    "type": "string",
-                    "description": "The name of the file being uploaded.",
-                    "example": "upload_csv_test.csv"
-                  },
-                  "fileType": {
-                    "type": "string",
-                    "description": "The type of file being uploaded.",
-                    "example": "Csv"
-                  },
-                  "importOp": {
-                    "type": "string",
-                    "description": "The import operation to perform on the file.",
-                    "example": "Create"
-                  },
-                  "primaryKeys": {
-                    "type": "array",
-                    "description": "The primary keys of the table, if any.",
-                    "example": ["id"]
-                  },
-                  "contentMd5": {
-                    "type": "string",
-                    "description": "The MD5 hash of the file contents.",
-                    "example": "d41d8cd98f00b204e9800998ecf8427e"
-                  },
-                  "content": {
-                    "type": "object",
-                    "description": "The file contents.",
-                    "example": {"type":"Buffer","data":[49,50,51,10,52,53,54,10,55,56,57,10]}
-                  }
-                }
-              }
+  "openapi": "3.0.0",
+  "info":{
+    "title": "File Upload",
+    "description": "API for uploading files to DoltHub",
+    "version": "1.0.0"
+  },
+  "servers":[
+    { 
+      "url": "https://www.dolthub.com/api/v1alpha1"
+      }
+    ],
+  "paths":{
+    "/{owner}/{database}/upload/{branch}":{
+      "post":{
+        "summary": "Upload a file to a DoltHub database",
+        "description": "This endpoint allows you to upload a file to DoltHub to create or update a table.",
+        "parameters":[
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
             }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Pull request created successfully.",
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          },
+          {
+            "name": "branch",
+            "in": "path",
+            "description": "The name of the branch to upload the file to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"main"
+            }
+          }],
+          "requestBody": {
+            "description": "The file upload information.",
+            "required": true,
             "content": {
               "application/json": {
-              "schema":{
-                "type": "object",
-              "properties": {
-                "status":{
-                  "type":"string",
-                  "example":"Success"
-                },
-                "database_owner":{
-                  "type":"string",
-                  "example":"dolthub"
-                },
-                "database_name":{
-                  "type":"string",
-                  "example":"museum-collections"
-                },
-                "branch_name":{
-                  "type":"string",
-                  "example":"main"
-                },
-                "file_name":{
-                  "type":"string",
-                  "example":"upload_csv_test.csv"
-                },
-                "content_md5":{
-                  "type":"string",
-                  "example":"d41d8cd98f00b204e9800998ecf8427e"
-                },
-                "operation_name":{
-                  "type":"string",
-                  "example":"operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
-                }
-              }
-            }
-          }
-        }
-      },
-      "400":{
-        "description": "Bad request. The request was invalid or could not be processed.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "object",
-                    "properties": {
-                      "status": {
-                        "type": "string",
-                        "example": "Error"
-                      },
-                      "message": {
-                        "type": "string",
-                        "example": "Invalid request body"
-                      },
-                      "database_owner":{
-                        "type":"string",
-                        "example":"dolthub"
-                      },
-                      "database_name":{
-                        "type":"string",
-                        "example":"museum-collections"
-                      },
-                      "branch_name":{
-                        "type":"string",
-                        "example":"main"
-                      },
-                      "file_name":{
-                        "type":"string",
-                        "example":"upload_csv_test.csv"
-                      },
-                      "content_md5":{
-                        "type":"string",
-                        "example":"d41d8cd98f00b204e9800998ecf8427e"
-                      }
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tableName": {
+                      "type": "string",
+                      "description": "The name of the table to create or update.",
+                      "example": "test_upload"
+                    },
+                    "fileName": {
+                      "type": "string",
+                      "description": "The name of the file being uploaded.",
+                      "example": "upload_csv_test.csv"
+                    },
+                    "fileType": {
+                      "type": "string",
+                      "description": "The type of file being uploaded.",
+                      "example": "Csv"
+                    },
+                    "importOp": {
+                      "type": "string",
+                      "description": "The import operation to perform on the file.",
+                      "example": "Create"
+                    },
+                    "primaryKeys": {
+                      "type": "array",
+                      "description": "The primary keys of the table, if any.",
+                      "example": ["id"]
+                    },
+                    "contentMd5": {
+                      "type": "string",
+                      "description": "The MD5 hash of the file contents.",
+                      "example": "d41d8cd98f00b204e9800998ecf8427e"
+                    },
+                    "content": {
+                      "type": "object",
+                      "description": "The file contents.",
+                      "example": {"type":"Buffer","data":[49,50,51,10,52,53,54,10,55,56,57,10]}
                     }
                   }
                 }
               }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Pull request created successfully.",
+              "content": {
+                "application/json": {
+                "schema":{
+                  "type": "object",
+                "properties": {
+                  "status":{
+                    "type":"string",
+                    "example":"Success"
+                  },
+                  "database_owner":{
+                    "type":"string",
+                    "example":"dolthub"
+                  },
+                  "database_name":{
+                    "type":"string",
+                    "example":"museum-collections"
+                  },
+                  "branch_name":{
+                    "type":"string",
+                    "example":"main"
+                  },
+                  "file_name":{
+                    "type":"string",
+                    "example":"upload_csv_test.csv"
+                  },
+                  "content_md5":{
+                    "type":"string",
+                    "example":"d41d8cd98f00b204e9800998ecf8427e"
+                  },
+                  "operation_name":{
+                    "type":"string",
+                    "example":"operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400":{
+          "description": "Bad request. The request was invalid or could not be processed.",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string",
+                          "example": "Error"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid request body"
+                        },
+                        "database_owner":{
+                          "type":"string",
+                          "example":"dolthub"
+                        },
+                        "database_name":{
+                          "type":"string",
+                          "example":"museum-collections"
+                        },
+                        "branch_name":{
+                          "type":"string",
+                          "example":"main"
+                        },
+                        "file_name":{
+                          "type":"string",
+                          "example":"upload_csv_test.csv"
+                        },
+                        "content_md5":{
+                          "type":"string",
+                          "example":"d41d8cd98f00b204e9800998ecf8427e"
+                        }
+                      }
+                    }
+                  }
+                }
 
-      }
-    },
-    "security": [
-      {
-        "APIKeyHeader": []
-      }
-    ]
-  }
-}
-},
-"components": {
-  "securitySchemes": {
-    "APIKeyHeader": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "authorization"
+        }
+      },
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ]
     }
   }
-}
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
 }
