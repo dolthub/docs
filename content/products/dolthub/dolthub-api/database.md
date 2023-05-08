@@ -24,7 +24,7 @@ headers = {
 
 
 
-## Creates pull request
+## Create pull request
 
 Here is an example of opening a pull request on the `museum-collections` database with data from the Los Angeles County Museum of Art. This data was added to the `lacma` branch on a fork database, whose `owner` is `liuliu`, we would like to eventually merge `lacma` branch into the `main` branch using an [authorization token](authentication.md).
 
