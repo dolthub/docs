@@ -89,12 +89,61 @@ Then use `GET` to poll the operation to check if the merge operation is done.
 
 ## Upload file
 
-Here is an example of uploading a file to create a table on a database  `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result.
+Here is an example of uploading a file `upload_csv_test.csv` to create a table `test_upload` on a database  `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result.
+
+```js
+const fs = require("fs");
+
+const url =
+  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
+ 
+const file_path = "upload_csv_test.csv";
+ 
+const headers = {
+  "Content-Type": "application/json",
+  authorization: [api token you created],
+};
+
+fs.readFile(file_path, (err, data) => {
+  if (err) throw err;
+
+  const SparkMD5 = require("spark-md5");
+
+  const enc = new TextEncoder();
+
+  const spark = new SparkMD5.ArrayBuffer();
+  spark.append(data);
+  const md5 = btoa(spark.end(true));
+
+  const params = {
+    tableName: "test_upload",
+    contents: data,
+    fileName: "upload_csv_test.csv",
+    branchName: "main",
+    fileType: "Csv",
+    importOp: "Create",
+    primaryKeys: [],
+    contentMd5: md5,
+  };
+
+  fetch(prod_url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(params),
+  })
+    .then((response) => {
+        // process response
+    })
+    .catch((error) => {
+      // process error
+    });
+});
+
+```
 
 To poll the operation and check its status, you can use the `operationName` in the returned response of the file upload post to query the API. Once the operation is complete, the response will contain a `job_id` field indicating the job that's running the import job, as well as other information such as the `repository_owner`, `repository_name`, and `pull_id`.
 
 Keep in mind that the time it takes for the import operation to complete can vary depending on the size of the file and the complexity of the changes being applied to the database.
-
 
 Include this `header` in your request with the API token you created.
 
