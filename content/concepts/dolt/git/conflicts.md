@@ -18,9 +18,9 @@ In the case of keyless tables, every column is considered part of the primary ke
 
 ### Schema
 
-Two branches must add, delete or modify a similarly named table, column, index or constraint to generate a schema conflict, otherwise the changes are mergeable.
+Two branches must add, delete or modify a similarly named table, column, foreign key, index or constraint to generate a schema conflict, otherwise the changes are mergeable.
 
-If two branches modify the same named table, column foreign key, index or check constraint, consult the following tables for conflict detection.
+If two branches modify the same named table, column, foreign key, index or check constraint, consult the following tables for conflict detection.
 
 #### Tables
 
