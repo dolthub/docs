@@ -10,7 +10,7 @@ Now you can use this token in the header when executing a query against a privat
 owner, repo, branch = "dolthub", "private-db", "main"
 query = """SELECT * FROM testtable"""
 res = requests.get(
-    "https://www.dolthub.com/api/v1alpha1/{}/{}".format(owner, repo, branch),
+    "https://www.dolthub.com/api/v1alpha1/{}/{}/{}".format(owner, repo, branch),
     params={"q": query},
     headers={ "authorization": "token [TOKEN YOU COPIED]" },
 )
