@@ -12,7 +12,7 @@
   ],
   
     "paths": {
-      "/{owner}/{repo}/pulls/{pull_id}/merge": {
+      "/{owner}/{database}/pulls/{pull_id}/merge": {
         "post": {
           "summary": "Merge a pull request",
           "description": "This endpoint merges a pull request into the destination branch.",
@@ -28,7 +28,7 @@
               }
             },
             {
-              "name": "repo",
+              "name": "database",
               "in": "path",
               "description": "The name of the database.",
               "required": true,
@@ -60,11 +60,11 @@
                         "type": "string",
                         "example": "Success"
                       },
-                      "repository_owner": {
+                      "database_owner": {
                         "type": "string",
                         "example": "dolthub"
                       },
-                      "repository_name": {
+                      "database_name": {
                         "type": "string",
                         "example": "museum-collections"
                       },
@@ -96,11 +96,11 @@
                         "type":"string",
                         "example":"Error merging a pull request."
                       },
-                      "repository_owner": {
+                      "database_owner": {
                         "type": "string",
                         "example": "dolthub"
                       },
-                      "repository_name": {
+                      "database_name": {
                         "type": "string",
                         "example": "museum-collections"
                       },

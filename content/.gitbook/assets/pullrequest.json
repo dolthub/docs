@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/{owner}/{repo}/pulls": {
+    "/{owner}/{database}/pulls": {
       "post": {
         "summary": "Create a new pull request",
         "description": "This API allows you to create a new pull request.",
@@ -27,7 +27,7 @@
             }
           },
           {
-            "name": "repo",
+            "name": "database",
             "in": "path",
             "description": "The name of the database.",
             "required": true,

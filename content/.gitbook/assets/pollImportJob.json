@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Check Merge Operation Status API",
+    "title": "Check Import Operation Status API",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,10 +11,10 @@
     }
   ],
   "paths": {
-    "/{owner}/{database}/pulls/{pull_id}/merge": {
+    "/{owner}/{database}/upload/{branch}": {
       "get": {
-        "summary": "Check merge operation status",
-        "description": "Poll the operation to check if the merge operation is done",
+        "summary": "Check import operation status",
+        "description": "Poll the operation to check if the file import operation is done",
         "parameters": [
           {
             "name": "owner",
@@ -37,13 +37,13 @@
             }
           },
           {
-            "name": "pull_id",
+            "name": "branch",
             "in": "path",
-            "description": "The ID of the pull request",
+            "description": "The name of the branch to upload the file to.",
             "required": true,
             "schema": {
               "type": "string",
-              "example":"66"
+              "example":"main"
             }
           },
           {
@@ -60,7 +60,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The status of the merge operation",
+            "description": "The status of the file import operation",
             "content": {
               "application/json": {
                 "schema": {
@@ -68,7 +68,7 @@
                   "properties": {
                     "status": {
                       "type": "string",
-                      "description": "The status of the operation, Success if the merge was successful",
+                      "description": "The status of the operation, Success if the file import was successful",
                       "example":"Success"
                     },
                     "operation_name": {
@@ -78,7 +78,7 @@
                     },
                     "job_created": {
                       "type": "boolean",
-                      "description": "True if the job is created, False otherwise",
+                      "description": "True if the import job is created, False otherwise",
                       "example":true
                     },
                     "database_owner": {
@@ -93,13 +93,13 @@
                     },
                     "pull_id": {
                       "type": "string",
-                      "description": "The ID of the pull request",
+                      "description": "The ID of the pull request that the import job created. This is only present if the import job is completed",
                       "example":"66"
                     },
                     "job_status":{
                       "type":"string",
                       "description":"The status of the job, In Progress if the job is still running, Completed if the job is done, Pending if the job is waiting to be run",
-                      "example":"In Progress"
+                      "example":"Completed"
                     }
                   }
                 }
