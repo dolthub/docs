@@ -341,7 +341,12 @@ than using this table directly.
 +----------+----------------------------------------+------+-----+---------+-------+
 ```
 
-Currently only view definitions are stored in `dolt_schemas`. `type` is currently always the string `view`. `name` is the name of the view as supplied in the `CREATE VIEW ...` statement. `fragment` is the `select` fragment that the view is defined as.
+Currently, all `VIEW`, `TRIGGER` and `EVENT` definitions are stored in the `dolt_schemas` table. 
+The column `type` defines whether the fragment is `view`, `trigger` or `event`. 
+The column `name` is the fragment name as supplied in the `CREATE` statement. 
+The column `fragment` stores the `CREATE` statement of the fragment. The column
+`json` is any additional important information such as `CreateAt` field
+for the fragment.
 
 The values in this table are partly implementation details associated with the implementation of the underlying database objects.
 
@@ -349,15 +354,20 @@ The values in this table are partly implementation details associated with the i
 
 ```sql
 CREATE VIEW four AS SELECT 2+2 FROM dual;
+CREATE TABLE mytable (x INT PRIMARY KEY);
+CREATE TRIGGER inc_insert BEFORE INSERT ON a FOR EACH ROW SET NEW.x = NEW.x + 1;
+CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO CALL DOLT_GC();
 SELECT * FROM dolt_schemas;
 ```
 
 ```text
-+------+------+------------------------------------------+-----------------+
-| type | name | fragment                                 | extra           |
-+------+------+------------------------------------------+-----------------+
-| view | four | CREATE VIEW four AS SELECT 2+2 FROM dual | {"CreatedAt":0} |
-+------+------+------------------------------------------+-----------------+
++---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
+| type    | name       | fragment                                                                                                                                                          | extra                     |
++---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
+| event   | monthly_gc | CREATE DEFINER = `root`@`localhost` EVENT `monthly_gc` ON SCHEDULE EVERY 1 MONTH STARTS '2023-05-09 10:48:24' ON COMPLETION NOT PRESERVE ENABLE DO CALL DOLT_GC() | {"CreatedAt": 1683654504} |
+| trigger | inc_insert | CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1                                                                             | {"CreatedAt": 1683654353} |
+| view    | four       | CREATE VIEW four AS SELECT 2+2 FROM dual                                                                                                                          | {"CreatedAt": 1683654112} |
++---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
 ```
 
 ## `dolt_tags`
