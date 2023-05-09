@@ -167,28 +167,25 @@ fs.readFile(file_path, (err, data) => {
 And an example of polling the job status in Javascript:
 
 ```js
-
-function pollOperation(op_name){
-  const url = `https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=${op_name}`;
-      
+function pollOperation(op_name) {
+  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=${op_name}`;
   const headers = {
-  "Content-Type": "application/json",
-  authorization: [api token you created],
+    "Content-Type": "application/json",
+    authorization: [api token you created],
   };
 
-  while(true){
-    const res= await fetch(url, {
+  while (true) {
+    const res = await fetch(url, {
       method: "GET",
       headers,
-      });
+    });
     const data = await res.json();
-    if(data.job_created){
+    if (data.job_created) {
       return data;
-    }else{
-      await new Promise(r => setTimeout(r, 1000));
+    } else {
+      await new Promise(r = >setTimeout(r, 1000));
     }
   }
-  
-}
 
+}
 ```
