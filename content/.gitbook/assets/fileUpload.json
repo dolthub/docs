@@ -14,7 +14,7 @@
     "/{owner}/{database}/upload/{branch}":{
       "post":{
         "summary": "Upload a file to a DoltHub database",
-        "description": "This endpoint allows you to upload a file to DoltHub to create or update a table.",
+        "description": "This endpoint allows you to upload a file to DoltHub to create, update, overwrite, or replace a table.",
         "parameters":[
           {
             "name": "owner",
@@ -56,7 +56,7 @@
                   "properties": {
                     "tableName": {
                       "type": "string",
-                      "description": "The name of the table to create or update.",
+                      "description": "The name of the table to create, update, overwrite, or replace a table.",
                       "example": "test_upload"
                     },
                     "fileName": {
@@ -66,12 +66,12 @@
                     },
                     "fileType": {
                       "type": "string",
-                      "description": "The type of file being uploaded.",
+                      "description": "The type of file being uploaded. Supported types are Csv, Psv, Json, Xlsx, and Sql.",
                       "example": "Csv"
                     },
                     "importOp": {
                       "type": "string",
-                      "description": "The import operation to perform on the file.",
+                      "description": "The import operation to perform on the file. Supported operations are Create, Update, Overwrite, and Replace.",
                       "example": "Create"
                     },
                     "primaryKeys": {

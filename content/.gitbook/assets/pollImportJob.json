@@ -45,29 +45,19 @@
               "type": "string",
               "example":"66"
             }
-          }
-        ],
-        "requestBody": {
-          "description": "The request body for checking file import operation status",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "operationName": {
-                    "type": "string",
-                    "description": "The operation name to check",
-                    "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
-                  }
-                },
-                "required": [
-                  "operationName"
-                ]
-              }
+          },
+          {
+            "name":"operationName",
+            "in":"query",
+            "description":"The operation name to check",
+            "required":true,
+            "schema":{
+              "type": "string",
+              "description": "The operation name to check",
+              "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "The status of the file import operation",
@@ -86,9 +76,9 @@
                       "description": "The operation name",
                       "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
                     },
-                    "done": {
+                    "job_created": {
                       "type": "boolean",
-                      "description": "True if the operation is done, False otherwise",
+                      "description": "True if the import job is created, False otherwise",
                       "example":true
                     },
                     "job_id": {
@@ -96,12 +86,12 @@
                       "description": "The job ID of the file import operation",
                       "example":"1"
                     },
-                    "repository_owner": {
+                    "database_owner": {
                       "type": "string",
                       "description": "The owner of the database",
                       "example":"dolthub"
                     },
-                    "repository_name": {
+                    "database_name": {
                       "type": "string",
                       "description": "The name of the database",
                       "example":"museum-collections"

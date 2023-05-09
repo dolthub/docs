@@ -87,61 +87,11 @@ Then use `GET` to poll the operation to check if the merge operation is done.
 {% endswagger %}
 
 
-## Upload file
+## Upload a file
 
-Here is an example of uploading a file `upload_csv_test.csv` to create a table `test_upload` on a database  `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result.
+Here is an example of uploading a file `lacma.csv` to create a table `lacma` on a database  `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result.
 
-```js
-const fs = require("fs");
-
-const url =
-  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
- 
-const file_path = "upload_csv_test.csv";
- 
-const headers = {
-  "Content-Type": "application/json",
-  authorization: [api token you created],
-};
-
-fs.readFile(file_path, (err, data) => {
-  if (err) throw err;
-
-  const SparkMD5 = require("spark-md5");
-
-  const enc = new TextEncoder();
-
-  const spark = new SparkMD5.ArrayBuffer();
-  spark.append(data);
-  const md5 = btoa(spark.end(true));
-
-  const params = {
-    tableName: "test_upload",
-    contents: data,
-    fileName: "upload_csv_test.csv",
-    branchName: "main",
-    fileType: "Csv",
-    importOp: "Create",
-    primaryKeys: [],
-    contentMd5: md5,
-  };
-
-  fetch(prod_url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(params),
-  })
-    .then((response) => {
-        // process response
-    })
-    .catch((error) => {
-      // process error
-    });
-});
-
-```
-
-To poll the operation and check its status, you can use the `operationName` in the returned response of the file upload post to query the API. Once the operation is complete, the response will contain a `job_id` field indicating the job that's running the import job, as well as other information such as the `repository_owner`, `repository_name`, and `pull_id`.
+To poll the operation and check its status, you can use the `operationName` in the returned response of the file upload post to query the API. Once the operation is complete, the response will contain a `job_id` field indicating the job that's running the file import as well as the id of the pull request that's created from the import.
 
 Keep in mind that the time it takes for the import operation to complete can vary depending on the size of the file and the complexity of the changes being applied to the database.
 
@@ -162,3 +112,80 @@ Then use `GET` to poll the operation to check if the import operation is done.
 {% swagger src="../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload/{branch}" method="get" %}
 [pollImportJob.json](../../.gitbook/assets/pollImportJob.json)
 {% endswagger %}
+
+Here is an example of uploading a file to create a table through this api endpoint in Javascript:
+
+```js
+const fs = require("fs");
+const SparkMD5 = require("spark-md5");
+
+const url =
+  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
+ 
+const file_path = "upload_csv_test.csv";
+ 
+const headers = {
+  "Content-Type": "application/json",
+  authorization: [api token you created],
+};
+
+fs.readFile(file_path, (err, data) => {
+  if (err) throw err;
+
+  const enc = new TextEncoder();
+
+  const spark = new SparkMD5.ArrayBuffer();
+  spark.append(data);
+  const md5 = btoa(spark.end(true));
+
+  const params = {
+    tableName: "lacma",
+    contents: data,
+    fileName: "lacma.csv",
+    branchName: "main",
+    fileType: "Csv",
+    importOp: "Create",
+    primaryKeys: ["id"],
+    contentMd5: md5,
+  };
+
+  fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(params),
+  })
+    .then((response) => {
+        // process response
+    })
+    .catch((error) => {
+      // process error
+    });
+});
+
+```
+
+And an example of poll the job status in Javascript:
+```js
+
+    const url =
+    "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=operations/b09a9221-9dcb-4a15-9ca8-a64656946f12";
+    
+    
+    const headers = {
+    "Content-Type": "application/json",
+    authorization: [api token you created],
+    };
+
+
+  fetch(url, {
+    method: "GET",
+    headers,
+  })
+    .then((response) => {
+        // process response
+    })
+    .catch((error) => {
+      // process error
+    });
+
+```

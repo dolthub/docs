@@ -60,11 +60,11 @@
                         "type": "string",
                         "example": "Success"
                       },
-                      "repository_owner": {
+                      "database_owner": {
                         "type": "string",
                         "example": "dolthub"
                       },
-                      "repository_name": {
+                      "database_name": {
                         "type": "string",
                         "example": "museum-collections"
                       },
@@ -96,11 +96,11 @@
                         "type":"string",
                         "example":"Error merging a pull request."
                       },
-                      "repository_owner": {
+                      "database_owner": {
                         "type": "string",
                         "example": "dolthub"
                       },
-                      "repository_name": {
+                      "database_name": {
                         "type": "string",
                         "example": "museum-collections"
                       },
