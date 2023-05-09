@@ -37,13 +37,13 @@
             }
           },
           {
-            "name": "pull_id",
+            "name": "branch",
             "in": "path",
-            "description": "The ID of the pull request",
+            "description": "The name of the branch to upload the file to.",
             "required": true,
             "schema": {
               "type": "string",
-              "example":"66"
+              "example":"main"
             }
           },
           {
