@@ -183,7 +183,7 @@ function pollOperation(op_name) {
     if (data.job_created) {
       return data;
     } else {
-      await new Promise(r = >setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 1000));
     }
   }
 
