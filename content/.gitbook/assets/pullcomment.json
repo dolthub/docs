@@ -10,7 +10,7 @@
     }
   ],
   "paths": {
-    "/{owner}/{repo}/pulls/{pull_id}/comments": {
+    "/{owner}/{database}/pulls/{pull_id}/comments": {
       "post": {
         "summary": "Add comment to pull request",
         "operationId": "addCommentToPullRequest",
@@ -27,7 +27,7 @@
            
           },
           {
-            "name": "repo",
+            "name": "database",
             "in": "path",
             "description": "database name",
             "required": true,
