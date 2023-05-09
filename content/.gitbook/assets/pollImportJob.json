@@ -93,7 +93,7 @@
                     },
                     "pull_id": {
                       "type": "string",
-                      "description": "The ID of the pull request that the import job created. This is only present if the import job is Completed",
+                      "description": "The ID of the pull request that the import job created. This is only present if the import job is completed",
                       "example":"66"
                     },
                     "job_status":{
