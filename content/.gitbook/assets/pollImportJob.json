@@ -100,6 +100,11 @@
                       "type": "string",
                       "description": "The ID of the pull request",
                       "example":"66"
+                    },
+                    "job_status":{
+                      "type":"string",
+                      "description":"The status of the job, In Progress if the job is still running, Completed if the job is done, Pending if the job is waiting to be run",
+                      "example":"In Progress"
                     }
                   }
                 }
