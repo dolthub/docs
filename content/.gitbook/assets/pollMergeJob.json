@@ -81,11 +81,6 @@
                       "description": "True if the job is created, False otherwise",
                       "example":true
                     },
-                    "job_id": {
-                      "type": "string",
-                      "description": "The job ID of the merge operation",
-                      "example":"1"
-                    },
                     "database_owner": {
                       "type": "string",
                       "description": "The owner of the database",
