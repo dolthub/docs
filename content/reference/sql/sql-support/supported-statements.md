@@ -41,6 +41,7 @@ title: Supported Statements
 | `ADD PARTITION`         | ❌         |                                                                                         |
 | `ALTER COLUMN`          | 🟠        | Name and order changes are supported. Some but not all type changes are supported.      |
 | `ALTER DATABASE`        | ❌         |                                                                                         |
+| `ALTER EVENT`           | ✅         | Moving events across databases using RENAME TO clause is not supported yet.             |
 | `ALTER INDEX`           | ❌         | Indexes can be created and dropped, but not altered.                                    |
 | `ALTER PRIMARY KEY`     | ✅         |                                                                                         |
 | `ALTER TABLE`           | ✅         | Not all `ALTER TABLE` statements are supported. See the rest of this table for details. |
@@ -48,9 +49,9 @@ title: Supported Statements
 | `ALTER VIEW`            | ❌         | Views can be created and dropped, but not altered.                                      |
 | `CHANGE COLUMN`         | ✅         |                                                                                         |
 | `CREATE DATABASE`       | ✅         | Creates a new dolt database rooted relative to the server directory                     |
-| `CREATE EVENT`          | ❌         |                                                                                         |
+| `CREATE EVENT`          | 🟠         | Dolt stores event definitions but event execution is not supported yet.                 |
 | `CREATE FUNCTION`       | ❌         |                                                                                         |
-| `CREATE INDEX`          | 🟠         | Fulltext indexes are not supported.                                         |
+| `CREATE INDEX`          | 🟠         | Fulltext indexes are not supported.                                                     |
 | `CREATE SCHEMA`         | ✅         | Creates a new dolt database rooted relative to the server directory                     |
 | `CREATE TABLE`          | ✅         |                                                                                         |
 | `CREATE TABLE AS`       | ❌         |                                                                                         |
