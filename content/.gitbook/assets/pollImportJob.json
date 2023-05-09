@@ -81,11 +81,6 @@
                       "description": "True if the import job is created, False otherwise",
                       "example":true
                     },
-                    "job_id": {
-                      "type": "string",
-                      "description": "The job ID of the file import operation",
-                      "example":"1"
-                    },
                     "database_owner": {
                       "type": "string",
                       "description": "The owner of the database",
@@ -98,8 +93,13 @@
                     },
                     "pull_id": {
                       "type": "string",
-                      "description": "The ID of the pull request",
+                      "description": "The ID of the pull request that the import job created. This is only present if the import job is completed",
                       "example":"66"
+                    },
+                    "job_status":{
+                      "type":"string",
+                      "description":"The status of the job, In Progress if the job is still running, Completed if the job is done, Pending if the job is waiting to be run",
+                      "example":"Completed"
                     }
                   }
                 }

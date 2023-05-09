@@ -81,11 +81,6 @@
                       "description": "True if the job is created, False otherwise",
                       "example":true
                     },
-                    "job_id": {
-                      "type": "string",
-                      "description": "The job ID of the merge operation",
-                      "example":"1"
-                    },
                     "database_owner": {
                       "type": "string",
                       "description": "The owner of the database",
@@ -100,6 +95,11 @@
                       "type": "string",
                       "description": "The ID of the pull request",
                       "example":"66"
+                    },
+                    "job_status":{
+                      "type":"string",
+                      "description":"The status of the job, In Progress if the job is still running, Completed if the job is done, Pending if the job is waiting to be run",
+                      "example":"In Progress"
                     }
                   }
                 }
