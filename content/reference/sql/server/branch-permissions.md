@@ -18,13 +18,13 @@ Each column is composed of a string that represents a pattern-matching expressio
 
 ### `dolt_branch_control`
 
-| Column      | Type                  | Collation          |
-|:------------|:----------------------|:-------------------|
-| database    | VARCHAR(16383)        | utf8mb4_0900_ai_ci |
-| branch      | VARCHAR(16383)        | utf8mb4_0900_ai_ci |
-| user        | VARCHAR(16383)        | utf8mb4_0900_bin   |
-| host        | VARCHAR(16383)        | utf8mb4_0900_ai_ci |
-| permissions | SET("admin", "write") | utf8mb4_0900_ai_ci |
+| Column      | Type                          | Collation          |
+|:------------|:------------------------------|:-------------------|
+| database    | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
+| branch      | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
+| user        | VARCHAR(16383)                | utf8mb4_0900_bin   |
+| host        | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
+| permissions | SET("admin", "write", "read") | utf8mb4_0900_ai_ci |
 
 ### `dolt_branch_namespace_control`
 
@@ -41,8 +41,9 @@ Each column is composed of a string that represents a pattern-matching expressio
 |:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | admin      | Grants all permissions available. In addition, grants write access to entries on both system tables, as long as the database and branch are equivalent, or they're subset of the database + branch that this permission belongs to. |
 | write      | Grants the ability to write on the branch, as well as modify the branch in all possible ways (rename, delete, etc.).                                                                                                                |
+| read       | Does not explicitly grant any permissions, as having the ability to read a branch is an irrevocable right for all users. This is just for the visual convenience, versus having an empty field.                                     |
 
-Do remember that all users, even those without an entry at all, still have read access to all branches.
+Just to reiterate: remember that all users, even those without an entry at all, still have read access to all branches.
 Permissions only affect modifying branches, and writing to the system tables.
 
 ### Pattern Matching
@@ -99,19 +100,19 @@ It is important to note that global and database admins do **not** have an impli
 They must insert their own row if they do not match a pre-existing row on their desired database and branch.
 This ensures that the table is the single source-of-truth regarding which users may modify branches.
 
-In addition to the above privileges, if a user has the `admin` permission, then that user may edit any entries in either system table that they either directly match, or their database and branch are supersets of the target entries.
+In addition to the above privileges, if a user has the `admin` permission, then that user may edit any entries in either system table that they either directly match, or their database and branch are supersets of the target entries (unless there is a more specific rule, which is further discussed below).
 
 ### Branch Modification
 
 All users may read any branch.
-The branch permissions tables only affect modification.
+The branch permissions tables primarily affect modification.
 When a user (connected via a client to a Dolt instance running as a server) attempts any operation that may modify either the branch or its contents (tables, staged work, etc.), then the first system table, `dolt_branch_control`, is invoked.
 
 To find all matching entries, we start with the global set of all entries.
 We first match against the database, which (hopefully) reduces the set of entries.
 Next we match against the branch, reducing the set further still.
 We repeat the same process for the user name and host, which gives us our final set.
-Out of the remaining entries, we gather all of the permissions, and then check that the user has the required permissions to execute the desired statement.
+Out of the remaining entries, we filter them down to which entries are the most specific for that branch (e.g. `ab%` vs `abcd`), gather all of the permissions from the filtered set, and then check that the user has the required permissions to execute the desired statement.
 If not, an error message is thrown.
 
 This same process is also used when attempting to modify the system tables, except that there's an additional check for the user's privileges.
@@ -137,9 +138,11 @@ No entry is added to `dolt_branch_namespace_control`, as branches may not have d
 
 ### Longest Match
 
-As the `dolt_branch_namespace_control` is intended for controlling "namespaces", we only consider the entry set that has the longest branch expressions.
-This is so that the set contains the most specific entries to the target branch name.
-Because we fold all of our match expressions, we can guarantee that the longest matching expression is the smallest subset of all other possible entries that may match.
+For both `dolt_branch_control` and `dolt_branch_namespace_control`, we only consider the entry set that has the longest matching expressions.
+This is so that the set contains the most specific entries to the target branch and user.
+Because we [fold all of our match expressions](#pattern-matching), we can guarantee that all longer matches are a subset of shorter matches.
+For example, `ab%` is shorter than `abc%`, and consequently `abcd` is a subset of `ab%`.
+This does leave the case where matches of equivalent length may still be a superset/subset combo (such as `abc_` and `abcd`), however we treat them as having an equivalent specificity.
 
 ### Additional Branch Creation Considerations
 
