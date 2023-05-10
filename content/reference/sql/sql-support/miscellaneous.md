@@ -124,12 +124,12 @@ Character sets and collations are added upon request, so please [file an issue](
 | koi8u_bin                   | koi8u         | ❌         |
 | koi8u_general_ci            | koi8u         | ❌         |
 | latin1_bin                  | latin1        | ✅         |
-| latin1_danish_ci            | latin1        | ❌         |
+| latin1_danish_ci            | latin1        | ✅         |
 | latin1_general_ci           | latin1        | ✅         |
 | latin1_general_cs           | latin1        | ✅         |
 | latin1_german1_ci           | latin1        | ✅         |
 | latin1_german2_ci           | latin1        | ✅         |
-| latin1_spanish_ci           | latin1        | ❌         |
+| latin1_spanish_ci           | latin1        | ✅         |
 | latin1_swedish_ci           | latin1        | ✅         |
 | latin2_bin                  | latin2        | ❌         |
 | latin2_croatian_ci          | latin2        | ❌         |
