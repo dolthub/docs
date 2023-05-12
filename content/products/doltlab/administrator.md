@@ -23,6 +23,7 @@ the following information can help DoltLab Admins manually perform some common a
 16. [Use custom Logo on DoltLab instance](#use-custom-logo)
 17. [Customize automated emails](#customize-automated-emails)
 18. [Customize DoltLab colors](#customize-colors)
+19. [Use a domain name with DoltLab](#use-domain)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -743,3 +744,19 @@ theme:
 Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
 
 After adding your custom values, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom colors across the site.
+
+<h1 id="use-domain">Use a domain name with DoltLab</h1>
+
+It's common practice to provision a domain name to use for a DoltLab instance. To do so, secure a domain name and map it to the _stable_, public IP address of the DoltLab host. Then, supply the domain name as the value to the `HOST_IP` environment variable when starting DoltLab. Let's look at an example using services offered by AWS.
+
+Let's say we've have set up and run an EC2 instance with the latest version of DoltLab and have successfully configured its Security Group to allow ingress traffic on `80`, `100`, `4321`, and `50051`. By default, this host will have a public IP address assigned to it, but this IP is unstable and will change whenever the host is restarted.
+
+First, we should attach a stable IP to this host. To do this in AWS, we can provision an [Elastic IP Address (EIP)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-allocating).
+
+Next, we should associate the EIP with our DoltLab host by following [these steps](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-associating). Once this is done, the DoltLab host should be reachable by the EIP.
+
+Finally, we can provision a domain name for the DoltLab host through [AWS Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html). After registering the new domain name, we need to create an `A` record that's attached to the EIP of the DoltLab host. To do so, follow the steps for creating records outlined [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html).
+
+Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and replace the value of the environment variable `HOST_IP` with the domain name, then restart DoltLab.
+
+In the event you are configuring your domain name with an Elastic Load Balancer, ensure that it specifies Target Groups for each of the ports required to operate DoltLab, `80`, `100`, `4321`, and `50051`.
