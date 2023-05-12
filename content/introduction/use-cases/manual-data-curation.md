@@ -1,5 +1,5 @@
 ---
-title: Better Data and Models
+title: Manual Data Curation
 ---
 
 # Problem
