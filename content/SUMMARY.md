@@ -16,12 +16,9 @@
   - [Git For Data](introduction/getting-started/git-for-data.md)
   - [Versioned MySQL Replica](introduction/getting-started/versioned-mysql-replica.md)
 - [Use Cases](introduction/use-cases.md)
-  - [Data Sharing](introduction/use-cases/data-sharing.md)
-  - [Data Ingestion](introduction/use-cases/data-ingestion.md)
-  - [Machine Learning](introduction/use-cases/ml.md)
-  - [Configuration Management](introduction/use-cases/config.md)
-  - [Version Control Your Application](introduction/use-cases/vc-your-app.md)
-  - [Better MySQL](introduction/use-cases/better-mysql.md)
+  - [Versioned MySQL Replica](introduction/use-cases/versioned-replica.md)
+  - [Better Data and Models](introduction/use-cases/better-data-and-models.md)
+  - [Manual Data Curation](introduction/use-cases/manual-data-curation.md)
 
 ## Concepts
 
