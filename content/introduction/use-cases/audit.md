@@ -11,12 +11,15 @@ title: Audit
 # Dolt solves this by…
 
 
+# Companies Doing This
 
+FJA
+
+# Case Studies
+
+Let us know if you would like us to feature your use of Dolt for audit here.
 
 # Example
 
 Concretely, here’s how you do it.
 
-# Companies Doing This
-
-FJA

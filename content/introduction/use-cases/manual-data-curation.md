@@ -18,10 +18,15 @@ Have maintainers create branches to make changes.
 Have diff and human review
 DoltHub has a user-friendly interface for non-technical users
 
+# Companies Doing This
+
+Annalise, Briya, Aktify, Blonk Sustainability, IMTF, Lumicks
+
+# Case Studies
+
+[Aktify](https://www.dolthub.com/blog/2021-10-01-dolt-aktify/)
+
 # Example
 
 Concretely, here’s how you do it.
 
-# Companies Doing This
-
-Annalise, Briya, Aktify, Blonk Sustainability, IMTF

@@ -17,10 +17,15 @@ title: Data and Model Quality Control
 
 Dolt fixes this problem by…
 
+# Companies Doing This
+
+Turbine, KAPSARC, Flock, Tome, Bosch, IMTF
+
+# Case Studies
+
+[Turbine](https://www.dolthub.com/blog/2022-08-17-dolt-turbine/)
+
 # Example
 
 Concretely, here’s how you do it.
 
-# Companies Doing This
-
-Turbine, KAPSARC, Flock, Tome, Bosch, IMTF
