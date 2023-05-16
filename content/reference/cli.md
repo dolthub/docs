@@ -5,7 +5,7 @@ title: CLI
 # CLI
 
 ```
-$ dolt
+$ dolt --help
 Valid commands for dolt are
                 init - Create an empty Dolt data repository.
               status - Show the working tree status.
