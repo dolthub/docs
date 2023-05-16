@@ -5,7 +5,7 @@ title: CLI
 # CLI
 
 ```
-$ dolt --help
+$ dolt
 Valid commands for dolt are
                 init - Create an empty Dolt data repository.
               status - Show the working tree status.
@@ -49,10 +49,14 @@ Valid commands for dolt are
                 dump - Export all tables in the working set into a file.
                 docs - Commands for working with Dolt documents.
                stash - Stash the changes in a dirty working directory away.
+```
+
+# Global Arguments
 
 Dolt subcommands are in transition to using the flags listed below as global flags.
-The sql subcommand is currently the only command that uses these flags. All other commands will ignore them.
+The sql subcommand is currently the only command that uses these flags. All other commands will ignore them until updates are made.
 
+```
 usage: dolt <--data-dir=<path>> subcommand <subcommand arguments>
 
 Specific dolt options
