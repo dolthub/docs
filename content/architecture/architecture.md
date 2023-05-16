@@ -106,7 +106,7 @@ Most other users of `go-mysql-server` use it to test their MySQL applications wi
 
 ![](../.gitbook/assets/vitess-horizontal.png)
 
-Vitess is used by `go-mysql-server` for SQL parsing and serving. We quickly forked it to [remove 90% of the functionality we did not need](https://www.dolthub.com/blog/2020-09-23-vitess-pruning/). We've heavily modified our fork since to support much more SQL syntax.
+[Vitess](https://github.com/dolthub/vitess) is used by `go-mysql-server` for SQL parsing and serving. We quickly forked it to [remove 90% of the functionality we did not need](https://www.dolthub.com/blog/2020-09-23-vitess-pruning/). We've heavily modified our fork since to support much more SQL syntax.
 
 # Take a Deeper Dive
 
