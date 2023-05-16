@@ -88,7 +88,7 @@ Noms was implemented in Golang. Dolt was implemented in Golang to take advantage
 
 We initially worked on a fork of Noms to build Dolt. [The Noms team had moved on](https://techcrunch.com/2018/01/08/salesforce-acquires-attic-labs-the-startup-behind-decentralized-database-noms/) when we started to use it. Our code became so intertwined that managing Noms as a dependency became messy so we included Noms code [directly in the Dolt repository](https://github.com/dolthub/dolt/tree/main/go/store).
 
-We heavily modified Noms to fit the SQL database use case. We kept the Noms model but traded the flexibility of Noms for throughput in our more specific SQL database use case. Optimizing for this specific use case allowed us to increase performance by an order of magnitude.
+We heavily modified Noms to fit the SQL database use case. We kept the Noms model but traded the flexibility of Noms for throughput in our more specific SQL database use case. Optimizing for this specific use case allowed us to [increase performance by an order of magnitude](https://www.dolthub.com/blog/2023-05-05-dolt-1-dot-0/#production-performance).
 
 ## `go-mysql-server`
 
