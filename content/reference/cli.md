@@ -56,23 +56,26 @@ Valid commands for dolt are
 Dolt subcommands are in transition to using the flags listed below as global flags.
 The sql subcommand is currently the only command that uses these flags. All other commands will ignore them.
 
-usage: `dolt <--data-dir=<path>> subcommand <subcommand arguments>`
+```bash
+dolt <--data-dir=<path>> subcommand <subcommand arguments>
+```
 
-Specific dolt options
-    `-u <user>`, `--user=<user>`
-      Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
+Specific dolt options:
 
-    `--data-dir=<directory>`
-      Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
+`-u <user>`, `--user=<user>`: 
+Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
-    `--doltcfg-dir=<directory>`
-      Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change to configuration settings.
+`--data-dir=<directory>`:
+Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
 
-    `--privilege-file=<privilege file>`
-      Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+`--doltcfg-dir=<directory>`:
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change to configuration settings.
 
-    `--branch-control-file=<branch control file>`
-      Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
+`--privilege-file=<privilege file>`:
+ Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+
+`--branch-control-file=<branch control file>`:
+Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
 
 ## `dolt add`
 
