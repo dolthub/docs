@@ -2,7 +2,7 @@
 title: Getting Started
 ---
 
-Dolt has five primary functions all with different ways to get started.
+Dolt has three primary functions all with different ways to get started.
 
 ## 1. [Version Controlled Database](./getting-started/database.md)
 
