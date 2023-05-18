@@ -63,6 +63,7 @@
 
 - [Hosted Dolt](products/hosted/README.md)
   - [Getting Started](products/hosted/getting-started.md)
+  - [Notable Features](products/hosted/notable-features.md)
   - [SQL Workbench](products/hosted/sql-workbench.md)
   - [Cloning a Hosted Database](products/hosted/cloning.md)
   - [Using DoltHub as a Remote](products/hosted/dolthub-as-remote.md)
