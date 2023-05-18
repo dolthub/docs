@@ -66,6 +66,7 @@
   - [SQL Workbench](products/hosted/sql-workbench.md)
   - [Cloning a Hosted Database](products/hosted/cloning.md)
   - [Using DoltHub as a Remote](products/hosted/dolthub-as-remote.md)
+  - [Infrastructure](products/hosted/infrastructure.md)
 - [DoltHub](products/dolthub/README.md)
   - [Data Sharing](products/dolthub/data-sharing.md)
   - [Data Bounties](products/dolthub/data-bounties.md)
