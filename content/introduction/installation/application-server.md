@@ -134,8 +134,7 @@ available via this method as well.
 
 # Other Linux distributions
 
-These instructions should work for Debian, Ubuntu, Amazon Linux, and
-many other common distributions. If you find they don't work for yours
-and you would like your distribution documented, come chat with us on
-[Discord](https://discord.com/invite/RFwfYpu) or [submit a
+These instructions should work for Debian, Ubuntu, Amazon Linux, and many other common
+distributions. If you find they don't work for yours and you would like your distribution
+documented, come chat with us on [Discord](https://discord.gg/s8uVgc3) or [submit a
 PR](https://github.com/dolthub/docs) to update the docs.

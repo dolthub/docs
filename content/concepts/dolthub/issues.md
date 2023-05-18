@@ -29,14 +29,14 @@ We will use our [`dolthub/us-president-precinct-results`](https://www.dolthub.co
 
 One of the bounty participants noticed some inconsistencies with one of the columns in the `vote_tallies` table. They decided to create an issue to document work that could be done to fix this issue. You can create an issue using the new issue form on any database page.
 
-![New issue form](../../.gitbook/assets/new-issue-form.png)
+![](../../.gitbook/assets/new-issue-form.png)
 
 You notice the issue can be easily fixed, so you run a few SQL queries and create a new [pull request](./prs.md) with some changes.
 
-![Pull request for issue](../../.gitbook/assets/pr-resolves-issue.png)
+![](../../.gitbook/assets/pr-resolves-issue.png)
 
 I can let the user who created the issue know that I fixed the issue by commenting on the issue, which notifies the issue creator and any participants in the issue.
 
-![Issue with comment](../../.gitbook/assets/issue-with-comment.png)
+![](../../.gitbook/assets/issue-with-comment.png)
 
 Now that this issue has been documented and fixed, anyone who also notices this problem with the data can see the discussion surrounding it, and also view the pull request with the solution. If the owner of the database decides to approve and merge the pull request, the issue can be closed and any participants will be notified that there has been a resolution.
