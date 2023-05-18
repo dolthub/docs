@@ -5,6 +5,7 @@
 - [Getting Started](./getting-started.md)
 - [Built-in SQL Workbench](./sql-workbench.md)
 - [Cloning a Hosted database](./cloning.md)
+- [Using DoltHub as a remote](./dolthub-as-remote.md)
 
 More documentation coming soon.
 
