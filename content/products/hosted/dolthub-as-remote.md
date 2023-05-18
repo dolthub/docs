@@ -39,7 +39,7 @@ pull, and fetch from public or private databases.
 
 # Example
 
-1. Find a database on DoltHub to clone
+## 1. Find a database on DoltHub to clone
 
 We have an example user metrics database on DoltHub named `dolthub/user_metrics`. Since we
 don't want our metrics to be publicly accessible, the database is private.
@@ -48,7 +48,7 @@ We want to host this data on Hosted Dolt so that we can use [Google Looker
 Studio](https://lookerstudio.google.com/) to visualize our data. Learn more about that
 process [here](https://www.dolthub.com/blog/2023-02-13-dolt-looker/).
 
-2. Create a new deployment on Hosted
+## 2. Create a new deployment on Hosted
 
 Next, I create a [new deployment](https://hosted.doltdb.com/create-deployment) on Hosted
 and check the `Expose Dolt credentials` check box from the form.
@@ -64,14 +64,14 @@ will have access to this key.
 If I accidentally expose my key or decide I want to remove it, I also have those options
 there.
 
-3. Add public key to DoltHub
+## 3. Add public key to DoltHub
 
 I click on "Add to DoltHub" to add my public key to DoltHub. This will open my DoltHub
 [credentials settings page](https://www.dolthub.com/settings/credentials).
 
 ![](../../.gitbook/assets/dolthub-credentials-for-hosted.png)
 
-4. Connect to Hosted instance and clone DoltHub database
+## 4. Connect to Hosted instance and clone DoltHub database
 
 Now that I have my credentials set up, I can connect to the Hosted instance using the
 information in the Connectivity tab and clone my `dolthub/user_metrics` database.
@@ -127,7 +127,7 @@ Now I can do whatever I want with my metrics data, including following [these
 steps](https://www.dolthub.com/blog/2023-02-13-dolt-looker/#create-a-data-source) to
 connect my Hosted instance to Looker.
 
-5. Make changes to database on DoltHub
+## 5. Make changes to database on DoltHub
 
 Finance reviews our metrics charts and finds a hole in the data suggesting an outage.
 
@@ -138,7 +138,7 @@ editor and create a pull request. They don't even need to know SQL!
 
 ![](../../.gitbook/assets/dolthub-spreadsheet-editor-user-metrics.png)
 
-6. Pull new DoltHub branch to Hosted instance for testing
+## 6. Pull new DoltHub branch to Hosted instance for testing
 
 We want to review the new chart from the change before we merge it to `main`. We can pull
 that branch to our Hosted instance and use it to [create a new branch in
@@ -166,7 +166,7 @@ mysql> select * from dolt_diff('main...outage-estimates', 'user_counts');
 
 ```
 
-7. Make a change from Hosted and push it back to DoltHub
+## 7. Make a change from Hosted and push it back to DoltHub
 
 We are mostly satisfied with the new chart, but I want to make a small update to the
 metrics for one of the days. I can make the change from Hosted on a branch and push it
@@ -206,7 +206,7 @@ I will see the new branch in my database on DoltHub.
 
 ![](../../.gitbook/assets/dolthub-outage-updates-branch.png)
 
-8. Merge branches into `main` on DoltHub and pull again to Hosted
+## 8. Merge branches into `main` on DoltHub and pull again to Hosted
 
 From there, our changes are approved and merged into the `main` branch on DoltHub. One
 more `dolt_pull` will update our `main` branch on Hosted.
