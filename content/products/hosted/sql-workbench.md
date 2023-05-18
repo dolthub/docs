@@ -14,7 +14,7 @@ pull requests.
 It's easy to get started browsing and updating data in your Hosted database with the SQL
 Workbench for both new and existing deployments.
 
-1. Add the workbench database users
+## 1. Add the workbench database users
 
 You must give access to certain database users in order to use the workbench. You can learn more about our workbench authentication model [here](#authentication-model).
 
@@ -28,7 +28,7 @@ the users manually in the Workbench tab of your deployment.
 
 ![](../../.gitbook/assets/hosted-workbench-users-instructions.png)
 
-2. Accessing the read-only workbench
+## 2. Accessing the read-only workbench
 
 The workbench is read-only by default. If the `hosted-ui-reader` user exists and you have
 at least one database, you should see the database(s) in the "Available Databases" section
@@ -40,14 +40,14 @@ You can then click on either button to browse your database in read-only mode.
 
 ![](../../.gitbook/assets/hosted-workbench-read-only.png)
 
-3. Enabling writes
+## 3. Enabling writes
 
 All you need to do to enable writes is to check the "Enable writes" checkbox in the
 Workbench tab of your deployment page and click Update. Assuming the `hosted-ui-admin`
 user has already been added, you will be able to immediately make changes to your data
 using the workbench.
 
-4. Making a change using the workbench
+## 4. Making a change using the workbench
 
 You can make changes to your data using the workbench using the SQL console or cell
 buttons. The cell buttons are a beginner-friendly way to make updates.
@@ -89,7 +89,7 @@ You will now see a commit for this change in the Commit Log for the branch.
 
 ![](../../.gitbook/assets/hosted-workbench-commit-log.png)
 
-5. Creating a pull request
+## 5. Creating a pull request
 
 Now create a [pull request](../../concepts/dolthub/prs.md) to submit your change for
 review. Navigate to the Pull Requests tab and click on "Create Pull Request". Choose the
