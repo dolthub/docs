@@ -25,7 +25,7 @@ GitHub forks are very similar to DoltHub forks in both purpose and practice.
 
 You can use the fork button on the top right of any database to fork the database to your own namespace. We will use our [`us-schools` database](https://www.dolthub.com/repositories/dolthub/us-schools) as an example.
 
-![Fork database](../../.gitbook/assets/fork-database.png)
+![](../../.gitbook/assets/fork-database.png)
 
 There is now a fork of `us-schools` in our namespace called `taylor/us-schools`. We can either edit directly on DoltHub or clone and edit using Dolt.
 
@@ -37,14 +37,14 @@ cloning https://doltremoteapi.dolthub.com/taylor/us-schools
 
 If you forked a database to do your own experimenting, your work here is done. However, if you'd like to propose changes to the base database, you can create a [pull request](./prs.md) by navigating to `dolthub/us-schools` and clicking one of the new pull request buttons.
 
-![New pull request](../../.gitbook/assets/new-pull-request.png)
+![](../../.gitbook/assets/new-pull-request.png)
 
 Select your fork as the "From database" and select a branch and title.
 
-![New pull request form](../../.gitbook/assets/new-pull-request-form.png)
+![](../../.gitbook/assets/new-pull-request-form.png)
 
 The owner of the base database (in this case `dolthub`) can then request any changes in your pull request and merge if they approve the request.
 
 You can also update your fork with the latest changes from the upstream database using the pull request form in your own database.
 
-![Create PR pull upstream](../../.gitbook/assets/new-pull-upstream-db.png)
+![](../../.gitbook/assets/new-pull-upstream-db.png)
