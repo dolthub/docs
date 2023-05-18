@@ -2,35 +2,37 @@
 title: "Hosted Dolt: SQL Workbench"
 ---
 
-Hosted Dolt has a built-in SQL Workbench with a [DoltHub](https://dolthub.com)-like UI.
-This allows users to browse their data, as well as access Dolt's powerful version control
-features like diffs and commit logs. When you enable writes, you can also access same
-features on the Hosted Workbench that make DoltHub easy to use as a collaboration tool
-among people of varying levels of SQL and Git knowledge, including cell buttons and pull
-requests.
+Hosted Dolt has a built-in SQL Workbench with a [DoltHub](https://www.dolthub.com)-like
+UI. This allows users to browse their data, as well as utilize Dolt's powerful version
+control features like diffs and commit logs. When you enable writes, you can also access
+the same features on the Hosted Workbench that make DoltHub easy to use as a collaboration
+tool among users of varying levels of SQL and Git knowledge, including cell buttons and
+pull requests.
 
 # Getting started with the workbench
 
-It's easy to get started with the SQL Workbench for both new and existing deployments.
+It's easy to get started browsing and updating data in your Hosted database with the SQL
+Workbench for both new and existing deployments.
 
 1. Add the workbench database users
 
 You must give access to certain database users in order to use the workbench. You can learn more about our workbench authentication model [here](#authentication-model).
 
-For new deployments, this is as simple as checking the `Create database users for the SQL
-Workbench` checkbox in the Create Deployment form.
+For new deployments, this is as simple as checking the "Create database users for the SQL
+Workbench" checkbox in the Create Deployment form.
 
 ![](../../.gitbook/assets/hosted-create-deployment-workbench-users.png)
 
-If you create a deployment without checking that box, you can find instructions for adding them manually in the `Workbench` tab of your deployment.
+If you create a deployment without checking that box, you can find instructions for adding
+the users manually in the Workbench tab of your deployment.
 
 ![](../../.gitbook/assets/hosted-workbench-users-instructions.png)
 
 2. Accessing the read-only workbench
 
 The workbench is read-only by default. If the `hosted-ui-reader` user exists and you have
-at least one database, you should see the database(s) in the `Available Databases` section
-of your Workbench tab, as well as the `Launch SQL Workbench` button at the top.
+at least one database, you should see the database(s) in the "Available Databases" section
+of your Workbench tab, as well as the "Launch SQL Workbench" button at the top.
 
 ![](../../.gitbook/assets/hosted-workbench-tab.png)
 
@@ -40,14 +42,76 @@ You can then click on either button to browse your database in read-only mode.
 
 3. Enabling writes
 
-All you need to do to enable writes is to check the `Enable writes` checkbox in the
-`Workbench` tab of your deployment page and click `Update`. Assuming the `hosted-ui-admin`
-user has already been added, you should be able to immediately make changes to your data
-using the workbench using the SQL console or cell buttons.
+All you need to do to enable writes is to check the "Enable writes" checkbox in the
+Workbench tab of your deployment page and click Update. Assuming the `hosted-ui-admin`
+user has already been added, you will be able to immediately make changes to your data
+using the workbench.
 
 4. Making a change using the workbench
 
+You can make changes to your data using the workbench using the SQL console or cell
+buttons. The cell buttons are a beginner-friendly way to make updates.
+
+First, create a new branch. Changes from the workbench are reflected immediately in your
+database, unlike DoltHub where you need to manually update your local Dolt with any
+changes using `dolt pull`. Creating changes on a branch lets you test a change without
+affecting `main`.
+
+![](../../.gitbook/assets/hosted-workbench-new-branch.png)
+
+Next, use the "Edit cell value" cell button to change a cell.
+
+![](../../.gitbook/assets/hosted-workbench-edit-cell.png)
+
+This will open a text input where you can make changes. Once you're done, click the check.
+
+![](../../.gitbook/assets/hosted-workbench-cell-input.png)
+
+This will generate a SQL update query. You don't need to know SQL to make updates using
+the workbench, but it can help you learn SQL along the way!
+
+![](../../.gitbook/assets/hosted-workbench-update-diff.png)
+
+DoltHub uses
+[workspaces](https://www.dolthub.com/blog/2021-08-04-edit-on-the-web-redux/#edit-using-the-sql-console)
+to stage changes made from the web and creates a commit on the workspace for each executed
+SQL query. Hosted works more like Dolt where each change is added to the [working
+set](../../concepts/dolt/git/working-set.md). When there are uncommitted changes you'll
+see the link to the diff with the option to create a commit.
+
+You can make as many changes as you want to the new branch before committing. Adding a new
+row is also simple using the `Add a row` button at the bottom of the screen. When you're
+done making changes create a commit on your branch.
+
+![](../../.gitbook/assets/hosted-workbench-create-commit.png)
+
+You will now see a commit for this change in the Commit Log for the branch.
+
+![](../../.gitbook/assets/hosted-workbench-commit-log.png)
+
 5. Creating a pull request
+
+Now create a [pull request](../../concepts/dolthub/prs.md) to submit your change for
+review. Navigate to the Pull Requests tab and click on "Create Pull Request". Choose the
+new branch you just updated as the "From branch" and add a title and description.
+
+![](../../.gitbook/assets/hosted-workbench-create-pr.png)
+
+The pull request will look like this.
+
+![](../../.gitbook/assets/hosted-workbench-pr.png)
+
+And you can click "View diff" to see a detailed view of the proposed changes.
+
+![Pull request diff](../../.gitbook/assets/hosted-workbench-pr-diff.png)
+
+Send this pull request to some teammates and they can comment to request changes or
+approve. Once approved, merge your branch.
+
+![](../../.gitbook/assets/hosted-workbench-merged-pr.png)
+
+You will see the new commit reflected in the Commit Log for the `main` branch, as well as
+in any connected MySQL client.
 
 # The Hosted Workbench vs DoltHub
 
