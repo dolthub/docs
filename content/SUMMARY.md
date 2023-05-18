@@ -77,6 +77,7 @@
     - [Database](products/dolthub/dolthub-api/database.md)
     - [Hooks](products/dolthub/dolthub-api/hooks.md)
   - [Transform File Uploads](products/dolthub/transform-uploads.md)
+  - [Workspaces](products/dolthub/workspaces.md)
 - [DoltLab](products/doltlab/README.md)
   - [Install DoltLab](products/doltlab/installation.md)
   - [Administrator Guide](products/doltlab/administrator.md)

@@ -12,11 +12,11 @@ The first thing to do is make sure you have a DoltHub account. Sign up [here](ht
 
 Once you're logged in, you can easily see the list of available data bounties on your [profile page](https://dolthub.com/profile/bounties):
 
-![Index of Open Data Bounties](../../.gitbook/assets/bounties-index.png)
+![](../../.gitbook/assets/bounties-index.png)
 
 Let's focus on the `dolthub/SHAQ` bounty. See more details about the bounty and rewards on the [bounty page](https://www.dolthub.com/repositories/dolthub/SHAQ/bounties/d013ac74-9e27-48ee-8d19-02bf7163f230):
 
-![Bounty Index Page](../../.gitbook/assets/bounty-detail-page.png)
+![](../../.gitbook/assets/bounty-detail-page.png)
 
 If you'd like to capture some of the $10,000 available for gathering basketball data, then it's time to dive into the details on how to participate.
 
@@ -26,11 +26,11 @@ DoltHub uses the "fork" model for facilitating collaboration. Contributions are 
 
 For now just fork `dolthub/SHAQ` into your own namespace:
 
-![Fork Bounty Repository](../../.gitbook/assets/fork-bounty-db.png)
+![](../../.gitbook/assets/fork-bounty-db.png)
 
 You will then be redirected to the forked database where you can have a look around:
 
-![Forked Bounty Repository](../../.gitbook/assets/forked-bounty-db.png)
+![](../../.gitbook/assets/forked-bounty-db.png)
 
 If you want to get paid, you need to add some data, so let's turn to that!
 
@@ -47,7 +47,7 @@ It doesn't matter how you make changes, as long as they are correct.
 
 Once you have pushed a commit with some changes you want to get paid for, create a pull request from the base database, `dolthub/SHAQ`:
 
-![Creating a Pull Request](../../.gitbook/assets/bounty-new-pr.png)
+![](../../.gitbook/assets/bounty-new-pr.png)
 
 Each bounty has specific instructions for submitting a pull request. Make sure you read the instructions and provide sources for your data. Your pull request can be rejected if it is not up to standards.
 
@@ -55,7 +55,7 @@ Each bounty has specific instructions for submitting a pull request. Make sure y
 
 The owner of the Data Bounty, in this case DoltHub, will then review your submission. If your pull request is merged you will be able to see the scoreboard on the bounty page updated with your current pay out.
 
-![Bounty Scoreboard](../../.gitbook/assets/bounty-scoreboard.png)
+![](../../.gitbook/assets/bounty-scoreboard.png)
 
 ## Creating
 
@@ -69,4 +69,4 @@ When the bounty is over, we will send an email to your primary email address on 
 
 ## Getting Help
 
-If you need help or have questions, join our [Discord](https://discord.com/invite/RFwfYpu) and talk to us in the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
+If you need help or have questions, join our [Discord](https://discord.gg/s8uVgc3) and talk to us in the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
