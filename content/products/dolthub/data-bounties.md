@@ -69,4 +69,4 @@ When the bounty is over, we will send an email to your primary email address on 
 
 ## Getting Help
 
-If you need help or have questions, join our [Discord](https://discord.com/invite/RFwfYpu) and talk to us in the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
+If you need help or have questions, join our [Discord](https://discord.gg/s8uVgc3) and talk to us in the \#data-bounties channel. We are excited to welcome new members to our vibrant and growing community!
