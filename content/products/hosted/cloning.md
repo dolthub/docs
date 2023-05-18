@@ -32,7 +32,7 @@ analytics query. [Clone](../../reference/cli.md#dolt-clone) makes it easy to get
 copy of your Hosted database with one command. Do whatever potentially destructive or
 performance-degrading operations on your laptop while respecting your production database.
 
-1. Expose remotesapi endpoint
+## 1. Expose remotesapi endpoint
 
 In order to enable cloning from your Hosted database, first expose the [remotesapi
 endpoint](../../reference/cli.md#dolt-sql-server). This will set the port for a server
@@ -47,7 +47,7 @@ deployment will also work.
 
 ![](../../.gitbook/assets/hosted-create-deployment-remotesapi.png)
 
-2. Set remote password and run clone command with user flag
+## 2. Set remote password and run clone command with user flag
 
 To authenticate against it, you have to set a `DOLT_REMOTE_PASSWORD` environment variable
 and pass along a `--user` flag to the `dolt clone` command. You can find these
@@ -70,7 +70,7 @@ cloning https://dolthub-us-housing.dbs.hosted.doltdb.com/us-housing-prices
 +----------+
 ```
 
-3. Sync your local copy with upstream changes
+## 3. Sync your local copy with upstream changes
 
 Now we can run whatever queries or schema migrations we want without affecting production.
 If there are updates to the database, easily sync your local copy using [`dolt
