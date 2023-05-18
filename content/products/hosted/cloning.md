@@ -53,7 +53,7 @@ To authenticate against it, you have to set a `DOLT_REMOTE_PASSWORD` environment
 and pass along a `--user` flag to the `dolt clone` command. You can find these
 instructions in the Connectivity tab on your deployment page.
 
-![Connectivity clone](../../.gitbook/assets/hosted-clone-commands.png)
+![](../../.gitbook/assets/hosted-clone-commands.png)
 
 After running the `dolt clone` command, you should have a local copy of your Hosted
 database.

@@ -53,13 +53,13 @@ process [here](https://www.dolthub.com/blog/2023-02-13-dolt-looker/).
 Next, I create a [new deployment](https://hosted.doltdb.com/create-deployment) on Hosted
 and check the `Expose Dolt credentials` check box from the form.
 
-![Expose Dolt credentials checkbox](../../.gitbook/assets/hosted-create-deployment-credentials.png)
+![](../../.gitbook/assets/hosted-create-deployment-credentials.png)
 
 Once the deployment has started, the public key will be populated in the settings tab of
 the deployment page (this may take a few minutes). Note that any deployment administrator
 will have access to this key.
 
-![Public key](../../.gitbook/assets/hosted-dolt-creds-public-key.png)
+![](../../.gitbook/assets/hosted-dolt-creds-public-key.png)
 
 If I accidentally expose my key or decide I want to remove it, I also have those options
 there.
@@ -69,7 +69,7 @@ there.
 I click on "Add to DoltHub" to add my public key to DoltHub. This will open my DoltHub
 [credentials settings page](https://www.dolthub.com/settings/credentials).
 
-![DoltHub credentials settings](../../.gitbook/assets/dolthub-credentials-for-hosted.png)
+![](../../.gitbook/assets/dolthub-credentials-for-hosted.png)
 
 4. Connect to Hosted instance and clone DoltHub database
 
@@ -136,7 +136,7 @@ trust Finance to have direct access to our production database. Instead, they ca
 the estimated `user_counts` for the missing metrics on DoltHub using the spreadsheet
 editor and create a pull request. They don't even need to know SQL!
 
-![Spreadsheet editor](../../.gitbook/assets/dolthub-spreadsheet-editor-user-metrics.png)
+![](../../.gitbook/assets/dolthub-spreadsheet-editor-user-metrics.png)
 
 6. Pull new DoltHub branch to Hosted instance for testing
 
@@ -204,7 +204,7 @@ mysql> call dolt_push('origin', 'outage-update');
 
 I will see the new branch in my database on DoltHub.
 
-![Branch from Hosted](../../.gitbook/assets/dolthub-outage-updates-branch.png)
+![](../../.gitbook/assets/dolthub-outage-updates-branch.png)
 
 8. Merge branches into `main` on DoltHub and pull again to Hosted
 
