@@ -206,7 +206,7 @@ SET    our_first_name = their_first_name,
 WHERE  their_id IS NOT NULL;
 ```
 
-See [dolt*conflicts*$tablename](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
+See [`dolt_conflicts_$tablename`](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
 
 ### Custom logic
 
