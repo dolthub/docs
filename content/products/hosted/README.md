@@ -2,6 +2,8 @@
 
 [Hosted Dolt](https://hosted.doltdb.com) is a cloud-deployed Dolt database. Choose the type of server and disk you need and we'll provision the resources and run Dolt for you. Connect with any MySQL client. Hosted Dolt is perfect for teams who want to build a Dolt-powered application.
 
+Learn more about Hosted Dolt's features and get started with our guides:
+
 - [Getting Started](./getting-started.md)
 - [Notable Features](./notable-features.md)
 - [Built-in SQL Workbench](./sql-workbench.md)
@@ -9,9 +11,7 @@
 - [Using DoltHub as a remote](./dolthub-as-remote.md)
 - [Infrastructure](./infrastructure.md)
 
-More documentation coming soon.
-
-Check out these blogs for more details.
+You can also check out these blogs for more details:
 
 - [Launch Announcement](https://www.dolthub.com/blog/2022-05-18-hosted-dolt/)
 - [$50 Trial Instances](https://www.dolthub.com/blog/2022-10-24-hosted-trial-instances/)

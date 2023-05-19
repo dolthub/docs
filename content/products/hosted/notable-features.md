@@ -40,6 +40,13 @@ provides a simple UI for viewing and changing your deployment's custom configura
 
 ![](../../.gitbook/assets/hosted-custom-config.png)
 
+## Replication
+
+Enable replication for your deployment and tell us how many replicas you want. You'll get
+logs and metrics for each server.
+
+![](../../.gitbook/assets/hosted-replica-graphs.png)
+
 ## Backups
 
 Full copies of all your databases are backed up nightly. These backups are kept for 14
