@@ -12,7 +12,7 @@ Our [discover page](https://www.dolthub.com/discover) on DoltHub lets you find p
 
 ## Clone data locally
 
-See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../installation.md)), which is found on every database page:
+See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../../introduction/installation.md)), which is found on every database page:
 
 ![](../../.gitbook/assets/dolt-clone-corona-virus.png)
 
