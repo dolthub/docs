@@ -6,20 +6,24 @@ title: "Contributing to Dolt"
 functionality, including branch, merge, clone, push and pull. As we attract
 more and more users with various use cases and ways of integrating Dolt into
 their existing workflows and systems, it's not rare for Dolt to need a little
-bit of work to support a new client library or upstream dependency. 
+bit of work to support a new client library or upstream dependency.
 
 Dolt consists of multiple parts:
+
 - [dolt](https://github.com/dolthub/dolt)
 - [go-mysql-server](https://github.com/dolthub/go-mysql-server)
 - [vitess](https://github.com/dolthub/vitess)
 
 Known issues with each part:
+
 - [dolt issues](https://github.com/dolthub/dolt/issues)
 - [go-mysql-server issues](https://github.com/dolthub/go-mysql-server/issues)
 - [vitess issues](https://github.com/dolthub/vitess/issues)
-	
+
 ## Prerequisites
+
 You should know that:
+
 1. Dolt is largely written in [golang](https://golang.org/) and
    you should [install the golang sdk](https://golang.org/dl/) to work with it.
 
@@ -34,16 +38,19 @@ You should know that:
    if you don't already have one.
 
 # Retrieve Source Code
+
 Create a fork of the dolt repo(s) by clicking the fork button at the upper
 right of each of the respective dolthub github repos.
 
 Create a directory for your dolt workspace.
+
 ```bash
 ~ $ mkdir dolt_workspace
 ~ $ cd ~/dolt_workspace
 ```
 
 Clone each of the dolt repos using Git.
+
 ```bash
 ~/dolt_workspace $ git clone git@github.com:<your-username>/dolt.git
 ~/dolt_workspace $ git clone git@github.com:<your-username>/go-mysql-server.git
@@ -53,6 +60,7 @@ Clone each of the dolt repos using Git.
 By default, the dolt repository builds and links against pinned versions
 of go-mysql-server and vitess, so to develop them together we need to
 add a local dependencies for `dolt` and `go-mysql-server`.
+
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
 ~/dolt_workspace/dolt/go $ go mod edit -replace github.com/dolthub/go-mysql-server=../../go-mysql-server
@@ -64,6 +72,7 @@ add a local dependencies for `dolt` and `go-mysql-server`.
 
 Check that everything is working as expected by running dolt's unit tests
 (this might take a few minutes).
+
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
 ~/dolt_workspace/dolt/go $ go test ./...
@@ -79,19 +88,25 @@ ok      github.com/dolthub/dolt/go/store/valuefile      0.786s
 ```
 
 # Install Dolt
+
 You can build dolt from source like so:
+
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
 ~/dolt_workspace/dolt/go $ go install ./cmd/dolt
 ```
 
 # Fix Issue
+
 Refer to these guides to fix bugs specific to each part of dolt:
+
 1. [Contributing to Dolt](./contributing/dolt.md)
 2. [Contributing to Go MySQL Server](./contributing/go-mysql-server.md)
 
 # Submit Pull Request
+
 Remember to remove local dependencies before pushing your changes.
+
 ```bash
 ~/dolt_workspace $ cd ./dolt/go
 ~/dolt_workspace $ go mod edit -dropreplace github.com/dolthub/go-mysql-server
@@ -103,21 +118,22 @@ Remember to remove local dependencies before pushing your changes.
 
 There is an auto-dependency bump that takes place to keep the different parts up to date.
 As a result, if your fix required changes to multiple projects, commit them in this order:
+
 1. vitess
 2. go-mysql-server
 3. dolt
 
 Navigate to the pull requests section of your repo(s).
 
-![Pull Request Section](../../content/.gitbook/assets/pr_section.png)
+![](../../content/.gitbook/assets/pr_section.png)
 
 Click on "New pull request".
 
-![New Pull Request](../../content/.gitbook/assets/new_pr.png)
+![](../../content/.gitbook/assets/new_pr.png)
 
 Make sure the base repository is set to dolthub/dolt and click "Create pull request".
 
-![Create Pull Request](../../content/.gitbook/assets/create_pr.png)
+![](../../content/.gitbook/assets/create_pr.png)
 
 Submitting the PR will get some automated tests run against the branch
 and will notify the project maintainers that someone has some changes.
