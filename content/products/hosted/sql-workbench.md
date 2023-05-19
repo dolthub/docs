@@ -200,7 +200,7 @@ Both DoltHub and the Hosted SQL workbench have this dropdown that lists the data
 branches. I'm going to use it as a simple example to convey the changes that needed to be
 made to implement the DoltHub UI against the Hosted SQL servers.
 
-![Branch dropdown](../images/dolthub-branch-dropdown.png)
+![](../../.gitbook/assets/dolthub-branch-dropdown.png)
 
 The `ListBranchNames` query is straightforward. You give it the owner and database names
 and it returns a list of all the branches in the database as strings. On DoltHub,

@@ -35,7 +35,7 @@ If you have an event you'd like us to support, [file an issue](https://github.co
 an in depth example for how to set up a webhook for a push event on DoltHub. You can add
 and manage webhooks in the settings tab of any of your DoltHub databases.
 
-![Webhooks page](../../.gitbook/assets/dolthub-webhooks.png)
+![](../../../.gitbook/assets/dolthub-webhooks.png)
 
 ## Events and payloads
 

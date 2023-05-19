@@ -4,14 +4,15 @@ title: Merges
 
 # Merging branches
 
-To merge a branch into your current branch, use the [`DOLT_MERGE()` 
+To merge a branch into your current branch, use the [`DOLT_MERGE()`
 procedure](dolt-sql-procedures.md#dolt_merge):
 
 ```sql
 CALL DOLT_MERGE('feature-branch');
-``` 
+```
 
 Usually, you will want to start a transaction before calling the procedure:
+
 ```sql
 START TRANSACTION;
 ```
@@ -35,6 +36,7 @@ If either error exists post-merge, the `conflicts` column will be set to `1`:
 If no conflicts/constraint-violations were encountered, the current transaction
 will be completed, and a commit will be made. You can check the status of a
 merge using the [dolt_merge_status](./dolt-system-tables.md#doltmergestatus) system table:
+
 ```
 > SELECT * from DOLT_MERGE_STATUS;
 +------------+--------+---------------+--------+-----------------+
@@ -55,16 +57,16 @@ Merging branches can create
 before you can commit your transaction. If a merge creates conflicts,
 the `DOLT_MERGE()` function will return a non-zero result in the conflicts column.
 
-Merges can generate conflicts on schema or data. 
+Merges can generate conflicts on schema or data.
 
 ## Schema
 
 Merges with schema conflicts will prevent the merge from completing and populate
 schema conflicts rows into the `dolt_schema_conflicts` system table. This system
 table describes the conflicted table's schema on each side of the merge: `ours`
-and `theirs`. Additionally, it shows the table's schema at the 
-[common-ancestor](../cli#dolt-merge-base) and describes why the `ours` and `theirs`
-schemas cannot be automatically merged. 
+and `theirs`. Additionally, it shows the table's schema at the
+[common-ancestor](../../cli.md#dolt-merge-base) and describes why the `ours` and `theirs`
+schemas cannot be automatically merged.
 
 ```sql
 > SELECT table_name, description, base_schema, our_schema, their_schema FROM dolt_schema_conflicts;
@@ -82,14 +84,14 @@ schemas cannot be automatically merged.
 +------------+--------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 ```
 
-Merges that result in schema conflicts will leave an active merge state until 
+Merges that result in schema conflicts will leave an active merge state until
 the schema conflicts are resolved. Users can either `--abort` the active merge
-or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-procedures#dolt_conflicts_resolve).
+or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-procedures.md#dolt_conflicts_resolve).
 `dolt_conflicts_resolve()` takes as arguments a table name and an option `--ours`
 or `--theirs` to specify which side of the merge should be accepted. It is important
 to note that this resolution strategy takes the _entire_ table from the choosen side
 of the merge, not only its schema. Schema and data changes from the side of the merge not chosen
- are discarded with the resolution strategy.  The schema and data changes still exist on the branch if you want to access them after the merge.
+are discarded with the resolution strategy. The schema and data changes still exist on the branch if you want to access them after the merge.
 
 ## Data
 
@@ -172,7 +174,7 @@ To use the merged values, overwriting our own, `REPLACE` and `DELETE`
 rows from the table using the conflicts table:
 
 ```sql
--- Replace existing rows with rows taken with their_* values as long 
+-- Replace existing rows with rows taken with their_* values as long
 -- as their_id is not null (rows deleted in theirs)
 REPLACE INTO people (id,first_name,last_name,age) (
     SELECT their_id, their_first_name, their_last_name, their_age
@@ -204,7 +206,7 @@ SET    our_first_name = their_first_name,
 WHERE  their_id IS NOT NULL;
 ```
 
-See [dolt_conflicts_$tablename](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
+See [dolt*conflicts*$tablename](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
 
 ### Custom logic
 
@@ -240,22 +242,24 @@ If any table in your database contains foreign key constraints or unique key
 constraints, it's possible that a merge will create constraint violations. When
 this occurs, the `conflicts` column will be set to `1`.
 
-Let's walk through an example for foreign key constraints. 
+Let's walk through an example for foreign key constraints.
 
 ## Foreign Key Constraint Violations
 
 Imagine we have a parent table and a child table with this schema:
+
 ```sql
 CREATE TABLE parent (pk INT PRIMARY KEY);
 CREATE TABLE child (
-    pk INT PRIMARY KEY, 
-    parent_fk INT, 
+    pk INT PRIMARY KEY,
+    parent_fk INT,
     FOREIGN KEY (parent_fk) REFERENCES parent (pk)
 );
 ```
 
 Let's create a situation where a merge adds a child to a parent that no longer
 exists:
+
 ```sql
 INSERT INTO parent values (1);
 CALL DOLT_COMMIT('-Am', 'setup');
@@ -269,7 +273,8 @@ DELETE from parent where pk = 1;
 CALL DOLT_COMMIT('-Am', 'delete parent 1');
 ```
 
-When we merge, we see the `conflict` column has been set: 
+When we merge, we see the `conflict` column has been set:
+
 ```sql
 > START TRANSACTION;
 > CALL DOLT_MERGE('branch_to_merge');
@@ -283,6 +288,7 @@ When we merge, we see the `conflict` column has been set:
 And we can inspect what the constraint violations are using the
 [dolt_constraint_violations](./dolt-system-tables.md#doltconstraintviolations)
 system table:
+
 ```sql
 > SELECT * from dolt_constraint_violations;
 +-------+----------------+
@@ -300,6 +306,7 @@ system table:
 ```
 
 Then we can fix the violation, clear it, and complete the merge:
+
 ```sql
 DELETE from child where pk = 1;
 DELETE from dolt_constraint_violations_child;
