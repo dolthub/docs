@@ -42,7 +42,7 @@ provides a simple UI for viewing and changing your deployment's custom configura
 
 ## Replication
 
-Enable replication for your deployment and tell us how many replicas you want. You'll get
+Scale your deployment read capacity or create hot failover instances by enabling read replication for your deployment. Configure how many replicas you want. You'll get
 logs and metrics for each server.
 
 ![](../../.gitbook/assets/hosted-replica-graphs.png)
