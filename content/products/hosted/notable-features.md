@@ -2,7 +2,7 @@
 title: "Hosted Dolt: Notable Features"
 ---
 
-# Version control
+# Version Control
 
 [Dolt](https://doltdb.com) is a database like no other. There are numerous Dolt version
 control features that you won't find elsewhere. Hosted Dolt gives you all the version
@@ -31,7 +31,7 @@ performance and usage in real time.
 
 ![](../../.gitbook/assets/hosted-monitoring.png)
 
-## Custom configuration
+## Custom Configuration
 
 Dolt has a myriad of [configuration options](../../reference/sql/server/configuration.md).
 Most of these can be changed on the running server by setting the appropriate [system
@@ -65,7 +65,7 @@ requires you to create a support ticket.
 
 Learn more about backups [here](https://www.dolthub.com/blog/2022-08-31-hosted-backups/).
 
-## Dolt upgrades
+## Dolt Upgrades
 
 We're releasing [new versions of Dolt](https://github.com/dolthub/dolt/releases) at least
 once per week. Set your service window and your deployed Dolt version will automatically
@@ -89,7 +89,7 @@ will get back to you within the hour.
 Learn more about our support ticket system
 [here](https://www.dolthub.com/blog/2022-07-13-hosted-dolt-incident-manager/).
 
-## Access management
+## Access Management
 
 Easily manage access to your deployment using the same permissions model as
 [DoltHub](../../concepts/dolthub/permissions.md) and
@@ -108,7 +108,7 @@ collaborator in your deployment's Settings tab.
 
 # Quick Start
 
-## Trial instance
+## Trial Instance
 
 To lower the cost barrier, Hosted Dolt offers [trial
 instance](https://www.dolthub.com/blog/2022-10-24-hosted-trial-instances/) for $50 a
@@ -116,11 +116,11 @@ month. For $50 you get a t2.medium running in EC2 with 50GB of storage. There is
 limit for these instances. This isn't a 30-day trial. It's an instance perfect for
 trialing Dolt.
 
-## Connect from anywhere using any MySQL client
+## Connect Using Any MySQL Client
 
-Dolt is a drop in replacement for MySQL. You can connect to your instance using your
-favorite MySQL client using the connectivity information in the Connectivity tab of your
-deployment console.
+Dolt is a drop in replacement for MySQL. You can connect to your instance from anywhere
+using your favorite MySQL client using the connectivity information in the Connectivity
+tab of your deployment console.
 
 ![](../../.gitbook/assets/hosted-connectivity.png)
 
