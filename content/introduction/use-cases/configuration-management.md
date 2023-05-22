@@ -20,7 +20,7 @@ Diffs and merges happen at the cell level.
 
 # Companies Doing This
 
-Scorewarrior 
+[Scorewarrior](https://scorewarrior.com/)
 
 # Case Studies
 

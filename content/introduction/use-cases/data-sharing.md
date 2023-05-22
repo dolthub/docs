@@ -24,7 +24,7 @@ Dolt was built for sharing. The Git model of code sharing has scaled to thousand
 
 # Companies Doing This
 
-Bitfinex, Certified Food, KAPSARC
+[Bitfinex](https://www.bitfinex.com/), [KAPSARC](https://www.kapsarc.org/)
 
 # Case Studies
 

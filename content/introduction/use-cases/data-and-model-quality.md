@@ -18,7 +18,7 @@ Dolt fixes this problem by…
 
 # Companies Doing This
 
-Turbine, KAPSARC, Flock, Tome, Bosch, IMTF
+[Turbine](https://turbine.ai/), [KAPSARC](https://www.kapsarc.org/), [Flock Safety](https://www.flocksafety.com/), [Tome](https://www.tome.com/), [Bosch](https://www.bosch-home.com/), [IMTF](https://imtf.com/)
 
 # Case Studies
 

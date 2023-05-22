@@ -16,7 +16,7 @@ Dolt fixes this problem by…
 
 # Companies Doing This
 
-Threekit, Network To Code, FJA
+[Threekit](https://www.threekit.com/), [Network To Code](https://www.networktocode.com/), [FJA](https://www.fja.com/)
 
 # Case Studies
 

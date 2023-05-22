@@ -16,11 +16,11 @@ Dolt fixes this problem by…
 
 # Companies Doing This
 
-Threekit, Network To Code, FJA
+Be the first.
 
 # Case Studies
 
-[Nautobot by Network To Code](https://www.dolthub.com/blog/2021-11-19-dolt-nautobot/)
+Let us know if you would like us to feature your use of Dolt for data sharing here.
 
 # Example
 

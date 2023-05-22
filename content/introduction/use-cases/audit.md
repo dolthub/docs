@@ -18,6 +18,8 @@ Dolt stores these efficiently by [sharing data that hasn't changed between all c
 
 The audit log created between commits is queryable via SQL using custom Dolt [system tables](../../reference/sql/version-control/dolt-system-tables.md) and [functions](../../reference/sql/version-control/dolt-sql-functions.md).
 
+If you're not ready to switch your primary database to Dolt, you can run MySQL as your primary and set Dolt up as [a versioned replica](../use-cases/versioned-replica.md). You lose users and commit messages but you still get a queryable log of every cell in your database.
+
 # Companies Doing This
 
 [FJA](https://www.fja.com/)

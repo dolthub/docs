@@ -20,7 +20,7 @@ DoltHub has a user-friendly interface for non-technical users
 
 # Companies Doing This
 
-Annalise, Briya, Aktify, Blonk Sustainability, IMTF, Lumicks
+[Annalise](https://usa.annalise.ai/), [Briya](https://briya.com/), [Aktify](https://aktify.com/), [Blonk Sustainability](https://blonksustainability.nl/), [IMTF](https://imtf.com/), [Lumicks](https://lumicks.com/)
 
 # Case Studies
 
