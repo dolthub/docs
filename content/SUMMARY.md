@@ -91,6 +91,7 @@
   - [Branch Permissions](reference/sql/server/branch-permissions.md)
   - [Backups](reference/sql/server/backups.md)
   - [Replication](reference/sql/server/replication.md)
+  - [Garbage Collection](reference/sql/server/garbage-collection.md)
   - [Troubleshooting](reference/sql/server/troubleshooting.md)
 - [Version Control Features](reference/sql/version-control/README.md)
   - [Using Branches](reference/sql/version-control/branches.md)
