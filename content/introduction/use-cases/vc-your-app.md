@@ -9,8 +9,6 @@ title: Version Control Your Application
 * Do you want to add a pull request workflow to your application?
 * Do you want to expose audit log functionality in your application?
 * Do you want to expose rollback functionality in your application?
-* Is your application offline first? 
-* Is sharing data when a node comes online a pain?
 
 # Dolt fixes this by…
 

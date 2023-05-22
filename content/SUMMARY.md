@@ -16,13 +16,14 @@
   - [Git For Data](introduction/getting-started/git-for-data.md)
   - [Versioned MySQL Replica](introduction/getting-started/versioned-mysql-replica.md)
 - [Use Cases](introduction/use-cases.md)
-  - [Versioned MySQL Replica](introduction/use-cases/versioned-replica.md)
+  - [Data Sharing](introduction/use-cases/data-sharing.md)
   - [Data and Model Quality Control](introduction/use-cases/better-data-and-models.md)
   - [Manual Data Curation](introduction/use-cases/manual-data-curation.md)
   - [Version Control for your Application](introduction/use-cases/vc-your-app.md)
+  - [Versioned MySQL Replica](introduction/use-cases/versioned-replica.md)
+  - [Audit](introduction/use-cases/audit.md) 
   - [Configuration Management](introduction/use-cases/configuration-management.md)
-  - [Audit](introduction/use-cases/audit.md)
-  - [Data Sharing](introduction/use-cases/data-sharing.md)
+  - [Offline First](introduction/use-cases/offline-first.md)
 
 ## Concepts
 

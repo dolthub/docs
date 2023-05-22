@@ -5,10 +5,10 @@ title: Manual Data Curation
 # Problem
 
 * Are you using spreadsheets to curate production data? 
-* Do non-technical users need the ability to edit data?
 * Is the process of merging and reviewing everyone’s changes getting out of hand? 
-* Are bad changes causing production issues? 
+* Are bad data changes causing production issues? 
 * Do you want a stepping stone to a more robust solution?
+* Do you want to ditch the process of converting spreadsheets to databases?
 
 # Dolt fixes this by…
 
