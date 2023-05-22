@@ -126,7 +126,7 @@ tab of your deployment console.
 
 # SQL Workbench
 
-## User Friendly Build-In Web GUI
+## User Friendly Built-In Web GUI
 
 Each deployment comes with a built-in SQL workbench, inspired by
 [DoltHub's](https://www.dolthub.com) database page. Browse your data in read-only mode or
