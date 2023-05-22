@@ -87,9 +87,10 @@ lot of garbage, such as file imports. It will need to be interruptable.
 ## Shallow GC
 
 Shallow garbage collection is a less complete but faster garbage collection that prunes
-unreferenced table files. Each `Commit` call creates a new table file. Once the maximum
-number of table files is exceeded, we conjoin them, which can leave behind some table file
-garbage.
+unreferenced table files. In normal operation, Dolt does not create unreferenced table
+files which stay on disk for a long time. But during some operations, including server
+shutdown, Dolt can leave behind unreferenced table files and various temporary files
+ which will not currently be automatically cleaned up.
 
 During shallow garbage collection we iterate through all table files and remove any that
 aren't referenced in the manifest.
