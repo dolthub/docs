@@ -2,24 +2,33 @@
 title: Garbage Collection
 ---
 
-# When to run garbage collection on your SQL server
+# How garbage is created
 
-It is now safe to run garbage collection on your running SQL server. To prevent concurrent
+Dolt creates on disk garbage. Dolt transactions that do not have a corresponding Dolt commit create on disk garbage. This garbage is most noticeable after large data imports. 
+
+Specifically, writes to Dolt can result in multiple chunks of the [prolly
+tree](https://www.dolthub.com/blog/2020-04-01-how-dolt-stores-table-data) being rewritten,
+which [writes a large portion of the
+tree](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/#cant_share).
+When you perform write operations without committing or delete a branch containing novel
+chunks, garbage is created.
+
+![How garbage is created](../../../.gitbook/assets/how-garbage-is-created.png)
+
+# How to run garbage collection
+
+Garbage collection can be run offline using [`dolt gc`](../../cli.md#dolt-gc) or online using [`call dolt_gc()`](../version-control/dolt-sql-procedures.md#dolt_gc). 
+
+## Offline
+
+If you have access to the server where your Dolt database is located and a Dolt sql-server is not running, navigate to the directory your database is stored in and run `dolt gc`. This will cycle through all the needed chunks in your database and delete those that are unnecessary. This process is CPU and memory intensive.
+
+## Online 
+
+You can run garbage collection on your running SQL server using [`call dolt_gc`](../version-control/dolt-sql-procedures.md#dolt_gc) through any connected client. To prevent concurrent
 writes potentially referencing garbage collected chunks, running
-[`dolt_gc`](../version-control/dolt-sql-procedures.md#dolt_gc) will break all open
-connections to the running server.
-
-[Shallow GC](#shallow-gc) happens automatically for certain operations, so it's possible
-it won't affect the size of your database that much when you run it.
-
-Performing GC on a cluster replica which is in standby mode is not yet supported, and running `call dolt_gc()` on the replica will fail.
-
-# Offline GC vs Online GC
-
-We originally implemented garbage collection for the offline use case. We didn't need to
-worry about concurrent writes to the database. When we implemented online GC we needed a
-way to make sure concurrent writes didn't reference garbage collected chunks. To make sure
-online GC runs safely, it currently breaks all open connections to a running server towards the end of the operation.
+[`call dolt_gc`](../version-control/dolt-sql-procedures.md#dolt_gc) will break all open
+connections to the running server. In flight queries on those connections may fail and must be retried. Re-establishing connections after they are broken is safe.
 
 At the end of the run, the connection which ran `call dolt_gc()` will be left open in order to deliver the results of the operation itself. The connection will be left in a terminally broken state where any attempt to run a query on it will result in the following error:
 
@@ -27,18 +36,16 @@ At the end of the run, the connection which ran `call dolt_gc()` will be left op
 
 The connection should be closed. In some connection pools it can be awkward to cause a single connection to actually close. If you need to run `call dolt_gc()` programmatically, one work around is to use a separate connection pool with a size of 1 which can be closed after the run is successful.
 
-## How garbage is created
+NOTE: Performing GC on [a cluster replica](../server/replication.md) which is in standby mode is not yet supported, and running `call dolt_gc()` on the replica will fail.
 
-Writes to Dolt can result in multiple chunks of the [prolly
-tree](https://www.dolthub.com/blog/2020-04-01-how-dolt-stores-table-data) being rewritten,
-which [writes a large portion of the
-tree](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/#cant_share).
-When you perform write operations without committing or delete a branch containing novel
-chunks garbage is created.
+# Automated GC
 
-![How garbage is created](../../../.gitbook/assets/how-garbage-is-created.png)
+We eventually want to support automated garbage collection during events that generate a
+lot of garbage, such as file imports. It will need to be interruptable.
 
-## Offline GC
+# How garbage collection works
+
+## Offline GC 
 
 Originally, running `dolt gc` took every branch and its working set and iterated through
 each referenced chunk. All referenced chunks were copied to a new table file, the old
@@ -77,20 +84,13 @@ running sql server couldn't work due to concurrent writes potentially referencin
 collected chunks. We needed to make some changes to Dolt to ensure online garbage
 collection leaves the database in a useable state.
 
-# Automated GC
-
-We eventually want to support automated garbage collection during events that generate a
-lot of garbage, such as file imports. It will need to be interruptable.
-
-# How online garbage collection works
-
-## Shallow GC
+### Shallow GC
 
 Shallow garbage collection is a less complete but faster garbage collection that prunes
 unreferenced table files. In normal operation, Dolt does not create unreferenced table
 files which stay on disk for a long time. But during some operations, including server
-shutdown, Dolt can leave behind unreferenced table files and various temporary files
- which will not currently be automatically cleaned up.
+shutdown, Dolt can leave behind unreferenced table files and various temporary files 
+which will not currently be automatically cleaned up.
 
 During shallow garbage collection we iterate through all table files and remove any that
 aren't referenced in the manifest.
@@ -112,9 +112,9 @@ GC](../version-control/dolt-sql-procedures.md#dolt_gc):
 CALL DOLT_GC('--shallow');
 ```
 
-## Full GC
+### Full GC
 
-### Background
+#### Background
 
 The main challenge to implementing full online GC was how to handle concurrent writes
 while garbage collection was running. In order to implement Git-like functionality in a
@@ -145,7 +145,7 @@ create a dangling reference. Dangling references can corrupt the state of the da
 in order to support online garbage collection we had to figure out a way to prevent
 concurrent writes from creating dangling references.
 
-### Implementation
+#### Implementation
 
 The current version of online GC allows concurrent writes by adding newly written chunks
 to the root set while the GC is running. Towards the end of the GC, we have to establish a
