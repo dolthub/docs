@@ -13,6 +13,10 @@ title: Configuration Management
 
 # Dolt solves this by…
 
+Configuration generally manged as large text files. Diffs and merges can become problematic.
+Some configuration is better modeled as tables. Tables can contain JSON columns.
+Version control allows for branches, diffs, and human review of configuration changes. 
+Diffs and merges happen at the cell level.
 
 # Companies Doing This
 

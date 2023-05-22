@@ -16,7 +16,11 @@ title: Data Sharing
 
 # Dolt solves this by…
 
+Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data sharing. 
 
+[Dolt](https://www.doltdb.com) is the world's first version controlled SQL database. 
+
+[DoltHub](https://www.dolthub.com) allows you to coordinate collaboration over the internet with permissions, human review, forks and all the other distributed collaboration tools you are used to from GitHub.
 
 # Companies Doing This
 

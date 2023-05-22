@@ -20,7 +20,7 @@ The audit log created between commits is queryable via SQL using custom Dolt [sy
 
 # Companies Doing This
 
-FJA
+[FJA](https://www.fja.com/)
 
 # Case Studies
 
