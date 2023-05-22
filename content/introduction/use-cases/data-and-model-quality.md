@@ -14,7 +14,11 @@ title: Data and Model Quality Control
 
 # Dolt fixes this by…
 
-Dolt fixes this problem by…
+Modern data science uses data to create models that look more like software than reports.
+Version control is the standard for code. Version control for data did not exist until now.
+Tags for model reproducibility.
+Branches for long running data projects.
+Commits, logs, and diffs for model insights.
 
 # Companies Doing This
 
