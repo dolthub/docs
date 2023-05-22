@@ -147,16 +147,13 @@ concurrent writes from creating dangling references.
 
 ### Implementation
 
-Our original approach for online GC was to block all writes while garbage collection was
-active and add a sanity check to all `Put` chunk calls for any dangling references.
+The current version of online GC allows concurrent writes by adding newly written chunks
+to the root set while the GC is running. Towards the end of the GC, we have to establish a
+safepoint where we are certain we have seen every in progress write and that all the referenced
+chunks will make it into the new files which make up the database. To establish this safe point,
+GC currently cancels all in-flight queries and breaks all existing SQL connections to the server.
 
-Once we worked through a few issues that surfaced while implementing these sanity checks,
-we realized the sanity checks during `Put` caused significant performance regressions to
-writes. We were able to fix these regressions by speeding up the address walks during the
-sanity checks and by moving the sanity checks to commit time instead of `Put`.
-
-The current version of online GC (which break all open connections to the running server)
-is available using the [stored procedure for
+Only GC functionality is available using the [stored procedure for
 GC](../version-control/dolt-sql-procedures.md#dolt_gc):
 
 ```sql
