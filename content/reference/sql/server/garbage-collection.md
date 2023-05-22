@@ -12,7 +12,7 @@ connections to the running server.
 [Shallow GC](#shallow-gc) happens automatically for certain operations, so it's possible
 it won't affect the size of your database that much when you run it.
 
-Online GC isn't safe yet on a cluster replica, but it will fail.
+Performing GC on a cluster replica which is in standby mode is not yet supported, and running `call dolt_gc()` on the replica will fail.
 
 # Offline GC vs Online GC
 
