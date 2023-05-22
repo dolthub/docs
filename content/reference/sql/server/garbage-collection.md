@@ -19,7 +19,13 @@ Performing GC on a cluster replica which is in standby mode is not yet supported
 We originally implemented garbage collection for the offline use case. We didn't need to
 worry about concurrent writes to the database. When we implemented online GC we needed a
 way to make sure concurrent writes didn't reference garbage collected chunks. To make sure
-online GC runs safely, it currently breaks all open connections to a running server.
+online GC runs safely, it currently breaks all open connections to a running server towards the end of the operation.
+
+At the end of the run, the connection which ran `call dolt_gc()` will be left open in order to deliver the results of the operation itself. The connection will be left in a terminally broken state where any attempt to run a query on it will result in the following error:
+
+`ERROR 1105 (HY000): this connection was established when this server performed an online garbage collection. this connection can no longer be used. please reconnect.`
+
+The connection should be closed. In some connection pools it can be awkward to cause a single connection to actually close. If you need to run `call dolt_gc()` programmatically, one work around is to use a separate connection pool with a size of 1 which can be closed after the run is successful.
 
 ## How garbage is created
 
