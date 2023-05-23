@@ -115,7 +115,7 @@ Then use `GET` to poll the operation to check if the import operation is done.
 [pollImportJob.json](../../../.gitbook/assets/pollImportJob.json)
 {% endswagger %}
 
-Here is an example of uploading a file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documenation for additional information.:
+Here is an example of uploading a CSV file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documentation for additional information.:
 
 ```js
 const fs = require("fs");
