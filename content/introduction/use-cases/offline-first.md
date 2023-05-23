@@ -12,7 +12,9 @@ title: Offline First
 
 # Dolt fixes this by…
 
-Dolt fixes this problem by…
+Clone, push, pull, and fetch to manage decentralized collaboration between nodes.
+Sync only considers the differences.
+Data conflicts allow your application to recover.
 
 # Companies Doing This
 
