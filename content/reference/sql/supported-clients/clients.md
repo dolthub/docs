@@ -116,6 +116,14 @@ We support the legacy [RMySQL](https://github.com/r-dbi/RMySQL) and newer [RMari
 - [RMariaDB Official Client Documentation](https://rmariadb.r-dbi.org)
 - [RMariaDB test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/r/rmariadb-test.r)
 
+## Rust
+
+We support the [mysql crate](https://docs.rs/mysql/latest/mysql/) in Rust.
+
+- [Official Client Documentation](https://docs.rs/mysql/latest/mysql/)
+- [Rust test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/rust/src/mysql_connector_test.rs)
+
+
 There is also an open-source, third-party wrapper for working with Dolt, called [DoltR](https://ecohealthalliance.github.io/doltr/). This tool is well-maintained by [EcoHealth Alliance](https://www.ecohealthalliance.org/) and provides an easy way to work with local or remote Dolt databases from within R Studio.
 
 - [Getting Started with Doltr](https://ecohealthalliance.github.io/doltr/articles/doltr.html)
