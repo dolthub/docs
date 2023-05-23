@@ -103,7 +103,7 @@ headers = {
 }
 ```
 
-To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object that includes `tableName`, `fileName`,  `fileType`, `importOp` and `primaryKeys` array.
+To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object.
 
 {% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload/{branch}" method="post" %}
 [fileUpload.json](../../../.gitbook/assets/fileUpload.json)
