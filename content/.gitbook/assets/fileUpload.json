@@ -39,8 +39,7 @@
           {
             "name": "branch",
             "in": "path",
-            "description": "The name of the branch to upload the file to.",
-            "required": true,
+            "description": "The name of the branch to upload the file to. If the database is empty and has no branches, the branchName field should be left blank.",
             "schema": {
               "type": "string",
               "example":"main"
@@ -64,7 +63,7 @@
                       "properties": {
                         "tableName": {
                           "type": "string",
-                          "description": "The name of the table to create, update, overwrite, or replace a table.",
+                          "description": "The name of the table to create, update, overwrite, or replace a table. It is required if the upload is fileType csv, psv, or xlsx. sql and any types don't need a tableName",
                           "example": "lacma"
                         },
                         "fileName": {
@@ -91,7 +90,7 @@
                           "example": ["id"]
                         }
                       },
-                      "required": ["tableName", "fileName", "fileType", "importOp"]
+                      "required": ["fileName", "fileType", "importOp"]
                     }
                   }
                 }
