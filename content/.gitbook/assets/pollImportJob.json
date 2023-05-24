@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/{owner}/{database}/upload/{branch}": {
+    "/{owner}/{database}/upload": {
       "get": {
         "summary": "Check import operation status",
         "description": "Poll the operation to check if the file import operation is done",
@@ -38,7 +38,7 @@
           },
           {
             "name": "branch",
-            "in": "path",
+            "in": "query",
             "description": "The name of the branch to upload the file to.",
             "required": true,
             "schema": {

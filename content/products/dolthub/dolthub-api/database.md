@@ -105,23 +105,27 @@ headers = {
 
 To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object.
 
-{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload/{branch}" method="post" %}
+{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload" method="post" %}
 [fileUpload.json](../../../.gitbook/assets/fileUpload.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the import operation is done.
 
-{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload/{branch}" method="get" %}
+{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload" method="get" %}
 [pollImportJob.json](../../../.gitbook/assets/pollImportJob.json)
 {% endswagger %}
 
 Here is an example of uploading a CSV file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documentation for additional information.:
 
+{% hint style="info" %}
+Please make sure to send your requests to `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload` instead of `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload/`, do not need the last `/`.
+{% endhint %}
+
 ```js
 const fs = require("fs");
  
 const url =
-  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
+  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload";
  
   
 const headers = {
@@ -137,6 +141,7 @@ async function fetchFileAndSend(filePath) {
   const params = {
     tableName: "lacma",
     fileName: "lacma.csv",
+    branchName:"main",
     fileType: "Csv",
     importOp: "Create",
     primaryKeys: ["id"],
@@ -166,8 +171,8 @@ async function fetchFileAndSend(filePath) {
 And an example of polling the job status in Javascript:
 
 ```js
-function pollOperation(op_name) {
-  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=${op_name}`;
+function pollOperation(op_name,branch_name) {
+  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload?branchName=${branch_name}&operationName=${op_name}`;
   const headers = {
     "Content-Type": "application/json",
     authorization: [api token you created],
