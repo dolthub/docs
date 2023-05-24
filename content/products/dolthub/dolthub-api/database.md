@@ -121,7 +121,7 @@ Here is an example of uploading a CSV file to create a table through this api en
 const fs = require("fs");
  
 const url =
-  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
+  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload";
  
   
 const headers = {
@@ -137,6 +137,7 @@ async function fetchFileAndSend(filePath) {
   const params = {
     tableName: "lacma",
     fileName: "lacma.csv",
+    branchName:"main",
     fileType: "Csv",
     importOp: "Create",
     primaryKeys: ["id"],
@@ -166,8 +167,8 @@ async function fetchFileAndSend(filePath) {
 And an example of polling the job status in Javascript:
 
 ```js
-function pollOperation(op_name) {
-  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=${op_name}`;
+function pollOperation(op_name,branch_name) {
+  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload?branchName=${branch_name}&operationName=${op_name}`;
   const headers = {
     "Content-Type": "application/json",
     authorization: [api token you created],
