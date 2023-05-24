@@ -11,7 +11,7 @@
       }
     ],
   "paths":{
-    "/{owner}/{database}/upload/{branch}":{
+    "/{owner}/{database}/upload":{
       "post":{
         "summary": "Upload a file to a DoltHub database",
         "description": "This endpoint allows you to upload a file to DoltHub to create, update, overwrite, or replace a table.",
@@ -34,15 +34,6 @@
             "schema": {
               "type": "string",
               "example":"museum-collections"
-            }
-          },
-          {
-            "name": "branch",
-            "in": "path",
-            "description": "The name of the branch to upload the file to. If the database is empty and has no branches, the branchName field should be left blank.",
-            "schema": {
-              "type": "string",
-              "example":"main"
             }
           }],
           "requestBody": {
@@ -71,6 +62,11 @@
                           "description": "The name of the file being uploaded.",
                           "example": "lacma.csv"
                         },
+                        "branchName": {
+                          "type": "string",
+                          "description": "The branch name of the file being uploaded to. If the database is empty (no branch exist), leave it as an empty string",
+                          "example": "main"
+                        },
                         "fileType": {
                           "type": "string",
                           "description": "The type of file being uploaded. Supported types are Csv, Psv, Json, Xlsx, and Sql.",
@@ -90,7 +86,7 @@
                           "example": ["id"]
                         }
                       },
-                      "required": ["fileName", "fileType", "importOp"]
+                      "required": ["branchName","fileName", "fileType", "importOp"]
                     }
                   }
                 }
