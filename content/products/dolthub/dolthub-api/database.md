@@ -117,6 +117,10 @@ Then use `GET` to poll the operation to check if the import operation is done.
 
 Here is an example of uploading a CSV file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documentation for additional information.:
 
+{% hint style="info" %}
+Please make sure to send your requests to `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload` instead of `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload/`, do not need the last `/`.
+{% endhint %}
+
 ```js
 const fs = require("fs");
  
