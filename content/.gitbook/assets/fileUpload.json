@@ -64,7 +64,7 @@
                         },
                         "branchName": {
                           "type": "string",
-                          "description": "The branch name of the file being uploaded to. If the database is empty (no branch exist), leave it as empty string",
+                          "description": "The branch name of the file being uploaded to. If the database is empty (no branch exist), leave it as an empty string",
                           "example": "main"
                         },
                         "fileType": {
