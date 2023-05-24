@@ -105,13 +105,13 @@ headers = {
 
 To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object.
 
-{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload/{branch}" method="post" %}
+{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload" method="post" %}
 [fileUpload.json](../../../.gitbook/assets/fileUpload.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the import operation is done.
 
-{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload/{branch}" method="get" %}
+{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload" method="get" %}
 [pollImportJob.json](../../../.gitbook/assets/pollImportJob.json)
 {% endswagger %}
 
