@@ -9,16 +9,15 @@ industry standard benchmarking tool.
 
 ## Performance Roadmap
 
-Dolt is slower than MySQL. The goal is to get Dolt to within 2-4 times
-the speed of MySQL for common operations. If a query takes MySQL 1
-second, we expect it to take Dolt 2-4 seconds. Or, if MySQL can run 8
-queries in 10 seconds, then we want Dolt to run 2-4 queries in 10
-seconds. The `multiple` column represents this relationship with
-regard to a particular benchmark.
+Dolt is slower than MySQL. The goal is to get Dolt to match 
+MySQL latency for common operations. Dolt is currently 2X slower 
+than MySQL, approximately 1.5X on writes and 2.5X on reads. The 
+`multiple` column represents this relationship with regard to a 
+particular benchmark.
 
 It's important recognize that these are industry standard tests, and
-are OLTP oriented. Many Dolt use-cases are non-OLTP, and Dolt is fast
-for bulk operations common in, for example, data pipeline contexts.
+are OLTP oriented. Performance results may vary but Dolt is 
+generally competitive on latency with MySQL and Postgres.
 
 ## Benchmark Data
 
