@@ -6,7 +6,26 @@ title: SQL Clients
 
 Dolt ships with a built in MySQL compatible server. To start the server for your Dolt database, you run `dolt sql-server` in the repository directory. The `dolt sql-server` command starts a MySQL compatible server for the Dolt database on port 3306 with no authentication. The database name is the name of the repository directory but with dashes \(`-`\) replaced with underscores \(`_`\). So `dolt-test` repository name would become `dolt_test` database name. See [this documentation for more configuration details](../../cli.md#dolt-sql-server).
 
-Once a server is running, any MySQL client should be able to connect to Dolt SQL Server in the exact same way it connects to a standard MySQL database. We explicitly support the programmatic clients outlined in this document through integration testing. Tests are run on GitHub pull requests to Dolt in a Ubuntu environment in a Docker container. If you would like another MySQL compatible client supported and tested, [please let us know](https://www.dolthub.com/contact).
+Once a server is running, any MySQL client should be able to connect to Dolt SQL Server in the exact same way it connects to a standard MySQL database. For instance, if you are running a Dolt sql-server locally, you can connect to it with the MySQL client `mysql` like so:
+
+```
+$ mysql -u root
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.9-Vitess 
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql>
+```
+
+We explicitly support the programmatic clients outlined in this document through integration testing. Tests are run on GitHub pull requests to Dolt in a Ubuntu environment in a Docker container. If you would like another MySQL compatible client supported and tested, [please let us know](https://www.dolthub.com/contact).
 
 The test code linked to below is a good way to get started connecting to a Dolt SQL server if you are not familiar how to connect to MySQL in your language of choice. The code establishes a connection, runs some simple queries, verifies the output comes back as expected, and closes the connection.
 
@@ -116,16 +135,14 @@ We support the legacy [RMySQL](https://github.com/r-dbi/RMySQL) and newer [RMari
 - [RMariaDB Official Client Documentation](https://rmariadb.r-dbi.org)
 - [RMariaDB test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/r/rmariadb-test.r)
 
+There is also an open-source, third-party wrapper for working with Dolt, called [DoltR](https://ecohealthalliance.github.io/doltr/). This tool is well-maintained by [EcoHealth Alliance](https://www.ecohealthalliance.org/) and provides an easy way to work with local or remote Dolt databases from within R Studio.
+
+- [Getting Started with Doltr](https://ecohealthalliance.github.io/doltr/articles/doltr.html)
+- [DoltR on GitHub](https://github.com/ecohealthalliance/doltr)
+
 ## Rust
 
 We support the [mysql crate](https://docs.rs/mysql/latest/mysql/) in Rust.
 
 - [Official Client Documentation](https://docs.rs/mysql/latest/mysql/)
 - [Rust test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/rust/src/mysql_connector_test.rs)
-
-
-There is also an open-source, third-party wrapper for working with Dolt, called [DoltR](https://ecohealthalliance.github.io/doltr/). This tool is well-maintained by [EcoHealth Alliance](https://www.ecohealthalliance.org/) and provides an easy way to work with local or remote Dolt databases from within R Studio.
-
-- [Getting Started with Doltr](https://ecohealthalliance.github.io/doltr/articles/doltr.html)
-- [DoltR on GitHub](https://github.com/ecohealthalliance/doltr)
-
