@@ -10,18 +10,27 @@ title: Miscellaneous
 |:----------------------------------|:----------|:----------------------------------------------------------------------------------------------------------------------|
 | Information schema                | ✅         |                                                                                                                       |
 | Views                             | ✅         |                                                                                                                       |
-| Window functions                  | 🟠        | Some functions not supported, see [window function docs](./expressions-functions-operators.md#window-functions)       |
+| Window functions                  | 🟠         | Some functions not supported, see [window function docs](./expressions-functions-operators.md#window-functions)       |
 | Common table expressions \(CTEs\) | ✅         |                                                                                                                       |
-| Stored procedures                 | 🟠        | Only a few statements are not yet supported, see [compound statements](./supported-statements.md#compound-statements) |
+| Stored procedures                 | 🟠         | Only a few statements are not yet supported, see [compound statements](./supported-statements.md#compound-statements) |
 | Cursors                           | ✅         |                                                                                                                       |
 | Triggers                          | ✅         |                                                                                                                       |
+
+## Client Compatibility
+
+Some MySQL features are client features, not server features. Dolt ships with a client but it is not as sophisticated as the `mysql` client. To access these features you can use the `mysql` client that ships with MySQL.
+
+| Feature                         | Supported | Notes and limitations                                                                                    |
+|:--------------------------------|:----------|:---------------------------------------------------------------------------------------------------------|
+| SOURCE                          | ❌        | Works with Dolt via the `mysql` client                                                                    |
+| LOAD DATA LOCAL INFILE          | ❌        | LOAD DATA INFILE works with the Dolt client. The LOCAL option only works with Dolt via the `mysql` client |
 
 ## Join hints
 
 Dolt supports the following join hints:
 
-| name                     | supported | detail                                                                                           |
-|--------------------------|-----------|--------------------------------------------------------------------------------------------------|
+| name                     | supported | detail                                                                                          |
+|--------------------------|-----------|-------------------------------------------------------------------------------------------------|
 | JOIN_ORDER(<table1>,...) | ✅         | Join tree in scope should use the following join execution order. Must include all table names. |
 | LOOKUP_JOIN(<t1>,<t2>)   | ✅         | Use LOOKUP strategy joining two tables.                                                         |
 | MERGE_JOIN(<t1>,<t2>)    | ✅         | Use MERGE strategy joining two tables.                                                          |
