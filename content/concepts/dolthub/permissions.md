@@ -26,7 +26,7 @@ Database admins are able to edit any data or settings within a database.
 
 You can add, update, and delete collaborators in the Settings tab on a database page:
 
-![Collaborator form](../../.gitbook/assets/database-settings-collabs.png)
+![](../../.gitbook/assets/database-settings-collabs.png)
 
 ## Permissions within organizations
 

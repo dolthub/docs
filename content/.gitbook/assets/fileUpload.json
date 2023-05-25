@@ -11,7 +11,7 @@
       }
     ],
   "paths":{
-    "/{owner}/{database}/upload/{branch}":{
+    "/{owner}/{database}/upload":{
       "post":{
         "summary": "Upload a file to a DoltHub database",
         "description": "This endpoint allows you to upload a file to DoltHub to create, update, overwrite, or replace a table.",
@@ -35,59 +35,58 @@
               "type": "string",
               "example":"museum-collections"
             }
-          },
-          {
-            "name": "branch",
-            "in": "path",
-            "description": "The name of the branch to upload the file to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example":"main"
-            }
           }],
           "requestBody": {
             "description": "The file upload information.",
             "required": true,
             "content": {
-              "application/json": {
+              "multipart/form-data": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "tableName": {
+                    "file": {
                       "type": "string",
-                      "description": "The name of the table to create, update, overwrite, or replace a table.",
-                      "example": "lacma"
+                      "format": "binary",
+                      "description": "The file to be uploaded."
                     },
-                    "fileName": {
-                      "type": "string",
-                      "description": "The name of the file being uploaded.",
-                      "example": "upload_csv_test.csv"
-                    },
-                    "fileType": {
-                      "type": "string",
-                      "description": "The type of file being uploaded. Supported types are Csv, Psv, Json, Xlsx, and Sql.",
-                      "example": "Csv"
-                    },
-                    "importOp": {
-                      "type": "string",
-                      "description": "The import operation to perform on the file. Supported operations are Create, Update, Overwrite, and Replace.",
-                      "example": "Create"
-                    },
-                    "primaryKeys": {
-                      "type": "array",
-                      "description": "The primary keys of the table, if any.",
-                      "example": ["id"]
-                    },
-                    "contentMd5": {
-                      "type": "string",
-                      "description": "The MD5 hash of the file contents.",
-                      "example": "d41d8cd98f00b204e9800998ecf8427e"
-                    },
-                    "content": {
+                    "params": {
                       "type": "object",
-                      "description": "The file contents.",
-                      "example": {"type":"Buffer","data":[49,50,51,10,52,53,54,10,55,56,57,10]}
+                      "properties": {
+                        "tableName": {
+                          "type": "string",
+                          "description": "The name of the table to create, update, overwrite, or replace a table. It is required if the upload is fileType csv, psv, or xlsx. sql and any types don't need a tableName",
+                          "example": "lacma"
+                        },
+                        "fileName": {
+                          "type": "string",
+                          "description": "The name of the file being uploaded.",
+                          "example": "lacma.csv"
+                        },
+                        "branchName": {
+                          "type": "string",
+                          "description": "The branch name of the file being uploaded to. If the database is empty (no branch exist), leave it as an empty string",
+                          "example": "main"
+                        },
+                        "fileType": {
+                          "type": "string",
+                          "description": "The type of file being uploaded. Supported types are Csv, Psv, Json, Xlsx, and Sql.",
+                          "example": "Csv"
+                        },
+                        "importOp": {
+                          "type": "string",
+                          "description": "The import operation to perform on the file. Supported operations are Create, Update, Overwrite, and Replace.",
+                          "example": "Create"
+                        },
+                        "primaryKeys": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "The primary keys of the table, if any.",
+                          "example": ["id"]
+                        }
+                      },
+                      "required": ["branchName","fileName", "fileType", "importOp"]
                     }
                   }
                 }
@@ -118,13 +117,9 @@
                     "type":"string",
                     "example":"main"
                   },
-                  "file_name":{
+                  "table_name":{
                     "type":"string",
-                    "example":"upload_csv_test.csv"
-                  },
-                  "content_md5":{
-                    "type":"string",
-                    "example":"d41d8cd98f00b204e9800998ecf8427e"
+                    "example":"lacma"
                   },
                   "operation_name":{
                     "type":"string",
@@ -162,13 +157,9 @@
                           "type":"string",
                           "example":"main"
                         },
-                        "file_name":{
+                        "table_name":{
                           "type":"string",
-                          "example":"upload_csv_test.csv"
-                        },
-                        "content_md5":{
-                          "type":"string",
-                          "example":"d41d8cd98f00b204e9800998ecf8427e"
+                          "example":"lacma"
                         }
                       }
                     }

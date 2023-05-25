@@ -128,7 +128,7 @@ will have the prefix `remotes/<remoteName>` in their names.
 ```sql
 SELECT *
 FROM dolt_branches
-UNION 
+UNION
 SELECT * FROM dolt_remote_branches;
 ```
 
@@ -341,9 +341,9 @@ than using this table directly.
 +----------+----------------------------------------+------+-----+---------+-------+
 ```
 
-Currently, all `VIEW`, `TRIGGER` and `EVENT` definitions are stored in the `dolt_schemas` table. 
-The column `type` defines whether the fragment is `view`, `trigger` or `event`. 
-The column `name` is the fragment name as supplied in the `CREATE` statement. 
+Currently, all `VIEW`, `TRIGGER` and `EVENT` definitions are stored in the `dolt_schemas` table.
+The column `type` defines whether the fragment is `view`, `trigger` or `event`.
+The column `name` is the fragment name as supplied in the `CREATE` statement.
 The column `fragment` stores the `CREATE` statement of the fragment. The column
 `json` is any additional important information such as `CreateAt` field
 for the fragment.
@@ -752,10 +752,10 @@ WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
 
 ## `dolt_column_diff`
 
-The `dolt_column_diff` system table shows which columns and tables in the current database were changed in each commit 
-reachable from the active branch's HEAD. When multiple columns are changed in a single commit, there is one row in the 
-`dolt_column_diff` system table for each column, all with the same commit hash. Any staged changes in the working set 
-are included with the value `STAGED` for their `commit_hash`. Any unstaged changes in the working set are included with 
+The `dolt_column_diff` system table shows which columns and tables in the current database were changed in each commit
+reachable from the active branch's HEAD. When multiple columns are changed in a single commit, there is one row in the
+`dolt_column_diff` system table for each column, all with the same commit hash. Any staged changes in the working set
+are included with the value `STAGED` for their `commit_hash`. Any unstaged changes in the working set are included with
 the value `WORKING` for their `commit_hash`.
 
 ### Schema
@@ -790,8 +790,8 @@ database from [DoltHub](https://www.dolthub.com/) as our
 example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the source url was updated.
 
 ```sql
-SELECT commit_hash, date 
-FROM dolt_column_diff 
+SELECT commit_hash, date
+FROM dolt_column_diff
 WHERE column_name = 'source_url';
 ```
 
@@ -817,9 +817,9 @@ If we narrow in on the `inmate_population_snapshots` table we can count the numb
 over the course of all our commits.
 
 ```sql
-SELECT column_name, count(commit_hash) as total_column_changes 
-FROM dolt_column_diff 
-WHERE table_name = 'inmate_population_snapshots' 
+SELECT column_name, count(commit_hash) as total_column_changes
+FROM dolt_column_diff
+WHERE table_name = 'inmate_population_snapshots'
 GROUP BY column_name;
 ```
 
@@ -870,7 +870,7 @@ GROUP BY column_name;
 +----------------------------+----------------------+
 ```
 
-From these results, we can see that fields describing the reasons an inmate is being held are being updated far more 
+From these results, we can see that fields describing the reasons an inmate is being held are being updated far more
 frequently than the fields holding demographic information about inmates.
 
 ## `dolt_diff_$TABLENAME`
@@ -1190,6 +1190,7 @@ mydb> replace into mytable (select their_a, their_b from dolt_conflicts_mytable)
 For convenience, you can also modify the `our_` columns of the
 `dolt_conflicts_mytable` to update the corresponding row in `mytable`. The above
 replace statement can be rewritten as:
+
 ```sql
 mydb> update dolt_conflicts_mytable set our_a = their_a, our_b = their_b;
 ```
@@ -1198,18 +1199,19 @@ And of course you can use any combination of `ours`, `theirs` and
 `base` rows in these statements.
 
 {% hint style="info" %}
+
 ### Notes
 
 - Updates made to the `our_` columns are applied to the original table using the
-primary key (or keyless hash). If the row does not exist, it will be inserted.
-Updates made to `our_` columns will never delete a row, however.
+  primary key (or keyless hash). If the row does not exist, it will be inserted.
+  Updates made to `our_` columns will never delete a row, however.
 
 - `dolt_conflict_id` is a unique identifier for the conflict. It is particulary
   useful when writing software that needs to resolve conflicts automatically.
 
 - `from_root_ish` is the commit hash of the "from branch" of the merge. This
-hash can be used to identify which merge produced a conflict, since conflicts
-can accumalate across merges.
+  hash can be used to identify which merge produced a conflict, since conflicts
+  can accumalate across merges.
 
 {% endhint %}
 
@@ -1235,7 +1237,7 @@ set that has an unresolved schema conflict.
 ```
 
 Query this table when resolving schema conflicts in a SQL session. For more information on
-resolving schema conflicts during merge, see the docs on [conflicts](./merges#conflicts).
+resolving schema conflicts during merge, see the docs on [conflicts](./merges.md#conflicts).
 
 ## `dolt_merge_status`
 
@@ -1391,6 +1393,7 @@ Configuration Tables can be staged and versioned just like user tables. They alw
 `dolt_ignore` stores a list of "table name patterns", and a boolean flag for each pattern indicating whether tables that match the patterns should not be staged for commit.
 
 This only affects the staging of new tables. Tables that have already been staged or committed are not affected the contents of `dolt_ignore`, and changes to those tables can still be staged.
+
 ### Schema
 
 ```text
@@ -1406,7 +1409,7 @@ This only affects the staging of new tables. Tables that have already been stage
 
 The format of patterns is a simplified version of gitignore’s patterns:
 
-- An asterisk "*"  or ampersand "%" matches any number of characters.
+- An asterisk "\*" or ampersand "%" matches any number of characters.
 - The character "?" matches any one character.
 - All other characters match exactly.
 

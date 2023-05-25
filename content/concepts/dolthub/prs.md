@@ -8,8 +8,6 @@ title: Pull Requests
 
 Pull requests are a way to propose changes to a database. A pull request is created from a [branch](../dolt/git/branch.md) with new changes that a user would like to make to another branch (commonly the `main` or `master` branch). Once the pull request is opened, the reviewer can easily review the [diff](../dolt/git/diff.md) of the proposed changes and discuss potential improvements or implications of the change. If approved, the pull request can be merged, which will update the base branch with the changes from the feature branch.
 
-![Diagram of pull request]()
-
 ## How to use pull requests
 
 You can use pull requests to propose changes for another branch. To create a pull request, you should make changes to a branch on your database or a [fork](./forks.md) of another database. Then you can use the new pull request form to choose your base branch. You can also add a title (required) and description (optional).
@@ -86,14 +84,14 @@ Date:   Fri Dec 03 14:15:38 -0800 2021
 
 We can open a pull request in `dolthub/us-schools` by selecting our fork and branch. We also add a title.
 
-![New pull request form](../../.gitbook/assets/new-pull-request-form.png)
+![](../../.gitbook/assets/new-pull-request-form.png)
 
 The owner of `dolthub/us-schools` can look at the diff and request changes.
 
-![New pull request diff](../../.gitbook/assets/pull-request-diff.png)
+![](../../.gitbook/assets/pull-request-diff.png)
 
 Once the changes have been approved, the owner can merge the pull request. The commits from the pull request will show up on the `main` (or `master` in this case) branch.
 
-![Merged pull with feedback](../../.gitbook/assets/merged-pull-with-feedback.png)
+![](../../.gitbook/assets/merged-pull-with-feedback.png)
 
 And we have successful used pull requests to incorporate a change to a database!

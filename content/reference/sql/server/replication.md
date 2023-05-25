@@ -94,6 +94,7 @@ Then set the appropriate server variables:
 
 ```bash
 $ dolt remote add origin timsehn/replication_example
+$ dolt sql -q "set @@persist.dolt_replicate_all_heads = 1"
 $ dolt sql -q "set @@persist.dolt_replicate_to_remote = 'origin'"
 ```
 
@@ -228,8 +229,8 @@ to pick specific branches or
 to replicate all branches.
 
 ```bash
-$ dolt sql -q "set @@persist.dolt_read_replica_remote = 'origin'"
 $ dolt sql -q "set @@persist.dolt_replicate_heads = 'main'"
+$ dolt sql -q "set @@persist.dolt_read_replica_remote = 'origin'"
 $ dolt sql -q "select * from test"
 +----+----+
 | pk | c1 |

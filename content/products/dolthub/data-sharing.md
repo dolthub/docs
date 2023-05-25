@@ -8,13 +8,13 @@ title: Data Sharing on DoltHub
 
 Our [discover page](https://www.dolthub.com/discover) on DoltHub lets you find public databases created by users in our community. You can easily share these databases and adopt them for your own use cases.
 
-![Discover page](../../.gitbook/assets/discover-covid-search.png)
+![](../../.gitbook/assets/discover-covid-search.png)
 
 ## Clone data locally
 
-See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../installation.md)), which is found on every database page:
+See an interesting database you'd like to make changes to? Get the database locally with just one command (assuming you have [Dolt installed](../../introduction/installation.md)), which is found on every database page:
 
-![Clone button](../../.gitbook/assets/dolt-clone-corona-virus.png)
+![](../../.gitbook/assets/dolt-clone-corona-virus.png)
 
 We are going to use the [`dolthub/corona-virus`](https://www.dolthub.com/repositories/dolthub/corona-virus) database as an example
 
@@ -76,7 +76,7 @@ Now that we've made a change locally using Dolt, we want to push the change back
 
 Since we don't have write permissions to `dolthub/corona-virus`, we need to fork it to our own namespace. This is easily done using the fork button:
 
-![Fork database](../../.gitbook/assets/fork-corona-virus.png)
+![](../../.gitbook/assets/fork-corona-virus.png)
 
 Now we have a database in our namespace that we can write to (`taylor/corona-virus`).
 
@@ -110,7 +110,7 @@ Checking remote server looking for key association.
 
 This will open your browser to the credentials settings page with the hash from above populated in the "Public key" field. Add a name for the token and click `Create`:
 
-![Credentials settings](../../.gitbook/assets/dolthub-add-cred.png)
+![](../../.gitbook/assets/dolthub-add-cred.png)
 
 You should see this message if it was successful:
 
@@ -131,7 +131,7 @@ We want to push the new branch we made changes to locally to the remote fork.
 
 When you navigate to the fork on DoltHub, you'll see the new branch in the branch selector dropdown on the left:
 
-![New branch in dropdown](../../.gitbook/assets/new-dolthub-branch-corona.png)
+![](../../.gitbook/assets/new-dolthub-branch-corona.png)
 
 ## Create a pull request to the parent database
 
@@ -139,7 +139,7 @@ In order to incorporate this change into the parent database (`dolthub/corona-vi
 
 To create a pull request, we first navigate to the parent database. In the "Pull Requests" tab click on the "Create Pull Request" button. Choose your fork as the "From database" and add a title and description.
 
-![Corona fork pull request](../../.gitbook/assets/new-pull-corona.png)
+![](../../.gitbook/assets/new-pull-corona.png)
 
 ## Next Steps
 

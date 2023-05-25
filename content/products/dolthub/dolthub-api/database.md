@@ -93,7 +93,7 @@ Here is an example of uploading a file `lacma.csv` to create a table `lacma` on 
 
 To poll the operation and check its status, you can use the `operationName` in the returned response of the file upload post to query the API. Once the operation is complete, the response will contain a `job_id` field indicating the job that's running the file import as well as the id of the pull request that's created when the import job is completed.
 
-Keep in mind that the time it takes for the import operation to complete can vary depending on the size of the file and the complexity of the changes being applied to the database.
+Keep in mind that the time it takes for the import operation to complete can vary depending on the size of the file and the complexity of the changes being applied to the database. The file size limit is 100 MB.
 
 Include this `header` in your request with the API token you created.
 
@@ -103,72 +103,76 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload/{branch}" method="post" %}
+To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object.
+
+{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload" method="post" %}
 [fileUpload.json](../../../.gitbook/assets/fileUpload.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the import operation is done.
 
-{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload/{branch}" method="get" %}
+{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload" method="get" %}
 [pollImportJob.json](../../../.gitbook/assets/pollImportJob.json)
 {% endswagger %}
 
-Here is an example of uploading a file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documenation for additional information.:
+Here is an example of uploading a CSV file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documentation for additional information.:
+
+{% hint style="info" %}
+Please make sure to send your requests to `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload` instead of `https://www.dolthub.com/api/v1alpha1/{owner}/{database}/upload/`, do not need the last `/`.
+{% endhint %}
 
 ```js
 const fs = require("fs");
-const SparkMD5 = require("spark-md5");
-
+ 
 const url =
-  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main";
+  "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload";
  
-const file_path = "upload_csv_test.csv";
- 
+  
 const headers = {
   "Content-Type": "application/json",
   authorization: [api token you created],
 };
 
-fs.readFile(file_path, (err, data) => {
-  if (err) throw err;
+const filePath = "lacma.csv";
 
-  const enc = new TextEncoder();
+fetchFileAndSend(filePath);
 
-  const spark = new SparkMD5.ArrayBuffer();
-  spark.append(data);
-  const md5 = btoa(spark.end(true));
-
+async function fetchFileAndSend(filePath) {
   const params = {
     tableName: "lacma",
-    contents: data,
     fileName: "lacma.csv",
-    branchName: "main",
+    branchName:"main",
     fileType: "Csv",
     importOp: "Create",
     primaryKeys: ["id"],
-    contentMd5: md5,
   };
+
+  const formData = new FormData();
+  const fileData = fs.readFileSync(filePath);
+  const blob = new Blob([buffer], { type: "application/octet-stream" });
+  await formData.append("file", blob, "lacma.csv");
+  formData.append("params", JSON.stringify(params));
 
   fetch(url, {
     method: "POST",
     headers,
-    body: JSON.stringify(params),
+    body: formData,
   })
-    .then((response) => {
+   .then((response) => {
         // process response
     })
     .catch((error) => {
       // process error
     });
-});
+}
 
 ```
 
 And an example of polling the job status in Javascript:
 
 ```js
-function pollOperation(op_name) {
-  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload/main?operationName=${op_name}`;
+function pollOperation(op_name,branch_name) {
+  const url = `https: //www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload?branchName=${branch_name}&operationName=${op_name}`;
   const headers = {
     "Content-Type": "application/json",
     authorization: [api token you created],

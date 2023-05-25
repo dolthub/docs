@@ -6,18 +6,17 @@ title: Import
 
 Dolt supports three modes of import:
 
-1) [`LOAD DATA INFILE`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) SQL-server command.
-2) [`dolt table import`](../../cli.md#dolt-table-import) CLI command.
-3) `dolt sql < import.sql` batch script import.
+1. [`LOAD DATA INFILE`](https://dev.mysql.com/doc/refman/8.0/en/load-data.html) SQL-server command.
+2. [`dolt table import`](../../cli.md#dolt-table-import) CLI command.
+3. `dolt sql < import.sql` batch script import.
 
-We recommend (1) > (2) > (3) for large import peformance. `dolt table import` is the most convenient and only slightly slower than `LOAD DATA INFILE`. Refer to the [import tutorial blog](https://www.dolthub.com/blog/2022-11-21-import-perf/) for a walkthrough of the different techniques.
+We recommend (1) > (2) > (3) for large import performance. `dolt table import` is the most convenient and only slightly slower than `LOAD DATA INFILE`. Refer to the [import tutorial blog](https://www.dolthub.com/blog/2022-11-21-import-perf/) for a walkthrough of the different techniques.
 
 ## Import comparison
 
-Each result row reports the runtime for a MySQL import of a certain table schema (`test_name` and `detail`), row count (`row_cnt`), and sorting (`sorting`). `sql_mult` and `cli_mult` distinguish the Dolt SQL (sql-server `LOAD DATA`) and CLI (`dolt table import`) latencys as a multiple of the MySQL latency for the same test conditions. All MySQL tests report the `LOAD DATA` latency.
+Each result row reports the runtime for a MySQL import of a certain table schema (`test_name` and `detail`), row count (`row_cnt`), and sorting (`sorting`). `sql_mult` and `cli_mult` distinguish the Dolt SQL (sql-server `LOAD DATA`) and CLI (`dolt table import`) latencies as a multiple of the MySQL latency for the same test conditions. All MySQL tests report the `LOAD DATA` latency.
 
 We are about 2x slower than MySQL for most import conditions. We are slightly slower importing blobs, reflecting how Dolt chunks blobs individually as prolly trees rather than a single byte array. Both Dolt and MySQL are less efficient importing sql scripts with standalone INSERT rows compared to batched insert script (we have a tool [here](https://github.com/dolthub/insert-batcher) to batch INSERT scripts).
-
 
 | test_name       | detail       | row_cnt | sorted | mysql_time | sql_mult | cli_mult |
 | --------------- | ------------ | ------- | ------ | ---------- | -------- | -------- |

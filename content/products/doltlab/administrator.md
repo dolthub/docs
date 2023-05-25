@@ -23,6 +23,7 @@ the following information can help DoltLab Admins manually perform some common a
 16. [Use custom Logo on DoltLab instance](#use-custom-logo)
 17. [Customize automated emails](#customize-automated-emails)
 18. [Customize DoltLab colors](#customize-colors)
+19. [Use a domain name with DoltLab](#use-domain)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -98,6 +99,7 @@ docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $
 The value of `PGPASSWORD` should be the `POSTGRES_PASSWORD` set when DoltLab was first deployed.
 
 To restore a postgres server from `postgres-dump.sql`, first stop the running DoltLab services, remove the stopped containers, and remove the old postgres server volume:
+
 ```bash
 cd doltlab
 
@@ -278,7 +280,7 @@ You have now completed the upgrade, and should no be running DoltLab `v0.2.0` wi
 
 <h1 id="connect-with-doltlab-team">Connect with the DoltLab Team</h1>
 
-If you need to connect to a DoltLab team member, the best way to do so is on [Discord](https://discord.com/invite/RFwfYpu), in the `#doltlab` server.
+If you need to connect to a DoltLab team member, the best way to do so is on [Discord](https://discord.gg/s8uVgc3), in the `#doltlab` server.
 
 <h1 id="auth-dolt-client">Authenticate a Dolt Client to use a DoltLab Account</h1>
 
@@ -354,29 +356,30 @@ To run a Prometheus server on your DoltLab host machine, first open port `9090` 
 
 ```yaml
 global:
-  scrape_interval:     5s
+  scrape_interval: 5s
   evaluation_interval: 10s
 scrape_configs:
   - job_name: cadivsor
     static_configs:
-      - targets: ['host.docker.internal:8080']
+      - targets: ["host.docker.internal:8080"]
   - job_name: prometheus
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ["localhost:9090"]
   - job_name: doltlabremoteapi
-    metrics_path: '/doltlabremoteapi'
+    metrics_path: "/doltlabremoteapi"
     static_configs:
-      - targets: ['host.docker.internal:7770']
+      - targets: ["host.docker.internal:7770"]
   - job_name: doltlabapi
-    metrics_path: '/doltlabapi'
+    metrics_path: "/doltlabapi"
     static_configs:
-      - targets: ['host.docker.internal:7770']
+      - targets: ["host.docker.internal:7770"]
 ```
 
 Then, start the Prometheus server as a Docker container running in daemon mode:
+
 ```bash
 docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 9090:9090 -v "$(pwd)"/prometheus.yml:/etc/prometheus/prometheus.yml:ro prom/prometheus:latest --config.file=/etc/prometheus/prometheus.yml
- ```
+```
 
 `--add-host host.docker.internal:host-gateway` is only required if running the Prometheus server on the DoltLab host. If running it elsewhere, this argument may be omitted, and the `host.docker.internal` hostname in `prometheus.yml` can be changed to the hostname of your DoltLab host.
 
@@ -548,9 +551,9 @@ Jobs were [recently introduced](https://www.dolthub.com/blog/2022-10-07-dolthub-
 
 As a result of the new Jobs infrastructure, DoltLab now requires more memory and disk. The amount of each of these depends on how users will use your instance. Here are the current end user limits of DoltLab Jobs as of `v0.7.0`:
 
-| Job Type | Database Size Limit | File Size Limit |
-|---|---|---|
-| File Import | 150 GB| 1 GB for `.csv`, 200 MB for `.sql` |
+| Job Type    | Database Size Limit | File Size Limit                    |
+| ----------- | ------------------- | ---------------------------------- |
+| File Import | 150 GB              | 1 GB for `.csv`, 200 MB for `.sql` |
 
 If you want to run a DoltLab instance that can support these end user limits, we recommend running DoltLab on a host with at least 64 GB of memory, and 20 TBs of disk. These recommended amounts will decrease as we continue to improve Dolt's resource efficiency and utilization.
 
@@ -558,9 +561,9 @@ If you want to run a DoltLab instance that can support these end user limits, we
 
 Under the hood, when a user uploads a file to DoltLab, a new Job is kicked off that copies that file into a new Docker container running a `dolt` binary. This Job container executes `dolt table import <file>` or `dolt sql < <file>`, depending on the file type of the uploaded file, which imports the data into a clone of the target database. The container finishes by opening a pull request containing the imported data.
 
-What's import to note about the Import Job process is how it can impact disk and memory utilization on a DoltLab host. 
+What's import to note about the Import Job process is how it can impact disk and memory utilization on a DoltLab host.
 
-For example, let's say a user uploads a 100 MB `.csv` on a 10 GB DoltLab database. First, the uploaded file is downloaded into the Job container, writing, temporarily, the 100 MB file to disk. Second, the target database is cloned into the container, using an additional 10 GB's of disk. Finally, the import process begins with `dolt table import <file>`, which uses additional disk (a variable amount), in the form of [temporary files](https://www.dolthub.com/blog/2021-08-13-generational-gc/) that Dolt writes to disk in order to perform the import. 
+For example, let's say a user uploads a 100 MB `.csv` on a 10 GB DoltLab database. First, the uploaded file is downloaded into the Job container, writing, temporarily, the 100 MB file to disk. Second, the target database is cloned into the container, using an additional 10 GB's of disk. Finally, the import process begins with `dolt table import <file>`, which uses additional disk (a variable amount), in the form of [temporary files](https://www.dolthub.com/blog/2021-08-13-generational-gc/) that Dolt writes to disk in order to perform the import.
 
 Importing also uses a variable amount of memory depending on the size of the cloned database and the size of the file being imported. In our example, the import completes in about 30 seconds, but uses about 5 GB of memory at its peak.
 
@@ -603,17 +606,17 @@ Save the file, and restart your DoltLab instance using the `start-doltlab.sh` sc
 
 Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
 
-* `email/collabInvite.txt` sent to invite user to be a database collaborator.
-* `email/invite.txt` sent to invite a user to join an organization.
-* `email/issueComment.txt` sent to notify user that an issue received a comment.
-* `email/issueState.txt` sent to notify user that an issue's state has changed.
-* `email/pullComment.txt` sent to notify user that a pull request received a comment.
-* `email/pullCommits.txt` sent to notify user that a pull request received a commit.
-* `email/pullReview.txt` sent to notify user that a pull request review's state has changed.
-* `email/pullState.txt` sent to notify user that a pull request's state has changed.
-* `email/recoverPassword.txt` sent to provide user with a link to reset their password.
-* `email/resetPassword.txt` sent to notify a user that their password has been reset.
-* `email/verify.txt` sent to a user to verify their email account.
+- `email/collabInvite.txt` sent to invite user to be a database collaborator.
+- `email/invite.txt` sent to invite a user to join an organization.
+- `email/issueComment.txt` sent to notify user that an issue received a comment.
+- `email/issueState.txt` sent to notify user that an issue's state has changed.
+- `email/pullComment.txt` sent to notify user that a pull request received a comment.
+- `email/pullCommits.txt` sent to notify user that a pull request received a commit.
+- `email/pullReview.txt` sent to notify user that a pull request review's state has changed.
+- `email/pullState.txt` sent to notify user that a pull request's state has changed.
+- `email/recoverPassword.txt` sent to provide user with a link to reset their password.
+- `email/resetPassword.txt` sent to notify a user that their password has been reset.
+- `email/verify.txt` sent to a user to verify their email account.
 
 To alter the text within one of the above files, we recommend only changing the hardcoded text between the [Actions](https://pkg.go.dev/text/template#hdr-Actions) and replacing the use of `{{.App}}`, which normally evaluates to "DoltLab", with the name of your company or team.
 
@@ -743,3 +746,19 @@ theme:
 Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
 
 After adding your custom values, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom colors across the site.
+
+<h1 id="use-domain">Use a domain name with DoltLab</h1>
+
+It's common practice to provision a domain name to use for a DoltLab instance. To do so, secure a domain name and map it to the _stable_, public IP address of the DoltLab host. Then, supply the domain name as the value to the `HOST_IP` environment variable when starting DoltLab. Let's look at an example using services offered by AWS.
+
+Let's say we've have set up and run an EC2 instance with the latest version of DoltLab and have successfully configured its Security Group to allow ingress traffic on `80`, `100`, `4321`, and `50051`. By default, this host will have a public IP address assigned to it, but this IP is unstable and will change whenever the host is restarted.
+
+First, we should attach a stable IP to this host. To do this in AWS, we can provision an [Elastic IP Address (EIP)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-allocating).
+
+Next, we should associate the EIP with our DoltLab host by following [these steps](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-associating). Once this is done, the DoltLab host should be reachable by the EIP.
+
+Finally, we can provision a domain name for the DoltLab host through [AWS Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html). After registering the new domain name, we need to create an `A` record that's attached to the EIP of the DoltLab host. To do so, follow the steps for creating records outlined [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html).
+
+Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and replace the value of the environment variable `HOST_IP` with the domain name, then restart DoltLab.
+
+In the event you are configuring your domain name with an Elastic Load Balancer, ensure that it specifies Target Groups for each of the ports required to operate DoltLab, `80`, `100`, `4321`, and `50051`.
