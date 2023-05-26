@@ -106,6 +106,14 @@ We support the [DBD::mysql](https://metacpan.org/pod/DBD::mysql) package that im
 - [Official Client Documentation](https://metacpan.org/pod/DBD::mysql)
 - [DBD:mysql test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/perl/dbd-mysql-test.pl)
 
+## PHP
+We support the built in [mysqli](https://www.php.net/manual/en/book.mysqli.php) extension and [PDO](https://www.php.net/manual/en/book.pdo.php) API for connecting to MySQL.
+
+- [Official mysqli Client Documentation](https://www.php.net/manual/en/book.mysqli.php)
+- [Official PDO Client Documentation](https://www.php.net/manual/en/book.pdo.php)
+- [mysqli test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/php/mysqli_connector_test.php)
+- [PDO test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/php/pdo_connector_test.php)
+
 ## Go
 
 We support the [go-sql-driver/mysql](https://github.com/go-sql-driver/mysql) package. This is the MySQL driver for the [database/sql](https://golang.org/pkg/database/sql/) package.
