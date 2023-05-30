@@ -29,17 +29,3 @@ Clone for development
 # Case Studies
 
 Let us know if you would like us to feature your use of Dolt as a versioned MySQL replica here.
-
-# Example
-
-For a full example of this use case, follow the [getting started guide](../getting-started/versioned-mysql-replica.md). This section just hits the highlights.
-
-## Identify and Prepare your Primary
-
-## Start a Dolt Replica
-
-## Query a cell's audit log
-
-## Find and Rollback a bad change
-
-## Clone for Development

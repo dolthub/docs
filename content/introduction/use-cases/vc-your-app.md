@@ -21,8 +21,5 @@ Better than slowly changing dimension or soft deletes.
 
 # Case Studies
 
-[Nautobot by Network To Code](https://www.dolthub.com/blog/2021-11-19-dolt-nautobot/)
-
-# Example
-
-Concretely, here’s how you do it.
+* [Nautobot by Network To Code](https://www.dolthub.com/blog/2021-11-19-dolt-nautobot/)
+* [Turbine](https://www.dolthub.com/blog/2022-08-17-dolt-turbine/)

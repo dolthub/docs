@@ -28,7 +28,3 @@ Commits, logs, and diffs for model insights.
 
 [Turbine](https://www.dolthub.com/blog/2022-08-17-dolt-turbine/)
 
-# Example
-
-Concretely, here’s how you do it.
-

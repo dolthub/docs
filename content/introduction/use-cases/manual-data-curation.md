@@ -26,7 +26,3 @@ DoltHub has a user-friendly interface for non-technical users
 
 [Aktify](https://www.dolthub.com/blog/2021-10-01-dolt-aktify/)
 
-# Example
-
-Concretely, here’s how you do it.
-

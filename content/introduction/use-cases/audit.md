@@ -28,7 +28,3 @@ If you're not ready to switch your primary database to Dolt, you can run MySQL a
 
 Let us know if you would like us to feature your use of Dolt for audit here.
 
-# Example
-
-Concretely, here’s how you do it.
-

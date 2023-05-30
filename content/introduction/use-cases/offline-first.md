@@ -23,7 +23,3 @@ Be the first.
 # Case Studies
 
 Let us know if you would like us to feature your use of Dolt for data sharing here.
-
-# Example
-
-Concretely, here’s how you do it.
