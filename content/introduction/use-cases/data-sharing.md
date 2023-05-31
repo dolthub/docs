@@ -18,9 +18,11 @@ title: Data Sharing
 
 Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data sharing. 
 
-[Dolt](https://www.doltdb.com) is the world's first version controlled SQL database. Git-style version control allows for decentralized, asynchronous collaboration. Every person gets there own copy of the database to read and write.
+[Dolt](https://www.doltdb.com) is the world's first version controlled SQL database. Git-style version control allows for decentralized, asynchronous collaboration. Every person gets their own copy of the database to read and write.[DoltHub](https://www.dolthub.com) allows you to coordinate collaboration over the internet with permissions, human review, forks and all the other distributed collaboration tools you are used to from GitHub.
 
-[DoltHub](https://www.dolthub.com) allows you to coordinate collaboration over the internet with permissions, human review, forks and all the other distributed collaboration tools you are used to from GitHub.
+Share data with customers. Use versions to satisfy slow vs fast upgrading consumers. Let them help make it better. Better debugging information: Version X works, version Y doesn't. They can even make changes and submit data patches.
+
+Vendors share data with you. First thing you do is import into Dolt and examine the diff, either human or programmatically. Build integration tests for the data. If there's a problem, never merge the import branch into main roll it back. Use the problematic diff to debug with your vendor.
 
 # Companies Doing This
 
