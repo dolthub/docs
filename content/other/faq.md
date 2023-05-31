@@ -107,7 +107,7 @@ it was created from. Note, this new database cannot be merged with the database
 it was created from. It is a new thing.
 
 Note, a remote can be local to your filesystem using 
-[filesystem remotes](../reference/sql/version-control/remotes.md). 
+[filesystem remotes](../reference/sql/version-control/remotes.md#filesystem). 
 
 You can also [`dolt dump`](../reference/cli.md#dolt-dump) the database and import 
 the dump to a new database using [`dolt sql`](../reference/cli.md#dolt-sql).
