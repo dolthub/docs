@@ -2,8 +2,6 @@
 title: FAQ
 ---
 
-# FAQ
-
 ## Why is it called Dolt? Are you calling me dumb?
 
 It's named `dolt` to pay homage to [how Linus Torvalds named
@@ -99,3 +97,17 @@ Previously, Dolt automatically synced doc files from the file system to the
 CLI command. `dolt docs upload [doc name] [file name]` reads a file into the
 `dolt_docs` table with the given name. `dolt docs print [doc name]` prints a
 doc with the given name to stdout.
+
+## How do I squash the history of a Dolt database? I only want the latest.
+
+Dolt has a command called [read-tables](../reference/cli.md#dolt-read-tables) 
+that reads the tables at a remote, commit pair and creates a new Dolt database 
+without any history. This new database is often much smaller than the database 
+it was created from. Note, this new database cannot be merged with the database 
+it was created from. It is a new thing.
+
+Note, a remote can be local to your filesystem using 
+[filesystem remotes](../reference/sql/version-control/remotes.md). 
+
+You can also [`dolt dump`](../reference/cli.md#dolt-dump) the database and import 
+the dump to a new database using [`dolt sql`](../reference/cli.md#sql).
