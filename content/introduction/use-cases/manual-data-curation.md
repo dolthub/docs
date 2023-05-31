@@ -7,8 +7,7 @@ title: Manual Data Curation
 * Are you using spreadsheets to curate production data? 
 * Is the process of merging and reviewing everyone’s changes getting out of hand? 
 * Are bad data changes causing production issues? 
-* Do you want a stepping stone to a more robust solution?
-* Do you want to ditch the process of converting spreadsheets to databases?
+* Would human review of cell-level data changes help?
 
 # Dolt fixes this by…
 

@@ -13,6 +13,7 @@ title: Version Control Your Application
 # Dolt fixes this by…
 
 Dolt gives you branch, diff, and merge at the database layer. 
+
 Better than slowly changing dimension or soft deletes.
 
 # Companies Doing This
