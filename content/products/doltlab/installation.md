@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v0.8.4` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v1.0.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -38,7 +38,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v0.8.4
+export DOLTLAB_VERSION=v1.0.0
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -46,7 +46,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v0.8.4
+export DOLTLAB_VERSION=v1.0.0
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -80,7 +80,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v0.8.4
+export DOLTLAB_VERSION=v1.0.0
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
@@ -93,6 +93,8 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * gentokenenckey
 * send_doltlab_deployed_event
 * smtp_connection_helper
+* migrate_postgres_dolt.sh
+* dolt_db_cli.sh
 * shell-db.sh
 * docker-compose.yaml
 * start-doltlab.sh
@@ -108,7 +110,13 @@ editing these files before starting your DoltLab instance. For more information 
 
 `smtp_connection_helper` is a binary used to help troubleshoot any issues your DoltLab instance might have when establishing a connection to your existing SMTP server. This tool uses similar code to DoltLab's email service and should successfully send a test email if the connection to the SMTP server was configured correctly. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](./administrator.md#troubleshoot-smtp-connection).
 
-`shell-db.sh` is a script that will open a PostgreSQL shell to your running DoltLab's PostgreSQL server. The `POSTGRES_PASSWORD` you set when starting DoltLab is required by this script as `PGPASSWORD`. A successful connection will display a `dolthubapi=#` prompt.
+`migrate_postgres_dolt.sh` is a script available in DoltLab `v1.0.0`+. Prior to DoltLab `v1.0.0`, DoltLab used PostgreSQL as its database. But now, starting with `v1.0.0`, DoltLab uses Dolt as its database. This script is used when upgrading from an older DoltLab instance to DoltLab `v1.0.0` and will copy the data from the existing, older DoltLab instance into the new Dolt database backing DoltLab `v1.0.0`. Please see [the guide](./administrator.md#upgrade-v080-v100) for using this script to copy existing data during upgrade.
+
+`dolt_db_cli.sh` is a script available in DoltLab `v1.0.0`+, useful for restoring DoltLab's Dolt server from a backup. 
+
+`shell-db.sh` is a script that will open a shell to your running DoltLab's database server. For DoltLab versions lower than `v1.0.0`, this database server is PostgreSQL. To use this script with those versions, supply the `POSTGRES_PASSWORD` value you set when starting DoltLab as the environment variable `PGPASSWORD`. A successful connection will display a `dolthubapi=#` prompt.
+
+For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, supply the `DOLT_PASSWORD` environment variable value you set when starting DoltLab. A successful connection will display a `mysql>` prompt.
 
 `docker-compose.yaml` is a complete [Docker Compose](https://docs.docker.com/compose/) configuration file that will spin up all the services required to run DoltLab.
 
@@ -120,9 +128,8 @@ The recommended way to run DoltLab is with the `start-doltlab.sh` script include
 
 ```bash
 export HOST_IP=<Host IP>
-export POSTGRES_PASSWORD=<Password>
+export DOLT_PASSWORD=<Password>
 export DOLTHUBAPI_PASSWORD=<Password>
-export POSTGRES_USER="dolthubapi"
 export EMAIL_USERNAME=<SMTP Email Username>
 export EMAIL_PASSWORD=<SMTP Email Password>
 export EMAIL_PORT=<STMP Email Port>
@@ -130,9 +137,10 @@ export EMAIL_HOST=<SMTP Email Host>
 export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 ```
 
+> For DoltLab version <= `v0.8.4` include `export POSTGRES_USER="dolthubapi"` and rename `DOLT_PASSWORD` to `POSTGRES_PASSWORD`.
+
 `HOST_IP` should be the IP address or DNS name of the Linux host running DoltLab.<br/>
-`POSTGRES_PASSWORD` and `DOLTHUBAPI_PASSWORD` may be set to any valid PostgreSQL password.<br/>
-`POSTGRES_USER` _must_ be "dolthubapi".<br/>
+`DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` may be set to any valid Dolt password.<br/>
 `EMAIL_USERNAME` should be a valid username authorized to use existing SMTP server.<br/>
 `EMAIL_PASSWORD` should be the password for the aforementioned username of the SMTP server.<br/>
 `EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
@@ -176,13 +184,13 @@ The running DoltLab processes can be viewed with `docker ps`:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                             COMMAND                  CREATED      STATUS      PORTS                                                                                     NAMES
-c1087c9f6004   public.ecr.aws/dolthub/doltlab/dolthub-server:v0.3.1              "docker-entrypoint.s…"   9 days ago   Up 9 days   3000/tcp                                                                                  doltlab_doltlabui_1
-a63aade4a36e   public.ecr.aws/dolthub/doltlab/dolthubapi-graphql-server:v0.3.1   "docker-entrypoint.s…"   9 days ago   Up 9 days   9000/tcp                                                                                  doltlab_doltlabgraphql_1
-5b2cad62d4e5   public.ecr.aws/dolthub/doltlab/dolthubapi-server:v0.3.1           "/app/go/services/do…"   9 days ago   Up 9 days                                                                                             doltlab_doltlabapi_1
-e6268950f987   public.ecr.aws/dolthub/doltlab/doltremoteapi-server:v0.3.1        "/app/go/services/do…"   9 days ago   Up 9 days   0.0.0.0:100->100/tcp, :::100->100/tcp, 0.0.0.0:50051->50051/tcp, :::50051->50051/tcp      doltlab_doltlabremoteapi_1
-52f39c016537   public.ecr.aws/dolthub/doltlab/fileserviceapi-server:v0.3.1       "/app/go/services/fi…"   9 days ago   Up 9 days                                                                                             doltlab_doltlabfileserviceapi_1
-0f952e7c7007   envoyproxy/envoy-alpine:v1.18-latest                              "/docker-entrypoint.…"   9 days ago   Up 9 days   0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:4321->4321/tcp, :::4321->4321/tcp, 10000/tcp   doltlab_doltlabenvoy_1
-204e0274798b   public.ecr.aws/dolthub/doltlab/postgres-server:v0.3.1             "docker-entrypoint.s…"   9 days ago   Up 9 days   5432/tcp                                                                                  doltlab_doltlabdb_1
+c691644170a0   public.ecr.aws/doltlab/dolthub-server:v1.0.0              "docker-entrypoint.s…"   2 hours ago     Up 2 hours               3000/tcp                                                                                                                                                                    doltlab_doltlabui_1
+47e6a04d4187   public.ecr.aws/doltlab/dolthubapi-graphql-server:v1.0.0   "docker-entrypoint.s…"   2 hours ago     Up 2 hours               9000/tcp                                                                                                                                                                    doltlab_doltlabgraphql_1
+6123d50a3306   public.ecr.aws/doltlab/dolthubapi-server:v1.0.0           "/app/go/services/do…"   2 hours ago     Up 2 hours                                                                                                                                                                                           doltlab_doltlabapi_1
+85bd6dc8166c   public.ecr.aws/doltlab/doltremoteapi-server:v1.0.0        "/app/go/services/do…"   2 hours ago     Up 2 hours               0.0.0.0:50051->50051/tcp, :::50051->50051/tcp                                                                                                                               doltlab_doltlabremoteapi_1
+cc4000a24ea0   public.ecr.aws/doltlab/fileserviceapi-server:v1.0.0       "/app/go/services/fi…"   2 hours ago     Up 2 hours                                                                                                                                                                                           doltlab_doltlabfileserviceapi_1
+c1faa01b05ce   public.ecr.aws/doltlab/dolt-sql-server:v1.0.0             "tini -- docker-entr…"   2 hours ago     Up 2 hours               3306/tcp, 33060/tcp                                                                                                                                                         doltlab_doltlabdb_1
+9d6826cfb0c3   envoyproxy/envoy-alpine:v1.18-latest                                                    "/docker-entrypoint.…"   2 hours ago     Up 2 hours               0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:100->100/tcp, :::100->100/tcp, 0.0.0.0:4321->4321/tcp, :::4321->4321/tcp, 0.0.0.0:7770->7770/tcp, :::7770->7770/tcp, 10000/tcp   doltlab_doltlabenvoy_1
 ```
 
 And navigating to `http://${HOST_IP}:80` in a web browser should show the DoltLab homepage.
