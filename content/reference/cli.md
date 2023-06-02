@@ -427,7 +427,7 @@ dolt commit [options]
 
 Stores the current contents of the staged tables in a new commit along with a log message from the user describing the changes.
 
-The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified files must be \"added\").
+The content to be added can be specified by using dolt add to incrementally \"add\" changes to the staged tables before using the commit command (Note: even modified tables must be \"added\").
 
 The log message can be added with the parameter `-m <msg>`.  If the `<-m>` parameter is not provided an editor will be opened where you can review the commit and provide a log message.
 
@@ -1759,7 +1759,7 @@ By default this command uses the dolt database in the current working directory,
 Runs a single query and exits.
 
 `-r`, `--result-format`:
-How to format result output. Valid values are tabular, csv, json, vertical. Defaults to tabular.
+How to format result output. Valid values are tabular, csv, json, vertical, and parquet. Defaults to tabular.
 
 `-s`, `--save`:
 Used with --query, save the query to the query catalog with the name provided. Saved queries can be examined in the dolt_query_catalog system table.
@@ -1776,29 +1776,11 @@ Used with --query and --save, saves the query with the descriptive message given
 `-b`, `--batch`:
 Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
 
-`--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
-
-`--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead
-
-`--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
-
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
 
 `-f`, `--file`:
 Execute statements from the file given.
-
-`--privilege-file`:
-Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
-
-`--branch-control-file`:
-Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
-
-`-u`, `--user`:
-Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
 
 
@@ -1927,6 +1909,7 @@ This is an example yaml configuration file showing all supported items and their
 	  autocommit: true
 	  persistence_behavior: load
 	  disable_client_multi_statements: false
+	  dolt_transaction_commit: false
 	
 	user:
 	  name: ""
@@ -1964,11 +1947,13 @@ This is an example yaml configuration file showing all supported items and their
 
 SUPPORTED CONFIG FILE FIELDS:
 
-`vlog_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
+`log_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
 `behavior.read_only`: If true database modification is disabled
 
 `behavior.autocommit`: If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
+
+`behavior.dolt_transaction_commit`: If true all SQL transaction commits will automatically create a Dolt commit, with a generated commit message. This is useful when a system working with Dolt wants to create versioned data, but doesn't want to directly use Dolt features such as dolt_commit(). 
 
 `user.name`: The username that connections should use for authentication
 
@@ -2265,6 +2250,7 @@ Imports data into a dolt table
 ```bash
 dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue]  [--quiet] [--disable-fk-checks] [--file-type <type>] <table> <file>
 dolt table import -u [--map <file>] [--continue] [--quiet] [--file-type <type>] <table> <file>
+dolt table import -a [--map <file>] [--continue] [--quiet] [--file-type <type>] <table> <file>
 dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
 ```
 
@@ -2276,13 +2262,15 @@ The schema for the new table can be specified explicitly by providing a SQL sche
 
 If `--update-table | -u` is given the operation will update `<table>` with the contents of file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
-During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--quiet` flag to prevent the import utility from printing all the skipped rows. 
+If `--append-table | -a` is given the operation will add the contents of the file to `<table>`, without modifying any of the rows of `<table>`. If the file contains a row that matches the primary key of a row already in the table, the import will be aborted unless the --continue flag is used (in which case that row will not be imported.) The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
 If `--replace-table | -r` is given the operation will replace `<table>` with the contents of the file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
 If the schema for the existing table does not match the schema for the new file, the import will be aborted by default. To overwrite both the table and the schema, use `-c -f`.
 
 A mapping file can be used to map fields between the file being imported and the table being written to. This can be used when creating a new table, or updating or replacing an existing table.
+
+During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--quiet` flag to prevent the import utility from printing all the skipped rows. 
 
 A mapping file is json in the format:
 
@@ -2319,6 +2307,9 @@ Create a new table, or overwrite an existing table (with the -f flag) from the i
 
 `-u`, `--update-table`:
 Update an existing table with the imported data.
+
+`-a`, `--append-table`:
+Require that the operation will not modify any rows in the table.
 
 `-f`, `--force`:
 If a create operation is being executed, data already exists in the destination, the force flag will allow the target to be overwritten.
