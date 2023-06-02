@@ -9,6 +9,7 @@ title: Dolt SQL Procedures
   - [dolt_backup()](#dolt_backup)
   - [dolt_branch()](#dolt_branch)
   - [dolt_checkout()](#dolt_checkout)
+  - [dolt_cherry_pick()](#dolt_cherry_pick)
   - [dolt_clean()](#dolt_clean)
   - [dolt_clone()](#dolt_clone)
   - [dolt_commit()](#dolt_commit)
@@ -235,6 +236,110 @@ CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
 CALL DOLT_CHECKOUT('main');
+```
+
+## `DOLT_CHERRY_PICK()`
+
+Apply the changes introduced by an existing commit.
+
+Apply changes from existing commit and creates a new commit from the current HEAD.
+
+Works exactly like [`dolt cherry-pick` command](../../cli.md#dolt-cherry-pick) on the CLI, 
+and has the same notes and limitations.
+
+```sql
+CALL DOLT_CHERRY_PICK('my-existing-branch~2');
+CALL DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');
+```
+
+### Options
+
+No options for this procedure.
+
+### Example
+
+For the below example consider the following set up of `main` and `mybranch` branches:
+
+```sql
+-- Checkout main branch
+CALL DOLT_CHECKOUT('main');
+
+-- View a log of commits
+SELECT commit_hash, message FROM dolt_log;
++----------------------------------+----------------------------+
+| commit_hash                      | message                    |
++----------------------------------+----------------------------+
+| 7e2q0hibo2m2af874i4e7isgnum74j4m | create a new table         |
+| omuqq67att6vfnka94drdallu4983gnr | Initialize data repository |
++----------------------------------+----------------------------+
+2 rows in set (0.00 sec)
+
+-- View the table
+SELECT * FROM mytable;
+Empty set (0.00 sec)
+
+-- Checkout new branch
+CALL DOLT_CHECKOUT('mybranch');
+
+-- View a log of commits
+SELECT commit_hash, message FROM dolt_log;
++----------------------------------+----------------------------+
+| commit_hash                      | message                    |
++----------------------------------+----------------------------+
+| 577isdjbq1951k2q4dqhli06jlauo51p | add 3, 4, 5 to the table   |
+| k318tpmqn4l97ofpaerato9c3m70lc14 | add 1, 2 to the table      |
+| 7e2q0hibo2m2af874i4e7isgnum74j4m | create a new table         |
+| omuqq67att6vfnka94drdallu4983gnr | Initialize data repository |
++----------------------------------+----------------------------+
+4 rows in set (0.00 sec)
+
+-- View the table
+SELECT * FROM mytable;
++---+
+| a |
++---+
+| 1 |
+| 2 |
+| 3 |
+| 4 |
+| 5 |
++---+
+5 rows in set (0.00 sec)
+```
+
+We want to cherry-pick only the change introduced in commit hash `'k318tpmqn4l97ofpaerato9c3m70lc14'`, which inserts `1` and `2` to the table. Specifying `'mybranch~1'` instead of the commit hash also works.
+
+```sql
+-- Checkout main branch
+CALL DOLT_CHECKOUT('main');
+
+-- Cherry-pick the commit
+CALL DOLT_CHERRY_PICK('k318tpmqn4l97ofpaerato9c3m70lc14');
++----------------------------------+
+| hash                             |
++----------------------------------+
+| mh518gdgbsut8m705b7b5rie9neq9uaj |
++----------------------------------+
+1 row in set (0.02 sec)
+
+mydb> SELECT * FROM mytable;
++---+
+| a |
++---+
+| 1 |
+| 2 |
++---+
+2 rows in set (0.00 sec)
+
+mydb> SELECT commit_hash, message FROM dolt_log;
++----------------------------------+----------------------------+
+| commit_hash                      | message                    |
++----------------------------------+----------------------------+
+| mh518gdgbsut8m705b7b5rie9neq9uaj | add 1, 2 to the table      |
+| 7e2q0hibo2m2af874i4e7isgnum74j4m | create a new table         |
+| omuqq67att6vfnka94drdallu4983gnr | Initialize data repository |
++----------------------------------+----------------------------+
+3 rows in set (0.00 sec)
 ```
 
 ## `DOLT_CLEAN()`
