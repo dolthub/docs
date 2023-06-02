@@ -12,14 +12,24 @@ title: Offline First
 
 # Dolt solves this by…
 
-Clone, push, pull, and fetch to manage decentralized collaboration between nodes.
-Sync only considers the differences.
-Data conflicts allow your application to recover.
+Dolt brings Git-style decentralization to the SQL database. Just like Git is ideal in no connectivity environments when dealing with files, Dolt is ideal in low connectivity environments when dealing with tables. Most large scale data is stored in tables.
+
+With Dolt you write to the database disconnected. You can have a fully functioning offline application that uses the exact same software and models it would use if it were a standard centralized SQL database.
+
+When it is safe to connect to the internet, Dolt computes the difference between what you have and what a peer database has and only sends these differences both ways. This synchronization process is very efficient, effectively allowing you to get the most information possible in and out in the shortest amount of time. Once the synchronization is complete, go back to disconnected. You and the peer now share a synchronized view with complete, auditable edit history.
+
+Conflicting writes are surfaced quickly and an operator or software can take additional action to resolve.
+
+You get all this with the familiar capabilities and performance of a SQL database.
 
 # Companies Doing This
 
-Be the first.
+Be the first
 
 # Case Studies
 
 Let us know if you would like us to feature your use of Dolt for data sharing here.
+
+# Other Related Articles
+
+[Dolt for Military Applications](https://www.dolthub.com/blog/2022-03-07-dolt-military/)
