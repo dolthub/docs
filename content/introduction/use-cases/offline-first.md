@@ -10,7 +10,7 @@ title: Offline First
 * What are you going to do if you detect them?
 * Would the Git model of clone, push, and pull on your data help?
 
-# Dolt fixes this by…
+# Dolt solves this by…
 
 Clone, push, pull, and fetch to manage decentralized collaboration between nodes.
 Sync only considers the differences.

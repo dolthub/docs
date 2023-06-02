@@ -10,7 +10,7 @@ title: Version Control Your Application
 * Do you want to expose audit log functionality in your application?
 * Do you want to expose rollback functionality in your application?
 
-# Dolt fixes this by…
+# Dolt solves this by…
 
 Dolt gives you branch, diff, and merge at the database layer. 
 
@@ -18,7 +18,7 @@ Better than slowly changing dimension or soft deletes.
 
 # Companies Doing This
 
-[Threekit](https://www.threekit.com/), [Network To Code](https://www.networktocode.com/), [FJA](https://www.fja.com/)
+[Threekit](https://www.threekit.com/), [Network To Code](https://www.networktocode.com/), [FJA](https://www.fja.com/), [Idearoom](https://www.idearoom.com/)
 
 # Case Studies
 

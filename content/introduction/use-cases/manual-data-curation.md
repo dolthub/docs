@@ -9,7 +9,7 @@ title: Manual Data Curation
 * Are bad data changes causing production issues? 
 * Would human review of cell-level data changes help?
 
-# Dolt fixes this by…
+# Dolt solves this by…
 
 Treat that spreadsheet like code. 
 Create a database on DoltHub. 

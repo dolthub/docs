@@ -20,7 +20,7 @@ If an operator makes a bad query, runs a bad script, or makes a bad deployment, 
 
 Moreover, Dolt can be added to your serving path as a read-only MySQL replica, so you know that it is always in sync with your primary. Your disaster recovery instance can serve production traffic so you always know it's working.
 
-Clone for development
+Additionally, a Dolt replica can be easily cloned (ie. copied) to a developer's machine for debugging purposes. See a data issue in production? Debug locally on your laptop safely.
 
 # Companies Doing this
 
