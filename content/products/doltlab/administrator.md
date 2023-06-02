@@ -31,9 +31,9 @@ DoltLab's source code is currently closed, but you can file DoltLab issues or vi
 
 <h1 id="backup-restore-volumes">Backup and Restore Volumes</h1>
 
-DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#back-up-restore-or-migrate-data-volumes), with the exception of DoltLab's postgres server. To backup the postgres server we recommend dumping the database with `pg_dump` and restoring the database from the dump using `psql`.
+DoltLab currently persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#back-up-restore-or-migrate-data-volumes), with the exception of DoltLab's PostgreSQL server. DoltLab <= `v0.8.4` uses PostgreSQL as its database and DoltLab `v1.0.0`+ uses Dolt. To backup the PostgreSQL server we recommend dumping the database with `pg_dump` and restoring the database from the dump using `psql`. To backup the Dolt server we recommend using Docker's volume backup and restore process, or Dolt's built-in backup and restore features.
 
-<h2 id="backup-restore-remote-data-user-data"><ins>Backing Up and Restoring Remote Data and User Uploaded Data</ins></h2>
+<h2 id="backup-restore-remote-data-user-data-dolt-server-data"><ins>Backing Up and Restoring Remote Data, User Uploaded Data, and Dolt Server data with Docker</ins></h2>
 
 To backup DoltLab's remote data, the database data for all database on a given DoltLab instance, leave DoltLab's services up and run:
 
@@ -53,6 +53,22 @@ docker run --rm --volumes-from doltlab_doltlabfileserviceapi_1 -v $(pwd):/backup
 
 This will create a tar file called `user-uploaded-data.tar` in your working directory.
 
+To backup Dolt server data, run:
+
+```bash
+# backup Dolt's root volume
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/doltlabdb-root.tar /.dolt
+
+# backup Dolt's config volume
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/doltlabdb-configs.tar /etc/dolt
+
+# backup Dolt's data volume
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/doltlabdb-data.tar /var/lib/dolt
+
+# backup Dolt's local backup volume
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu tar cvf /backup/doltlabdb-backups.tar /backups
+```
+
 Before restoring DoltLab's volumes from a backup, first, stop the running DoltLab services, `prune` the Docker containers, and remove the old volume(s):
 
 ```bash
@@ -69,9 +85,23 @@ docker volume rm doltlab_doltlab-remote-storage
 
 # remove the user uploaded data
 docker volume rm doltlab_doltlab-user-uploads
+
+# remove the Dolt server root volume
+docker volume rm doltlab_doltlabdb-dolt-root
+
+# remove the Dolt server config volume
+docker volume rm doltlab_doltlabdb-dolt-configs
+
+# remove the Dolt server data volume
+docker volume rm doltlab_doltlabdb-dolt-data
+
+# remove the Dolt server local backups volume
+docker volume rm doltlab_doltlabdb-dolt-backups
 ```
 
-Next, [start DoltLab's services](./installation.md#start-doltlab) using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `remote-data.tar` backup file and run:
+Next, [start DoltLab's services](./installation.md#start-doltlab) using the `start-doltlab.sh` script. After the script completes, stop DoltLab once more with `docker-compose stop`. Doing this will recreate the required containers so that their volumes can be updated with the commands below.
+
+Once the services are stopped, `cd` into the directory containing the `remote-data.tar` backup file and run:
 
 ```bash
 # restore remote data from tar
@@ -85,9 +115,39 @@ To restore user uploaded data, `cd` into the directory containing `user-uploaded
 docker run --rm --volumes-from doltlab_doltlabfileserviceapi_1 -v $(pwd):/backup ubuntu bash -c "cd /doltlab-user-uploads && tar xvf /backup/user-uploaded-data.tar --strip 1"
 ```
 
+To restore Dolt server root data, `cd` into the directory containing `doltlabdb-root.tar` and run:
+
+```bash
+# restore Dolt server root data from tar
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu bash -c "cd /.dolt && tar xvf /backup/doltlabdb-root.tar --strip 1"
+```
+
+To restore Dolt server config data, `cd` into the directory containing `doltlabdb-configs.tar` and run:
+
+```bash
+# restore Dolt server config data from tar
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu bash -c "cd /etc/dolt && tar xvf /backup/doltlabdb-configs.tar --strip 2"
+```
+
+To restore Dolt server data, `cd` into the directory containing `doltlabdb-data.tar` and run:
+
+```bash
+# restore Dolt server data from tar
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu bash -c "cd /var/lib/dolt && tar xvf /backup/doltlabdb-data.tar --strip 3"
+```
+
+To restore Dolt server local backup data, `cd` into the directory containing `doltlabdb-backups.tar` and run:
+
+```bash
+# restore Dolt server local backups data from tar
+docker run --rm --volumes-from doltlab_doltlabdb_1 -v $(pwd):/backup ubuntu bash -c "cd /backups && tar xvf /backup/doltlabdb-backups.tar --strip 1"
+```
+
+You can now restart DoltLab, and should see all data restored from the `tar` files.
+
 <h2 id="backup-restore-postgres-data"><ins>Backing Up and Restoring PostgreSQL Data</ins></h2>
 
-For backing up data from DoltLab's postgres server, we recommend executing a data dump with `pg_dump`. To do so, keep DoltLab's services up and run:
+For DoltLab versions <= `v0.8.4`, to backup data from DoltLab's postgres server, we recommend executing a data dump with `pg_dump`. To do so, keep DoltLab's services up and run:
 
 > For DoltLab `v0.7.0` and later, use `--network doltlab` below.
 
@@ -141,9 +201,70 @@ SET session_replication_role = replica;
 docker run --rm --network doltlab_doltlab -e PGPASSWORD=<POSTGRES_PASSWORD> -v $(pwd):/doltlab-db-dumps postgres:13-bullseye bash -c "psql --host=doltlab_doltlabdb_1 --port=5432 --username=dolthubadmin dolthubapi < /doltlab-db-dumps/postgres-dump.sql"
 ```
 
+<h2 id="backup-restore-dolt-server-backup"><ins>Backing Up and Restoring Dolt Server with `dolt backup`</ins></h2>
+
+DoltLab `v1.0.0`+ uses Dolt as its database. To back up the Dolt server of DoltLab using Dolt's built-in backup and restore features, keep DoltLab's services up and open a connection to the database. The quickest way to do this is with the `./shell-db.sh` script included with DoltLab:
+
+```bash
+DOLT_PASSWORD=<DOLT_PASSWORD> ./shell-db.sh
+...
+mysql>
+```
+
+Next, add a local backup using the `DOLT_BACKUP()` stored procedure. By default, DoltLab uses a Docker volume backed by the host's disk that allows you to create backups of the Dolt server. These backups will be located at `/backups` from within the Dolt server container. To create persistent backups, simply use `/backups` as the path prefix to the backup names:
+
+```bash
+mysql> call dolt_backup('add', 'local-backup', 'file:///backups/dolthubapi/2023/06/01');
++---------+
+| success |
++---------+
+|       1 |
++---------+
+1 row in set (0.00 sec)
+```
+
+The above snippet will create a new backup stored at `/backups/dolthubapi/2023/06/01` within the Dolt server container, and persisted to the host using the Docker volume `doltlab_doltlabdb-dolt-backups`.
+
+You can sync the backup with the `sync` command:
+
+```bash
+mysql> call dolt_backup('sync', 'local-backup');
++---------+
+| success |
++---------+
+|       1 |
++---------+
+1 row in set (0.00 sec)
+```
+
+The local backup is now synced, and you can now disconnect the shell.
+
+At the time of this writing, Dolt only supports restoring backups using the CLI. To restore the Dolt server from a local backup, stop DoltLab's services using `docker-compose stop`.
+Then, use the `./dolt_db_cli.sh` included with DoltLab to open a container shell with access to the Dolt server volumes.
+
+Delete the existing `./dolthubapi` directory located at `/var/lib/dolt` from within this container:
+
+```bash
+./dolt_db_cli.sh 
+root:/var/lib/dolt# ls
+dolthubapi
+root:/var/lib/dolt# rm -rf dolthubapi/
+```
+
+Doing this removes the existing Dolt server database. Now, use [dolt backup restore](https://docs.dolthub.com/cli-reference/cli#dolt-backup) to restore the database from the backup located at `/backups/dolthubapi/2023/06/01`:
+
+```bash
+root:/var/lib/dolt# dolt backup restore file:///backups/dolthubapi/2023/06/01 dolthubapi
+
+root:/var/lib/dolt# ls
+dolthubapi
+```
+
+The database has now been successfully restored, and you can now restart DoltLab.
+
 <h1 id="send-service-logs">Send Service Logs to DoltLab Team</h1>
 
-DoltLab is comprised of [multiple services](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/) running in a single Docker network via Docker compose. Logs for a particular service can be viewed using the `docker logs <container name>` command. For example, to view to logs of `doltlabapi` service, run:
+DoltLab is composed of [multiple services](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/) running in a single Docker network via Docker compose. Logs for a particular service can be viewed using the `docker logs <container name>` command. For example, to view to logs of `doltlabapi` service, run:
 
 ```bash
 docker logs doltlab_doltlabapi_1
@@ -171,6 +292,29 @@ Upgrading to newer versions of DoltLab requires downtime. This means that DoltLa
 In addition, some early versions have different database schemas than newer ones. If the docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab Admins can simply remove these Docker volumes and run the `start-doltlab.sh` script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
+
+<h2 id="upgrade-v084-v100"><ins>Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code></ins></h2>
+
+DoltLab `v0.8.4` is the final version of DoltLab released using PostgreSQL as the database backing DoltLab's API. Starting with DoltLab `v1.0.0`, DoltLab runs on Dolt.
+
+If your current DoltLab instance is older than `v0.8.4`, you must first upgrade to this version _before_ upgrading to DoltLab `v1.0.0`. This ensures your DoltLab instance contains the necessary schema changes required to run the database migration script included with DoltLab `v1.0.0` called `./migrate_postgres_dolt.sh`.
+
+`./migrate_postgres_dolt.sh` will copy all existing PostgreSQL data from your old DoltLab instance into DoltLab `v1.0.0`'s Dolt database.
+
+Let's walkthrough how to perform this upgrade and database migration with an example.
+
+On a host running DoltLab `v0.8.4`, we first stop DoltLab with `docker-compose stop`. Next, we download and unzip DoltLab `v1.0.0` to the same location as the previous version of DoltLab.
+
+Before running the migration script, we will start DoltLab `v1.0.0` for the first time using the `./start-doltlab.sh` script, then once DoltLab is started, shut it back down. Doing this quick, start-then-stop will create the new Docker volumes required for running DoltLab `v1.0.0` and the migration script. Now, we can run `./migrate_postgres_dolt.sh` included with DoltLab `v1.0.0` and supply the environment variable values we used for our DoltLab `v0.8.4` instance. This script will automatically move our data from PostgreSQL to Dolt:
+
+```bash
+POSTGRES_PASSWORD=<POSTGRES_PASSWORD> \
+DOLT_PASSWORD=<DOLT_PASSWORD> \
+DOLTHUBAPI_PASSWORD=<DOLTHUBAPI_PASSWORD> \
+./migrate_postgres_dolt.sh
+```
+
+Once the script completes, DoltLab `v1.0.0` can be started and all data from `v0.8.4` will be present.
 
 <h2 id="upgrade-v060-v070"><ins>Upgrade from DoltLab <code>v0.6.0</code> to <code>v0.7.0+</code></ins></h2>
 
