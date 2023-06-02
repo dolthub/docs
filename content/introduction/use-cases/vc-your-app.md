@@ -12,9 +12,15 @@ title: Version Control Your Application
 
 # Dolt solves this by…
 
-Dolt gives you branch, diff, and merge at the database layer. 
+If you have an application that would benefit from branches, merges, diffs, logs, and human review of changes, you can use Dolt to power that application. Dolt gives you branch, diff, and merge at the database layer. 
 
-Better than slowly changing dimension or soft deletes.
+Programmatically access git functionality via procedures, system tables, and functions. Programmatic control of git operations combined with the ability to use standard SQL creates the ideal foundation to add version control to your application.
+
+Dolt ships with standard RDBMS tools like replication and backups. Run Dolt with a hot standby and failover just like MySQL or Postgres.
+
+Hosted Dolt is a hosted version of Dolt that works like AWS RDS. Let us worry about operating Dolt in the cloud. Write your application against a cloud endpoint.
+
+In the past applications that needed these features required slowly changing dimension or soft deletes. These approaches are cumbersome and do not support merge. Dolt gives application the full developemnt power of Git.
 
 # Companies Doing This
 
