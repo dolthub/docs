@@ -29,4 +29,6 @@ This use case is particularly popular in video games where much of the game func
 
 Let us know if you would like us to feature your use of Dolt for configuration management here.
 
+# Other Related Articles
 
+[Version control for Video Game Development using Dolt](https://www.dolthub.com/blog/?q=game)

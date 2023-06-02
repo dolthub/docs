@@ -28,3 +28,7 @@ If you're not ready to switch your primary database to Dolt to get its audit cap
 
 Let us know if you would like us to feature your use of Dolt for audit here.
 
+# Other Related Articles
+
+[So you want an Immutable database](https://www.dolthub.com/blog/2022-03-21-immutable-database/)
+[So you want Soft Deletes?](https://www.dolthub.com/blog/2022-11-03-soft-deletes/)
