@@ -17,7 +17,7 @@
   - [Versioned MySQL Replica](introduction/getting-started/versioned-mysql-replica.md)
 - [Use Cases](introduction/use-cases.md)
   - [Data Sharing](introduction/use-cases/data-sharing.md)
-  - [Data and Model Quality Control](introduction/use-cases/better-data-and-models.md)
+  - [Data and Model Quality Control](introduction/use-cases/data-and-model-quality.md)
   - [Manual Data Curation](introduction/use-cases/manual-data-curation.md)
   - [Version Control for your Application](introduction/use-cases/vc-your-app.md)
   - [Versioned MySQL Replica](introduction/use-cases/versioned-replica.md)
