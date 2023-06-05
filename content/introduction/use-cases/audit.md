@@ -22,7 +22,7 @@ If you're not ready to switch your primary database to Dolt to get its audit cap
 
 # Companies Doing This
 
-[FJA](https://www.fja.com/)
+* [FJA](https://www.fja.com/)
 
 # Case Studies
 
