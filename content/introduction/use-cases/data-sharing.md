@@ -26,7 +26,8 @@ Dolt and DoltHub are also great if vendors share data with you. When you receive
 
 # Companies Doing This
 
-[Bitfinex](https://www.bitfinex.com/), [KAPSARC](https://www.kapsarc.org/)
+* [Bitfinex](https://www.bitfinex.com/) 
+* [KAPSARC](https://www.kapsarc.org/)
 
 # Case Studies
 

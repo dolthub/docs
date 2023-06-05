@@ -10,10 +10,6 @@ Dolt really shines when your database can benefit from [branches](../concepts/do
 
 Other customers use Dolt to [manage video game configuration](./use-cases/configuration-management.md), [get an immutable audit log of changes to their database](./use-cases/audit.md), [build reproducibility into machine learning models](./use-cases/data-and-model-quality.md), [ensure data quality using a pull request workflow](./use-cases/manual-data-curation.md), and much more. 
 
-Eventually, we think people will realize that all SQL databases should be version controlled to prevent data loss and make development easier, much the same way we think all code should be version controlled. Dolt compares favorably  on [performance](../reference/sql/benchmarks/latency.md) and [correctness](../reference/sql/benchmarks/correctness.md), as we signalled with [Dolt 1.0](https://www.dolthub.com/blog/2023-05-05-dolt-1-dot-0/).
-
-Until every database is version controlled, we can dive deep into the following use cases.
-
 1. [Data Sharing](introduction/use-cases/data-sharing.md)
 2. [Data and Model Quality Control](introduction/use-cases/better-data-and-models.md)
 3. [Manual Data Curation](introduction/use-cases/manual-data-curation.md)

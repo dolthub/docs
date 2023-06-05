@@ -20,8 +20,6 @@ When it is safe to connect to the internet, Dolt computes the difference between
 
 Conflicting writes are surfaced quickly and an operator or software can take additional action to resolve.
 
-You get all this with the familiar capabilities and performance of a SQL database.
-
 # Companies Doing This
 
 Be the first
