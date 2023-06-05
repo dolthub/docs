@@ -19,7 +19,13 @@ Dolt is a MySQL compatible database so exporting the manually created data to pr
 
 # Companies Doing This
 
-[Annalise](https://usa.annalise.ai/), [Briya](https://briya.com/), [Aktify](https://aktify.com/), [Blonk Sustainability](https://blonksustainability.nl/), [IMTF](https://imtf.com/), [Lumicks](https://lumicks.com/), [Merkle Science](https://www.merklescience.com/)
+* [Annalise](https://usa.annalise.ai/)
+* [Briya](https://briya.com/)
+* [Aktify](https://aktify.com/) 
+* [Blonk Sustainability](https://blonksustainability.nl/)
+* [IMTF](https://imtf.com/)
+* [Lumicks](https://lumicks.com/)
+* [Merkle Science](https://www.merklescience.com/)
 
 # Case Studies
 
