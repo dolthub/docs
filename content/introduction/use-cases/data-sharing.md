@@ -16,13 +16,13 @@ title: Data Sharing
 
 # Dolt solves this by…
 
-Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data sharing. 
+Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data. 
 
-Dolt is the world's first version controlled SQL database. Git-style version control allows for decentralized, asynchronous collaboration. Every person gets their own copy of the database to read and write. DoltHub allows you to coordinate collaboration over the internet with permissions, human review, forks and all the other distributed collaboration tools you are used to from GitHub.
+Dolt is the world's first version controlled SQL database. Git-style version control allows for decentralized, asynchronous collaboration. Every person gets their own copy of the database to read and write. DoltHub allows you to coordinate collaboration over the internet with [permissions](../../concepts/dolthub/permissions.md), [human review](../../concepts/dolthub/prs.md), [forks](../../concepts/dolthub/forks.md) and all the other distributed collaboration tools you are used to from GitHub.
 
 Dolt and DoltHub is the best way to share data with customers. Use versions to satisfy both slow and fast upgrading consumers. Let your customers help make your data better. Versions offer better debugging information. Version X works but version Y doesn't. Your customers can even make changes and submit data patches for your review, much like open source.
 
-Dolt and DoltHub are also great if vendors share data with you. When you receive data from a vendor, import the data into Dolt. Examine the diff, either with the human eye or programmatically, before putting the data into production. You can now build integration tests for vendor data. If there's a problem, never merge the import branch into main or roll the change back if a bug was discovered in production. Use the problematic diff to debug with your vendor. The same tools you have for software dependencies, you now have for data dependencies.
+Dolt and DoltHub are also great if vendors share data with you. When you receive data from a vendor, import the data into Dolt. Examine the diff, either with the human eye or programmatically, before putting the data into production. You can now build integration tests for vendor data. If there's a problem, never [merge](../../concepts/dolt/git/merge.md) the import [branch](../../concepts/dolt/git/branch.md) into main or roll the change back if a bug was discovered in production. Use the problematic [diff](../../concepts/dolt/git/diff.md) to debug with your vendor. The same tools you have for software dependencies, you now have for data dependencies.
 
 # Companies Doing This
 

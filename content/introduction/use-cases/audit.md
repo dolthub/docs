@@ -12,9 +12,9 @@ title: Audit
 
 # Dolt solves this by…
 
-Dolt provides a built-in, queryable audit log of every cell in your database. Whenever a [Dolt commit](../../concepts/dolt/git/commits.md) is created, the user, time, and optional commit message are recorded along with the data that changed. These commits form an immutable log of changes to every cell in your database going back to inception. 
+Dolt provides a built-in, queryable audit log of every cell in your database. Whenever a [Dolt commit](../../concepts/dolt/git/commits.md) is created, the user, time, and optional commit message are recorded along with the data that changed. These commits form an [immutable log of changes](../../concepts/dolt/git/log.md) to every cell in your database going back to inception. 
 
-Dolt stores these efficiently by [sharing data that hasn't changed between all commits referencing that data](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/). Effectively, only the differences are stored between versions of the data. 
+Dolt stores these changes efficiently by [sharing data that hasn't changed between all commits referencing that data](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/). Effectively, only the differences are stored between versions of the data. 
 
 The audit log created between commits is queryable via standard SQL using custom Dolt [system tables](../../reference/sql/version-control/dolt-system-tables.md) and [functions](../../reference/sql/version-control/dolt-sql-functions.md). The results can be filtered and joined using other data in your database. 
 

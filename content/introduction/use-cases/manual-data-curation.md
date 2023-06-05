@@ -11,9 +11,9 @@ title: Manual Data Curation
 
 # Dolt solves this by…
 
-Dolt allows you to treat your spreadsheet like code. DoltHub and DoltLab implement a Pull Request workflow, the standard for human reviewing code changes. Extend that model to your data changes. Make changes on branches and then have the changes human reviewed. Data diffs are easily consumed by a human reviewer. Add continuous integration tests to data changes. Have dozens or hundreds of changes in flight at one time.
+Dolt allows you to treat your spreadsheet like code. DoltHub and DoltLab implement a [Pull Request workflow](../../concepts/dolthub/prs.md) on tables, the standard for human reviewing code changes. Extend that model to your data changes. Make changes on [branches](../../concepts/dolt/git/branch.md) and then have the changes human reviewed. Data diffs are easily consumed by a human reviewer. Add continuous integration tests to data changes. Have dozens or hundreds of changes in flight at one time.
 
-DoltHub and DoltLab support SQL, File Upload (CSV), and a spreadsheet editor for data modification. These interfaces are simple enough that non-technical users can make and review data changes. 
+DoltHub and DoltLab support [SQL](../../concepts/dolt/sql/README.md), File Upload (CSV), and a spreadsheet editor for data modification. These interfaces are simple enough that non-technical users can make and review data changes. 
 
 Dolt is a MySQL compatible database so exporting the manually created data to production can be as simple as cloning a copy and starting a server for you developers to connect to.
 

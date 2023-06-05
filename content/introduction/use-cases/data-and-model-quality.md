@@ -14,17 +14,19 @@ title: Data and Model Quality Control
 
 # Dolt solves this by…
 
-Traditional databases were built for a world of transactions and reports. Modern data science tools use data to create models that look more like software than reports. The version control tools we use to build software apply to modern data science. Version control for data did not exist until Dolt, the first and only database you can branch, diff, and merge just like a Git repository.
+Traditional databases were built for a world of transactions and reports. Modern data science tools use data to create models that behave more like software than reports. Models produce user visible outputs and define application behavior. Tuning data to get the right model can be a lot like writing code.
 
-Modern data science applications require model reproducibility, data quality, and multiple related versions of data to perform at their best. Dolt allows for these capabilities directly in your database, in a version control model most developers understand.
+The version control tools we use to build software apply to modern data science. Version control for data did not exist until Dolt, the first and only database you can [branch](../../concepts/dolt/git/branch.md), [diff](../../concepts/dolt/git/diff.md), and [merge](../../concepts/dolt/git/merge.md) just like a Git repository.
 
-The simplest application of Dolt is to use tags for model reproducibility. If you build a model from a version of the data, make a tag at that commit and refer to that tag in the model metadata. Some of our data and model quality control customers only use Dolt for this simple feature. Dolt shares storage between versions so you can store many more copies of the data using Dolt than say storing copies of the data in S3. 
+Modern data science applications require model reproducibility, data quality, and multiple versions of data to perform at their best. Dolt allows for these capabilities directly in your database, in a [Git-style version control model](../../concepts/dolt/git/README.md) most developers understand.
 
-Dolt allows for human or automated review on data changes increasing data quality. If a bad change makes it through review simply roll the data back to a previous version. DoltHub, DoltLab, and the Hosted Dolt Workbench all implement a Pull Request workflow, the standard for human reviewing code changes. Extend that model to your data changes.
+The simplest application of Dolt is to use for model reproducibility. If you build a model from a version of the data, make a tag at that commit and refer to that tag in the model metadata. Some of our data and model quality control customers only use Dolt for this simple feature. Dolt shares storage between versions so you can store many more copies of the data using Dolt than say storing copies of the data in S3. 
 
-Dolt is the only database with branch and merge functionality. Branches allow for long running data projects. Want to add an additional feature to a model, use production data, but you don't want the new feature effecting production model build? Make branch and run the project on that branch. Occasionally merge production data into that branch so you can stay in touch with changes there. Branches have increased the number of data projects companies using Dolt for data storage by an order of magnitude.
+Dolt allows for human or automated review on data changes increasing data quality. If a bad change makes it through review simply [roll the data back to a previous version](https://www.dolthub.com/blog/2022-09-23-dolt-rollback-options/). DoltHub, DoltLab, and the Hosted Dolt Workbench all implement [a Pull Request](../../concepts/dolthub/prs.md) workflow, the standard for human reviewing code changes. Extend that model to your data changes.
 
-Lastly, commits, logs, and diffs for can be used for model insights. Did Thursday's model perform better than Tuesday's but had the same model weights? Inspect the data diff to see what changed. Inspect the commit log to see where that new data came from.
+Dolt is the only database with [branch](../../concepts/dolt/git/branch.md) and [merge](../../concepts/dolt/git/merge.md) functionality. Branches allow for long running data projects. Want to add an additional feature to a model, use production data, but you don't want the new feature effecting production model build? Make branch and run the project on that branch. Occasionally merge production data into that branch so you can stay in touch with changes there. Companies use Dolt branches to increase the number of parallel data projects by an order of magnitude.
+
+Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dolt/git/log.md), and [diffs](../../concepts/dolt/git/diff.md) for can be used for model insights. Did Thursday's model perform better than Tuesday's but had the same model weights? Inspect the data diff to see what changed. Inspect the commit log to see where that new data came from.
 
 # Companies Doing This
 
@@ -40,3 +42,4 @@ Lastly, commits, logs, and diffs for can be used for model insights. Did Thursda
 [Upleveling Flyte’s Data Lineage Using Dolt](https://www.dolthub.com/blog/2021-06-04-flyte-dolt-plugin/)
 [Data Version Control and Dolt Reproducibility](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
 [Using Dolt to Manage Train/Test Splits](https://www.dolthub.com/blog/2020-05-11-dolt-manage-train-test-splits/)
+[So you want Data Quality Control](https://www.dolthub.com/blog/2022-11-23-data-quality-control/)
