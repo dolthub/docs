@@ -32,15 +32,11 @@ Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dol
 
 ## Unstructured files in cloud storage
 
-Most people store copies of training data or database backups in cloud storage for reproducibility.
+It is common practice to store copies of training data or database backups in cloud storage for model reproducibility. A full copy of the data is stored for every run. This can become quite expensive and limit the amount of models you can reproduce. Dolt stores only the differences between stored versions decreasing the cost of data storage. Additionally, Dolt can produce diffs between versions of training data producing novel model insights.
 
 ## MySQL, Postgres, or other databases
 
-Data in tabular form.
-
-## Spreadsheets
-
-Office 365 or Google Sheets.
+Dolt can replace any database used to store and query data. Many of our customers switch from other OLTP databases like MySQL or Postgres to improve data and model quality through versioning. Customers have also switched to Dolt from document databases like MongoDB. Dolt's additional unique features like branches, diffs, and merges allow for human review of data changes and multiple parallel data projects.
 
 # Companies Doing This
 

@@ -25,7 +25,7 @@ This use case is particularly popular in video games where much of the game func
 
 ## Files in Git
 
-Large configuration files in Git.
+Most large configuration files are stored and versioned in Git. If the files get too large they are store in cloud storage and linked to Git using [git-lfs](https://git-lfs.com/). If the files are stored in git-lfs, you lose the ability to diff the contents of the files. Dolt improves the experience by adding query capabilities and large fine-grained diffs to the data stored in configuration files. The diff and merge experience will be greatly improved in Dolt for this type of data.
 
 # Companies Doing This
 

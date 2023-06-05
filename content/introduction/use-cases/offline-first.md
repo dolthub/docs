@@ -22,9 +22,9 @@ Conflicting writes are surfaced quickly and an operator or software can take add
 
 # Dolt replaces
 
-## Syncing processes
+## Custom syncing processes
 
-Custom code on client and server resolves syncs.
+Dolt replaces custom code to synchronize your client and server. This code is complicated and hard to get right. The Git [remote](../../concepts/dolt/git/remotes.md) model of clone, fetch, push, and pull is a proven synchronization model. Dolt brings this model tyo the database allowing you to remove most of your synchronization code. 
 
 # Companies Doing This
 

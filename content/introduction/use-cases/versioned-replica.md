@@ -26,6 +26,8 @@ Additionally, a Dolt replica can be easily cloned (ie. copied) to a developer's 
 
 ## Change Data Capture
 
+
+
 # Companies Doing this
 
 * [NoCD](https://www.treatmyocd.com/)

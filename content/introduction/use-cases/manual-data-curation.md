@@ -21,7 +21,7 @@ Dolt is a MySQL compatible database so exporting the manually created data to pr
 
 ## Spreadsheets
 
-Office 365 or Google Sheets.
+Dolt replaces Excel or Google Sheets for manual data curation. Versioning features allow for more efficient asynchronous collaboration and human review of data changes. The DoltHub interface is still enough for non-technical users to contribute data changes.
 
 # Companies Doing This
 

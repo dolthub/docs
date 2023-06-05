@@ -27,6 +27,7 @@ In the past applications that needed these features required [slowly changing di
 ## Soft Deletes
 
 
+
 ## Slowly Changing Dimension
 
 
