@@ -28,6 +28,20 @@ Dolt is the only database with [branch](../../concepts/dolt/git/branch.md) and [
 
 Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dolt/git/log.md), and [diffs](../../concepts/dolt/git/diff.md) can be used for model insights. Did Thursday's model perform better than Tuesday's but had the same model weights? Inspect the data diff to see what changed. Inspect the commit log to see where that new data came from.
 
+# Dolt replaces...
+
+## Unstructured files in cloud storage
+
+Most people store copies of training data or database backups in cloud storage for reproducibility.
+
+## MySQL, Postgres, or other databases
+
+Data in tabular form.
+
+## Spreadsheets
+
+Office 365 or Google Sheets.
+
 # Companies Doing This
 
 * [Turbine](https://turbine.ai/)

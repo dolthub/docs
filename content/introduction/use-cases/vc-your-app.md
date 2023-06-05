@@ -22,6 +22,15 @@ Dolt ships with standard [RDBMS](../../concepts/dolt/rdbms/README.md) tools like
 
 In the past applications that needed these features required [slowly changing dimension](https://www.dolthub.com/blog/2021-09-17-database-version-control/) or [soft deletes](https://www.dolthub.com/blog/2022-11-03-soft-deletes/). These approaches are cumbersome and do not support merge. Dolt gives application the full development power of Git.
 
+# Dolt replaces
+
+## Soft Deletes
+
+
+## Slowly Changing Dimension
+
+
+
 # Companies Doing This
 
 [Threekit](https://www.threekit.com/), [Network To Code](https://www.networktocode.com/), [FJA](https://www.fja.com/), [Idearoom](https://www.idearoom.com/)

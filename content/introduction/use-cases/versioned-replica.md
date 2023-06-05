@@ -22,6 +22,10 @@ Moreover, Dolt can be added to your serving path as a read-only MySQL replica, s
 
 Additionally, a Dolt replica can be easily cloned (ie. copied) to a developer's machine for debugging purposes. See a data issue in production? Debug locally on your laptop safely.
 
+# Dolt replaces...
+
+## Change Data Capture
+
 # Companies Doing this
 
 * [NoCD](https://www.treatmyocd.com/)

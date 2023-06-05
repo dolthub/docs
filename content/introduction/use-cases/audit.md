@@ -20,6 +20,11 @@ The audit log created between commits is queryable via standard SQL using custom
 
 If you're not ready to switch your primary database to Dolt to get its audit capabilities, you can run MySQL as your primary and set Dolt up as [a versioned replica](../use-cases/versioned-replica.md). You lose users and commit messages but you still get a queryable log of every cell in your database.
 
+# Dolt replaces
+
+## Change Data Capture
+
+
 # Companies Doing This
 
 * [FJA](https://www.fja.com/)

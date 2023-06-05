@@ -24,6 +24,18 @@ Dolt and DoltHub is the best way to share data with customers. Use versions to s
 
 Dolt and DoltHub are also great if vendors share data with you. When you receive data from a vendor, import the data into Dolt. Examine the diff, either with the human eye or programmatically, before putting the data into production. You can now build integration tests for vendor data. If there's a problem, never [merge](../../concepts/dolt/git/merge.md) the import [branch](../../concepts/dolt/git/branch.md) into main or roll the change back if a bug was discovered in production. Use the problematic [diff](../../concepts/dolt/git/diff.md) to debug with your vendor. The same tools you have for software dependencies, you now have for data dependencies.
 
+# Dolt replaces...
+
+## Exchanging Files
+
+Emailing CSVs, FTP servers.
+
+## External APIs
+
+Great for data that does not have an API.
+
+Even for data with an API, the data can change out from under you.
+
 # Companies Doing This
 
 * [Bitfinex](https://www.bitfinex.com/) 

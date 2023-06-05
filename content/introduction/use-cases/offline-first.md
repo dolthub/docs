@@ -20,6 +20,12 @@ When it is safe to connect to the internet, Dolt computes the difference between
 
 Conflicting writes are surfaced quickly and an operator or software can take additional action to resolve.
 
+# Dolt replaces
+
+## Syncing processes
+
+Custom code on client and server resolves syncs.
+
 # Companies Doing This
 
 Be the first

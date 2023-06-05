@@ -17,6 +17,12 @@ DoltHub and DoltLab support [SQL](../../concepts/dolt/sql/README.md), File Uploa
 
 Dolt is a MySQL compatible database so exporting the manually created data to production can be as simple as cloning a copy and starting a server for your developers to connect to.
 
+# Dolt replaces...
+
+## Spreadsheets
+
+Office 365 or Google Sheets.
+
 # Companies Doing This
 
 * [Annalise](https://usa.annalise.ai/)
