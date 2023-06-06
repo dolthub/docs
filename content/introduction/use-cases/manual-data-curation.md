@@ -32,6 +32,7 @@ Dolt replaces Excel or Google Sheets for manual data curation. Versioning featur
 * [IMTF](https://imtf.com/)
 * [Lumicks](https://lumicks.com/)
 * [Merkle Science](https://www.merklescience.com/)
+* [Idearoom](https://www.idearoom.com/)
 
 # Case Studies
 
