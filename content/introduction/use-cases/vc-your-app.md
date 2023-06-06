@@ -30,7 +30,7 @@ A common technique to version your database is to use [soft deletes](https://www
 
 ## Slowly Changing Dimension
 
-A more advanced technique for versioning databases is [slowly changing dimension](https://en.wikipedia.org/wiki/Slowly_changing_dimension). Slowly Changing Dimension is similar to soft deletes. Additional database columns are added to tables to manage versioning. Dolt is slowly changing dimension on every table by default. Queries involving the slowly changing dimension become Dolt history queries against [system tables](../../reference/sql/version-control/dolt-system-tables.md). Moreover, complicated [merge](../../concepts/dolt/git/merge.md) process can happen at the database layer whereas these would need to be handled at the application layer with slowly changing dimension.
+A more advanced technique for versioning databases is [slowly changing dimension](https://en.wikipedia.org/wiki/Slowly_changing_dimension). Slowly Changing Dimension is similar to soft deletes. Additional database columns are added to tables to manage versioning. Dolt is slowly changing dimension on every table by default. Queries involving the slowly changing dimension become Dolt history queries against [system tables](../../reference/sql/version-control/dolt-system-tables.md). Moreover, complicated [merge](../../concepts/dolt/git/merge.md) processes can happen at the database layer. Merges must handled by custom code at the application layer with slowly changing dimension.
 
 # Companies Doing This
 

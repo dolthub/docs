@@ -28,11 +28,11 @@ Dolt and DoltHub are also great if vendors share data with you. When you receive
 
 ## Exchanging Files
 
-Dolt replaces exchanging flat data files like CSVs via email, FTP servers, or other file transfer techniques. Dolt allows data to maintain schema on exchange including constraints, triggers, and views. This more rich format of exchange reduces transfer errors. Dolt also allows you to change the data to fit the needs and still get updates from your source. Dolt will notify you if your changes [conflict](../../concepts/dolt/git/conflicts.md) with the source.
+Dolt replaces exchanging flat data files like CSVs via email, FTP servers, or other file transfer techniques. Dolt allows data to maintain schema on exchange including constraints, triggers, and views. This more rich format of exchange reduces transfer errors. Dolt also allows you to change the data to fit your needs and still get updates from your source. Dolt will notify you if your changes [conflict](../../concepts/dolt/git/conflicts.md) with the source.
 
 ## External APIs
 
-Dolt is ideal for sharing data that does not have an API. But even for data with an API, Dolt is often more convenient. With Dolt, you get all the data and its history. With APIs you often have to assemble the data with multiple API calls. With APIs, the data can change out from under you whereas with Dolt you can read a version of the data until you are ready to upgrade. DoltHub ships with a [SQL API](../../products/dolthub/dolthub-api/sql.md) so you can choose the data sharing solution that is right for your use case.
+Dolt is ideal for sharing data that does not have an API. But even for data with an API, Dolt is often more convenient. With Dolt, you get all the data and its history. With APIs you often have to assemble the data with multiple API calls. With APIs, the data can change out from under you, whereas with Dolt you can read a version of the data until you are ready to upgrade. DoltHub ships with a [SQL API](../../products/dolthub/dolthub-api/sql.md) so you can choose the data sharing solution that is right for your use case.
 
 # Companies Doing This
 

@@ -24,7 +24,7 @@ If you're not ready to switch your primary database to Dolt to get its audit cap
 
 ## Soft Deletes
 
-A technique to add audit capability to an existing database is to add [soft deletes](https://www.dolthub.com/blog/2022-11-03-soft-deletes/). Soft delete is the use various techniques to mark data as inactive instead of deleting it. This is strictly worse than a version controlled database for audit purposes. With soft deletes, nn operator can still modify data or the application can make mistakes. In Dolt, every write is part of the audit log.
+A technique to add audit capability to an existing database is to add [soft deletes](https://www.dolthub.com/blog/2022-11-03-soft-deletes/). Soft delete is the use various techniques to mark data as inactive instead of deleting it. This is strictly worse than a version controlled database for audit purposes. With soft deletes, an operator can still modify data or the application can make mistakes. In Dolt, every write is part of the audit log. It is far more difficult for an operator to change Dolt history.
 
 ## Change Data Capture
 

@@ -32,7 +32,7 @@ Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dol
 
 ## Unstructured files in cloud storage
 
-It is common practice to store copies of training data or database backups in cloud storage for model reproducibility. A full copy of the data is stored for every run. This can become quite expensive and limit the amount of models you can reproduce. Dolt stores only the differences between stored versions decreasing the cost of data storage. Additionally, Dolt can produce diffs between versions of training data producing novel model insights.
+It is common practice to store copies of training data or database backups in cloud storage for model reproducibility. A full copy of the data is stored for every training run. This can become quite expensive and limit the amount of models you can reproduce. Dolt stores only the differences between stored versions decreasing the cost of data storage. Additionally, Dolt can produce diffs between versions of training data producing novel model insights.
 
 ## MySQL, Postgres, or other databases
 
