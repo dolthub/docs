@@ -20,6 +20,12 @@ When it is safe to connect to the internet, Dolt computes the difference between
 
 Conflicting writes are surfaced quickly and an operator or software can take additional action to resolve.
 
+# Dolt replaces
+
+## Custom syncing processes
+
+Dolt replaces custom code to synchronize your client and server. This code is complicated and hard to get right. The Git [remote](../../concepts/dolt/git/remotes.md) model of clone, fetch, push, and pull is a proven synchronization model. Dolt brings this model to the database allowing you to remove most of your synchronization code. 
+
 # Companies Doing This
 
 Be the first
@@ -30,5 +36,5 @@ Let us know if you would like us to feature your use of Dolt for data sharing he
 
 # Other Related Articles
 
-[So you want a Decentralized database?](https://www.dolthub.com/blog/2022-05-27-decentralized-database/)
-[Dolt for Military Applications](https://www.dolthub.com/blog/2022-03-07-dolt-military/)
+* [So you want a Decentralized database?](https://www.dolthub.com/blog/2022-05-27-decentralized-database/)
+* [Dolt for Military Applications](https://www.dolthub.com/blog/2022-03-07-dolt-military/)

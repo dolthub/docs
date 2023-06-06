@@ -21,6 +21,12 @@ Dolt is an ideal solution for version controlling tabular configuration. Dolt al
 
 This use case is particularly popular in video games where much of the game functionality is modeled as configuration. Store the likelihood of an item drop or the strength of a particular enemy in Dolt tables. Review and manage changes. When the configuration is ready, use a build process to create whatever format your game needs.
 
+# Dolt replaces...
+
+## Files in Git
+
+Most large configuration files are stored and versioned in Git. If the files get too large they are store in cloud storage and linked to Git using [git-lfs](https://git-lfs.com/). If the files are stored in git-lfs, you lose the ability to diff the contents of the files. Dolt improves the experience by adding query capabilities and large fine-grained diffs to the data stored in configuration files. The diff and merge experience will be greatly improved in Dolt for this type of data.
+
 # Companies Doing This
 
 * [Scorewarrior](https://scorewarrior.com/)
@@ -32,5 +38,5 @@ Let us know if you would like us to feature your use of Dolt for configuration m
 
 # Other Related Articles
 
-[Version control for Video Game Development using Dolt](https://www.dolthub.com/blog/?q=game)
-[Your config file should be a database](https://www.dolthub.com/blog/2023-05-15-your-config-file-should-be-a-database/)
+* [Version control for Video Game Development using Dolt](https://www.dolthub.com/blog/?q=game)
+* [Your config file should be a database](https://www.dolthub.com/blog/2023-05-15-your-config-file-should-be-a-database/)

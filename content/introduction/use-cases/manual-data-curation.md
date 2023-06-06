@@ -17,6 +17,12 @@ DoltHub and DoltLab support [SQL](../../concepts/dolt/sql/README.md), File Uploa
 
 Dolt is a MySQL compatible database so exporting the manually created data to production can be as simple as cloning a copy and starting a server for your developers to connect to.
 
+# Dolt replaces...
+
+## Spreadsheets
+
+Dolt replaces Excel or Google Sheets for manual data curation. Versioning features allow for more efficient asynchronous collaboration and human review of data changes. The DoltHub interface is still easy enough for non-technical users to contribute and review data changes.
+
 # Companies Doing This
 
 * [Annalise](https://usa.annalise.ai/)
@@ -26,6 +32,7 @@ Dolt is a MySQL compatible database so exporting the manually created data to pr
 * [IMTF](https://imtf.com/)
 * [Lumicks](https://lumicks.com/)
 * [Merkle Science](https://www.merklescience.com/)
+* [Idearoom](https://www.idearoom.com/)
 
 # Case Studies
 
@@ -33,7 +40,7 @@ Dolt is a MySQL compatible database so exporting the manually created data to pr
 
 # Other Related Articles
 
-[So you want Spreadsheet Version Control?](https://www.dolthub.com/blog/2022-07-15-so-you-want-spreadsheet-version-control/)
-[Edit like a Spreadsheet V1](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/)
+* [So you want Spreadsheet Version Control?](https://www.dolthub.com/blog/2022-07-15-so-you-want-spreadsheet-version-control/)
+* [Edit like a Spreadsheet V1](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/)
 
 
