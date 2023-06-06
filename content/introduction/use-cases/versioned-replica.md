@@ -42,6 +42,6 @@ Let us know if you would like us to feature your use of Dolt as a versioned MySQ
 
 # Related Articles
 
-[Dolt Binlog Replication Preview](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/)
-[Getting Started: Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/)
-[Versioned MySQL Replicas on Hosted Dolt](https://www.dolthub.com/blog/2023-04-05-versioned-mysql-replicas-on-hosted-dolt/)
+* [Dolt Binlog Replication Preview](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/)
+* [Getting Started: Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/)
+* [Versioned MySQL Replicas on Hosted Dolt](https://www.dolthub.com/blog/2023-04-05-versioned-mysql-replicas-on-hosted-dolt/)

@@ -38,5 +38,5 @@ Let us know if you would like us to feature your use of Dolt for configuration m
 
 # Other Related Articles
 
-[Version control for Video Game Development using Dolt](https://www.dolthub.com/blog/?q=game)
-[Your config file should be a database](https://www.dolthub.com/blog/2023-05-15-your-config-file-should-be-a-database/)
+* [Version control for Video Game Development using Dolt](https://www.dolthub.com/blog/?q=game)
+* [Your config file should be a database](https://www.dolthub.com/blog/2023-05-15-your-config-file-should-be-a-database/)

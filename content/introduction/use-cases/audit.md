@@ -42,6 +42,6 @@ Let us know if you would like us to feature your use of Dolt for audit here.
 
 # Other Related Articles
 
-[So you want an Immutable database](https://www.dolthub.com/blog/2022-03-21-immutable-database/)
-[So you want Soft Deletes?](https://www.dolthub.com/blog/2022-11-03-soft-deletes/)
-[So you want Change Data Capture](https://www.dolthub.com/blog/2023-03-01-change-data-capture/)
+* [So you want an Immutable database](https://www.dolthub.com/blog/2022-03-21-immutable-database/)
+* [So you want Soft Deletes?](https://www.dolthub.com/blog/2022-11-03-soft-deletes/)
+* [So you want Change Data Capture](https://www.dolthub.com/blog/2023-03-01-change-data-capture/)

@@ -40,7 +40,7 @@ Dolt replaces Excel or Google Sheets for manual data curation. Versioning featur
 
 # Other Related Articles
 
-[So you want Spreadsheet Version Control?](https://www.dolthub.com/blog/2022-07-15-so-you-want-spreadsheet-version-control/)
-[Edit like a Spreadsheet V1](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/)
+* [So you want Spreadsheet Version Control?](https://www.dolthub.com/blog/2022-07-15-so-you-want-spreadsheet-version-control/)
+* [Edit like a Spreadsheet V1](https://www.dolthub.com/blog/2021-10-04-edit-like-spreadsheet-v1/)
 
 

@@ -53,8 +53,8 @@ Dolt can replace any database used to store and query data. Many of our customer
 
 # Other Related Articles
 
-[Better Data with Great Expectations + Dolt](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
-[Upleveling Flyte’s Data Lineage Using Dolt](https://www.dolthub.com/blog/2021-06-04-flyte-dolt-plugin/)
-[Data Version Control and Dolt Reproducibility](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
-[Using Dolt to Manage Train/Test Splits](https://www.dolthub.com/blog/2020-05-11-dolt-manage-train-test-splits/)
-[So you want Data Quality Control](https://www.dolthub.com/blog/2022-11-23-data-quality-control/)
+* [Better Data with Great Expectations + Dolt](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
+* [Upleveling Flyte’s Data Lineage Using Dolt](https://www.dolthub.com/blog/2021-06-04-flyte-dolt-plugin/)
+* [Data Version Control and Dolt Reproducibility](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
+* [Using Dolt to Manage Train/Test Splits](https://www.dolthub.com/blog/2020-05-11-dolt-manage-train-test-splits/)
+* [So you want Data Quality Control](https://www.dolthub.com/blog/2022-11-23-data-quality-control/)

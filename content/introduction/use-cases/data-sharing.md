@@ -45,6 +45,6 @@ Let us know if you would like us to feature your use of Dolt for data sharing he
 
 # Other Related Articles
 
-[Distribute Data with Dolt, not APIs](https://www.dolthub.com/blog/2020-05-18-distribute-dolt-not-api/)
-[Data Collaboration on DoltHub](https://www.dolthub.com/blog/2020-10-05-data-collaboration-on-dolthub/)
-[DoltHub is the Figma of Databases](https://www.dolthub.com/blog/2021-11-08-figma-of-databases/)
+* [Distribute Data with Dolt, not APIs](https://www.dolthub.com/blog/2020-05-18-distribute-dolt-not-api/)
+* [Data Collaboration on DoltHub](https://www.dolthub.com/blog/2020-10-05-data-collaboration-on-dolthub/)
+* [DoltHub is the Figma of Databases](https://www.dolthub.com/blog/2021-11-08-figma-of-databases/)

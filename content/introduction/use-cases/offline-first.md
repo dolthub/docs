@@ -36,5 +36,5 @@ Let us know if you would like us to feature your use of Dolt for data sharing he
 
 # Other Related Articles
 
-[So you want a Decentralized database?](https://www.dolthub.com/blog/2022-05-27-decentralized-database/)
-[Dolt for Military Applications](https://www.dolthub.com/blog/2022-03-07-dolt-military/)
+* [So you want a Decentralized database?](https://www.dolthub.com/blog/2022-05-27-decentralized-database/)
+* [Dolt for Military Applications](https://www.dolthub.com/blog/2022-03-07-dolt-military/)
