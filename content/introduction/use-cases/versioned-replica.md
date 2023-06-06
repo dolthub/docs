@@ -22,6 +22,16 @@ Moreover, Dolt can be added to your serving path as a read-only MySQL replica, s
 
 Additionally, a Dolt replica can be easily cloned (ie. copied) to a developer's machine for debugging purposes. See a data issue in production? Debug locally on your laptop safely.
 
+# Dolt replaces...
+
+## Backups and Transaction Logs
+
+Dolt as a versioned replica becomes your first line of defense against a bad operator query, script, or deployment. Dolt is online and contains the full history of your database. In a disaster you can use diffs to find a bad query and roll it back. Then you can produce a database patch and apply it to production. You do not need to reinstall from a backup and play the transaction log back to the point of the failure, an extremely time consuming process.
+
+## Change Data Capture
+
+[Change Data Capture](https://www.dolthub.com/blog/2023-03-01-change-data-capture/) is a way to add a history of data changes to an existing database. Modern change data capture tools consume replication logs to produce database changes in a consumable stream. Dolt can consume the same logs producing a simpler change data capture solution. 
+
 # Companies Doing this
 
 * [NoCD](https://www.treatmyocd.com/)
@@ -32,6 +42,6 @@ Let us know if you would like us to feature your use of Dolt as a versioned MySQ
 
 # Related Articles
 
-[Dolt Binlog Replication Preview](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/)
-[Getting Started: Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/)
-[Versioned MySQL Replicas on Hosted Dolt](https://www.dolthub.com/blog/2023-04-05-versioned-mysql-replicas-on-hosted-dolt/)
+* [Dolt Binlog Replication Preview](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/)
+* [Getting Started: Versioned MySQL Replica](https://www.dolthub.com/blog/2023-03-15-getting-started-versioned-mysql-replica/)
+* [Versioned MySQL Replicas on Hosted Dolt](https://www.dolthub.com/blog/2023-04-05-versioned-mysql-replicas-on-hosted-dolt/)

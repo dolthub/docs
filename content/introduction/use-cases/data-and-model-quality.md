@@ -28,6 +28,16 @@ Dolt is the only database with [branch](../../concepts/dolt/git/branch.md) and [
 
 Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dolt/git/log.md), and [diffs](../../concepts/dolt/git/diff.md) can be used for model insights. Did Thursday's model perform better than Tuesday's but had the same model weights? Inspect the data diff to see what changed. Inspect the commit log to see where that new data came from.
 
+# Dolt replaces...
+
+## Unstructured files in cloud storage
+
+It is common practice to store copies of training data or database backups in cloud storage for model reproducibility. A full copy of the data is stored for every training run. This can become quite expensive and limit the amount of models you can reproduce. Dolt stores only the differences between stored versions decreasing the cost of data storage. Additionally, Dolt can produce diffs between versions of training data producing novel model insights.
+
+## MySQL, Postgres, or other databases
+
+Dolt can replace any database used to store and query data. Many of our customers switch from other OLTP databases like MySQL or Postgres to improve data and model quality through versioning. Customers have also switched to Dolt from document databases like MongoDB. Dolt's additional unique features like branches, diffs, and merges allow for human review of data changes and multiple parallel data projects.
+
 # Companies Doing This
 
 * [Turbine](https://turbine.ai/)
@@ -43,8 +53,8 @@ Lastly, [commits](../../concepts/dolt/git/commits.md), [logs](../../concepts/dol
 
 # Other Related Articles
 
-[Better Data with Great Expectations + Dolt](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
-[Upleveling Flyte’s Data Lineage Using Dolt](https://www.dolthub.com/blog/2021-06-04-flyte-dolt-plugin/)
-[Data Version Control and Dolt Reproducibility](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
-[Using Dolt to Manage Train/Test Splits](https://www.dolthub.com/blog/2020-05-11-dolt-manage-train-test-splits/)
-[So you want Data Quality Control](https://www.dolthub.com/blog/2022-11-23-data-quality-control/)
+* [Better Data with Great Expectations + Dolt](https://www.dolthub.com/blog/2021-06-15-great-expectations-plus-dolt/)
+* [Upleveling Flyte’s Data Lineage Using Dolt](https://www.dolthub.com/blog/2021-06-04-flyte-dolt-plugin/)
+* [Data Version Control and Dolt Reproducibility](https://www.dolthub.com/blog/2021-04-16-dolt-dvc/)
+* [Using Dolt to Manage Train/Test Splits](https://www.dolthub.com/blog/2020-05-11-dolt-manage-train-test-splits/)
+* [So you want Data Quality Control](https://www.dolthub.com/blog/2022-11-23-data-quality-control/)
