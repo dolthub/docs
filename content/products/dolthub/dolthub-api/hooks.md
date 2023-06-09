@@ -47,18 +47,20 @@ This event occurs when a commit is pushed.
 
 The payload delivered for a push event webhook contains information about the push that was made to the database. The payload is a JSON object that includes the following fields:
 
-| Key                | Type   | Description                                                               |
-| ------------------ | ------ | ------------------------------------------------------------------------- |
-| `ref`              | string | The name of the branch that was pushed.                                   |
-| `head`             | string | The SHA of the most recent commit on `ref` after the push.                |
-| `prev`             | string | The SHA of the most recent commit on `ref` before the push.               |
-| `repository.name`  | string | The name of the database where the push occurred.                         |
-| `repository.owner` | string | The owner (username or org name) of the database where the push occurred. |
+| Key                | Type   | Description                                                                               |
+| ------------------ | ------ | ----------------------------------------------------------------------------------------- |
+| `event_name`       | string | The name of the event triggered by the webhook. In this case, it will always be "push".   |
+| `ref`              | string | The name of the branch that was pushed.                                                   |
+| `head`             | string | The SHA of the most recent commit on `ref` after the push.                                |
+| `prev`             | string | The SHA of the most recent commit on `ref` before the push.                               |
+| `repository.name`  | string | The name of the database where the push occurred.                                         |
+| `repository.owner` | string | The owner (username or org name) of the database where the push occurred.                 |
 
 An example of the payload:
 
 ```json
 {
+  "event_name": "push",
   "ref": "refs/heads/main",
   "head": "ns725d8noah3m0mjjvrilet1rsmcgna2",
   "prev": "6higvr7ic9ndahfruh3kufu409im44jd",
@@ -73,23 +75,39 @@ An example of the payload:
 
 The pull request event webhook is triggered whenever a pull request is created, merged, or closed. The payload includes these fields:
 
-| Key                | Type   | Description                                                                              |
-| ------------------ | ------ | ---------------------------------------------------------------------------------------- |
-| `repository.name`  | string | The name of the database where the push occurred.                                        |
-| `repository.owner` | string | The owner (username or org name) of the database where the pull request change occurred. |
-| `pullID`           | string | The ID of the pull request that triggered the webhook.                                   |
-| `action`           | string | The action that triggered the webhook (Opened, Closed, etc.).                            |
+| Key                            | Type   | Description                                                                                       |
+| ------------------------------ | ------ | ------------------------------------------------------------------------------------------------- |
+| `event_name`                   | string | The name of the event triggered by the webhook. In this case, it will always be "pull_request".   |
+| `repository.name`              | string | The name of the database for the pull request base.                                               |
+| `repository.owner`             | string | The owner (username or org name) of the pull request base.                                        |
+| `pullID`                       | string | The ID of the pull request that triggered the webhook.                                            |
+| `action`                       | string | The action that triggered the webhook (Opened, Closed, Merged.).                                  |
+| `state`                        | string | The current state of the pull request after the event.                                            |
+| `fromRepository.name`          | string | The name of the database where the pull request is created from.                                  |
+| `fromRepository.name`          | string | The owner of the database where the pull request is created from.                                 |
+| `author`                       | string | The author of the pull request.                                                                   |
+| `sender`                       | string | The user who triggered the event.                                                                 |
 
 An example of the payload object:
 
 ```json
 {
+  "event_name": "pull_request",
   "repository": {
+    "name": "test",
+    "owner": "dolthub"
+  },
+  "pullID": "15",
+  "action": "Opened",
+  "state":"Open",
+  "fromBranch": "liuliu/feature-branch",
+  "toBranch": "main",
+  "author": "liuliu",
+  "fromRepository": {
     "name": "test",
     "owner": "liuliu"
   },
-  "pullID": "15",
-  "action": "Opened"
+  "sender": "liuliu"
 }
 ```
 
@@ -99,9 +117,9 @@ A branch Event Webhook is triggered when a branch is created or deleted. The pay
 
 | Key                | Type   | Description                                                                        |
 | ------------------ | ------ | ---------------------------------------------------------------------------------- |
-| `repository.name`  | string | The name of the database where the push occurred.                                  |
+| `event_name	`      | string | The name of the event. In this case, it will always be "branch".                   |
+| `repository.name`  | string | The name of the database where the branch is located.                              |
 | `repository.owner` | string | The owner (username or org name) of the database where the branch change occurred. |
-| `event_name	`       | string | The name of the event (branch).                                                    |
 | `branch`           | string | The full name of the branch (e.g., refs/heads/main).                               |
 | `action`           | string | The action that triggered the webhook (deleted or created the branch).             |
 
