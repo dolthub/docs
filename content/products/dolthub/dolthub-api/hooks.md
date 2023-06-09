@@ -78,8 +78,8 @@ The pull request event webhook is triggered whenever a pull request is created, 
 | Key                            | Type   | Description                                                                                       |
 | ------------------------------ | ------ | ------------------------------------------------------------------------------------------------- |
 | `event_name`                   | string | The name of the event triggered by the webhook. In this case, it will always be "pull_request".   |
-| `repository.name`              | string | The name of the database where the pull request is located.                                       |
-| `repository.owner`             | string | The owner (username or org name) of the database where the pull request is located.               |
+| `repository.name`              | string | The name of the database for the pull request base.                                               |
+| `repository.owner`             | string | The owner (username or org name) of the pull request base.                                        |
 | `pullID`                       | string | The ID of the pull request that triggered the webhook.                                            |
 | `action`                       | string | The action that triggered the webhook (Opened, Closed, Merged.).                                  |
 | `state`                        | string | The current state of the pull request after the event.                                            |
@@ -99,6 +99,7 @@ An example of the payload object:
   },
   "pullID": "15",
   "action": "Opened",
+  "state":"Open",
   "fromBranch": "liuliu/feature-branch",
   "toBranch": "main",
   "author": "liuliu",
