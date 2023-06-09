@@ -85,6 +85,8 @@ The pull request event webhook is triggered whenever a pull request is created, 
 | `state`                        | string | The current state of the pull request after the event.                                            |
 | `fromRepository.name`          | string | The name of the database where the pull request is created from.                                  |
 | `fromRepository.name`          | string | The owner of the database where the pull request is created from.                                 |
+| `fromBranch`                   | string | The branch that the pull request is created from.                                                 |
+| `toBranch`                     | string | The branch that the pull request wants to merge into.                                             |
 | `author`                       | string | The author of the pull request.                                                                   |
 | `sender`                       | string | The user who triggered the event.                                                                 |
 
