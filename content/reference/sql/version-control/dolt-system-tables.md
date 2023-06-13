@@ -654,25 +654,9 @@ Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/reposit
 we can query for the five most recent commits before November 1st, 2021, across all commits in the database
 (regardless of what is checked out to `HEAD`) with this query:
 
-```sql
-SELECT *
-FROM dolt_commits
-WHERE date < "2021-11-01"
-ORDER BY date DESC
-LIMIT 5;
-```
-
-```text
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-| commit_hash                      | committer | email              | date                              | message                                                |
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-| 57cbn09m8egip6anq5c8s94uhhvaifkp | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:32.125 -0700 PDT | Merge pull request #43 from brian_add_all_team_seasons |
-| nqpgo65t5rcq2gkcvnfigqpsabc42qln | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:17.919 -0700 PDT | Merge pull request #41 from brian                      |
-| vto66re76lvfri7ls0ndu3m9fg47s4li | bpf120    | bpf120@gmail.com   | 2021-10-22 08:28:20.748 -0700 PDT | Added all teams for all seasons                        |
-| akiasoe4jp68gq3k4fbhdni6ti0lntqk | bpf120    | brianf@dolthub.com | 2021-10-22 04:19:07.037 -0700 PDT | Adding BAA to league tables                            |
-| ptau7oesshub36075l12bqp7cejqu64j | bpf120    | brianf@dolthub.com | 2021-10-22 04:09:07.604 -0700 PDT | Adding ABA as a league                                 |
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-```
+{% raw %}
+<iframe src="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B" style="border:1rem solid grey;border-radius:1rem;margin: auto;width: 100%;display: block;max-width: var(--block-wrapper-max-width);align-items: center;height: 450px;"></iframe>
+{% endraw %}
 
 ## `dolt_diff`
 
