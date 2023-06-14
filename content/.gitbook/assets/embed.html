@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .iframe-wrapper {
+      border: 1rem solid grey;
+      border-radius: 1rem;
+      margin: auto;
+      width: 100%;
+      display: block;
+      max-width: var(--block-wrapper-max-width);
+      align-items: center;
+      height: 450px;
+    }
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="iframe-wrapper">
+    <iframe src="{{ embed_url }}" frameborder="0"></iframe>
+  </div>
+</body>
+</html>
