@@ -36,16 +36,15 @@ const embedDoltHubSQL = createComponent<
   render: async (element, context) => {
     return (
       <block>
-        <hstack>
-          <textinput state="content" />
-          <divider />
-          <webframe
-            source={{ url: element.state.embedUrl }}
-            data={{
-              embedUrl: element.dynamicState("content"),
-            }}
-          />
-        </hstack>
+        <textinput state="content" />
+        <divider />
+        <webframe
+          source={{ url: element.state.embedUrl }}
+          data={{
+            embedUrl: element.dynamicState("content"),
+          }}
+          aspectRatio={16 / 9}
+        />
       </block>
     );
   },
