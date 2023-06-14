@@ -1,56 +1,51 @@
 import {
-    createIntegration,
-    createComponent,
-    FetchEventCallback,
-    RuntimeContext,
-  } from "@gitbook/runtime";
-  
-  type IntegrationContext = {} & RuntimeContext;
-  type IntegrationBlockProps = {};
-  type IntegrationBlockState = { message: string };
-  type IntegrationAction = { action: "click" };
-  
-  const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
-    request,
-    context
-  ) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { api } = context;
-    const user = api.user.getAuthenticatedUser();
-  
-    return new Response(JSON.stringify(user));
-  };
-  
-  const exampleBlock = createComponent<
-     IntegrationBlockProps,
-     IntegrationBlockState,
-     IntegrationAction,
-     IntegrationContext
-  >({
-    componentId: "embedDoltHubSQL",
-    initialState: (props) => {
-      return {
-        message: "Click Me",
-      };
-    },
-    action: async (element, action, context) => {
-      switch (action.action) {
-        case "click":
-          console.log("Button Clicked");
-          return {};
-      }
-    },
-    render: async (element, context) => {
-      return (
-        <block>
-          <button label={element.state.message} onPress={{ action: "click" }} />
-        </block>
-      );
-    },
-  });
-  
-  export default createIntegration({
-    fetch: handleFetchEvent,
-    components: [exampleBlock],
-    events: {},
-  });
+  FetchEventCallback,
+  RuntimeContext,
+  createComponent,
+  createIntegration,
+} from "@gitbook/runtime";
+
+type IntegrationContext = {} & RuntimeContext;
+type IntegrationBlockProps = { embedUrl: string };
+type IntegrationBlockState = { embedUrl: string };
+type IntegrationAction = {};
+
+const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
+  request,
+  context
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { api } = context;
+  const user = api.user.getAuthenticatedUser();
+
+  return new Response(JSON.stringify(user));
+};
+
+const embedDoltHubSQL = createComponent<
+  IntegrationBlockProps,
+  IntegrationBlockState,
+  IntegrationAction,
+  IntegrationContext
+>({
+  componentId: "embedDoltHubSQL",
+  initialState: (props) => ({
+    embedUrl: props.embedUrl,
+  }),
+
+  render: async (element, context) => {
+    return (
+      <block>
+        <webframe
+          source={{ url: element.state.embedUrl }}
+          aspectRatio={16 / 9}
+        />
+      </block>
+    );
+  },
+});
+
+export default createIntegration({
+  fetch: handleFetchEvent,
+  components: [embedDoltHubSQL],
+  events: {},
+});
