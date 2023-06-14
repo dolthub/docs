@@ -2,7 +2,7 @@ import
 ---
 title: Dolt System Tables
 ---
-{% integration/embedDoltHubSQL embedUrl="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B" %}
+{% embedDoltHubSQL embedUrl="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B" %}
 
 # Table of contents
 
