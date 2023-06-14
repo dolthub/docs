@@ -1,0 +1,16 @@
+name: embedDoltHubSQL
+title: Embed DoltHub SQL
+description: Embed an example SQL result from DoltHub
+organization: dolthub 
+visibility: private
+scopes:
+  - space:content:read
+  - space:content:write
+  - space:metadata:read
+  - space:metadata:write
+  - space:views:read
+script: ./src/index.js
+blocks:
+  - id: embedDoltHubSQL
+    title: Embed the SQL result
+    description: Just webframes a /embed URL on DoltHub
