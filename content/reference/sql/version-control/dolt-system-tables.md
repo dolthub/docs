@@ -1,7 +1,6 @@
 ---
 title: Dolt System Tables
 ---
-<blockquote class="twitter-tweet" data-theme="light"><p lang="en" dir="ltr">The Future of the Dolt Command Line Interface.<br><br>Our latest blog gives a quick history of Dolt and where we are heading with our CLI.<a href="https://t.co/iK9lPT5jtN">https://t.co/iK9lPT5jtN</a></p>&mdash; DoltHub (@DoltHub) <a href="https://twitter.com/DoltHub/status/1668359136797511688?ref_src=twsrc%5Etfw">June 12, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 # Table of contents
 
