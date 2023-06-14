@@ -1,4 +1,3 @@
-import 
 ---
 title: Dolt System Tables
 ---
