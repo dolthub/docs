@@ -7,7 +7,7 @@ import {
 
 type IntegrationContext = {} & RuntimeContext;
 type IntegrationBlockProps = { embedUrl: string };
-type IntegrationBlockState = { embedUrl: string; content: string };
+type IntegrationBlockState = { embedUrl: string };
 type IntegrationAction = {};
 
 const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
@@ -30,19 +30,28 @@ const embedDoltHubSQL = createComponent<
   componentId: "embedDoltHubSQL",
   initialState: (props) => ({
     embedUrl: "https://dolthub.com",
-    content: "",
   }),
 
-  render: async (element, context) => {
+  render: async (element) => {
+    console.log(element.state.embedUrl);
     return (
       <block>
-        <textinput state="content" />
-        <divider />
-        <webframe
-          source={{ url: element.state.embedUrl }}
-          data={{
-            embedUrl: element.dynamicState("content"),
+        <textinput state="embedUrl" />
+        <button
+          label="Submit URL"
+          onPress={{
+            action: "@editor.node.updateProps",
+            props: {
+              embedUrl: element.dynamicState("embedUrl"),
+            },
+            state: {
+              embedUrl: element.dynamicState("embedUrl"),
+            },
           }}
+        />
+        <webframe
+          source={{ url: element.props.embedUrl }}
+          aspectRatio={16 / 9}
         />
       </block>
     );
