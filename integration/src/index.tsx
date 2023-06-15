@@ -29,7 +29,7 @@ const embedDoltHubSQL = createComponent<
 >({
   componentId: "embedDoltHubSQL",
   initialState: (props) => ({
-    embedUrl: props.embedUrl,
+    embedUrl: "https://dolthub.com",
     content: "",
   }),
 
@@ -43,7 +43,6 @@ const embedDoltHubSQL = createComponent<
           data={{
             embedUrl: element.dynamicState("content"),
           }}
-          aspectRatio={16 / 9}
         />
       </block>
     );
