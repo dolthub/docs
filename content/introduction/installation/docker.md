@@ -21,11 +21,11 @@ or you can get a specific, older version by using the Dolt version you want as t
 ```shell
 > docker pull dolthub/dolt:latest
 > docker run dolthub/dolt:latest version
-dolt version 0.50.10
+dolt version 1.5.0
 >
-> docker pull dolthub/dolt:0.50.8
-> docker run dolthub/dolt:0.50.8 version
-dolt version 0.50.8
+> docker pull dolthub/dolt:1.4.2
+> docker run dolthub/dolt:1.4.2 version
+dolt version 1.4.2
 ```
 
 ## Docker Image for Dolt SQL-Server
@@ -107,7 +107,7 @@ Here is how I set up my directories to be mounted. I have three directories to m
 shared > ls
 databases	dolt		server
 shared > docker run -p 3307:3306 -v $PWD/server:/etc/dolt/servercfg.d -v $PWD/dolt:/etc/dolt/doltcfg.d -v $PWD/databases:/var/lib/dolt dolthub/dolt-sql-server:latest 
-2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Entrypoint script for Dolt Server 0.50.10 starting.
+2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Entrypoint script for Dolt Server 1.5.0 starting.
 2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Checking for config provided in /etc/dolt/doltcfg.d
 2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: /etc/dolt/doltcfg.d/config.json file is found
 2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Checking for config provided in /etc/dolt/servercfg.d
@@ -115,7 +115,7 @@ shared > docker run -p 3307:3306 -v $PWD/server:/etc/dolt/servercfg.d -v $PWD/do
 
 
 2022-10-27 18:07:51+00:00 [Warn] [Entrypoint]: /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
-2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Dolt Server 0.50.10 is started.
+2022-10-27 18:07:51+00:00 [Note] [Entrypoint]: Dolt Server 1.5.0 is started.
 Starting server with Config HP="0.0.0.0:3306"|T="28800000"|R="false"|L="debug"
 
 ```
