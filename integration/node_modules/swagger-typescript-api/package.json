@@ -1,0 +1,110 @@
+{
+  "name": "swagger-typescript-api",
+  "version": "9.3.1",
+  "description": "Generate typescript/javascript api from swagger schema",
+  "scripts": {
+    "cli:json": "node index.js -r -d -p ./swagger-test-cli.json -n swagger-test-cli.ts",
+    "cli:yaml": "node index.js -r -d -p ./swagger-test-cli.yaml -n swagger-test-cli.ts",
+    "node": "node swagger-test-cli/generate.js",
+    "node:debug": "node --nolazy swagger-test-cli/generate.js",
+    "contributors": "all-contributors generate",
+    "cli:help": "node index.js -h",
+    "test-all": "node --unhandled-rejections=strict ./scriptsRunner.js generate validate test:*",
+    "test-all-extended": "node --unhandled-rejections=strict ./scriptsRunner.js generate-extended validate generate validate test:*",
+    "test-specific": "node ./scriptsRunner.js generate validate test:*",
+    "prepare": "npm run test-all-extended",
+    "generate": "node tests/generate.js",
+    "generate-extended": "node tests/generate-extended.js",
+    "generate:debug": "node --nolazy tests/generate.js",
+    "validate": "node tests/validate.js",
+    "validate:debug": "node --nolazy tests/validate.js",
+    "test:--route-types": "node tests/spec/routeTypes/test.js",
+    "test:--no-client": "node tests/spec/noClient/test.js",
+    "test:--default-as-success": "node tests/spec/defaultAsSuccess/test.js",
+    "test:--templates": "node tests/spec/templates/test.js",
+    "test:--union-enums": "node tests/spec/unionEnums/test.js",
+    "test:--responses": "node tests/spec/responses/test.js",
+    "test:specProperty": "node tests/spec/specProperty/test.js",
+    "test:--module-name-index": "node tests/spec/moduleNameIndex/test.js",
+    "test:--module-name-first-tag": "node tests/spec/moduleNameFirstTag/test.js",
+    "test:--modular": "node tests/spec/modular/test.js",
+    "test:--single-http-client": "node tests/spec/singleHttpClient/test.js",
+    "test:--extract-request-params": "node tests/spec/extractRequestParams/test.js",
+    "test:--extract-request-body": "node tests/spec/extractRequestBody/test.js",
+    "test:--enum-names-as-values": "node tests/spec/enumNamesAsValues/test.js",
+    "test:--default-response": "node tests/spec/defaultResponse/test.js",
+    "test:--js": "node tests/spec/js/test.js",
+    "test:--js--axios": "node tests/spec/jsAxios/test.js",
+    "test:--axios": "node tests/spec/axios/test.js",
+    "test:--axios--single-http-client": "node tests/spec/axiosSingleHttpClient/test.js",
+    "test:--type-suffix--type-prefix": "node tests/spec/typeSuffixPrefix/test.js",
+    "test:partialBaseTemplate": "node tests/spec/partialBaseTemplate/test.js",
+    "test:partialDefaultTemplate": "node tests/spec/partialDefaultTemplate/test.js",
+    "test:--patch": "node tests/spec/patch/test.js"
+  },
+  "author": "acacode",
+  "license": "MIT",
+  "typings": "./index.d.ts",
+  "main": "src/index.js",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/lodash": "^4.14.166",
+    "@types/node": "^15.0.2",
+    "@types/prettier": "^2.1.6",
+    "all-contributors-cli": "^6.19.0",
+    "husky": "^4.3.6",
+    "pretty-quick": "^3.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.4",
+    "@types/swagger-schema-official": "2.0.21",
+    "commander": "^6.2.1",
+    "cosmiconfig": "^7.0.0",
+    "eta": "^1.12.1",
+    "js-yaml": "^4.0.0",
+    "lodash": "^4.17.21",
+    "make-dir": "^3.1.0",
+    "nanoid": "^3.1.22",
+    "node-emoji": "^1.10.0",
+    "prettier": "^2.2.1",
+    "swagger-schema-official": "2.0.0-bab6bed",
+    "swagger2openapi": "^7.0.5",
+    "typescript": "^4.2.4"
+  },
+  "bin": {
+    "swagger-typescript-api": "index.js",
+    "sta": "index.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "post-commit": "git update-index -g"
+    }
+  },
+  "keywords": [
+    "openapi",
+    "swagger",
+    "typescript",
+    "api",
+    "javascript",
+    "rest",
+    "codegen",
+    "generation",
+    "http"
+  ],
+  "files": [
+    "src",
+    "index.js",
+    "index.d.ts",
+    "templates",
+    "LICENSE"
+  ],
+  "bugs": {
+    "url": "https://github.com/acacode/swagger-typescript-api/issues"
+  },
+  "homepage": "https://github.com/acacode/swagger-typescript-api",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/acacode/swagger-typescript-api"
+  }
+}
