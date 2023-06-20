@@ -36,19 +36,6 @@ const embedDoltHubSQL = createComponent<
     console.log(element.state.embedUrl);
     return (
       <block>
-        <textinput state="embedUrl" />
-        <button
-          label="Submit URL"
-          onPress={{
-            action: "@editor.node.updateProps",
-            props: {
-              embedUrl: element.dynamicState("embedUrl"),
-            },
-            state: {
-              embedUrl: element.dynamicState("embedUrl"),
-            },
-          }}
-        />
         <webframe
           source={{ url: element.props.embedUrl }}
           aspectRatio={16 / 9}
