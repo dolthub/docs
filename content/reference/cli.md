@@ -441,6 +441,9 @@ Use the given `<msg>` as the commit message.
 `--allow-empty`:
 Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
 
+`--skip-empty`:
+Record a commit only if there are changes to be committed. The commit operation will be a no-op, instead of an error, if there are no changes staged to commit. An error will be thrown if `--skip-empty` is used with `--allow-empty`.
+
 `--date`:
 Specify the date used in the commit. If not specified the current system time is used.
 
