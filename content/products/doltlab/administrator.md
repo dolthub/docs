@@ -24,6 +24,7 @@ the following information can help DoltLab Admins manually perform some common a
 17. [Customize automated emails](#customize-automated-emails)
 18. [Customize DoltLab colors](#customize-colors)
 19. [Use a domain name with DoltLab](#use-domain)
+20. [Add Super Admins to a DoltLab instance](#add-super-admins)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -906,3 +907,23 @@ Finally, we can provision a domain name for the DoltLab host through [AWS Route 
 Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and replace the value of the environment variable `HOST_IP` with the domain name, then restart DoltLab.
 
 In the event you are configuring your domain name with an Elastic Load Balancer, ensure that it specifies Target Groups for each of the ports required to operate DoltLab, `80`, `100`, `4321`, and `50051`.
+
+<h1 id="add-super-admins">Add Super Admins to a DoltLab instance</h1>
+
+Starting with DoltLab `v1.0.1`, DoltLab allows administrators to specify users who will be "super admins" on their DoltLab instance.
+
+A DoltLab "super admin" is a user who can has unrestricted access and the highest possibly permission level on all organizations, teams, and databases on a DoltLab instance. This allows these users to write to any database, public or private, merge pull-requests, delete databases and add or remove organization/team members. By default there are no "super admins" registered on a DoltLab instance, including the default user `admin`.
+
+You can define super admins for a DoltLab instance by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
+
+```yaml
+# admin-config.yaml
+super_admins: [
+  "user1@example.com",
+  "user2@example.com"
+]
+```
+
+Add the field `super_admins` to the `admin-config.yaml` file and provide a list of email addresses associated with the DoltLab users who will be super admins. These addresses must be verified by the DoltLab users associated with them for their super admin privileges to take effect.
+
+After adding this field, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, your instance will have super admin users.
