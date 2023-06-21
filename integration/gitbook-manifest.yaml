@@ -1,7 +1,7 @@
 name: embedDoltHubSQL
 title: Embed DoltHub SQL
-organization: IN7dLkZtDKjE9hwH4dBS
-visibility: private
+organization: -MO3iG41rAZJsdGWtz_o
+visibility: public
 description: ""
 script: src/index.tsx
 scopes:

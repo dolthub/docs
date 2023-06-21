@@ -29,7 +29,8 @@ const embedDoltHubSQL = createComponent<
 >({
   componentId: "embedDoltHubSQL",
   initialState: (props) => ({
-    embedUrl: "https://dolthub.com",
+    embedUrl:
+      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B",
   }),
 
   render: async (element) => {
@@ -37,7 +38,7 @@ const embedDoltHubSQL = createComponent<
     return (
       <block>
         <webframe
-          source={{ url: element.props.embedUrl }}
+          source={{ url: element.props.embedUrl || element.state.embedUrl }}
           aspectRatio={16 / 9}
         />
       </block>
