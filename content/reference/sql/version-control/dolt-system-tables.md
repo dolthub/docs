@@ -654,7 +654,7 @@ Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/reposit
 we can query for the five most recent commits before November 1st, 2021, across all commits in the database
 (regardless of what is checked out to `HEAD`) with this query:
 
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*+FROM+dolt_commits+ORDER+BY+date+DESC+LIMIT+5" %}
+{% embed url="https://www.dolthub.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AWHERE+date+%3C+%222021-11-01%22%0AORDER+BY+date+DESC%0ALIMIT+5%3B" %}
 
 ## `dolt_diff`
 
