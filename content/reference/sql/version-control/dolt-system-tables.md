@@ -567,7 +567,7 @@ This is similar, but different from the `dolt_log` [system table](https://docs.d
 
 Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/repositories/dolthub/SHAQ), we can query for the five most recent commits before November 1st, 2021, across all commits in the database (regardless of what is checked out to `HEAD`) with this query:
 
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5;" %}
+{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5" %}
 
 ### `dolt_diff`
 
