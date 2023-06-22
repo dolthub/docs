@@ -2,7 +2,7 @@ name: embedDoltHubSQL
 title: Embed DoltHub SQL
 organization: -MO3iG41rAZJsdGWtz_o
 visibility: public
-description: ""
+description: "Embed DoltHub SQL console directly into GitBook pages."
 script: src/index.tsx
 scopes:
   - space:content:read
