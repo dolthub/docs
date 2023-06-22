@@ -37,12 +37,6 @@ title: Dolt System Tables
 * [Configuration Tables](dolt-system-tables.md#configuration\_tables)
   * [dolt\_ignore](dolt-system-tables.md#dolt\_ignore)
 
-\{% @embedDoltHubSQL/embedDoltHubSQL embedUrl='https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+\*%0AFROM+dolt\_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B' %\}
-
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5;" %}
-
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+15;" %}
-
 
 ## Database Metadata System Tables
 
@@ -573,25 +567,7 @@ This is similar, but different from the `dolt_log` [system table](https://docs.d
 
 Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/repositories/dolthub/SHAQ), we can query for the five most recent commits before November 1st, 2021, across all commits in the database (regardless of what is checked out to `HEAD`) with this query:
 
-```sql
-SELECT *
-FROM dolt_commits
-WHERE date < "2021-11-01"
-ORDER BY date DESC
-LIMIT 5;
-```
-
-```
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-| commit_hash                      | committer | email              | date                              | message                                                |
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-| 57cbn09m8egip6anq5c8s94uhhvaifkp | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:32.125 -0700 PDT | Merge pull request #43 from brian_add_all_team_seasons |
-| nqpgo65t5rcq2gkcvnfigqpsabc42qln | bpf120    | bpf120@gmail.com   | 2021-10-22 11:13:17.919 -0700 PDT | Merge pull request #41 from brian                      |
-| vto66re76lvfri7ls0ndu3m9fg47s4li | bpf120    | bpf120@gmail.com   | 2021-10-22 08:28:20.748 -0700 PDT | Added all teams for all seasons                        |
-| akiasoe4jp68gq3k4fbhdni6ti0lntqk | bpf120    | brianf@dolthub.com | 2021-10-22 04:19:07.037 -0700 PDT | Adding BAA to league tables                            |
-| ptau7oesshub36075l12bqp7cejqu64j | bpf120    | brianf@dolthub.com | 2021-10-22 04:09:07.604 -0700 PDT | Adding ABA as a league                                 |
-+----------------------------------+-----------+--------------------+-----------------------------------+--------------------------------------------------------+
-```
+{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5;" %}
 
 ### `dolt_diff`
 
