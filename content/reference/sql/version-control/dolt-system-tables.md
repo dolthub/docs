@@ -37,6 +37,8 @@ title: Dolt System Tables
 * [Configuration Tables](dolt-system-tables.md#configuration\_tables)
   * [dolt\_ignore](dolt-system-tables.md#dolt\_ignore)
 
+{% embed embedUrl="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*+FROM+d" %}
+
 ## Database Metadata System Tables
 
 ### `dolt_branches`
