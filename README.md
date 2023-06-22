@@ -51,3 +51,9 @@ You can create a styled info box for a note callout by including the following:
 My styled note! 
 {% endhint %}
 ```
+
+## Embed DoltHub SQL Console
+You can embed DoltHub SQL console by including the following:
+```
+{% embed url="https://www.dolthub.com/repositories/[owner]/[database]/embed/[refName]?q={query}" %}
+```
