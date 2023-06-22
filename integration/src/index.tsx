@@ -1,54 +1,51 @@
 import {
-  FetchEventCallback,
   RuntimeContext,
+  RuntimeEnvironment,
   createComponent,
   createIntegration,
 } from "@gitbook/runtime";
 
-type IntegrationContext = {} & RuntimeContext;
-type IntegrationBlockProps = { embedUrl: string };
-type IntegrationBlockState = { embedUrl: string };
-type IntegrationAction = {};
+interface DoltHubSQLInstallationConfiguration {}
 
-const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
-  request,
-  context
-) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { api } = context;
-  const user = api.user.getAuthenticatedUser();
+type DoltHubSQLRuntimeEnvironment =
+  RuntimeEnvironment<DoltHubSQLInstallationConfiguration>;
+type DoltHubSQLRuntimeContext = RuntimeContext<DoltHubSQLRuntimeEnvironment>;
 
-  return new Response(JSON.stringify(user));
-};
+const embedBlock = createComponent<{
+  url?: string;
+}>({
+  componentId: "embed",
 
-const embedDoltHubSQL = createComponent<
-  IntegrationBlockProps,
-  IntegrationBlockState,
-  IntegrationAction,
-  IntegrationContext
->({
-  componentId: "embedDoltHubSQL",
-  initialState: (props) => ({
-    embedUrl:
-      props.embedUrl ||
-      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AORDER+BY+date+DESC%0ALIMIT+5%3B",
-  }),
+  async action(element, action) {
+    switch (action.action) {
+      case "@link.unfurl": {
+        const { url } = action;
+
+        return {
+          props: {
+            url,
+          },
+        };
+      }
+    }
+
+    return element;
+  },
 
   render: async (element) => {
-    console.log(element.state.embedUrl);
+    const url = new URL(
+      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5;"
+    );
+    url.searchParams.set("embed_host", "gitbook.com");
+    url.searchParams.set("url", element.props.url);
     return (
       <block>
-        <webframe
-          source={{ url: element.state.embedUrl }}
-          aspectRatio={16 / 9}
-        />
+        <webframe source={{ url: url.toString() }} aspectRatio={16 / 9} />
       </block>
     );
   },
 });
 
-export default createIntegration({
-  fetch: handleFetchEvent,
-  components: [embedDoltHubSQL],
-  events: {},
+export default createIntegration<DoltHubSQLRuntimeContext>({
+  components: [embedBlock],
 });
