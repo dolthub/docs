@@ -1,8 +1,10 @@
 ---
-title: "Hosted Dolt: Getting Started"
+title: 'Hosted Dolt: Getting Started'
 ---
 
-# Create an account
+# Getting Started
+
+## Create an account
 
 Your journey today starts on the internet. Open a web browser and navigate to https://hosted.doltdb.com. You should be greeted by this welcoming site (pun intended).
 
@@ -10,13 +12,13 @@ Your journey today starts on the internet. Open a web browser and navigate to ht
 
 Click the "Sign In" button on the top right. A Sign In form will appear. Click the Create account tab.
 
-![](../../.gitbook/assets/hosted-getting-started/hosted-create-account.png)
+![](<../../.gitbook/assets/hosted-getting-started/hosted-create-account (1).png>)
 
 Either use your Google account or use a valid email to create a Hosted Dolt account. Once you've chosen a username and clicked the Create Account button, use that account to Sign In. Once you sign in, your landing page will be an empty deployments page.
 
 ![](../../.gitbook/assets/hosted-getting-started/hosted-no-deployments.png)
 
-# Create a Deployment
+## Create a Deployment
 
 Now it's time to create a deployment. A deployment is a dedicated cloud host running the world's first and only version controlled SQL database, Dolt. This cloud host can be in Amazon Web Services (AWS) or Google Cloud Platform (GCP). This cloud host is monitored and backed up for you so you don't need to worry about operating it.
 
@@ -42,7 +44,7 @@ Once the deployment completes your deployment page will look something like this
 
 You now have a cloud deployed Dolt! Let's do something interesting with it.
 
-# Use the built-in SQL workbench
+## Use the built-in SQL workbench
 
 Dolt is a version controlled SQL database. Let's make some tables to show off how to use it.
 
@@ -54,7 +56,7 @@ There are three ways to read or write from Hosted Dolt. You can:
 
 In this blog, we will show off (1) and (2) but we're going to start with the Workbench because it is the easiest to use.
 
-## Start the Workbench
+### Start the Workbench
 
 Click on the Workbench tab of your deployment.
 
@@ -66,7 +68,7 @@ The workbench has writes off by default. We will turn those on and create a data
 
 This should feel like a standard SQL workbench like Tableplus or Datagrip but it's web-based and has some extra Dolt-specific features like a Commit Log and Pull Requests.
 
-## Create Some Tables
+### Create Some Tables
 
 Now let's create some tables using SQL. We're going to enter the following SQL queries into the query box. You have to run them one at a time.
 
@@ -92,13 +94,13 @@ create table employees_teams(
 
 I click the "Play" button to execute the queries. After running a query you are presented with a diff off the working set. You can start to see how Dolt's versioning capabilities make for a powerful workbench experience.
 
-![](../../.gitbook/assets/hosted-getting-started/after-query-diff.png)
+![](<../../.gitbook/assets/hosted-getting-started/after-query-diff (1).png>)
 
 I finish up by subsequently running the last two create table queries.
 
 ![](../../.gitbook/assets/hosted-getting-started/multi-table-diff.png)
 
-## Create a Dolt Commit
+### Create a Dolt Commit
 
 Now time to use my first Dolt feature! I'm going to create a [Dolt Commit](https://docs.dolthub.com/concepts/dolt/git/commits). Make a Dolt commit when you want to preserve the state of the Dolt database permanently for future reference.
 
@@ -116,7 +118,7 @@ I can also see my new commit in the Commit Log.
 
 The built in Workbench in Hosted Dolt gives you a powerful web GUI to interact with Dolt. It has all the features of a workbench like Tableplus or Datagrip combined with features of GitHub like a commit log and Pull Requests. We'll be demoing Hosted Pull Requests later so keep reading.
 
-# Add a collaborator
+## Add a collaborator
 
 Dolt is a [multiplayer database](https://www.dolthub.com/blog/2022-10-17-multiplayer-database/). It works best when you have multiple editors collaborating.
 
@@ -134,11 +136,11 @@ Finish up by clicking the "Add Collaborator" button.
 
 Taylor can now access the deployment page to get connectivity information. Her mission is to add rows to these new tables and make a Pull Request for me to review. Taylor actually did the next section as you can tell from the Hosted Dolt screenshots.
 
-# Connect a MySQL client
+## Connect a MySQL client
 
 Dolt is a MySQL-compatible database. You can connect any client that can connect to MySQL to it. We're going to use the MySQl client that comes with MySQL in this section to connect to Dolt.
 
-## Install
+### Install
 
 Head over to the [MySQL Getting Started documentation](https://dev.mysql.com/doc/mysql-getting-started/en/) and install MySQL on your machine. I used [Homebrew](https://brew.sh/) to install MySQL on my Mac.
 
@@ -149,7 +151,7 @@ MySQL comes with a MySQL server called `mysqld` and a MySQL client called `mysql
 mysql  Ver 8.0.29 for macos12.2 on x86_64 (Homebrew)
 ```
 
-## Connect
+### Connect
 
 Now, to connect the mysql client to Dolt, you need the host, port, username, and password from the Connectivity tab.
 
@@ -157,7 +159,7 @@ Now, to connect the mysql client to Dolt, you need the host, port, username, and
 
 Then, in your terminal send in that information as arguments to mysql. The connectivity table even has a convenient section to copy/paste this information.
 
-![](../../.gitbook/assets/hosted-getting-started/connect-to-server.png)
+![](<../../.gitbook/assets/hosted-getting-started/connect-to-server (1).png>)
 
 ```sh
 $ mysql -h"timsehn-personal-getting-started.dbs.hosted.doltdb.com" -u"nvcqnc7i1znv57pj" -p"ojZ7HCXel1Ho1aHUvvWW4hWu1HlqSRMK"
@@ -179,7 +181,7 @@ mysql>
 
 This MySQL client is connected to your Hosted Dolt instance. Any changes you make here will be visible to users of the workbench or any other client connected to the Hosted Dolt database.
 
-## Create a branch
+### Create a branch
 
 So let's be safe and make our changes on a [branch](https://docs.dolthub.com/concepts/dolt/git/branch). A branch in Dolt is a lightweight way of isolating your changes from the "main" copy of the database. Since our goal is to make a Pull Request in the SQL Workbench, making a branch is necessary as pull requests are done between two branches, in this case "main" and our new branch.
 
@@ -209,7 +211,7 @@ mysql> select active_branch();
 
 Great, Taylor is now on a new branch and can safely make her changes.
 
-## Insert some rows
+### Insert some rows
 
 This is easy if you know SQL. In the MySQL client on the `inserts` branch, Taylor ran the following SQL to add a few of the early employees here at DoltHub and assign them to teams.
 
@@ -266,7 +268,7 @@ mysql> call dolt_commit('-m', 'inserted early employees');
 
 Let's head back over to the workbench to make a Pull Request.
 
-## Make and Review a Pull Request
+### Make and Review a Pull Request
 
 The Hosted Dolt workbench supports pull requests and human review of your Hosted Dolt database. Head back over to your browser with the Hosted Dolt Web UI up and go to the Workbench tab. Click the `getting_started` database to open a workbench for it.
 
@@ -276,7 +278,7 @@ As you can see on the "main" branch there are no rows inserted in the tables.
 
 But on the inserts branch there are!
 
-![](../../.gitbook/assets/hosted-getting-started/workbench-filled-tables.png)
+![](<../../.gitbook/assets/hosted-getting-started/workbench-filled-tables (1).png>)
 
 We want to make a pull request from the inserts branch to the main branch, review our changes, and then merge inserts branch into the main branch if everything looks good. To do this we click the Pull Requests tab and click the "Create Pull Request" button.
 
@@ -284,13 +286,13 @@ We want to make a pull request from the inserts branch to the main branch, revie
 
 Taylor selects the to branch as main and the from branch as inserts. She has the opportunity to add a name and description of the changes to help the reviewer figure out what I've done.
 
-![](../../.gitbook/assets/hosted-getting-started/workbench-pr-form.png)
+![](<../../.gitbook/assets/hosted-getting-started/workbench-pr-form (1).png>)
 
 Finally, she clicks "Create pull request". She now sends me this Pull Request link for review.
 
-![](../../.gitbook/assets/hosted-getting-started/workbench-pr.png)
+![](<../../.gitbook/assets/hosted-getting-started/workbench-pr (1).png>)
 
-## Review and Merge
+### Review and Merge
 
 On the Pull Request Page, I have access to a human readable diff of the changes under review.
 
