@@ -44,6 +44,7 @@ title: Dolt System Tables
 
   - [dolt_ignore](#dolt_ignore)
 
+{% embed embedUrl="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*+FROM+dolt_commits+ORDER+BY+date+DESC+LIMIT+5" %}
 # Database Metadata System Tables
 
 ## `dolt_branches`

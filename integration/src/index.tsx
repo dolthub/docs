@@ -1,19 +1,32 @@
 import {
+  FetchEventCallback,
   RuntimeContext,
-  RuntimeEnvironment,
   createComponent,
   createIntegration,
 } from "@gitbook/runtime";
 
-interface DoltHubSQLInstallationConfiguration {}
+type IntegrationContext = {} & RuntimeContext;
+type IntegrationBlockProps = { embedUrl: string };
+type IntegrationBlockState = { embedUrl: string };
+type IntegrationAction = {};
 
-type DoltHubSQLRuntimeEnvironment =
-  RuntimeEnvironment<DoltHubSQLInstallationConfiguration>;
-type DoltHubSQLRuntimeContext = RuntimeContext<DoltHubSQLRuntimeEnvironment>;
+const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
+  request,
+  context
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { api } = context;
+  const user = api.user.getAuthenticatedUser();
 
-const embedBlock = createComponent<{
-  url?: string;
-}>({
+  return new Response(JSON.stringify(user));
+};
+
+const embedDoltHubSQL = createComponent<
+  IntegrationBlockProps,
+  IntegrationBlockState,
+  IntegrationAction,
+  IntegrationContext
+>({
   componentId: "embed",
 
   async action(element, action) {
@@ -23,7 +36,7 @@ const embedBlock = createComponent<{
 
         return {
           props: {
-            url,
+            embedUrl: url,
           },
         };
       }
@@ -33,19 +46,19 @@ const embedBlock = createComponent<{
   },
 
   render: async (element) => {
-    const url = new URL(
-      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5"
-    );
-    url.searchParams.set("embed_host", "gitbook.com");
-    url.searchParams.set("url", element.props.url);
     return (
       <block>
-        <webframe source={{ url: url.toString() }} aspectRatio={16 / 9} />
+        <webframe
+          source={{ url: element.props.embedUrl }}
+          aspectRatio={16 / 9}
+        />
       </block>
     );
   },
 });
 
-export default createIntegration<DoltHubSQLRuntimeContext>({
-  components: [embedBlock],
+export default createIntegration({
+  fetch: handleFetchEvent,
+  components: [embedDoltHubSQL],
+  events: {},
 });
