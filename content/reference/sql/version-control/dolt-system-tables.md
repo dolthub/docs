@@ -598,28 +598,7 @@ The `DOLT_DIFF` system table has the following columns
 
 Taking the [`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players) database from [DoltHub](https://www.dolthub.com/) as our example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed, from the month of October, 2020.
 
-```sql
-SELECT commit_hash, table_name
-FROM   dolt_diff
-WHERE  date BETWEEN "2020-10-01" AND "2020-10-31";
-```
-
-```
-+----------------------------------+------------------------------+
-| commit_hash                      | table_name                   |
-+----------------------------------+------------------------------+
-| rla1p8emnp91urj3uant52msrskouqil | draft_history                |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_post_season    |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_regular_season |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_post_season         |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_regular_season      |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_allstar        |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_post_season    |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_regular_season |
-| jbk2ckroo4hhqovrcpiv7c615dlsf3ut | draft_history                |
-| pu60cdppae7rumf1lm06j5ngkijp7i8f | players                      |
-+----------------------------------+------------------------------+
-```
+{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/nba-players/query/master?active=Tables&q=SELECT+commit_hash%2C+table_name+FROM+dolt_diff+WHERE+date+BETWEEN+%222020-05-09%22+AND+%222020-05-10%22%3B%0A" %}
 
 From these results, we can see there were four commits to this database in October, 2020. Commits `rla1p8em` and `jbk2ckro` only changed the `draft_history` table, commit `pu60cdpp` changed the `players` table, and commit `1gtq675i` made changes to seven tables. To dig deeper into these changes, we can query the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
 
