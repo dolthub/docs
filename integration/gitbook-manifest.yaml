@@ -15,5 +15,5 @@ blocks:
     title: Embed DoltHub SQL
     description: webframes a /embed URL on DoltHub
     urlUnfurl:
-      - https://dolthub-preview-1.awsdev.ld-corp.com/repositories/**
+      - https://dolthub.com/repositories/**
 secrets: {}
