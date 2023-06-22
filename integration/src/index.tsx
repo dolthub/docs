@@ -34,7 +34,7 @@ const embedBlock = createComponent<{
 
   render: async (element) => {
     const url = new URL(
-      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5;"
+      "https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5"
     );
     url.searchParams.set("embed_host", "gitbook.com");
     url.searchParams.set("url", element.props.url);
