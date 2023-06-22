@@ -598,7 +598,7 @@ The `DOLT_DIFF` system table has the following columns
 
 Taking the [`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players) database from [DoltHub](https://www.dolthub.com/) as our example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed, from the month of October, 2020.
 
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/nba-players/query/master?active=Tables&q=SELECT+commit_hash%2C+table_name+FROM+dolt_diff+WHERE+date+BETWEEN+%222020-05-09%22+AND+%222020-05-10%22%3B%0A" %}
+{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/nba-players/embed/master?active=Tables&q=SELECT+commit_hash%2C+table_name+FROM+dolt_diff+WHERE+date+BETWEEN+%222020-05-09%22+AND+%222020-05-10%22%3B%0A" %}
 
 From these results, we can see there were four commits to this database in October, 2020. Commits `rla1p8em` and `jbk2ckro` only changed the `draft_history` table, commit `pu60cdpp` changed the `players` table, and commit `1gtq675i` made changes to seven tables. To dig deeper into these changes, we can query the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
 
