@@ -1,19 +1,21 @@
 import {
   FetchEventCallback,
   RuntimeContext,
+  RuntimeEnvironment,
   createComponent,
   createIntegration,
 } from "@gitbook/runtime";
 
-type IntegrationContext = {} & RuntimeContext;
-type IntegrationBlockProps = { embedUrl: string };
-type IntegrationBlockState = { embedUrl: string };
-type IntegrationAction = {};
+interface EmbedDoltHubSQLConfiguration {}
 
-const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
-  request,
-  context
-) => {
+type EmbedDoltHubSQLRuntimeEnvironment =
+  RuntimeEnvironment<EmbedDoltHubSQLConfiguration>;
+type EmbedDoltHubSQLRuntimeContext =
+  RuntimeContext<EmbedDoltHubSQLRuntimeEnvironment>;
+
+const handleFetchEvent: FetchEventCallback<
+  EmbedDoltHubSQLRuntimeContext
+> = async (request, context) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { api } = context;
   const user = api.user.getAuthenticatedUser();
@@ -21,12 +23,12 @@ const handleFetchEvent: FetchEventCallback<IntegrationContext> = async (
   return new Response(JSON.stringify(user));
 };
 
-const embedDoltHubSQL = createComponent<
-  IntegrationBlockProps,
-  IntegrationBlockState,
-  IntegrationAction,
-  IntegrationContext
->({
+/**
+ * Component to render the block when embeding an DoltHub URL.
+ */
+const embedBlock = createComponent<{
+  url?: string;
+}>({
   componentId: "embed",
 
   async action(element, action) {
@@ -36,7 +38,7 @@ const embedDoltHubSQL = createComponent<
 
         return {
           props: {
-            embedUrl: url,
+            url,
           },
         };
       }
@@ -45,20 +47,23 @@ const embedDoltHubSQL = createComponent<
     return element;
   },
 
-  render: async (element) => {
+  async render(element, context) {
+    const { url } = element.props;
+    const aspectRatio = 16 / 9;
     return (
       <block>
         <webframe
-          source={{ url: element.props.embedUrl }}
-          aspectRatio={16 / 9}
+          source={{
+            url: url,
+          }}
+          aspectRatio={aspectRatio}
         />
       </block>
     );
   },
 });
 
-export default createIntegration({
+export default createIntegration<EmbedDoltHubSQLRuntimeContext>({
   fetch: handleFetchEvent,
-  components: [embedDoltHubSQL],
-  events: {},
+  components: [embedBlock],
 });

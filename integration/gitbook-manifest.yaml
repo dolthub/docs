@@ -11,7 +11,7 @@ scopes:
   - space:metadata:write
   - space:views:read
 blocks:
-  - id: embedDoltHubSQL
+  - id: embed
     title: Embed DoltHub SQL
     description: webframes a /embed URL on DoltHub
     urlUnfurl:
