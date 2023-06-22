@@ -37,7 +37,6 @@ title: Dolt System Tables
 * [Configuration Tables](dolt-system-tables.md#configuration\_tables)
   * [dolt\_ignore](dolt-system-tables.md#dolt\_ignore)
 
-
 ## Database Metadata System Tables
 
 ### `dolt_branches`
@@ -567,8 +566,6 @@ This is similar, but different from the `dolt_log` [system table](https://docs.d
 
 Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/repositories/dolthub/SHAQ), we can query for the five most recent commits before November 1st, 2021, across all commits in the database (regardless of what is checked out to `HEAD`) with this query:
 
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*FROM+dolt_commitsORDER+BY+date+DESCLIMIT+5" %}
-
 ### `dolt_diff`
 
 The `dolt_diff` system table shows which tables in the current database were changed in each commit reachable from the active branch's HEAD. When multiple tables are changed in a single commit, there is one row in the `dolt_diff` system table for each table, all with the same commit hash. Any staged or unstaged changes in the working set are included with the value `WORKING` for their `commit_hash`. After identifying the tables that changed in a commit, the `dolt_diff_$TABLENAME` system tables can be used to determine the data that changed in each table.
@@ -597,8 +594,6 @@ The `DOLT_DIFF` system table has the following columns
 #### Example Query
 
 Taking the [`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players) database from [DoltHub](https://www.dolthub.com/) as our example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed, from the month of October, 2020.
-
-{% embed url="https://dolthub-preview-1.awsdev.ld-corp.com/repositories/dolthub/nba-players/embed/master?active=Tables&q=SELECT+commit_hash%2C+table_name+FROM+dolt_diff+WHERE+date+BETWEEN+%222020-05-09%22+AND+%222020-05-10%22%3B%0A" %}
 
 From these results, we can see there were four commits to this database in October, 2020. Commits `rla1p8em` and `jbk2ckro` only changed the `draft_history` table, commit `pu60cdpp` changed the `players` table, and commit `1gtq675i` made changes to seven tables. To dig deeper into these changes, we can query the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
 
@@ -1009,7 +1004,7 @@ mydb> update dolt_conflicts_mytable set our_a = their_a, our_b = their_b;
 And of course you can use any combination of `ours`, `theirs` and `base` rows in these statements.
 
 {% hint style="info" %}
-#### Notes
+**Notes**
 
 * Updates made to the `our_` columns are applied to the original table using the primary key (or keyless hash). If the row does not exist, it will be inserted. Updates made to `our_` columns will never delete a row, however.
 * `dolt_conflict_id` is a unique identifier for the conflict. It is particulary useful when writing software that needs to resolve conflicts automatically.
