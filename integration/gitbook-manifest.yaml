@@ -1,0 +1,19 @@
+name: embedDoltHubSQL
+title: Embed DoltHub SQL
+organization: -MO3iG41rAZJsdGWtz_o
+visibility: public
+description: "Embed DoltHub SQL console directly into GitBook pages."
+script: src/index.tsx
+scopes:
+  - space:content:read
+  - space:content:write
+  - space:metadata:read
+  - space:metadata:write
+  - space:views:read
+blocks:
+  - id: embed
+    title: Embed DoltHub SQL
+    description: webframes a /embed URL on DoltHub
+    urlUnfurl:
+      - https://www.dolthub.com/repositories/**
+secrets: {}
