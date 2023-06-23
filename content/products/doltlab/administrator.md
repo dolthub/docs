@@ -25,6 +25,7 @@ the following information can help DoltLab Admins manually perform some common a
 18. [Customize DoltLab colors](#customize-colors)
 19. [Use a domain name with DoltLab](#use-domain)
 20. [Add Super Admins to a DoltLab instance](#add-super-admins)
+21. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -927,3 +928,135 @@ super_admins: [
 Add the field `super_admins` to the `admin-config.yaml` file and provide a list of email addresses associated with the DoltLab users who will be super admins. These addresses must be verified by the DoltLab users associated with them for their super admin privileges to take effect.
 
 After adding this field, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, your instance will have super admin users.
+
+<h1 id="doltlab-hosted-dolt">Run DoltLab on Hosted Dolt</h1>
+
+Starting with DoltLab `v1.0.0`, DoltLab can be configured to use a [Hosted Dolt](https://hosted.doltdb.com) instance as its application database. This allows DoltLab administrators to use the feature-rich SQL workbench Hosted Dolt provides to interact with their DoltLab database.
+
+To configure a DoltLab to use a Hosted Dolt, follow the steps below as we create a sample DoltLab Hosted Dolt instance called `my-doltlab-db-1`.
+
+<h2 id="doltlab-hosted-dolt-create-deployment">Create a Hosted Dolt Deployment</h2>
+
+To begin, you'll need to create a Hosted Dolt deployment that your DoltLab instance will connect to. We've created a [video tutorial](https://www.dolthub.com/blog/2022-05-20-hosted-dolt-howto/) for how to create your first Hosted Dolt deployment, but briefly, you'll need to create an account on [hosted.doltdb.com](https://www.hosted.doltdb.com) and then click the "Create Deployment" button.
+
+You will then see a form where you can specify details about the host you need for your DoltLab instance:
+
+![Create Deployment Page 1](../../../static/create_deployment_1.png)
+
+In the image above you can see that we defined our Hosted Dolt deployment name as `my-doltlab-db-1`, selected an AWS EC2 host with 2 CPU and 8 GB of RAM in region `us-west-2`. We've also requested 200 GB of disk. For DoltLab, these settings should be more than sufficient.
+
+We have also requested a replica instance by checking the "Enable Replication" box, and specifying `1` replica, although replication is not required for DoltLab.
+
+![Create Deployment Page 2](../../../static/create_deployment_2.png)
+
+If you want the ability to [clone this Hosted Dolt instance](https://www.dolthub.com/blog/2023-04-17-cloning-a-hosted-database/), check the box "Enable Dolt Credentials". And finally, if you want to use the SQL workbench feature for this hosted instance (which we recommend) you should also check the box "Create database users for the SQL Workbench".
+
+You will see the hourly cost of running the Hosted Dolt instance displayed above the "Create Deployment" button. Click it, and wait for the deployment to reach the "Started" state.
+
+![Hosted Deployment Started](../../../static/hosted_deployment_started.png)
+
+Once the deployment has come up, the deployment page will display the connection information for both the primary host and the replica, and each will be ready to use. Before connecting a DoltLab instance to the primary host, though, there are a few remaining steps to take to ensure the host has the proper state before connecting DoltLab.
+
+First, click the "Configuration" tab and uncheck the box "behavior_disable_multistatements". DoltLab will need to execute multiple statements against this database when it starts up. You can also, optionally, change the log_level to "debug". This log level setting will make sure executed queries appear in the database logs, which is helpful for debugging.
+
+![Hosted Deployment Started](../../../static/hosted_deployment_started.png)
+
+Click "Save Changes".
+
+Next, navigate to the "Workbench" tab and check the box "Enable Writes". This will allow you to execute writes against this instance from the SQL workbench. Click "Update".
+
+![Hosted Deployment Started](../../../static/enable_writes.png)
+
+Then, with writes enabled, on this same page, click "Create database" to create the database that DoltLab expects, called `dolthubapi`.
+
+Finally, create the required users and grants that DoltLab requires by connecting to this deployment and running the following statements:
+
+```sql
+CREATE USER 'dolthubadmin' IDENTIFIED BY '<password>';
+CREATE USER 'dolthubapi' IDENTIFIED BY '<password>';
+GRANT ALL ON *.* TO 'dolthubadmin';
+GRANT ALL ON dolthubapi.* TO 'dolthubapi';
+```
+
+You can do this by running these statements from the Hosted workbench SQL console, or by connecting to the database using the mysql client connection command on the "Connectivity" tab, and executing these statements from the SQL shell.
+
+This instance is now ready for a DoltLab connection.
+
+<h2 id="doltlab-hosted-dolt-edit-docker-compose">Edit DoltLab's Docker Compose file</h2>
+
+To connect DoltLab to `my-doltlab-db-1`, ensure that your DoltLab instance is stopped, and remove references to `doltlabdb` in DoltLab's `docker-compose.yaml` file.
+
+You can also remove references to `doltlabdb-dolt-data`, `doltlabdb-dolt-root`, `doltlabdb-dolt-configs`, and `doltlabdb-dolt-backups` from the `volumes` section, as these were only necessary for DoltLab's default Dolt server.
+
+```yaml
+  # commenting out all references to doltlabdb
+  #
+  # 
+  # doltlabdb:
+  #  image: public.ecr.aws/dolthub/doltlab/dolt-sql-server:v1.0.2
+  #  command:
+  #    -l debug
+  #  environment:
+  #    DOLT_PASSWORD: "${DOLT_PASSWORD}"
+  #    DOLTHUBAPI_PASSWORD: "${DOLTHUBAPI_PASSWORD}"
+  #  networks:
+  #    - default
+  #  volumes:
+  #    - doltlabdb-dolt-data:/var/lib/dolt
+  #    - doltlabdb-dolt-root:/.dolt
+  #    - doltlabdb-dolt-configs:/etc/dolt
+  #    - doltlabdb-dolt-backups:/backups
+  doltlabenvoy:
+     image: envoyproxy/envoy-alpine:v1.18-latest
+     command:
+       -c /envoy.yaml
+...
+  doltlabui:
+    depends_on:
+      # - doltlabdb
+      - doltlabenvoy
+      - doltlabremoteapi
+      - doltlabapi
+      - doltlabgraphql
+      - doltlabfileserviceapi
+...
+    networks:
+      - default
+networks:
+  default:
+    external:
+      name: doltlab
+volumes:
+  # doltlabdb-dolt-data:
+  # doltlabdb-dolt-root:
+  # doltlabdb-dolt-configs:
+  # doltlabdb-dolt-backups:     
+  doltlab-remote-storage:
+  doltlab-user-uploads:
+```
+
+There's one additional edit to the `docker-compose.yaml` file to make before we can start DoltLab. Edit the value of the `-doltHost`argument in the `doltlabapi.command` section to match the host of the primary `my-doltlab-db-1` host. In our example, this would be `dolthub-my-doltlab-db-1.dbs.hosted.doltdb.com`.
+
+```yaml
+...
+  doltlabapi:
+...
+    command:
+      -doltlab
+      -outboundInternalServiceEndpointHost doltlabenvoy
+      -iterTokenEncKeysFile /iter_token.keys
+      -iterTokenDecKeysFile /iter_token.keys
+      -doltUser dolthubapi
+      -doltHost dolthub-my-doltlab-db-1.dbs.hosted.doltdb.com # update the host to point to the primary deployment
+      -doltPort 3306
+      -tlsSkipVerify # hosted dolt requires TLS, but we will skip verification for now
+...
+```
+
+You will also need to add the argument `-tlsSkipVerify` to the `doltlabapi.command` section. Save these changes to the file, and you can now start DoltLab using the `start-doltlab.sh` script.
+
+Make sure that the `DOLT_PASSWORD` environment variable matches the password you used when creating user `dolthubadmin`, and `DOLTHUBAPI_PASSWORD` matches the password you used when creating user `dolthubapi`.
+
+Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
+
+![Hosted Dolt Workbench](../../../static/hosted_dolt_workbench.png)
