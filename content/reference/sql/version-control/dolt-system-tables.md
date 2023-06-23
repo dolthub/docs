@@ -182,17 +182,12 @@ operations, such as `DROP PROCEDURE`.
 ### Example Query
 
 ```sql
-CREATE PROCEDURE p1(x INT) SELECT x;
-SELECT * FROM dolt_procedures;
+CREATE PROCEDURE simple_proc1(x DOUBLE, y DOUBLE) SELECT x*y;
+CREATE PROCEDURE simple_proc2() SELECT name FROM category;
 ```
 
-```text
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| name | create_stmt                         | created_at                    | modified_at                   |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_procedures%3B" %}
+
 
 ## `dolt_query_catalog`
 
@@ -378,7 +373,7 @@ SELECT * FROM dolt_schemas;
 Create a tag using dolt_tag() stored procedure.
 
 ```sql
-CALL DOLT_TAG('v2','head','-m','creating v2 tag');
+CALL DOLT_TAG('_migrationtest','head','-m','savepoint for migration testing');
 ```
 
 ```text
@@ -391,19 +386,7 @@ CALL DOLT_TAG('v2','head','-m','creating v2 tag');
 
 Get all the tags.
 
-```sql
-SELECT * FROM dolt_tags;
-```
-
-```text
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| tag_name | tag_hash                         | tagger     | email                | date                    | message         |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| v1       | av46ue6knfcf59b3621vtu69dfrkgdpv | jennifersp | jennifer@dolthub.com | 2022-07-10 12:45:23.135 | creating v1 tag |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| v2       | ppjpdtj8hsvrmg2455qguduthrcfektu | jennifersp | jennifer@dolthub.com | 2022-07-11 16:36:05.461 | creating v2 tag |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_tags%3B" %}
 
 # Database History System Tables
 
@@ -446,32 +429,15 @@ Attempting to query `dolt_blame_$tablename` for a table without a primary key wi
 
 ### Example Query
 
-Consider the following example table `app_config` that holds configuration data:
+Consider the following example table `city`:
 
-```
-> describe app_config;
-+--------+----------+------+-----+---------+-------+
-| Field  | Type     | Null | Key | Default | Extra |
-+--------+----------+------+-----+---------+-------+
-| id     | bigint   | NO   | PRI |         |       |
-| name   | longtext | NO   |     |         |       |
-| value  | longtext | NO   |     |         |       |
-+--------+----------+------+-----+---------+-------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=describe+city%3B" %}
 
-To find who set the current configuration values, we can query the `dolt_blame_app_config` table:
+To find who set the current values, we can query the `dolt_blame_city` table:
 
-```
-> select * from dolt_blame_app_config;
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| id  | commit                           | commit_date                       | committer       | email             | message                       |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
-| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
-| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_blame_city+LIMIT+5%3B" %}
+
+
 
 ## `dolt_commit_ancestors`
 
