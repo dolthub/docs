@@ -139,7 +139,7 @@ SELECT * FROM dolt_conflicts_people;
 | base_occupation | base_last_name | base_id | base_first_name | base_age | our_occupation | our_last_name | our_id | our_first_name | our_age | their_occupation | their_last_name | their_id | their_first_name | their_age |
 +-----------------+----------------+---------+-----------------+----------+----------------+---------------+--------+----------------+---------+------------------+-----------------+----------+------------------+-----------+
 | Homemaker       | Simpson        |       1 | Marge           |       37 | Homemaker      | Simpson       |      1 | Marge          |      36 | NULL             | NULL            |     NULL | NULL             |      NULL |
-| Bartender       | Szslak         |       2 | Moe             |     NULL | Bartender      | Szslak        |      2 | Moe            |      62 | Bartender        | Szslak          |        2 | Moe              |        60 |
+| Bartender       | Szyslak        |       2 | Moe             |     NULL | Bartender      | Szyslak       |      2 | Moe            |      62 | Bartender        | Szyslak         |        2 | Moe              |        60 |
 | NULL            | NULL           |    NULL | NULL            |     NULL | Student        | Simpson       |      3 | Bart           |      10 | Student          | Simpson         |        3 | Lisa             |         8 |
 +-----------------+----------------+---------+-----------------+----------+----------------+---------------+--------+----------------+---------+------------------+-----------------+----------+------------------+-----------+
 ```
