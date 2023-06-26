@@ -215,24 +215,16 @@ All named queries are displayed in the Queries tab of your database on
 
 ### Example Query
 
-Using the `jfulghum/iris-flower-dataset` from DoltHub as an example, you can create a
+Using the `dolthub/docs_examples` from DoltHub as an example, you can create a
 named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
 
 ```shell
-> dolt sql -q "select distinct(class) from classified_measurements where petal_length_cm > 5" \
-           -s "Large Irises" -m "Query to identify iris species with the largest recorded petal lengths"
+> dolt sql -q "select * from tablename" -s "select all" -m "Query to select all records from tablename"
 ```
 
 After creating a named query, you can view it in the `dolt_query_catalog` table:
 
-```sql
-> select * from dolt_query_catalog;
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| id           | display_order | name         | query                                                                         | description                                                            |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| Large Irises | 1             | Large Irises | select distinct(class) from classified_measurements where petal_length_cm > 5 | Query to identify iris species with the largest recorded petal lengths |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_query_catalog%3B" %}
 
 Then you can use the dolt CLI to execute it:
 
@@ -332,20 +324,12 @@ The values in this table are partly implementation details associated with the i
 ```sql
 CREATE VIEW four AS SELECT 2+2 FROM dual;
 CREATE TABLE mytable (x INT PRIMARY KEY);
-CREATE TRIGGER inc_insert BEFORE INSERT ON a FOR EACH ROW SET NEW.x = NEW.x + 1;
+CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1;
 CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO CALL DOLT_GC();
-SELECT * FROM dolt_schemas;
 ```
 
-```text
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-| type    | name       | fragment                                                                                                                                                          | extra                     |
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-| event   | monthly_gc | CREATE DEFINER = `root`@`localhost` EVENT `monthly_gc` ON SCHEDULE EVERY 1 MONTH STARTS '2023-05-09 10:48:24' ON COMPLETION NOT PRESERVE ENABLE DO CALL DOLT_GC() | {"CreatedAt": 1683654504} |
-| trigger | inc_insert | CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1                                                                             | {"CreatedAt": 1683654353} |
-| view    | four       | CREATE VIEW four AS SELECT 2+2 FROM dual                                                                                                                          | {"CreatedAt": 1683654112} |
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-```
+Then you can view them in `dolt_schemas;`:
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_schemas%3B" %}
 
 ## `dolt_tags`
 
@@ -508,14 +492,13 @@ The `from_commit` and `to_commit` parameters must both be specified in the query
 
 ### Example Schema
 
-Consider a simple example with a table that has two columns:
+Consider a simple example with a table that has one column:
 
 ```text
 +--------------+
 | field | type |
 +--------------+
-| pk    | int  |
-| val   | int  |
+| x     | int  |
 +--------------+
 ```
 
@@ -525,14 +508,13 @@ Based on the table's schema above, the schema of the `dolt_commit_diff_$TABLENAM
 +------------------+----------+
 | field            | type     |
 +------------------+----------+
-| to_pk            | int      |
-| to_val           | int      |
+| to_x             | int      |
 | to_commit        | longtext |
 | to_commit_date   | datetime |
-| from_pk          | int      |
-| from_val         | int      |
+| from_x           | int      |
 | from_commit      | longtext |
 | from_commit_date | datetime |
+| diff_type        | varchar  |
 +------------------+----------+
 ```
 
@@ -549,17 +531,13 @@ D---E---F---G main
 We can use the above table to represent two types of diffs: a two-point diff and a three-point diff.
 In a two-point diff we want to see the difference in rows between Point C and Point G.
 
-```SQL
-SELECT * from dolt_commit_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('main');
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+*+from+dolt_commit_diff_mytable+where+to_commit%3DHASHOF%28%27feature%27%29+and+from_commit+%3D+HASHOF%28%27main%27%29%3B" %}
 
 We can also compute a three-point diff using this table.
 In a three-point diff we want to see how our feature branch has diverged
 from our common ancestor E, without including the changes from F and G on main.
 
-```SQL
-SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('main', 'feature');
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+*+from+dolt_commit_diff_mytable+where+to_commit%3DHASHOF%28%27feature%27%29+and+from_commit%3Ddolt_merge_base%28%27main%27%2C+%27feature%27%29%3B" %}
 
 [The `dolt_merge_base` function](dolt-sql-functions.md#dolt_merge_base)
 computes the closest ancestor E between `main` and `feature`.
@@ -823,17 +801,13 @@ from the user table's schema at the current checked out branch.
 
 ### Example Schema
 
-Consider a table named `states` with the following schema:
+Consider a table named `mytable` with the following schema:
 
 ```text
 +------------+--------+
 | field      | type   |
 +------------+--------+
-| state      | TEXT   |
-| capital    | TEXT   |
-| population | BIGINT |
-| area       | BIGINT |
-| counties   | BIGINT |
+| x          | INT    |
 +------------+--------+
 ```
 
@@ -843,11 +817,7 @@ The schema for `dolt_history_states` would be:
 +-------------+----------+
 | field       | type     |
 +-------------+----------+
-| state       | TEXT     |
-| capital     | TEXT     |
-| population  | BIGINT   |
-| area        | BIGINT   |
-| counties    | BIGINT   |
+| x           | INT      |
 | commit_hash | TEXT     |
 | committer   | TEXT     |
 | commit_date | DATETIME |
@@ -856,7 +826,7 @@ The schema for `dolt_history_states` would be:
 
 ### Example Query
 
-Assume a database with the `states` table above and the following commit graph:
+Assume a database with the `mytable` table above and the following commit graph:
 
 ```text
    B---E  feature
@@ -864,26 +834,10 @@ Assume a database with the `states` table above and the following commit graph:
  A---C---D  main
 ```
 
-When the `main` branch is checked out, the following query returns the results below, showing
-the state of the Virginia row at every ancestor commit reachable from our current branch.
+When the `feature` branch is checked out, the following query returns the results below, showing
+the row at every ancestor commit reachable from our current branch.
 
-```sql
-SELECT *
-FROM dolt_history_states
-WHERE state = "Virginia";
-```
-
-```text
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-| state    | population | capital      | area   | counties | commit_hash | committer | commit_date                     |
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-| Virginia | 877683     | Richmond     | 42774  | 75       | HASHOF(D)   | billybob  | 1810-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 807557     | Richmond     | 42774  | 73       | HASHOF(C)   | billybob  | 1800-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 691937     | Williamsburg | 42774  | 68       | HASHOF(A)   | billybob  | 1778-01-09 00:00:00.0 +0000 UTC |
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-
-# Note: in the real result set there would be actual commit hashes for each row.
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/feature?q=SELECT+*+FROM+dolt_history_mytable%3B" %}
 
 ## `dolt_log`
 
