@@ -40,18 +40,22 @@ SHOW CREATE TABLE myTable AS OF 'myBranch';
 DESCRIBE myTable AS OF 'HEAD~';
 ```
 
-## Specifying a commit hash for an entire connection
+Note that `AS OF` always names a revision at a specific Dolt commit. Changes on a branch's [working
+set](../../concepts/dolt/git/working-set.md) that have not been commited to that head via `call
+dolt_commit()` or similar are not visible via this syntax.
 
-You can connect to a non-HEAD, read-only database where every table is
-locked to a particular commit. Use a connection string like this:
+## Specifying a revision in the database name
+
+You can connect to any commit in the database history by including its commit hash in the name of
+the database, like this:
 
 `mysql://127.0.0.1:3306/mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
 
-Or a `USE` statement. Note the backtick quoting, which is necessary
-since the database identifier contains a slash character.
+The database will be read-only in this case. You can do the same thing on an existing connection
+with a `USE` statement.
 
 ```sql
-USE `mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
+USE mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p
 ```
 
 Or specify the commit hash directly in the query. This is equivalent
@@ -64,6 +68,10 @@ show create table `mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`.myTable;
 
 There are other variations on this as well. See the docs on [using
 branches](branches.md) for more details.
+
+Note that this syntax applied to a branch will name that branch's [working
+set](../../concepts/dolt/git/working-set.md) and therefore includes any changes not yet committed to
+the HEAD of the branch.
 
 ## Querying history using dolt system tables
 

@@ -53,7 +53,13 @@ Another potential cause is a commit-heavy workflow that uses a database design t
 
 ## Server Consuming Memory
 
-A Dolt server requires approximately 1% of the disk size of the database in memory at minimum. So, a 100GB database should have at least 1GB of RAM but preferably more. We recommend provisioning approximately 10% of the disk size of the database as memory.
+Serving Dolt databases requires a fair amount of memory. As a general rule, we recommend a minimum
+of 2GB available RAM for any production use case. Larger databases or heavier workloads should start
+at 4GB of RAM, and 8GB is common for our production customers. Your server's RAM requirements grow
+with the size of the database being served, the number of concurrent connections, the size /
+complexity of queries being executed, and other factors. These numbers can vary dramatically and are
+only intended as first-step guidance on resource requirements. Your use case may require more or
+less memory to run well, and you should load test to determine the correct ceiling.
 
 A query may cause Dolt to grow memory use unbounded and then eventually crash the server. If you discover one such queries, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). Such queries should be rare but not impossible, especially with complex queries containing multiple `JOIN`s.
 
