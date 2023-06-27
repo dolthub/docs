@@ -54,7 +54,7 @@ Valid commands for dolt are
 ## Global Arguments
 
 Dolt subcommands are in transition to using the flags listed below as global flags.
-The sql subcommand is currently the only command that uses these flags. All other commands will ignore them.
+Not all subcommands use these flags. If your command accepts these flags without error, then they are supported.
 
 ```bash
 dolt <--data-dir=<path>> subcommand <subcommand arguments>
@@ -62,7 +62,7 @@ dolt <--data-dir=<path>> subcommand <subcommand arguments>
 
 Specific dolt options:
 
-`-u <user>`, `--user=<user>`: 
+`-u <user>`, `--user=<user>`:
 Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
 `--data-dir=<directory>`:
@@ -72,10 +72,14 @@ Defines a directory whose subdirectories should all be dolt data repositories ac
 Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change to configuration settings.
 
 `--privilege-file=<privilege file>`:
- Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
 
 `--branch-control-file=<branch control file>`:
 Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
+
+`--use-db=<database>`:
+The name of the database to use when executing SQL queries. Defaults the database of the root directory, if it exists, and the first alphabetically if not.
+
 
 ## `dolt add`
 
