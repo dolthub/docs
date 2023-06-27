@@ -58,7 +58,7 @@ You can embed DoltHub SQL console by including the following:
 {% embed url="https://www.dolthub.com/repositories/[owner]/[database]/embed/[refName]?q={query}" %}
 ```
 
-Some system tables are not supported on DoltHub, for example, `dolt_conflicts`, running `select * from dolt_conflicts` will return query error: `dhdolt: ReadOnlyChunkStore: Unimplemented.`
+Some system tables are not supported on DoltHub, for example, `dolt_conflicts`, running `select * from dolt_conflicts` will return the query error: `dhdolt: ReadOnlyChunkStore: Unimplemented.`
 Make sure the query works on DoltHub before adding the console.
 
 To avoid timeout, use a small-size database. sometimes queries with `ORDER BY` will time out. After removing `ORDER BY`, it will return much faster.
