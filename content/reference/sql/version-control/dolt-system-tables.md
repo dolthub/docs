@@ -73,25 +73,7 @@ or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#do
 
 Get all the branches.
 
-```sql
-SELECT *
-FROM dolt_branches
-```
-
-```text
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| name   | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message         |
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-| 2011   | t2sbbg3h6uo93002frfj3hguf22f1uvh | bheni            | brian@dolthub.com      | 2020-01-22 20:47:31.213 +0000 UTC | import 2011 column mappings   |
-| 2012   | 7gonpqhihgnv8tktgafsg2oovnf3hv7j | bheni            | brian@dolthub.com      | 2020-01-22 23:01:39.08 +0000 UTC  | import 2012 allnoagi data     |
-| 2013   | m9seqiabaefo3b6ieg90rr4a14gf6226 | bheni            | brian@dolthub.com      | 2020-01-22 23:50:10.639 +0000 UTC | import 2013 zipcodeagi data   |
-| 2014   | v932nm88f5g3pjmtnkq917r2q66jm0df | bheni            | brian@dolthub.com      | 2020-01-23 00:00:43.673 +0000 UTC | update 2014 column mappings   |
-| 2015   | c7h0jc23hel6qbh8ro5ertiv15to9g9o | bheni            | brian@dolthub.com      | 2020-01-23 00:04:35.459 +0000 UTC | import 2015 allnoagi data     |
-| 2016   | 0jntctp6u236le9qjlt9kf1q1if7mp1l | bheni            | brian@dolthub.com      | 2020-01-28 20:38:32.834 +0000 UTC | fix allnoagi zipcode for 2016 |
-| 2017   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
-| main   | j883mmogbd7rg3cfltukugk0n65ud0fh | bheni            | brian@dolthub.com      | 2020-01-28 16:43:45.687 +0000 UTC | import 2017 allnoagi data     |
-+--------+----------------------------------+------------------+------------------------+-----------------------------------+-------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_branches%3B" %}
 
 To find the current active branch use [`select active_branch()`](./dolt-sql-functions.md#active_branch).
 
@@ -200,17 +182,12 @@ operations, such as `DROP PROCEDURE`.
 ### Example Query
 
 ```sql
-CREATE PROCEDURE p1(x INT) SELECT x;
-SELECT * FROM dolt_procedures;
+CREATE PROCEDURE simple_proc1(x DOUBLE, y DOUBLE) SELECT x*y;
+CREATE PROCEDURE simple_proc2() SELECT name FROM category;
 ```
 
-```text
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| name | create_stmt                         | created_at                    | modified_at                   |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-| p1   | CREATE PROCEDURE p1(x INT) SELECT x | 2021-03-04 00:00:000+0000 UTC | 2021-03-04 00:00:000+0000 UTC |
-+------+-------------------------------------+-------------------------------+-------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_procedures%3B" %}
+
 
 ## `dolt_query_catalog`
 
@@ -238,24 +215,16 @@ All named queries are displayed in the Queries tab of your database on
 
 ### Example Query
 
-Using the `jfulghum/iris-flower-dataset` from DoltHub as an example, you can create a
+Using the `dolthub/docs_examples` from DoltHub as an example, you can create a
 named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
 
 ```shell
-> dolt sql -q "select distinct(class) from classified_measurements where petal_length_cm > 5" \
-           -s "Large Irises" -m "Query to identify iris species with the largest recorded petal lengths"
+> dolt sql -q "select * from tablename" -s "select all" -m "Query to select all records from tablename"
 ```
 
 After creating a named query, you can view it in the `dolt_query_catalog` table:
 
-```sql
-> select * from dolt_query_catalog;
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| id           | display_order | name         | query                                                                         | description                                                            |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-| Large Irises | 1             | Large Irises | select distinct(class) from classified_measurements where petal_length_cm > 5 | Query to identify iris species with the largest recorded petal lengths |
-+--------------+---------------+--------------+-------------------------------------------------------------------------------+------------------------------------------------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_query_catalog%3B" %}
 
 Then you can use the dolt CLI to execute it:
 
@@ -355,20 +324,12 @@ The values in this table are partly implementation details associated with the i
 ```sql
 CREATE VIEW four AS SELECT 2+2 FROM dual;
 CREATE TABLE mytable (x INT PRIMARY KEY);
-CREATE TRIGGER inc_insert BEFORE INSERT ON a FOR EACH ROW SET NEW.x = NEW.x + 1;
+CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1;
 CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO CALL DOLT_GC();
-SELECT * FROM dolt_schemas;
 ```
 
-```text
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-| type    | name       | fragment                                                                                                                                                          | extra                     |
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-| event   | monthly_gc | CREATE DEFINER = `root`@`localhost` EVENT `monthly_gc` ON SCHEDULE EVERY 1 MONTH STARTS '2023-05-09 10:48:24' ON COMPLETION NOT PRESERVE ENABLE DO CALL DOLT_GC() | {"CreatedAt": 1683654504} |
-| trigger | inc_insert | CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1                                                                             | {"CreatedAt": 1683654353} |
-| view    | four       | CREATE VIEW four AS SELECT 2+2 FROM dual                                                                                                                          | {"CreatedAt": 1683654112} |
-+---------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+
-```
+Then you can view them in `dolt_schemas`:
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_schemas%3B" %}
 
 ## `dolt_tags`
 
@@ -396,7 +357,7 @@ SELECT * FROM dolt_schemas;
 Create a tag using dolt_tag() stored procedure.
 
 ```sql
-CALL DOLT_TAG('v2','head','-m','creating v2 tag');
+CALL DOLT_TAG('_migrationtest','head','-m','savepoint for migration testing');
 ```
 
 ```text
@@ -409,19 +370,7 @@ CALL DOLT_TAG('v2','head','-m','creating v2 tag');
 
 Get all the tags.
 
-```sql
-SELECT * FROM dolt_tags;
-```
-
-```text
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| tag_name | tag_hash                         | tagger     | email                | date                    | message         |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| v1       | av46ue6knfcf59b3621vtu69dfrkgdpv | jennifersp | jennifer@dolthub.com | 2022-07-10 12:45:23.135 | creating v1 tag |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-| v2       | ppjpdtj8hsvrmg2455qguduthrcfektu | jennifersp | jennifer@dolthub.com | 2022-07-11 16:36:05.461 | creating v2 tag |
-+----------+----------------------------------+------------+----------------------+-------------------------+-----------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_tags%3B" %}
 
 # Database History System Tables
 
@@ -464,32 +413,15 @@ Attempting to query `dolt_blame_$tablename` for a table without a primary key wi
 
 ### Example Query
 
-Consider the following example table `app_config` that holds configuration data:
+Consider the following example table `city`:
 
-```
-> describe app_config;
-+--------+----------+------+-----+---------+-------+
-| Field  | Type     | Null | Key | Default | Extra |
-+--------+----------+------+-----+---------+-------+
-| id     | bigint   | NO   | PRI |         |       |
-| name   | longtext | NO   |     |         |       |
-| value  | longtext | NO   |     |         |       |
-+--------+----------+------+-----+---------+-------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=describe+city%3B" %}
 
-To find who set the current configuration values, we can query the `dolt_blame_app_config` table:
+To find who set the current values, we can query the `dolt_blame_city` table:
 
-```
-> select * from dolt_blame_app_config;
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| id  | commit                           | commit_date                       | committer       | email             | message                       |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-| 1   | gift4cdu4m0daedgppu8m3uiuh8sovc8 | 2022-02-22 20:05:08.881 +0000 UTC | Thomas Foolery, | foolery@email.com | updating display config value |
-| 2   | 30c2qqv3u6mvfsd11g0t1ejk0j974f71 | 2022-02-22 20:05:09.14 +0000 UTC  | Harry Wombat,   | wombat@email.com  | switching to file encryption  |
-| 3   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-| 4   | s15jrjbtg1mq5sfmekpgdomijcr4jsq0 | 2022-02-22 20:05:09.265 +0000 UTC | Johnny Moolah,  | johnny@moolah.com | adding new config for format  |
-+-----+----------------------------------+-----------------------------------+-----------------+-------------------+-------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_blame_city%3B" %}
+
+
 
 ## `dolt_commit_ancestors`
 
@@ -560,14 +492,13 @@ The `from_commit` and `to_commit` parameters must both be specified in the query
 
 ### Example Schema
 
-Consider a simple example with a table that has two columns:
+Consider a simple example with a table that has one column:
 
 ```text
 +--------------+
 | field | type |
 +--------------+
-| pk    | int  |
-| val   | int  |
+| x     | int  |
 +--------------+
 ```
 
@@ -577,14 +508,13 @@ Based on the table's schema above, the schema of the `dolt_commit_diff_$TABLENAM
 +------------------+----------+
 | field            | type     |
 +------------------+----------+
-| to_pk            | int      |
-| to_val           | int      |
+| to_x             | int      |
 | to_commit        | longtext |
 | to_commit_date   | datetime |
-| from_pk          | int      |
-| from_val         | int      |
+| from_x           | int      |
 | from_commit      | longtext |
 | from_commit_date | datetime |
+| diff_type        | varchar  |
 +------------------+----------+
 ```
 
@@ -601,17 +531,13 @@ D---E---F---G main
 We can use the above table to represent two types of diffs: a two-point diff and a three-point diff.
 In a two-point diff we want to see the difference in rows between Point C and Point G.
 
-```SQL
-SELECT * from dolt_commit_diff_$TABLENAME where to_commit=HASHOF('feature') and from_commit = HASHOF('main');
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+*+from+dolt_commit_diff_mytable+where+to_commit%3DHASHOF%28%27feature%27%29+and+from_commit+%3D+HASHOF%28%27main%27%29%3B" %}
 
 We can also compute a three-point diff using this table.
 In a three-point diff we want to see how our feature branch has diverged
 from our common ancestor E, without including the changes from F and G on main.
 
-```SQL
-SELECT * FROM dolt_commit_diff_$TABLENAME WHERE to_commit=HASHOF('feature') and from_commit=dolt_merge_base('main', 'feature');
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+*+from+dolt_commit_diff_mytable+where+to_commit%3DHASHOF%28%27feature%27%29+and+from_commit%3Ddolt_merge_base%28%27main%27%2C+%27feature%27%29%3B" %}
 
 [The `dolt_merge_base` function](dolt-sql-functions.md#dolt_merge_base)
 computes the closest ancestor E between `main` and `feature`.
@@ -650,11 +576,11 @@ checked out branch, whereas `dolt_commits` shows all commits from the entire dat
 
 ### Example Query
 
-Using the [`dolthub/SHAQ` database from DoltHub](https://www.dolthub.com/repositories/dolthub/SHAQ),
-we can query for the five most recent commits before November 1st, 2021, across all commits in the database
+Using the [`dolthub/first-hour-db` database from DoltHub](https://www.dolthub.com/repositories/dolthub/first-hour-db),
+we can query for the five commits before April 20th, 2022, across all commits in the database
 (regardless of what is checked out to `HEAD`) with this query:
 
-{% embed url="https://www.dolthub.com/repositories/dolthub/SHAQ/embed/main?q=SELECT+*%0AFROM+dolt_commits%0AWHERE+date+%3C+%222021-11-01%22%0AORDER+BY+date+DESC%0ALIMIT+5%3B" %}
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0A" %}
 
 ## `dolt_diff`
 
@@ -685,52 +611,20 @@ make any changes to tables _(e.g. an empty commit)_, it is not included in the `
 ### Example Query
 
 Taking the
-[`dolthub/nba-players`](https://www.dolthub.com/repositories/dolthub/nba-players)
+[`dolthub/first-hour-db`](https://www.dolthub.com/repositories/dolthub/first-hour-db)
 database from [DoltHub](https://www.dolthub.com/) as our
 example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed,
-from the month of October, 2020.
+from the month of April, 2022.
 
-```sql
-SELECT commit_hash, table_name
-FROM   dolt_diff
-WHERE  date BETWEEN "2020-10-01" AND "2020-10-31";
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+commit_hash%2C+table_name%0AFROM+++dolt_diff%0AWHERE++date+BETWEEN+%222022-04-01%22+AND+%222022-04-30%22%3B%0A" %}
 
-```text
-+----------------------------------+------------------------------+
-| commit_hash                      | table_name                   |
-+----------------------------------+------------------------------+
-| rla1p8emnp91urj3uant52msrskouqil | draft_history                |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_post_season    |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | career_totals_regular_season |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_post_season         |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | rankings_regular_season      |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_allstar        |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_post_season    |
-| 1gtq675ira4phn3ib05ri0qksdp13ut3 | season_totals_regular_season |
-| jbk2ckroo4hhqovrcpiv7c615dlsf3ut | draft_history                |
-| pu60cdppae7rumf1lm06j5ngkijp7i8f | players                      |
-+----------------------------------+------------------------------+
-```
 
 From these results, we can see there were four commits to this database in October, 2020. Commits
-`rla1p8em` and `jbk2ckro` only changed the `draft_history` table, commit `pu60cdpp` changed the `players`
-table, and commit `1gtq675i` made changes to seven tables. To dig deeper into these changes, we can query
+`	224helo` only changed the `dolt_schemas` table, commit `7jrvg1a` changed the `dolt_docs`
+table, and commit `5jpgb0f` made changes to two tables. To dig deeper into these changes, we can query
 the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
 
-```sql
-SELECT count(*) as total_rows_changed
-FROM   dolt_diff_players
-WHERE  to_commit='pu60cdppae7rumf1lm06j5ngkijp7i8f';
-```
-
-```text
-+--------------------+
-| total_rows_changed |
-+--------------------+
-| 4501               |
-+--------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+count%28*%29+as+total_rows_changed%0AFROM+++dolt_diff_dolt_schemas%0AWHERE++to_commit%3D%27224helolb2bg6iqrf9b7befrflehqgnb%27%3B%0A" %}
 
 ## `dolt_column_diff`
 
@@ -767,90 +661,16 @@ make any changes to tables _(e.g. an empty commit)_, it is not included in the `
 ### Example Query
 
 Taking the
-[`dolthub/us-jails`](https://www.dolthub.com/repositories/dolthub/us-jails)
+[`first-hour-db`](https://www.dolthub.com/repositories/dolthub/first-hour-db)
 database from [DoltHub](https://www.dolthub.com/) as our
-example, the following query uses the `dolt_column_diff` system table to find all commits, and tables where the source url was updated.
+example, the following query uses the `dolt_column_diff` system table to find commits, and tables where the name was updated.
 
-```sql
-SELECT commit_hash, date
-FROM dolt_column_diff
-WHERE column_name = 'source_url';
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+commit_hash%2C+date%0AFROM+dolt_column_diff+where+column_name+%3D+%27name%27%0A%3B%0A" %}
 
-```text
-+----------------------------------+-------------------------+
-| commit_hash                      | date                    |
-+----------------------------------+-------------------------+
-| i3f3orlfmbjgqnst90c8r96jps7tdtv9 | 2022-06-14 19:11:58.402 |
-| ubu61jhc3qp1d28035ee3kd105ao10q1 | 2022-06-14 06:40:23.19  |
-| gora1aioouji9j3858n928g84en6b17b | 2022-06-02 19:25:54.407 |
-| bg7c1miq9rpbhfhnlebtlmpdvt3u898j | 2022-05-28 04:56:12.894 |
-| 4dgdn1ur42cuk18sin7olt8fnaik5d9b | 2022-05-19 19:28:49.013 |
-| 3c2mb901bm3m1erc3k3ojad950v694ad | 2022-05-18 18:09:27.142 |
-| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
-| 2qdmmfgjm5kuv358e2c9p2a91c9ue9ja | 2022-04-19 14:37:20.099 |
-| dj11kqhja290f9vut5i8jhdg3hun4e1v | 2022-05-19 19:26:53.179 |
-| 6p9ho1qgjbsgaf810k6u4f5mhqfti82o | 2022-05-18 00:26:43.743 |
-| ...                              |                         |
-+----------------------------------+-------------------------+
-```
-
-If we narrow in on the `inmate_population_snapshots` table we can count the number of commits that updated each column
+If we narrow in on the `dolt_schemas` table we can count the number of commits that updated each column
 over the course of all our commits.
 
-```sql
-SELECT column_name, count(commit_hash) as total_column_changes
-FROM dolt_column_diff
-WHERE table_name = 'inmate_population_snapshots'
-GROUP BY column_name;
-```
-
-```text
-+----------------------------+----------------------+
-| column_name                | total_column_changes |
-+----------------------------+----------------------+
-| source_url_2               | 34                   |
-| id                         | 63                   |
-| snapshot_date              | 63                   |
-| total                      | 62                   |
-| male                       | 25                   |
-| source_url                 | 64                   |
-| total_off_site             | 16                   |
-| female                     | 25                   |
-| on_probation               | 3                    |
-| technical_parole_violators | 16                   |
-| federal_offense            | 22                   |
-| convicted_or_sentenced     | 26                   |
-| detained_or_awaiting_trial | 33                   |
-| civil_offense              | 7                    |
-| awaiting_trial             | 4                    |
-| convicted                  | 4                    |
-| other_gender               | 4                    |
-| white                      | 7                    |
-| back                       | 1                    |
-| hispanic                   | 4                    |
-| asian                      | 7                    |
-| american_indian            | 7                    |
-| mexican_american           | 1                    |
-| multi_racial               | 4                    |
-| other_race                 | 7                    |
-| on_parole                  | 1                    |
-| felony                     | 18                   |
-| misdemeanor                | 18                   |
-| other_offense              | 6                    |
-| first_time_incarcerated    | 1                    |
-| employed                   | 1                    |
-| unemployed                 | 1                    |
-| citizen                    | 1                    |
-| noncitizen                 | 1                    |
-| juvenile                   | 4                    |
-| juvenile_male              | 1                    |
-| juvenile_female            | 1                    |
-| death_row_condemned        | 1                    |
-| solitary_confinement       | 1                    |
-| black                      | 6                    |
-+----------------------------+----------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+column_name%2C+count%28commit_hash%29+as+total_column_changes%0AFROM+dolt_column_diff%0AWHERE+table_name+%3D+%27dolt_schemas%27%0AGROUP+BY+column_name%3B" %}
 
 From these results, we can see that fields describing the reasons an inmate is being held are being updated far more
 frequently than the fields holding demographic information about inmates.
@@ -950,35 +770,13 @@ limit which types of changes will be returned.
 ### Example Query
 
 Taking the
-[`dolthub/wikipedia-ngrams`](https://www.dolthub.com/repositories/dolthub/wikipedia-ngrams)
+[`dolthub/us-jails`](https://www.dolthub.com/repositories/dolthub/us-jails)
 database from [DoltHub](https://www.dolthub.com/) as our
-example, the following query will retrieve the bigrams whose total
-counts have changed the most between 2 versions.
+example, the following query will retrieve the jails whose total
+num_inmates_rated_for have changed the most between 2 versions.
 
-```sql
-SELECT from_bigram, to_bigram, from_total_count, to_total_count, ABS(to_total_count-from_total_count) AS delta
-FROM dolt_diff_bigram_counts
-WHERE from_commit = HASHOF("HEAD~3") AND diff_type = "modified"
-ORDER BY delta DESC
-LIMIT 10;
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/us-jails/embed/main?q=SELECT+to_county%2C+from_county%2Cto_num_inmates_rated_for%2Cfrom_num_inmates_rated_for%2C++abs%28to_num_inmates_rated_for+-+from_num_inmates_rated_for%29+AS+delta%0AFROM+dolt_diff_jails%0AWHERE+from_commit+%3D+HASHOF%28%22HEAD~3%22%29+AND+diff_type+%3D+%22modified%22%0AORDER+BY+delta+DESC%0ALIMIT+10%3B%0A" %}
 
-```text
-+-------------+-------------+------------------+----------------+-------+
-| from_bigram | to_bigram   | from_total_count | to_total_count | delta |
-+-------------+-------------+------------------+----------------+-------+
-| of the      | of the      | 21566470         | 21616678       | 50208 |
-| _START_ The | _START_ The | 19008468         | 19052410       | 43942 |
-| in the      | in the      | 14345719         | 14379619       | 33900 |
-| _START_ In  | _START_ In  | 8212684          | 8234586        | 21902 |
-| to the      | to the      | 7275659          | 7291823        | 16164 |
-| _START_ He  | _START_ He  | 5722362          | 5737483        | 15121 |
-| at the      | at the      | 4273616          | 4287398        | 13782 |
-| for the     | for the     | 4427780          | 4438872        | 11092 |
-| and the     | and the     | 4871852          | 4882874        | 11022 |
-| is a        | is a        | 4632620          | 4643068        | 10448 |
-+-------------+-------------+------------------+----------------+-------+
-```
 
 ## `dolt_history_$TABLENAME`
 
@@ -1003,17 +801,13 @@ from the user table's schema at the current checked out branch.
 
 ### Example Schema
 
-Consider a table named `states` with the following schema:
+Consider a table named `mytable` with the following schema:
 
 ```text
 +------------+--------+
 | field      | type   |
 +------------+--------+
-| state      | TEXT   |
-| capital    | TEXT   |
-| population | BIGINT |
-| area       | BIGINT |
-| counties   | BIGINT |
+| x          | INT    |
 +------------+--------+
 ```
 
@@ -1023,11 +817,7 @@ The schema for `dolt_history_states` would be:
 +-------------+----------+
 | field       | type     |
 +-------------+----------+
-| state       | TEXT     |
-| capital     | TEXT     |
-| population  | BIGINT   |
-| area        | BIGINT   |
-| counties    | BIGINT   |
+| x           | INT      |
 | commit_hash | TEXT     |
 | committer   | TEXT     |
 | commit_date | DATETIME |
@@ -1036,7 +826,7 @@ The schema for `dolt_history_states` would be:
 
 ### Example Query
 
-Assume a database with the `states` table above and the following commit graph:
+Assume a database with the `mytable` table above and the following commit graph:
 
 ```text
    B---E  feature
@@ -1044,26 +834,10 @@ Assume a database with the `states` table above and the following commit graph:
  A---C---D  main
 ```
 
-When the `main` branch is checked out, the following query returns the results below, showing
-the state of the Virginia row at every ancestor commit reachable from our current branch.
+When the `feature` branch is checked out, the following query returns the results below, showing
+the row at every ancestor commit reachable from our current branch.
 
-```sql
-SELECT *
-FROM dolt_history_states
-WHERE state = "Virginia";
-```
-
-```text
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-| state    | population | capital      | area   | counties | commit_hash | committer | commit_date                     |
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-| Virginia | 877683     | Richmond     | 42774  | 75       | HASHOF(D)   | billybob  | 1810-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 807557     | Richmond     | 42774  | 73       | HASHOF(C)   | billybob  | 1800-01-01 00:00:00.0 +0000 UTC |
-| Virginia | 691937     | Williamsburg | 42774  | 68       | HASHOF(A)   | billybob  | 1778-01-09 00:00:00.0 +0000 UTC |
-+----------+------------+--------------+--------+----------+-------------+-----------+---------------------------------+
-
-# Note: in the real result set there would be actual commit hashes for each row.
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/feature?q=SELECT+*+FROM+dolt_history_mytable%3B" %}
 
 ## `dolt_log`
 
@@ -1086,24 +860,9 @@ This is the same data returned by the [`dolt log` CLI command](https://docs.dolt
 
 ### Example Query
 
-The following query shows the commits reachable from the current checked out head and created by user `bheni` since April, 2019:
+The following query shows the commits reachable from the current checked out head and created by user `jennifersp` since April, 2022:
 
-```sql
-SELECT *
-FROM dolt_log
-WHERE committer = "bheni" and date > "2019-04-01"
-ORDER BY date;
-```
-
-```text
-+----------------------------------+-----------+--------------------+-----------------------------------+---------------+
-| commit_hash                      | committer | email              | date                              | message       |
-+----------------------------------+-----------+--------------------+-----------------------------------+---------------+
-| qi331vjgoavqpi5am334cji1gmhlkdv5 | bheni     | brian@dolthub.com | 2019-06-07 00:22:24.856 +0000 UTC | update rating |
-| 137qgvrsve1u458briekqar5f7iiqq2j | bheni     | brian@dolthub.com | 2019-04-04 22:43:00.197 +0000 UTC | change rating |
-| rqpd7ga1nic3jmc54h44qa05i8124vsp | bheni     | brian@dolthub.com | 2019-04-04 21:07:36.536 +0000 UTC | fixes         |
-+----------------------------------+-----------+--------------------+-----------------------------------+---------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_log%0AWHERE+committer+%3D+%22jennifersp%22+and+date+%3E+%222022-04-01%22%0AORDER+BY+date%3B" %}
 
 # Working Set Metadata System Tables
 

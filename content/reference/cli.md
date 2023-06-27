@@ -51,7 +51,7 @@ Valid commands for dolt are
                stash - Stash the changes in a dirty working directory away.
 ```
 
-# Global Arguments
+## Global Arguments
 
 Dolt subcommands are in transition to using the flags listed below as global flags.
 The sql subcommand is currently the only command that uses these flags. All other commands will ignore them.
