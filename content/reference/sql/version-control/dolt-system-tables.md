@@ -328,7 +328,7 @@ CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.
 CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO CALL DOLT_GC();
 ```
 
-Then you can view them in `dolt_schemas;`:
+Then you can view them in `dolt_schemas`:
 {% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_schemas%3B" %}
 
 ## `dolt_tags`
@@ -577,10 +577,10 @@ checked out branch, whereas `dolt_commits` shows all commits from the entire dat
 ### Example Query
 
 Using the [`dolthub/first-hour-db` database from DoltHub](https://www.dolthub.com/repositories/dolthub/first-hour-db),
-we can query for the five most recent commits before April 20th, 2022, across all commits in the database
+we can query for the five commits before April 20th, 2022, across all commits in the database
 (regardless of what is checked out to `HEAD`) with this query:
 
-{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0AORDER+BY+date+DESC%0A" %}
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0A" %}
 
 ## `dolt_diff`
 
