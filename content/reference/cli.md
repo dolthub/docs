@@ -51,7 +51,7 @@ Valid commands for dolt are
                stash - Stash the changes in a dirty working directory away.
 ```
 
-# Global Argumants
+# Global Arguments
 
 Dolt subcommands are in transition to using the flags listed below as global flags.
 The sql subcommand is currently the only command that uses these flags. All other commands will ignore them.
@@ -330,7 +330,10 @@ If applying the row data changes from the cherry-picked commit results in a data
 
 **Arguments and options**
 
-No options for this command.
+`--abort`:
+Abort the current conflict resolution process, and revert all changes from the in-process cherry-pick operation.
+
+
 
 ## `dolt clean`
 
@@ -439,10 +442,10 @@ The commit timestamp can be modified using the --date parameter.  Dates can be s
 Use the given `<msg>` as the commit message.
 
 `--allow-empty`:
-Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety.
+Allow recording a commit that has the exact same data as its sole parent. This is usually a mistake, so it is disabled by default. This option bypasses that safety. Cannot be used with --skip-empty.
 
 `--skip-empty`:
-Record a commit only if there are changes to be committed. The commit operation will be a no-op, instead of an error, if there are no changes staged to commit. An error will be thrown if `--skip-empty` is used with `--allow-empty`.
+Only create a commit if there are staged changes. If no changes are staged, the call to commit is a no-op. Cannot be used with --allow-empty.
 
 `--date`:
 Specify the date used in the commit. If not specified the current system time is used.
@@ -1777,7 +1780,7 @@ List all saved queries.
 Used with --query and --save, saves the query with the descriptive message given. See also `--name`.
 
 `-b`, `--batch`:
-Use to enable more efficient batch processing for large SQL import scripts consisting of only INSERT statements. Other statements types are not guaranteed to work in this mode.
+Use to enable more efficient batch processing for large SQL import scripts. This mode is no longer supported and this flag is a no-op. To speed up your SQL imports, use either LOAD DATA, or structure your SQL import script to insert many rows per statement.
 
 `-c`, `--continue`:
 Continue running queries on an error. Used for batch mode only.
@@ -1836,19 +1839,19 @@ Defines the level of logging provided
 Options are: `trace`, `debug`, `info`, `warning`, `error`, `fatal`. Defaults to `info`.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
+Defines a directory to find databases to serve. Defaults to the current directory.
 
 `--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead.
+Deprecated, use `--data-dir` instead.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
+Defines a directory that contains non-database storage for dolt. Defaults to `$data-dir/.doltcfg`. Will be created automatically as needed.
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server.
 
 `--query-parallelism`:
-Set the number of go routines spawned to handle each query. Defaults to `2`.
+Deprecated, no effect in current versions of Dolt
 
 `--max-connections`:
 Set the number of connections handled by the server. Defaults to `100`.
@@ -1857,10 +1860,10 @@ Set the number of connections handled by the server. Defaults to `100`.
 Indicate whether to `load` or `ignore` persisted global variables. Defaults to `load`.
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will be created as needed.
 
 `--branch-control-file`:
-Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
+Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will be created as needed.
 
 `--allow-cleartext-passwords`:
 Allows use of cleartext passwords. Defaults to false.
@@ -1869,7 +1872,7 @@ Allows use of cleartext passwords. Defaults to false.
 Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 
 `--remotesapi-port`:
-Sets the port for a server which can expose the databases in this sql-server over remotesapi.
+Sets the port for a server which can expose the databases in this sql-server over remotesapi, so that clients can clone or pull from this server.
 
 `--golden`:
 Provides a connection string to a MySQL instance to be used to validate query results
@@ -1896,7 +1899,7 @@ Start a MySQL-compatible server.
 
 ```bash
 dolt sql-server --config <file>
-dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--data-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
+dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--data-dir <directory>] [-r]
 ```
 
 **Description**
@@ -1929,18 +1932,24 @@ This is an example yaml configuration file showing all supported items and their
 	  require_secure_transport: null
 	  allow_cleartext_passwords: null
 	
-	databases: []
-	
 	performance:
 	  query_parallelism: null
+	
+	data_dir: .
+	
+	cfg_dir: .doltcfg
 	
 	metrics:
 	  labels: {}
 	  host: null
-	  port: null
+	  port: -1
 	
 	remotesapi:
 	  port: null
+	
+	privilege_file: .doltcfg/privileges.db
+	
+	branch_control_file: .doltcfg/branch_control.db
 	
 	user_session_vars: []
 	
@@ -1950,11 +1959,21 @@ This is an example yaml configuration file showing all supported items and their
 
 SUPPORTED CONFIG FILE FIELDS:
 
+`data_dir`: A directory where the server will load dolt databases to serve, and create new ones. Defaults to the current directory.
+
+`cfg_dir`: A directory where the server will load and store non-database configuration data, such as permission information. Defaults `$data_dir/.doltcfg`.
+
 `log_level`: Level of logging provided. Options are: `trace`, `debug`, `info`, `warning`, `error`, and `fatal`.
 
-`behavior.read_only`: If true database modification is disabled
+`privilege_file`: "Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will be created as needed.
 
-`behavior.autocommit`: If true write queries will automatically alter the working set. When working with autocommit enabled it is highly recommended that listener.max_connections be set to 1 as concurrency issues will arise otherwise
+`branch_control_file`: Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will be created as needed.
+
+`max_logged_query_len`: If greater than zero, truncates query strings in logging to the number of characters given.
+
+`behavior.read_only`: If true database modification is disabled. Defaults to false.
+
+`behavior.autocommit`: If true every statement is committed automatically. Defaults to true. @@autocommit can also be specified in each session.
 
 `behavior.dolt_transaction_commit`: If true all SQL transaction commits will automatically create a Dolt commit, with a generated commit message. This is useful when a system working with Dolt wants to create versioned data, but doesn't want to directly use Dolt features such as dolt_commit(). 
 
@@ -1972,13 +1991,11 @@ SUPPORTED CONFIG FILE FIELDS:
 
 `listener.write_timeout_millis`: The number of milliseconds that the server will wait for a write operation
 
-`performance.query_parallelism`: Amount of go routines spawned to process each query
+`remotesapi.port`: A port to listen for remote API operations on. If set to a positive integer, this server will accept connections from clients to clone, pull, etc. databases being served.
 
-`databases`: a list of dolt data repositories to make available as SQL databases. If databases is missing or empty then the working directory must be a valid dolt data repository which will be made available as a SQL database
+`user_session_vars`: A map of user name to a map of session variables to set on connection for each session.
 
-`databases[i].path`: A path to a dolt data repository
-
-`databases[i].name`: The name that the database corresponding to the given path should be referenced via SQL
+`cluster`: Settings related to running this server in a replicated cluster. For information on setting these values, see https://docs.dolthub.com/sql-reference/server/replication
 
 If a config file is not provided many of these settings may be configured on the command line.
 
@@ -2011,19 +2028,19 @@ Defines the level of logging provided
 Options are: `trace`, `debug`, `info`, `warning`, `error`, `fatal`. Defaults to `info`.
 
 `--data-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
+Defines a directory to find databases to serve. Defaults to the current directory.
 
 `--multi-db-dir`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory. This is deprecated, you should use `--data-dir` instead.
+Deprecated, use `--data-dir` instead.
 
 `--doltcfg-dir`:
-Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change that affect configuration settings.
+Defines a directory that contains non-database storage for dolt. Defaults to `$data-dir/.doltcfg`. Will be created automatically as needed.
 
 `--no-auto-commit`:
 Set @@autocommit = off for the server.
 
 `--query-parallelism`:
-Set the number of go routines spawned to handle each query. Defaults to `2`.
+Deprecated, no effect in current versions of Dolt
 
 `--max-connections`:
 Set the number of connections handled by the server. Defaults to `100`.
@@ -2032,10 +2049,10 @@ Set the number of connections handled by the server. Defaults to `100`.
 Indicate whether to `load` or `ignore` persisted global variables. Defaults to `load`.
 
 `--privilege-file`:
-Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will be created as needed.
 
 `--branch-control-file`:
-Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
+Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will be created as needed.
 
 `--allow-cleartext-passwords`:
 Allows use of cleartext passwords. Defaults to false.
@@ -2044,7 +2061,7 @@ Allows use of cleartext passwords. Defaults to false.
 Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 
 `--remotesapi-port`:
-Sets the port for a server which can expose the databases in this sql-server over remotesapi.
+Sets the port for a server which can expose the databases in this sql-server over remotesapi, so that clients can clone or pull from this server.
 
 `--golden`:
 Provides a connection string to a MySQL instance to be used to validate query results
