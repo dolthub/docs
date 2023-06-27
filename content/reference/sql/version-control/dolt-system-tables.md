@@ -419,7 +419,7 @@ Consider the following example table `city`:
 
 To find who set the current values, we can query the `dolt_blame_city` table:
 
-{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_blame_city+LIMIT+5%3B" %}
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_blame_city%3B" %}
 
 
 
