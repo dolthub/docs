@@ -23,6 +23,7 @@ Roadmap last updated Jul 2023, next update Oct 2023.
 | Hosted replication failover               | Q3 2023     |
 | Full text indexes                         | Q3 2023     |
 | Server / CLI compatibility                | Q3 2023     |
+| User-defined functions                    | Q3 2023     |
 | Better stored procedure support           | Q3 2023     |
 | Event execution                           | 2023        |
 | Update multiple branches in a transaction | 2023        |
