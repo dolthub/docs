@@ -113,6 +113,12 @@ You can switch to a new branch with a starting commit as well:
 CALL DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
 ```
 
+## Branches and transactions
+
+The set of branches and their HEAD commits are established at transaction start time. Changes made
+to the set of branches or their HEAD commits will not be visible to this session until a new
+transaction begins.
+
 ## Restrictions on committing to multiple branches in a single transaction
 
 The server will permit you to modify more than one branch in a single transaction, but will not

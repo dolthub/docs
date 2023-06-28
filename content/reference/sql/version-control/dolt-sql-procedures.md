@@ -143,6 +143,14 @@ CALL DOLT_BRANCH('-d', 'branchToDelete');
 CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 ```
 
+{% hint style="info" %}
+
+### Notes
+
+-  The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
+
+{% endhint %}
+
 ### Options
 
 `-c`, `--copy`: Create a copy of a branch. Must be followed by the name of the source branch to copy and the name of the new branch to create. Without the `--force` option, the copy will fail if the new branch already exists.
@@ -209,6 +217,10 @@ CALL DOLT_CHECKOUT('my-existing-branch');
 CALL DOLT_CHECKOUT('my-table');
 ```
 
+{% hint style="info" %}
+
+### Notes
+
 `DOLT_CHECKOUT()` with a branch argument has two side effects on your session state:
 
 1. The session's current database, as returned by `SELECT DATABASE()`, is now the unqualified
@@ -218,6 +230,9 @@ CALL DOLT_CHECKOUT('my-table');
    
 See the comments after the statements below for an example of this behavior, and also read [Using
 Branches](./branches.md)
+
+{% endhint %}
+
 
 ```sql
 set autocommit = on;
@@ -640,6 +655,14 @@ CALL DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast
 CALL DOLT_MERGE('--abort');
 ```
 
+{% hint style="info" %}
+
+### Notes
+
+- The `dolt_merge()` procedure implicitly commits the current transaction and begins a new one.
+
+{% endhint %}
+
 ### Options
 
 `--no-ff`: Create a merge commit even when the merge resolves as a fast-forward.
@@ -838,6 +861,15 @@ CALL DOLT_RESET('--hard', 'featureBranch');
 CALL DOLT_RESET('--hard', 'commitHash123abc');
 CALL DOLT_RESET('myTable'); -- soft reset
 ```
+
+{% hint style="info" %}
+
+### Notes
+
+-  With the `--hard` option, the `dolt_reset()` procedure implicitly commits the current transaction
+   and begins a new one.
+
+{% endhint %}
 
 ### Options
 
