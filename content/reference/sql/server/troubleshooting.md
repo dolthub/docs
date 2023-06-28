@@ -53,18 +53,73 @@ Another potential cause is a commit-heavy workflow that uses a database design t
 
 ## Server Consuming Memory
 
-A Dolt server requires approximately 1% of the disk size of the database in memory at minimum. So, a 100GB database should have at least 1GB of RAM but preferably more. We recommend provisioning approximately 10% of the disk size of the database as memory.
+Serving Dolt databases requires a fair amount of memory. As a general rule, we recommend a minimum
+of 2GB available RAM for any production use case. Larger databases or heavier workloads should start
+at 4GB of RAM, and 8GB is common for our production customers. Your server's RAM requirements grow
+with the size of the database being served, the number of concurrent connections, the size /
+complexity of queries being executed, and other factors. These numbers can vary dramatically and are
+only intended as first-step guidance on resource requirements. Your use case may require more or
+less memory to run well, and you should load test to determine the correct ceiling.
 
-A query may cause Dolt to grow memory use unbounded and then eventually crash the server. If you discover one such queries, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). Such queries should be rare but not impossible, especially with complex queries containing multiple `JOIN`s.
+A query may cause Dolt to grow memory use unbounded and then eventually crash the server. If you
+discover one such queries, please submit a [GitHub
+Issue](https://github.com/dolthub/dolt/issues). Such queries should be rare but not impossible,
+especially with complex queries containing multiple `JOIN`s.
 
-Dolt may not free memory efficiently. If your Dolt server grows memory use unbounded over time and then frees the memory upon restart, you have discoverd a memory leak. Again, please submit a [GitHub issue](https://github.com/dolthub/dolt/issues). Memory leaks should be rare and we treat memory leak fixes as high priority.
+Dolt may not free memory efficiently. If your Dolt server grows memory use unbounded over time and
+then frees the memory upon restart, you have discoverd a memory leak. Again, please submit a [GitHub
+issue](https://github.com/dolthub/dolt/issues). Memory leaks should be rare and we treat memory leak
+fixes as high priority.
 
 ## Server Consuming CPU
 
-Under too much concurrent load, Dolt may consume all the CPU on a host. This is likely caused by too much read concurrency. In this case, create more [read replicas](./replication.md) and load balance your reads among your replicas.
+Under too much concurrent load, Dolt may consume all the CPU on a host. This is likely caused by too
+much read concurrency. In this case, create more [read replicas](./replication.md) and load balance
+your reads among your replicas.
 
-If you discover a query consuming all of your CPU, please submit a [GitHub Issue](https://github.com/dolthub/dolt/issues). On rare occasions, this could be a Dolt bug.
+If you discover a query consuming all of your CPU, please submit a [GitHub
+Issue](https://github.com/dolthub/dolt/issues). On rare occasions, this could be a Dolt bug.
 
 ## Too much write concurrency
 
-Currently, Dolt is not a high throughput write database. Given the current transaction model, each transaction is treated as a `merge` and requires a global write lock to perform that merge. Dolt can easily become overwhelmed with too many writes. This is an issue we will be tackling in the back half of 2023 using row level locking and other common transactional database strategies.
+Currently, Dolt is not a high-throughput database for writes. The current transaction model
+serializes all writes, which means that after a certain threshold of writer concurrency, you'll
+observe increasing latency for write operations which becomes worse as more writers pile up. As of
+this writing Dolt can handle approximately 300 writes per second, but this number can be lower
+depending on the size of the database, the size of the updates, replication settings, and other
+factors.
+
+Improving maximum write concurrency is an ongoing project.
+
+## Session state leaking due to connection pooling
+
+Many SQL database client libraries implement some kind of connection pool, where connections to the
+database are created ahead of time and then handed out to different execution threads when needed to
+execute queries. This is typically done to reduce latency on database operations. Usually these pools
+reuse connections after they are returned to the pool.
+
+Using connection pooling with Dolt when combined with `dolt_checkout()` can be problematic, because
+a session that gets returned to the pool and re-used may behave differently (modify a different
+branch head) than a fresh connection. Consider this sequence:
+
+```sql
+call dolt_checkout('feature-branch');
+...
+call dolt_commit();
+```
+
+When this connection is returned to the pool, its session has `feature-branch` checked out. If it's
+reused by another execution thread that expects a different branch, you have a bug.
+
+To mitigate potential bugs with the checked out branch in session state, we recommend that you
+either:
+
+* Disable connection pooling if feasible
+* Configure your connection pool to not re-use connections that were returned to it
+* Use a different connection string for each branch (this may mean using multiple connection pools)
+* Augment your application logic to always begin a new unit of work with `call dolt_checkout(...)`
+  to ensure the expected branch is checked out for the session
+
+[Implementing the `COM_RESET_CONNECTION` protocol](https://github.com/dolthub/dolt/issues/3921)
+would solve the problem of leaking session state between different execution threads, but support
+for this functionality in popular libraries is spotty. For now, use the above guidance.

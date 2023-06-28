@@ -143,6 +143,14 @@ CALL DOLT_BRANCH('-d', 'branchToDelete');
 CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 ```
 
+{% hint style="info" %}
+
+### Notes
+
+-  The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
+
+{% endhint %}
+
 ### Options
 
 `-c`, `--copy`: Create a copy of a branch. Must be followed by the name of the source branch to copy and the name of the new branch to create. Without the `--force` option, the copy will fail if the new branch already exists.
@@ -196,21 +204,44 @@ Switches this session to a different branch.
 With table names as arguments, restores those tables to their contents
 in the current HEAD.
 
-When switching to a different branch, your session state must be
-clean. `COMMIT` or `ROLLBACK` any changes before switching to a
-different branch.
-
-Note, unlike the Git command-line, if you have a modified working set,
-those changes remain on the branch you modified after a DOLT_CHECKOUT().
-The working set does not transfer to the new checked out branch. We
-modified this behavior because Dolt assumes multiple users of a branch
-in SQL context. Having one user change the state of other users
-working set was deemed undesirable behavior.
+Note, unlike the Git command-line, if you have a modified working set, those changes remain on the
+branch you modified after a `DOLT_CHECKOUT()`.  Uncommitted changes in the working set do not
+transfer to the checked out branch as on the command line. We modified this behavior in the SQL
+context because multiple users may be connected to the same branch. Having one user bring changes
+from various other branches with them when they switch branches is too disruptive in the
+multi-tenant SQL context.
 
 ```sql
 CALL DOLT_CHECKOUT('-b', 'my-new-branch');
 CALL DOLT_CHECKOUT('my-existing-branch');
 CALL DOLT_CHECKOUT('my-table');
+```
+
+{% hint style="info" %}
+
+### Notes
+
+`DOLT_CHECKOUT()` with a branch argument has two side effects on your session state:
+
+1. The session's current database, as returned by `SELECT DATABASE()`, is now the unqualified
+   database name.
+2. For the remainder of this session, references to the unqualified name of this database will
+   resolve to the branch checked out.
+   
+See the comments after the statements below for an example of this behavior, and also read [Using
+Branches](./branches.md)
+
+{% endhint %}
+
+
+```sql
+set autocommit = on;
+use mydb/branch1; -- current db is now `mydb/branch1`
+insert into t1 values (1); -- modifying the `branch1` branch
+call dolt_checkout('branch2'); -- current db is now `mydb`
+insert into t1 values (2); -- modifying the `branch2` branch
+use mydb/branch3; -- current db is now `mydb/branch3`
+insert into mydb.t1 values (3); -- modifying the `branch2` branch
 ```
 
 ### Options
@@ -624,6 +655,14 @@ CALL DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast
 CALL DOLT_MERGE('--abort');
 ```
 
+{% hint style="info" %}
+
+### Notes
+
+- The `dolt_merge()` procedure implicitly commits the current transaction and begins a new one.
+
+{% endhint %}
+
 ### Options
 
 `--no-ff`: Create a merge commit even when the merge resolves as a fast-forward.
@@ -822,6 +861,15 @@ CALL DOLT_RESET('--hard', 'featureBranch');
 CALL DOLT_RESET('--hard', 'commitHash123abc');
 CALL DOLT_RESET('myTable'); -- soft reset
 ```
+
+{% hint style="info" %}
+
+### Notes
+
+-  With the `--hard` option, the `dolt_reset()` procedure implicitly commits the current transaction
+   and begins a new one.
+
+{% endhint %}
 
 ### Options
 
