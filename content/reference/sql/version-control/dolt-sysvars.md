@@ -34,8 +34,6 @@ title: Dolt System Variables
 
 - [Persisting System Variables](#persisting-system-variables)
 
-- [Examples](#examples)
-
 # General system setting variables
 
 ## `dbname_default_branch`
@@ -186,7 +184,7 @@ On a read replica, setting this variable will cause the server to attempt to clo
 database used in a query or connection string by constructing a remote URL and cloning from that
 remote. See [Replication](../server/replication.md).
 
-## @@dolt_skip_replication_errors
+## `dolt_skip_replication_errors`
 
 Set this variable to `1` to ignore replication errors on a read replica. Replication errors will log
 a warning rather than causing queries to fail. Defaults to `0`.
@@ -256,28 +254,28 @@ variables are used as session variables, and the SQL interface is
 the encouraged access point. Variables that affect server startup, like
 replication, must be set before instantiation.
 
-# Examples
+## Examples
 
-## `SET PERSIST`
+### `SET PERSIST`
 
 ```sql
 SET PERSIST max_connections = 1000;
 SET @@PERSIST.max_connections = 1000;
 ```
 
-## `SET PERSIST_ONLY`
+### `SET PERSIST_ONLY`
 
 ```sql
 SET PERSIST_ONLY back_log = 1000;
 SET @@PERSIST_ONLY.back_log = 1000;
 ```
 
-## CLI
+### CLI
 
 ```bash
 $ dolt sql -q "set @@persist.max_connections = 1000"
 ```
 
-## Limitations
+### Limitations
 
 Deleting variables with `RESET PERSIST` is not supported.
