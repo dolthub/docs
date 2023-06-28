@@ -20,7 +20,7 @@ Roadmap last updated Jul 2023, next update Oct 2023.
 | Feature                                   | Estimate    |
 | -------                                   | ---         |
 | Better table statistics support           | Q3 2023     |
-| Hosted replication                        | Q3 2023     |
+| Hosted replication failover               | Q3 2023     |
 | Full text indexes                         | Q3 2023     |
 | Server / CLI compatibility                | Q3 2023     |
 | Better stored procedure support           | Q3 2023     |
@@ -48,6 +48,7 @@ Roadmap last updated Jul 2023, next update Oct 2023.
 
 | Feature                             | Launch Date |
 | -------                             | ---         |
+| Hosted replication                  | Jun 2023    |
 | dolt_schema_diff table              | Jun 2023    |
 | Better branch transaction support   | Jun 2023    |
 | Many new collations                 | Jun 2023    |
