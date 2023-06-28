@@ -154,7 +154,7 @@ resolves to a particular branch. The rules for this are subtle.
 
 * If `dolt_checkout()` was called to switch the checked-out branch previously in this session, an
   unqualified database name will resolve to that branch. `dolt_checkout()` has the side-effect of
-  changing what branch an unqualified database name resolves to for the remainder of a sessio.n
+  changing what branch an unqualified database name resolves to for the remainder of a session.
 * Otherwise, an unqualified database name resolves to the default branch, typically `main`.
 
 An example:
@@ -189,32 +189,4 @@ last checked out with `dolt_checkout()`.
 
 Note that these name resolution rules apply to all statements that use an unqualified database name,
 not just `USE`. For example, `insert into mydb.t1 values (4)` will also modify the last checked-out
-branch, or the default brnach, depending on session history.
-
-## Notes on connection pooling libraries
-
-Many SQL database client libraries implement some kind of connection pool, where connections to the
-database are created ahead of time and then handed out to different execution threads when needed to
-execute queries. This is typically done to reduce latency on database operations. Often these pools
-reuse the connections when they are returned to the pool.
-
-Using connection pooling with Dolt when combined with `dolt_checkout()` can be problematic, because
-a session that gets returned to the pool and re-used may behave differently (modify a different
-branch head) than a fresh connection. Consider this sequence:
-
-```sql
-call dolt_checkout('feature-branch');
-...
-call dolt_commit();
-```
-
-When this connection is returned to the pool, its session has `feature-branch` checked out. If it's
-reused by another execution thread that expects a different branch, you have a bug.
-
-To mitigate potential bugs with session state, we recommend either:
-
-* Disable connection pooling if feasible
-* Configure your connection pool to not re-use connections that were returned to it
-* Use a different connection string for each branch (this may mean using multiple connection pools)
-* Augment your application logic to always begin a new unit of work with `call dolt_checkout(...)`
-  to ensure the expected branch is checked out for the session
+branch, or the default branch, depending on session history.
