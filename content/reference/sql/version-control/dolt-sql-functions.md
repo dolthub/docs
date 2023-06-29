@@ -842,3 +842,126 @@ The `DOLT_SCHEMA_DIFF()` table function takes three arguments:
 +-----------------------+------+
 ```
 
+### Example
+
+Consider a table named `inventory` in a database with two branches: `main` and `feature_branch`. We can use the
+`DOLT_SCHEMA_DIFF()` function to calculate a diff of the table schema from the `main` branch to the `feature_branch` branch
+to see how the table's schema has changed on the feature branch.
+
+Here is the schema of `inventory` at the tip of `main`:
+
+```text
++----------+------+
+| field    | type |
++----------+------+
+| pk       | int  |
+| name     | text |
+| quantity | int  |
++----------+------+
+```
+
+Here is the schema of `inventory` at the tip of `feature_branch`:
+
+```text
++----------+------+
+| field    | type |
++----------+------+
+| pk       | int  |
+| name     | text |
+| color    | text |
++----------+------+
+```
+
+To calculate the schema diff and view the results, we run the following query:
+
+```sql
+SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "inventory")
+```
+
+The results from `DOLT_SCHEMA_DIFF()` show how the schema has changed going from tip of `main` to tip of `feature_branch`:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               | alter_statement                                  |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------------------------------------------+
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        | ALTER TABLE `inventory` DROP `quantity`;         |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |                                                  |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |                                                  |
+|                 |               |   `quantity` int,                                                 |   `color` varchar(10),                                            |                                                  |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |                                                  |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                                  |
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        | ALTER TABLE `inventory` ADD `color` varchar(10); |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |                                                  |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |                                                  |
+|                 |               |   `quantity` int,                                                 |   `color` varchar(10),                                            |                                                  |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |                                                  |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                                  |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------------------------------------------+
+```
+
+Let's look at the returned data.
+
+1. We got back two rows, one for each `ALTER TABLE...` statement.
+2. The first alter statement is the `ALTER TABLE...DROP` statement that removes the `quantity` column from the table.
+3. The second alter statement is the `ALTER TABLE...ADD` statement that adds the `color` column to the table.
+4. The `from_table_name` and `to_table_name` columns show the table name at the start and end of the diff. These columns are the same because the table was not renamed during the diff.
+5. Both the `from_create_statement` and `to_create_statement` columns show the full `CREATE TABLE` statement for the table at the start and end of the diff.
+
+We invoked `DOLT_SCHEMA_DIFF()` with branch names, but we could have used any revision specifier. For example, we could have used commit hashes or tag names, and would have gotten the same results.
+
+Using tags or commit hashes:
+
+```sql
+select * from dolt_schema_diff('v1', 'v1.1', 'inventory');
+select * from dolt_schema_diff('tjj1kp2mnoad8crv6b94mh4a4jiq7ab2', 'v391rm7r0t4989sgomv0rpn9ue4ugo6g', 'inventory');
+```
+
+So far, we have always supplied the last parameter, table name, but this is optional. If we omit the table name, we will get back a row for every table with a schema diff between the two revisions.
+
+In the current example, we have only one table with a schema diff, so the below queries return the same results as the previous query.
+
+```sql
+select * from dolt_schema_diff('main', 'feature_branch');
+select * from dolt_schema_diff('v1', 'v1.1');
+select * from dolt_schema_diff('tjj1kp2mnoad8crv6b94mh4a4jiq7ab2', 'v391rm7r0t4989sgomv0rpn9ue4ugo6g');
+```
+
+We can use the three dot diff to get the schema diff starting at the last common commit. In this example, the last common commit is the commit where the `feature_branch` was created from `main`.
+
+```sql
+select * from dolt_schema_diff('main...feature_branch');
+select * from dolt_schema_diff('v1...v1.1');
+select * from dolt_schema_diff('tjj1kp2mnoad8crv6b94mh4a4jiq7ab2...v391rm7r0t4989sgomv0rpn9ue4ugo6g');
+```
+
+Finally, we can flip the order of the revisions to get the schema diff in the opposite direction.
+
+```sql
+select * from dolt_schema_diff('feature_branch', 'main');
+```
+
+The above query will produce this output:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+---------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               | alter_statement                             |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+---------------------------------------------+
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        | ALTER TABLE `inventory` DROP `color`;       |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |                                             |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |                                             |
+|                 |               |   `color` varchar(10),                                            |   `quantity` int,                                                 |                                             |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |                                             |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                             |
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        | ALTER TABLE `inventory` ADD `quantity` int; |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |                                             |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |                                             |
+|                 |               |   `color` varchar(10),                                            |   `quantity` int,                                                 |                                             |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |                                             |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                             |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+---------------------------------------------+
+```
+
+Note the different alter statements.
+
+1. ```ALTER TABLE `inventory` DROP `color`;```
+2. ```ALTER TABLE `inventory` ADD `quantity` int;```
