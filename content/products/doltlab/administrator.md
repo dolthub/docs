@@ -15,7 +15,7 @@ the following information can help DoltLab Admins manually perform some common a
 8. [Connect to an SMTP Server with Implicit TLS](#smtp-implicit-tls)
 9. [Troubleshoot SMTP Server Connection Problems](#troubleshoot-smtp-connection)
 10. [Prevent Unauthorized User Account Creation](#prevent-unauthorized-users)
-11. [Use an external PostgreSQL server with DoltLab](#use-external-postgres)
+11. [Use an external Database server with DoltLab](#use-external-database)
 12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
 13. [DoltLab Jobs](#doltlab-jobs)
 14. [Disable Usage Metrics](#disable-metrics)
@@ -661,9 +661,9 @@ You can now execute the following `INSERT` to allow a specific user with `exampl
 INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VALUES ('example@address.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
 
-<h1 id="use-external-postgres">Use an external PostgreSQL server with DoltLab</h1>
+<h1 id="use-external-database">Use an external Database server with DoltLab</h1>
 
-You can connect a DoltLab instance to an external PostgreSQL server version `13` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
+For DoltLab `v0.8.4` and earlier, you can connect a DoltLab instance to an external PostgreSQL server version `13` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
 
 ```yaml
   doltlabapi:
@@ -685,6 +685,29 @@ CREATE DATABASE dolthubapi;
 GRANT ALL PRIVILEGES ON DATABASE dolthubapi TO dolthubapi;
 CREATE EXTENSION citext SCHEMA public;
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dolthubapi;
+```
+
+For DoltLab `v1.0.0` or later, you can connect a DoltLab instance to an external Dolt server version `v1.0.0` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-doltHost` and `-doltPort` arguments.
+
+```yaml
+  doltlabapi:
+    ...
+    command:
+      ...
+      -doltHost <host>
+      -doltPort <port>
+      ...
+```
+
+Like with the external PostgreSQL changes described above, you can remove the `doltlabdb` section and all references to it and `doltlabdb-dolt-data`, `doltlabdb-dolt-root`, `doltlabdb-dolt-configs`, and `doltlabdb-dolt-backups` in the `docker-compose.yaml` file.
+
+Finally, before (re)starting DoltLab with this change, you will also need to execute the following statements in your external Dolt server:
+
+```sql
+CREATE USER 'dolthubadmin' IDENTIFIED BY '<password>';
+CREATE USER 'dolthubapi' IDENTIFIED BY '<password>';
+GRANT ALL ON *.* TO 'dolthubadmin';
+GRANT ALL ON dolthubapi.* TO 'dolthubapi';
 ```
 
 <h1 id="expose-doltlab-ngrok">Expose a DoltLab instance with ngrok</h1>
@@ -959,7 +982,7 @@ Once the deployment has come up, the deployment page will display the connection
 
 First, click the "Configuration" tab and uncheck the box "behavior_disable_multistatements". DoltLab will need to execute multiple statements against this database when it starts up. You can also, optionally, change the log_level to "debug". This log level setting will make sure executed queries appear in the database logs, which is helpful for debugging.
 
-![Hosted Deployment Started](../../../static/hosted_deployment_started.png)
+![Hosted Deployment Configuration](../../../static/hosted_deployment_configuration.png)
 
 Click "Save Changes".
 
