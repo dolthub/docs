@@ -966,3 +966,9 @@ Note the different alter statements.
 
 1. ```ALTER TABLE `inventory` DROP `color`;```
 2. ```ALTER TABLE `inventory` ADD `quantity` int;```
+
+### Example query
+
+You can try calling `DOLT_SCHEMA_DIFF()` against the [DoltHub docs_examples DB](https://www.dolthub.com/repositories/dolthub/docs_examples), by getting the diff of schemas between `schema_diff_v1` and `schema_diff_v2` tags.
+
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?active=Tables&q=SELECT+*%0AFROM+dolt_schema_diff%28%27schema_diff_v1%27%2C+%27schema_diff_v2%27%29%3B%0A" %}
