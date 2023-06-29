@@ -132,7 +132,7 @@ Each deployment comes with a built-in SQL workbench, inspired by
 [DoltHub's](https://www.dolthub.com) database page. Browse your data in read-only mode or
 allow writes and make changes to your database from the web. The workbench comes with your
 favorite DoltHub features, including [pull requests](#pull-requests), [diffs](#diffs),
-[commit logs](#commit-log), [ORM diagrams](#orm-diagrams), and more!
+[commit logs](#commit-log), [ER diagrams](#er-diagrams), [CSV upload and download](#csv-upload-and-download), and more!
 
 ![SQL workbench](../../.gitbook/assets/hosted-support.png)
 
@@ -161,6 +161,18 @@ View an audit log of all changes made to your data.
 Visualize the entities in your database as well as the relationship between tables.
 
 ![](../../.gitbook/assets/hosted-workbench-er-diagram.png)
+
+## CSV Upload and Download
+
+Update database tables using an uploaded CSV or the built-in spreadsheet editor.
+
+![](../../.gitbook/assets/hosted-upload-csv.png)
+
+And download query results as a CSV.
+
+![](../../.gitbook/assets/hosted-download-results-popup.png)
+
+Learn more in [our blog](https://www.dolthub.com/blog/2023-06-30-hosted-workbench-csv-support/).
 
 # Dolt Ecosystem
 
