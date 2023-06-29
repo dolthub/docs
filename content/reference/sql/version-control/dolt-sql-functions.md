@@ -828,3 +828,17 @@ The `DOLT_SCHEMA_DIFF()` table function takes three arguments:
 - `from_revision...to_revision` — gets the three dot diff, or revision of table schema between the `from_revision` and `to_revision`, _starting at the last common commit_.
 - `tablename` — the name of the table to diff. This argument is optional. When it's not defined, all tables with schema diffs will be returned.
 
+### Schema
+
+```text
++-----------------------+------+
+| field                 | type |
++-----------------------+------+
+| from_table_name       | TEXT |
+| to_table_name         | TEXT |
+| from_create_statement | TEXT |
+| to_create_statement   | TEXT |
+| alter_statement       | TEXT |
++-----------------------+------+
+```
+
