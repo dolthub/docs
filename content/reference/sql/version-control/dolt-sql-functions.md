@@ -803,3 +803,12 @@ With result of single row:
 
 The `DOLT_SCHEMA_DIFF()` table function calculates the schema difference between any two commits in the database.
 Each row in the result set describes how a table was altered between the two commits, including the table's create statement at to and from commits.
+
+Note that the `DOLT_SCHEMA_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
+support aliasing or joining with other tables, and argument values must currently be literal values.
+
+### Privileges
+
+`DOLT_SCHEMA_DIFF()` table function requires `SELECT` privilege for all tables if no table is defined or
+for the defined table only.
+
