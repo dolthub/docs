@@ -65,6 +65,9 @@ Specific dolt options:
 `-u <user>`, `--user=<user>`:
 Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
+`-p <password>`, `--password=<password>`:
+Defines the password for the user. Defaults to empty string.
+
 `--data-dir=<directory>`:
 Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
 
@@ -327,9 +330,9 @@ dolt cherry-pick <commit>
 
 Applies the changes from an existing commit and creates a new commit from the current HEAD. This requires your working tree to be clean (no modifications from the HEAD commit).
 
-Cherry-picking merge commits or commits with schema changes or rename or drop tables is not currently supported. Row data changes are allowed as long as the two table schemas are exactly identical.
+Cherry-picking merge commits or commits with table drops/renames is not currently supported. 
 
-If applying the row data changes from the cherry-picked commit results in a data conflict, the cherry-pick operation is aborted and no changes are made to the working tree or committed.
+If any data conflicts, schema conflicts, or constraint violations are detected during cherry-picking, you can use Dolt's conflict resolution features to resolve them. For more information on resolving conflicts, see: https://docs.dolthub.com/concepts/dolt/git/conflicts.
 
 
 **Arguments and options**
