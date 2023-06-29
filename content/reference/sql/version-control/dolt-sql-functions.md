@@ -812,3 +812,19 @@ support aliasing or joining with other tables, and argument values must currentl
 `DOLT_SCHEMA_DIFF()` table function requires `SELECT` privilege for all tables if no table is defined or
 for the defined table only.
 
+### Options
+
+```sql
+DOLT_SCHEMA_DIFF(<from_commit>, <to_commit>, <optional_tablename>)
+DOLT_SCHEMA_DIFF(<from_revision..to_revision>, <optional_tablename>)
+DOLT_SCHEMA_DIFF(<from_revision...to_revision>, <optional_tablename>)
+```
+
+The `DOLT_SCHEMA_DIFF()` table function takes three arguments:
+
+- `from_revision` — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `to_revision` — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `from_revision..to_revision` — gets the two dot diff, or revision of table schema between the `from_revision` and `to_revision`. This is equivalent to `dolt_schema_diff(<from_revision>, <to_revision>, <tablename>)`.
+- `from_revision...to_revision` — gets the three dot diff, or revision of table schema between the `from_revision` and `to_revision`, _starting at the last common commit_.
+- `tablename` — the name of the table to diff. This argument is optional. When it's not defined, all tables with schema diffs will be returned.
+
