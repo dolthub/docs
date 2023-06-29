@@ -18,6 +18,7 @@ title: Dolt SQL Functions
   - [dolt_diff_summary()](#dolt_diff_summary)
   - [dolt_log()](#dolt_log)
   - [dolt_patch()](#dolt_patch)
+  - [dolt_schema_diff](#dolt_schema_diff)
 
 # Informational Functions
 
