@@ -798,3 +798,8 @@ With result of single row:
 | 1               | WORKING          | gg4kasjl6tgrtoag8tnn1der09sit4co | items      | schema    | DROP TABLE `items`; |
 +-----------------+------------------+----------------------------------+------------+-----------+---------------------+
 ```
+
+## `DOLT_SCHEMA_DIFF()`
+
+The `DOLT_SCHEMA_DIFF()` table function calculates the schema difference between any two commits in the database.
+Each row in the result set describes how a table was altered between the two commits, including the table's create statement at to and from commits.
