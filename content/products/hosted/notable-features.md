@@ -172,6 +172,8 @@ And download query results as a CSV.
 
 ![](../../.gitbook/assets/hosted-download-results-popup.png)
 
+Learn more in [our blog](https://www.dolthub.com/blog/2023-06-30-hosted-workbench-csv-support/).
+
 # Dolt Ecosystem
 
 ## Clone a Hosted Instance
