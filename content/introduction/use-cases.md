@@ -11,7 +11,7 @@ Dolt really shines when your database can benefit from [branches](../concepts/do
 Other customers use Dolt to [manage video game configuration](./use-cases/configuration-management.md), [get an immutable audit log of changes to their database](./use-cases/audit.md), [build reproducibility into machine learning models](./use-cases/data-and-model-quality.md), [ensure data quality using a pull request workflow](./use-cases/manual-data-curation.md), and much more.
 
 1. [Data Sharing](./use-cases/data-sharing.md)
-2. [Data and Model Quality Control](./use-cases/better-data-and-models.md)
+2. [Data and Model Quality Control](./use-cases/data-and-model-quality.md)
 3. [Manual Data Curation](./use-cases/manual-data-curation.md)
 4. [Version Control for your Application](./use-cases/vc-your-app.md)
 5. [Versioned MySQL Replica](./use-cases/versioned-replica.md)
