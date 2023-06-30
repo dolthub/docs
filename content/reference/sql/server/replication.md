@@ -409,8 +409,8 @@ On `dolt-1.db`, we will have a `config.yaml` like:
 ```yaml
 cluster:
   standby_remotes:
-    - name: standby
-      remote_url_template: http://dolt-2.db:50051/{database}
+  - name: standby
+    remote_url_template: http://dolt-2.db:50051/{database}
   bootstrap_role: primary
   bootstrap_epoch: 1
   remotesapi:
@@ -422,8 +422,8 @@ On `dolt-2.db`, we will have:
 ```yaml
 cluster:
   standby_remotes:
-    - name: standby
-      remote_url_template: http://dolt-1.db:50051/{database}
+  - name: standby
+    remote_url_template: http://dolt-1.db:50051/{database}
   bootstrap_role: standby
   bootstrap_epoch: 1
   remotesapi:
