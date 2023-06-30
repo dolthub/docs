@@ -20,7 +20,7 @@ Due to the difference in nature of reviewing data vs reviewing code, diffs on Do
 
 ## Example
 
-We will use our [`dolthub/us-schools`](https://www.dolthub.com/repositories/dolthub/us-schools) database as an example. This database was created through one of our [bounties](../../introduction/getting-started/data-bounties.md).
+We will use our [`dolthub/us-schools`](https://www.dolthub.com/repositories/dolthub/us-schools) database as an example. This database was created through one of our [bounties](../../products/dolthub/data-bounties.md).
 
 First, we [fork](./forks.md) the database and clone our fork.
 

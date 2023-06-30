@@ -247,7 +247,7 @@ Then, use the `./dolt_db_cli.sh` included with DoltLab to open a container shell
 Delete the existing `./dolthubapi` directory located at `/var/lib/dolt` from within this container:
 
 ```bash
-./dolt_db_cli.sh 
+./dolt_db_cli.sh
 root:/var/lib/dolt# ls
 dolthubapi
 root:/var/lib/dolt# rm -rf dolthubapi/
@@ -942,10 +942,7 @@ You can define super admins for a DoltLab instance by defining them in an `admin
 
 ```yaml
 # admin-config.yaml
-super_admins: [
-  "user1@example.com",
-  "user2@example.com"
-]
+super_admins: ["user1@example.com", "user2@example.com"]
 ```
 
 Add the field `super_admins` to the `admin-config.yaml` file and provide a list of email addresses associated with the DoltLab users who will be super admins. These addresses must be verified by the DoltLab users associated with them for their super admin privileges to take effect.
@@ -960,7 +957,7 @@ To configure a DoltLab to use a Hosted Dolt, follow the steps below as we create
 
 <h2 id="doltlab-hosted-dolt-create-deployment">Create a Hosted Dolt Deployment</h2>
 
-To begin, you'll need to create a Hosted Dolt deployment that your DoltLab instance will connect to. We've created a [video tutorial](https://www.dolthub.com/blog/2022-05-20-hosted-dolt-howto/) for how to create your first Hosted Dolt deployment, but briefly, you'll need to create an account on [hosted.doltdb.com](https://www.hosted.doltdb.com) and then click the "Create Deployment" button.
+To begin, you'll need to create a Hosted Dolt deployment that your DoltLab instance will connect to. We've created a [video tutorial](https://www.dolthub.com/blog/2022-05-20-hosted-dolt-howto/) for how to create your first Hosted Dolt deployment, but briefly, you'll need to create an account on [hosted.doltdb.com](https://hosted.doltdb.com) and then click the "Create Deployment" button.
 
 You will then see a form where you can specify details about the host you need for your DoltLab instance:
 
@@ -1014,7 +1011,7 @@ You can also remove references to `doltlabdb-dolt-data`, `doltlabdb-dolt-root`, 
 ```yaml
   # commenting out all references to doltlabdb
   #
-  # 
+  #
   # doltlabdb:
   #  image: public.ecr.aws/dolthub/doltlab/dolt-sql-server:v1.0.2
   #  command:
@@ -1053,7 +1050,7 @@ volumes:
   # doltlabdb-dolt-data:
   # doltlabdb-dolt-root:
   # doltlabdb-dolt-configs:
-  # doltlabdb-dolt-backups:     
+  # doltlabdb-dolt-backups:
   doltlab-remote-storage:
   doltlab-user-uploads:
 ```
