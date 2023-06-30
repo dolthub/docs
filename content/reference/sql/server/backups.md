@@ -12,12 +12,12 @@ Using remotes for backups should be suitable for some use cases. Using remotes f
 
 ### Configure a remote
 
-Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../introduction/getting-started/data-sharing.md#dolt-login).
+Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../products/dolthub/data-sharing.md#dolt-login).
 
 ```bash
 % dolt remote add backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 $ dolt remote -v
-backup https://doltremoteapi.dolthub.com/timsehn/backup-example 
+backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 ```
 
 ### Backup by Pushing a Branch
@@ -26,7 +26,7 @@ backup https://doltremoteapi.dolthub.com/timsehn/backup-example
 mysql> use backup_example;
 mysql> create table test (pk int, c1 int, primary key(pk));
 mysql> insert into test values (0,0);
-mysql> call dolt_add('test');    
+mysql> call dolt_add('test');
 mysql> call dolt_commit('-m', "Created table and inserted values to be backed up");
 +----------------------------------+
 | hash                             |
@@ -58,7 +58,7 @@ $ mkdir -p /Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup add local-backup file:///Users/timsehn/liquidata/dolt/backups/backup-example
 $ dolt backup sync local-backup
 Uploaded 3.1 kB of 3.1 kB @ 0 B/s.
-$ 
+$
 ```
 
 You can use any valid dolt remote, including [AWS S3, GCS](https://www.dolthub.com/blog/2021-07-19-remotes/), and DoltHub remotes. For example, to backup to a DoltHub remote, do something like:
