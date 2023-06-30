@@ -70,7 +70,7 @@ There are other variations on this as well. See the docs on [using
 branches](branches.md) for more details.
 
 Note that this syntax applied to a branch will name that branch's [working
-set](../../concepts/dolt/git/working-set.md) and therefore includes any changes not yet committed to
+set](../../../concepts/dolt/git/working-set.md) and therefore includes any changes not yet committed to
 the HEAD of the branch.
 
 ## Querying history using dolt system tables
