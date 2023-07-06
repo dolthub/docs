@@ -18,6 +18,7 @@ title: Dolt SQL Functions
   - [dolt_diff_summary()](#dolt_diff_summary)
   - [dolt_log()](#dolt_log)
   - [dolt_patch()](#dolt_patch)
+  - [dolt_schema_diff](#dolt_schema_diff)
 
 # Informational Functions
 
@@ -798,3 +799,200 @@ With result of single row:
 | 1               | WORKING          | gg4kasjl6tgrtoag8tnn1der09sit4co | items      | schema    | DROP TABLE `items`; |
 +-----------------+------------------+----------------------------------+------------+-----------+---------------------+
 ```
+
+## `DOLT_SCHEMA_DIFF()`
+
+The `DOLT_SCHEMA_DIFF()` table function calculates the schema difference between any two commits in the database.
+Each row in the result set describes how a table was altered between the two commits, including the table's create statement at to and from commits.
+
+Note that the `DOLT_SCHEMA_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
+support aliasing or joining with other tables, and argument values must currently be literal values.
+
+### Privileges
+
+`DOLT_SCHEMA_DIFF()` table function requires `SELECT` privilege for all tables if no table is defined or
+for the defined table only.
+
+### Options
+
+```sql
+DOLT_SCHEMA_DIFF(<from_commit>, <to_commit>, <optional_tablename>)
+DOLT_SCHEMA_DIFF(<from_revision..to_revision>, <optional_tablename>)
+DOLT_SCHEMA_DIFF(<from_revision...to_revision>, <optional_tablename>)
+```
+
+The `DOLT_SCHEMA_DIFF()` table function takes three arguments:
+
+- `from_revision` — the revision of the table data for the start of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `to_revision` — the revision of the table data for the end of the diff. This argument is required. This may be a commit, tag, branch name, or other revision specifier (e.g. "main~", "WORKING", "STAGED").
+- `from_revision..to_revision` — gets the two dot diff, or revision of table schema between the `from_revision` and `to_revision`. This is equivalent to `dolt_schema_diff(<from_revision>, <to_revision>, [<tablename>])`.
+- `from_revision...to_revision` — gets the three dot diff, or revision of table schema between the `from_revision` and `to_revision`, _starting at the last common commit_.
+- `tablename` — the name of the table to diff. This argument is optional. When it's not defined, all tables with schema diffs will be returned.
+
+### Schema
+
+```text
++-----------------------+------+
+| field                 | type |
++-----------------------+------+
+| from_table_name       | TEXT |
+| to_table_name         | TEXT |
+| from_create_statement | TEXT |
+| to_create_statement   | TEXT |
++-----------------------+------+
+```
+
+### Example
+
+For this example, we'll consider three tables within the context of two branches: `main` and `feature_branch`.
+
+These are the tables on `main`: `employees`, `inventory`, `vacations`.
+These are the tables on `feature_branch`: `inventory`, `photos`, `trips`.
+
+To figure out how these tables changed, we run the following query:
+
+```sql
+SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch")
+```
+
+The results from `DOLT_SCHEMA_DIFF()` show how the schema for all tables has changed going from tip of `main` to tip of `feature_branch`:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| employees       |               | CREATE TABLE `employees` (                                        |                                                                   |
+|                 |               |   `pk` int NOT NULL,                                              |                                                                   |
+|                 |               |   `name` varchar(50),                                             |                                                                   |
+|                 |               |   PRIMARY KEY (`pk`)                                              |                                                                   |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                                                   |
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   `quantity` int,                                                 |   `color` varchar(10),                                            |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
+|                 | photos        |                                                                   | CREATE TABLE `photos` (                                           |
+|                 |               |                                                                   |   `pk` int NOT NULL,                                              |
+|                 |               |                                                                   |   `name` varchar(50),                                             |
+|                 |               |                                                                   |   `dt` datetime(6),                                               |
+|                 |               |                                                                   |   PRIMARY KEY (`pk`)                                              |
+|                 |               |                                                                   | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
+| vacations       | trips         | CREATE TABLE `vacations` (                                        | CREATE TABLE `trips` (                                            |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+```
+
+Let's look at the returned data.
+
+1. The first row has values in `from_table_name` and `from_create_statement` columns, while `to_table_name` and `to_create_statement` columns are empty. This means that between `main` and `feature_branch`, the table `employees` was deleted.
+2. The second row has identical values for `from_table_name` and `to_table_name`, but `from_create_statement` is different from `to_create_statement`. This means the table's schema changed between `main` and `feature_branch`.
+3. The third row is similar to the first row, except its `to_*` columns are empty, and `from_*` columns are set. This means that between `main` and `feature_branch`, the table `photos` was added.
+4. Finally, the last row has mostly identical `from_create_statement` and `to_create_statement` columns, but different `from_table_name` and `to_table_name` columns. This means the table was renamed changed between `main` and `feature_branch`.
+
+We invoked `DOLT_SCHEMA_DIFF()` with branch names, but we could have used any revision specifier. For example, we could have used commit hashes or tag names, and would have gotten the same results.
+
+Using tags or commit hashes:
+
+```sql
+select * from dolt_schema_diff('v1', 'v1.1');
+select * from dolt_schema_diff('tjj1kp2mnoad8crv6b94mh4a4jiq7ab2', 'v391rm7r0t4989sgomv0rpn9ue4ugo6g');
+```
+
+So far, we have always supplied just the first two parameters, the `from` and `to` revisions, but we have not specified the optional table parameter, so `DOLT_SCHEMA_DIFF()` returned schema diffs of all changed tables.
+We can scope `DOLT_SCHEMA_DIFF()` to a specific table simply by specifying it as the last parameter.
+
+Let's try this with the `inventory` table.
+
+```sql
+SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "inventory")
+```
+
+We will see this set of results:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   `quantity` int,                                                 |   `color` varchar(10),                                            |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+```
+
+When a table is renamed, we can specify either the "old" table name, or the "new" table name, and we will receive the same results. The following two queries will provide the same results:
+
+```sql
+SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "trips");
+SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "vacations");
+```
+
+Here are the results:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| vacations       | trips         | CREATE TABLE `vacations` (                                        | CREATE TABLE `trips` (                                            |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+```
+
+Finally, we can flip the order of the revisions to get the schema diff in the opposite direction.
+
+```sql
+select * from dolt_schema_diff('feature_branch', 'main');
+```
+
+The above query will produce this output:
+
+```text
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| from_table_name | to_table_name | from_create_statement                                             | to_create_statement                                               |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+| photos          |               | CREATE TABLE `photos` (                                           |                                                                   |
+|                 |               |   `pk` int NOT NULL,                                              |                                                                   |
+|                 |               |   `name` varchar(50),                                             |                                                                   |
+|                 |               |   `dt` datetime(6),                                               |                                                                   |
+|                 |               |   PRIMARY KEY (`pk`)                                              |                                                                   |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |                                                                   |
+|                 | employees     |                                                                   | CREATE TABLE `employees` (                                        |
+|                 |               |                                                                   |   `pk` int NOT NULL,                                              |
+|                 |               |                                                                   |   `name` varchar(50),                                             |
+|                 |               |                                                                   |   PRIMARY KEY (`pk`)                                              |
+|                 |               |                                                                   | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
+| inventory       | inventory     | CREATE TABLE `inventory` (                                        | CREATE TABLE `inventory` (                                        |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   `color` varchar(10),                                            |   `quantity` int,                                                 |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
+| trips           | vacations     | CREATE TABLE `trips` (                                            | CREATE TABLE `vacations` (                                        |
+|                 |               |   `pk` int NOT NULL,                                              |   `pk` int NOT NULL,                                              |
+|                 |               |   `name` varchar(50),                                             |   `name` varchar(50),                                             |
+|                 |               |   PRIMARY KEY (`pk`)                                              |   PRIMARY KEY (`pk`)                                              |
+|                 |               | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; | ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_bin; |
++-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
+```
+
+Note the difference between this call and the previous `dolt_schema_diff('main', 'feature_branch')` invocation:
+
+1. First row shows that the table `photos` was deleted
+2. Second row show the creation of `employees` table
+3. Third row has the `from_create_statement` and `to_create_statement` columns swapped
+4. Fourth row shows the inverse rename of `trips` to `vacations`
+
+### Example query
+
+You can try calling `DOLT_SCHEMA_DIFF()` against the [DoltHub docs_examples DB](https://www.dolthub.com/repositories/dolthub/docs_examples), by getting the diff of schemas between `schema_diff_v1` and `schema_diff_v2` tags, which correspond to `main` and `feature_branch` branches from these examples.
+
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?active=Tables&q=SELECT+*%0AFROM+dolt_schema_diff%28%27schema_diff_v1%27%2C+%27schema_diff_v2%27%29%3B%0A" %}
