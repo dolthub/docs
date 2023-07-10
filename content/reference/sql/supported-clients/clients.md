@@ -58,6 +58,7 @@ engine = create_engine(conn_string_base +
 
 - [Offical Library documentation](https://docs.sqlalchemy.org/en/13/)
 - [Python SQLAlchemy test code](https://github.com/dolthub/dolt/blob/main/integration-tests/mysql-client-tests/python/sqlalchemy-test.py)
+- [In depth Dolt <> SQLAlchemy guide with Examples](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/)
 
 ## Node
 
