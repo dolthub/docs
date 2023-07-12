@@ -168,6 +168,24 @@ To load into dolt:
 dolt sql < dump.sql
 ```
 
+## Hosted Dolt Deployments
+
+Importing data into a [Hosted Dolt](https://www.hosted.doltdb.com) deployment can be done using the deployment's default configuration. Let's say you've dumped an existing MySQL database using `mysqldump` and want to import that dump into your Hosted Dolt deployment.
+
+Navigate to the "Configuration" tab of your Hosted deployment dashboard, and make sure that the box `behavior_auto_commit` is checked. This will automatically create SQL `COMMIT`s after every statement is executed, ensuring the data is persisted after each import statement is executed.
+
+Also, make sure that the box `behavior_disable_multistatements` is unchecked. This is required for importing dumps, as they often combine multiple statements into single strings.
+
+![Hosted Dolt Importing Configuration](../.gitbook/assets/hosted-importing-configuration.png)
+
+New Hosted deployments will have these correct server configuration settings by default. Please note that altering them prior to performing an import has been known to cause some imports to fail.
+
+With the above settings in place, you can import the SQL dump using a standard MySQL client or database tool:
+
+```
+mysql -h my-deployment.dbs.hosted.doltdb.com -u <user name> -p<password> database < dump.sql
+```
+
 ## Postgres
 
 You can load a postgres database into dolt with our custom [pg2mysql](https://github.com/dolthub/pg2mysql) tool. If you have
