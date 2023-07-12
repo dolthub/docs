@@ -961,31 +961,31 @@ To begin, you'll need to create a Hosted Dolt deployment that your DoltLab insta
 
 You will then see a form where you can specify details about the host you need for your DoltLab instance:
 
-![Create Deployment Page 1](../../../static/create_deployment_1.png)
+![Create Deployment Page 1](../../.gitbook/assets/create_deployment_1.png)
 
 In the image above you can see that we defined our Hosted Dolt deployment name as `my-doltlab-db-1`, selected an AWS EC2 host with 2 CPU and 8 GB of RAM in region `us-west-2`. We've also requested 200 GB of disk. For DoltLab, these settings should be more than sufficient.
 
 We have also requested a replica instance by checking the "Enable Replication" box, and specifying `1` replica, although replication is not required for DoltLab.
 
-![Create Deployment Page 2](../../../static/create_deployment_2.png)
+![Create Deployment Page 2](../../.gitbook/assets/create_deployment_2.png)
 
 If you want the ability to [clone this Hosted Dolt instance](https://www.dolthub.com/blog/2023-04-17-cloning-a-hosted-database/), check the box "Enable Dolt Credentials". And finally, if you want to use the SQL workbench feature for this hosted instance (which we recommend) you should also check the box "Create database users for the SQL Workbench".
 
 You will see the hourly cost of running the Hosted Dolt instance displayed above the "Create Deployment" button. Click it, and wait for the deployment to reach the "Started" state.
 
-![Hosted Deployment Started](../../../static/hosted_deployment_started.png)
+![Hosted Deployment Started](../../.gitbook/assets/hosted_deployment_started.png)
 
 Once the deployment has come up, the deployment page will display the connection information for both the primary host and the replica, and each will be ready to use. Before connecting a DoltLab instance to the primary host, though, there are a few remaining steps to take to ensure the host has the proper state before connecting DoltLab.
 
 First, click the "Configuration" tab and uncheck the box "behavior_disable_multistatements". DoltLab will need to execute multiple statements against this database when it starts up. You can also, optionally, change the log_level to "debug". This log level setting will make sure executed queries appear in the database logs, which is helpful for debugging.
 
-![Hosted Deployment Configuration](../../../static/hosted_deployment_configuration.png)
+![Hosted Deployment Configuration](../../.gitbook/assets/hosted_deployment_configuration.png)
 
 Click "Save Changes".
 
 Next, navigate to the "Workbench" tab and check the box "Enable Writes". This will allow you to execute writes against this instance from the SQL workbench. Click "Update".
 
-![Hosted Deployment Started](../../../static/enable_writes.png)
+![Hosted Deployment Started](../../.gitbook/assets/enable_writes.png)
 
 Then, with writes enabled, on this same page, click "Create database" to create the database that DoltLab expects, called `dolthubapi`.
 
@@ -1079,4 +1079,4 @@ Make sure that the `DOLT_PASSWORD` environment variable matches the password you
 
 Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
 
-![Hosted Dolt Workbench](../../../static/hosted_dolt_workbench.png)
+![Hosted Dolt Workbench](../../.gitbook/assets/hosted_dolt_workbench.png)
