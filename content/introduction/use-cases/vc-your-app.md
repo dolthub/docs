@@ -52,3 +52,5 @@ A more advanced technique for versioning databases is [slowly changing dimension
 * [How we built the Hosted Dolt Workbench](https://www.dolthub.com/blog/2022-08-24-hosted-sql-workbench/#how-it-was-built)
 * [So you want Database Version Control?](https://www.dolthub.com/blog/2021-09-17-database-version-control/)
 * [So you want Soft Deletes](https://www.dolthub.com/blog/2022-11-03-soft-deletes/)
+* [Getting Started: Dolt and SQLAlchemy](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/)
+* [Using SQLAlchemy for Dolt Time Travel](https://www.dolthub.com/blog/2023-04-12-dolt-sqlalchemy/)
