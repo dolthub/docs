@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/{owner}/{database}/branch": {
+    "/{owner}/{database}/branches": {
       "post": {
         "summary": "Create Branch",
         "description": "This API endpoint allows you to create a new branch in the database.",

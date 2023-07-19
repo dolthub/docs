@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Create a Tag",
-    "description": "API to create a new tag",
+    "title": "Create a Release",
+    "description": "API to create a new release",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,10 +11,10 @@
     }
   ],
   "paths": {
-    "/{owner}/{database}/tag": {
+    "/{owner}/{database}/releases": {
       "post": {
-        "summary": "Create Tag",
-        "description": "This API endpoint allows you to create a new tag in the database.",
+        "summary": "Create Release",
+        "description": "This API endpoint allows you to create a new release in the database.",
         "parameters": [
           {
             "name": "owner",
@@ -38,7 +38,7 @@
           }
         ],
         "requestBody": {
-          "description": "The tag information.",
+          "description": "The release information.",
           "required": true,
           "content": {
             "application/json": {

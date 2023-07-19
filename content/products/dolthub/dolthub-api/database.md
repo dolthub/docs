@@ -206,7 +206,7 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/createBranch.json" path="/{owner}/{database}/branch" method="post" %}
+{% swagger src="../../../.gitbook/assets/createBranch.json" path="/{owner}/{database}/branches" method="post" %}
 [createBranch.json](../../../.gitbook/assets/createBranch.json)
 {% endswagger %}
 
@@ -223,6 +223,6 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/createTag.json" path="/{owner}/{database}/tag" method="post" %}
-[createTag.json](../../../.gitbook/assets/createTag.json)
+{% swagger src="../../../.gitbook/assets/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
+[createRelease.json](../../../.gitbook/assets/createRelease.json)
 {% endswagger %}
