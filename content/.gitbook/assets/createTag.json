@@ -1,0 +1,192 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Create a Tag",
+    "description": "API to create a new tag",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/tag": {
+      "post": {
+        "summary": "Create Tag",
+        "description": "This API endpoint allows you to create a new tag in the database.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the owner of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The tag information.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tagName": {
+                    "type": "string",
+                    "description": "The name of the tag.",
+                    "example":"v1"
+                  },
+                  "tagMessage": {
+                    "type": "string",
+                    "description": "The description of the tag.",
+                    "example":"First version of the database"
+                  },
+                  "revisionType": {
+                    "type": "string",
+                    "description": "The type of revision, can be either 'branch' or 'commit'.",
+                    "example":"branch"
+                  },
+                  "revisionName": {
+                    "type": "string",
+                    "description": "The name of revision. If revisionType is 'branch', this is the name of the base branch. If revisionType is 'commit', this is the commit hash.",
+                    "example":"main"
+                  }             
+              },
+              "required": [
+                "revisionType","revisionName","tagName","tagMessage"
+              ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "description": "Status of the create branch operation",
+                    "example":"Success"
+                  },
+                  "database_owner": {
+                    "type": "string",
+                    "description": "Owner of the database",
+                    "example":"dolthub"
+                  },
+                  "database_name": {
+                    "type": "string",
+                    "description": "Database name",
+                    "example":"museum-collections"
+                  },
+                  "tag_name": {
+                    "type": "string",
+                    "description": "Name of the tag",
+                    "example":"v1"
+                  },
+                  "tag_description":{
+                    "type":"string",
+                    "description": "Description of the tag",
+                    "example":"First version of the database"
+                  },
+                  "revision_type": {
+                    "type": "string",
+                    "description": "Type of the revision",
+                    "example":"branch"
+                  },
+                  "revision_name": {
+                    "type": "string",
+                    "description": "Name of the revision",
+                    "example":"main"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request. The request was invalid or could not be processed.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "Error"
+                  },
+                  "message":{
+                    "type":"string",
+                    "example":"Error creating a tag."
+                  },
+                  "database_owner": {
+                    "type": "string",
+                    "description": "Owner of the database",
+                    "example":"dolthub"
+                  },
+                  "database_name": {
+                    "type": "string",
+                    "description": "Database name",
+                    "example":"museum-collections"
+                  },
+                  "tag_name": {
+                    "type": "string",
+                    "description": "Name of the tag",
+                    "example":"v1"
+                  },
+                  "tag_description":{
+                    "type":"string",
+                    "description": "Description of the tag",
+                    "example":"First version of the database"
+                  },
+                  "revision_type": {
+                    "type": "string",
+                    "description": "Type of the revision",
+                    "example":"branch"
+                  },
+                  "revision_name": {
+                    "type": "string",
+                    "description": "Name of the revision",
+                    "example":"main"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ]
+    }
+  }
+},
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

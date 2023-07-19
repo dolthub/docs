@@ -193,3 +193,36 @@ function pollOperation(op_name,branch_name) {
 
 }
 ```
+
+## Create a branch
+
+Here's an example of how to create a new branch in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Creating a branch requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/createBranch.json" path="/{owner}/{database}/branch" method="post" %}
+[createBranch.json](../../../.gitbook/assets/createBranch.json)
+{% endswagger %}
+
+
+## Create a tag
+
+Here's an example of how to create a new tag in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Creating a tag requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/createTag.json" path="/{owner}/{database}/tag" method="post" %}
+[createTag.json](../../../.gitbook/assets/createTag.json)
+{% endswagger %}
