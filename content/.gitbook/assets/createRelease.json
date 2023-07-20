@@ -45,14 +45,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "releaseName": {
+                  "tagName": {
                     "type": "string",
-                    "description": "The name of the release.",
+                    "description": "The name of the tag.",
                     "example":"v1"
                   },
-                  "releaseMessage": {
+                  "tagMessage": {
                     "type": "string",
-                    "description": "The description of the release.",
+                    "description": "The description of the tag.",
                     "example":"First version of the database"
                   },
                   "revisionType": {
@@ -67,7 +67,7 @@
                   }             
               },
               "required": [
-                "revisionType","revisionName","releaseName","releaseMessage"
+                "revisionType","revisionName","tagName","tagMessage"
               ]
             }
           }
@@ -96,14 +96,14 @@
                     "description": "Database name",
                     "example":"museum-collections"
                   },
-                  "release_name": {
+                  "tag_name": {
                     "type": "string",
-                    "description": "Name of the release",
+                    "description": "Name of the tag",
                     "example":"v1"
                   },
-                  "release_description":{
+                  "tag_description":{
                     "type":"string",
-                    "description": "Description of the release",
+                    "description": "Description of the tag",
                     "example":"First version of the database"
                   },
                   "revision_type": {
@@ -146,14 +146,14 @@
                     "description": "Database name",
                     "example":"museum-collections"
                   },
-                  "release_name": {
+                  "tag_name": {
                     "type": "string",
-                    "description": "Name of the release",
+                    "description": "Name of the tag",
                     "example":"v1"
                   },
-                  "release_description":{
+                  "tag_description":{
                     "type":"string",
-                    "description": "Description of the release",
+                    "description": "Description of the tag",
                     "example":"First version of the database"
                   },
                   "revision_type": {
