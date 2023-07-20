@@ -27,14 +27,7 @@ title: Dolt SQL Functions
 The `ACTIVE_BRANCH()` function returns the name of the currently
 active branch for this session.
 
-```sql
-mysql> select active_branch();
-+-----------------+
-| active_branch() |
-+-----------------+
-| main            |
-+-----------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+active_branch%28%29%3B" %}
 
 ## `DOLT_MERGE_BASE()`
 
@@ -51,28 +44,14 @@ D---E---F---G main
 
 The following would return the hash of commit `E`:
 
-```sql
-mysql> SELECT DOLT_MERGE_BASE('feature', 'main');
-+------------------------------------+
-| DOLT_MERGE_BASE('feature', 'main') |
-+------------------------------------+
-| tjj1kp2mnoad8crv6b94mh4a4jiq7ab2   |
-+------------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+DOLT_MERGE_BASE%28%27feature%27%2C+%27main%27%29%3B" %}
 
 ## `HASHOF()`
 
 The `HASHOF()` function returns the commit hash of a branch or other
 commit spec.
 
-```sql
-mysql> select hashof('main');
-+----------------------------------+
-| hashof('main')                   |
-+----------------------------------+
-| v391rm7r0t4989sgomv0rpn9ue4ugo6g |
-+----------------------------------+
-```
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+hashof%28%27main%27%29%3B" %}
 
 ## `DOLT_VERSION()`
 
