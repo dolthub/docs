@@ -193,3 +193,36 @@ function pollOperation(op_name,branch_name) {
 
 }
 ```
+
+## Create a branch
+
+Here's an example of how to create a new branch in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Creating a branch requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/createBranch.json" path="/{owner}/{database}/branches" method="post" %}
+[createBranch.json](../../../.gitbook/assets/createBranch.json)
+{% endswagger %}
+
+
+## Create a release
+
+Here's an example of how to create a new release in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Creating a release requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
+[createRelease.json](../../../.gitbook/assets/createRelease.json)
+{% endswagger %}
