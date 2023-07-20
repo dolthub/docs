@@ -211,11 +211,11 @@ headers = {
 {% endswagger %}
 
 
-## Create a tag
+## Create a release
 
-Here's an example of how to create a new tag in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+Here's an example of how to create a new release in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
 
-Creating a tag requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+Creating a release requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
 
 ```python
 headers = {

@@ -45,14 +45,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "tagName": {
+                  "releaseName": {
                     "type": "string",
-                    "description": "The name of the tag.",
+                    "description": "The name of the release.",
                     "example":"v1"
                   },
-                  "tagMessage": {
+                  "releaseMessage": {
                     "type": "string",
-                    "description": "The description of the tag.",
+                    "description": "The description of the release.",
                     "example":"First version of the database"
                   },
                   "revisionType": {
@@ -67,7 +67,7 @@
                   }             
               },
               "required": [
-                "revisionType","revisionName","tagName","tagMessage"
+                "revisionType","revisionName","releaseName","releaseMessage"
               ]
             }
           }
@@ -96,14 +96,14 @@
                     "description": "Database name",
                     "example":"museum-collections"
                   },
-                  "tag_name": {
+                  "release_name": {
                     "type": "string",
-                    "description": "Name of the tag",
+                    "description": "Name of the release",
                     "example":"v1"
                   },
-                  "tag_description":{
+                  "release_description":{
                     "type":"string",
-                    "description": "Description of the tag",
+                    "description": "Description of the release",
                     "example":"First version of the database"
                   },
                   "revision_type": {
@@ -134,7 +134,7 @@
                   },
                   "message":{
                     "type":"string",
-                    "example":"Error creating a tag."
+                    "example":"Error creating a release."
                   },
                   "database_owner": {
                     "type": "string",
@@ -146,14 +146,14 @@
                     "description": "Database name",
                     "example":"museum-collections"
                   },
-                  "tag_name": {
+                  "release_name": {
                     "type": "string",
-                    "description": "Name of the tag",
+                    "description": "Name of the release",
                     "example":"v1"
                   },
-                  "tag_description":{
+                  "release_description":{
                     "type":"string",
-                    "description": "Description of the tag",
+                    "description": "Description of the release",
                     "example":"First version of the database"
                   },
                   "revision_type": {
