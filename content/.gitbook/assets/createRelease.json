@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Create a Release",
+    "title": "Create a release",
     "description": "API to create a new release",
     "version": "1.0.0"
   },
@@ -14,7 +14,7 @@
     "/{owner}/{database}/releases": {
       "post": {
         "summary": "Create Release",
-        "description": "This API endpoint allows you to create a new release in the database.",
+        "description": "This API endpoint allows you to create a new release in your database.",
         "parameters": [
           {
             "name": "owner",
@@ -57,7 +57,7 @@
                   },
                   "revisionType": {
                     "type": "string",
-                    "description": "The type of revision, can be either 'branch' or 'commit'.",
+                    "description": "The type of revision, can be either 'branch', 'ref' or 'commit'.",
                     "example":"branch"
                   },
                   "revisionName": {
