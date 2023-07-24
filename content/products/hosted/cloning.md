@@ -55,6 +55,14 @@ instructions in the Connectivity tab on your deployment page.
 
 ![](../../.gitbook/assets/hosted-clone-commands.png)
 
+If you'd like to allow other SQL users to clone without giving them access to your Hosted
+admin username and password, you can grant them `CLONE_ADMIN` privileges. They will then
+be able to execute the above commands using their own SQL user and password.
+
+```sql
+GRANT CLONE_ADMIN ON *.* TO "[username]"@"[host]";
+```
+
 After running the `dolt clone` command, you should have a local copy of your Hosted
 database.
 
