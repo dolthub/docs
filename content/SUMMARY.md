@@ -84,7 +84,7 @@
 - [DoltLab](products/doltlab/README.md)
   - [Install DoltLab](products/doltlab/installation.md)
   - [Administrator Guide](products/doltlab/administrator.md)
-  - [DoltLab API](products/dolthub/dolthub-api/README.md)
+  - [DoltLab API](https://docs.dolthub.com/products/dolthub/dolthub-api)
 
 ## SQL Reference
 
