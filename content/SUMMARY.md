@@ -73,7 +73,7 @@
 - [DoltHub](products/dolthub/README.md)
   - [Data Sharing](products/dolthub/data-sharing.md)
   - [Data Bounties](products/dolthub/data-bounties.md)
-  - [DoltHub/DoltLab API](products/dolthub/dolthub-api/README.md)
+  - [API](products/dolthub/dolthub-api/README.md)
     - [Authentication](products/dolthub/dolthub-api/authentication.md)
     - [SQL](products/dolthub/dolthub-api/sql.md)
     - [CSV](products/dolthub/dolthub-api/csv.md)
@@ -84,7 +84,7 @@
 - [DoltLab](products/doltlab/README.md)
   - [Install DoltLab](products/doltlab/installation.md)
   - [Administrator Guide](products/doltlab/administrator.md)
-  - [DoltLab API](https://docs.dolthub.com/products/dolthub/dolthub-api)
+  - [API](products/doltlab/doltlab-api/README.md)
 
 ## SQL Reference
 

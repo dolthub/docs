@@ -1,0 +1,1 @@
+../../dolthub/dolthub-api/authentication.md
