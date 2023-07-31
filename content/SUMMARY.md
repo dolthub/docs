@@ -77,7 +77,7 @@
     - [Authentication](products/dolthub/api/authentication.md)
     - [SQL](products/dolthub/api/sql.md)
     - [CSV](products/dolthub/api/csv.md)
-    - [Database](products/dolthub/dolthub-api/database.md)
+    - [Database](products/dolthub/api/database.md)
     - [Hooks](products/dolthub/api/hooks.md)
   - [Transform File Uploads](products/dolthub/transform-uploads.md)
   - [Workspaces](products/dolthub/workspaces.md)
