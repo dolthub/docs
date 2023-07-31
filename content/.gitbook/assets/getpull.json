@@ -1,0 +1,169 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DoltHub API - Get Pull Request API",
+    "description": "API to get information about a pull request."
+  },
+  "servers": [
+    {
+      "url":  "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/pulls/{pull_id}": {
+      "get": {
+        "summary": "Get pull request by ID",
+        "description": "Get information about a specific pull request.",
+        "parameters": [
+          {
+            "name": "pull_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the pull request",
+             "schema": {
+              "type": "string",
+              "example":"1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the request",
+                      "example":"Success"
+
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example":"dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example":"museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "description": "Pull request ID",
+                      "example":"1"
+                    },
+                    "title:": {
+                      "type": "string",
+                      "description": "Title of the pull request",
+                      "example":"Added new data"
+                    },
+                    "description:": {
+                      "type": "string",
+                      "description": "Description of the pull request",
+                      "example":"Added new data"
+                    },
+                    "state":{
+                      "type": "string",
+                      "description": "State of the pull request",
+                      "example":"merged"
+                    },
+                    "from_branch_owner":{
+                      "type": "string",
+                      "description": "Owner of the branch from which the pull request was created",
+                      "example":"liuliu"
+                    },
+                    "from_branch_database":{
+                      "type": "string",
+                      "description": "Database name of the branch from which the pull request was created",
+                      "example":"museum-collections"
+                    },
+                    "from_branch_name":{
+                      "type": "string",
+                      "description": "Name of the branch from which the pull request was created",
+                      "example":"feature"
+                    },
+                    "to_branch_owner":{
+                      "type": "string",
+                      "description": "Owner of the branch to which the pull request was created",
+                      "example":"dolthub"
+                    },
+                    "to_branch_database":{
+                      "type": "string",
+                      "description": "Database name of the branch to which the pull request was created",
+                      "example":"museum-collections"
+                    },
+                    "to_branch_name":{
+                      "type": "string",
+                      "description": "Name of the branch to which the pull request was created",
+                      "example":"main"
+                    },
+                    "created_at":{
+                      "type": "string",
+                      "description": "Time at which the pull request was created",
+                      "example":"2023-07-01T18:00:00Z"
+                    },
+                    "author":{
+                      "type": "string",
+                      "description": "Author of the pull request",
+                      "example":"liuliu"
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message":{
+                      "type":"string",
+                      "example":"Error getting a pull request."
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "example": "museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "example": "1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

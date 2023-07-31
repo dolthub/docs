@@ -1,0 +1,162 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Update a Pull Request",
+    "description": "API to update a pull request."
+  },
+  "servers": [
+    {
+      "url":  "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/pulls/{pull_id}": {
+      "patch": {
+        "summary": "Update pull request by ID",
+        "description": "Update a pull request, including its title and description, set its state to be closed.",
+        "parameters": [
+          {
+            "name": "pull_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the pull request",
+             "schema": {
+              "type": "string",
+              "example":"1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The release information.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The title of the pull request.",
+                    "example":"Added new data"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The description of the pull request.",
+                    "example":"Added new data from LACMA museum."
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "For closing a pull request, the state should be 'closed'.",
+                    "example":"closed"
+                  }   
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the request",
+                      "example":"Success"
+
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example":"dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example":"museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "description": "Pull request ID",
+                      "example":"1"
+                    },
+                    "title:": {
+                      "type": "string",
+                      "description": "Title of the pull request after update",
+                      "example":"Added new data"
+                    },
+                    "description:": {
+                      "type": "string",
+                      "description": "Description of the pull request after update",
+                      "example":"Added new data"
+                    },
+                    "state":{
+                      "type": "string",
+                      "description": "State of the pull request after update",
+                      "example":"closed"
+                    },
+                    "allow_maintainer_to_edit_from_branch:":{
+                      "type": "string",
+                      "description": "Allow maintainer to edit from branch",
+                      "example":"false"
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message":{
+                      "type":"string",
+                      "example":"Error getting a pull request."
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "example": "museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "example": "1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

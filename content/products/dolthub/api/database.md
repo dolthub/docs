@@ -36,10 +36,40 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/pullrequest.json" path="/{owner}/{database}/pulls" method="post" %}
-[pullrequest.json](../../../.gitbook/assets/pullrequest.json)
+{% swagger src="../../../.gitbook/assets/createpull.json" path="/{owner}/{database}/pulls" method="post" %}
+[createpull.json](../../../.gitbook/assets/createpull.json)
 {% endswagger %}
 
+
+## Get details of a pull request
+
+Here is an example of getting the details of a pull request on the `museum-collections` database, the pull request id is 1.
+
+Include this `header` in your request.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/getpull.json" path="/{owner}/{database}/pulls/{pull_id}" method="get" %}
+[getpull.json](../../../.gitbook/assets/getpull.json)
+{% endswagger %}
+
+## Update a pull request
+
+Here is an example of updating pull request #1 on the `museum-collections` database, setting its new title, description and close it.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/updatepull.json" path="/{owner}/{database}/pulls/{pull_id}" method="patch" %}
+[updatepull.json](../../../.gitbook/assets/updatepull.json)
+{% endswagger %}
 
 
 ## Create a pull request comment&#x20;
