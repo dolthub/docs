@@ -1,1 +1,0 @@
-../../dolthub/dolthub-api/sql.md
