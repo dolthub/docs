@@ -13,22 +13,22 @@
   "paths": {
     "/{owner}/{database}/pulls/{pull_id}": {
       "patch": {
-        "summary": "Update pull request by ID",
-        "description": "Update a pull request, including its title and description, set its state to be closed.",
+        "summary": "Update Pull Request",
+        "description": "Updates a pull request by ID, including its title, description, and sets its state to be 'closed'.",
         "parameters": [
           {
             "name": "pull_id",
             "in": "path",
             "required": true,
-            "description": "ID of the pull request",
-             "schema": {
+            "description": "ID of the pull request to update.",
+            "schema": {
               "type": "string",
-              "example":"1"
+              "example": "1"
             }
           }
         ],
         "requestBody": {
-          "description": "The release information.",
+          "description": "Request body containing the updated pull request information.",
           "required": true,
           "content": {
             "application/json": {
@@ -37,27 +37,27 @@
                 "properties": {
                   "title": {
                     "type": "string",
-                    "description": "The title of the pull request.",
-                    "example":"Added new data"
+                    "description": "The updated title of the pull request.",
+                    "example": "Added new data"
                   },
                   "description": {
                     "type": "string",
-                    "description": "The description of the pull request.",
-                    "example":"Added new data from LACMA museum."
+                    "description": "The updated description of the pull request.",
+                    "example": "Added new data from LACMA museum."
                   },
                   "state": {
                     "type": "string",
-                    "description": "For closing a pull request, the state should be 'closed'.",
-                    "example":"closed"
-                  }   
+                    "description": "The updated state of the pull request ('closed' to close the pull request).",
+                    "example": "closed"
+                  }
+                }
               }
             }
           }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "Success",
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -66,43 +66,42 @@
                     "status": {
                       "type": "string",
                       "description": "Status of the request",
-                      "example":"Success"
-
+                      "example": "Success"
                     },
                     "database_owner": {
                       "type": "string",
                       "description": "Owner of the database",
-                      "example":"dolthub"
+                      "example": "dolthub"
                     },
                     "database_name": {
                       "type": "string",
                       "description": "Database name",
-                      "example":"museum-collections"
+                      "example": "museum-collections"
                     },
                     "pull_id": {
                       "type": "string",
-                      "description": "Pull request ID",
-                      "example":"1"
+                      "description": "Updated pull request ID",
+                      "example": "1"
                     },
-                    "title:": {
+                    "title": {
                       "type": "string",
                       "description": "Title of the pull request after update",
-                      "example":"Added new data"
+                      "example": "Added new data"
                     },
-                    "description:": {
+                    "description": {
                       "type": "string",
                       "description": "Description of the pull request after update",
-                      "example":"Added new data"
+                      "example": "Added new data from LACMA museum."
                     },
-                    "state":{
+                    "state": {
                       "type": "string",
-                      "description": "State of the pull request after update",
-                      "example":"closed"
+                      "description": "State of the pull request after update ('closed' if closed)",
+                      "example": "closed"
                     },
-                    "allow_maintainer_to_edit_from_branch:":{
+                    "allow_maintainer_to_edit_from_branch": {
                       "type": "string",
-                      "description": "Allow maintainer to edit from branch",
-                      "example":"false"
+                      "description": "Whether maintainers are allowed to edit from the branch",
+                      "example": "false"
                     }
                   }
                 }
@@ -120,9 +119,9 @@
                       "type": "string",
                       "example": "Error"
                     },
-                    "message":{
-                      "type":"string",
-                      "example":"Error getting a pull request."
+                    "message": {
+                      "type": "string",
+                      "example": "Error updating a pull request."
                     },
                     "database_owner": {
                       "type": "string",

@@ -43,7 +43,7 @@ headers = {
 
 ## Get details of a pull request
 
-Here is an example of getting the details of a pull request on the `museum-collections` database, the pull request id is 1.
+This API allows you to retrieve the details of a specific pull request in the `museum-collections`` database. In this example, we will retrieve the details of pull request #1.
 
 Include this `header` in your request.
 
@@ -59,7 +59,9 @@ headers = {
 
 ## Update a pull request
 
-Here is an example of updating pull request #1 on the `museum-collections` database, setting its new title, description and close it.
+This API allows you to update a pull request by providing the necessary information in the request body. You can update the title, description, and even close the pull request.
+
+Here's an example of how to update pull request #1 on the museum-collections database. In this example, we will set a new title, description, and close the pull request.
 
 ```python
 headers = {
