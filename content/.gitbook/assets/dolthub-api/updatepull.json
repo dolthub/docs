@@ -17,6 +17,26 @@
         "description": "Updates a pull request by ID, including its title, description, and sets its state to be 'closed'.",
         "parameters": [
           {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          },
+          {
             "name": "pull_id",
             "in": "path",
             "required": true,
@@ -28,9 +48,8 @@
           }
         ],
         "requestBody": {
-          "description": "Request body containing the updated pull request information.",
-          "required": true,
-          "content": {
+          "description": "Request body containing the updated pull request information, should update at least one field.",
+           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
@@ -47,7 +66,7 @@
                   },
                   "state": {
                     "type": "string",
-                    "description": "The updated state of the pull request ('closed' to close the pull request).",
+                    "description": "The updated state of the pull request (can only update to 'closed')",
                     "example": "closed"
                   }
                 }
@@ -95,13 +114,8 @@
                     },
                     "state": {
                       "type": "string",
-                      "description": "State of the pull request after update ('closed' if closed)",
+                      "description": "State of the pull request after update",
                       "example": "closed"
-                    },
-                    "allow_maintainer_to_edit_from_branch": {
-                      "type": "string",
-                      "description": "Whether maintainers are allowed to edit from the branch",
-                      "example": "false"
                     }
                   }
                 }
@@ -121,7 +135,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Error updating a pull request."
+                      "example": "Error updating the pull request."
                     },
                     "database_owner": {
                       "type": "string",

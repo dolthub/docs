@@ -17,6 +17,26 @@
         "description": "Get information about a specific pull request.",
         "parameters": [
           {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          },
+          {
             "name": "pull_id",
             "in": "path",
             "required": true,
@@ -64,7 +84,7 @@
                     "description:": {
                       "type": "string",
                       "description": "Description of the pull request",
-                      "example":"Added new data"
+                      "example":"Added missing museums, sourced from museums.com"
                     },
                     "state":{
                       "type": "string",
@@ -73,32 +93,32 @@
                     },
                     "from_branch_owner":{
                       "type": "string",
-                      "description": "Owner of the branch from which the pull request was created",
+                      "description": "Owner of database of the source branch.",
                       "example":"liuliu"
                     },
                     "from_branch_database":{
                       "type": "string",
-                      "description": "Database name of the branch from which the pull request was created",
+                      "description": "Database name of source branch.",
                       "example":"museum-collections"
                     },
                     "from_branch_name":{
                       "type": "string",
-                      "description": "Name of the branch from which the pull request was created",
+                      "description": "Name of the source branch.",
                       "example":"feature"
                     },
                     "to_branch_owner":{
                       "type": "string",
-                      "description": "Owner of the branch to which the pull request was created",
+                      "description": "Owner of database of the destination branch.",
                       "example":"dolthub"
                     },
                     "to_branch_database":{
                       "type": "string",
-                      "description": "Database name of the branch to which the pull request was created",
+                      "description": "Database name of destination branch.",
                       "example":"museum-collections"
                     },
                     "to_branch_name":{
                       "type": "string",
-                      "description": "Name of the branch to which the pull request was created",
+                      "description": "Name of the destination branch.",
                       "example":"main"
                     },
                     "created_at":{
