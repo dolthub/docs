@@ -1,0 +1,141 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DoltHub API - List releases",
+    "description": "API to get release list on a database.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/releases": {
+      "get": {
+        "summary": "List Releases",
+        "description": "This API endpoint allows you to list all releases in your database.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the owner of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          }
+        ],
+      "responses": {
+        "200": {
+          "description": "Success",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "description": "Status of the request",
+                    "example":"Success"
+                  },
+                  "database_owner": {
+                    "type": "string",
+                    "description": "Owner of the database",
+                    "example":"dolthub"
+                  },
+                  "database_name": {
+                    "type": "string",
+                    "description": "Database name",
+                    "example":"museum-collections"
+                  },
+                  "releases":{
+                    "type":"array",
+                    "description":"List of branches",
+                    "items":{
+                      "type":"object",
+                      "properties":{
+                        "tag_name": {
+                          "type": "string",
+                          "description": "Name of the tag",
+                          "example":"v1"
+                        },
+                        "tag_description":{
+                          "type":"string",
+                          "description": "Description of the tag",
+                          "example":"First version of the database"
+                        },
+                        "tagged_at":{
+                          "type":"string",
+                          "description": "Date of the tag",
+                          "example":"2023-03-31T18:00:00Z"
+                        
+                        }
+                      }
+                    }
+                 }
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Bad request. The request was invalid or could not be processed.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "example": "Error"
+                  },
+                  "message":{
+                    "type":"string",
+                    "example":"Error creating a release."
+                  },
+                  "database_owner": {
+                    "type": "string",
+                    "description": "Owner of the database",
+                    "example":"dolthub"
+                  },
+                  "database_name": {
+                    "type": "string",
+                    "description": "Database name",
+                    "example":"museum-collections"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ]
+    }
+  }
+},
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

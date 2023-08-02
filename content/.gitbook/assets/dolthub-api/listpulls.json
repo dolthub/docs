@@ -1,0 +1,154 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DoltHub API - List Pull Requests API",
+    "description": "API to get pull request list on a database."
+  },
+  "servers": [
+    {
+      "url":  "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/pulls": {
+      "get": {
+        "summary": "List pull requests of a database",
+        "description": "Get information about a specific pull request.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the request",
+                      "example":"Success"
+
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example":"dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example":"museum-collections"
+                    },
+                     "pulls":{
+                        "type":"array",
+                        "description":"List of pull requests",
+                        "items":{
+                          "type":"object",
+                          "properties":{
+                            "pull_id": {
+                              "type": "string",
+                              "description": "Pull request ID",
+                              "example":"1"
+                            },
+                            "title:": {
+                              "type": "string",
+                              "description": "Title of the pull request",
+                              "example":"Added new data"
+                            },
+                            "description:": {
+                              "type": "string",
+                              "description": "Description of the pull request",
+                              "example":"Added missing museums, sourced from museums.com"
+                            },
+                            "state":{
+                              "type": "string",
+                              "description": "State of the pull request",
+                              "example":"merged"
+                            },
+                            "created_at":{
+                              "type": "string",
+                              "description": "Time at which the pull request was created",
+                              "example":"2023-07-01T18:00:00Z"
+                            },
+                            "creator":{
+                              "type": "string",
+                              "description": "Creator of the pull request",
+                              "example":"liuliu"
+                            }
+                          }
+                        }
+                     }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message":{
+                      "type":"string",
+                      "example":"Error getting pull request list."
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "example": "museum-collections"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}
