@@ -19,7 +19,7 @@ headers = {
 ```
 
 {% swagger src="../../../.gitbook/assets/dolthub-api/createDatabase.json" path="/api/v1alpha1/database" method="post" %}
-[createDatabase.json](../../../.gitbook/dolthub-api/assets/createDatabase.json)
+[createDatabase.json](../../../.gitbook/assets/dolthub-api/createDatabase.json)
 {% endswagger %}
 
 
