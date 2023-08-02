@@ -194,6 +194,10 @@ using [Dolt system
 tables](https://docs.dolthub.com/sql-reference/version-control/dolt-system-tables) and
 [functions](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-functions).
 
+You can learn more about the architecture of the Hosted workbench and how we use the RGD
+(React + GraphQL + Dolt) stack in [this
+blog](https://www.dolthub.com/blog/2023-08-02-workbench-architecture-and-rgd-stack/).
+
 ### Comparing DoltHub and Hosted GraphQL servers
 
 Both DoltHub and the Hosted SQL workbench have this dropdown that lists the database
@@ -293,3 +297,5 @@ Here are some blogs that go more into depth about the SQL Workbench on Hosted:
 - [Announcing the build-in SQL Workbench](https://www.dolthub.com/blog/2022-08-24-hosted-sql-workbench/)
 - [Allowing writes on the SQL Workbench](https://www.dolthub.com/blog/2022-09-26-hosted-ui-writes/)
 - [Comparing DoltHub and the Hosted SQL Workbench](https://www.dolthub.com/blog/2023-03-17-dolthub-vs-hosted-workbench/)
+- [CSV Support for the Hosted Dolt Workbench](https://www.dolthub.com/blog/2023-06-30-hosted-workbench-csv-support/)
+- [The RGD Stack: An Example Inspired by the Hosted Dolt Workbench](https://www.dolthub.com/blog/2023-08-02-workbench-architecture-and-rgd-stack/)
