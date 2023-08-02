@@ -590,8 +590,6 @@ mysql> select * from dolt_diff('HEAD^', 'HEAD', 'salaries');
 We use the [`dolt_patch()`](../../reference/sql/version-control/dolt-sql-functions.md#dolt_patch) function to generate the sql we want to run on our primary.
 
 ```sql
-mysql> call dolt_patch('HEAD^', 'HEAD');
-ERROR 1105 (HY000): stored procedure "dolt_patch" does not exist
 mysql> select * from dolt_patch('HEAD^', 'HEAD');
 +-----------------+----------------------------------+----------------------------------+------------+-----------+------------------------------------------------------------------------------------------+
 | statement_order | from_commit_hash                 | to_commit_hash                   | table_name | diff_type | statement                                                                                |
