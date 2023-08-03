@@ -74,6 +74,23 @@ headers = {
 {% endswagger %}
 
 
+## List pull requests
+
+Here is an example of getting pull requests list on the `museum-collections` database using an [authorization token](authentication.md).
+
+Include this `header` in your request.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/listPulls.json" path="/{owner}/{database}/pulls" method="get" %}
+[listPulls.json](../../../.gitbook/assets/dolthub-api/listPulls.json)
+{% endswagger %}
+
+
 ## Create a pull request comment&#x20;
 
 Here is an example of adding a pull request comment using an [authorization token](authentication.md).
@@ -243,6 +260,22 @@ headers = {
 {% endswagger %}
 
 
+## List branches
+
+Here's an example of how to list branches in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Getting branches list requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/listBranches.json" path="/{owner}/{database}/branches" method="get" %}
+[listBranches.json](../../../.gitbook/assets/dolthub-api/listBranches.json)
+{% endswagger %}
+
 ## Create a release
 
 Here's an example of how to create a new release in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
@@ -257,4 +290,21 @@ headers = {
 
 {% swagger src="../../../.gitbook/assets/dolthub-api/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
 [createRelease.json](../../../.gitbook/assets/dolthub-api/createRelease.json)
+{% endswagger %}
+
+
+## List releases
+
+Here's an example of how to list releases in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+
+Getting releases list requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/listReleases.json" path="/{owner}/{database}/releases" method="get" %}
+[listReleases.json](../../../.gitbook/assets/dolthub-api/listReleases.json)
 {% endswagger %}
