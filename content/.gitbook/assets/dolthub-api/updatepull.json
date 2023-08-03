@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Update a Pull Request",
+    "description": "API to update a pull request."
+  },
+  "servers": [
+    {
+      "url":  "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/pulls/{pull_id}": {
+      "patch": {
+        "summary": "Update Pull Request",
+        "description": "Updates a pull request by ID, including its title, description, and sets its state to be 'closed'.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"museum-collections"
+            }
+          },
+          {
+            "name": "pull_id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the pull request to update.",
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Request body containing the updated pull request information, should update at least one field.",
+           "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The updated title of the pull request.",
+                    "example": "Added new data"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The updated description of the pull request.",
+                    "example": "Added new data from LACMA museum."
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "The updated state of the pull request (can only update to 'closed')",
+                    "example": "closed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "Status of the request",
+                      "example": "Success"
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example": "dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example": "museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "description": "Updated pull request ID",
+                      "example": "1"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "Title of the pull request after update",
+                      "example": "Added new data"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the pull request after update",
+                      "example": "Added new data from LACMA museum."
+                    },
+                    "state": {
+                      "type": "string",
+                      "description": "State of the pull request after update",
+                      "example": "closed"
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Error updating the pull request."
+                    },
+                    "database_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "database_name": {
+                      "type": "string",
+                      "example": "museum-collections"
+                    },
+                    "pull_id": {
+                      "type": "string",
+                      "example": "1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}
