@@ -18,8 +18,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/createDatabase.json" path="/api/v1alpha1/database" method="post" %}
-[createDatabase.json](../../../.gitbook/assets/createDatabase.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createDatabase.json" path="/api/v1alpha1/database" method="post" %}
+[createDatabase.json](../../../.gitbook/assets/dolthub-api/createDatabase.json)
 {% endswagger %}
 
 
@@ -36,10 +36,42 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/pullrequest.json" path="/{owner}/{database}/pulls" method="post" %}
-[pullrequest.json](../../../.gitbook/assets/pullrequest.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createpull.json" path="/{owner}/{database}/pulls" method="post" %}
+[createpull.json](../../../.gitbook/assets/dolthub-api/createpull.json)
 {% endswagger %}
 
+
+## Get pull request details
+
+This API allows you to retrieve the details of a specific pull request in the `museum-collections` database. In this example, we will retrieve the details of pull request #1.
+
+Include this `header` in your request.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/getpull.json" path="/{owner}/{database}/pulls/{pull_id}" method="get" %}
+[getpull.json](../../../.gitbook/assets/dolthub-api/getpull.json)
+{% endswagger %}
+
+## Update a pull request
+
+This API allows you to update a pull request by providing the fields you want to update in the request body. You can update the title, description, and state (only closing a pull request is supported).
+
+Here's an example of how to update pull request #1 on the museum-collections database. In this example, we will set a new title, description, and close the pull request.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/updatepull.json" path="/{owner}/{database}/pulls/{pull_id}" method="patch" %}
+[updatepull.json](../../../.gitbook/assets/dolthub-api/updatepull.json)
+{% endswagger %}
 
 
 ## Create a pull request comment&#x20;
@@ -54,8 +86,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/pullcomment.json" path="/{owner}/{database}/pulls/{pull_id}/comments" method="post" %}
-[pullcomment.json](../../../.gitbook/assets/pullcomment.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/pullcomment.json" path="/{owner}/{database}/pulls/{pull_id}/comments" method="post" %}
+[pullcomment.json](../../../.gitbook/assets/dolthub-api/pullcomment.json)
 {% endswagger %}
 
 
@@ -76,14 +108,14 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/mergePull.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="post" %}
-[mergePull.json](../../../.gitbook/assets/mergePull.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/mergePull.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="post" %}
+[mergePull.json](../../../.gitbook/assets/dolthub-api/mergePull.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the merge operation is done.
 
-{% swagger src="../../../.gitbook/assets/pollMergeJob.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="get" %}
-[pollMergeJob.json](../../../.gitbook/assets/pollMergeJob.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/pollMergeJob.json" path="/{owner}/{database}/pulls/{pull_id}/merge" method="get" %}
+[pollMergeJob.json](../../../.gitbook/assets/dolthub-api/pollMergeJob.json)
 {% endswagger %}
 
 
@@ -105,14 +137,14 @@ headers = {
 
 To upload the file, include two fields in the request body, `file` and `params`, the `file` should be type of `Blob`, and `params` should be a JSON object.
 
-{% swagger src="../../../.gitbook/assets/fileUpload.json" path="/{owner}/{database}/upload" method="post" %}
-[fileUpload.json](../../../.gitbook/assets/fileUpload.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/fileUpload.json" path="/{owner}/{database}/upload" method="post" %}
+[fileUpload.json](../../../.gitbook/assets/dolthub-api/fileUpload.json)
 {% endswagger %}
 
 Then use `GET` to poll the operation to check if the import operation is done.
 
-{% swagger src="../../../.gitbook/assets/pollImportJob.json" path="/{owner}/{database}/upload" method="get" %}
-[pollImportJob.json](../../../.gitbook/assets/pollImportJob.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/pollImportJob.json" path="/{owner}/{database}/upload" method="get" %}
+[pollImportJob.json](../../../.gitbook/assets/dolthub-api/pollImportJob.json)
 {% endswagger %}
 
 Here is an example of uploading a CSV file to create a table through this api endpoint in Javascript, you can reference the [`dolt table import`](https://docs.dolthub.com/cli-reference/cli#dolt-table-import) documentation for additional information.:
@@ -206,8 +238,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/createBranch.json" path="/{owner}/{database}/branches" method="post" %}
-[createBranch.json](../../../.gitbook/assets/createBranch.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createBranch.json" path="/{owner}/{database}/branches" method="post" %}
+[createBranch.json](../../../.gitbook/assets/dolthub-api/createBranch.json)
 {% endswagger %}
 
 
@@ -223,6 +255,6 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
-[createRelease.json](../../../.gitbook/assets/createRelease.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
+[createRelease.json](../../../.gitbook/assets/dolthub-api/createRelease.json)
 {% endswagger %}
