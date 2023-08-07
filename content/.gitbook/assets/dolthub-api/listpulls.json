@@ -35,6 +35,17 @@
               "type": "string",
               "example":"museum-collections"
             }
+          },
+          {
+            "name":"pageToken",
+            "in":"query",
+            "description":"The pageToken to get the next page of results",
+            "required":false,
+            "schema":{
+              "type": "string",
+              "description": "The next page token",
+              "example": "AWE2Nm9uMWQ23FSQ7oRTbCXYTLLvNDhNs5hIFebQFI66FW-SYXGSlh3XcUQ8zmtLQ00QgD0X5FZr5ZTAhvT2FfRrGog7OuUno9wdTIXFQpkkX0opYoJL6Vrn2emlXkMBTiZYMqChyhR92_Yxd58B0w5nMrfXFf8v7xfAkN46hw"
+            }
           }
         ],
         "responses": {
@@ -99,6 +110,11 @@
                             }
                           }
                         }
+                     },
+                     "next_page_token":{
+                        "type": "string",
+                        "description": "page token for the next page of results",
+                        "example":"AWE2Nm9uMWQ23FSQ7oRTbCXYTLLvNDhNs5hIFebQFI66FW-SYXGSlh3XcUQ8zmtLQ00QgD0X5FZr5ZTAhvT2FfRrGog7OuUno9wdTIXFQpkkX0opYoJL6Vrn2emlXkMBTiZYMqChyhR92_Yxd58B0w5nMrfXFf8v7xfAkN46hw"
                      }
                   }
                 }
