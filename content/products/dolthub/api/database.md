@@ -76,7 +76,7 @@ headers = {
 
 ## List pull requests
 
-Here is an example of getting pull requests list on the `museum-collections` database using an [authorization token](authentication.md).
+Here is an example of getting pull requests list on the `museum-collections` database using an [authorization token](authentication.md). The response of pull request list is paginated, you can use the next page token included in the response to retrieve the following page of pull requests.
 
 Include this `header` in your request.
 
