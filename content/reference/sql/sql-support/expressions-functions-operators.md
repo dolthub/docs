@@ -225,7 +225,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_ARRAY_APPEND()`             | ❌            |                                                                                                                 |
 | `JSON_ARRAY_INSERT()`             | ❌            |                                                                                                                 |
 | `JSON_CONTAINS()`                 | ✅            |                                                                                                                 |
-| `JSON_CONTAINS_PATH()`            | ❌            |                                                                                                                 |
+| `JSON_CONTAINS_PATH()`            | ✅            |                                                                                                                 |
 | `JSON_DEPTH()`                    | ❌            |                                                                                                                 |
 | `JSON_EXTRACT()`                  | ✅            |                                                                                                                 |
 | `JSON_INSERT()`                   | ❌            |                                                                                                                 |
