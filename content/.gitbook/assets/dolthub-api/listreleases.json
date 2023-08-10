@@ -62,7 +62,7 @@
                   },
                   "releases":{
                     "type":"array",
-                    "description":"List of branches",
+                    "description":"List of releases",
                     "items":{
                       "type":"object",
                       "properties":{

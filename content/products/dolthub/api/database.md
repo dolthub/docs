@@ -76,7 +76,7 @@ headers = {
 
 ## List pull requests
 
-Here is an example of getting pull requests list on the `museum-collections` database using an [authorization token](authentication.md). The response of pull request list is paginated, you can use the next page token included in the response to retrieve the following page of pull requests.
+Here is an example of listing pull requests for the `museum-collections` database using an [authorization token](authentication.md). The response of pull request list is paginated, so you need to use the next page token included in the response to retrieve the following pages of pull requests.
 
 Include this `header` in your request.
 
@@ -262,9 +262,9 @@ headers = {
 
 ## List branches
 
-Here's an example of how to list branches in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+Here's an example of how to list branches in the database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
 
-Getting branches list requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+Listing branches requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
 
 ```python
 headers = {
@@ -278,7 +278,7 @@ headers = {
 
 ## Create a release
 
-Here's an example of how to create a new release in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+Here's an example of how to create a new release in the database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
 
 Creating a release requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
 
@@ -295,9 +295,9 @@ headers = {
 
 ## List releases
 
-Here's an example of how to list releases in database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
+Here's an example of how to list releases in the database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
 
-Getting releases list requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+Listing releases requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
 
 ```python
 headers = {
