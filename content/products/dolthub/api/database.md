@@ -288,8 +288,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/createrelease.json" path="/{owner}/{database}/releases" method="post" %}
-[createrelease.json](../../../.gitbook/assets/dolthub-api/createrelease.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
+[createRelease.json](../../../.gitbook/assets/dolthub-api/createRelease.json)
 {% endswagger %}
 
 
@@ -305,6 +305,6 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/listReleases.json" path="/{owner}/{database}/releases" method="get" %}
-[listReleases.json](../../../.gitbook/assets/dolthub-api/listReleases.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/listreleases.json" path="/{owner}/{database}/releases" method="get" %}
+[listreleases.json](../../../.gitbook/assets/dolthub-api/listreleases.json)
 {% endswagger %}
