@@ -86,8 +86,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/listPulls.json" path="/{owner}/{database}/pulls" method="get" %}
-[listPulls.json](../../../.gitbook/assets/dolthub-api/listPulls.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/listpulls.json" path="/{owner}/{database}/pulls" method="get" %}
+[listpulls.json](../../../.gitbook/assets/dolthub-api/listpulls.json)
 {% endswagger %}
 
 
@@ -272,8 +272,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/listBranches.json" path="/{owner}/{database}/branches" method="get" %}
-[listBranches.json](../../../.gitbook/assets/dolthub-api/listBranches.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/listbranches.json" path="/{owner}/{database}/branches" method="get" %}
+[listbranches.json](../../../.gitbook/assets/dolthub-api/listbranches.json)
 {% endswagger %}
 
 ## Create a release
@@ -288,8 +288,8 @@ headers = {
 }
 ```
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
-[createRelease.json](../../../.gitbook/assets/dolthub-api/createRelease.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/createrelease.json" path="/{owner}/{database}/releases" method="post" %}
+[createrelease.json](../../../.gitbook/assets/dolthub-api/createrelease.json)
 {% endswagger %}
 
 
