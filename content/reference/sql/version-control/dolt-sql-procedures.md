@@ -460,14 +460,6 @@ CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 
 `-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
 
-`--aws-region`: The cloud provider region associated with the remote database being cloned.
-
-`--aws-creds-type`: The credential type when cloning a remote database from AWS. Valid options are role, env, and file.
-
-`--aws-creds-file`: The AWS credentials file for use when cloning a remote database from AWS.
-
-`--aws-creds-profile`: The AWS profile name holding the credentials to use when cloning a remote database from AWS.
-
 ### Examples
 
 ```sql
@@ -794,24 +786,14 @@ CALL DOLT_PUSH('origin', 'feature-branch');
 ## `DOLT_REMOTE()`
 
 Adds a remote for a database at given url, or removes an existing remote with its remote-tracking branches
-and configuration settings. Works exactly like [`dolt remote` command](../../cli.md#dolt-remote) on the CLI, and takes
-the same arguments except for listing remotes. To list existing remotes, use the
+and configuration settings. Similar to [`dolt remote` command](../../cli.md#dolt-remote) on the CLI, with the
+exception of cloud provider flags. To list existing remotes, use the
 [`dolt_remotes` system table](./dolt-system-tables.md#dolt_remotes).
 
 ```sql
 CALL DOLT_REMOTE('add','remote_name','remote_url');
 CALL DOLT_REMOTE('remove','existing_remote_name');
 ```
-
-### Options
-
-`--aws-region=<region>`: Specify a cloud provider region associated with this remote.
-
-`--aws-creds-type=<creds-type>`: Specify a credential type. Valid options are role, env, and file.
-
-`--aws-creds-file=<file>`: Specify an AWS credentials file.
-
-`--aws-creds-profile=<profile>`: Specify an AWS profile to use.
 
 ### Example
 
