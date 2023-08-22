@@ -26,6 +26,7 @@ the following information can help DoltLab Admins manually perform some common a
 19. [Use a domain name with DoltLab](#use-domain)
 20. [Add Super Admins to a DoltLab instance](#add-super-admins)
 21. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
+22. [Serve DoltLab over HTTPS with a TLS reverse proxy](#doltlab-https-proxy)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1080,3 +1081,206 @@ Make sure that the `DOLT_PASSWORD` environment variable matches the password you
 Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
 
 ![Hosted Dolt Workbench](../../.gitbook/assets/hosted_dolt_workbench.png)
+
+<h1 id="doltlab-https-proxy">Serve DoltLab over HTTPS with a TLS reverse proxy</h1>
+
+Starting with DoltLab `v1.0.5`, it is possible to serve a DoltLab instance behind a TLS reverse proxy. You may want to do this if you want to serve your DoltLab instance over `HTTPS` instead of `HTTP`. Let's walkthrough an example of how to run a DoltLab instance behind an [nginx](https://www.nginx.com/) TLS proxy, running on the same host. We will use [doltlab.dolthub.com](https://doltlab.dolthub.com) as our example.
+
+Before you begin you will need to create valid TLS certificates on the DoltLab host. You can provision these from a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) or do so with a free tool like [certbot](https://certbot.eff.org/). For this example we have created valid certs with `certbot`, `/etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem` and `/etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem`.
+
+To start, shut down your DoltLab instance if it is currently running, then open four new ports on your DoltLab host. These ports will be used to forward requests to DoltLab's existing `HTTP` ports.
+
+In our example we will using the following new ports: `443`, `143`, `5443`, and `50043`. `443` will route requests to port `80` where DoltLab's UI is served. `143` will forward requests to port `100` where DoltLab serves database data from. `5443` will forward requests to `4321`, which DoltLab uses to enable user file uploads. And, finally, `50043` will map to `50051`, the port used by clients for cloning, pushing, pulling, and fetching data.
+
+At this time you can also close ports `80`, `100`, `4321`, and `50051` on the DoltLab host, as these no longer need to be reachable on the public internet.
+
+Next, edit DoltLab's `docker-compose.yaml` and amend the arguments under `doltlabremoteapi.command`:
+
+```yaml
+  doltlabremoteapi:
+...
+    command:
+      # change value of `-http-host`, adding the HOST_IP before the colon and the new TLS database data serving port (143) after the colon
+      -http-host "doltlab.dolthub.com:143"
+      -http-scheme "https" # add `-http-scheme` with value `https`
+      -backingStoreHostNameOverrideKey ":143" # update this with TLS database data serving port as well
+```
+
+There are 2 arguments that need to change, and one new argument to add. As you can see from the above snippet, `-http-host` needs to be updated with the `HOST_IP` value followed by a colon and the new TLS database data serving port. Since we use `HOST_IP=doltlab.dolthub.com`, and we are mapping TLS port `143` to `HTTP` port `100`, our new value is `doltlab.dolthub.com:143`.
+
+We also need to change the port in the value of `-backingStoreHostNameOverrideKey` to reflect this same TLS port, so our value here is `:143`.
+
+Lastly, we need to add the argument `-http-scheme https` to this `command` block.
+
+Next, edit the `doltlabapi.command` section:
+
+```yaml
+  doltlabapi:
+...
+    command:
+      # change the url scheme to `https`
+      -websiteURL "https://doltlab.dolthub.com"
+      # change the scheme to `https` and the port to the new TLS file upload port (5443)
+      -userImportUploadsFileServiceBrowserHost "https://doltlab.dolthub.com:5443"
+```
+
+Here we change the value of `-websiteURL` to have an `https` scheme. We also change the value of   `-userImportUploadsFileServiceBrowserHost` so that the url scheme is `https` and the port after the colon is `5443`, the new TLS port we are using to forward requests to DoltLab's user file upload service running on `HTTP` port `4321`.
+
+Save the changes to this file.
+
+Next, [install nginx v1.13.10 or higher](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) on the DoltLab host. For this example, the open source version can be installed on Ubuntu with:
+
+```bash
+sudo apt update
+sudo apt install nginx
+```
+
+Ensure `nginx` is running with:
+
+```bash
+sudo systemctl status nginx
+● nginx.service - nginx - high performance web server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+     Active: active (running) since Fri 2023-08-18 20:51:50 UTC; 3 days ago
+       Docs: https://nginx.org/en/docs/
+   Main PID: 2913065 (nginx)
+      Tasks: 5 (limit: 18734)
+     Memory: 9.8M
+     CGroup: /system.slice/nginx.service
+             ├─2913065 nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx.conf
+             ├─3844184 nginx: worker process
+             ├─3844185 nginx: worker process
+             ├─3844186 nginx: worker process
+             └─3844187 nginx: worker process
+
+Aug 18 20:51:50 ip-10-2-3-125 systemd[1]: Starting nginx - high performance web server...
+Aug 18 20:51:50 ip-10-2-3-125 systemd[1]: Started nginx - high performance web server.
+```
+
+Then, edit the `nginx` configuration file located at `/etc/nginx/nginx.conf` to be the following:
+
+```
+user  nginx;
+worker_processes  auto;
+
+error_log  /var/log/nginx/error.log notice;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    # include /etc/nginx/conf.d/*.conf;
+
+    ssl_session_cache   shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    server {
+        listen 443 ssl;
+
+        ssl_certificate     /etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location / {
+            proxy_pass http://127.0.0.1:80;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto https;
+        }                
+    }
+    
+    server {
+        listen 143 ssl;
+
+        ssl_certificate     /etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location / {
+            proxy_pass http://127.0.0.1:100;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto https;
+        }                
+    }
+    
+    server {
+        listen 5443 ssl;
+
+        ssl_certificate     /etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location / {
+            proxy_pass http://127.0.0.1:4321;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_set_header X-Forwarded-Port $server_port;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto https;
+        }                
+    }
+
+    server {
+        listen 50043 ssl http2;
+
+        ssl_certificate     /etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location / {
+            grpc_pass grpc://127.0.0.1:50051;
+        }                
+    }
+}
+
+```
+
+The above configuration file includes `server` blocks that route the new TLS ports to the proper `HTTP` ports of DoltLab and use the TLS certificates we created earlier with `certbot`. Importantly, the `server` block for `50043` used by clients for cloning, pushing, pulling, and fetching must be configured with `http2` and as a `grpc_pass`.
+
+Save the changes to the configuration file and reload `nginx` with: `nginx -s reload`. This will make the configuration changes take effect.
+
+Finally, restart DoltLab using the `./start-doltlab.sh` script with two additional environment variables:
+
+```bash
+export USE_HTTPS=1 # enable https support in the DoltLab frontend
+export DOLTLAB_REMOTE_PORT=50043 # set to new TLS port for cloning/pushing/pulling/fetching (50043)
+...
+./start-doltlab.sh
+```
+
+Once your DoltLab instance comes up, it will be served on `HTTPS` via the `nginx` TLS proxy.
