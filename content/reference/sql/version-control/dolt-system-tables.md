@@ -1044,8 +1044,8 @@ running `dolt status` from the command line.
 | Field      | Type    | Null | Key |
 +------------+---------+------+-----+
 | table_name | text    | NO   | PRI |
-| staged     | tinyint | NO   |     |
-| status     | text    | NO   |     |
+| staged     | tinyint | NO   | PRI |
+| status     | text    | NO   | PRI |
 +------------+---------+------+-----+
 ```
 
