@@ -22,10 +22,10 @@ DoltLab is currently available for Linux and we recommend the following _minimum
 * Host should allow egress `TCP` connections.
 * The following `TCP` ports _must_ be open on the host:
   * `22`, for `ssh` connections.
-  * `80`, for ingress `HTTP` connections.
-  * `100`, for ingress connections to DoltLab's [remote data file server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
-  * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
-  * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server).
+  * `80`, for ingress `HTTP` connections, or `443` for ingress `HTTPS` connections (supported in DoltLab >= `v1.0.6`).
+  * `100`, for ingress connections to DoltLab's [remote data file server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), or `143` to use TLS (supported in DoltLab >= `v1.0.6`).
+  * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), or `50043` to use TLS (supported in DoltLab >= `v1.0.6`).
+  * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server), or `5443` to use TLS (supported in DoltLab >= `v1.0.6`).
 
 > Starting with DoltLab `v0.7.0`, DoltLab uses more variable disk and memory on its host in order to run DoltLab Jobs. As a result, the minimum memory and disk requirements listed above might be too low for your use case. Please read the section on [DoltLab Jobs](./administrator.md#doltlab-jobs) in the Administrator Guide to find out more about how Jobs can impact your DoltLab instance.
 
@@ -90,6 +90,7 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 
 * templates
 * envoy.tmpl
+* envoy-tls.tmpl
 * gentokenenckey
 * send_doltlab_deployed_event
 * smtp_connection_helper
@@ -97,12 +98,15 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * dolt_db_cli.sh
 * shell-db.sh
 * docker-compose.yaml
+* docker-compose-tls.yaml
 * start-doltlab.sh
 
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
 
 `envoy.tmpl` is an template file used to create the [Envoy](https://www.envoyproxy.io/) proxy configuration file called `envoy.yaml`.
+
+`envoy-tls.tmpl` is included in DoltLab >= `v1.0.6` and is used to create an `envoy.yaml` file that uses TLS.
 
 `gentokenenckey`, short for "generate token encryption key" is a binary used to generate token encryption keys used by DoltLab. The code is available [here](https://gist.github.com/coffeegoddd/9b1acb07baaa72c8173a2e7b11dacb80).
 
@@ -120,6 +124,8 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 
 `docker-compose.yaml` is a complete [Docker Compose](https://docs.docker.com/compose/) configuration file that will spin up all the services required to run DoltLab.
 
+`docker-compose-tls.yaml` is included in DoltLab >= `v1.0.6` and will spin up DoltLab using TLS.
+
 `start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
@@ -127,6 +133,7 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set:
 
 ```bash
+# required
 export HOST_IP=<Host IP>
 export DOLT_PASSWORD=<Password>
 export DOLTHUBAPI_PASSWORD=<Password>
@@ -135,6 +142,10 @@ export EMAIL_PASSWORD=<SMTP Email Password>
 export EMAIL_PORT=<STMP Email Port>
 export EMAIL_HOST=<SMTP Email Host>
 export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
+
+# optional, supported in DoltLab >= v1.0.6
+export TLS_CERT_CHAIN=<path to TLS certificate chain>
+export TLS_PRIVATE_KEY=<path to TLS private key>
 ```
 
 > For DoltLab version <= `v0.8.4` include `export POSTGRES_USER="dolthubapi"` and rename `DOLT_PASSWORD` to `POSTGRES_PASSWORD`.
@@ -146,6 +157,8 @@ export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 `EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
 `EMAIL_HOST` should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that receives no-reply messages.<br/>
+`TLS_CERT_CHAIN` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS certificate chain.<br/>
+`TLS_PRIVATE_KEY` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS private key.<br/>
 
 <h5 id="doltlab-smtp-auth">Supported SMTP Authentication methods</h5>
 
