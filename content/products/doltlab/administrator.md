@@ -27,6 +27,7 @@ the following information can help DoltLab Admins manually perform some common a
 20. [Add Super Admins to a DoltLab instance](#add-super-admins)
 21. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
 22. [Serve DoltLab over HTTPS with a TLS reverse proxy](#doltlab-https-proxy)
+23. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1286,3 +1287,19 @@ export DOLTLAB_REMOTE_PORT=50043 # set to new TLS port for cloning/pushing/pulli
 ```
 
 Once your DoltLab instance comes up, it will be served on `HTTPS` via the `nginx` TLS proxy.
+
+<h1 id="doltlab-https-natively">Serve DoltLab over HTTPS natively</h1>
+
+Starting with DoltLab `v1.0.6`, it is possible to run DoltLab over `HTTPS` with TLS natively. To do so, make sure that port `443` is open on the host running DoltLab (as well as the other required ports `100`, `4321`, and `50051`) and that you have a valid TLS certificate that uses the `HOST_IP` of the DoltLab host. We recommend creating a TLS certificate using [certbot](https://certbot.eff.org/).
+
+To start DoltLab with TLS, you will run the `./start-doltlab.sh` script with the argument `https`, and will need to supply two additional environment variables:
+
+```bash
+...
+export TLS_CERT_CHAIN=<path to TLS certificate chain>
+export TLS_PRIVATE_KEY=<path to TLS private key>
+./start-doltlab.sh https
+```
+
+Once the services are spun up, DoltLab will be available at `https://${HOST_IP}`.
+
