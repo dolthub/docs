@@ -147,7 +147,7 @@ CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 
 ### Notes
 
--  The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
+- The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
 
 {% endhint %}
 
@@ -205,7 +205,7 @@ With table names as arguments, restores those tables to their contents
 in the current HEAD.
 
 Note, unlike the Git command-line, if you have a modified working set, those changes remain on the
-branch you modified after a `DOLT_CHECKOUT()`.  Uncommitted changes in the working set do not
+branch you modified after a `DOLT_CHECKOUT()`. Uncommitted changes in the working set do not
 transfer to the checked out branch as on the command line. We modified this behavior in the SQL
 context because multiple users may be connected to the same branch. Having one user bring changes
 from various other branches with them when they switch branches is too disruptive in the
@@ -227,12 +227,11 @@ CALL DOLT_CHECKOUT('my-table');
    database name.
 2. For the remainder of this session, references to the unqualified name of this database will
    resolve to the branch checked out.
-   
+
 See the comments after the statements below for an example of this behavior, and also read [Using
 Branches](./branches.md)
 
 {% endhint %}
-
 
 ```sql
 set autocommit = on;
@@ -275,7 +274,7 @@ Apply the changes introduced by an existing commit.
 
 Apply changes from existing commit and creates a new commit from the current HEAD.
 
-Works exactly like [`dolt cherry-pick` command](../../cli.md#dolt-cherry-pick) on the CLI, 
+Works exactly like [`dolt cherry-pick` command](../../cli.md#dolt-cherry-pick) on the CLI,
 and has the same notes and limitations.
 
 ```sql
@@ -848,8 +847,8 @@ CALL DOLT_RESET('myTable'); -- soft reset
 
 ### Notes
 
--  With the `--hard` option, the `dolt_reset()` procedure implicitly commits the current transaction
-   and begins a new one.
+- With the `--hard` option, the `dolt_reset()` procedure implicitly commits the current transaction
+  and begins a new one.
 
 {% endhint %}
 
@@ -953,10 +952,10 @@ Creates a new tag that points at specified commit ref, or deletes an existing ta
 To list existing tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
-
-CALL DOLT_TAG('tag_name','commit_ref');
-CALL DOLT_TAG('-m','message','tag_name','commit_ref');
-CALL DOLT_TAG('-d','tag_name');
+CALL DOLT_TAG('tag_name', 'commit_ref');
+CALL DOLT_TAG('-m', 'message', 'tag_name', 'commit_ref');
+CALL DOLT_TAG('-m', 'message', '--author', 'John Doe <johndoe@example.com>', 'tag_name', 'commit_ref');
+CALL DOLT_TAG('-d', 'tag_name');
 ```
 
 ### Options
@@ -964,6 +963,9 @@ CALL DOLT_TAG('-d','tag_name');
 `-m`: Use the given message as the tag message.
 
 `-d`: Delete a tag.
+
+`--author`: Specify an explicit author using the standard "A U Thor
+author@example.com" format.
 
 ### Example
 
