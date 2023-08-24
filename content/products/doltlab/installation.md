@@ -23,9 +23,9 @@ DoltLab is currently available for Linux and we recommend the following _minimum
 * The following `TCP` ports _must_ be open on the host:
   * `22`, for `ssh` connections.
   * `80`, for ingress `HTTP` connections, or `443` for ingress `HTTPS` connections (supported in DoltLab >= `v1.0.6`).
-  * `100`, for ingress connections to DoltLab's [remote data file server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), or `143` to use TLS (supported in DoltLab >= `v1.0.6`).
-  * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server), or `50043` to use TLS (supported in DoltLab >= `v1.0.6`).
-  * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server), or `5443` to use TLS (supported in DoltLab >= `v1.0.6`).
+  * `100`, for ingress connections to DoltLab's [remote data file server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
+  * `50051`, for ingress connections to DoltLab's [remote API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-remoteapi-server).
+  * `4321`, for ingress connections to DoltLab's [file upload service API](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-file-service-api-server).
 
 > Starting with DoltLab `v0.7.0`, DoltLab uses more variable disk and memory on its host in order to run DoltLab Jobs. As a result, the minimum memory and disk requirements listed above might be too low for your use case. Please read the section on [DoltLab Jobs](./administrator.md#doltlab-jobs) in the Administrator Guide to find out more about how Jobs can impact your DoltLab instance.
 
@@ -100,7 +100,7 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * docker-compose.yaml
 * docker-compose-tls.yaml
 * start-doltlab.sh
-
+ 
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
 
@@ -189,7 +189,7 @@ To overwrite these default values, simply change the values of their correspondi
 Once these variables are set, simply run the `start-doltlab.sh` script:
 
 ```bash
-./start-doltlab.sh # runs doltlab using docker-compose in daemon mode
+./start-doltlab.sh # runs doltlab on HTTP using docker-compose.yaml in daemon mode
 ```
 
 The running DoltLab processes can be viewed with `docker ps`:
@@ -207,3 +207,11 @@ c1faa01b05ce   public.ecr.aws/doltlab/dolt-sql-server:v1.0.0             "tini -
 ```
 
 And navigating to `http://${HOST_IP}:80` in a web browser should show the DoltLab homepage.
+
+To run DoltLab with TLS instead run:
+
+```bash
+./start-doltlab.sh https # runs doltlab on HTTPS using docker-compose-tls.yaml in daemon mode
+```
+
+And navigating to `https://${HOST_IP}:443` in a web browser should show the DoltLab homepage.
