@@ -160,6 +160,8 @@ export TLS_PRIVATE_KEY=<path to TLS private key>
 `TLS_CERT_CHAIN` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS certificate chain.<br/>
 `TLS_PRIVATE_KEY` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS private key.<br/>
 
+To use DoltLab with TLS ensure the certificate is for the `HOST_IP` of your DoltLab host. We recommend creating a TLS certificate with [certbot](https://certbot.eff.org/).
+
 <h5 id="doltlab-smtp-auth">Supported SMTP Authentication methods</h5>
 
 Starting in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
