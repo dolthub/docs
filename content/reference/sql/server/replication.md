@@ -61,8 +61,9 @@ replication:
 1. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads).
    **Either this variable or `@@dolt_replicate_all_heads` must be
    set.** Used to configure specific branches (ie. HEADs) to push /
-   pull. Set to a comma-separted list of branches that should be
-   replicated.
+   pull. Set to a comma-separated list of branches to be
+   replicated. The wildcard `*` may be used to match zero or more characters
+   in a branch name and is useful for selecting multiple branches. 
 1. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads).
    **Either this variable or `@@dolt_replicate_heads` must be set.**
    Replicate all branches (ie. HEADs). Defaults to 0.

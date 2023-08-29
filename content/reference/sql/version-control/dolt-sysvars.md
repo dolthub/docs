@@ -159,13 +159,16 @@ mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
 
 ## `dolt_replicate_heads`
 
-This system variable specifies which heads a read replica should fetch.
+This system variable specifies which branch heads a read replica will fetch.
+The wildcard `*` may be used to match zero or more characters in a branch name 
+and is useful for selecting multiple branch names. 
 Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 `dolt_replicate_all_heads`. See [Replication](../server/replication.md).
 
 ```sql
 mysql> SET @@GLOBAL.dolt_replicate_heads = main;
 mysql> SET @@GLOBAL.dolt_replicate_heads = "main,feature1,feature2";
+mysql> SET @@GLOBAL.dolt_replicate_heads = "main,release*";
 ```
 
 ## `dolt_replication_remote_url_template`
