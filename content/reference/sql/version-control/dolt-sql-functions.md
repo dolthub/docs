@@ -554,7 +554,7 @@ The `DOLT_LOG()` table function takes any number of optional revision arguments:
   Note: the CLI `dolt log` command defaults to "short", while this table function defaults
   to "no".
 - `--not`: Excludes commits reachable by revision.
-- `--tables`: Limits the log to commits that affect the specified tables. Any number of tables can be specified.
+- `--tables`: Limits the log to commits that affect the specified tables. Any number of comma separated tables can be specified.
 
 ### Schema
 
