@@ -283,3 +283,7 @@ There are some best practices to keep in mind in order to make importing externa
 - Avoid adding foreign keys or unique indexes until after the import is completed. These substantially increase import time.
 - Minimize your use of blob types. These are expensive to create.
 - If running multiple import jobs back to back, be sure to [garbage collect](https://docs.dolthub.com/cli-reference/cli#dolt-gc) the database. Imports can generate a substantial amount of garbage.
+- If you're writing your own `.sql` file instead of using `mysqldump`, consider the following:
+  - Import one table at a time.
+  - Prefer fewer INSERT statements that each insert multiple values over more, shorter statements that only insert a single value each.
+  - Sort your inserts by primary key. If a table doesn't have a primary key, consider adding one.
