@@ -529,10 +529,10 @@ must be literal values.
 ### Options
 
 ```sql
-DOLT_LOG(<optional_revision>, <optional_revision>)
+DOLT_LOG([<optional_revisions>...], [--tables <tables>...])
 ```
 
-The `DOLT_LOG()` table function takes up to two optional revision arguments:
+The `DOLT_LOG()` table function takes any number of optional revision arguments:
 
 - `optional_revision`: a branch name, tag, or commit ref (with or without an ancestor
   spec) that specifies which ancestor commits to include in the results. If no revisions
@@ -554,6 +554,7 @@ The `DOLT_LOG()` table function takes up to two optional revision arguments:
   Note: the CLI `dolt log` command defaults to "short", while this table function defaults
   to "no".
 - `--not`: Excludes commits reachable by revision.
+- `--tables`: Limits the log to commits that affect the specified tables. Any number of comma separated tables can be specified.
 
 ### Schema
 

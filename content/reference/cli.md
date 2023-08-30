@@ -49,6 +49,7 @@ Valid commands for dolt are
                 dump - Export all tables in the working set into a file.
                 docs - Commands for working with Dolt documents.
                stash - Stash the changes in a dirty working directory away.
+             profile - Manage dolt profiles for CLI global options.
 ```
 
 ## Global Arguments
@@ -62,25 +63,37 @@ dolt <--data-dir=<path>> subcommand <subcommand arguments>
 
 Specific dolt options:
 
+`--profile=<profile>`:
+The name of the profile to use when executing SQL queries. Run `dolt profile --help` for more information.
+
 `-u <user>`, `--user=<user>`:
 Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
 
 `-p <password>`, `--password=<password>`:
-Defines the password for the user. Defaults to empty string.
+Defines the password for the user. Defaults to empty string when the user is `root`.
 
-`--data-dir=<directory>`:
-Defines a directory whose subdirectories should all be dolt data repositories accessible as independent databases within. Defaults to the current directory.
+`--host=<host>`:
+Defines the host to connect to.
 
-`--doltcfg-dir=<directory>`:
+`--port=<port>`:
+Defines the port to connect to.
+
+`--no-tls`:
+Disables TLS for the connection to remote databases.
+
+`--data-dir=<data-dir>`:
+Defines a data directory whose subdirectories should all be dolt data repositories accessible as independent databases. Defaults to the current directory.
+
+`--doltcfg-dir=<doltcfg-dir>`:
 Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change to configuration settings.
 
-`--privilege-file=<privilege file>`:
+`--privilege-file=<privilege-file>`:
 Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
 
-`--branch-control-file=<branch control file>`:
+`--branch-control-file=<branch-control-file>`:
 Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
 
-`--use-db=<database>`:
+`--use-db=<use-db>`:
 The name of the database to use when executing SQL queries. Defaults the database of the root directory, if it exists, and the first alphabetically if not.
 
 
@@ -978,6 +991,9 @@ When no refspec(s) are specified on the command line, the fetch_specs for the de
 `-u`, `--user`:
 User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
 
+`-p`, `--prune`:
+After fetching, remove any remote-tracking references that don't exist on the remote.
+
 
 
 ## `dolt filter-branch`
@@ -1100,8 +1116,8 @@ The command takes options to control what is shown and how.
 `dolt log [<revisions>...]`
   Lists commit logs starting from revision. If multiple revisions provided, lists logs reachable by all revisions.
 	
-`dolt log [<revisions>...] <table>`
-  Lists commit logs starting from revisions, only including commits with changes to table.
+`dolt log [<revisions>...] -- <tables>`
+  Lists commit logs starting from revisions, only including commits with changes to the given table(s).
 	
 `dolt log <revisionB>..<revisionA>`
 `dolt log <revisionA> --not <revisionB>`
@@ -1269,6 +1285,67 @@ Find the common ancestor of two commits, and return the ancestor's commit hash.'
 
 No options for this command.
 
+## `dolt profile`
+
+Manage dolt profiles for CLI global options.
+
+**Synopsis**
+
+```bash
+dolt profile [-v | --verbose]
+dolt profile add [-u <user>] [-p <password>] [--host <host>] [--port <port>] [--no-tls] [--data-dir <directory>] [--doltcfg-dir <directory>] [--privilege-file <privilege file>] [--branch-control-file <branch control file>] [--use-db <database>] <name>
+dolt profile remove <name>
+```
+
+**Description**
+
+With no arguments, shows a list of existing profiles. Two subcommands are available to perform operations on the profiles.
+
+`add`
+Adds a profile named `<name>`. Returns an error if the profile already exists.
+
+`remove`
+Remove the profile named `<name>`.
+
+**Arguments and options**
+
+`<name>`: Defines the name of the profile to add or remove.
+
+`-u`, `--user`:
+Defines the local superuser (defaults to `root`). If the specified user exists, will take on permissions of that user.
+
+`-p`, `--password`:
+Defines the password for the user. Defaults to empty string when the user is `root`.
+
+`--host`:
+Defines the host to connect to.
+
+`--port`:
+Defines the port to connect to.
+
+`--no-tls`:
+Disables TLS for the connection to remote databases.
+
+`--data-dir`:
+Defines a data directory whose subdirectories should all be dolt data repositories accessible as independent databases. Defaults to the current directory.
+
+`--doltcfg-dir`:
+Defines a directory that contains configuration files for dolt. Defaults to `$data-dir/.doltcfg`. Will only be created if there is a change to configuration settings.
+
+`--privilege-file`:
+Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will only be created if there is a change to privileges.
+
+`--branch-control-file`:
+Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will only be created if there is a change to branch control permissions.
+
+`--use-db`:
+The name of the database to use when executing SQL queries. Defaults the database of the root directory, if it exists, and the first alphabetically if not.
+
+`-v`, `--verbose`:
+Includes full details when printing list of profiles.
+
+
+
 ## `dolt pull`
 
 Fetch from and integrate with another repository or a local branch
@@ -1411,24 +1488,20 @@ Remove the remote named `<name>`. All remote-tracking branches and configuration
 
 **Arguments and options**
 
-`<region>`: cloud provider region associated with this remote.
+`-v`, `--verbose`:
+When printing the list of remotes adds additional details.
 
-`<creds-type>`: credential type.  Valid options are role, env, and file.  See the help section for additional details.
+`--aws-region`:
+Cloud provider region associated with this remote.
 
-`<profile>`: AWS profile to use.
-
-`--aws-region`
-
-`--aws-creds-type`
+`--aws-creds-type`:
+Credential type. Valid options are role, env, and file. See the help section for additional details.
 
 `--aws-creds-file`:
 AWS credentials file
 
 `--aws-creds-profile`:
 AWS profile to use
-
-`-v`, `--verbose`:
-When printing the list of remotes adds additional details.
 
 `--oss-creds-file`:
 OSS credentials file
@@ -1749,9 +1822,7 @@ Runs a SQL query
 ```bash
 dolt sql 
 dolt sql < script.sql
-dolt sql [--data-dir <directory>] [-r <result format>]
 dolt sql -q <query> [-r <result format>] [-s <name> -m <message>] [-b]
-dolt sql -q <query> --data-dir <directory> [-r <result format>] [-b]
 dolt sql -x <name>
 dolt sql --list-saved
 ```
@@ -1762,9 +1833,9 @@ Runs a SQL query you specify. With no arguments, begins an interactive shell to 
 
 Multiple SQL statements must be separated by semicolons. Use `-b` to enable batch mode to speed up large batches of INSERT / UPDATE statements. Pipe SQL files to dolt sql (no `-q`) to execute a SQL import or update script. 
 
-Queries can be saved to the query catalog with `-s`. Alternatively `-x` can be used to execute a saved query by name.
+By default this command uses the dolt database in the current working directory. If you would prefer to use a different directory, user the `--data-dir <directory>` argument before the sql subcommand.
 
-By default this command uses the dolt database in the current working directory, as well as any dolt databases that are found in the current directory. Any databases created with CREATE DATABASE are placed in the current directory as well. Running with `--data-dir <directory>` uses each of the subdirectories of the supplied directory (each subdirectory must be a valid dolt data repository) as databases. Subdirectories starting with '.' are ignored.
+If a server is running for the database in question, then the query will go through the server automatically. If connecting to a remote server is preferred, used the `--host <host>` and `--port <port>` global arguments. See 'dolt --help' for more information about global arguments.
 
 **Arguments and options**
 
