@@ -218,7 +218,7 @@ Query OK, 5 rows affected (0.01 sec)
 
 mysql> select first_name, last_name, team_name from employees
     join employees_teams on (employees.id=employees_teams.employee_id)
-    join teams on (teams.id=employees_teams.team_id)\
+    join teams on (teams.id=employees_teams.team_id)
     where team_name='Engineering';
 +------------+-----------+-------------+
 | first_name | last_name | team_name   |
