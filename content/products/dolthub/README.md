@@ -8,15 +8,11 @@ DoltHub is GitHub for Dolt. DoltHub acts as a [Dolt remote](../../concepts/dolt/
 
 # Getting Started
 
-DoltHub has many uses. We recommend getting started by [sharing a database](./data-sharing.md) or participating in a [data bounty](./data-bounties.md).
+DoltHub has many uses. We recommend getting started by [sharing a database](./data-sharing.md).
 
-1. [Data Sharing](./data-sharing.md)
+[Data Sharing](./data-sharing.md)
 
 This documentation will walk you through discovering data on DoltHub, cloning a copy locally, making a change on a fork, and submitting a pull request to the original database.
-
-2. [Data Bounties](./data-bounties.md)
-
-DoltHub hosts [Data Bounties](./data-bounties.md) where we pay to have an open database constructed, usually from scraping and transforming public data. This documentation will walk you through step-by-step how to make money contributing to data bounties.
 
 # DoltHub API
 

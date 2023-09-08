@@ -12,7 +12,7 @@ have write permissions to.
 
 Hosted and DoltHub have different [use cases](https://www.dolthub.com/compare) depending
 on your goals, but there are also reasons to use DoltHub and Hosted together. Easily build
-an online application based on a [crowd-sourced database](https://dolthub.com/bounties) on
+an online application based on a crowd-sourced database on
 DoltHub or isolate changes to your production database and sync on your schedule.
 
 # How Dolt credentials work on Hosted
