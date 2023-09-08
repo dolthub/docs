@@ -623,10 +623,30 @@ sql-server will block all writes while garbage collection is in progress.
 CALL DOLT_GC();
 CALL DOLT_GC('--shallow');
 ```
-
 ### Options
 
 `--shallow` Performs a faster but less thorough garbage collection.
+
+### Notes
+
+To prevent concurrent writes potentially referencing garbage collected chunks, running 
+`call dolt_gc()` will break all open connections to the running server. In flight 
+queries on those connections may fail and must be retried. Re-establishing connections 
+after they are broken is safe.
+
+At the end of the run, the connection which ran call dolt_gc() will be left open in order 
+to deliver the results of the operation itself. The connection will be left in a terminally 
+broken state where any attempt to run a query on it will result in the following error:
+
+```
+ERROR 1105 (HY000): this connection was established when this server performed an online 
+garbage collection. this connection can no longer be used. please reconnect.
+```
+
+The connection should be closed. In some connection pools it can be awkward to cause a 
+single connection to actually close. If you need to run call dolt_gc() programmatically, 
+one work around is to use a separate connection pool with a size of 1 which can be 
+closed after the run is successful.
 
 ## `DOLT_MERGE()`
 
