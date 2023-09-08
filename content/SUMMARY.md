@@ -72,7 +72,6 @@
   - [Infrastructure](products/hosted/infrastructure.md)
 - [DoltHub](products/dolthub/README.md)
   - [Data Sharing](products/dolthub/data-sharing.md)
-  - [Data Bounties](products/dolthub/data-bounties.md)
   - [API](products/dolthub/api/README.md)
     - [Authentication](products/dolthub/api/authentication.md)
     - [SQL](products/dolthub/api/sql.md)
