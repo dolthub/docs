@@ -8,8 +8,6 @@ redirects:
   tutorials/installation: introduction/installation.md
   integrations/programmatic-clients: reference/sql/supported-clients/clients.md
   getting-started/dolthub: concepts/dolthub/README.md
-  bounties/bounties: products/dolthub/data-bounties.md
-  introduction/getting-started/data-bounties: products/dolthub/data-bounties.md
   introduction/getting-started/data-sharing: products/dolthub/data-sharing.md
   reference/sql: reference/sql/server/README.md
   reference/sql/configuration: reference/sql/server/configuration.md
