@@ -1436,18 +1436,15 @@ dolt query-diff [options] [<query1>] [<query2>]
 
 **Description**
 
-A shallow clone operation will retrieve the state of table(s) from a remote repository at a given commit. Retrieved data is placed into the working state of a newly created local Dolt repository. Changes to the data cannot be submitted back to the remote repository, and the shallow clone cannot be converted into a regular clone of a repository.
+Will execute two queries and compare the resulting table sets.
 
 **Arguments and options**
 
-`<remote-repo>`: Remote repository to retrieve data from
+`<query1>`: A SQL `SELECT` query to be executed. 
 
-`<commit>`: Branch or commit hash representing a point in time to retrieve tables from
+`<query2>`: A SQL `SELECT` query to be executed.
 
-`<table>`:  Optional tables to retrieve.  If omitted, all tables are retrieved.
 
-`-d`, `--dir`:
-directory to create and put retrieved table data.
 
 
 ## `dolt read-tables`
