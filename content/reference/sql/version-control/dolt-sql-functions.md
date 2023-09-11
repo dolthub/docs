@@ -19,6 +19,7 @@ title: Dolt SQL Functions
   - [dolt_log()](#dolt_log)
   - [dolt_patch()](#dolt_patch)
   - [dolt_schema_diff](#dolt_schema_diff)
+  - [dolt_query_diff](#dolt_query_diff)
 
 # Informational Functions
 
@@ -976,3 +977,59 @@ Note the difference between this call and the previous `dolt_schema_diff('main',
 You can try calling `DOLT_SCHEMA_DIFF()` against the [DoltHub docs_examples DB](https://www.dolthub.com/repositories/dolthub/docs_examples), by getting the diff of schemas between `schema_diff_v1` and `schema_diff_v2` tags, which correspond to `main` and `feature_branch` branches from these examples.
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?active=Tables&q=SELECT+*%0AFROM+dolt_schema_diff%28%27schema_diff_v1%27%2C+%27schema_diff_v2%27%29%3B%0A" %}
+
+## `DOLT_QUERY_DIFF()`
+
+The `DOLT_QUERY_DIFF()` table function calculates the data difference between any two queries, producing a table similar to the `DOLT_DIFF()` table function.
+
+### Privileges
+
+`DOLT_QUERY_DIFF()` table function requires `SELECT` privilege for all tables used in each query.
+
+### Example
+
+For this example, we have the table `t` in two branches `main` and `other`.
+
+On `main`, the table `t` has the following data:
+```text
++---+----+
+| i | j  |
++---+----+
+| 0 | 0  |
+| 1 | 10 |
+| 3 | 3  |
+| 4 | 4  |
++---+----+
+```
+
+On `other`, the table `t` has the following data:
+```text
++---+---+
+| i | j |
++---+---+
+| 0 | 0 |
+| 1 | 1 |
+| 2 | 2 |
+| 4 | 4 |
++---+---+
+```
+
+We can use the `DOLT_QUERY_DIFF()` table function to calculate the difference between the two tables:
+
+```text
+dolt> select * from dolt_query_diff('select * from t as of main', 'select * from t as of other');
++--------+--------+------+------+-----------+
+| from_i | from_j | to_i | to_j | diff_type |
++--------+--------+------+------+-----------+
+| 1      | 10     | 1    | 1    | modified  |
+| NULL   | NULL   | 2    | 2    | added     |
+| 3      | 3      | NULL | NULL | deleted   |
++--------+--------+------+------+-----------+
+3 rows in set (0.00 sec)
+```
+
+### Note
+
+Query diff is performed brute force and thus, will be slow for large result sets.
+The algorithm is super linear (`n^2`) on the size of the results sets.
+Over time, we will optimize this to use features of the storage engine to improve performance.
