@@ -11,6 +11,7 @@ Valid commands for dolt are
               status - Show the working tree status.
                  add - Add table changes to the list of staged table changes.
                 diff - Diff a table.
+          query-diff - Diff two queries.
                reset - Remove table changes from the list of staged table changes.
                clean - Remove untracked tables from working set.
               commit - Record changes to the repository.
@@ -1423,6 +1424,32 @@ Update the remote with local history, overwriting any conflicting history in the
 
 
 
+## `dolt query-diff`
+
+Calculates table diff between two queries.
+
+**Synopsis**
+
+```bash
+dolt query-diff [options] [<query1>] [<query2>]
+```
+
+**Description**
+
+A shallow clone operation will retrieve the state of table(s) from a remote repository at a given commit. Retrieved data is placed into the working state of a newly created local Dolt repository. Changes to the data cannot be submitted back to the remote repository, and the shallow clone cannot be converted into a regular clone of a repository.
+
+**Arguments and options**
+
+`<remote-repo>`: Remote repository to retrieve data from
+
+`<commit>`: Branch or commit hash representing a point in time to retrieve tables from
+
+`<table>`:  Optional tables to retrieve.  If omitted, all tables are retrieved.
+
+`-d`, `--dir`:
+directory to create and put retrieved table data.
+
+
 ## `dolt read-tables`
 
 Fetch table(s) at a specific commit into a new dolt repo
@@ -1447,7 +1474,6 @@ A shallow clone operation will retrieve the state of table(s) from a remote repo
 
 `-d`, `--dir`:
 directory to create and put retrieved table data.
-
 
 
 ## `dolt remote`
