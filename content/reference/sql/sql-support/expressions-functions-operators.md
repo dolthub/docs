@@ -222,13 +222,13 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `IS`                              | ✅            |                                                                                                                 |
 | `JSON_ARRAY()`                    | ✅            |                                                                                                                 |
 | `JSON_ARRAYAGG()`                 | ✅            |                                                                                                                 |
-| `JSON_ARRAY_APPEND()`             | ❌            |                                                                                                                 |
-| `JSON_ARRAY_INSERT()`             | ❌            |                                                                                                                 |
+| `JSON_ARRAY_APPEND()`             | ✅            |                                                                                                                 |
+| `JSON_ARRAY_INSERT()`             | ✅            |                                                                                                                 |
 | `JSON_CONTAINS()`                 | ✅            |                                                                                                                 |
 | `JSON_CONTAINS_PATH()`            | ✅            |                                                                                                                 |
 | `JSON_DEPTH()`                    | ❌            |                                                                                                                 |
 | `JSON_EXTRACT()`                  | ✅            |                                                                                                                 |
-| `JSON_INSERT()`                   | ❌            |                                                                                                                 |
+| `JSON_INSERT()`                   | ✅            |                                                                                                                 |
 | `JSON_KEYS()`                     | ❌            |                                                                                                                 |
 | `JSON_LENGTH()`                   | ❌            |                                                                                                                 |
 | `JSON_MERGE()`                    | ❌            |                                                                                                                 |
@@ -239,12 +239,12 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_OVERLAPS()`                 | ❌            |                                                                                                                 |
 | `JSON_PRETTY()`                   | ❌            |                                                                                                                 |
 | `JSON_QUOTE()`                    | ❌            |                                                                                                                 |
-| `JSON_REMOVE()`                   | ❌            |                                                                                                                 |
-| `JSON_REPLACE()`                  | ❌            |                                                                                                                 |
+| `JSON_REMOVE()`                   | ✅            |                                                                                                                 |
+| `JSON_REPLACE()`                  | ✅            |                                                                                                                 |
 | `JSON_SCHEMA_VALID()`             | ❌            |                                                                                                                 |
 | `JSON_SCHEMA_VALIDATION_REPORT()` | ❌            |                                                                                                                 |
 | `JSON_SEARCH()`                   | ❌            |                                                                                                                 |
-| `JSON_SET()`                      | 🟠           | out of range and ordinal referencing are not supported yet.                                                     |
+| `JSON_SET()`                      | ✅            |                                                                                                                 |
 | `JSON_STORAGE_FREE()`             | ❌            |                                                                                                                 |
 | `JSON_STORAGE_SIZE()`             | ❌            |                                                                                                                 |
 | `JSON_TABLE()`                    | ✅            | `FOR ORDINALITY` and `NESTED` are not supported yet.                                                            |
