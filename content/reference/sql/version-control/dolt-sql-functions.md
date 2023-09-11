@@ -1027,3 +1027,9 @@ dolt> select * from dolt_query_diff('select * from t as of main', 'select * from
 +--------+--------+------+------+-----------+
 3 rows in set (0.00 sec)
 ```
+
+### Note
+
+Query diff is performed brute force and thus, will be slow for large result sets.
+The algorithm is super linear (`n^2`) on the size of the results sets.
+Over time, we will optimize this to use features of the storage engine to improve performance.

@@ -1444,6 +1444,11 @@ Will execute two queries and compare the resulting table sets.
 
 `<query2>`: A SQL `SELECT` query to be executed.
 
+**Note**
+
+Query diff is performed brute force and thus, will be slow for large result sets.
+The algorithm is super linear (`n^2`) on the size of the results sets.
+Over time, we will optimize this to use features of the storage engine to improve performance.
 
 
 
