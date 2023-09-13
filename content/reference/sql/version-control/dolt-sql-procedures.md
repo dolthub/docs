@@ -74,6 +74,16 @@ committed. The abbreviation '.' can be used to add all tables.
 
 `-A`: Stages all tables with changes.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -99,6 +109,16 @@ via SQL yet.
 
 ```sql
 CALL DOLT_BACKUP('sync', 'name');
+```
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
 ```
 
 ### Example
@@ -162,6 +182,16 @@ CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 `-f`, `--force`: When used with the `--copy` option, allows for recreating a branch from another branch, even if the branch already exists. When used with the `--move` or `--delete` options, force will allow you to rename or delete branches in use in other active server sessions, but be aware that this will require those other sessions to disconnect and reconnect before they can execute statements again.
 
 `-D`: Shortcut for `--delete --force`.
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
 
 ### Examples
 
@@ -247,6 +277,17 @@ insert into mydb.t1 values (3); -- modifying the `branch2` branch
 
 `-b`: Create a new branch with the given name.
 
+### Output Schema
+
+```text
++---------+------+-----------------------------+
+| Field   | Type | Description                 |
++---------+------+-----------------------------+
+| status  | int  | 0 if successful, 1 if not   |
+| message | text | success/failure information |
++---------+------+-----------------------------+
+```
+
 ### Example
 
 ```sql
@@ -285,6 +326,19 @@ CALL DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');
 ### Options
 
 No options for this procedure.
+
+### Output Schema
+
+```text
++-----------------------+------+---------------------------------+
+| Field                 | Type | Description                     |
++-----------------------+------+---------------------------------+
+| hash                  | text | hash of the applied commit      |
+| data_conflicts        | int  | number of data conflicts        |
+| schema_conflicts      | int  | number of schema conflicts      |
+| constraint_violations | int  | number of constraint violations |
++-----------------------+------+---------------------------------+
+```
 
 ### Example
 
@@ -392,6 +446,16 @@ CALL DOLT_CLEAN('--dry-run');
 
 `--dry-run`: Test removing untracked tables from working set.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -458,6 +522,16 @@ CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 `--remote`: Name of the remote to be added to the new, cloned database. The default is 'origin'.
 
 `-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
 
 ### Examples
 
@@ -533,6 +607,16 @@ current system time is used.
 `--author`: Specify an explicit author using the standard "A U Thor
 author@example.com" format.
 
+### Output Schema
+
+```text
++-------+------+----------------------------+
+| Field | Type | Description                |
++-------+------+----------------------------+
+| hash  | text | hash of the commit created |
++-------+------+----------------------------+
+```
+
 ### Examples
 
 ```sql
@@ -569,6 +653,16 @@ CALL DOLT_CONFLICTS_RESOLVE('--theirs', <table>);
 
 `--theirs`: For all conflicts, take the version from their branch and resolve the conflict.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Examples
 
 ```sql
@@ -601,6 +695,16 @@ CALL DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
 
 No options for this procedure.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -626,6 +730,16 @@ CALL DOLT_GC('--shallow');
 ### Options
 
 `--shallow` Performs a faster but less thorough garbage collection.
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
 
 ### Notes
 
@@ -700,6 +814,18 @@ transaction can be committed. See [Dolt system
 tables](dolt-system-tables.md##dolt_conflicts_usdtablename) for
 details.
 
+### Output Schema
+
+```text
++--------------+------+--------------------------------------+
+| Field        | Type | Description                          |
++--------------+------+--------------------------------------+
+| hash         | text | hash of the merge commit             |
+| fast_forward | int  | whether the merge was a fast forward |
+| conflicts    | int  | number of conflicts created          |
++--------------+------+--------------------------------------+
+```
+
 ### Example
 
 ```sql
@@ -756,6 +882,17 @@ transaction can be committed. See [Dolt system
 tables](dolt-system-tables.md##dolt_conflicts_usdtablename) for
 details.
 
+### Output Schema
+
+```text
++--------------+------+-------------------------------------+
+| Field        | Type | Description                         |
++--------------+------+-------------------------------------+
+| fast_forward | int  | whether the pull was a fast forward |
+| conflicts    | int  | number of conflicts created         |
++--------------+------+-------------------------------------+
+```
+
 ### Example
 
 ```sql
@@ -786,6 +923,16 @@ CALL DOLT_PUSH('--force', 'origin', 'main');
 
 `--force`: Update the remote with local history, overwriting any conflicting history in the remote.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -812,6 +959,16 @@ exception of cloud provider flags. To list existing remotes, use the
 ```sql
 CALL DOLT_REMOTE('add','remote_name','remote_url');
 CALL DOLT_REMOTE('remove','existing_remote_name');
+```
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
 ```
 
 ### Example
@@ -880,6 +1037,16 @@ tracked tables in the working tree since <commit> are discarded.
 `--soft`: Does not touch the working tables, but removes all tables
 staged to be committed. This is the default behavior.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -920,6 +1087,16 @@ CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ### Options
 
 `--author=<author>`: Specify an explicit author using the standard `A U Thor <author@example.com>` format.
+
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
 
 ### Example
 
@@ -987,6 +1164,16 @@ CALL DOLT_TAG('-d', 'tag_name');
 `--author`: Specify an explicit author using the standard "A U Thor
 author@example.com" format.
 
+### Output Schema
+
+```text
++--------+------+---------------------------+
+| Field  | Type | Description               |
++--------+------+---------------------------+
+| status | int  | 0 if successful, 1 if not |
++--------+------+---------------------------+
+```
+
 ### Example
 
 ```sql
@@ -1029,6 +1216,16 @@ Verifies constraints against every row.
 Disables writing results to the
 [DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations)
 system table.
+
+### Output Schema
+
+```text
++------------+------+----------------------+
+| Field      | Type | Description          |
++------------+------+----------------------+
+| violations | int  | number of violations |
++------------+------+----------------------+
+```
 
 ### Example
 
