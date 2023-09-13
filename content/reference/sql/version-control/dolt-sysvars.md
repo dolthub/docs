@@ -23,6 +23,7 @@ title: Dolt System Variables
   - [dolt_replicate_heads](#dolt_replicate_heads)
   - [dolt_replicate_all_heads](#dolt_replicate_all_heads)
   - [dolt_replication_remote_url_template](#dolt_replication_remote_url_template)
+  - [dolt_read_replica_force_pull](#dolt_read_replica_force_pull)
   - [dolt_skip_replication_errors](#dolt_skip_replication_errors)
 
 - [Session metadata variables](#session-metadata-variables)
@@ -186,6 +187,12 @@ set @@persist.dolt_replication_remote_url_template = 'gs://mybucket/remotes/{dat
 On a read replica, setting this variable will cause the server to attempt to clone any unknown
 database used in a query or connection string by constructing a remote URL and cloning from that
 remote. See [Replication](../server/replication.md).
+
+## ``dolt_read_replica_force_pull``
+
+Set this variable to `1` to always update local copies of remote heads even when they have diverged
+from the local copy, which can occur in the case of a `dolt push -f`. A setting of `0` rejects
+remote head updates that cannot be fast-forward merged into the local copy. Defaults to `1`.
 
 ## `dolt_skip_replication_errors`
 
