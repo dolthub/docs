@@ -188,11 +188,12 @@ On a read replica, setting this variable will cause the server to attempt to clo
 database used in a query or connection string by constructing a remote URL and cloning from that
 remote. See [Replication](../server/replication.md).
 
-## ``dolt_read_replica_force_pull``
+## `dolt_read_replica_force_pull`
 
-Set this variable to `1` to always update local copies of remote heads even when they have diverged
-from the local copy, which can occur in the case of a `dolt push -f`. A setting of `0` rejects
-remote head updates that cannot be fast-forward merged into the local copy. Defaults to `1`.
+Set this variable to `1` to cause read replicas to always their local copies of remote heads even
+when they have diverged from the local copy, which can occur in the case of a `dolt push -f`. A
+setting of `0` causes read replicas to reject remote head updates that cannot be fast-forward merged
+into the local copy. Defaults to `1`.
 
 ## `dolt_skip_replication_errors`
 
