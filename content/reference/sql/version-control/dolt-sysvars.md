@@ -190,7 +190,7 @@ remote. See [Replication](../server/replication.md).
 
 ## `dolt_read_replica_force_pull`
 
-Set this variable to `1` to cause read replicas to always their local copies of remote heads even
+Set this variable to `1` to cause read replicas to always pull their local copies of remote heads even
 when they have diverged from the local copy, which can occur in the case of a `dolt push -f`. A
 setting of `0` causes read replicas to reject remote head updates that cannot be fast-forward merged
 into the local copy. Defaults to `1`.
