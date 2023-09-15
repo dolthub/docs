@@ -74,7 +74,7 @@
                       },
                       "operation_name": {
                         "type": "string",
-                        "example": "operations/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                        "example": "repositoryOwners/dolthub/repositories/museum-collections/jobs/b09a9221-9dcb-4a15-9ca8-a64656946f12"
                       }
                     }
                   }
