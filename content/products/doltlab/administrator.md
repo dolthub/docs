@@ -28,6 +28,7 @@ the following information can help DoltLab Admins manually perform some common a
 21. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
 22. [Serve DoltLab over HTTPS with a TLS reverse proxy](#doltlab-https-proxy)
 23. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
+24. [Improve DoltLab Performance](#doltlab-performance)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1303,3 +1304,30 @@ export TLS_PRIVATE_KEY=<path to TLS private key>
 
 Once the services are spun up, DoltLab will be available at `https://${HOST_IP}`.
 
+<h1 id="doltlab-performance">Improve DoltLab Performance</h1>
+
+Starting with DoltLab `v1.1.0`, it is possible to limit the number of concurrent Jobs running on a DoltLab host by adding optional arguments to the `doltlabapi` block of the `docker-compose.yaml` or `docker-compose-tls.yaml` files.
+
+When user's upload files on a DoltLab instance, or merge a pull request, DoltLab creates a Job corresponding to this work. These Jobs spawn new Docker containers that performs the required work.
+
+By default, DoltLab imposes no limit to the number of concurrent Jobs that can be spawned. As a result, a DoltLab host might experience resources exhaustion as the Docker engine uses all available host resources for managing it's containers.
+
+To prevent resource exhaustion, the following can be added in DoltLab >= `v1.1.0` to limit the number of concurrent Jobs, ensuring DoltLab will not run more jobs than the configured limit, at any one time:
+
+```yaml
+# docker-compose.yaml
+...
+  doltlabapi:
+...
+    command:
+...
+      -jobConcurrencyLimit "5"
+      -jobConcurrencyLoopSeconds "10"
+      -jobMaxRetries "5"
+```
+
+`-jobConcurrencyLimit` limits number of concurrent Jobs a DoltLab instance will run at any given time. A value of `0` indicates no limit.
+
+`-jobConcurrencyLoopSeconds` is the number of seconds Job Scheduler will wait before looking for more Jobs to schedule. Default is `10` seconds.
+
+`jobMaxRetries` is the number of times the Job Scheduler will retry scheduling a Job before permanently giving up, requiring the Job to be recreated.
