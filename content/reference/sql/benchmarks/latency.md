@@ -21,8 +21,6 @@ generally competitive on latency with MySQL and Postgres.
 
 ## Benchmark Data
 
-### Current Default Format (`__DOLT__`)
-
 Below are the results of running `sysbench` MySQL tests against Dolt
 SQL Server for the most recent release of Dolt in the current default 
 storage format. We will update this with every release. The tests 
