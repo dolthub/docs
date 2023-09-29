@@ -10,7 +10,7 @@ Just like Git, Dolt supports syncing with a [remote database](../../../concepts/
 
 Remotes are configured using the [`remote` command](../../cli.md#dolt-remote). You configure a remote with a name and a URL. When you want to use the remote, you refer to it by name. When you clone a remote, a remote named `origin` is automatically configured for you.
 
-<h1 id="pushing-to-remote">Pushing to a remote</h1>
+<h1 id="pushing-to-remote">Pushing to a Remote</h1>
 
 Let's go through an example of how you can push data from a local Dolt database to a remote. In this example, we'll use the running Dolt server we created in the [Getting Started](https://docs.dolthub.com/introduction/getting-started/database) section to push a branch to [DoltHub.com](https://www.dolthub.com).
 
@@ -47,10 +47,6 @@ Our local Dolt client (and running Dolt server) are now successfully authenticat
 ```
 Key successfully associated with user: coffeegoddd email dustin@dolthub.com
 ```
-
-The reason both our local Dolt client _and_ running Dolt server are now authenticated for DoltHub.com is because they both reference the same local directory Dolt uses to manage its global state. This directory can be set by defining `DOLT_ROOT_PATH`, but by default, will be created at `$HOME/.dolt`. This directory houses global (client and server) configuration as well as all remote credentials, which are located in `$HOME/.dolt/creds`.
-
-It's important to be aware of this global state directory in the event you wanted to authenticate a Dolt server running from within a container. To do so, you should run `dolt login` using a Dolt CLI client outside of the containerized environment to create new remote credentials, then mount your local `$HOME/.dolt` directory to the `DOLT_ROOT_PATH` of the container. This ensures that the Dolt server in the container has the credentials to write to your remote.
 
 Using a MySQL client connected to the running Dolt server, let's give pushing to DoltHub.com a try. We're going to push our `main` branch, so first we check it out:
 
@@ -91,6 +87,14 @@ mysql> call dolt_push('origin', 'main');
 And the data from our local Dolt server is now available on DoltHub.com!
 
 ![DoltHub database has changes](../../../../content/.gitbook/assets/dolthub_database_has_changes.png)
+
+## Pushing from Dolt running in a container
+
+In the example above, the local Dolt client and running Dolt server were successfully authenticated against DoltHub.com because neither was running in a containerized environment. 
+
+As a result, both the client and server were able to reference the same local directory Dolt uses to manage its global state. This directory can be set by defining `DOLT_ROOT_PATH`, but by default, is created at `$HOME/.dolt`. This directory houses global (client and server) configuration as well as all remote credentials, which are located in `$HOME/.dolt/creds`.
+
+It's important to be aware of this global state directory in the event you wanted to authenticate a Dolt server running from within a container. To do so, you should run `dolt login` using a Dolt CLI client outside of the containerized environment to create new remote credentials, then mount your local `$HOME/.dolt` directory to the `DOLT_ROOT_PATH` of the container. This ensures that the Dolt server in the container has the credentials to write to your remote.
 
 # Remote Actions
 
