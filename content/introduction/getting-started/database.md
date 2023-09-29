@@ -635,4 +635,4 @@ Want to dive even deeper? Here are some links to advanced topics:
 * [Backups](https://www.dolthub.com/blog/2021-10-08-backups/)
 * [Replication](https://www.dolthub.com/blog/2021-10-20-read-replication/)
 * [Conflicts](https://docs.dolthub.com/concepts/dolt/conflicts)
-* [Using a Remote with your Server](https://docs.dolthub.com/concepts/dolt/remotes)
+* [Using a Remote with your Server](https://docs.dolthub.com/sql-reference/version-control/remotes#pushing-to-remote)
