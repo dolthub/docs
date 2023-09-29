@@ -625,6 +625,86 @@ mysql> select to_commit,from_first_name,to_first_name from dolt_diff_employees
 
 Dolt provides powerful data audit capabilities down to individual cells. When, how, and why has each cell in your database changed over time?
 
+# Push to a remote
+
+Now let's push data from our Dolt server to a remote, like [DoltHub.com](https://www.dolthub.com) or a [DoltLab](https://www.doltlab.com) instance. To do this, we'll need to authenticate our Dolt server against the remote so that it can perform writes.
+
+First, if we're going to push data to DoltHub.com, we'll need to create an account or [sign-in](https://www.dolthub.com/signin) if we already one.
+
+Next, we're going to create a database on DoltHub.com that will serve as the remote for our local Dolt server.
+
+![Empty database as remote](../../.gitbook/assets/empty_database_as_remote.png)
+
+Next, we can run the command [dolt login](https://docs.dolthub.com/cli-reference/cli#dolt-login) from our local Dolt CLI client. This command will help us authenticate our local client to DoltHub.com, associating our client with our DoltHub identity.
+
+```
+dolt login
+Credentials created successfully.
+pub key: l5bfb43fmqu8u8b59m8fp5cb8o1jcpt8281u94t80us35u6fgavg
+/Users/dustin/.dolt/creds/6h68h8brsfu9580rqupi3h9icfhtd5s28ikoguejqqesq.jwk
+Opening a browser to:
+	https://dolthub.com/settings/credentials#l5bfb43fmqu8u8b59m8fp5cb8o1jcpt8281u94t80us35u6fgavg
+Please associate your key with your account.
+Checking remote server looking for key association.
+Retrying in 2
+```
+
+This command opens a web browser to DoltHub's credentials page where it will populate the Public Key field with a newly generated public key. In this example that public key is `pub key: l5bfb43fmqu8u8b59m8fp5cb8o1jcpt8281u94t80us35u6fgavg`.
+
+On the credentials page, we just need to provide a description for our new key and click "Add". 
+
+![Add Dolt client credentials](../../.gitbook/assets/add_getting_started_creds.png)
+
+Our local Dolt client (and running Dolt server) are now successfully authenticated to push to DoltHub database where we have write access. The final output of `dolt login` will read:
+
+```
+Key successfully associated with user: coffeegoddd email dustin@dolthub.com
+```
+
+The reason both our local Dolt client _and_ running Dolt server are now authenticated for DoltHub.com is because they both reference the same local directory Dolt uses to manage its global state. This directory can be set by defining `DOLT_ROOT_PATH`, but by default, will be created at `$HOME/.dolt`. This directory houses global (client and server) configuration as well as all remote credentials, which are located in `$HOME/.dolt/creds`.
+
+It's important to be aware of this global state directory in the event you wanted to authenticate a Dolt server running from within a container. To do so, you should run `dolt login` using a Dolt CLI client outside of the containerized environment to create new remote credentials, then mount your local `$HOME/.dolt` directory to the `DOLT_ROOT_PATH` of the container. This ensures that the Dolt server in the container has the credentials to write to your remote.
+
+Returning to our MySQL client connected to the running Dolt server, let's give pushing to DoltHub.com a try. We're going to push our `main` branch, so first we check it out:
+
+```
+mysql> call dolt_checkout('main');
++--------+---------------------------+
+| status | message                   |
++--------+---------------------------+
+|      0 | Switched to branch 'main' |
++--------+---------------------------+
+1 row in set (0.02 sec)
+```
+
+Now, we need to add the remote address for the DoltHub database we created to the Dolt server:
+
+```
+mysql> call dolt_remote('add', 'origin', 'coffeegoddd/getting_started');
++--------+
+| status |
++--------+
+|      0 |
++--------+
+1 row in set (0.03 sec)
+```
+
+And then we can push:
+
+```
+mysql> call dolt_push('origin', 'main');
++--------+
+| status |
++--------+
+|      0 |
++--------+
+1 row in set (0.77 sec)
+```
+
+And the data from our local Dolt server is now available on DoltHub.com!
+
+![DoltHub database has changes](../../.gitbook/assets/dolthub_database_has_changes.png)
+
 # Conclusion
 
 That should be enough to get you started. We covered installation, starting a SQL server, connecting with various clients, creating a database and schema, inserting and updating data on main, using branches for change isolation, rollback, diffs and logs, merge, and cell lineage. You had the grand tour. Hopefully you are starting to imagine the possibilities for your Dolt-backed applications.
