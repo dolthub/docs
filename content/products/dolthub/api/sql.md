@@ -19,7 +19,7 @@ res.json()
 
 This shows our repository metadata as a dictionary:
 
-```json
+```js
 {'query_execution_status': 'Success',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
@@ -42,7 +42,7 @@ res.json()
 
 This yields the results as JSON, with both schema and data:
 
-```json
+```js
 {'query_execution_status': 'RowLimit',
  'query_execution_message': '',
  'repository_owner': 'dolthub',
@@ -72,6 +72,7 @@ This yields the results as JSON, with both schema and data:
 .
 .
 .
+]}
 ```
 
 As a reminder, this API is in Alpha version, and we will continue to flesh this out, as well as improve query performance, over time.
