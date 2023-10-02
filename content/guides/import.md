@@ -160,7 +160,7 @@ You can dump the database `test` as follows:
 mysqldump --databases test -P 3306 -h 0.0.0.0 -u root -p > dump.sql
 ```
 
-**Note**: Using the `--databases` flag will cause `mysqldump` to include a command to create the database for you if it doesn't exist yet. Without this flag, you will need to ensure you have already created your database (e.g. `create database test;`) before you can load in the `mysqldump` file.    
+**Note**: Using the `--databases` flag will cause `mysqldump` to include a command to create the database for you if it doesn't exist yet. Without this flag, you will need to ensure you have already created your database (e.g. `create database test;`) before you can load in the `mysqldump` file.
 
 To load into dolt:
 
@@ -170,7 +170,7 @@ dolt sql < dump.sql
 
 ## Hosted Dolt Deployments
 
-Importing data into a [Hosted Dolt](https://www.hosted.doltdb.com) deployment can be done using the deployment's default configuration. Let's say you've dumped an existing MySQL database using `mysqldump` and want to import that dump into your Hosted Dolt deployment.
+Importing data into a [Hosted Dolt](https://hosted.doltdb.com) deployment can be done using the deployment's default configuration. Let's say you've dumped an existing MySQL database using `mysqldump` and want to import that dump into your Hosted Dolt deployment.
 
 Navigate to the "Configuration" tab of your Hosted deployment dashboard, and make sure that the box `behavior_auto_commit` is checked. This will automatically create SQL `COMMIT`s after every statement is executed, ensuring the data is persisted after each import statement is executed.
 
