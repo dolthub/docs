@@ -38,7 +38,7 @@ Retrying in 2
 
 This command opens a web browser to DoltHub's credentials page where it will populate the Public Key field with a newly generated public key. In this example that public key is `pub key: l5bfb43fmqu8u8b59m8fp5cb8o1jcpt8281u94t80us35u6fgavg`.
 
-On the credentials page, we just need to provide a description for our new key and click "Add". 
+On the credentials page, we just need to provide a description for our new key and click "Add".
 
 ![Add Dolt client credentials](../../../../content/.gitbook/assets/add_getting_started_creds.png)
 
@@ -90,7 +90,7 @@ And the data from our local Dolt server is now available on DoltHub.com!
 
 ## Pushing from Dolt running in a container
 
-In the example above, the local Dolt client and running Dolt server were successfully authenticated against DoltHub.com because neither was running in a containerized environment. 
+In the example above, the local Dolt client and running Dolt server were successfully authenticated against DoltHub.com because neither was running in a containerized environment.
 
 As a result, both the client and server were able to reference the same local directory Dolt uses to manage its global state. This directory can be set by defining `DOLT_ROOT_PATH`, but by default, is created at `$HOME/.dolt`. This directory houses global (client and server) configuration as well as all remote credentials, which are located in `$HOME/.dolt/creds`.
 
@@ -106,11 +106,11 @@ Sync functionality is supported via the [`clone`](../../cli.md#dolt-clone), [`fe
 
 [DoltHub](https://www.dolthub.com) is a remote operated by DoltHub Inc. Public repositories are free. Private repositories are free up to a Gigabyte. After a Gigabyte, private repositories are $50 a month and scale up in cost after 100GB. DoltHub adds a web GUI to your remotes along with Forks, Pull Requests, and Issues.
 
-See the [Getting Started Guide for DoltHub](../../../introduction/getting-started/data-sharing.md) on how to get started with a DoltHub remote.
+See the [Getting Started Guide for DoltHub](../../../products/dolthub/data-sharing.md) on how to get started with a DoltHub remote.
 
 ## DoltLab
 
-[DoltLab](https://www.doltlab.com) is a version of [DoltHub](https://www.dolthub.com) you can deploy in your own network. It looks very similar to DoltHub. See the [DoltLab Guide](../../../guides/doltlab/installation.md) if you are interested in using DoltLab as a remote.
+[DoltLab](https://www.doltlab.com) is a version of [DoltHub](https://www.dolthub.com) you can deploy in your own network. It looks very similar to DoltHub. See the [DoltLab Guide](../../../products/doltlab/installation.md) if you are interested in using DoltLab as a remote.
 
 ## Filesystem
 
@@ -118,22 +118,28 @@ Filesystem based remotes allow you to push/pull data from any location that can 
 
 **Linux / OSX Examples**
 
- * Adding a remote 
+- Adding a remote
+
 ```
-dolt remote add origin file:///Users/brian/datasets/menus  
+dolt remote add origin file:///Users/brian/datasets/menus
 ```
- * Cloning
+
+- Cloning
+
 ```
 dolt clone file:///Users/brian/datasets/menus
 ```
 
 **Windows Examples**
 
- * Adding a remote
+- Adding a remote
+
 ```
 dolt remote add origin file:///c:/Users/brian/datasets/menus
 ```
- * Cloning 
+
+- Cloning
+
 ```
 dolt clone file:///c:/Users/brian/datasets/menus
 ```
@@ -147,7 +153,7 @@ key with the name "db".
 
 ![Create a Dynamo Table with a primary key of: db](../../../.gitbook/assets/create_dynamo_table.png)
 
-This single DynamoDB table can be used for multiple unrelated remote repositories.  Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
+This single DynamoDB table can be used for multiple unrelated remote repositories. Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
 
 ```
 dolt remote add origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
@@ -165,7 +171,7 @@ In order to initialize your system to be able to connect to your AWS cloud resou
 dolt remote add --aws-creds-profile prod-profile --aws-region us-west-2 origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
 ```
 
-or 
+or
 
 ```
 dolt clone --aws-creds-profile prod-profile --aws-region us-west-2 origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
@@ -198,4 +204,4 @@ origin https://doltremoteapi.dolthub.com/Dolthub/menus
 remotesrv --http-port 1234 --dir ./remote_storage
 ```
 
-This starts a server listening on port 50051 for our grpc requests, and runs a file server on port 1234 which provides upload, and download functionality similar to S3 / GCS locally.  We use the url `http://localhost:50051/test-org/test-repo` when adding a remote or cloning from this remote server.
+This starts a server listening on port 50051 for our grpc requests, and runs a file server on port 1234 which provides upload, and download functionality similar to S3 / GCS locally. We use the url `http://localhost:50051/test-org/test-repo` when adding a remote or cloning from this remote server.

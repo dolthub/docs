@@ -16,13 +16,13 @@ This documentation will walk you through discovering data on DoltHub, cloning a 
 
 # DoltHub API
 
-DoltHub has [an API](./dolthub-api/README.md) you can script against. The documentation covers:
+DoltHub has [an API](./api/README.md) you can script against. The documentation covers:
 
-1. [Authentication](./dolthub-api/authentication.md)
-2. [SQL API](./dolthub-api/sql.md) - Used to make read or write SQL queries to a DoltHub database
-3. [CSV API](./dolthub-api/csv.md) - Used to download CSV format files of DoltHub tables
-4. [Database API](./dolthub-api/database.md) - Used to interact with DoltHub databases and pull requests
-5. [Hooks](./dolthub-api/hooks.md) - Used to receive change events to your DoltHub databases
+1. [Authentication](./api/authentication.md)
+2. [SQL API](./api/sql.md) - Used to make read or write SQL queries to a DoltHub database
+3. [CSV API](./api/csv.md) - Used to download CSV format files of DoltHub tables
+4. [Database API](./api/database.md) - Used to interact with DoltHub databases and pull requests
+5. [Hooks](./api/hooks.md) - Used to receive change events to your DoltHub databases
 
 # Guides
 
