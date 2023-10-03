@@ -926,11 +926,12 @@ CALL DOLT_PUSH('--force', 'origin', 'main');
 ### Output Schema
 
 ```text
-+--------+------+---------------------------+
-| Field  | Type | Description               |
-+--------+------+---------------------------+
-| status | int  | 0 if successful, 1 if not |
-+--------+------+---------------------------+
++---------+------+-----------------------------+
+| Field   | Type | Description                 |
++---------+------+-----------------------------+
+| status  | int  | 0 if successful, 1 if not   |
+| message | text | success/failure information |
++---------+------+-----------------------------+
 ```
 
 ### Example
