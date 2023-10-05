@@ -8,7 +8,7 @@ Please make sure to send your requests to `https://www.dolthub.com` instead of `
 
 ## Reading
 
-{% swagger src="../../../.gitbook/assets/dolthub-api/sqlRead.json" path="/api/v1alpha1/{owner}/{database}" method="get" %}
+{% swagger src="../../../.gitbook/assets/dolthub-api/sqlRead.json" path="/{owner}/{database}" method="get" %}
 [sqlRead.json](../../../.gitbook/assets/dolthub-api/sqlRead.json)
 {% endswagger %}
 
@@ -16,6 +16,7 @@ We will use an example DoltHub database, [dolthub/ip-to-country](https://www.dol
 
 ```python
 import requests
+
 owner, database = 'dolthub', 'ip-to-country'
 res = requests.get('https://dolthub.com/api/v1alpha1/{}/{}'.format(owner, database))
 res.json()
