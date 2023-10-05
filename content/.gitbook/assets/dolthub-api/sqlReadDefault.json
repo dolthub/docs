@@ -1,0 +1,346 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SQL Read Queries",
+    "description": "API to execute SQL read queries on the default branch."
+  },
+  "servers": [
+    {
+      "url":  "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}": {
+      "get": {
+        "summary": "Execute SQL read queries on the default branch.",
+        "description": "Execute SQL read queries on the default branch.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"ip-to-country"
+            }
+          },
+          {
+            "name":"q",
+            "in":"q",
+            "description":"The SQL query to execute.",
+            "required":false,
+            "schema":{
+              "type": "string",
+              "example": "SHOW TABLES"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "description": "Query execution status",
+                      "example":"Success"
+                    },
+                    "query_execution_message": {
+                      "type": "string",
+                      "description": "Additional information about the query execution",
+                      "example":""
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example":"dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example":"ip-to-country"
+                    },
+                    "commit_ref": {
+                      "type": "string",
+                      "description": "Commit ref that the query is executed against",
+                      "example":"main"
+                    },
+                    "sql_query:": {
+                      "type": "string",
+                      "description": "SQL query that was executed.",
+                      "example":"SHOW TABLES"
+                    },
+                    "schema": {
+                      "type": "array",
+                      "description": "Schema of the SQL table",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "description": "Name of the column",
+                            "example":"Tables_in_dolt"
+                          },
+                          "columnType": {
+                            "type": "string",
+                            "description": "SQL type of the column",
+                            "example":"longtext"
+                          }
+                        }
+                      }
+                    },
+                    "rows": {
+                      "type": "array",
+                      "description": "Rows returned by the query",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "[columnName]": {
+                            "type": "string",
+                            "description": "Value of the column",
+                            "example":"IPv4ToCountry"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "query_execution_message":{
+                      "type":"string",
+                      "example":"query error: Error parsing SQL"
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "example": "ip-to-country"
+                    },
+                    "commit_ref": {
+                      "type": "string",
+                      "example": "main"
+                    },
+                    "sql_query:" : {
+                      "type": "string",
+                      "example": "invalid query"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/{owner}/{database}/{ref}": {
+      "get": {
+        "summary": "Execute SQL read queries on a specified ref.",
+        "description": "Execute SQL read queries on a specified ref.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"ip-to-country"
+            }
+          },
+          {
+            "name": "ref",
+            "in": "path",
+            "description": "The database ref to execute the query against.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example":"newbranch"
+            }
+          },
+          {
+            "name":"q",
+            "in":"q",
+            "description":"The SQL query to execute.",
+            "required":false,
+            "schema":{
+              "type": "string",
+              "example": "SELECT * FROM IPv4ToCountry WHERE CountryCode2Letter = 'AU'"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "description": "Query execution status",
+                      "example":"Success"
+                    },
+                    "query_execution_message": {
+                      "type": "string",
+                      "description": "Additional information about the query execution",
+                      "example":""
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example":"dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example":"ip-to-country"
+                    },
+                    "commit_ref": {
+                      "type": "string",
+                      "description": "Commit ref that the query is executed against",
+                      "example":"newbranch"
+                    },
+                    "sql_query:": {
+                      "type": "string",
+                      "description": "SQL query that was executed.",
+                      "example":"SELECT * FROM IPv4ToCountry WHERE CountryCode2Letter = 'AU'"
+                    },
+                    "schema": {
+                      "type": "array",
+                      "description": "Schema of the SQL table",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "columnName": {
+                            "type": "string",
+                            "description": "Name of the column",
+                            "example":"IPFrom"
+                          },
+                          "columnType": {
+                            "type": "string",
+                            "description": "SQL type of the column",
+                            "example":"Int"
+                          }
+                        }
+                      }
+                    },
+                    "rows": {
+                      "type": "array",
+                      "description": "Rows returned by the query",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "[columnName]": {
+                            "type": "string",
+                            "description": "Value of the column",
+                            "example":"16777216"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "query_execution_message":{
+                      "type":"string",
+                      "example":"query error: Error parsing SQL"
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "example": "ip-to-country"
+                    },
+                    "commit_ref": {
+                      "type": "string",
+                      "example": "newbranch"
+                    },
+                    "sql_query:" : {
+                      "type": "string",
+                      "example": "invalid query"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}

@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "DoltHub API - Get Pull Request API",
+    "title": "Get Pull Request",
     "description": "API to get information about a pull request."
   },
   "servers": [

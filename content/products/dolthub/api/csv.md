@@ -2,6 +2,10 @@
 
 DoltHub provides a CSV API for fetching table data as CSVs. You can request a CSV for an individual table or a zip of all table CSVs at a specified commit or branch.
 
+{% hint style="info" %}
+Please make sure to send your requests to `https://www.dolthub.com` instead of `https://dolthub.com`.
+{% endhint %}
+
 #### Example
 
 We will use an example DoltHub database, [dolthub/us-jails](https://www.dolthub.com/repositories/dolthub/us-jails/) and the Python `requests` library to explore it in the Python console.
