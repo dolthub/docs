@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url":  "https://www.dolthub.com/api/v1alpha1"
+      "url": "https://www.dolthub.com/api/v1alpha1"
     }
   ],
   "paths": {
@@ -23,7 +23,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"dolthub"
+              "example": "dolthub"
             }
           },
           {
@@ -33,7 +33,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"SHAQ"
+              "example": "SHAQ"
             }
           },
           {
@@ -43,7 +43,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"main"
+              "example": "main"
             }
           },
           {
@@ -53,15 +53,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"feature"
+              "example": "feature"
             }
           },
           {
-            "name":"q",
-            "in":"q",
-            "description":"The SQL query to execute. Use the request body instead for larger queries.",
-            "required":false,
-            "schema":{
+            "name": "q",
+            "in": "q",
+            "description": "The SQL query to execute. Use the request body instead for larger queries.",
+            "required": false,
+            "schema": {
               "type": "string",
               "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
             }
@@ -77,7 +77,7 @@
                 "properties": {
                   "query": {
                     "type": "string",
-                    "example":"UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                    "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
                   }
                 }
               }
@@ -95,48 +95,48 @@
                     "query_execution_status": {
                       "type": "string",
                       "description": "Query execution status",
-                      "example":"Success"
+                      "example": "Success"
                     },
                     "query_execution_message": {
                       "type": "string",
                       "description": "Additional information about the query execution",
-                      "example":"Operation created. Poll the operation endpoint to see the execution status of this query."
+                      "example": "Operation created. Poll the operation endpoint to see the execution status of this query."
                     },
                     "repository_owner": {
                       "type": "string",
                       "description": "Owner of the database",
-                      "example":"dolthub"
+                      "example": "dolthub"
                     },
                     "repository_name": {
                       "type": "string",
                       "description": "Database name",
-                      "example":"SHAQ"
+                      "example": "SHAQ"
                     },
                     "from_branch_name": {
                       "type": "string",
                       "description": "Base branch",
-                      "example":"main"
+                      "example": "main"
                     },
                     "to_branch_name": {
                       "type": "string",
                       "description": "Branch the query is executed on",
-                      "example":"main"
+                      "example": "main"
                     },
                     "query:": {
                       "type": "string",
                       "description": "SQL query that was executed.",
-                      "example":"UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                      "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
                     },
                     "operation_name:": {
                       "type": "string",
                       "description": "Operation name that can be used to poll for the query result.",
-                      "example":"operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+                      "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
                     }
                   }
                 }
               }
             }
-          }, 
+          },
           "400": {
             "description": "Bad request. The request was invalid or could not be processed.",
             "content": {
@@ -148,9 +148,9 @@
                       "type": "string",
                       "example": "Error"
                     },
-                    "query_execution_message":{
-                      "type":"string",
-                      "example":"query error: Error parsing SQL"
+                    "query_execution_message": {
+                      "type": "string",
+                      "example": "query error: Error parsing SQL"
                     },
                     "repository_owner": {
                       "type": "string",
@@ -163,22 +163,22 @@
                     "from_branch_name": {
                       "type": "string",
                       "description": "Base branch",
-                      "example":"main"
+                      "example": "main"
                     },
                     "to_branch_name": {
                       "type": "string",
                       "description": "Branch the query is executed on",
-                      "example":"main"
+                      "example": "main"
                     },
                     "query:": {
                       "type": "string",
                       "description": "SQL query that was executed.",
-                      "example":"UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                      "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
                     },
                     "operation_name:": {
                       "type": "string",
                       "description": "Operation name that can be used to poll for the query result.",
-                      "example":""
+                      "example": ""
                     }
                   }
                 }
@@ -205,7 +205,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"dolthub"
+              "example": "dolthub"
             }
           },
           {
@@ -215,15 +215,15 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example":"SHAQ"
+              "example": "SHAQ"
             }
           },
           {
-            "name":"operationName",
-            "in":"query",
-            "description":"The name of the operation",
+            "name": "operationName",
+            "in": "query",
+            "description": "The name of the operation",
             "required": true,
-            "schema":{
+            "schema": {
               "type": "string",
               "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
             }
@@ -240,12 +240,12 @@
                     "_id": {
                       "type": "string",
                       "description": "The operation name",
-                      "example":"operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+                      "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
                     },
                     "done": {
                       "type": "boolean",
                       "description": "Whether or not the operation has completed",
-                      "example":true
+                      "example": true
                     },
                     "res_details": {
                       "type": "object",
@@ -254,56 +254,54 @@
                         "query_execution_status": {
                           "type": "string",
                           "description": "Query execution status",
-                          "example":"Success"
+                          "example": "Success"
                         },
                         "query_execution_message": {
                           "type": "string",
                           "description": "Additional information about the query execution",
-                          "example":"Query OK, 2 rows affected. Rows matched: 2  Changed: 2  Warnings: 0."
+                          "example": "Query OK, 2 rows affected. Rows matched: 2  Changed: 2  Warnings: 0."
                         },
                         "owner_name": {
                           "type": "string",
                           "description": "Owner of the database",
-                          "example":"dolthub"
+                          "example": "dolthub"
                         },
                         "repository_name": {
                           "type": "string",
                           "description": "Database name",
-                          "example":"SHAQ"
+                          "example": "SHAQ"
                         },
                         "from_commit_id": {
                           "type": "string",
                           "description": "From commit before the write",
-                          "example":"518ue176ec13qf563e87uoerkqqepood"
+                          "example": "518ue176ec13qf563e87uoerkqqepood"
                         },
                         "to_commit_id": {
                           "type": "string",
                           "description": "To commit containing the write",
-                          "example":"5sp7i0bov6itma2u04dpk15ui24lrigp"
+                          "example": "5sp7i0bov6itma2u04dpk15ui24lrigp"
                         }
                       }
                     }
                   }
-                }  
+                }
               }
             }
-          }
-        }
-      }, 
-      "400": {
-        "description": "Bad request. The request was invalid or could not be processed.",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "query_execution_status": {
+          },
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
                       "type": "string",
                       "example": "Error"
                     },
-                    "query_execution_message":{
-                      "type":"string",
-                      "example":"query error: Error parsing SQL"
+                    "query_execution_message": {
+                      "type": "string",
+                      "example": "query error: Error parsing SQL"
                     },
                     "operation_name": {
                       "type": "string",
@@ -311,6 +309,8 @@
                     }
                   }
                 }
+              }
+            }
           }
         },
         "security": [
