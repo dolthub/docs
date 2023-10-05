@@ -8,10 +8,8 @@ Please make sure to send your requests to `https://www.dolthub.com` instead of `
 
 ## Reading
 
-### Default branch
-
-{% swagger src="../../../.gitbook/assets/dolthub-api/sqlReadDefault.json" path="/api/v1alpha1/{owner}/{database}" method="get" %}
-[createDatabase.json](../../../.gitbook/assets/dolthub-api/sqlReadDefault.json)
+{% swagger src="../../../.gitbook/assets/dolthub-api/sqlRead.json" path="/api/v1alpha1/{owner}/{database}" method="get" %}
+[sqlRead.json](../../../.gitbook/assets/dolthub-api/sqlRead.json)
 {% endswagger %}
 
 We will use an example DoltHub database, [dolthub/ip-to-country](https://www.dolthub.com/repositories/dolthub/ip-to-country/) and the Python `requests` library to explore it in the Python console:
