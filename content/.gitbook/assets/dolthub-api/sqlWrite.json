@@ -1,0 +1,333 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SQL Write Queries",
+    "description": "API to execute SQL write queries."
+  },
+  "servers": [
+    {
+      "url": "https://www.dolthub.com/api/v1alpha1"
+    }
+  ],
+  "paths": {
+    "/{owner}/{database}/write/{from_branch}/{to_branch}": {
+      "post": {
+        "summary": "SQL write query and merge branches",
+        "description": "Executes SQL write against to_branch (will be created from from_branch if it doesn't exist). If no query is provided, will merge to_branch into from_branch.",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "SHAQ"
+            }
+          },
+          {
+            "name": "from_branch",
+            "in": "path",
+            "description": "The base branch.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "main"
+            }
+          },
+          {
+            "name": "to_branch",
+            "in": "path",
+            "description": "The branch to write to. Will be created from the from_branch if it doesn't exist.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "feature"
+            }
+          },
+          {
+            "name": "q",
+            "in": "q",
+            "description": "The SQL query to execute. Use the request body instead for larger queries.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "SQL write query to execute. Can be used in place of the query parameter for larger queries.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "description": "Query execution status",
+                      "example": "Success"
+                    },
+                    "query_execution_message": {
+                      "type": "string",
+                      "description": "Additional information about the query execution",
+                      "example": "Operation created. Poll the operation endpoint to see the execution status of this query."
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "description": "Owner of the database",
+                      "example": "dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "description": "Database name",
+                      "example": "SHAQ"
+                    },
+                    "from_branch_name": {
+                      "type": "string",
+                      "description": "Base branch",
+                      "example": "main"
+                    },
+                    "to_branch_name": {
+                      "type": "string",
+                      "description": "Branch the query is executed on",
+                      "example": "main"
+                    },
+                    "query:": {
+                      "type": "string",
+                      "description": "SQL query that was executed.",
+                      "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                    },
+                    "operation_name:": {
+                      "type": "string",
+                      "description": "Operation name that can be used to poll for the query result.",
+                      "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "query_execution_message": {
+                      "type": "string",
+                      "example": "query error: Error parsing SQL"
+                    },
+                    "repository_owner": {
+                      "type": "string",
+                      "example": "dolthub"
+                    },
+                    "repository_name": {
+                      "type": "string",
+                      "example": "SHAQ"
+                    },
+                    "from_branch_name": {
+                      "type": "string",
+                      "description": "Base branch",
+                      "example": "main"
+                    },
+                    "to_branch_name": {
+                      "type": "string",
+                      "description": "Branch the query is executed on",
+                      "example": "main"
+                    },
+                    "query:": {
+                      "type": "string",
+                      "description": "SQL query that was executed.",
+                      "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
+                    },
+                    "operation_name:": {
+                      "type": "string",
+                      "description": "Operation name that can be used to poll for the query result.",
+                      "example": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/{owner}/{database}/write": {
+      "get": {
+        "summary": "Check write query operation status",
+        "description": "Poll the operation to check if the SQL write operation is done",
+        "parameters": [
+          {
+            "name": "owner",
+            "in": "path",
+            "description": "The name of the database owner.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "dolthub"
+            }
+          },
+          {
+            "name": "database",
+            "in": "path",
+            "description": "The name of the database.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "SHAQ"
+            }
+          },
+          {
+            "name": "operationName",
+            "in": "query",
+            "description": "The name of the operation",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "description": "The operation name",
+                      "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+                    },
+                    "done": {
+                      "type": "boolean",
+                      "description": "Whether or not the operation has completed",
+                      "example": true
+                    },
+                    "res_details": {
+                      "type": "object",
+                      "description": "Additional information about the completed SQL write operation",
+                      "properties": {
+                        "query_execution_status": {
+                          "type": "string",
+                          "description": "Query execution status",
+                          "example": "Success"
+                        },
+                        "query_execution_message": {
+                          "type": "string",
+                          "description": "Additional information about the query execution",
+                          "example": "Query OK, 2 rows affected. Rows matched: 2  Changed: 2  Warnings: 0."
+                        },
+                        "owner_name": {
+                          "type": "string",
+                          "description": "Owner of the database",
+                          "example": "dolthub"
+                        },
+                        "repository_name": {
+                          "type": "string",
+                          "description": "Database name",
+                          "example": "SHAQ"
+                        },
+                        "from_commit_id": {
+                          "type": "string",
+                          "description": "From commit before the write",
+                          "example": "518ue176ec13qf563e87uoerkqqepood"
+                        },
+                        "to_commit_id": {
+                          "type": "string",
+                          "description": "To commit containing the write",
+                          "example": "5sp7i0bov6itma2u04dpk15ui24lrigp"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request. The request was invalid or could not be processed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query_execution_status": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "query_execution_message": {
+                      "type": "string",
+                      "example": "query error: Error parsing SQL"
+                    },
+                    "operation_name": {
+                      "type": "string",
+                      "example": "operations/72abb56b-d478-43ae-9a2d-c9602184c7ab"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "authorization"
+      }
+    }
+  }
+}
