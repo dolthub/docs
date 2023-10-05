@@ -13,7 +13,7 @@
   "paths": {
     "/{owner}/{database}": {
       "get": {
-        "summary": "Execute SQL read queries on the default branch.",
+        "summary": "SQL read queries on the default branch",
         "parameters": [
           {
             "name": "owner",
@@ -168,7 +168,7 @@
     },
     "/{owner}/{database}/{ref}": {
       "get": {
-        "summary": "Execute SQL read queries on a specified ref.",
+        "summary": "SQL read queries on a specified ref",
         "parameters": [
           {
             "name": "owner",
