@@ -8,6 +8,8 @@ Please make sure to send your requests to `https://www.dolthub.com` instead of `
 
 ## Reading
 
+### Using the default branch
+
 {% swagger src="../../../.gitbook/assets/dolthub-api/sqlRead.json" path="/{owner}/{database}" method="get" %}
 [sqlRead.json](../../../.gitbook/assets/dolthub-api/sqlRead.json)
 {% endswagger %}
@@ -35,6 +37,12 @@ This shows our database metadata as a dictionary:
    'columnType': 'longtext'}],
  'rows': [{'Table': 'IPv4ToCountry'}, {'Table': 'IPv6ToCountry'}]}
 ```
+
+### Specifying a ref
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/sqlRead.json" path="/{owner}/{database}/{ref}" method="get" %}
+[sqlRead.json](../../../.gitbook/assets/dolthub-api/sqlRead.json)
+{% endswagger %}
 
 We can now execute a query:
 
