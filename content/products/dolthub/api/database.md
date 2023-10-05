@@ -22,8 +22,6 @@ headers = {
 [createDatabase.json](../../../.gitbook/assets/dolthub-api/createDatabase.json)
 {% endswagger %}
 
-
-
 ## Create pull request
 
 Here is an example of opening a pull request on the `museum-collections` database with data from the Los Angeles County Museum of Art. This data was added to the `lacma` branch on a fork database, whose `owner` is `liuliu`, we would like to eventually merge `lacma` branch into the `main` branch using an [authorization token](authentication.md).
@@ -39,7 +37,6 @@ headers = {
 {% swagger src="../../../.gitbook/assets/dolthub-api/createpull.json" path="/{owner}/{database}/pulls" method="post" %}
 [createpull.json](../../../.gitbook/assets/dolthub-api/createpull.json)
 {% endswagger %}
-
 
 ## Get pull request details
 
@@ -73,7 +70,6 @@ headers = {
 [updatepull.json](../../../.gitbook/assets/dolthub-api/updatepull.json)
 {% endswagger %}
 
-
 ## List pull requests
 
 Here is an example of listing pull requests for the `museum-collections` database using an [authorization token](authentication.md). The response of pull request list is paginated, so you need to use the next page token included in the response to retrieve the following pages of pull requests.
@@ -90,7 +86,6 @@ headers = {
 [listpulls.json](../../../.gitbook/assets/dolthub-api/listpulls.json)
 {% endswagger %}
 
-
 ## Create a pull request comment&#x20;
 
 Here is an example of adding a pull request comment using an [authorization token](authentication.md).
@@ -106,8 +101,6 @@ headers = {
 {% swagger src="../../../.gitbook/assets/dolthub-api/pullcomment.json" path="/{owner}/{database}/pulls/{pull_id}/comments" method="post" %}
 [pullcomment.json](../../../.gitbook/assets/dolthub-api/pullcomment.json)
 {% endswagger %}
-
-
 
 ## Merge pull request
 
@@ -135,10 +128,9 @@ Then use `GET` to poll the operation to check if the merge operation is done.
 [pollMergeJob.json](../../../.gitbook/assets/dolthub-api/pollMergeJob.json)
 {% endswagger %}
 
-
 ## Upload a file
 
-Here is an example of uploading a file `lacma.csv` to create a table `lacma` on a database `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result. 
+Here is an example of uploading a file `lacma.csv` to create a table `lacma` on a database `museum-collections` using an [authorization token](authentication.md). Note that the file import operation is asynchronous and creates an operation that can be polled to get the result.
 
 To poll the operation and check its status, you can use the `operationName` in the returned response of the file upload post to query the API. Once the operation is complete, the response will contain a `job_id` field indicating the job that's running the file import as well as the id of the pull request that's created when the import job is completed.
 
@@ -172,11 +164,11 @@ Please make sure to send your requests to `https://www.dolthub.com/api/v1alpha1/
 
 ```js
 const fs = require("fs");
- 
+
 const url =
   "https://www.dolthub.com/api/v1alpha1/dolthub/museum-collections/upload";
- 
-  
+
+
 const headers = {
   "Content-Type": "application/json",
   authorization: [api token you created],
@@ -259,7 +251,6 @@ headers = {
 [createBranch.json](../../../.gitbook/assets/dolthub-api/createBranch.json)
 {% endswagger %}
 
-
 ## List branches
 
 Here's an example of how to list branches in the database `museum-collections` under the organization `dolthub` using an [authorization token](authentication.md).
@@ -291,7 +282,6 @@ headers = {
 {% swagger src="../../../.gitbook/assets/dolthub-api/createRelease.json" path="/{owner}/{database}/releases" method="post" %}
 [createRelease.json](../../../.gitbook/assets/dolthub-api/createRelease.json)
 {% endswagger %}
-
 
 ## List releases
 
