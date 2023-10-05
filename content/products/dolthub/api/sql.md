@@ -101,6 +101,10 @@ We can use our [SHAQ database](https://www.dolthub.com/repositories/dolthub/SHAQ
 
 ### 1. Run query
 
+{% swagger src="../../../.gitbook/assets/dolthub-api/sqlWrite.json" path="/{owner}/{database}/write/{from_branch}/{to_branch}" method="post" %}
+[sqlWrite.json](../../../.gitbook/assets/dolthub-api/sqlWrite.json)
+{% endswagger %}
+
 First, we want to hit the write endpoint with our `UPDATE` query. This will start an asynchronous operation.
 
 ```python
@@ -140,6 +144,10 @@ The yielded JSON results include an `operation_name`.
 ```
 
 ### 2. Poll operation
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/sqlWrite.json" path="/{owner}/{database}/write" method="get" %}
+[sqlWrite.json](../../../.gitbook/assets/dolthub-api/sqlWrite.json)
+{% endswagger %}
 
 `operation_name` can be used to poll the second endpoint to check if the operation is done.
 
