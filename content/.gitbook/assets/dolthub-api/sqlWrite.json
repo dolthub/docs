@@ -68,7 +68,6 @@
           }
         ],
         "requestBody": {
-          "description": "SQL write query to execute. Can be used in place of the query parameter for larger queries.",
           "required": false,
           "content": {
             "application/json": {
@@ -77,6 +76,7 @@
                 "properties": {
                   "query": {
                     "type": "string",
+                    "description": "SQL write query to execute. Can be used in place of the query parameter for larger queries.",
                     "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
                   }
                 }
