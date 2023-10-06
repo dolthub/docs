@@ -273,12 +273,12 @@
                         },
                         "from_commit_id": {
                           "type": "string",
-                          "description": "From commit before the write",
+                          "description": "From commit before the write or merge commit after a merge.",
                           "example": "518ue176ec13qf563e87uoerkqqepood"
                         },
                         "to_commit_id": {
                           "type": "string",
-                          "description": "To commit containing the write",
+                          "description": "To commit containing the write. Empty after a successful merge.",
                           "example": "5sp7i0bov6itma2u04dpk15ui24lrigp"
                         }
                       }
