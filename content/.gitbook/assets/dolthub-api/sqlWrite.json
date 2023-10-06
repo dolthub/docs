@@ -58,7 +58,7 @@
           },
           {
             "name": "q",
-            "in": "q",
+            "in": "query",
             "description": "The SQL query to execute. Use the request body instead for larger queries.",
             "required": false,
             "schema": {
