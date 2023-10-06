@@ -68,7 +68,6 @@
           }
         ],
         "requestBody": {
-          "description": "SQL write query to execute. Can be used in place of the query parameter for larger queries.",
           "required": false,
           "content": {
             "application/json": {
@@ -77,6 +76,7 @@
                 "properties": {
                   "query": {
                     "type": "string",
+                    "description": "SQL write query to execute. Can be used in place of the query parameter for larger queries.",
                     "example": "UPDATE player_season_stat_totals SET player_id=714287 WHERE player_id=15404617"
                   }
                 }
@@ -273,12 +273,12 @@
                         },
                         "from_commit_id": {
                           "type": "string",
-                          "description": "From commit before the write",
+                          "description": "From commit before the write or merge commit after a merge.",
                           "example": "518ue176ec13qf563e87uoerkqqepood"
                         },
                         "to_commit_id": {
                           "type": "string",
-                          "description": "To commit containing the write",
+                          "description": "To commit containing the write. Empty after a successful merge.",
                           "example": "5sp7i0bov6itma2u04dpk15ui24lrigp"
                         }
                       }
