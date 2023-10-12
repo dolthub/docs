@@ -142,14 +142,6 @@ guaranteed to see these changes reflected in the files on disk.
 +----------+------+
 ```
 
-### Usage
-
-Dolt users do not have to be familiar with this system table in order
-to make a `LICENSE.md` or `README.md`. Simply run `dolt init` or
-`touch README.md` and `touch LICENSE.md` from a Dolt database to get
-started. Then, `dolt add` and `dolt commit` the docs like you would a
-table.
-
 ## `dolt_procedures`
 
 `dolt_procedures` stores each stored procedure that has been created
