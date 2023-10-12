@@ -18,11 +18,13 @@ title: Dolt SQL Procedures
   - [dolt_gc()](#dolt_gc)
   - [dolt_merge()](#dolt_merge)
   - [dolt_pull()](#dolt_pull)
+  - [dolt_purge_dropped_databases()](#dolt_purge_dropped_databases)
   - [dolt_push()](#dolt_push)
   - [dolt_remote()](#dolt_remote)
   - [dolt_reset()](#dolt_reset)
   - [dolt_revert()](#dolt_revert)
   - [dolt_tag()](#dolt_tag)
+  - [dolt_undrop()](#dolt_undrop)
   - [dolt_verify_constraints()](#dolt_verify_constraints)
 
 # Dolt SQL Procedures
@@ -908,6 +910,32 @@ CALL DOLT_PULL('origin', 'some-branch');
 SELECT * FROM dolt_log LIMIT 5;
 ```
 
+
+## `DOLT_PURGE_DROPPED_DATABASES()`
+
+Permanently deletes any dropped databases that are being held in a temporary holding area. When a Dolt database is 
+dropped, it is moved to a temporary holding area where the [`dolt_undrop()` stored procedure](#dolt_undrop) can restore
+it. The `dolt_purge_dropped_databases()` stored procedure clears this holding area and permanently deletes any data
+from those databases. This action is not reversible, so callers should be cautious about using it. The main benefit
+of using this function is to reclaim disk space used by the temporary holding area. Because this is a destructive
+operation, callers must have `SUPER` privileges in order to execute it. 
+
+### Example
+
+```sql
+-- Create a database and populate a table in the working set 
+CREATE DATABASE database1;
+use database1;
+create table t(pk int primary key);
+
+-- Dropping the database will move it to a temporary holding area 
+DROP DATABASE database1;
+
+-- At this point, the database can be restored by calling dolt_undrop('database1'), but
+-- instead, we permanently delete it by calling dolt_purge_dropped_databases().
+CALL dolt_purge_dropped_databases(); 
+```
+
 ## `DOLT_PUSH()`
 
 Updates remote refs using local refs, while sending objects necessary to
@@ -1191,6 +1219,39 @@ CALL DOLT_COMMIT('-am', 'committing all changes');
 
 -- Create a tag for the HEAD commit.
 CALL DOLT_TAG('v1','head','-m','creating v1 tag');
+```
+
+## `DOLT_UNDROP()`
+
+Restores a dropped database. See the [`dolt_purge_dropped_databases()` stored procedure](#dolt_purge_dropped_databases) for info on how to permanently remove dropped databases. 
+
+```sql
+CALL DOLT_UNDROP(<database_name>);
+```
+
+### Options
+
+`dolt_undrop()` takes a single argument – the name of the dropped database to restore. When called without any arguments,
+`dolt_undrop()` returns an error message that contains a list of all dropped databases that are available to be restored.
+
+### Example
+
+```sql
+-- Create a database and populate a table in the working set 
+CREATE DATABASE database1;
+use database1;
+create table t(pk int primary key);
+
+-- Dropping the database will move it to a temporary holding area 
+DROP DATABASE database1;
+     
+-- calling dolt_undrop() with no arguments will return an error message that
+-- lists the dropped database that are available to be restored
+CALL dolt_undrop();
+
+-- Use dolt_undrop() to restore it 
+CALL dolt_undrop('database1');
+SELECT * FROM database1.t;
 ```
 
 ## `DOLT_VERIFY_CONSTRAINTS()`
