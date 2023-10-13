@@ -66,6 +66,8 @@ or deleted with the [`DOLT_BRANCH()` stored procedure](dolt-sql-procedures.md#do
 | latest_committer_email | TEXT     |
 | latest_commit_date     | DATETIME |
 | latest_commit_message  | TEXT     |
+| remote                 | TEXT     |
+| branch                 | TEXT     |
 +------------------------+----------+
 ```
 
