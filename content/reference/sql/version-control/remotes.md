@@ -205,3 +205,38 @@ remotesrv --http-port 1234 --dir ./remote_storage
 ```
 
 This starts a server listening on port 50051 for our grpc requests, and runs a file server on port 1234 which provides upload, and download functionality similar to S3 / GCS locally. We use the url `http://localhost:50051/test-org/test-repo` when adding a remote or cloning from this remote server.
+
+## Dolt sql-server
+
+A running [Dolt](https://doltdb.com) `sql-server` can expose all the databases on it through an HTTP(s) remote endpoint. To configure this, you include a `remotesapi:` configuration stanza inside the `config.yaml` file given to `sql-server` command. The stanza currently supports a single integer field, `port:`, which defines the TCP port the remotesapi endpoint will be exposed on. Providing a port will cause the sql-server process to run a remotesapi endpoint on the provided port. The listening IP address is the same as for the SQL server itself. If the MySQL server itself is configured with a TLS key and certificate then the endpoint will use the same TLS configuration as the SQL server endpoint itself and it will require HTTPS.
+
+The exposed remotesapi endpoint for a `sql-server` is currrently read-only. A Dolt client can `clone`, `fetch`, and `pull` from it, but cannot `push` to it.
+
+Authenticating to the remotesapi exposed on a `sql-server` works differently than authenticating to a typical HTTPS Dolt remote. Authentication to a sql-server remote is based on SQL users, passwords and grants, as opposed to the `dolt creds` functionality which is used above in DoltHub and DoltLab remotes. The Dolt client's `clone`, `fetch`, and `pull` commands support a `--user` parameter, which can be used to supply a username for authentication when interacting with the remote. The password to be used is supplied through an environment variable, `DOLT_REMOTE_PASSWORD`, which should be set to the appropriate value when the `clone`/`fetch`/`pull` command is run. This username and password correspond to a configured SQL user on the sql-server.
+
+The SQL user whose credentials are being used to authenticate to the remotesapi endpoint must have a grant for the `CLONE_ADMIN` privilege on the server to which they are connecting.
+
+Here is an end-to-end example showing exposing the remotesapi on a running sql-server, granting a user permissions to a database on it, and then cloning that database from a Dolt client.
+
+We configure the remotesapi to run on the sql-server and run the sql-server process:
+
+```
+$ cat config.yaml
+remotesapi:
+  port: 8080
+$ dolt sql -q "create database exampledb"
+$ dolt sql -q "create user 'exampleuser'@'%' identified by 'examplepassword'"
+$ dolt sql -q "grant clone_admin on *.* to 'exampleuser'@'%'"
+$ dolt sql-server --config config.yaml &
+```
+
+At this point, `dolt sql-server` is running on port `:3306` and its remotesapi endpoint is running on port `:8080`. We can clone `exampledb` from it:
+
+```
+$ DOLT_REMOTE_PASSWORD=examplepassword dolt clone --user exampleuser https://localhost:8080/exampledb exampledb
+$ cd exampledb
+$ dolt log --oneline
+q17m6q60c9qnu85kf37r1bb78bdq7pac (HEAD -> main, remotes/origin/main) Initialize data repository
+```
+
+The `--user` and `DOLT_REMOTE_PASSWORD` settings are not stored in the local state of the remote configuration for the `clone`. All future `fetch` and `pull` invocations from the clone directory need to supply them in order to authenticate to the remote.
