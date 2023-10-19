@@ -1196,9 +1196,9 @@ dolt ls [--options] [<commit>]
 
 **Description**
 
-With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count and a hash of the table will also be displayed.
+With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count will also be displayed.
 
-If the `--system` flag is supplied this will show the dolt system tables which are queryable with SQL.  Some system tables can be queried even if they are not in the working set by specifying appropriate parameters in the SQL queries. To see these tables too you may pass the `--verbose` flag.
+If the `--system` flag is supplied this will show the dolt system tables which are queryable with SQL.
 
 If the `--all` flag is supplied both user and system tables will be printed.
 
@@ -1206,13 +1206,13 @@ If the `--all` flag is supplied both user and system tables will be printed.
 **Arguments and options**
 
 `-v`, `--verbose`:
-show the hash of the table
+show the row count of user tables
 
 `-s`, `--system`:
 show system tables
 
 `-a`, `--all`:
-show system tables
+show user and system tables
 
 
 
