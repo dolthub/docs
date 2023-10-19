@@ -9,6 +9,7 @@ title: Dolt System Variables
   - [dbname_default_branch](#dbname_default_branch)
   - [dolt_log_level](#dolt_log_level)
   - [dolt_show_branch_databases](#dolt_show_branch_databases)
+  - [dolt_show_system_tables](#dolt_show_system_tables)
   - [dolt_transaction_commit](#dolt_transaction_commit)
   - [dolt_allow_commit_conflicts](#dolt_allow_commit_conflicts)
   - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
@@ -82,6 +83,11 @@ fresh> show databases;
 +--------------------+
 5 rows in set (0.00 sec)
 ```
+
+## `dolt_show_system_tables`
+
+When set to `1`, this system variable causes all system tables to be show in `show tables` and in `information_schema.tables`. 
+Defaults to `0`.
 
 ## `dolt_transaction_commit`
 
