@@ -1196,7 +1196,7 @@ dolt ls [--options] [<commit>]
 
 **Description**
 
-With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the {{.EmphasisLeft}}--verbose{{.EmphasisRight}} flag is provided a row count will also be displayed.
+With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count will also be displayed.
 
 If the `--system` flag is supplied this will show the dolt system tables which are queryable with SQL.
 
