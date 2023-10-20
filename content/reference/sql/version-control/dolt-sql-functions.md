@@ -10,6 +10,7 @@ title: Dolt SQL Functions
   - [dolt_merge_base()](#dolt_merge_base)
   - [hashof()](#hashof)
   - [dolt_version()](#dolt_version)
+  - [has_ancestor()](#has_ancestor)
 
 - [Table Functions](#table-functions)
 
@@ -66,6 +67,30 @@ mysql> select dolt_version();
 +----------------+
 | 0.40.4         |
 +----------------+
+```
+
+## `HAS_ANCESTOR()`
+
+The `HASH_ANCESTOR(target, ancestor)` function returns a `boolean` indicating whether a
+candidate `ancestor` commit is in the commit graph of the `target` ref.
+
+Consider the example commit graph from above:
+
+```text
+      A---B---C feature
+     /
+D---E---F---G main
+```
+
+A hypothetic example where we substitute letters for commit
+hashes would look like:
+
+```sql
+select has_ancestor('feature', 'A'); -- true
+select has_ancestor('feature', 'E'); -- true
+select has_ancestor('feature', 'F'); -- false
+select has_ancestor('main', 'E');    -- true
+select has_ancestor('G', 'main');    -- true
 ```
 
 # Table Functions
