@@ -85,7 +85,7 @@ D---E---F---G main
 A hypothetic example where we substitute letters for commit
 hashes would look like:
 
-```
+```sql
 select has_ancestor('feature', 'A'); -- true
 select has_ancestor('feature', 'E'); -- true
 select has_ancestor('feature', 'F'); -- false
