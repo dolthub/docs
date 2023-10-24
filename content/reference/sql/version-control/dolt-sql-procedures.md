@@ -176,7 +176,7 @@ Branch names have a few restrictions which are similar to the constraints Git pu
 - May not contain '..' (two periods)
 - May not contain '@{'
 - May not contain ASCII control characters
-- May not contain characters: ':', '?', '\[', '\', '^', '~', '*'
+- May not contain characters: ':', '?', '\[', '\\', '^', '~', '*'
 - May not contain whitespace (spaces, tabs, newlines)
 - May not end with '/'
 - May not end with '.lock'
