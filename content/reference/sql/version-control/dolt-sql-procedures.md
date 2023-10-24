@@ -169,7 +169,22 @@ CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 
 ### Notes
 
-- The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
+Branch names have a few restrictions which are similar to the constraints Git puts on branch names. Dolt's branches are a little more restrictive, as [ASCII](https://en.wikipedia.org/wiki/ASCII) characters are required. Rules are as follows:
+
+- All characters must be ASCII (7 Bit)
+- May not start with '.' (period)
+- May not contain '..' (two periods)
+- May not contain '@{'
+- May not contain ASCII control characters
+- May not contain characters: ':', '?', '\[', '\', '^', '~', '*'
+- May not contain whitespace (spaces, tabs, newlines)
+- May not end with '/'
+- May not end with '.lock'
+- May not be HEAD (case insensitive)
+- May not be indistinguishable from a commit hash. 32 characters, where all characters are 0-9 or a-z (case sensitive)
+
+
+The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
 
 {% endhint %}
 
