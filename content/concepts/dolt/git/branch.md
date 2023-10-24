@@ -30,6 +30,20 @@ Conceptually Git branches and Dolt branches are the same.
 
 In Dolt, branches become a slightly more important concept in server mode. In Git, you often are working on a clone of your repository locally. Thus, your write isolation can be at the clone level. With Dolt in server mode, your application will be coordinating writes to a single server through branches. 
 
+## Valid Branch Names
+
+Branch names have a few restrictions which are similar to the constraints Git puts on branch names. Dolt's branches are a little more restrictive, as [ASCII](https://en.wikipedia.org/wiki/ASCII) characters are required. Rules are as follows:
+
+* All characters must be ASCII (7 Bit)
+* May not start with '.' (period)
+* May not contain '..' (two periods)
+* May not contain '@{'
+* May not contain ASCII control characters
+* May not contain characters: ':', '?', '\[', '\', '^', '~', '*'
+* May not contain whitespace (spaces, tabs, newlines)
+* May not end with '/'
+* May not end with '.lock'
+
 ## Example
 
 ```
