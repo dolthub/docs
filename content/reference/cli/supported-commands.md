@@ -2,15 +2,17 @@
 title: "Cli Commands"
 ---
 
+We aim to match our CLI command behavior as closely to their Git equivalent as possible. This page lists the commands that are currently supported, and any known limitations.
+
 # Cli Commands
 
 ## Setup and Config
 
-| Component | Supported  | Notes and limitations                   |
-|:----------|:-----------|:----------------------------------------|
-| `config`  | ✅          | planned support for `dolt config alias` |
+| Component | Supported  | Notes and limitations |
+|:----------|:-----------|:----------------------|
+| `config`  | ✅          |                       |
 
-## Getting and Creating Projects
+## Getting and Creating Databases
 
 | Component | Supported  | Notes and limitations |
 |:----------|:-----------|:----------------------|
@@ -31,17 +33,17 @@ title: "Cli Commands"
 
 ## Branching and Merging
 
-| Component  | Supported | Notes and limitations                                       |
-|:-----------|:----------|:------------------------------------------------------------|
-| `branch`   | ✅         |                                                             |
-| `checkout` | ✅         |                                                             |
-| `merge`    | ✅         |                                                             |
-| `log`      | 🟠        | planned support for `dolt log --all` and `dolt log --graph` |
-| `stash`    | ❌         |                                                             |
-| `tag`      | ✅         |                                                             |
-| `worktree` | ❌         |                                                             |
+| Component  | Supported | Notes and limitations |
+|:-----------|:----------|:----------------------|
+| `branch`   | ✅         |                       |
+| `checkout` | ✅         |                       |
+| `merge`    | ✅         |                       |
+| `log`      | ✅         |                       |
+| `stash`    | ✅         |                       |
+| `tag`      | ✅         |                       |
+| `worktree` | ❌         |                       |
 
-## Sharing and Updating Projects
+## Sharing and Updating Databases
 
 | Component | Supported | Notes and limitations |
 |:----------|:----------|:----------------------|
@@ -58,7 +60,6 @@ title: "Cli Commands"
 | `diff`       | ✅         |                                                     |
 | `range-diff` | ❌         |                                                     |
 | `shortlog`   | ❌         |                                                     |
-| `describe`   | ❌         |                                                     |
 
 ## Patching
 
@@ -72,18 +73,18 @@ title: "Cli Commands"
 
 | Component | Supported | Notes and limitations |
 |:----------|:----------|:----------------------|
-| `bisect`  | ❌         | support is planned    |
+| `bisect`  | ❌         |                       |
 | `blame`   | ✅         |                       |
 
 ## Administration
 
-| Component       | Supported | Notes and limitations                  |
-|:----------------|:----------|:---------------------------------------|
-| `clean`         | 🟠        | does not completely match git behavior |
-| `gc`            | ✅         |                                        |
-| `fsck`          | ❌         |                                        |
-| `reflog`        | ❌         | support is planned                     |
-| `filter-branch` | ✅         |                                        |
+| Component       | Supported | Notes and limitations                                                                 |
+|:----------------|:----------|:--------------------------------------------------------------------------------------|
+| `clean`         | 🟠        | [does not completely match git behavior](https://github.com/dolthub/dolt/issues/6313) |
+| `gc`            | ✅         |                                                                                       |
+| `fsck`          | ❌         |                                                                                       |
+| `reflog`        | ❌         |                                                                                       |
+| `filter-branch` | ✅         |                                                                                       |
 
 ## Plumbing Commands
 
@@ -94,6 +95,8 @@ title: "Cli Commands"
 | `merge-base`   | ✅         |                       |
 | `rev-list`     | ❌         |                       |
 | `rev-parse`    | ❌         |                       |
-| `name-rev`     | ❌         | support is planned    |
+| `name-rev`     | ❌         |                       |
 | `show-ref`     | ❌         |                       |
 | `update-ref`   | ❌         |                       |
+
+If you are interested in a command that is currently unsupported, please [open an issue](https://github.com/dolthub/dolt) or contact us on [discord](https://discord.gg/8qyCyRfh).
