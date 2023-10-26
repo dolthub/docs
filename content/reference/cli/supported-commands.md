@@ -99,4 +99,4 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 | `show-ref`     | ❌         |                       |
 | `update-ref`   | ❌         |                       |
 
-If you are interested in a command that is currently unsupported, please [open an issue](https://github.com/dolthub/dolt) or contact us on [discord](https://discord.gg/8qyCyRfh).
+If you are interested in a command that is currently unsupported, please [open an issue](https://github.com/dolthub/dolt/issues) or contact us on [discord](https://discord.gg/8qyCyRfh).
