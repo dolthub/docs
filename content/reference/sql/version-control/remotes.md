@@ -8,7 +8,7 @@ Just like Git, Dolt supports syncing with a [remote database](../../../concepts/
 
 # Configuring Remotes
 
-Remotes are configured using the [`remote` command](../../cli.md#dolt-remote). You configure a remote with a name and a URL. When you want to use the remote, you refer to it by name. When you clone a remote, a remote named `origin` is automatically configured for you.
+Remotes are configured using the [`remote` command](../../cli/cli.md#dolt-remote). You configure a remote with a name and a URL. When you want to use the remote, you refer to it by name. When you clone a remote, a remote named `origin` is automatically configured for you.
 
 <h1 id="pushing-to-remote">Pushing to a Remote</h1>
 
@@ -98,7 +98,7 @@ It's important to be aware of this global state directory in the event you wante
 
 # Remote Actions
 
-Sync functionality is supported via the [`clone`](../../cli.md#dolt-clone), [`fetch`](../../cli.md#dolt-fetch), [`push`](../../cli.md#dolt-push), and [`pull`](../../cli.md#dolt-pull).
+Sync functionality is supported via the [`clone`](../../cli/cli.md#dolt-clone), [`fetch`](../../cli/cli.md#dolt-fetch), [`push`](../../cli/cli.md#dolt-push), and [`pull`](../../cli/cli.md#dolt-pull).
 
 # Remote Options
 

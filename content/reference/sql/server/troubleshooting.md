@@ -26,7 +26,7 @@ Dolt supports the SQL `EXPLAIN` operation in order for you to see the plan for c
 
 ## Compare to MySQL
 
-Dolt strives to be 100% MySQL compatible. If you run a query that works in MySQL but does not work in Dolt, it is a Dolt bug and you should [submit an issue](#submitting-issues). You can dump your Dolt database using [`dolt dump`](../../cli.md#dolt-dump) and import the resulting file into MySQL using `mysql < dump.sql`. The test the query you think should work using any MySQL client.
+Dolt strives to be 100% MySQL compatible. If you run a query that works in MySQL but does not work in Dolt, it is a Dolt bug and you should [submit an issue](#submitting-issues). You can dump your Dolt database using [`dolt dump`](../../cli/cli.md#dolt-dump) and import the resulting file into MySQL using `mysql < dump.sql`. The test the query you think should work using any MySQL client.
 
 # Submitting Issues
 

@@ -179,7 +179,7 @@ Learn more in [our blog](https://www.dolthub.com/blog/2023-06-30-hosted-workbenc
 ## Clone a Hosted Instance
 
 In some cases you might want to clone your database from Hosted Dolt so that you can
-access Dolt's [command line interface](../../reference/cli.md). Hosted provides an option
+access Dolt's [command line interface](../../reference/cli/cli.md). Hosted provides an option
 to expose your instance's remotesapi endpoint to allow clone, fetch, and pull from your
 Hosted.
 

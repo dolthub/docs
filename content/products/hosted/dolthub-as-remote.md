@@ -17,9 +17,9 @@ DoltHub or isolate changes to your production database and sync on your schedule
 
 # How Dolt credentials work on Hosted
 
-When you use Dolt on the [command line](../../reference/cli.md) to interact with DoltHub
+When you use Dolt on the [command line](../../reference/cli/cli.md) to interact with DoltHub
 or DoltLab to pull private databases or push to databases you have permission to, you're
-required to run [`dolt login`](../../reference/cli.md#dolt-login). This creates a new
+required to run [`dolt login`](../../reference/cli/cli.md#dolt-login). This creates a new
 public/private keypair for authenticating with doltremoteapi and adds it to your global
 Dolt configuration. It then opens up your browser to your [credential settings
 page](https://www.dolthub.com/settings/credentials) on DoltHub where you can add the
