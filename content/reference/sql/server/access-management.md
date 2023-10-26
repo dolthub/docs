@@ -27,10 +27,10 @@ By default, privileges will be stored in `.doltcfg/privileges.db` file, you may 
 ### User and Password Arguments
 
 Before the introduction of users and privileges, Dolt supported only a single user with an accompanying password.
-This was done using the `--user` and `--password` arguments ([see the docs for their defaults](../../cli.md#dolt-sql-server), also available using YAML configuration), whereby a server would only allow connections that supplied that singular user and password combination.
+This was done using the `--user` and `--password` arguments ([see the docs for their defaults](../../cli/cli.md#dolt-sql-server), also available using YAML configuration), whereby a server would only allow connections that supplied that singular user and password combination.
 Although Dolt now supports users in a similar fashion to MySQL, we still retain the user and password arguments.
 In MySQL, the default super account (generally called the root user) is created during installation and configuration.
-Rather than creating this super account during [`init`](../../cli.md#dolt-init), we instead handle the super account creation when starting a server via the arguments.
+Rather than creating this super account during [`init`](../../cli/cli.md#dolt-init), we instead handle the super account creation when starting a server via the arguments.
 
 This leads to an interaction with the [privilege file](#privilege-file) that should be noted.
 A privilege file is only created when there is a modification to any of the grant tables.
@@ -42,7 +42,7 @@ This behavior was chosen so that server should always have at least one user tha
 
 ## Editing Users
 
-Dolt comes with a MySQL client built-in, which is the [`sql-client`](../../cli.md#dolt-sql-client) command.
+Dolt comes with a MySQL client built-in, which is the [`sql-client`](../../cli/cli.md#dolt-sql-client) command.
 In addition to allowing access to a running server, the client command also has the `--dual` flag which runs a server in the background, while the foreground automatically connects to the background server using the given port, etc.
 
 Importantly, as described in the [previous section](#user-and-password-arguments), if a non-empty privilege file is provided, then the `--user` and `--password` arguments (also available via a [YAML configuration file](./configuration.md)) _only_ function as login credentials.

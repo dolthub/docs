@@ -5,27 +5,27 @@ title: Dolt SQL Procedures
 # Table of Contents
 
 - [Dolt SQL Procedures](#dolt-sql-procedures)
-  - [dolt_add()](#dolt_add)
-  - [dolt_backup()](#dolt_backup)
-  - [dolt_branch()](#dolt_branch)
-  - [dolt_checkout()](#dolt_checkout)
-  - [dolt_cherry_pick()](#dolt_cherry_pick)
-  - [dolt_clean()](#dolt_clean)
-  - [dolt_clone()](#dolt_clone)
-  - [dolt_commit()](#dolt_commit)
-  - [dolt_conflicts_resolve()](#dolt_conflicts_resolve)
-  - [dolt_fetch()](#dolt_fetch)
-  - [dolt_gc()](#dolt_gc)
-  - [dolt_merge()](#dolt_merge)
-  - [dolt_pull()](#dolt_pull)
-  - [dolt_purge_dropped_databases()](#dolt_purge_dropped_databases)
-  - [dolt_push()](#dolt_push)
-  - [dolt_remote()](#dolt_remote)
-  - [dolt_reset()](#dolt_reset)
-  - [dolt_revert()](#dolt_revert)
-  - [dolt_tag()](#dolt_tag)
-  - [dolt_undrop()](#dolt_undrop)
-  - [dolt_verify_constraints()](#dolt_verify_constraints)
+  - [dolt_add()](#doltadd)
+  - [dolt_backup()](#doltbackup)
+  - [dolt_branch()](#doltbranch)
+  - [dolt_checkout()](#doltcheckout)
+  - [dolt_cherry_pick()](#doltcherrypick)
+  - [dolt_clean()](#doltclean)
+  - [dolt_clone()](#doltclone)
+  - [dolt_commit()](#doltcommit)
+  - [dolt_conflicts_resolve()](#doltconflictsresolve)
+  - [dolt_fetch()](#doltfetch)
+  - [dolt_gc()](#doltgc)
+  - [dolt_merge()](#doltmerge)
+  - [dolt_pull()](#doltpull)
+  - [dolt_purge_dropped_databases()](#doltpurgedroppeddatabases)
+  - [dolt_push()](#doltpush)
+  - [dolt_remote()](#doltremote)
+  - [dolt_reset()](#doltreset)
+  - [dolt_revert()](#doltrevert)
+  - [dolt_tag()](#dolttag)
+  - [dolt_undrop()](#doltundrop)
+  - [dolt_verify_constraints()](#doltverifyconstraints)
 
 # Dolt SQL Procedures
 
@@ -332,7 +332,7 @@ Apply the changes introduced by an existing commit.
 
 Apply changes from existing commit and creates a new commit from the current HEAD.
 
-Works exactly like [`dolt cherry-pick` command](../../cli.md#dolt-cherry-pick) on the CLI,
+Works exactly like [`dolt cherry-pick` command](../../cli/cli.md#dolt-cherry-pick) on the CLI,
 and has the same notes and limitations.
 
 ```sql
@@ -996,7 +996,7 @@ CALL DOLT_PUSH('origin', 'feature-branch');
 ## `DOLT_REMOTE()`
 
 Adds a remote for a database at given url, or removes an existing remote with its remote-tracking branches
-and configuration settings. Similar to [`dolt remote` command](../../cli.md#dolt-remote) on the CLI, with the
+and configuration settings. Similar to [`dolt remote` command](../../cli/cli.md#dolt-remote) on the CLI, with the
 exception of cloud provider flags. To list existing remotes, use the
 [`dolt_remotes` system table](./dolt-system-tables.md#dolt_remotes).
 
@@ -1189,7 +1189,7 @@ SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=h
 ## `DOLT_TAG()`
 
 Creates a new tag that points at specified commit ref, or deletes an existing tag. Works exactly like
-[`dolt tag` command](../../cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags.
+[`dolt tag` command](../../cli/cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags.
 To list existing tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql

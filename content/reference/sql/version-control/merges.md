@@ -5,7 +5,7 @@ title: Merges
 # Merging branches
 
 To merge a branch into your current branch, use the [`DOLT_MERGE()`
-procedure](dolt-sql-procedures.md#dolt_merge):
+procedure](dolt-sql-procedures.md#doltmerge):
 
 ```sql
 CALL DOLT_MERGE('feature-branch');
@@ -65,7 +65,7 @@ Merges with schema conflicts will prevent the merge from completing and populate
 schema conflicts rows into the `dolt_schema_conflicts` system table. This system
 table describes the conflicted table's schema on each side of the merge: `ours`
 and `theirs`. Additionally, it shows the table's schema at the
-[common-ancestor](../../cli.md#dolt-merge-base) and describes why the `ours` and `theirs`
+[common-ancestor](../../cli/cli.md#dolt-merge-base) and describes why the `ours` and `theirs`
 schemas cannot be automatically merged.
 
 ```sql
@@ -86,7 +86,7 @@ schemas cannot be automatically merged.
 
 Merges that result in schema conflicts will leave an active merge state until
 the schema conflicts are resolved. Users can either `--abort` the active merge
-or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-procedures.md#dolt_conflicts_resolve).
+or resolve the schema conflict using [`dolt_conflicts_resolve()`](./dolt-sql-procedures.md#doltconflictsresolve).
 `dolt_conflicts_resolve()` takes as arguments a table name and an option `--ours`
 or `--theirs` to specify which side of the merge should be accepted. It is important
 to note that this resolution strategy takes the _entire_ table from the choosen side
@@ -206,7 +206,7 @@ SET    our_first_name = their_first_name,
 WHERE  their_id IS NOT NULL;
 ```
 
-See [`dolt_conflicts_$tablename`](./dolt-system-tables.md#dolt_conflicts_usdtablename) for details.
+See [`dolt_conflicts_$tablename`](./dolt-system-tables.md#doltconflictstablename) for details.
 
 ### Custom logic
 
@@ -230,9 +230,9 @@ set @@dolt_allow_commit_conflicts = 1;
 ```
 
 The server will not allow you to create new Dolt commits (with the
-[`dolt_commit()` system function](./dolt-sql-functions.md#dolt_commit)
+[`dolt_commit()` system function](./dolt-sql-procedures.md#doltcommit)
 or with the [`@@dolt_transaction_commit` system
-variable](./dolt-sysvars.md#dolt_transaction_commit)) if the working
+variable](./dolt-sysvars.md#dolttransactioncommit)) if the working
 set has conflicts. You must resolve conflicts before creating a Dolt
 commit.
 

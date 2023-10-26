@@ -12,7 +12,7 @@ Using remotes for backups should be suitable for some use cases. Using remotes f
 
 ### Configure a remote
 
-Currently you can only add and remove remotes from the [Dolt CLI](../../cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../products/dolthub/data-sharing.md#dolt-login).
+Currently you can only add and remove remotes from the [Dolt CLI](../../cli/cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../products/dolthub/data-sharing.md#dolt-login).
 
 ```bash
 % dolt remote add backup https://doltremoteapi.dolthub.com/timsehn/backup-example
@@ -47,7 +47,7 @@ Using DoltHub or DoltLab as a remote provides a web UI to your backups.
 
 ## Backups
 
-Dolt also has backups, accessed with the [`dolt backup` command](../../cli.md#dolt-backup). These backups look more like traditional database backups. The entire state of the database, including uncommitted changes on all branches, are copied to another location.
+Dolt also has backups, accessed with the [`dolt backup` command](../../cli/cli.md#dolt-backup). These backups look more like traditional database backups. The entire state of the database, including uncommitted changes on all branches, are copied to another location.
 
 ### Create a backup
 
@@ -91,7 +91,7 @@ mysql> call dolt_backup('sync', 'local-backup');
 
 ### Restore from a backup
 
-The backup command called with the restore option looks a lot like the [dolt clone command](../../cli.md#dolt-clone).
+The backup command called with the restore option looks a lot like the [dolt clone command](../../cli/cli.md#dolt-clone).
 
 ```bash
 $ dolt backup restore file:///Users/timsehn/liquidata/dolt/backups/backup-example backup-restore

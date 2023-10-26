@@ -6,21 +6,21 @@ title: Dolt SQL Functions
 
 - [Informational Functions](#informational-functions)
 
-  - [active_branch()](#active_branch)
-  - [dolt_merge_base()](#dolt_merge_base)
+  - [active_branch()](#activebranch)
+  - [dolt_merge_base()](#doltmergebase)
   - [hashof()](#hashof)
-  - [dolt_version()](#dolt_version)
-  - [has_ancestor()](#has_ancestor)
+  - [dolt_version()](#doltversion)
+  - [has_ancestor()](#hasancestor)
 
 - [Table Functions](#table-functions)
 
-  - [dolt_diff()](#dolt_diff)
-  - [dolt_diff_stat()](#dolt_diff_stat)
-  - [dolt_diff_summary()](#dolt_diff_summary)
-  - [dolt_log()](#dolt_log)
-  - [dolt_patch()](#dolt_patch)
-  - [dolt_schema_diff](#dolt_schema_diff)
-  - [dolt_query_diff](#dolt_query_diff)
+  - [dolt_diff()](#doltdiff)
+  - [dolt_diff_stat()](#doltdiffstat)
+  - [dolt_diff_summary()](#doltdiffsummary)
+  - [dolt_log()](#doltlog)
+  - [dolt_patch()](#doltpatch)
+  - [dolt_schema_diff](#doltschemadiff)
+  - [dolt_query_diff](#doltquerydiff)
 
 # Informational Functions
 
@@ -262,7 +262,7 @@ return empty result. Each row in the result set describes a diff stat for a sing
 number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 
-`DOLT_DIFF_STAT()` works like [CLI `dolt diff --stat` command](../../cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_STAT()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
+`DOLT_DIFF_STAT()` works like [CLI `dolt diff --stat` command](../../cli/cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_STAT()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
 
 Note that the `DOLT_DIFF_STAT()` table function currently has restrictions on how it can be used in queries. It does not
 support aliasing or joining with other tables, and argument values must be literal values.
@@ -402,7 +402,7 @@ between any two commits in the database. Only changed tables will be listed in t
 along with the diff type ('added', 'dropped', 'modified', 'renamed') and whether there are
 data and schema changes.
 
-`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli.md#dolt-diff),
+`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli/cli.md#dolt-diff),
 but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table
 name is optional. It returns empty result if there are no tables with changes.
 
@@ -542,7 +542,7 @@ With result of single row:
 
 The `DOLT_LOG` table function gets the commit log for all commits reachable from the
 provided revision's `HEAD` (or the current `HEAD` if no revision is provided). `DOLT_LOG()`
-works like [CLI `dolt log` command](../../cli.md#dolt-log).
+works like [CLI `dolt log` command](../../cli/cli.md#dolt-log).
 
 Note that the `DOLT_LOG()` table function currently has restrictions on how it can be used
 in queries. It does not support aliasing or joining with other tables, and argument values
@@ -670,7 +670,7 @@ Learn more about two vs three dot log [here](https://www.dolthub.com/blog/2022-1
 Generate the SQL statements needed to patch a table (or all tables) from a starting revision 
 to a target revision. This can be useful when you want to import data into Dolt from an external source, 
 compare differences, and generate the SQL statements needed to patch the original source. This command is
-equivalent of [`dolt diff -r sql` CLI command](../../cli.md#dolt-diff).
+equivalent of [`dolt diff -r sql` CLI command](../../cli/cli.md#dolt-diff).
 Both schema and/or data diff statements are returned if applicable. Some data diff cannot be
 produced from incompatible schema changes; these are shown as warnings containing
 which table this occurred on.

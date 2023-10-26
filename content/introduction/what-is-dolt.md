@@ -20,7 +20,7 @@ Dolt is a [version controlled SQL database](https://www.dolthub.com/blog/2021-09
 
 ## Git for Data
 
-Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). [Dolt matches the Git CLI exactly](../reference/cli.md). When you would have run `git add`, you run `dolt add`. When you would have run `git commit`, you run `dolt commit`.
+Dolt is [Git for data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). [Dolt matches the Git CLI exactly](../reference/cli/cli.md). When you would have run `git add`, you run `dolt add`. When you would have run `git commit`, you run `dolt commit`.
 
 ## Versioned MySQL Replica
 

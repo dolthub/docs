@@ -6,7 +6,7 @@ title: DoltHub Workspaces
 
 Workspaces are a concept we invented for editing data on DoltHub. There is not a GitHub
 equivalent. Essentially workspaces are a special type of ref, similar to
-[branches](../../concepts/dolt/git/branch.md) or [tags](../../reference/cli.md#dolt-tag).
+[branches](../../concepts/dolt/git/branch.md) or [tags](../../reference/cli/cli.md#dolt-tag).
 They are meant to simulate a "staging area" on DoltHub, similar to [working
 sets](../../concepts/dolt/git/working-set.md) in Dolt.
 

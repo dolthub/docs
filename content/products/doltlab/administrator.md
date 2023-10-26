@@ -433,7 +433,7 @@ If you need to connect to a DoltLab team member, the best way to do so is on [Di
 
 <h1 id="auth-dolt-client">Authenticate a Dolt Client to use a DoltLab Account</h1>
 
-As of Dolt `v0.39.0`, the [dolt login](../../reference/cli.md#dolt-login) command can be used to authenticate against DoltLab instances.
+As of Dolt `v0.39.0`, the [dolt login](../../reference/cli/cli.md#dolt-login) command can be used to authenticate against DoltLab instances.
 
 To authenticate a client against DoltLab with this command, use the `--auth-endpoint`, `--login-url`, and `--insecure` arguments to point your Dolt client at the DoltLab instance you want to authenticate against.
 
@@ -463,7 +463,7 @@ requesting update
 Key successfully associated with user: <user> email <email>
 ```
 
-For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli.md#dolt-creds-new) command, which will output a new public key:
+For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli/cli.md#dolt-creds-new) command, which will output a new public key:
 
 ```bash
 dolt creds new
@@ -471,7 +471,7 @@ Credentials created successfully.
 pub key: fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
 ```
 
-Copy the generated public key and run the [dolt creds use](../../reference/cli.md#dolt-creds-use) command:
+Copy the generated public key and run the [dolt creds use](../../reference/cli/cli.md#dolt-creds-use) command:
 
 ```bash
 dolt creds use fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg

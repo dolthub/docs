@@ -18,7 +18,7 @@ title: Miscellaneous
 
 ## Client Compatibility
 
-Some MySQL features are client features, not server features. Dolt ships with a client (ie. [`dolt sql`](../../cli.md#dolt-sql) or [`dolt sql-client`](../../cli.md#dolt-sql-client)) and a server ([`dolt sql-server`](../../cli.md#dolt-sql-server)). The Dolt client is not as sophisticated as the `mysql` client. To access these features you can use the `mysql` client that ships with MySQL.
+Some MySQL features are client features, not server features. Dolt ships with a client (ie. [`dolt sql`](../../cli/cli.md#dolt-sql) or [`dolt sql-client`](../../cli/cli.md#dolt-sql-client)) and a server ([`dolt sql-server`](../../cli/cli.md#dolt-sql-server)). The Dolt client is not as sophisticated as the `mysql` client. To access these features you can use the `mysql` client that ships with MySQL.
 
 | Feature                         | Supported | Notes and limitations                                                                                    |
 |:--------------------------------|:----------|:---------------------------------------------------------------------------------------------------------|
