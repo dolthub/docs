@@ -17,7 +17,7 @@ chunks, garbage is created.
 
 # How to run garbage collection
 
-Garbage collection can be run offline using [`dolt gc`](../../cli.md#dolt-gc) or online using [`call dolt_gc()`](../version-control/dolt-sql-procedures.md#dolt_gc).
+Garbage collection can be run offline using [`dolt gc`](../../cli/cli.md#dolt-gc) or online using [`call dolt_gc()`](../version-control/dolt-sql-procedures.md#dolt_gc).
 
 ## Offline
 

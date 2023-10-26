@@ -4,7 +4,7 @@
 
 # What is DoltHub
 
-DoltHub is GitHub for Dolt. DoltHub acts as a [Dolt remote](../../concepts/dolt/git/remotes.md) you can [clone, push, pull and fetch](../../reference/cli.md) from. DoltHub adds [permissions](../../concepts/dolthub/permissions.md), [pull requests](../../concepts/dolthub/prs.md), [issues](../../concepts/dolthub/issues.md), and [forks](../../concepts/dolthub/forks.md) to the Dolt ecosystem. Additionally, DoltHub has a modern SQL workbench built in so you can explore and change databases on the web.
+DoltHub is GitHub for Dolt. DoltHub acts as a [Dolt remote](../../concepts/dolt/git/remotes.md) you can [clone, push, pull and fetch](../../reference/cli/cli.md) from. DoltHub adds [permissions](../../concepts/dolthub/permissions.md), [pull requests](../../concepts/dolthub/prs.md), [issues](../../concepts/dolthub/issues.md), and [forks](../../concepts/dolthub/forks.md) to the Dolt ecosystem. Additionally, DoltHub has a modern SQL workbench built in so you can explore and change databases on the web.
 
 # Getting Started
 

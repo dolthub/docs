@@ -5,7 +5,7 @@ title: "Hosted Dolt: Cloning a Hosted Database"
 # How it works
 
 In some cases you might want to clone your database from Hosted so that you can access
-Dolt's [command line interface](../../reference/cli.md). While much of the command line is
+Dolt's [command line interface](../../reference/cli/cli.md). While much of the command line is
 [available in SQL](../../reference/sql/version-control/README.md) there are some
 CLI-specific features that can be helpful for debugging your database offline.
 
@@ -28,14 +28,14 @@ instructions in the Connectivity tab of your deployment page.
 When you're using Hosted as your production database, there might be some
 performance-heavy operations or tests you want to run in isolation so you don't impact
 production, such as beta testing a considerable schema migration or running a big
-analytics query. [Clone](../../reference/cli.md#dolt-clone) makes it easy to get a local
+analytics query. [Clone](../../reference/cli/cli.md#dolt-clone) makes it easy to get a local
 copy of your Hosted database with one command. Do whatever potentially destructive or
 performance-degrading operations on your laptop while respecting your production database.
 
 ## 1. Expose remotesapi endpoint
 
 In order to enable cloning from your Hosted database, first expose the [remotesapi
-endpoint](../../reference/cli.md#dolt-sql-server). This will set the port for a server
+endpoint](../../reference/cli/cli.md#dolt-sql-server). This will set the port for a server
 which can expose the databases in the sql-server over remotesapi.
 
 **Note that this will only work for deployments that use a Web PKI certificate.**

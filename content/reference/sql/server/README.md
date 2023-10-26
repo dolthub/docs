@@ -22,7 +22,7 @@ The host, user, password, timeout, logging info and other options can
 be set on the command line or via a config file.
 
 View the `dolt sql-server` command documentation
-[here](../../cli.md#dolt-sql-server).
+[here](../../cli/cli.md#dolt-sql-server).
 
 # dolt sql
 
@@ -64,4 +64,4 @@ statements at once. This is useful for [importing a dump from another database](
 % dolt sql < mysqldump.sql
 ```
 
-View the `dolt sql` command documentation [here](../../cli.md#dolt-sql).
+View the `dolt sql` command documentation [here](../../cli/cli.md#dolt-sql).
