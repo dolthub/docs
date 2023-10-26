@@ -123,7 +123,7 @@
 ## CLI Reference
 
 - [CLI Command Reference](reference/cli/cli.md)
-- [Supported CLI Commands](reference/cli/cli-commands.md)
+- [Supported CLI Commands](reference/cli/supported-commands.md)
 
 ## Architecture
 
