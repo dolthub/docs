@@ -27,7 +27,7 @@ To make a contribution create a feature branch, either in a fork or in this repo
 
 To add a new page to the docs, make sure you update [SUMMARY.md](https://github.com/dolthub/docs/blob/gitbook-publish/content/SUMMARY.md)
 
-To update Dolt CLI reference docs, make updates to the Dolt command code in the `dolt` repo, then run `dolt dump-docs` to regenerate the CLI markdown file and copy it to `content/reference/cli.md`.
+To update Dolt CLI reference docs, make updates to the Dolt command code in the `dolt` repo, then run `dolt dump-docs` to regenerate the CLI markdown file and copy it to `content/reference/cli/cli.md`.
 
 To recap:
 
