@@ -122,8 +122,8 @@
 
 ## CLI Reference
 
-- [CLI Command Reference](reference/cli/cli.md)
-- [Supported CLI Commands](reference/cli/supported-commands.md)
+- [Commands](reference/cli/cli.md)
+- [Git Comparison](reference/cli/git-comparison.md)
 
 ## Architecture
 

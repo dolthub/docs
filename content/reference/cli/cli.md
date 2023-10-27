@@ -2,7 +2,7 @@
 title: CLI
 ---
 
-# CLI
+# CLI Commands
 
 ```
 $ dolt
