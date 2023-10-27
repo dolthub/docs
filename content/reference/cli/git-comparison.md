@@ -1,16 +1,17 @@
 ---
-title: "Cli Commands"
+title: "Git Comparison"
 ---
 
 We aim to match our CLI command behavior as closely to their Git equivalent as possible. This page lists the commands that are currently supported, and any known limitations.
 
-# Cli Commands
+# Git Comparison
 
 ## Setup and Config
 
-| Component | Supported  | Notes and limitations |
-|:----------|:-----------|:----------------------|
-| `config`  | ✅          |                       |
+| Component | Supported | Notes and limitations |
+|:----------|:----------|:----------------------|
+| `config`  | ✅         |                       |
+| `help`    | 🟠        |                       |
 
 ## Getting and Creating Databases
 
@@ -29,7 +30,8 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 | `notes`   | ❌         |                       |
 | `restore` | ❌         |                       |
 | `reset`   | ✅         |                       |
-| `rm`      | ✅         |                       |
+| `rm`      | ❌         |                       |
+| `mv`      | ❌         |                       |
 
 ## Branching and Merging
 
@@ -42,6 +44,7 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 | `stash`    | ✅         |                       |
 | `tag`      | ✅         |                       |
 | `worktree` | ❌         |                       |
+| `switch`   | ❌         |                       |
 
 ## Sharing and Updating Databases
 
