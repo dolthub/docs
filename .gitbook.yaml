@@ -30,6 +30,8 @@ redirects:
   reference/sql/benchmarks/correctness: reference/sql/benchmarks/correctness.md
   reference/sql/benchmarks/latency: reference/sql/benchmarks/latency.md
   reference/sql/benchmarks/import: reference/sql/benchmarks/import.md
+  reference/cli/cli: reference/cli/cli.md
+  reference/cli/git-comparison: reference/cli/git-comparison.md
   concepts/dolthub/api: products/dolthub/dolthub-api/README.md
   concepts/dolthub/hooks: products/dolthub/dolthub-api/hooks.md
   guides/dolthub-api/: products/dolthub/dolthub-api/README.md
