@@ -19,6 +19,7 @@ title: Dolt SQL Functions
   - [dolt_diff_summary()](#doltdiffsummary)
   - [dolt_log()](#doltlog)
   - [dolt_patch()](#doltpatch)
+  - [dolt_reflog()](#dolt_reflog)
   - [dolt_schema_diff](#doltschemadiff)
   - [dolt_query_diff](#doltquerydiff)
 
@@ -805,6 +806,68 @@ With result of single row:
 | 1               | WORKING          | gg4kasjl6tgrtoag8tnn1der09sit4co | items      | schema    | DROP TABLE `items`; |
 +-----------------+------------------+----------------------------------+------------+-----------+---------------------+
 ```
+
+## `DOLT_REFLOG()`
+
+The `DOLT_REFLOG()` table function shows the history of named refs (e.g. branches and tags), which is useful when you want to understand how a branch or tag has changed over time to reference different commits, particularly for information that isn't surfaced through the `dolt_log` system table or `dolt_log()` table function. For example, if you use `dolt_reset()` to change the commit a branch points to, you can use `dolt_reflog()` to see what commit the branch was pointing to before it was moved to that commit. Another common use case for `dolt_reflog()` is to recreate a branch or tag that was accidentally deleted. The example section below shows how to recreate a deleted branch.  
+
+The data from Dolt's reflog comes from [Dolt's journaling chunk store](https://www.dolthub.com/blog/2023-03-08-dolt-chunk-journal/). This data is local to a Dolt database and never included when pushing, pulling, or cloning a Dolt database. This means when you clone a Dolt database, it will not have any reflog data until you perform operations that change what commit branches or tags reference.   
+
+Dolt's reflog is similar to [Git's reflog](https://git-scm.com/docs/git-reflog), but there are a few differences:
+- The Dolt reflog currently only supports named references, such as branches and tags, and not any of Git's special refs (e.g. `HEAD`, `FETCH-HEAD`, `MERGE-HEAD`).
+- The Dolt reflog can be queried for the log of references, even after a reference has been deleted. In Git, once a branch or tag is deleted, the reflog for that ref is also deleted and to find the last commit a branch or tag pointed to you have to use Git's special `HEAD` reflog to find the commit, which can sometimes be challenging. Dolt makes this much easier by allowing you to see the history for a deleted ref so you can easily see the last commit a branch or tag pointed to before it was deleted.
+
+### Privileges 
+
+There are no special privileges required to use the `dolt_reflog()` table function.
+
+### Options
+
+```sql
+DOLT_REFLOG(<ref_name>)
+```
+
+The `dolt_reflog()` table function takes one argument: the name of the ref to query. This can be the name of a branch (e.g. "myBranch") or the name of a tag (e.g. "v1.1.4") or it can be the fully qualified ref path (e.g. "refs/heads/myBranch"). The `ref_name` parameter is case-insensitive. 
+
+### Schema
+
+```text
++-----------------------+-----------+
+| field                 | type      |
++-----------------------+-----------+
+| ref                   | TEXT      |
+| ref_timestamp         | TIMESTAMP |
+| commit_hash           | TEXT      |
+| commit_message        | TEXT      |
++-----------------------+-----------+
+```
+
+### Example
+
+The example below shows how to recreate a branch that was deleted by finding the last commit it referenced in Dolt's reflog. 
+
+```sql
+-- Someone accidentally deletes the wrong branch!
+call dolt_branch('-D', 'prodBranch');
+
+-- After we realize the wrong branch has been deleted, we query the Dolt reflog on the same Dolt database instance
+-- where the branch was deleted to see what commits the prodBranch branch has referenced. Using the same Dolt 
+-- instance is important, since reflog information is always local and not included when pushing/pulling databases.
+select * from dolt_reflog('prodBranch');
++-----------------------+---------------------+----------------------------------+-------------------------------+
+| ref                   | ref_timestamp       | commit_hash                      | commit_message                |
++-----------------------+---------------------+----------------------------------+-------------------------------+
+| refs/heads/prodBranch | 2023-10-25 20:54:37 | v531ptpmv2tquig8v591tsjghtj84ksg | inserting row 42              |
+| refs/heads/prodBranch | 2023-10-25 20:53:12 | rvt34lqrbtdr3dhnjchruu73lik4e398 | inserting row 100000          |
+| refs/heads/prodBranch | 2023-10-25 20:53:06 | v531ptpmv2tquig8v591tsjghtj84ksg | inserting row 42              |
+| refs/heads/prodBranch | 2023-10-25 20:52:43 | ihuj1l7fmqq37sjhtlrgpup5n76gfhju | inserting row 1 into table xy |
++-----------------------+---------------------+----------------------------------+-------------------------------+
+
+-- The last commit prodBranch pointed to was v531ptpmv2tquig8v591tsjghtj84ksg, so to restore our branch, we
+-- just need to create a branch with the same name, pointing to that last commit.
+call dolt_branch('prodBranch', 'v531ptpmv2tquig8v591tsjghtj84ksg');
+```
+
 
 ## `DOLT_SCHEMA_DIFF()`
 
