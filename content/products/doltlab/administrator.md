@@ -298,7 +298,7 @@ In addition, some early versions have different database schemas than newer ones
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
 
-<h2 id="upgrade-v1.1.1-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
+<h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
 
 The upgrade process for DoltLab `v1.1.1` to `v2.0.0` has not changed, and only requires replacing DoltLab `v1.1.1` with DoltLab `v2.0.0`, the way previous upgrades did.
 
@@ -789,7 +789,11 @@ Save the file, and restart your DoltLab instance using the `start-doltlab.sh` sc
 
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
-Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
+Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. 
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
+
+Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
 
 - `email/collabInvite.txt` sent to invite user to be a database collaborator.
 - `email/invite.txt` sent to invite a user to join an organization.
@@ -910,12 +914,14 @@ Once we save our edits, we can restart our DoltLab instance for the changes to t
 
 <h1 id="customize-colors">Customize DoltLab colors</h1>
 
-Starting with DoltLab `v0.8.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
+Starting with DoltLab `v0.8.1`, and ending with `v1.1.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 You can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
-# admin-config.yaml
+# admin-config.yaml DoltLab >= v0.8.1, <= v1.1.1
 theme:
   custom:
     rgb_accent_1: "252, 66, 201"
@@ -926,6 +932,21 @@ theme:
     rgb_link_1: "31, 109, 198"
     rgb_link_2: "61, 145, 240"
     rgb_link_light: "109, 176, 252"
+```
+
+```yaml
+# admin-config.yaml DoltLab >= v2.0.0
+enterprise:
+  theme:
+    custom:
+      rgb_accent_1: "252, 66, 201"
+      rgb_background_accent_1: "24, 33, 52"
+      rgb_background_gradient_start: "31, 41, 66"
+      rgb_button_1: "61, 145, 240"
+      rgb_button_2: "31, 109, 198"
+      rgb_link_1: "31, 109, 198"
+      rgb_link_2: "61, 145, 240"
+      rgb_link_light: "109, 176, 252"
 ```
 
 Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
@@ -950,15 +971,23 @@ In the event you are configuring your domain name with an Elastic Load Balancer,
 
 <h1 id="add-super-admins">Add Super Admins to a DoltLab instance</h1>
 
-Starting with DoltLab `v1.0.1`, DoltLab allows administrators to specify users who will be "super admins" on their DoltLab instance.
+Starting with DoltLab `v1.0.1`, and ending with `v1.1.1`, DoltLab allows administrators to specify users who will be "super admins" on their DoltLab instance.
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 A DoltLab "super admin" is a user who can has unrestricted access and the highest possibly permission level on all organizations, teams, and databases on a DoltLab instance. This allows these users to write to any database, public or private, merge pull-requests, delete databases and add or remove organization/team members. By default there are no "super admins" registered on a DoltLab instance, including the default user `admin`.
 
 You can define super admins for a DoltLab instance by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
-# admin-config.yaml
+# admin-config.yaml DoltLab >= v1.0.1, <= v1.1.1
 super_admins: ["user1@example.com", "user2@example.com"]
+```
+
+```yaml
+# admin-config.yaml DoltLab >= v2.0.0
+enterprise:
+  super_admins: ["user1@example.com", "user2@example.com"]
 ```
 
 Add the field `super_admins` to the `admin-config.yaml` file and provide a list of email addresses associated with the DoltLab users who will be super admins. These addresses must be verified by the DoltLab users associated with them for their super admin privileges to take effect.
