@@ -6,21 +6,21 @@ title: Dolt SQL Functions
 
 - [Informational Functions](#informational-functions)
 
-  - [active_branch()](#activebranch)
-  - [dolt_merge_base()](#doltmergebase)
+  - [active_branch()](#active_branch)
+  - [dolt_merge_base()](#dolt_merge_base)
   - [hashof()](#hashof)
-  - [dolt_version()](#doltversion)
-  - [has_ancestor()](#hasancestor)
+  - [dolt_version()](#dolt_version)
+  - [has_ancestor()](#has_ancestor)
 
 - [Table Functions](#table-functions)
 
-  - [dolt_diff()](#doltdiff)
-  - [dolt_diff_stat()](#doltdiffstat)
-  - [dolt_diff_summary()](#doltdiffsummary)
-  - [dolt_log()](#doltlog)
-  - [dolt_patch()](#doltpatch)
-  - [dolt_schema_diff](#doltschemadiff)
-  - [dolt_query_diff](#doltquerydiff)
+  - [dolt_diff()](#dolt_diff)
+  - [dolt_diff_stat()](#dolt_diff_stat)
+  - [dolt_diff_summary()](#dolt_diff_summary)
+  - [dolt_log()](#dolt_log)
+  - [dolt_patch()](#dolt_patch)
+  - [dolt_schema_diff](#dolt_schema_diff)
+  - [dolt_query_diff](#dolt_query_diff)
 
 # Informational Functions
 

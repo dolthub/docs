@@ -6,43 +6,43 @@ title: Dolt System Tables
 
 - [Database Metadata](#database-metadata-system-tables)
 
-  - [dolt_branches](#doltbranches)
-  - [dolt_remote_branches](#doltremotebranches)
-  - [dolt_docs](#doltdocs)
-  - [dolt_procedures](#doltprocedures)
-  - [dolt_query_catalog](#doltquerycatalog)
-  - [dolt_remotes](#doltremotes)
-  - [dolt_schemas](#doltschemas)
-  - [dolt_tags](#dolttags)
+  - [dolt_branches](#dolt_branches)
+  - [dolt_remote_branches](#dolt_remote_branches)
+  - [dolt_docs](#dolt_docs)
+  - [dolt_procedures](#dolt_procedures)
+  - [dolt_query_catalog](#dolt_query_catalog)
+  - [dolt_remotes](#dolt_remotes)
+  - [dolt_schemas](#dolt_schemas)
+  - [dolt_tags](#dolt_tags)
 
 - [Database History](#database-history-system-tables)
 
-  - [dolt_blame\_$tablename](#doltblametablename)
-  - [dolt_commit_ancestors](#doltcommitancestors)
-  - [dolt_commit_diff\_$tablename](#doltcommitdifftablename)
-  - [dolt_commits](#doltcommits)
-  - [dolt_diff](#doltdiff)
-  - [dolt_column_diff](#doltcolumndiff)
-  - [dolt_diff\_$tablename](#doltdifftablename)
-  - [dolt_history\_$tablename](#dolthistorytablename)
-  - [dolt_log](#doltlog)
+  - [dolt_blame\_$tablename](#dolt_blame_usdtablename)
+  - [dolt_commit_ancestors](#dolt_commit_ancestors)
+  - [dolt_commit_diff\_$tablename](#dolt_commit_diff_usdtablename)
+  - [dolt_commits](#dolt_commits)
+  - [dolt_diff](#dolt_diff)
+  - [dolt_column_diff](#dolt_column_diff)
+  - [dolt_diff\_$tablename](#dolt_diff_usdtablename)
+  - [dolt_history\_$tablename](#dolt_history_usdtablename)
+  - [dolt_log](#dolt_log)
 
 - [Working Set Metadata](#working-set-metadata-system-tables)
 
-  - [dolt_conflicts](#doltconflicts)
-  - [dolt_conflicts\_$tablename](#doltconflictstablename)
-  - [dolt_schema_conflicts](#doltschemaconflicts)
-  - [dolt_merge_status](#doltmergestatus)
-  - [dolt_status](#doltstatus)
+  - [dolt_conflicts](#dolt_conflicts)
+  - [dolt_conflicts\_$tablename](#dolt_conflicts_usdtablename)
+  - [dolt_schema_conflicts](#dolt_schema_conflicts)
+  - [dolt_merge_status](#dolt_merge_status)
+  - [dolt_status](#dolt_status)
 
 - [Constraint Validation](#constraint-violation-system-tables)
 
-  - [dolt_constraint_violations](#doltconstraintviolations)
-  - [dolt_constraint_violations\_$tablename](#doltconstraintviolationstablename)
+  - [dolt_constraint_violations](#dolt_constraint_violations)
+  - [dolt_constraint_violations\_$tablename](#dolt_constraint_violations_usdtablename)
 
 - [Configuration Tables](#configuration-tables)
 
-  - [dolt_ignore](#doltignore)
+  - [dolt_ignore](#dolt_ignore)
 
 # Database Metadata System Tables
 
