@@ -29,6 +29,7 @@ the following information can help DoltLab Admins manually perform some common a
 22. [Serve DoltLab over HTTPS with a TLS reverse proxy](#doltlab-https-proxy)
 23. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 24. [Improve DoltLab Performance](#doltlab-performance)
+25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1373,3 +1374,65 @@ To prevent resource exhaustion, the following can be added in DoltLab >= `v1.1.0
 `-jobConcurrencyLoopSeconds` is the number of seconds Job Scheduler will wait before looking for more Jobs to schedule. Default is `10` seconds.
 
 `jobMaxRetries` is the number of times the Job Scheduler will retry scheduling a Job before permanently giving up, requiring the Job to be recreated.
+
+<h1 id="doltlab-single-sign-on">Configure SAML Single-Sign-On</h1>
+
+DoltLab Enterprise => `v2.0.0` supports SAML single-sign-on. To configure your DoltLab instance to use single-sign-on, you will first need an Identity Provider (IP) to provide you with a metadata descriptor.
+
+For example, [Okta](https://www.okta.com/), a popular IP, provides an endpoint for downloading the metadata descriptor for a SAML application after you register an application on their platform.
+
+![Okta saml app creation](../../.gitbook/assets/doltlab_okta_app.png)
+
+During registration, Okta will ask you for the "Single Sign On Url" and an "Audience Restriction" for the application.
+
+Use the domain/host IP address of your DoltLab instance followed by `/sso/callback` for the "Single Sign On Url", and use that same domain/host IP address followed by just "/sso" for the "Audience Restriction". Since this example will be for `https://doltlab.dolthub.com`, we'll use `https://doltlab.dolthub.com/sso/callback` and `https://doltlab.dolthub.com/sso` respectively.
+
+![Okta saml settings](../../.gitbook/assets/doltlab_okta_settings.png)
+
+Be sure to also set "Name ID Format" to "Persistent".
+
+Then, download the metadata Okta provides for this application to your DoltLab host.
+
+Next, run the `./gen_saml_certs.sh` script included with DoltLab `v2.0.0` to generate a SAML signing key and certificate. This script will create two files, `./saml_key.pem` and `./saml_cert.pem` DoltLab will use for signing SAML requests.
+
+Finally, edit the `./docker-compose.yaml` file for DoltLab so that the following arguments are added to the `doltlabapi.command` block and `doltlabapi.volumes` block:
+
+```yaml
+  doltlabapi:
+    command:
+      ...
+      -samlKeyFile "/saml_key.pem"
+      -samlCertFile "/saml_cert.pem"
+      -samlMetadataDescriptor "/saml_metadata"
+      ...
+    volumes:
+      ...
+      - ${PWD}/saml_key.pem:/saml_key.pem
+      - ${PWD}/saml_cert.pem:/saml_cert.pem
+      - ${PWD}/saml_metadata:/saml_metadata # ./saml_metadata is the metadata descriptor downloaded from the IP
+      ...
+```
+
+Save these changes to the `./docker-compose.yaml` file and restart your DoltLab instance for them to take effect.
+
+When SAML single-sign-on is configured for DoltLab, you will see the SAML option on the sign-in page:
+
+![Sign in with saml provider](../../.gitbook/assets/doltlab_saml_signin.png)
+
+Next, as user `admin`, login to your DoltLab instance and navigate to Profile > Settings > SSO.
+
+![DoltLab profile settings](../../.gitbook/assets/doltlab_profile_settings.png)
+
+On this tab you will see the following:
+
+![Global saml sso info](../../.gitbook/assets/doltlab_saml_settings.png)
+
+`Assertion Consumer Service Url` displays the url where Okta should send the SAML assertion.
+
+`Entity ID/Login Url` displays the url users can use to login to DoltLab using the IP, but they can now simply use the option available on the sign-in page.
+
+`IP Metadata Descriptor` is a metadata descriptor for this DoltLab instance, and can be downloaded and supplied to the IP if it requires service providers to upload metadata.
+
+`Certificate` can be downloaded if you want to add a signature certificate to the IP to verify the digital signatures.
+
+Your DoltLab instance will now use single-sign-on through your IP for user login and account creation.
