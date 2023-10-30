@@ -2,9 +2,15 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v1.1.1` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v2.0.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
+
+DoltLab versions lower than `v2.0.0` allowed users to use certain enterprise features for free. However, DoltLab >= `v2.0.0` has removed these features for the free version of DoltLab, as they are now exclusive to DoltLab Enterprise customers. 
+
+For more information about which features have been removed for free from DoltLab `v2.0.0`, please see [Administrator Guide](./administrator.md).
+
+If you'd like more information about DoltLab Enterprise, please reach out to us on [Discord](https://discord.gg/s8uVgc3), or email Brain Fitzgerald at brianf@dolthub.com.
 
 > Starting with DoltLab `v0.6.0`, Dolt's new storage format (__DOLT__) is the default format for new databases.
 
@@ -38,7 +44,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v1.1.1
+export DOLTLAB_VERSION=v2.0.0
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -46,7 +52,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v1.1.1
+export DOLTLAB_VERSION=v2.0.0
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -80,7 +86,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v1.1.1
+export DOLTLAB_VERSION=v2.0.0
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
@@ -91,9 +97,14 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * templates
 * envoy.tmpl
 * envoy-tls.tmpl
+* config_loader
 * gentokenenckey
 * send_doltlab_deployed_event
 * smtp_connection_helper
+* get_machine_id
+* gen_saml_key
+* gen_saml_cert
+* gent_saml_certs.sh
 * migrate_postgres_dolt.sh
 * dolt_db_cli.sh
 * shell-db.sh
@@ -110,9 +121,19 @@ editing these files before starting your DoltLab instance. For more information 
 
 `gentokenenckey`, short for "generate token encryption key" is a binary used to generate token encryption keys used by DoltLab. The code is available [here](https://gist.github.com/coffeegoddd/9b1acb07baaa72c8173a2e7b11dacb80).
 
+`config_loader` is a binary used to process the `admin-config.yaml` file, if one exists.
+
 `send_doltlab_deployed_event` is a binary that sends a single request to our metrics server, letting us track how many DoltLab instances get deployed each day. This information helps us properly fund and staff our DoltLab team. The source for this binary is [here](https://gist.github.com/coffeegoddd/cc1c7c765af56f6523bc5faffbc19e7a).
 
 `smtp_connection_helper` is a binary used to help troubleshoot any issues your DoltLab instance might have when establishing a connection to your existing SMTP server. This tool uses similar code to DoltLab's email service and should successfully send a test email if the connection to the SMTP server was configured correctly. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](./administrator.md#troubleshoot-smtp-connection).
+
+`get_machine_id` is a binary used to determine the hardware ID of the DoltLab host, used only for DoltLab Enterprise.
+
+`gen_saml_key` is a binary used to generate a private key for configuring SAML single-sign-on, used only for DoltLab Enterprise.
+
+`gen_saml_cert` is a binary used to generate a signing certificate for SAML single-sign-on, used only for DoltLab Enterprise.
+
+`gen_saml_certs.sh` is a script that uses `gen_saml_key` and `gen_saml_cert` to create a signing certificate for SAML single-sign-on, used only for DoltLab Enterprise. The script requires a single argument, the `common name` to use for the certificate.
 
 `migrate_postgres_dolt.sh` is a script available in DoltLab `v1.0.0`+. Prior to DoltLab `v1.0.0`, DoltLab used PostgreSQL as its database. But now, starting with `v1.0.0`, DoltLab uses Dolt as its database. This script is used when upgrading from an older DoltLab instance to DoltLab `v1.0.0` and will copy the data from the existing, older DoltLab instance into the new Dolt database backing DoltLab `v1.0.0`. Please see [the guide](./administrator.md#upgrade-v080-v100) for using this script to copy existing data during upgrade.
 
@@ -143,6 +164,13 @@ export EMAIL_PORT=<STMP Email Port>
 export EMAIL_HOST=<SMTP Email Host>
 export NO_REPLY_EMAIL=<An Email Address to Receive No Reply Messages>
 
+# required for DoltLab Enterprise
+export DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE=<Product Code>
+export DOLTLAB_ENTERPRISE_ONLINE_SHARED_KEY=<Shared Key>
+export DOLTLAB_ENTERPRISE_ONLINE_API_KEY=<API Key>
+export DOLTLAB_ENTERPRISE_ONLINE_LICENSE_KEY=<License Key>
+export DOLTLAB_ENTERPRISE_HARDWARE_ID=<Hardware ID>
+
 # optional, supported in DoltLab >= v1.0.6
 export TLS_CERT_CHAIN=<path to TLS certificate chain>
 export TLS_PRIVATE_KEY=<path to TLS private key>
@@ -157,6 +185,11 @@ export TLS_PRIVATE_KEY=<path to TLS private key>
 `EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
 `EMAIL_HOST` should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that receives no-reply messages.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE`, provided by us to DoltLab Enterprise customers.
+`DOLTLAB_ENTERPRISE_ONLINE_SHARED_KEY`, provided by us to DoltLab Enterprise customers.
+`DOLTLAB_ENTERPRISE_ONLINE_API_KEY`, provided by us to DoltLab Enterprise customers.
+`DOLTLAB_ENTERPRISE_ONLINE_LICENSE_KEY`, provided by us to DoltLab Enterprise customers.
+`DOLTLAB_ENTERPRISE_HARDWARE_ID`, use `./get_machine_id` binary to get the hardware ID and use the output as this value (DoltLab Enterprise only).
 `TLS_CERT_CHAIN` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS certificate chain.<br/>
 `TLS_PRIVATE_KEY` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS private key.<br/>
 
