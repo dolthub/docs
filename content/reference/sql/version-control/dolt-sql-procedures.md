@@ -1445,15 +1445,15 @@ SELECT * from dolt_constraint_violations_child;
 ```
 
 # Access Control
-Dolt stored procedures are access controlled using the GRANT permissions system. Dolt deviates slightly from the common permissions model due to the fact that some dolt procedures need to be more tightly controlled for safety of the server.
+Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
 
-User's who need common Dolt capability such as adding and committing to a branch will need Execute permission granted on the database in question. As a privileged user, you can grant access with the following command:
+Users who need common Dolt capability such as adding and committing to a branch will need Execute permission granted on the database in question. As a privileged user, you can grant access with the following command:
 
 ```sql
 mydb> GRANT EXECUTE ON mydb.* TO pat@localhost
 ```
 
-This will give the user, Pat, the ability run all stored procedures on the database. This includes Dolt procedures as well as user defined procedures. If you need to use fine grained permissions, you can grant them individually:
+This will give the user, `pat`, the ability run all stored procedures on the database. This includes Dolt procedures as well as user defined procedures. If you need to use fine grained permissions, you can grant them individually:
 
 ```sql
 mydb> GRANT EXECUTE ON PROCEDURE mydb.dolt_commit TO pat@localhost
