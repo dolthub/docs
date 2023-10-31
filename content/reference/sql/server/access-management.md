@@ -42,8 +42,7 @@ This behavior was chosen so that server should always have at least one user tha
 
 ## Editing Users
 
-Dolt comes with a MySQL client built-in, which is the [`sql-client`](../../cli/cli.md#dolt-sql-client) command.
-In addition to allowing access to a running server, the client command also has the `--dual` flag which runs a server in the background, while the foreground automatically connects to the background server using the given port, etc.
+Dolt comes with a client built-in, which is the [`sql`](../../cli/cli.md#dolt-sql) command.
 
 Importantly, as described in the [previous section](#user-and-password-arguments), if a non-empty privilege file is provided, then the `--user` and `--password` arguments (also available via a [YAML configuration file](./configuration.md)) _only_ function as login credentials.
 Otherwise, the arguments handle both the creation of a super account **and** login credentials.

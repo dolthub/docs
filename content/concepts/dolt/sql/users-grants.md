@@ -26,25 +26,25 @@ Grants can only apply to traditional SQL access to Dolt tables as of now. Our ro
 
 ### Create a user and grant permissions
 ```
-$ dolt sql-client --user="root"
-# Welcome to the Dolt MySQL client.
+$ dolt sql
+# Welcome to the DoltSQL shell.
 # Statements must be terminated with ';'.
 # "exit" or "quit" (or Ctrl-D) to exit.
-mysql> CREATE USER testuser@localhost IDENTIFIED BY 'password123';
-mysql> GRANT SELECT ON db_name.example TO testuser@localhost;
-mysql> CREATE ROLE testrole;
-mysql> GRANT SELECT, INSERT, UPDATE, DELETE on *.* TO testrole;
-mysql> exit;
+dolt> CREATE USER testuser@localhost IDENTIFIED BY 'password123';
+dolt> GRANT SELECT ON db_name.example TO testuser@localhost;
+dolt> CREATE ROLE testrole;
+dolt> GRANT SELECT, INSERT, UPDATE, DELETE on *.* TO testrole;
+dolt> exit;
 ```
 
 ### Access data as a user
 ```
-$ dolt sql-client --user="testuser" --password="password123"
-# Welcome to the Dolt MySQL client.
+$ dolt --user="testuser" --password="password123" sql
+# Welcome to the DoltSQL shell.
 # Statements must be terminated with ';'.
 # "exit" or "quit" (or Ctrl-D) to exit.
-mysql> USE db_name;
-mysql> SELECT * FROM example;
+dolt> USE db_name;
+db_name> SELECT * FROM example;
 +----+
 | pk |
 +----+
@@ -52,10 +52,10 @@ mysql> SELECT * FROM example;
 | 2  |
 | 3  |
 +----+
-mysql> SELECT * FROM example2;
+db_name> SELECT * FROM example2;
 Error 1105: Access denied for user 'testuser'@'localhost' to table 'example2'
-mysql> SELECT * FROM table_does_not_exist;
+db_name> SELECT * FROM table_does_not_exist;
 Error 1105: Access denied for user 'testuser'@'localhost' to table 'table_does_not_exist'
-mysql> INSERT INTO example VALUES (4);
+db_name> INSERT INTO example VALUES (4);
 Error 1105: command denied to user 'testuser'@'localhost'
 ```
