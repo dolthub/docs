@@ -19,15 +19,12 @@ not taken in the standard command line lexicon. So,
 
 ## Dolt is MySQL-compatible. I use Postgres?
 
-Dolt is MySQL-compatible. Dolt is a replacement for MySQL or Postgres.
-[Dolt does not contain any MySQL code](../architecture/architecture.md)
-but you connect to it with a MySQL client. It is usually not difficult
-to convert Postgres SQL to MySQL SQL.
+We released a Postgres version of Dolt called [DoltgreSQL](https://github.com/dolthub/doltgresql). 
 
-All that said, many people have asked for a Postgres-flavored version
-of Dolt. We published [two blogs responding to this request](https://dolthub-preview-1.awsdev.ld-corp.com/blog/?q=have%20postgres%20want%20dolt). [This is the latest](https://www.dolthub.com/blog/2023-07-14-postgres-dolt-2023/). We have tools available to help Postgres users migrate to Dolt.
-
-We investigated plugging [Dolt's storage layer](../architecture/storage-engine.md) into Postgres using the [foreign data wrapper interface](https://www.dolthub.com/blog/2022-01-26-creating-a-postgres-foreign-data-wrapper/) to make a true [DoltgreSQL](https://www.doltgresql.com). Building this would take a year or so. We need the MySQL-flavored version of Dolt to get enough adoption to fund the DoltgreSQL project.
+However, Dolt is a production-grade version controlled database today. 
+[Dolt is 1.0](https://www.dolthub.com/blog/2023-05-05-dolt-1-dot-0/). 
+If you are ok with using a MySQL-client, we recommend using Dolt for 
+all use cases. Doltgres is experimental.
 
 ## What does `@@autocommit` do?
 
