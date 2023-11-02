@@ -2,7 +2,7 @@
 title: CLI
 ---
 
-# CLI
+# CLI Commands
 
 ```
 $ dolt
@@ -17,7 +17,6 @@ Valid commands for dolt are
               commit - Record changes to the repository.
                  sql - Run a SQL query against tables in repository.
           sql-server - Start a MySQL-compatible server.
-          sql-client - Starts a built-in MySQL client.
                  log - Show commit logs.
                 show - Show information about a specific commit.
               branch - Create, list, edit, delete branches.
@@ -1893,108 +1892,6 @@ Continue running queries on an error. Used for batch mode only.
 
 `-f`, `--file`:
 Execute statements from the file given.
-
-
-
-## `dolt sql-client`
-
-Starts a built-in MySQL client.
-
-**Synopsis**
-
-```bash
-dolt sql-client [-d] --config <file>
-dolt sql-client [-d] [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout>] [-l <loglevel>] [--data-dir <directory>] [--query-parallelism <num-go-routines>] [-r]
-dolt sql-client -q <string> [--use-db <db_name>] [--result-format <format>] [-H <host>] [-P <port>] [-u <user>] [-p <password>]
-```
-
-**Description**
-
-Starts a MySQL client that is built into dolt. May connect to any database that supports MySQL connections, including dolt servers.
-
-You may also start a dolt server and automatically connect to it using this client. Both the server and client will be a part of the same process. This is useful for testing behavior of the dolt server without the need for an external client, and is not recommended for general usage.
-
-Similar to `dolt sql-server`, this command may use a YAML configuration file or command line arguments. For more information on the YAML file, refer to the documentation on `dolt sql-server`.
-
-**Arguments and options**
-
-`--config`:
-When provided configuration is taken from the yaml config file and all command line parameters are ignored.
-
-`-H`, `--host`:
-Defines the host address that the server will run on. Defaults to `localhost`.
-
-`-P`, `--port`:
-Defines the port that the server will run on. Defaults to `3306`.
-
-`-u`, `--user`:
-Defines the server user. Defaults to ``. This should be explicit if desired.
-
-`-p`, `--password`:
-Defines the server password. Defaults to ``.
-
-`-t`, `--timeout`:
-Defines the timeout, in seconds, used for connections
-A value of `0` represents an infinite timeout. Defaults to `28800000`.
-
-`-r`, `--readonly`:
-Disable modification of the database.
-
-`-l`, `--loglevel`:
-Defines the level of logging provided
-Options are: `trace`, `debug`, `info`, `warning`, `error`, `fatal`. Defaults to `info`.
-
-`--data-dir`:
-Defines a directory to find databases to serve. Defaults to the current directory.
-
-`--multi-db-dir`:
-Deprecated, use `--data-dir` instead.
-
-`--doltcfg-dir`:
-Defines a directory that contains non-database storage for dolt. Defaults to `$data-dir/.doltcfg`. Will be created automatically as needed.
-
-`--no-auto-commit`:
-Set @@autocommit = off for the server.
-
-`--query-parallelism`:
-Deprecated, no effect in current versions of Dolt
-
-`--max-connections`:
-Set the number of connections handled by the server. Defaults to `100`.
-
-`--persistence-behavior`:
-Indicate whether to `load` or `ignore` persisted global variables. Defaults to `load`.
-
-`--privilege-file`:
-Path to a file to load and store users and grants. Defaults to `$doltcfg-dir/privileges.db`. Will be created as needed.
-
-`--branch-control-file`:
-Path to a file to load and store branch control permissions. Defaults to `$doltcfg-dir/branch_control.db`. Will be created as needed.
-
-`--allow-cleartext-passwords`:
-Allows use of cleartext passwords. Defaults to false.
-
-`--socket`:
-Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
-
-`--remotesapi-port`:
-Sets the port for a server which can expose the databases in this sql-server over remotesapi, so that clients can clone or pull from this server.
-
-`--golden`:
-Provides a connection string to a MySQL instance to be used to validate query results
-
-`-d`, `--dual`:
-Causes this command to spawn a dolt server that is automatically connected to.
-
-`-q`, `--query`:
-Sends the given query to the server and immediately exits.
-
-`--use-db`:
-Selects the given database before executing a query. By default, uses the current folder's name. Must be used with the --query flag.
-
-`--result-format`:
-Returns the results in the given format. Must be used with the --query flag.
-
 
 
 ## `dolt sql-server`

@@ -5,28 +5,28 @@ title: Dolt SQL Procedures
 # Table of Contents
 
 - [Dolt SQL Procedures](#dolt-sql-procedures)
-  - [dolt_add()](#doltadd)
-  - [dolt_backup()](#doltbackup)
-  - [dolt_branch()](#doltbranch)
-  - [dolt_checkout()](#doltcheckout)
-  - [dolt_cherry_pick()](#doltcherrypick)
-  - [dolt_clean()](#doltclean)
-  - [dolt_clone()](#doltclone)
-  - [dolt_commit()](#doltcommit)
-  - [dolt_conflicts_resolve()](#doltconflictsresolve)
-  - [dolt_fetch()](#doltfetch)
-  - [dolt_gc()](#doltgc)
-  - [dolt_merge()](#doltmerge)
-  - [dolt_pull()](#doltpull)
-  - [dolt_purge_dropped_databases()](#doltpurgedroppeddatabases)
-  - [dolt_push()](#doltpush)
-  - [dolt_remote()](#doltremote)
-  - [dolt_reset()](#doltreset)
-  - [dolt_revert()](#doltrevert)
-  - [dolt_tag()](#dolttag)
-  - [dolt_undrop()](#doltundrop)
-  - [dolt_verify_constraints()](#doltverifyconstraints)
-
+  - [dolt_add()](#dolt_add)
+  - [dolt_backup()](#dolt_backup)
+  - [dolt_branch()](#dolt_branch)
+  - [dolt_checkout()](#dolt_checkout)
+  - [dolt_cherry_pick()](#dolt_cherry_pick)
+  - [dolt_clean()](#dolt_clean)
+  - [dolt_clone()](#dolt_clone)
+  - [dolt_commit()](#dolt_commit)
+  - [dolt_conflicts_resolve()](#dolt_conflicts_resolve)
+  - [dolt_fetch()](#dolt_fetch)
+  - [dolt_gc()](#dolt_gc)
+  - [dolt_merge()](#dolt_merge)
+  - [dolt_pull()](#dolt_pull)
+  - [dolt_purge_dropped_databases()](#dolt_purge_dropped_databases)
+  - [dolt_push()](#dolt_push)
+  - [dolt_remote()](#dolt_remote)
+  - [dolt_reset()](#dolt_reset)
+  - [dolt_revert()](#dolt_revert)
+  - [dolt_tag()](#dolt_tag)
+  - [dolt_undrop()](#dolt_undrop)
+  - [dolt_verify_constraints()](#dolt_verify_constraints)
+- [Access Control](#access-control)
 # Dolt SQL Procedures
 
 Dolt provides native stored procedures to allow access to `dolt` CLI
@@ -1443,3 +1443,48 @@ SELECT * from dolt_constraint_violations_child;
 +----------------+----+-----------+
 */
 ```
+
+# Access Control
+Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
+
+Users who need common Dolt capability such as adding and committing to a branch will need Execute permission granted on the database in question. As a privileged user, you can grant access with the following command:
+
+```sql
+mydb> GRANT EXECUTE ON mydb.* TO pat@localhost
+```
+
+This will give the user, `pat`, the ability run all stored procedures on the database. This includes Dolt procedures as well as user defined procedures. If you need to use fine grained permissions, you can grant them individually:
+
+```sql
+mydb> GRANT EXECUTE ON PROCEDURE mydb.dolt_commit TO pat@localhost
+```
+
+If you need to remove access for a particular capability, REVOKE as follows:
+
+```sql
+mydb> REVOKE EXECUTE ON PROCEDURE mydb.dolt_commit FROM pat@localhost
+mydb> REVOKE EXECUTE ON mydb.* FROM pat@localhost
+```
+
+## Administrative Procedures
+The follow procedures are considered administrative, and as a result users are required to have explicit grants to use them.
+
+* dolt_backup
+* dolt_clone
+* dolt_fetch
+* dolt_undrop
+* dolt_purge_dropped_databases
+* dolt_gc
+* dolt_pull
+* dolt_push
+* dolt_remote
+
+For example, if a service account requires the ability to start `dolt_gc`, then it must have specific permissions to do so:
+
+```sql
+database> GRANT EXECUTE ON PROCEDURE mydb.dolt_gc TO service_account@localhost
+```
+
+`dolt_push()`, `dolt_fetch()`, and `dolt_pull()` are considered administrative operations currently because they all use a shared credential to talk to remote servers. User level access to remotes, and the ability to store user level credentials for them is on our [roadmap](https://github.com/dolthub/dolt/issues/6639).
+
+The root user, or any other user with super privileges is allowed to call all procedures.

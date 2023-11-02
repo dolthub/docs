@@ -31,25 +31,9 @@ Your terminal will just hang there. This means the server is running. Any errors
 
 # Connect with any MySQL client
 
-In the new terminal, we will now connect to the running database server using a client. Dolt also ships with a MySQL compatible client. 
+In the new terminal, we will now connect to the running database server using a client.
 
-```bash
-% dolt sql-client -u root
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
-mysql>
-```
-
-In the other terminal where you ran `dolt sql-server`, you'll see the following log line.
-
-```
-2022-06-06T13:14:32-07:00 INFO [conn 1] NewConnection {DisableClientMultiStatements=false}
-```
-
-You are connected!
-
-While we're here let's grab a copy of MySQL so we can connect with that client. Head over to the [MySQL Getting Started](https://dev.mysql.com/doc/mysql-getting-started/en/) documentation and install MySQL on your machine. I used [Homebrew](https://brew.sh/) to install MySQL on my Mac.
+Let's grab a copy of MySQL so we can connect with that client. Head over to the [MySQL Getting Started](https://dev.mysql.com/doc/mysql-getting-started/en/) documentation and install MySQL on your machine. I used [Homebrew](https://brew.sh/) to install MySQL on my Mac.
 
 MySQL comes with a MySQL server called `mysqld` and a MySQL client called `mysql`. You're only interested in the client. After following the instructions from MySQL's documentation, make sure you have a copy of the `mysql` client on your path:
 
@@ -76,14 +60,13 @@ Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
 mysql>
 ```
-
-Again, to ensure the client actually connected, you should see the following in the `dolt sql-server` terminal
+To ensure the client actually connected, you should see the following in the `dolt sql-server` terminal
 
 ```
 2022-06-06T13:26:55-07:00 INFO [conn 2] NewConnection {DisableClientMultiStatements=false}
 ```
 
-As you can see, Dolt supports any MySQL-compatible client. Dolt ships with a client but you can use any MySQL client, like the one that comes with MySQL.
+As you can see, Dolt supports any MySQL-compatible client.
 
 # Create a schema
 
@@ -561,32 +544,22 @@ mysql> select first_name, last_name, team_name from employees
 
 I'm also gone from the Sales Team. Engineering is life.
 
-I have to commit all my changes because the last merge was not a fast-forward merge.
+Now, we have a database with all the schema and data changes merged and ready for use.
 
 ```
-mysql> call dolt_commit('-m', 'Merged all branches');
-+----------------------------------+
-| hash                             |
-+----------------------------------+
-| vn9b0qcematsj2f6ka0hfoflhr5s6p0b |
-+----------------------------------+
-1 row in set (0.01 sec)
-
 mysql> select * from dolt_log;
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
-| commit_hash                      | committer | email           | date                    | message                              |
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
-| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim Sehn  | tim@dolthub.com | 2022-06-07 17:10:02.07  | Merged all branches                  |
-| pg3nfi0j1dpc5pf1rfgckpmlteaufdrt | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:44:37.513 | Added start_date column to employees |
-| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:41:49.847 | Modifications on a branch            |
-| 13qfqa5rojq18j84d1n2htjkm6fletg4 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:39:32.066 | Populated tables with data           |
-| ne182jemgrlm8jnjmoubfqsstlfi1s98 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:35:49.277 | Created initial schema               |
-| vluuhvd0bn59598utedt77ed9q5okbcb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:33:59.531 | Initialize data repository           |
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
+| commit_hash                      | committer | email           | date                    | message                                |
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
+| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim Sehn  | tim@dolthub.com | 2022-06-07 17:10:02.07  | Merge branch 'modifications' into main |
+| pg3nfi0j1dpc5pf1rfgckpmlteaufdrt | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:44:37.513 | Added start_date column to employees   |
+| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:41:49.847 | Modifications on a branch              |
+| 13qfqa5rojq18j84d1n2htjkm6fletg4 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:39:32.066 | Populated tables with data             |
+| ne182jemgrlm8jnjmoubfqsstlfi1s98 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:35:49.277 | Created initial schema                 |
+| vluuhvd0bn59598utedt77ed9q5okbcb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:33:59.531 | Initialize data repository             |
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
 6 rows in set (0.00 sec)
 ```
-
-Now, we have a database with all the schema and data changes merged and ready for use.
 
 # Audit Cell Lineage
 

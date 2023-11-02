@@ -29,6 +29,7 @@ the following information can help DoltLab Admins manually perform some common a
 22. [Serve DoltLab over HTTPS with a TLS reverse proxy](#doltlab-https-proxy)
 23. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 24. [Improve DoltLab Performance](#doltlab-performance)
+25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -297,6 +298,19 @@ Upgrading to newer versions of DoltLab requires downtime. This means that DoltLa
 In addition, some early versions have different database schemas than newer ones. If the docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab Admins can simply remove these Docker volumes and run the `start-doltlab.sh` script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
+
+<h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
+
+The upgrade process for DoltLab `v1.1.1` to `v2.0.0` has not changed, and only requires replacing DoltLab `v1.1.1` with DoltLab `v2.0.0`, the way previous upgrades did.
+
+However, DoltLab `v2.0.0` is the first version of DoltLab that supports Enterprise mode, a configuration exclusive to DoltLab Enterprise customers. Prior to `v2.0.0`, DoltLab was released with enterprise features _included_. However, these exclusive features are now unsupported by DoltLab `v2.0.0` for non-enterprise customers.
+
+If you are currently using the any of the following enterprise features in DoltLab <= `v1.1.1`, you will lose them by upgrading to DoltLab `v2.0.0`:
+
+* [Custom Automated Emails](#customize-automated-emails)
+* [Custom Logo](#use-custom-logo)
+* [Custom Color Themes](#customize-colors)
+* [Super Admins](#add-super-admins)
 
 <h2 id="upgrade-v084-v100"><ins>Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code></ins></h2>
 
@@ -776,7 +790,11 @@ Save the file, and restart your DoltLab instance using the `start-doltlab.sh` sc
 
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
-Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
+Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. 
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
+
+Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
 
 - `email/collabInvite.txt` sent to invite user to be a database collaborator.
 - `email/invite.txt` sent to invite a user to join an organization.
@@ -897,12 +915,14 @@ Once we save our edits, we can restart our DoltLab instance for the changes to t
 
 <h1 id="customize-colors">Customize DoltLab colors</h1>
 
-Starting with DoltLab `v0.8.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
+Starting with DoltLab `v0.8.1`, and ending with `v1.1.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 You can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
-# admin-config.yaml
+# admin-config.yaml DoltLab >= v0.8.1, <= v1.1.1
 theme:
   custom:
     rgb_accent_1: "252, 66, 201"
@@ -913,6 +933,21 @@ theme:
     rgb_link_1: "31, 109, 198"
     rgb_link_2: "61, 145, 240"
     rgb_link_light: "109, 176, 252"
+```
+
+```yaml
+# admin-config.yaml DoltLab >= v2.0.0
+enterprise:
+  theme:
+    custom:
+      rgb_accent_1: "252, 66, 201"
+      rgb_background_accent_1: "24, 33, 52"
+      rgb_background_gradient_start: "31, 41, 66"
+      rgb_button_1: "61, 145, 240"
+      rgb_button_2: "31, 109, 198"
+      rgb_link_1: "31, 109, 198"
+      rgb_link_2: "61, 145, 240"
+      rgb_link_light: "109, 176, 252"
 ```
 
 Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
@@ -937,15 +972,23 @@ In the event you are configuring your domain name with an Elastic Load Balancer,
 
 <h1 id="add-super-admins">Add Super Admins to a DoltLab instance</h1>
 
-Starting with DoltLab `v1.0.1`, DoltLab allows administrators to specify users who will be "super admins" on their DoltLab instance.
+Starting with DoltLab `v1.0.1`, and ending with `v1.1.1`, DoltLab allows administrators to specify users who will be "super admins" on their DoltLab instance.
+
+As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 A DoltLab "super admin" is a user who can has unrestricted access and the highest possibly permission level on all organizations, teams, and databases on a DoltLab instance. This allows these users to write to any database, public or private, merge pull-requests, delete databases and add or remove organization/team members. By default there are no "super admins" registered on a DoltLab instance, including the default user `admin`.
 
 You can define super admins for a DoltLab instance by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
-# admin-config.yaml
+# admin-config.yaml DoltLab >= v1.0.1, <= v1.1.1
 super_admins: ["user1@example.com", "user2@example.com"]
+```
+
+```yaml
+# admin-config.yaml DoltLab >= v2.0.0
+enterprise:
+  super_admins: ["user1@example.com", "user2@example.com"]
 ```
 
 Add the field `super_admins` to the `admin-config.yaml` file and provide a list of email addresses associated with the DoltLab users who will be super admins. These addresses must be verified by the DoltLab users associated with them for their super admin privileges to take effect.
@@ -1331,3 +1374,65 @@ To prevent resource exhaustion, the following can be added in DoltLab >= `v1.1.0
 `-jobConcurrencyLoopSeconds` is the number of seconds Job Scheduler will wait before looking for more Jobs to schedule. Default is `10` seconds.
 
 `jobMaxRetries` is the number of times the Job Scheduler will retry scheduling a Job before permanently giving up, requiring the Job to be recreated.
+
+<h1 id="doltlab-single-sign-on">Configure SAML Single-Sign-On</h1>
+
+DoltLab Enterprise => `v2.0.0` supports SAML single-sign-on. To configure your DoltLab instance to use single-sign-on, you will first need an Identity Provider (IP) to provide you with a metadata descriptor.
+
+For example, [Okta](https://www.okta.com/), a popular IP, provides an endpoint for downloading the metadata descriptor for a SAML application after you register an application on their platform.
+
+![Okta saml app creation](../../.gitbook/assets/doltlab_okta_app.png)
+
+During registration, Okta will ask you for the "Single Sign On Url" and an "Audience Restriction" for the application.
+
+Use the domain/host IP address of your DoltLab instance followed by `/sso/callback` for the "Single Sign On Url", and use that same domain/host IP address followed by just "/sso" for the "Audience Restriction". Since this example will be for `https://doltlab.dolthub.com`, we'll use `https://doltlab.dolthub.com/sso/callback` and `https://doltlab.dolthub.com/sso` respectively.
+
+![Okta saml settings](../../.gitbook/assets/doltlab_okta_settings.png)
+
+Be sure to also set "Name ID Format" to "Persistent".
+
+Then, download the metadata Okta provides for this application to your DoltLab host.
+
+Next, run the `./gen_saml_certs.sh` script included with DoltLab `v2.0.0` to generate a SAML signing key and certificate. This script will create two files, `./saml_key.pem` and `./saml_cert.pem` DoltLab will use for signing SAML requests.
+
+Finally, edit the `./docker-compose.yaml` file for DoltLab so that the following arguments are added to the `doltlabapi.command` block and `doltlabapi.volumes` block:
+
+```yaml
+  doltlabapi:
+    command:
+      ...
+      -samlKeyFile "/saml_key.pem"
+      -samlCertFile "/saml_cert.pem"
+      -samlMetadataDescriptor "/saml_metadata"
+      ...
+    volumes:
+      ...
+      - ${PWD}/saml_key.pem:/saml_key.pem
+      - ${PWD}/saml_cert.pem:/saml_cert.pem
+      - ${PWD}/saml_metadata:/saml_metadata # ./saml_metadata is the metadata descriptor downloaded from the IP
+      ...
+```
+
+Save these changes to the `./docker-compose.yaml` file and restart your DoltLab instance for them to take effect.
+
+When SAML single-sign-on is configured for DoltLab, you will see the SAML option on the sign-in page:
+
+![Sign in with saml provider](../../.gitbook/assets/doltlab_saml_signin.png)
+
+Next, as user `admin`, login to your DoltLab instance and navigate to Profile > Settings > SSO.
+
+![DoltLab profile settings](../../.gitbook/assets/doltlab_profile_settings.png)
+
+On this tab you will see the following:
+
+![Global saml sso info](../../.gitbook/assets/doltlab_saml_settings.png)
+
+`Assertion Consumer Service Url` displays the url where Okta should send the SAML assertion.
+
+`Entity ID/Login Url` displays the url users can use to login to DoltLab using the IP, but they can now simply use the option available on the sign-in page.
+
+`IP Metadata Descriptor` is a metadata descriptor for this DoltLab instance, and can be downloaded and supplied to the IP if it requires service providers to upload metadata.
+
+`Certificate` can be downloaded if you want to add a signature certificate to the IP to verify the digital signatures.
+
+Your DoltLab instance will now use single-sign-on through your IP for user login and account creation.

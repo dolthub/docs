@@ -173,8 +173,7 @@ The following examples are a small snippet that shows branch permissions in acti
 It is assumed that this document has been read in full, as concepts that are explained in previous sections are not explained in-depth.
 The [setup section](#setup) is run before each example, therefore remember to have a dedicated terminal window for [setup](#setup) if you want to try any of these examples yourself.
 All examples other than [setup](#setup) will exclusively use the second terminal window.
-In addition, all examples will use Dolt's built-in client, accessible using `dolt sql-client`.
-It is not required to use that client, as it is just a standard MySQL client.
+All examples will use MySQL's default client, `mysql`.
 Feel free to use your desired MySQL client.
 
 ### Setup
@@ -184,7 +183,6 @@ As we are running these examples locally, we will use two terminal windows.
 The first window will contain the server, which we are starting here.
 It is worth noting that the examples use the default host and port of `localhost:3306`.
 If these are already in use for your system, then you may supply the arguments `--host="<your_host_here>"` and `--port=<your_port_here>` to change them.
-`dolt sql-client` also takes these same arguments.
 
 As explained in the [default state section](#default-state), we automatically add a row to the `dolt_branch_control` table that allows all users to modify all branches by default.
 For these examples, we remove that default row.
@@ -226,20 +224,14 @@ This example shows the `write` permission in action.
 We add the `write` permission to the `testuser` user, which allows that user to modify the contents of our `main` (default) branch, while the `root` user does not have the permission and cannot make any modifications.
 
 ```
-$ dolt sql-client --user=root
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=root
 mysql> USE example;
 mysql> INSERT INTO dolt_branch_control VALUES ('%', 'main', 'testuser', '%', 'write');
 mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `root`@`%` does not have the correct permissions on branch `main`
 mysql> exit;
 
-$ dolt sql-client --user=testuser
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=testuser
 mysql> USE example;
 mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
 mysql> exit;
@@ -257,10 +249,7 @@ The users added are all fake, and are just used to demonstrate the capability.
 We end by showing that this only applies to the exact match expression, as the very similar `_main` branch name is still off-limits.
 
 ```
-$ dolt sql-client --user=testuser
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=testuser
 mysql> USE example;
 mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `testuser`@`localhost` does not have the correct permissions on branch `main`
@@ -270,18 +259,12 @@ mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main', 'new
 Error 1105: `testuser`@`localhost` cannot add the row ["example", "main", "newuser", "%"]
 mysql> exit;
 
-$ dolt sql-client --user=root
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=root
 mysql> USE example;
 mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main%', 'testuser', '%', 'admin');
 mysql> exit;
 
-$ dolt sql-client --user=testuser
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=testuser
 mysql> USE example;
 mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
 mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
@@ -304,10 +287,7 @@ The exception being `mainroot`, which while having `main` as a prefix, it is con
 Consequently, `testuser` cannot use `mainroot` as a prefix, as [the longest match](#longest-match) overrides their `main%` entry.
 
 ```
-$ dolt sql-client --user=root
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=root
 mysql> USE example;
 mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'main%', 'testuser', '%');
 mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'mainroot%', 'root', '%');
@@ -331,10 +311,7 @@ mysql> CALL DOLT_BRANCH('mainroot');
 
 mysql> exit;
 
-$ dolt sql-client --user=testuser
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+$ mysql --user=testuser
 mysql> USE example;
 mysql> CALL DOLT_BRANCH('main1');
 +--------+
@@ -357,10 +334,7 @@ Our pre-existing database is `example`, as Dolt uses the directory's name for it
 Therefore, we create another database named `newdb`, which the user `root` will not have any permissions on.
 
 ```
-dolt sql-client --user=root
-# Welcome to the Dolt MySQL client.
-# Statements must be terminated with ';'.
-# "exit" or "quit" (or Ctrl-D) to exit.
+mysql --user=root
 mysql> USE example;
 mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `root`@`%` does not have the correct permissions on branch `main`
