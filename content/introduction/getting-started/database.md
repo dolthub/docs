@@ -544,32 +544,22 @@ mysql> select first_name, last_name, team_name from employees
 
 I'm also gone from the Sales Team. Engineering is life.
 
-I have to commit all my changes because the last merge was not a fast-forward merge.
+Now, we have a database with all the schema and data changes merged and ready for use.
 
 ```
-mysql> call dolt_commit('-m', 'Merged all branches');
-+----------------------------------+
-| hash                             |
-+----------------------------------+
-| vn9b0qcematsj2f6ka0hfoflhr5s6p0b |
-+----------------------------------+
-1 row in set (0.01 sec)
-
 mysql> select * from dolt_log;
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
-| commit_hash                      | committer | email           | date                    | message                              |
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
-| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim Sehn  | tim@dolthub.com | 2022-06-07 17:10:02.07  | Merged all branches                  |
-| pg3nfi0j1dpc5pf1rfgckpmlteaufdrt | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:44:37.513 | Added start_date column to employees |
-| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:41:49.847 | Modifications on a branch            |
-| 13qfqa5rojq18j84d1n2htjkm6fletg4 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:39:32.066 | Populated tables with data           |
-| ne182jemgrlm8jnjmoubfqsstlfi1s98 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:35:49.277 | Created initial schema               |
-| vluuhvd0bn59598utedt77ed9q5okbcb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:33:59.531 | Initialize data repository           |
-+----------------------------------+-----------+-----------------+-------------------------+--------------------------------------+
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
+| commit_hash                      | committer | email           | date                    | message                                |
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
+| vn9b0qcematsj2f6ka0hfoflhr5s6p0b | Tim Sehn  | tim@dolthub.com | 2022-06-07 17:10:02.07  | Merge branch 'modifications' into main |
+| pg3nfi0j1dpc5pf1rfgckpmlteaufdrt | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:44:37.513 | Added start_date column to employees   |
+| uhkv57j4bp2v16vcnmev9lshgkqq8ppb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:41:49.847 | Modifications on a branch              |
+| 13qfqa5rojq18j84d1n2htjkm6fletg4 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:39:32.066 | Populated tables with data             |
+| ne182jemgrlm8jnjmoubfqsstlfi1s98 | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:35:49.277 | Created initial schema                 |
+| vluuhvd0bn59598utedt77ed9q5okbcb | Tim Sehn  | tim@dolthub.com | 2022-06-07 16:33:59.531 | Initialize data repository             |
++----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
 6 rows in set (0.00 sec)
 ```
-
-Now, we have a database with all the schema and data changes merged and ready for use.
 
 # Audit Cell Lineage
 
