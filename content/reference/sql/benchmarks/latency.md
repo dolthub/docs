@@ -61,3 +61,10 @@ The Dolt version is `1.24.1`.
 |-----------------------|-----|
 <!-- END___DOLT___LATENCY_RESULTS_TABLE -->
 <br/>
+
+> NOTE: We're currently investigating a recent change in these benchmarks.
+> On the night of October 31 (Spooky!), both MySQL and Dolt write benchmarks
+> got slower but MySQL's got slower more. On writes, Dolt went from 1.3X MySQL
+> with no single measure faster than MySQL to 1.1X MySQL with five
+> individual measures faster than MySQL. This does not correspond to a
+> change in the MySQL or Dolt version. Investigation is ongoing.
