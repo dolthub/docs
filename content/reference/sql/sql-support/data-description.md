@@ -65,7 +65,7 @@ title: Data Description
 | :------------------- | :-------- | :------------------------------------------------------------------------------------------------------ |
 | Indexes              | 🟠        | Unsupported on TINYTEXT, TEXT, MEDIUMTEXT, LONGTEXT, TINYBLOB, BLOB, MEDIUMBLOB and LONGBLOB data types |
 | Multi-column indexes | ✅        |                                                                                                         |
-| Full-text indexes    | ❌        |                                                                                                         |
+| Full-text indexes    | 🟠        | Only basic functionality supported. Missing other search modifiers, different text parsers, stopword support, minimum word length adjustments, phrase matching |
 | Spatial indexes      | ✅        |                                                                                                         |
 
 ## Schema
