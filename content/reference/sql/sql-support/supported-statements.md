@@ -9,7 +9,7 @@ title: Supported Statements
 | Statement           | Supported | Notes and limitations                                                             |
 |:--------------------|:----------|:----------------------------------------------------------------------------------|
 | `CALL`              | ✅         |                                                                                   |
-| `CREATE TABLE AS`   | ❌         | `INSERT INTO SELECT *` is supported.                                              |
+| `CREATE TABLE AS`   | ✅         |                                                                                   |
 | `CREATE TABLE LIKE` | ✅         |                                                                                   |
 | `DO`                | ❌         |                                                                                   |
 | `DELETE`            | ✅         | No support for referring to more than one table in a single `DELETE` statement.   |
@@ -23,7 +23,7 @@ title: Supported Statements
 | `SELECT FROM AS OF` | ✅         | Selecting from a table as of any known revision or commit timestamp is supported. |
 | `SELECT FOR UPDATE` | ❌         | Row-level locks are not supported.                                                |
 | `SUBQUERIES`        | ✅         | Subqueries work, but must be given aliases. Some limitations apply.               |
-| `TABLE`             | ❌         | Equivalent to `SELECT * FROM TABLE` without a `WHERE` clause.                     |
+| `TABLE`             | ✅         |                                                                                   |
 | `TRUNCATE`          | ✅         |                                                                                   |
 | `UPDATE`            | ✅         | No support for referring to more than one table in a single `UPDATE` statement.   |
 | `VALUES`            | ✅         |                                                                                   |
@@ -49,19 +49,19 @@ title: Supported Statements
 | `ALTER VIEW`            | ❌         | Views can be created and dropped, but not altered.                                      |
 | `CHANGE COLUMN`         | ✅         |                                                                                         |
 | `CREATE DATABASE`       | ✅         | Creates a new dolt database rooted relative to the server directory                     |
-| `CREATE EVENT`          | 🟠         | Dolt stores event definitions but event execution is not supported yet.                 |
+| `CREATE EVENT`          | ✅         |                                                                                         |
 | `CREATE FUNCTION`       | ❌         |                                                                                         |
-| `CREATE INDEX`          | 🟠         | Fulltext indexes are not supported.                                                     |
+| `CREATE INDEX`          | ✅         |                                                                                         |
 | `CREATE SCHEMA`         | ✅         | Creates a new dolt database rooted relative to the server directory                     |
 | `CREATE TABLE`          | ✅         |                                                                                         |
-| `CREATE TABLE AS`       | ❌         |                                                                                         |
+| `CREATE TABLE AS`       | ✅         |                                                                                         |
 | `CREATE TRIGGER`        | ✅         |                                                                                         |
 | `CREATE VIEW`           | ✅         |                                                                                         |
 | `DESCRIBE TABLE`        | ✅         |                                                                                         |
 | `DROP COLUMN`           | ✅         |                                                                                         |
 | `DROP CONSTRAINT`       | ✅         |                                                                                         |
 | `DROP DATABASE`         | ✅         | Deletes the dolt data directory. This is unrecoverable.                                 |
-| `DROP EVENT`            | ❌         |                                                                                         |
+| `DROP EVENT`            | ✅         |                                                                                         |
 | `DROP FUNCTION`         | ❌         |                                                                                         |
 | `DROP INDEX`            | ✅         |                                                                                         |
 | `DROP SCHEMA`           | ✅         | Deletes the dolt data directory. This is unrecoverable.                                 |
@@ -85,7 +85,7 @@ title: Supported Statements
 | `SHOW DATABASES`        | ✅         |                                                                                         |
 | `SHOW FUNCTION CODE`    | ❌         |                                                                                         |
 | `SHOW FUNCTION STATUS`  | ❌         |                                                                                         |
-| `SHOW GRANTS`           | 🟠        | Database privileges, table privileges, and role assumption are not yet implemented.     |
+| `SHOW GRANTS`           | 🟠         | Database privileges, table privileges, and role assumption are not yet implemented.     |
 | `SHOW INDEX`            | ❌         |                                                                                         |
 | `SHOW PRIVILEGES`       | ✅         |                                                                                         |
 | `SHOW PROCEDURE CODE`   | ❌         |                                                                                         |
