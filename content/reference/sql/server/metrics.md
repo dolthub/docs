@@ -26,9 +26,11 @@ metrics:
 Once you start a Dolt SQL server with the configuration above, you'll be able to view all the exposed metrics and their descriptions at http://localhost:11228/metrics. The metrics prefixed with `dss_` are Dolt SQL server metrics, and metrics prefixed with `go_` are Golang runtime metrics.
 
 #### Important Dolt SQL Server Metrics
-- `dss_concurrent_connections` – Number of clients concurrently connected to this instance of dolt sql server.
-- `dss_concurrent_queries` – Number of queries concurrently being run on this instance of dolt sql server.
-- `dss_query_duration_bucket` – Histogram buckets of dolt sql server query runtimes
+- `dss_concurrent_connections` – Number of clients concurrently connected to this Dolt SQL server.
+- `dss_concurrent_queries` – Number of queries concurrently being run on this instance of Dolt SQL server.
+- `dss_query_duration_bucket` – Histogram buckets of Dolt SQL server query latencies.
+- `dss_is_replica` – Indicates if this Dolt SQL server is a replica. (Only exposed when replication is enabled)  
+- `dss_replication_lag` – The replication lag in ms for this replica. (Only exposed when replication is enabled)
 
 #### Important Go Runtime Metrics
 - `go_gc_duration_seconds` – Histogram buckets containing counts for different pause durations of garbage collection cycles.
