@@ -48,3 +48,5 @@ scrape_configs:
     static_configs:
     - targets: ["localhost:11228"]
 ```
+
+Other monitoring products, such as [Datadog](https://www.datadoghq.com/), can also be configured to [scrape metrics from the Prometheus HTTP endpoint](https://www.datadoghq.com/blog/monitor-prometheus-metrics/) exposed by a Dolt SQL server.   
