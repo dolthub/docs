@@ -4,7 +4,7 @@ title: Backups
 
 # Backups
 
-There are several ways to safely backup Dolt databases and Dolt SQL servers. If you are using [Hosted Dolt](../../../products/hosted.md), then you get automatic backups without having to configure anything. If you are running your own Dolt SQL server, then you will need to handle your own backups using one of the approaches below. 
+There are several ways to safely backup Dolt databases and Dolt SQL servers. If you are using [Hosted Dolt](../../../products/hosted.md), then you get automatic backups without having to configure anything. If you are running your own Dolt SQL server, then you need to handle your own backups using one of the approaches below. 
 
 Backing up through [point-in-time snapshots at a block device level](#point-in-time-snapshots-on-block-devices) is often the easiest approach and what we recommended if this works for your setup. Backing up by [copying files at a file system level](#copying-files-on-file-systems) can also work in some cases, but requires that no Dolt processes are reading or writing any data while the file copy operation is in progress. You can also roll your own custom solutions by [pushing to remotes](#pushing-to-remotes) or using the [Dolt backup command](#dolt-backup-command). Make sure you include [all additional configuration files](#additional-sql-server-configuration) needed to fully restore your Dolt SQL server environment. As with any backup solution, it is important that you regularly test your backup and restore processes.
 
@@ -18,11 +18,11 @@ Unlike block devices that support point-in-time snapshots, you **cannot** rely o
 
 ## Pushing to Remotes
 
-Using remotes for backups should be suitable for some use cases. Using remotes for backups only backs up to the current commit of a branch, not the working set or other branches. Pushing to a remote creates an off server copy of the branch being pushed. Frequently pushing to a remote can serve as a reasonable backup.
+Using remotes for backups is suitable for some use cases, but be aware that using remotes for backups only backs up to the current commit of a branch, not the working set or other branches. Pushing to a remote creates an off server copy of the branch being pushed. Frequently pushing to a remote can serve as a backup for some use cases.
 
 ### Configure a remote
 
-Currently you can only add and remove remotes from the [Dolt CLI](../../cli/cli.md). The example uses DoltHub as a remote but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../products/dolthub/data-sharing.md#dolt-login).
+This example uses DoltHub as a remote, but you can use Dolt with [other remotes like filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/). I created an empty database on DoltHub and [configured the appropriate read and write credentials on this host](../../../products/dolthub/data-sharing.md#dolt-login).
 
 ```bash
 % dolt remote add backup https://doltremoteapi.dolthub.com/timsehn/backup-example
@@ -71,18 +71,18 @@ Uploaded 3.1 kB of 3.1 kB @ 0 B/s.
 $
 ```
 
-You can use any valid dolt remote, including [AWS S3, GCS](https://www.dolthub.com/blog/2021-07-19-remotes/), and DoltHub remotes. For example, to backup to a DoltHub remote, do something like:
+You can use any valid Dolt remote, including [AWS S3, GCS](https://www.dolthub.com/blog/2021-07-19-remotes/), and DoltHub remotes. For example, to backup to a DoltHub remote:
 
 ```bash
 $ dolt backup add dolthub-backup https://doltremoteapi.dolthub.com/username/my-database-backup
 $ dolt backup sync dolthub-backup
 ```
 
-The repository `username/my-database-backup` will need to have already been created on DoltHub and your dolt CLI will need to be authenticated to write to it.
+The repository `username/my-database-backup` will need to have already been created on DoltHub and your Dolt CLI will need to be authenticated to write to it.
 
-It's important to note that syncing a backup to a remote will overwrite every existing branch and working set. The state of the remote repository becomes exactly the state of the database which is synced to it. In particular, remote branches will be deleted if they do not exist in the local database and all existing branches are pushed without regard to merged state, whether the push is a fast forward of an existing remote branch, etc. If you want to keep more than one version of a backup, you should use different remote URLs.
+It's important to note that syncing a backup to a remote will overwrite every existing branch and working set. The state of the remote repository becomes exactly the state of the database which is synced to it. In particular, remote branches will be deleted if they do not exist in the local database and all existing branches are pushed without regard to merged state, whether the push is a fast-forward of an existing remote branch, etc. If you want to keep more than one version of a backup, you should use different remote URLs.
 
-Doing a syncing of a backup to an existing backup remote is incremental. It only copies the novel data which has changed since the last sync.
+Syncing a backup to an existing backup remote is incremental. It only copies the novel data which has changed since the last sync.
 
 ### Sync a backup from SQL
 
