@@ -11,6 +11,6 @@ Dolt uses a three digit versioning format – `major`.`minor`.`patch`. For major
 
 # Internal Feature Version
 
-In addition to the external version number, Dolt also uses an internal "feature" version that is incremented when a significant change is made that requires changing persisted data structures in a backwards incompatible way. When you use a version of Dolt with a new feature version, once it writes data to your database, older clients with a lower feature version will no longer be able to read or write that database. You can check the feature version of your database by running `dolt version --feature` from within the database's directory. 
+In addition to the external version number, Dolt also uses an internal "feature" version that is incremented when persisted data structures change in a backwards incompatible way. When you use a version of Dolt with a new feature version, once it writes data to your database, older clients with a lower feature version will no longer be able to read or write that database. You can check the feature version of your database by running `dolt version --feature` from within the database's directory. 
 
 Feature version bumps will be called out in a version's release notes and will be released as a minor version bump. We avoid feature bumps as much as possible because they can be disruptive to customers, but they are occasionally needed when an existing data structure does not provide enough forward compatibility to support a new feature. 
