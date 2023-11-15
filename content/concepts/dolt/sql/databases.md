@@ -46,3 +46,7 @@ mysql> show tables;
 | docs           |
 +----------------+
 ```
+
+## Note
+
+The file directory name is used to create the database name if creating database without running sql query. We used to replace hyphens in directory name to create a database name because database name with hyphens needs to be defined with backticks in SQL shell. `Dolt Version 1.27.0` and after, we do not replace hyphens anymore and this behavior is on by default unless `DOLT_DISABLE_DATABASE_RENAMING` is set to any value.
