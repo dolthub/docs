@@ -49,4 +49,4 @@ mysql> show tables;
 
 ## Note
 
-The file directory name is used to create the database name if creating database without running sql query. We used to replace hyphens in directory name to create a database name because database name with hyphens needs to be defined with backticks in SQL shell. `Dolt Version 1.27.0` and after, we do not replace hyphens anymore and this behavior is on by default unless `DOLT_DBNAME_REPLACE_HYPHENS` is set to any value.
+Previous to Dolt 1.27.0, Dolt replaced hyphens in database names (e.g. database directories containing hyphens) with underscores. Dolt now allows databases to be named with hyphens. If you need the old behavior for compatibility, you can set the `DOLT_DBNAME_REPLACE_HYPHENS` environment variable to any value.
