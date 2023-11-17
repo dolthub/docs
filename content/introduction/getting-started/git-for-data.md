@@ -82,7 +82,7 @@ $ cd dolt
 
 # Initialize a database
 
-Like Git, Dolt relies on directories to store your databases. The directories will have a hidden `.dolt` directory where your database is stored after you run `dolt init`. So, let's make a directory called `git_for_data` that will house our `dolt` database, `cd` to it, and run `dolt init`.
+Like Git, Dolt relies on directories to store your databases. The directories will have a hidden `.dolt` directory where your database is stored after you run `dolt init`. So, let's make a directory called `git_for_data` that will house our `dolt` database, `cd` to it, and run `dolt init`. The database name will be `git_for_data`, the same as the directory name.
 
 ```bash
 $ mkdir git_for_data
