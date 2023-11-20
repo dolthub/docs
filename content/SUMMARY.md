@@ -115,7 +115,6 @@
 - [Supported Clients](reference/sql/supported-clients/README.md)
   - [Programmatic](reference/sql/supported-clients/clients.md)
   - [SQL Editors](reference/sql/supported-clients/sql-editors.md)
-  - [Spreadsheets](reference/sql/supported-clients/spreadsheets.md)
 - [Benchmarks and Metrics](reference/sql/benchmarks/README.md)
   - [Correctness](reference/sql/benchmarks/correctness.md)
   - [Latency](reference/sql/benchmarks/latency.md)
