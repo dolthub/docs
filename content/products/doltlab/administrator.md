@@ -1442,19 +1442,23 @@ Your DoltLab instance will now use single-sign-on through your IP for user login
 
 DoltLab Enterprise => `v2.0.3` supports automated database backups for DoltLab's application Dolt server. Support for automated backups for each Dolt database on a DoltLab instance is currently underway and will be added soon.
 
-To configure your DoltLab instance to automatically back up it's Dolt database server, first, provision either a GCP bucket or and AWS S3 bucket and Dynamo DB table. You will need these to resources to create a backup remote for DoltLab's Dolt server.
+To configure your DoltLab instance to automatically back up its Dolt database server, first, provision either a GCP bucket or and AWS S3 bucket and Dynamo DB table. You will need these to resources to create a remote backup.
 
 Dolt supports a [backup](https://docs.dolthub.com/sql-reference/server/backups#dolt-backup-command) command which can be used to create backups of a Dolt instance.
 
-Let's walk through setting up automated backups using an AWS backup remote first. Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) as a backup destination, but requires that two resources be provisioned. As stated in [this helpful blog post](https://www.dolthub.com/blog/2021-07-19-remotes/#aws-remotes), "AWS remotes use a combination of Dynamo DB and S3. The Dynamo table can be created with any name but must have a primary key with the name `db`."
+Let's walk through setting up automated backups using an AWS remote backup first.
+
+<h2 id="aws-remote-backup">AWS Remote Backup</h2>
+
+Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) as a backup destination, but requires that two resources be provisioned. As stated in [this helpful blog post](https://www.dolthub.com/blog/2021-07-19-remotes/#aws-remotes), "AWS remotes use a combination of Dynamo DB and S3. The Dynamo table can be created with any name but must have a primary key with the name `db`."
 
 For our example, let's create an AWS S3 bucket called `test-doltlab-application-db-backups`.
 
-![S3 bucket test-doltlab-application-db-backups]()
+![S3 bucket test-doltlab-application-db-backups](../../.gitbook/assets/aws_remote_backup_s3.png)
 
 Let's also create a Dynamo DB table in the same AWS region, and call it `test-doltlab-backup-application-db-manifest`. Notice its uses the required partition key (primary key) `db`.
 
-![Dynamo DB test-doltlab-backup-application-db-manifest]()
+![Dynamo DB test-doltlab-backup-application-db-manifest](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
 
 The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
 
@@ -1541,7 +1545,7 @@ Next, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` sections i
 ...
   ## Uncomment backup-syncer for configuring automated backups.
 
-  backup-syncer:
+backup-syncer:
    depends_on:
      - doltlabdb
      - doltlabenvoy
@@ -1565,39 +1569,69 @@ Next, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` sections i
   ## Uncomment prometheus for DoltLab go service metrics.
   ## Should be used with backup-syncer and alertmanager for automated backup alerts.
 
-  prometheus:
+prometheus:
    depends_on:
-     -doltlabenvoy
-     -doltlabapi
+     - doltlabenvoy
+     - doltlabapi
    image: prom/prometheus:latest
    command:
-     -config.file=/etc/prometheus/prometheus.yaml
+     --config.file=/etc/prometheus/prometheus.yaml
    ports:
-     - 9090:9090
+     - "9090:9090"
    networks:
-     -default
+     - default
    volumes:
      - ${PWD}/prometheus-alert.rules:/etc/prometheus/alerts.rules
      - ${PWD}/prometheus.yaml:/etc/prometheus/prometheus.yaml
-  alertmanager:
+alertmanager:
    depends_on:
-     -doltlabenvoy
-     -doltlabapi
+     - doltlabenvoy
+     - doltlabapi
    image: prom/alertmanager:latest
    command:
-     -config.file=/etc/alertmanager/alertmanager.yaml
+     --config.file=/etc/alertmanager/alertmanager.yaml
    networks:
-     -default
+     - default
    ports:
-     -9093:9093
+     - "9093:9093"
    volumes:
      ${PWD}/alertmanager.yaml:/etc/alertmanager/alertmanager.yaml
 ...
 ```
 
-`backup-syncer` is the service responsible for calling [DOLT_BACKUP](https://docs.dolthub.com/sql-reference/server/backups#sync-a-backup-from-sql) on DoltLab's Dolt server. By default, this service will backup the Dolt database whenever it starts, and then at midnight each night. The backup schedule can be set with the `-cron` argument.
+`backup-syncer` is the service responsible for calling [DOLT_BACKUP](https://docs.dolthub.com/sql-reference/server/backups#sync-a-backup-from-sql) on DoltLab's Dolt server. By default, this service will backup the Dolt database whenever it starts, and then again at midnight each night. The backup schedule can be set with the `-cron` argument.
 
 `prometheus` and `alertmanager` are [Prometheus](https://prometheus.io/) and [AlertManager](https://prometheus.io/docs/alerting/latest/alertmanager/) instances used to notify DoltLab administrators of failed backup attempts.
+
+In order for `alertmanager` to notify you of backup failures, edit the `./alertmanager.yaml` file and include the SMTP authentication information:
+
+```yaml
+global:
+  smtp_from: no-reply@example.com
+  smtp_auth_username: my-username
+  smtp_auth_password: ******
+  smtp_smarthost: smtp.gmail.com:587
+
+receivers:
+  - name: doltlab-admin-email
+    email_configs:
+      - to: me@example.com
+        send_resolved: true
+
+route:
+  receiver: "doltlab-admin-email"
+  group_wait: 30s
+  group_interval: 2m
+  repeat_interval: 4h
+  routes:
+    - receiver: "doltlab-admin-email"
+      group_by: [alertname]
+      matchers:
+        - app =~ "backup-syncer"
+        - severity =~ "page|critical"
+```
+
+For more configuration options, please consult the [AlertManager documentaion](https://prometheus.io/docs/alerting/latest/configuration/).
 
 Finally, restart DoltLab using the `./start-doltlab.sh` script, adding the following environment variables:
 
@@ -1610,3 +1644,13 @@ AWS_REGION=aws-region \
 DOLT_BACKUP_URL="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup" \
 ./start-doltlab.sh
 ```
+
+The `backup-syncer` service will start backing up the DoltLab application database and you will see your backups stored in your S3 bucket, and the manifest stored in your DynamoDB table.
+
+![Backup in S3](../../.gitbook/assets/aws_remote_backup_s3_example.png)
+
+![Backup in Dynamo DB](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
+
+Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
+
+<h2 id="gcp-remote-backup">GCP Remote Backup</h2>
