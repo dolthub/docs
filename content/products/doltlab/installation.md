@@ -111,6 +111,9 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * docker-compose.yaml
 * docker-compose-tls.yaml
 * start-doltlab.sh
+* prometheus.yaml
+* prometheus-alert.rules
+* alertmanager.yaml
  
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
@@ -148,6 +151,12 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 `docker-compose-tls.yaml` is included in DoltLab >= `v1.0.6` and will spin up DoltLab using TLS.
 
 `start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
+
+`prometheus.yaml` is a [Prometheus](https://prometheus.io/) configuration file that can be used for observing real-time DoltLab service metrics. Used for DoltLab Enterprise automated backups.
+
+`prometheus-alert.rules` is an alert rules file used for sending emails to DoltLab admins in the event of a backup failure. Used for DoltLab Enterprise automated backups.
+
+`alertmanager.yaml` is a [AlertManager](https://prometheus.io/docs/alerting/latest/alertmanager/) configuration file for sending email alerts to DoltLab admins based on Prometheus metrics. Used for DoltLab Enterprise automated backups.
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 

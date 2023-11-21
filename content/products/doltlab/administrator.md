@@ -1456,7 +1456,7 @@ Let's also create a Dynamo DB table in the same AWS region, and call it `test-do
 
 ![Dynamo DB test-doltlab-backup-application-db-manifest]()
 
-The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/[backup_name]`, will be `aws://test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups/my_doltlab_backup`.
+The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
 
 We've also granted read and write access for these resources to an IAM role called `DoltLabBackuper`.
 
@@ -1501,11 +1501,11 @@ Next, we shut down our running DoltLab instance to make changes to the `docker-c
       ## to mount AWS credentials into server container. This allows
       ## for backing up to AWS remotes.
 
-      AWS_PROFILE=${AWS_PROFILE}
-      AWS_SDK_LOAD_CONFIG=1
-      AWS_SHARED_CREDENTIALS_FILE=/.aws/credentials
-      AWS_CONFIG_FILE=/.aws/config
-      AWS_REGION=${AWS_REGION}
+      AWS_PROFILE: "${AWS_PROFILE}"
+      AWS_SDK_LOAD_CONFIG: "1"
+      AWS_SHARED_CREDENTIALS_FILE: "/.aws/credentials"
+      AWS_CONFIG_FILE: "/.aws/config"
+      AWS_REGION: "${AWS_REGION}"
 
       ## Uncomment to mount GCP credentials into server container. This allows
       ## for backing up to GCP remotes.
@@ -1553,7 +1553,7 @@ Next, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` sections i
      -doltUser dolthubadmin
      -doltHost doltlabdb
      -doltPort 3306
-     -backupUrlBase "${BACKUP_URL}"
+     -backupUrlBase "${DOLT_BACKUP_URL}"
      -doltDatabaseName dolthubapi
      -cron "0 0 * * *" # everyday at 12am
      -backupOnBoot
@@ -1595,7 +1595,18 @@ Next, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` sections i
 ...
 ```
 
-`backup-syncer` is the service responsible for calling [DOLT_BACKUP]() DoltLab's Dolt server. By default, this service will backup the Dolt database whenever it starts, and then at midnight each night. The backup schedule can be set with the `-cron` argument.
+`backup-syncer` is the service responsible for calling [DOLT_BACKUP](https://docs.dolthub.com/sql-reference/server/backups#sync-a-backup-from-sql) on DoltLab's Dolt server. By default, this service will backup the Dolt database whenever it starts, and then at midnight each night. The backup schedule can be set with the `-cron` argument.
 
-`prometheus` and `alertmanager` are used to notify DoltLab administrators of failed backup attempts. Create the following three files in the `doltlab` directory to enable email alerts when backups fail:
+`prometheus` and `alertmanager` are [Prometheus](https://prometheus.io/) and [AlertManager](https://prometheus.io/docs/alerting/latest/alertmanager/) instances used to notify DoltLab administrators of failed backup attempts.
 
+Finally, restart DoltLab using the `./start-doltlab.sh` script, adding the following environment variables:
+
+```bash
+...
+AWS_PROFILE=doltlab_backuper \
+AWS_SHARED_CREDENTIALS_FILE=/absolute/path/to/aws/credentials \
+AWS_CONFIG_FILE=/absolute/path/to/aws/config \
+AWS_REGION=aws-region \
+DOLT_BACKUP_URL="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup" \
+./start-doltlab.sh
+```
