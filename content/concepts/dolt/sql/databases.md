@@ -49,4 +49,4 @@ mysql> show tables;
 
 ## Note
 
-Previous to Dolt 1.27.0, Dolt replaced hyphens in database names (e.g. database directories containing hyphens) with underscores. Dolt now allows databases to be named with hyphens. If you need the old behavior for compatibility, you can set the `DOLT_DBNAME_REPLACE_HYPHENS` environment variable to any value.
+Previous to Dolt 1.27.0, Dolt replaced hyphens and space characters in database names (e.g. database directories containing hyphens and space characters) with underscores. Dolt now allows databases to be named with hyphens and space characters. If you need the old behavior for compatibility, you can set the `DOLT_DBNAME_REPLACE` environment variable to any value.
