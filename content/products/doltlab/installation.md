@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v2.0.2` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v2.0.3` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -44,7 +44,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v2.0.2
+export DOLTLAB_VERSION=v2.0.3
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -52,7 +52,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v2.0.2
+export DOLTLAB_VERSION=v2.0.3
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -86,7 +86,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v2.0.2
+export DOLTLAB_VERSION=v2.0.3
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
@@ -111,6 +111,9 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * docker-compose.yaml
 * docker-compose-tls.yaml
 * start-doltlab.sh
+* prometheus.yaml
+* prometheus-alert.rules
+* alertmanager.yaml
  
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
@@ -148,6 +151,12 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 `docker-compose-tls.yaml` is included in DoltLab >= `v1.0.6` and will spin up DoltLab using TLS.
 
 `start-doltlab.sh` is a helper script designed to quickly and easily start DoltLab. See the following section for more information about how to use this script.
+
+`prometheus.yaml` is a [Prometheus](https://prometheus.io/) configuration file that can be used for observing real-time DoltLab service metrics. Used for DoltLab Enterprise automated backups.
+
+`prometheus-alert.rules` is an alert rules file used for sending emails to DoltLab admins in the event of a backup failure. Used for DoltLab Enterprise automated backups.
+
+`alertmanager.yaml` is a [AlertManager](https://prometheus.io/docs/alerting/latest/alertmanager/) configuration file for sending email alerts to DoltLab admins based on Prometheus metrics. Used for DoltLab Enterprise automated backups.
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 

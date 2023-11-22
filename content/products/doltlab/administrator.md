@@ -30,6 +30,7 @@ the following information can help DoltLab Admins manually perform some common a
 23. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 24. [Improve DoltLab Performance](#doltlab-performance)
 25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
+26. [Automated Remote Backups](#doltlab-automated-backups)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1436,3 +1437,289 @@ On this tab you will see the following:
 `Certificate` can be downloaded if you want to add a signature certificate to the IP to verify the digital signatures.
 
 Your DoltLab instance will now use single-sign-on through your IP for user login and account creation.
+
+<h1 id="doltlab-automated-backups">Automated Remote Backups</h1>
+
+DoltLab Enterprise => `v2.0.3` supports automated database backups for DoltLab's application Dolt server. Support for automated backups for each Dolt database on a DoltLab instance is currently underway and will be added soon.
+
+To configure your DoltLab instance to automatically back up its Dolt database server, first, provision either a GCP bucket or and AWS S3 bucket and Dynamo DB table. You will need these to resources to create a remote backup.
+
+Dolt supports a [backup](https://docs.dolthub.com/sql-reference/server/backups#dolt-backup-command) command which can be used to create backups of a Dolt instance.
+
+Let's walk through setting up automated backups using an AWS remote backup first.
+
+<h2 id="aws-remote-backup">AWS Remote Backup</h2>
+
+Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) as a backup destination, but requires that two resources be provisioned. As stated in [this helpful blog post](https://www.dolthub.com/blog/2021-07-19-remotes/#aws-remotes), "AWS remotes use a combination of Dynamo DB and S3. The Dynamo table can be created with any name but must have a primary key with the name `db`."
+
+For our example, let's create an AWS S3 bucket called `test-doltlab-application-db-backups`.
+
+![S3 bucket test-doltlab-application-db-backups](../../.gitbook/assets/aws_remote_backup_s3.png)
+
+Let's also create a Dynamo DB table in the same AWS region, and call it `test-doltlab-backup-application-db-manifest`. Notice its uses the required partition key (primary key) `db`.
+
+![Dynamo DB test-doltlab-backup-application-db-manifest](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
+
+The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
+
+We've also granted read and write access for these resources to an IAM role called `DoltLabBackuper`.
+
+It's now time to update our DoltLab instance configuration to automatically backup it's Dolt server data to our AWS remote.
+
+First, ensure that the AWS credentials on the DoltLab host can be used to assume the role `DoltLabBackuper`. Create a AWS config file that contains:
+
+```
+[profile doltlab_backuper]
+role_arn = arn:aws:iam::<aws account number>:role/DoltLabBackuper
+region = <aws region>
+source_profile = default
+```
+
+Then use the AWS CLI to confirm this profile can be used on your DoltLab host:
+
+```
+AWS_SDK_LOAD_CONFIG=1 \
+AWS_REGION=<aws region> \
+AWS_CONFIG_FILE=<path to config file> \
+AWS_SDK_LOAD_CONFIG=1 \
+AWS_PROFILE=doltlab_backuper \
+aws sts get-caller-identity
+{
+    "UserId": "<user id>:botocore-session-1700511795",
+    "Account": <aws account number>,
+    "Arn": "arn:aws:sts::<aws account number>:assumed-role/DoltLabBackuper/botocore-session-1700511795"
+}
+```
+
+Next, we shut down our running DoltLab instance to make changes to the `docker-compose.yaml` file. In the `doltlabdb` secion, uncomment the AWS environment variables in the `doltlabdb.environment` block, as well as the ones in the `doltlabdb.volumes` block.
+
+```yaml
+...
+  doltlabdb:
+  ...
+    environment:
+      DOLT_PASSWORD: "${DOLT_PASSWORD}"
+      DOLTHUBAPI_PASSWORD: "${DOLTHUBAPI_PASSWORD}"
+
+      ## Uncomment the AWS environment variables
+      ## to mount AWS credentials into server container. This allows
+      ## for backing up to AWS remotes.
+
+      AWS_PROFILE: "${AWS_PROFILE}"
+      AWS_SDK_LOAD_CONFIG: "1"
+      AWS_SHARED_CREDENTIALS_FILE: "/.aws/credentials"
+      AWS_CONFIG_FILE: "/.aws/config"
+      AWS_REGION: "${AWS_REGION}"
+
+      ## Uncomment to mount GCP credentials into server container. This allows
+      ## for backing up to GCP remotes.
+
+      # GOOGLE_APPLICATION_CREDENTIALS=/gcloud_credentials.json
+    networks:
+      - default
+    volumes:
+      - doltlabdb-dolt-data:/var/lib/dolt
+      - doltlabdb-dolt-root:/.dolt
+      - doltlabdb-dolt-configs:/etc/dolt
+      - doltlabdb-dolt-backups:/backups
+
+      ## Uncomment the AWS environment variables
+      ## to mount AWS credentials into server container. This allows
+      ## for backing up to AWS remotes.
+
+      - ${AWS_SHARED_CREDENTIALS_FILE}:/.aws/credentials
+      - ${AWS_CONFIG_FILE}:/.aws/config
+
+      ## Uncomment to mount GCP credentials into server container. This allows
+      ## for backing up to GCP remotes.
+
+      # - ${GOOGLE_APPLICATION_CREDENTIALS}:/gcloud_credentials.json
+...
+```
+
+Doing so will mount the AWS credentials on the host, into the Dolt server container, which is required for authenticating pushes as `DoltLabBackuper` to our AWS remote.
+
+Next, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` sections in the `docker-compose.yaml` file as well.
+
+```yaml
+...
+  ## Uncomment backup-syncer for configuring automated backups.
+
+backup-syncer:
+   depends_on:
+     - doltlabdb
+     - doltlabenvoy
+     - doltlabapi
+   image: public.ecr.aws/doltlab/backup-syncer:v2.0.3
+   command:
+     -dolthubapiHost doltlabapi
+     -dolthubapiPort 60051
+     -doltUser dolthubadmin
+     -doltHost doltlabdb
+     -doltPort 3306
+     -backupUrlBase "${DOLT_BACKUP_URL}"
+     -doltDatabaseName dolthubapi
+     -cron "0 0 * * *" # everyday at 12am
+     -backupOnBoot
+   environment:
+     DOLT_PASSWORD: "${DOLT_PASSWORD}"
+   networks:
+    - default
+
+  ## Uncomment prometheus for DoltLab go service metrics.
+  ## Should be used with backup-syncer and alertmanager for automated backup alerts.
+
+prometheus:
+   depends_on:
+     - doltlabenvoy
+     - doltlabapi
+   image: prom/prometheus:latest
+   command:
+     --config.file=/etc/prometheus/prometheus.yaml
+   ports:
+     - "9090:9090"
+   networks:
+     - default
+   volumes:
+     - ${PWD}/prometheus-alert.rules:/etc/prometheus/alerts.rules
+     - ${PWD}/prometheus.yaml:/etc/prometheus/prometheus.yaml
+alertmanager:
+   depends_on:
+     - doltlabenvoy
+     - doltlabapi
+   image: prom/alertmanager:latest
+   command:
+     --config.file=/etc/alertmanager/alertmanager.yaml
+   networks:
+     - default
+   ports:
+     - "9093:9093"
+   volumes:
+     ${PWD}/alertmanager.yaml:/etc/alertmanager/alertmanager.yaml
+...
+```
+
+`backup-syncer` is the service responsible for calling [DOLT_BACKUP](https://docs.dolthub.com/sql-reference/server/backups#sync-a-backup-from-sql) on DoltLab's Dolt server. By default, this service will backup the Dolt database whenever it starts, and then again at midnight each night. The backup schedule can be set with the `-cron` argument.
+
+`prometheus` and `alertmanager` are [Prometheus](https://prometheus.io/) and [AlertManager](https://prometheus.io/docs/alerting/latest/alertmanager/) instances used to notify DoltLab administrators of failed backup attempts.
+
+In order for `alertmanager` to notify you of backup failures, edit the `./alertmanager.yaml` file and include the SMTP authentication information:
+
+```yaml
+global:
+  smtp_from: no-reply@example.com
+  smtp_auth_username: my-username
+  smtp_auth_password: ******
+  smtp_smarthost: smtp.gmail.com:587
+
+receivers:
+  - name: doltlab-admin-email
+    email_configs:
+      - to: me@example.com
+        send_resolved: true
+
+route:
+  receiver: "doltlab-admin-email"
+  group_wait: 30s
+  group_interval: 2m
+  repeat_interval: 4h
+  routes:
+    - receiver: "doltlab-admin-email"
+      group_by: [alertname]
+      matchers:
+        - app =~ "backup-syncer"
+        - severity =~ "page|critical"
+```
+
+For more configuration options, please consult the [AlertManager documentaion](https://prometheus.io/docs/alerting/latest/configuration/).
+
+Finally, restart DoltLab using the `./start-doltlab.sh` script, adding the following environment variables:
+
+```bash
+...
+AWS_PROFILE=doltlab_backuper \
+AWS_SHARED_CREDENTIALS_FILE=/absolute/path/to/aws/credentials \
+AWS_CONFIG_FILE=/absolute/path/to/aws/config \
+AWS_REGION=aws-region \
+DOLT_BACKUP_URL="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup" \
+./start-doltlab.sh
+```
+
+The `backup-syncer` service will start backing up the DoltLab application database and you will see your backups stored in your S3 bucket, and the manifest stored in your DynamoDB table.
+
+![Backup in S3](../../.gitbook/assets/aws_remote_backup_s3_example.png)
+
+![Backup in Dynamo DB](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
+
+Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
+
+<h2 id="gcp-remote-backup">GCP Remote Backup</h2>
+
+To backup DoltLab's Dolt server to a GCP remote, first create a bucket in GCP. This will be the only required resource needed.
+
+![GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket.png)
+
+Next, add GCP JSON credentials to your DoltLab host. You can find information about GCP credentials [here](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login).
+
+Following the Dolt's url template for GCP remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#gcp-remotes), the remote url we will use for this bucket will be `gs://test-doltlab-application-db-backup/my_doltlab_backup`.
+
+Ensure you have stopped your running DoltLab instance, then, like we did for the AWS remote, we are going to uncomment the `GOOGLE_APPLICATION_CREDENTIALS` environment variables in the `doltlabdb.environment` and `doltlabdb.volumes` block of DoltLab's `./docker-compose.yaml` file.
+
+```yaml
+...
+  doltlabdb:
+  ...
+    environment:
+      DOLT_PASSWORD: "${DOLT_PASSWORD}"
+      DOLTHUBAPI_PASSWORD: "${DOLTHUBAPI_PASSWORD}"
+
+      ## Uncomment the AWS environment variables
+      ## to mount AWS credentials into server container. This allows
+      ## for backing up to AWS remotes.
+
+      #AWS_PROFILE: "${AWS_PROFILE}"
+      #AWS_SDK_LOAD_CONFIG: "1"
+      #AWS_SHARED_CREDENTIALS_FILE: "/.aws/credentials"
+      #AWS_CONFIG_FILE: "/.aws/config"
+      #AWS_REGION: "${AWS_REGION}"
+
+      ## Uncomment to mount GCP credentials into server container. This allows
+      ## for backing up to GCP remotes.
+
+      GOOGLE_APPLICATION_CREDENTIALS: /gcloud_credentials.json
+    networks:
+      - default
+    volumes:
+      - doltlabdb-dolt-data:/var/lib/dolt
+      - doltlabdb-dolt-root:/.dolt
+      - doltlabdb-dolt-configs:/etc/dolt
+      - doltlabdb-dolt-backups:/backups
+
+      ## Uncomment the AWS environment variables
+      ## to mount AWS credentials into server container. This allows
+      ## for backing up to AWS remotes.
+
+      #- ${AWS_SHARED_CREDENTIALS_FILE}:/.aws/credentials
+      #- ${AWS_CONFIG_FILE}:/.aws/config
+
+      ## Uncomment to mount GCP credentials into server container. This allows
+      ## for backing up to GCP remotes.
+
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/gcloud_credentials.json
+...
+```
+
+Additionally, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` like we did for the AWS remote.
+
+Finally, restart your DoltLab instance using the `./start-doltlab.sh` script while supplying the following additional environment variables:
+
+```bash
+...
+GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/gcloud/credentials \
+DOLT_BACKUP_URL="gs://test-doltlab-application-db-backup/my_doltlab_backup" \
+./start-doltlab.sh
+```
+
+Your DoltLab instance will now automatically back up its application Dolt server to your GCP bucket.
+
+![Backup in GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
