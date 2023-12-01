@@ -1058,6 +1058,8 @@ Searches the repository for data that is no longer referenced and no longer need
 
 If the `--shallow` flag is supplied, a faster but less thorough garbage collection will be performed.
 
+`dolt gc` won't work if there is a running server. Use `dolt sql -q 'call dolt_gc()'` instead.
+
 **Arguments and options**
 
 `-s`, `--shallow`:
