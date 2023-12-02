@@ -81,13 +81,13 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 
 ## Administration
 
-| Component       | Supported | Notes and limitations                                                                                                                                                                             |
-|:----------------|:----------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `clean`         | 🟠        | [does not completely match git behavior](https://github.com/dolthub/dolt/issues/6313)                                                                                                             |
-| `gc`            | ✅         |                                                                                                                                                                                                   |
-| `fsck`          | ❌         |                                                                                                                                                                                                   |
-| `reflog`        | 🟠         | [does not completely match git behavior](https://www.dolthub.com/blog/2023-11-17-dolt-reflog/):<br/> <li>only supports named references (not Git's special refs)</li> <li>shows deleted refs</li> |
-| `filter-branch` | ✅         |                                                                                                                                                                                                   |
+| Component       | Supported | Notes and limitations                                                                                                                                                                               |
+|:----------------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `clean`         | 🟠        | [does not completely match Git's behavior](https://github.com/dolthub/dolt/issues/6313)                                                                                                             |
+| `gc`            | ✅         |                                                                                                                                                                                                     |
+| `fsck`          | ❌         |                                                                                                                                                                                                     |
+| `reflog`        | ✅         | [does not completely match Git's behavior](https://www.dolthub.com/blog/2023-11-17-dolt-reflog/):<br/> <li>only supports named references (not Git's special refs)</li> <li>shows deleted refs</li> |
+| `filter-branch` | ✅         |                                                                                                                                                                                                     |
 
 
 ## Plumbing Commands
