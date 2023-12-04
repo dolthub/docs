@@ -160,7 +160,9 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 
-The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your environment:
+The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your DoltLab host environment/shell.
+
+> Note, the `./start-doltlab.sh` script contains references to some of these environment variables, but not all, as some are referenced elsewhere.
 
 ```bash
 # required
