@@ -4,23 +4,30 @@ title: Applications that work with Dolt
 
 ## Drop-in MySQL Replacement
 
-Dolt is the world's first version controlled SQL database. Dolt has been built from the storage engine up with no MySQL code. Dolt is designed to be a drop-in replacement for MySQL. All the tools you use with MySQL work the same way with Dolt but with Dolt's added version control features. Below is the list of applications and tools we have tested out with Dolt and links to the getting started guides. 
+Dolt is the world's first version controlled SQL database. Dolt has been built from the storage engine up with no MySQL code. Dolt is designed to be a drop-in replacement for MySQL. All the tools you use with MySQL work the same way with Dolt but with Dolt's added version control features. Below is the list of ORMs and tools we have tested out with Dolt and links to the getting started guides. 
 
-Let us know what else you'd like to see tested by sending an [email](mailto:interest@dolthub.com) or swinging by our [Discord](https://discord.gg/gqr7K4VNKe). 
+Let us know what else you'd like to see tested by sending us [email](mailto:interest@dolthub.com) or come by our [Discord](https://discord.gg/gqr7K4VNKe). 
 
-<br></br>
+## ORMs
+| ORM | Blog | Sample Code | 
+| --- | ---- | ----------- |
+| [SQLAlchemy](https://www.sqlalchemy.org/) | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
+| [Hibernate ](https://hibernate.org/)| [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
+| [Knex.js](https://knexjs.org/) | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
+| [EF Core](https://learn.microsoft.com/en-us/ef/core/) | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample)
 
-| Application | 
-| ----------- |
-| [Knex.js](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) |
-| [SQLAlchemy](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) |
-| [EF Core](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) |
-| [Hibernate](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | 
-| [Excel](https://www.dolthub.com/blog/2023-11-24-dolt-excel/) |
-| [Google Sheets](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/) |
-| [Docker](https://www.dolthub.com/blog/2023-10-25-dolt-docker/) |
-| [XCA](https://www.dolthub.com/blog/2023-08-21-xca-on-dolt/) |
-| [WordPress](https://www.dolthub.com/blog/2023-08-04-wordpress-on-dolt/)|
-| [Looker Studio](https://www.dolthub.com/blog/2023-02-13-dolt-looker/)|
-| [Superset](https://www.dolthub.com/blog/2023-01-27-dolt-superset/) |
-| [Retool](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/) |
+## Tools
+
+| Tool | Blog | 
+| ---- | ---- | 
+| [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel) | 
+| [Google Sheets](https://www.google.com/sheets/about/#overview) | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/) |
+| [XCA](https://hohnstaedt.de/xca/) | [Blog](https://www.dolthub.com/blog/2023-08-21-xca-on-dolt/) |
+| [WordPress](https://wordpress.com/) | [Blog](https://www.dolthub.com/blog/2023-08-04-wordpress-on-dolt/) |
+| [Looker Studio](https://lookerstudio.google.com/) | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/) |
+| [Apache Superset](https://superset.apache.org/) | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/) |
+| [Retool](https://retool.com/) | [Blog](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/) |
+
+
+
+
