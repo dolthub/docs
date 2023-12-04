@@ -49,7 +49,7 @@ Valid commands for dolt are
                 docs - Commands for working with Dolt documents.
                stash - Stash the changes in a dirty working directory away.
              profile - Manage dolt profiles for CLI global options.
-          query-diff - description
+          query-diff - Shows table diff between two queries.
               reflog - Show history of named refs.
 ```
 
@@ -1210,7 +1210,7 @@ dolt ls [--options] [<commit>]
 
 **Description**
 
-With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count and a hash of the table will also be displayed.
+With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count of the table will also be displayed.
 
 If the `--system` flag is supplied this will show the dolt system tables which are queryable with SQL.
 
