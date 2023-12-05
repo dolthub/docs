@@ -9,13 +9,13 @@ Dolt is the world's first version controlled SQL database. Dolt has been built f
 Let us know what else you'd like to see tested by sending us [email](mailto:interest@dolthub.com) or come by our [Discord](https://discord.gg/gqr7K4VNKe). 
 
 ## ORMs
-| ORM | Blog | Sample Code | 
-| --- | ---- | ----------- |
-| [SQLAlchemy](https://www.sqlalchemy.org/) | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
-| [Hibernate ](https://hibernate.org/)| [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
-| [Knex.js](https://knexjs.org/) | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
-| [EF Core](https://learn.microsoft.com/en-us/ef/core/) | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample) |
-| [Django](https://www.djangoproject.com/)| [Blog](https://www.dolthub.com/blog/2021-06-09-running-django-on-dolt/) | :x: |
+| ORM | Language | Blog | Sample Code | 
+| --- | ---------| ---- | ----------- |
+| [SQLAlchemy](https://www.sqlalchemy.org/) | Python | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
+| [Django](https://www.djangoproject.com/)| Python | [Blog](https://www.dolthub.com/blog/2021-06-09-running-django-on-dolt/) | :x: |
+| [Hibernate ](https://hibernate.org/)| Java | [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
+| [Knex.js](https://knexjs.org/) | Javascript | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
+| [EF Core](https://learn.microsoft.com/en-us/ef/core/) | C# | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample) |
 
 ## Tools
 
