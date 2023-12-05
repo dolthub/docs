@@ -141,6 +141,7 @@
   - [go-mysql-server](guides/contributing/go-mysql-server.md)
 - [MySQL to Dolt Replication](guides/binlog-replication.md)
 - [Importing Data](guides/import.md)
+- [Dolt Tested Apps](guides/dolt-tested-apps.md)
 
 ## Other
 
