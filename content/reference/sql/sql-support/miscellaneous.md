@@ -36,8 +36,8 @@ Dolt supports the following join hints:
 | MERGE_JOIN(<t1>,<t2>)    | ✅         | Use MERGE strategy joining two tables.                                                          |
 | HASH_JOIN(<t1>,<t2>)     | ✅         | Use HASH strategy joining two tables.                                                           |
 | INNER_JOIN(<t1>,<t2>)    | ✅         | Use INNER strategy joining two tables.                                                          |
-| SEMI_JOIN(<t1>,<t2>)     | ❌         | Use SEMI strategy joining two tables.                                                           |
-| ANTI_JOIN(<t1>,<t2>)     | ❌         | Use ANTI strategy joining two tables.                                                           |
+| SEMI_JOIN(<t1>,<t2>)     | ✅         | Use SEMI strategy joining two tables (for `EXISTS` or `IN` queries).                            |
+| ANTI_JOIN(<t1>,<t2>)     | ✅         | Use ANTI strategy joining two tables (for `NOT EXISTS` or `NOT IN` queries).                    |
 | JOIN_FIXED_ORDER         | ❌         | Join tree uses in-place table order for execution.                                              |
 | NO_ICP                   | ❌         | Disable indexed range scans on index using filters.                                             |
 
