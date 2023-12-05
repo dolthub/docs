@@ -14,7 +14,8 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [SQLAlchemy](https://www.sqlalchemy.org/) | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
 | [Hibernate ](https://hibernate.org/)| [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
 | [Knex.js](https://knexjs.org/) | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
-| [EF Core](https://learn.microsoft.com/en-us/ef/core/) | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample)
+| [EF Core](https://learn.microsoft.com/en-us/ef/core/) | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample) |
+| [Django](https://www.djangoproject.com/)| [Blog](https://www.dolthub.com/blog/2021-06-09-running-django-on-dolt/) | :x: |
 
 ## Tools
 
