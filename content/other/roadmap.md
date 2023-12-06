@@ -22,7 +22,7 @@ Roadmap last updated Dec 2023, next update Jan 2024.
 | Rebase                                    | Q4 2023     |
 | DoltgreSQL 90% correctness                | Q4 2023     |
 | DoltgreSQL 99% correctness                | Q1 2024     |
-| Posgres type support                      | Q1 2024     |
+| Postgres type support                      | Q1 2024     |
 | Posgres function support                  | Q1 2024     |
 | Multiple DBs in one repo                  | Q1 2024     |
 | Update multiple branches in a transaction | 2024        |
