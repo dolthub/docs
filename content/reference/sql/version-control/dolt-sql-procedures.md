@@ -293,6 +293,8 @@ insert into mydb.t1 values (3); -- modifying the `branch2` branch
 ### Options
 
 `-b`: Create a new branch with the given name.
+`-B`: Similar to `-b`, but will move a branch if it already exists.
+`-t`: When creating a new branch, set up 'upstream' configuration.
 
 ### Output Schema
 
