@@ -825,10 +825,12 @@ There are no special privileges required to use the `dolt_reflog()` table functi
 
 ```sql
 DOLT_REFLOG()
-DOLT_REFLOG(<ref_name>)
+DOLT_REFLOG(['--all'], <ref_name>)
 ```
 
-The `dolt_reflog()` table function can be called with no arguments or with one argument. If called without any arguments, it will return the full reference log, which lists changes from newest to oldest for all tracked references. If called with one argument, that argument is the name of a ref to query. This can be the name of a branch (e.g. "myBranch") or the name of a tag (e.g. "v1.1.4") or it can be the fully qualified ref path (e.g. "refs/heads/myBranch"). The `ref_name` parameter is case-insensitive. 
+The `dolt_reflog()` table function can be called with no arguments or with one argument. If called without any arguments, it will return the full reference log, which lists changes from newest to oldest for all tracked references. If called with one argument, that argument is the name of a ref to query. This can be the name of a branch (e.g. "myBranch") or the name of a tag (e.g. "v1.1.4") or it can be the fully qualified ref path (e.g. "refs/heads/myBranch"). The `ref_name` parameter is case-insensitive.
+
+The `dolt_reflog()` table function can also be called with the `--all` flag to show all refs, including hidden refs, such as DoltHub workspace refs.
 
 ### Schema
 

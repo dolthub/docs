@@ -49,7 +49,8 @@ Valid commands for dolt are
                 docs - Commands for working with Dolt documents.
                stash - Stash the changes in a dirty working directory away.
              profile - Manage dolt profiles for CLI global options.
-          query-diff - description
+          query-diff - Shows table diff between two queries.
+              reflog - Show history of named refs.
 ```
 
 ## Global Arguments
@@ -162,7 +163,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 	role: Use the credentials installed for the current user
 	env: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 	file: Uses the credentials file specified by the parameter aws-creds-file
-
+	
 GCP backup urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google.
 
 The local filesystem can be used as a backup by providing a repository url in the format file://absolute path. See https://en.wikipedia.org/wiki/File_URI_scheme
@@ -175,7 +176,7 @@ Restore a Dolt database from a given `<url>` into a specified directory `<url>`.
 
 `sync`
 Snapshot the database and upload to the backup `<name>`. This includes branches, tags, working sets, and remote tracking refs.
-
+	
 `sync-url`
 Snapshot the database and upload the backup to `<url>`. Like sync, this includes branches, tags, working sets, and remote tracking refs, but it does not require you to create a named backup
 
@@ -309,14 +310,14 @@ dolt checkout --track <remote>/<branch>
 Updates tables in the working set to match the staged versions. If no paths are given, dolt checkout will also update HEAD to set the specified branch as the current branch.
 
 dolt checkout `<branch>`
-To prepare for working on `<branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working
-tree are kept, so that they can be committed to the `<branch>`.
+   To prepare for working on `<branch>`, switch to it by updating the index and the tables in the working tree, and by pointing HEAD at the branch. Local modifications to the tables in the working
+   tree are kept, so that they can be committed to the `<branch>`.
 
 dolt checkout -b `<new_branch>` [`<start_point>`]
-Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
+   Specifying -b causes a new branch to be created as if dolt branch were called and then checked out.
 
 dolt checkout `<table>`...
-To update table(s) with their values in HEAD
+  To update table(s) with their values in HEAD 
 
 **Arguments and options**
 
@@ -346,7 +347,7 @@ dolt cherry-pick <commit>
 
 Applies the changes from an existing commit and creates a new commit from the current HEAD. This requires your working tree to be clean (no modifications from the HEAD commit).
 
-Cherry-picking merge commits or commits with table drops/renames is not currently supported.
+Cherry-picking merge commits or commits with table drops/renames is not currently supported. 
 
 If any data conflicts, schema conflicts, or constraint violations are detected during cherry-picking, you can use Dolt's conflict resolution features to resolve them. For more information on resolving conflicts, see: https://docs.dolthub.com/concepts/dolt/git/conflicts.
 
@@ -507,7 +508,7 @@ dolt config [--global|--local] --unset <name>...
 **Description**
 
 You can query/set/replace/unset options with this command.
-
+		
 When reading, the values are read from the global and repository local configuration files, and options `<--global>`, and `<--local>` can be used to tell the command to read from only that location.
 
 When writing, the new value is written to the repository local configuration file by default, and options `<--global>`, can be used to tell the command to write to that location (you can say `<--local>` but that is the default).
@@ -625,8 +626,8 @@ dolt constraints verify [--all] [--output-only] [<table>...]
 **Description**
 
 Verifies that inserted or modified rows in the working set satisfy the defined table constraints.
-If any constraints are violated, they are documented in the dolt_constraint_violations system table.
-By default, this command does not consider row changes that have been previously committed.
+               If any constraints are violated, they are documented in the dolt_constraint_violations system table.
+               By default, this command does not consider row changes that have been previously committed.
 
 **Arguments and options**
 
@@ -797,19 +798,19 @@ dolt diff [options] <commit> <commit> [<tables>...]
 Show changes between the working and staged tables, changes between the working tables and the tables within a commit, or changes between tables at two commits.
 
 `dolt diff [--options] [<tables>...]`
-This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
+   This form is to view the changes you made relative to the staging area for the next commit. In other words, the differences are what you could tell Dolt to further add but you still haven't. You can stage these changes by using dolt add.
 
 `dolt diff [--options] [--merge-base] <commit> [<tables>...]`
-This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch. If `--merge-base` is given, instead of using `<commit>`, use the merge base of `<commit>` and HEAD. `dolt diff --merge-base A` is equivalent to `dolt diff $(dolt merge-base A HEAD)` and `dolt diff A...HEAD`.
+   This form is to view the changes you have in your working tables relative to the named `<commit>`. You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch. If `--merge-base` is given, instead of using `<commit>`, use the merge base of `<commit>` and HEAD. `dolt diff --merge-base A` is equivalent to `dolt diff $(dolt merge-base A HEAD)` and `dolt diff A...HEAD`.
 
 `dolt diff [--options] [--merge-base] <commit> <commit> [<tables>...]`
-This is to view the changes between two arbitrary `commit`. If `--merge-base` is given, use the merge base of the two commits for the "before" side. `dolt diff --merge-base A B` is equivalent to `dolt diff $(dolt merge-base A B) B` and `dolt diff A...B`.
+   This is to view the changes between two arbitrary `commit`. If `--merge-base` is given, use the merge base of the two commits for the "before" side. `dolt diff --merge-base A B` is equivalent to `dolt diff $(dolt merge-base A B) B` and `dolt diff A...B`.
 
 `dolt diff [--options] <commit>..<commit> [<tables>...]`
-This is synonymous to the above form (without the ..) to view the changes between two arbitrary `commit`.
+   This is synonymous to the above form (without the ..) to view the changes between two arbitrary `commit`.
 
 `dolt diff [--options] <commit>...<commit> [<tables>...]`
-This is to view the changes on the branch containing and up to the second `<commit>`, starting at a common ancestor of both `<commit>`. `dolt diff A...B` is equivalent to `dolt diff $(dolt merge-base A B) B` and `dolt diff --merge-base A B`. You can omit any one of `<commit>`, which has the same effect as using HEAD instead.
+   This is to view the changes on the branch containing and up to the second `<commit>`, starting at a common ancestor of both `<commit>`. `dolt diff A...B` is equivalent to `dolt diff $(dolt merge-base A B) B` and `dolt diff --merge-base A B`. You can omit any one of `<commit>`, which has the same effect as using HEAD instead.
 
 The diffs displayed can be limited to show the first N by providing the parameter `--limit N` where `N` is the number of diffs to display.
 
@@ -932,11 +933,11 @@ dolt dump [-f] [-r <result-format>] [-fn <file_name>]  [-d <directory>] [--batch
 
 **Description**
 
-`dolt dump` dumps all tables in the working set.
-If a dump file already exists then the operation will fail, unless the `--force | -f` flag
-is provided. The force flag forces the existing dump file to be overwritten. The `-r` flag
+`dolt dump` dumps all tables in the working set. 
+If a dump file already exists then the operation will fail, unless the `--force | -f` flag 
+is provided. The force flag forces the existing dump file to be overwritten. The `-r` flag 
 is used to support different file formats of the dump. In the case of non .sql files each table is written to a separate
-csv,json or parquet file.
+csv,json or parquet file. 
 
 
 **Arguments and options**
@@ -1014,7 +1015,7 @@ dolt filter-branch [--all] -q <queries> [<commit>]
 
 **Description**
 
-Traverses the commit history to the initial commit starting at the current HEAD commit, or a commit you name. Replays all commits, rewriting the history using the provided SQL queries. Separate multiple queries with semicolons. Use the DELIMITER syntax to define stored procedures, triggers, etc.
+Traverses the commit history to the initial commit starting at the current HEAD commit, or a commit you name. Replays all commits, rewriting the history using the provided SQL queries. Separate multiple queries with semicolons. Use the DELIMITER syntax to define stored procedures, triggers, etc. 
 
 If a `<commit-spec>` is provided, the traversal will stop when the commit is reached and rewriting will begin at that commit, or will error if the commit is not found.
 
@@ -1122,25 +1123,25 @@ dolt log [-n <num_commits>] [<revision-range>] [[--] <table>]
 
 Shows the commit logs
 
-The command takes options to control what is shown and how.
+The command takes options to control what is shown and how. 
 
 `dolt log`
-Lists commit logs from current HEAD when no options provided.
-
+  Lists commit logs from current HEAD when no options provided.
+	
 `dolt log [<revisions>...]`
-Lists commit logs starting from revision. If multiple revisions provided, lists logs reachable by all revisions.
-
+  Lists commit logs starting from revision. If multiple revisions provided, lists logs reachable by all revisions.
+	
 `dolt log [<revisions>...] -- <table>`
-Lists commit logs starting from revisions, only including commits with changes to table.
-
+  Lists commit logs starting from revisions, only including commits with changes to table.
+	
 `dolt log <revisionB>..<revisionA>`
 `dolt log <revisionA> --not <revisionB>`
 `dolt log ^<revisionB> <revisionA>`
-Different ways to list two dot logs. These will list commit logs for revisionA, while excluding commits from revisionB. The table option is not supported for two dot log.
-
+  Different ways to list two dot logs. These will list commit logs for revisionA, while excluding commits from revisionB. The table option is not supported for two dot log.
+	
 `dolt log <revisionB>...<revisionA>`
 `dolt log <revisionA> <revisionB> --not $(dolt merge-base <revisionA> <revisionB>)`
-Different ways to list three dot logs. These will list commit logs reachable by revisionA OR revisionB, while excluding commits reachable by BOTH revisionA AND revisionB.
+  Different ways to list three dot logs. These will list commit logs reachable by revisionA OR revisionB, while excluding commits reachable by BOTH revisionA AND revisionB.
 
 **Arguments and options**
 
@@ -1209,7 +1210,7 @@ dolt ls [--options] [<commit>]
 
 **Description**
 
-With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count and a hash of the table will also be displayed.
+With no arguments lists the tables in the current working set but if a commit is specified it will list the tables in that commit.  If the `--verbose` flag is provided a row count of the table will also be displayed.
 
 If the `--system` flag is supplied this will show the dolt system tables which are queryable with SQL.
 
@@ -1245,7 +1246,7 @@ dolt merge --abort
 
 Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch.
 
-The second syntax (`<dolt merge --abort>`) can only be run after the merge has resulted in conflicts. dolt merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started (and especially if those changes were further modified after the merge was started), dolt merge `--abort` will in some cases be unable to reconstruct the original (pre-merge) changes. Therefore:
+The second syntax (`<dolt merge --abort>`) can only be run after the merge has resulted in conflicts. dolt merge `--abort` will abort the merge process and try to reconstruct the pre-merge state. However, if there were uncommitted changes when the merge started (and especially if those changes were further modified after the merge was started), dolt merge `--abort` will in some cases be unable to reconstruct the original (pre-merge) changes. Therefore: 
 
 `<Warning>`: Running dolt merge with non-trivial uncommitted changes is discouraged: while possible, it may leave you in a state that is hard to back out of in the case of a conflict.
 
@@ -1262,10 +1263,7 @@ Merge changes to the working set without updating the commit history
 Use the given `<msg>` as the commit message.
 
 `--abort`:
-Abort the current conflict resolution process, and try to reconstruct the pre-merge state.
-
-If there were uncommitted working set changes present when the merge started, `dolt merge --abort` will be unable to reconstruct these changes. It is therefore recommended to always commit or stash your changes before running dolt merge.
-
+Abort the in-progress merge and return the working set to the state before the merge started.
 
 `--commit`:
 Perform the merge and commit the result. This is the default option, but can be overridden with the --no-commit flag. Note that this option does not affect fast-forward merges, which don't create a new merge commit, and if any merge conflicts or constraint violations are detected, no commit will be attempted.
@@ -1506,6 +1504,34 @@ directory to create and put retrieved table data.
 
 
 
+## `dolt reflog`
+
+Shows a history of named refs
+
+**Synopsis**
+
+```bash
+dolt reflog [--all] <ref>
+```
+
+**Description**
+
+Shows the history of named refs (e.g. branches and tags), which is useful for understanding how a branch 
+or tag changed over time to reference different commits, particularly for information not surfaced through `dolt log`.
+The data from Dolt's reflog comes from [Dolt's journaling chunk store](https://www.dolthub.com/blog/2023-03-08-dolt-chunk-journal/). 
+This data is local to a Dolt database and never included when pushing, pulling, or cloning a Dolt database. This means when you clone a Dolt database, it will not have any reflog data until you perform operations that change what commit branches or tags reference.
+
+Dolt's reflog is similar to [Git's reflog](https://git-scm.com/docs/git-reflog), but there are a few differences:
+- The Dolt reflog currently only supports named references, such as branches and tags, and not any of Git's special refs (e.g. `HEAD`, `FETCH-HEAD`, `MERGE-HEAD`).
+- The Dolt reflog can be queried for the log of references, even after a reference has been deleted. In Git, once a branch or tag is deleted, the reflog for that ref is also deleted and to find the last commit a branch or tag pointed to you have to use Git's special `HEAD` reflog to find the commit, which can sometimes be challenging. Dolt makes this much easier by allowing you to see the history for a deleted ref so you can easily see the last commit a branch or tag pointed to before it was deleted.
+
+**Arguments and options**
+
+`--all`:
+Show all refs, including hidden refs, such as DoltHub workspace refs
+
+
+
 ## `dolt remote`
 
 Manage set of tracked repositories
@@ -1534,7 +1560,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 	role: Use the credentials installed for the current user
 	env: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 	file: Uses the credentials file specified by the parameter aws-creds-file
-
+	
 GCP remote urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google.
 
 The local filesystem can be used as a remote by providing a repository url in the format file://absolute path. See https://en.wikipedia.org/wiki/File_URI_scheme
@@ -1887,7 +1913,7 @@ dolt sql --list-saved
 
 Runs a SQL query you specify. With no arguments, begins an interactive shell to run queries and view the results. With the `-q` option, runs the given query and prints any results, then exits.
 
-Multiple SQL statements must be separated by semicolons. Use `-b` to enable batch mode to speed up large batches of INSERT / UPDATE statements. Pipe SQL files to dolt sql (no `-q`) to execute a SQL import or update script.
+Multiple SQL statements must be separated by semicolons. Use `-b` to enable batch mode to speed up large batches of INSERT / UPDATE statements. Pipe SQL files to dolt sql (no `-q`) to execute a SQL import or update script. 
 
 By default this command uses the dolt database in the current working directory. If you would prefer to use a different directory, user the `--data-dir <directory>` argument before the sql subcommand.
 
@@ -2009,7 +2035,7 @@ SUPPORTED CONFIG FILE FIELDS:
 
 `behavior.autocommit`: If true every statement is committed automatically. Defaults to true. @@autocommit can also be specified in each session.
 
-`behavior.dolt_transaction_commit`: If true all SQL transaction commits will automatically create a Dolt commit, with a generated commit message. This is useful when a system working with Dolt wants to create versioned data, but doesn't want to directly use Dolt features such as dolt_commit().
+`behavior.dolt_transaction_commit`: If true all SQL transaction commits will automatically create a Dolt commit, with a generated commit message. This is useful when a system working with Dolt wants to create versioned data, but doesn't want to directly use Dolt features such as dolt_commit(). 
 
 `user.name`: The username that connections should use for authentication
 
@@ -2121,7 +2147,7 @@ dolt stash drop <stash>
 
 **Description**
 
-Use dolt stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory.
+Use dolt stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. 
 
 The command saves your local modifications away and reverts the working directory to match the HEAD commit. The stash entries that are saved away can be listed with 'dolt stash list'.
 
@@ -2168,7 +2194,7 @@ dolt stash drop <stash>
 
 **Description**
 
-Removes a single stash entry at given index from the list of stash entries (e.g. 'dolt stash drop stash@{1}' will drop the stash entry at index 1 in the stash list).
+Removes a single stash entry at given index from the list of stash entries (e.g. 'dolt stash drop stash@{1}' will drop the stash entry at index 1 in the stash list). 
 
 This command does not apply the stash on current working directory, use 'dolt stash pop' to apply a stash on current working directory.
 
@@ -2327,7 +2353,7 @@ If the schema for the existing table does not match the schema for the new file,
 
 A mapping file can be used to map fields between the file being imported and the table being written to. This can be used when creating a new table, or updating or replacing an existing table.
 
-During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--quiet` flag to prevent the import utility from printing all the skipped rows.
+During import, if there is an error importing any row, the import will be aborted by default. Use the `--continue` flag to continue importing when an error is encountered. You can add the `--quiet` flag to prevent the import utility from printing all the skipped rows. 
 
 A mapping file is json in the format:
 
@@ -2413,11 +2439,11 @@ dolt table mv [-f] <oldtable> <newtable>
 **Description**
 
 
-The dolt table mv command will rename a table. If a table exists with the target name this command will
-fail unless the `--force|-f` flag is provided.  In that case the table at the target location will be overwritten
+The dolt table mv command will rename a table. If a table exists with the target name this command will 
+fail unless the `--force|-f` flag is provided.  In that case the table at the target location will be overwritten 
 by the table being renamed.
 
-The result is equivalent of running `dolt table cp <old> <new>` followed by `dolt table rm <old>`, resulting
+The result is equivalent of running `dolt table cp <old> <new>` followed by `dolt table rm <old>`, resulting 
 in a new table and a deleted table in the working set. These changes can be staged using `dolt add` and committed
 using `dolt commit`.
 
@@ -2468,7 +2494,7 @@ dolt tag -d <tagname>
 
 If there are no non-option arguments, existing tags are listed.
 
-The command's second form creates a new tag named `<tagname>` which points to the current `HEAD`, or `<ref>` if given. Optionally, a tag message can be passed using the `-m` option.
+The command's second form creates a new tag named `<tagname>` which points to the current `HEAD`, or `<ref>` if given. Optionally, a tag message can be passed using the `-m` option. 
 
 With a `-d`, `<tagname>` will be deleted.
 
