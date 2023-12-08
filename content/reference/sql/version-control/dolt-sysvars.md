@@ -15,6 +15,7 @@ title: Dolt System Variables
   - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
   - [dolt_transaction_commit](#dolt_transaction_commit)
   - [dolt_transaction_commit](#dolt_transaction_commit)
+  - [strict_mysql_compatibility](#strict_mysql_compatibility)
 
 - [Replication variables](#replication-variables)
 
@@ -94,6 +95,15 @@ Defaults to `0`.
 When set to `1`, this system variable creates a Dolt commit for every
 SQL transaction commit. Commits have an auto-generated commit
 message. Defaults to `0`.
+
+## `strict_mysql_compatibility`
+
+When set to `1`, Dolt will disable some extensions to MySQL behavior that are intended to increase compatibility
+with other database engines in the MySQL family. For example, for compatibility with MariaDB, Dolt supports an 
+extension to MySQL's behavior that allows `TEXT` and `BLOB` columns to be used in unique indexes without specifying
+a prefix length. Users who want Dolt to behave exactly like MySQL and not support these extensions can set this
+system variable to `1`. For wider compatibility, this system variable defaults to `0` to enable these extensions
+by default.
 
 ## `dolt_allow_commit_conflicts`
 
