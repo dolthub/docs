@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v2.0.4` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v2.0.5` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -11,11 +11,6 @@ DoltLab versions lower than `v2.0.0` allowed users to use certain enterprise fea
 For more information about which features have been removed for free from DoltLab `v2.0.0`, please see [Administrator Guide](./administrator.md).
 
 If you'd like more information about DoltLab Enterprise, please reach out to us on [Discord](https://discord.gg/s8uVgc3), or email Brain Fitzgerald at brianf@dolthub.com.
-
-> Starting with DoltLab `v0.6.0`, Dolt's new storage format (__DOLT__) is the default format for new databases.
-
-> We recommend upgrading your Dolt CLI to ^`v0.5.14` as well. This version initializes new databases with the new storage format.
-
 
 <h1 id="recommended-minimum-hardware"><ins>Recommended Minimum Hardware</ins></h1>
 
@@ -44,7 +39,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v2.0.4
+export DOLTLAB_VERSION=v2.0.5
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -52,7 +47,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v2.0.4
+export DOLTLAB_VERSION=v2.0.5
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -86,7 +81,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v2.0.4
+export DOLTLAB_VERSION=v2.0.5
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
