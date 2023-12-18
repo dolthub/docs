@@ -14,8 +14,8 @@ title: Dolt System Variables
   - [dolt_allow_commit_conflicts](#dolt_allow_commit_conflicts)
   - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
   - [dolt_transaction_commit](#dolt_transaction_commit)
-  - [dolt_transaction_commit](#dolt_transaction_commit)
   - [strict_mysql_compatibility](#strict_mysql_compatibility)
+
 
 - [Replication variables](#replication-variables)
 
