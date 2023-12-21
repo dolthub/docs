@@ -47,6 +47,11 @@ title: Dolt System Tables
 
   - [dolt_ignore](#dolt_ignore)
 
+- [Rebasing](#rebasing-tables)
+
+  - [dolt_rebase](#dolt_rebase)
+
+
 # Database Metadata System Tables
 
 ## `dolt_branches`
@@ -1182,4 +1187,52 @@ WHERE staged=true;
 | foo                 | true   | new table |
 | generated_exception | true   | new table |
 +---------------------+--------+-----------+
+```
+
+# Rebasing Tables
+
+## `dolt_rebase`
+
+`dolt_rebase` is only present while an interactive rebase is in progress, and only on the branch where the rebase is being executed. For example, when rebasing the `feature1` branch, the rebase will be executed on the `dolt_rebase_feature1` branch, and the `dolt_rebase` system table will exist on that branch while the rebase is in-progress. The `dolt_rebase` system table starts off with the default rebase plan, which is to `pick` all of the commits identified for the rebase. Users can adjust the rebase plan by updating the `dolt_rebase` table to change the rebase action, reword a commit message, or even add new rows with additional commits to be applied as part of the rebase. For more details about rebasing, see [the `dolt_rebase()` stored procedure](dolt-sql-procedures.md#dolt_rebase).  
+
+### Schema
+
+```text
++----------------+---------------------------------------------------+
+| Field          | Type                                              |
++----------------+---------------------------------------------------+
+| rebase_order   | DECIMAL(6,2)                                      |
+| action         | ENUM('pick', 'drop', 'reword', 'squash', 'fixup') |
+| commit_hash    | TEXT                                              |
+| commit_message | TEXT                                              |
++----------------+---------------------------------------------------+
+```
+
+The `action` field can take one of the following rebase actions:
+- `pick` - apply a commit as is and keep its commit message.
+- `drop` - do not apply a commit. The row in the `dolt_rebase` table can also be deleted to drop a commit from the rebase plan.
+- `reword` - apply a commit, and use the updated commit message from the `commit_message` field in the `dolt_rebase` table for its commit message. Note that if you edit the `commit_message` but do not use the `reword` action, the original commit message will still be used. 
+- `squash` - apply a commit, but include its changes in the previous commit instead of creating a new commit. The commit message of the previous commit will be altered to include the previous commit message as well as the commit message from the squashed commit. Note that the rebase plan MUST include a `pick` or `reword` action in the plan before a `squash` action.
+- `fixup` - apply a commit, but include its changes in the previous commit instead of creating a new commit. The commit message of the previous commit will NOT be changed, and the commit message from the fixup commit will be discarded.  Note that the rebase plan MUST include a `pick` or `reword` action in the plan before a `fixup` action.
+
+### Example Queries
+
+To squash all commits into a single commit and include the commit messages from all commits, the following query can be used:
+```sql
+update dolt_rebase set action = 'squash' where rebase_order > 1;
+```
+
+To reword a commit with commit hash '123aef456f', be sure to set the action to `reword` and to update the `commit_message` field:
+```sql
+update dolt_rebase set action = 'reword', commit_message = 'here is my new message' where commit_hash = '123aef456f';
+```
+
+To drop the second commit in the rebase plan, you can use the `drop` action:
+```sql
+update dolt_rebase set action = 'drop' where rebase_order = 2;
+```
+
+Or you can simply delete that row from the `dolt_rebase` table:
+```sql
+delete from dolt_rebase where rebase_order = 2;
 ```
