@@ -19,13 +19,16 @@ title: Dolt System Tables
 
   - [dolt_blame\_$tablename](#dolt_blame_usdtablename)
   - [dolt_commit_ancestors](#dolt_commit_ancestors)
-  - [dolt_commit_diff\_$tablename](#dolt_commit_diff_usdtablename)
   - [dolt_commits](#dolt_commits)
+  - [dolt_history\_$tablename](#dolt_history_usdtablename)
+  - [dolt_log](#dolt_log)
+
+- [Database Diffs](#database-diffs)
+
+  - [dolt_commit_diff\_$tablename](#dolt_commit_diff_usdtablename)
   - [dolt_diff](#dolt_diff)
   - [dolt_column_diff](#dolt_column_diff)
   - [dolt_diff\_$tablename](#dolt_diff_usdtablename)
-  - [dolt_history\_$tablename](#dolt_history_usdtablename)
-  - [dolt_log](#dolt_log)
 
 - [Working Set Metadata](#working-set-metadata-system-tables)
 
@@ -40,7 +43,7 @@ title: Dolt System Tables
   - [dolt_constraint_violations](#dolt_constraint_violations)
   - [dolt_constraint_violations\_$tablename](#dolt_constraint_violations_usdtablename)
 
-- [Configuration Tables](#configuration-tables)
+- [Configuration](#configuration-tables)
 
   - [dolt_ignore](#dolt_ignore)
 
@@ -438,6 +441,129 @@ merged will have `parent_index` 1.
 +--------------+------+------+-----+---------+-------+
 ```
 
+
+## `dolt_commits`
+
+The `dolt_commits` system table shows _ALL_ commits in a Dolt database.
+
+This is similar, but different from the `dolt_log` [system table](https://docs.dolthub.com/reference/sql/dolt-system-tables#dolt_log)
+and the `dolt log` [CLI command](https://docs.dolthub.com/reference/cli#dolt-log).
+`dolt log` shows you commit history for all commit ancestors reachable from the current `HEAD` of the
+checked out branch, whereas `dolt_commits` shows all commits from the entire database, no matter which branch is checked out.
+
+### Schema
+
+```text
+> describe dolt_commits;
++-------------+----------+------+-----+---------+-------+
+| Field       | Type     | Null | Key | Default | Extra |
++-------------+----------+------+-----+---------+-------+
+| commit_hash | text     | NO   | PRI |         |       |
+| committer   | text     | NO   |     |         |       |
+| email       | text     | NO   |     |         |       |
+| date        | datetime | NO   |     |         |       |
+| message     | text     | NO   |     |         |       |
++-------------+----------+------+-----+---------+-------+
+```
+
+### Example Query
+
+Using the [`dolthub/first-hour-db` database from DoltHub](https://www.dolthub.com/repositories/dolthub/first-hour-db),
+we can query for the five commits before April 20th, 2022, across all commits in the database
+(regardless of what is checked out to `HEAD`) with this query:
+
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0A" %}
+
+
+## `dolt_history_$TABLENAME`
+
+For every user table named `$TABLENAME`, there is a read-only system table named `dolt_history_$TABLENAME`
+that can be queried to find a row's value at every commit in the current branch's history.
+
+### Schema
+
+Every Dolt history table contains columns for `commit_hash`, `committer`, and `commit_date`, plus every column
+from the user table's schema at the current checked out branch.
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+----------+
+| commit_hash | TEXT     |
+| committer   | TEXT     |
+| commit_date | DATETIME |
+| other cols  |          |
++-------------+----------+
+```
+
+### Example Schema
+
+Consider a table named `mytable` with the following schema:
+
+```text
++------------+--------+
+| field      | type   |
++------------+--------+
+| x          | INT    |
++------------+--------+
+```
+
+The schema for `dolt_history_states` would be:
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+----------+
+| x           | INT      |
+| commit_hash | TEXT     |
+| committer   | TEXT     |
+| commit_date | DATETIME |
++-------------+----------+
+```
+
+### Example Query
+
+Assume a database with the `mytable` table above and the following commit graph:
+
+```text
+   B---E  feature
+  /
+ A---C---D  main
+```
+
+When the `feature` branch is checked out, the following query returns the results below, showing
+the row at every ancestor commit reachable from our current branch.
+
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/feature?q=SELECT+*+FROM+dolt_history_mytable%3B" %}
+
+## `dolt_log`
+
+The `dolt_log` system table contains the commit log for all commits reachable from the current `HEAD`.
+This is the same data returned by the [`dolt log` CLI command](https://docs.dolthub.com/reference/cli#dolt-log).
+
+### Schema
+
+```text
++-------------+----------+
+| field       | type     |
++-------------+--------- +
+| commit_hash | text     |
+| committer   | text     |
+| email       | text     |
+| date        | datetime |
+| message     | text     |
++-------------+--------- +
+```
+
+### Example Query
+
+The following query shows the commits reachable from the current checked out head and created by user `jennifersp` since April, 2022:
+
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_log%0AWHERE+committer+%3D+%22jennifersp%22+and+date+%3E+%222022-04-01%22%0AORDER+BY+date%3B" %}
+
+
+# Database Diffs
+
 ## `dolt_commit_diff_$TABLENAME`
 
 For every user table named `$TABLENAME`, there is a read-only system table named `dolt_commit_diff_$TABLENAME`
@@ -543,38 +669,6 @@ see what changes are in the working set that have yet to be committed
 to HEAD. It is often useful to use [the `HASHOF()` function](dolt-sql-functions.md#hashof)
 to get the commit hash of a branch, or an ancestor commit. The above table
 requires both `from_commit` and `to_commit` to be filled.
-
-## `dolt_commits`
-
-The `dolt_commits` system table shows _ALL_ commits in a Dolt database.
-
-This is similar, but different from the `dolt_log` [system table](https://docs.dolthub.com/reference/sql/dolt-system-tables#dolt_log)
-and the `dolt log` [CLI command](https://docs.dolthub.com/reference/cli#dolt-log).
-`dolt log` shows you commit history for all commit ancestors reachable from the current `HEAD` of the
-checked out branch, whereas `dolt_commits` shows all commits from the entire database, no matter which branch is checked out.
-
-### Schema
-
-```text
-> describe dolt_commits;
-+-------------+----------+------+-----+---------+-------+
-| Field       | Type     | Null | Key | Default | Extra |
-+-------------+----------+------+-----+---------+-------+
-| commit_hash | text     | NO   | PRI |         |       |
-| committer   | text     | NO   |     |         |       |
-| email       | text     | NO   |     |         |       |
-| date        | datetime | NO   |     |         |       |
-| message     | text     | NO   |     |         |       |
-+-------------+----------+------+-----+---------+-------+
-```
-
-### Example Query
-
-Using the [`dolthub/first-hour-db` database from DoltHub](https://www.dolthub.com/repositories/dolthub/first-hour-db),
-we can query for the five commits before April 20th, 2022, across all commits in the database
-(regardless of what is checked out to `HEAD`) with this query:
-
-{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0A" %}
 
 ## `dolt_diff`
 
@@ -771,92 +865,6 @@ num_inmates_rated_for have changed the most between 2 versions.
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/us-jails/embed/main?q=SELECT+to_county%2C+from_county%2Cto_num_inmates_rated_for%2Cfrom_num_inmates_rated_for%2C++abs%28to_num_inmates_rated_for+-+from_num_inmates_rated_for%29+AS+delta%0AFROM+dolt_diff_jails%0AWHERE+from_commit+%3D+HASHOF%28%22HEAD~3%22%29+AND+diff_type+%3D+%22modified%22%0AORDER+BY+delta+DESC%0ALIMIT+10%3B%0A" %}
 
-
-## `dolt_history_$TABLENAME`
-
-For every user table named `$TABLENAME`, there is a read-only system table named `dolt_history_$TABLENAME`
-that can be queried to find a row's value at every commit in the current branch's history.
-
-### Schema
-
-Every Dolt history table contains columns for `commit_hash`, `committer`, and `commit_date`, plus every column
-from the user table's schema at the current checked out branch.
-
-```text
-+-------------+----------+
-| field       | type     |
-+-------------+----------+
-| commit_hash | TEXT     |
-| committer   | TEXT     |
-| commit_date | DATETIME |
-| other cols  |          |
-+-------------+----------+
-```
-
-### Example Schema
-
-Consider a table named `mytable` with the following schema:
-
-```text
-+------------+--------+
-| field      | type   |
-+------------+--------+
-| x          | INT    |
-+------------+--------+
-```
-
-The schema for `dolt_history_states` would be:
-
-```text
-+-------------+----------+
-| field       | type     |
-+-------------+----------+
-| x           | INT      |
-| commit_hash | TEXT     |
-| committer   | TEXT     |
-| commit_date | DATETIME |
-+-------------+----------+
-```
-
-### Example Query
-
-Assume a database with the `mytable` table above and the following commit graph:
-
-```text
-   B---E  feature
-  /
- A---C---D  main
-```
-
-When the `feature` branch is checked out, the following query returns the results below, showing
-the row at every ancestor commit reachable from our current branch.
-
-{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/feature?q=SELECT+*+FROM+dolt_history_mytable%3B" %}
-
-## `dolt_log`
-
-The `dolt_log` system table contains the commit log for all commits reachable from the current `HEAD`.
-This is the same data returned by the [`dolt log` CLI command](https://docs.dolthub.com/reference/cli#dolt-log).
-
-### Schema
-
-```text
-+-------------+----------+
-| field       | type     |
-+-------------+--------- +
-| commit_hash | text     |
-| committer   | text     |
-| email       | text     |
-| date        | datetime |
-| message     | text     |
-+-------------+--------- +
-```
-
-### Example Query
-
-The following query shows the commits reachable from the current checked out head and created by user `jennifersp` since April, 2022:
-
-{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_log%0AWHERE+committer+%3D+%22jennifersp%22+and+date+%3E+%222022-04-01%22%0AORDER+BY+date%3B" %}
 
 # Working Set Metadata System Tables
 
