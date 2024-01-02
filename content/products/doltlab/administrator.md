@@ -1788,8 +1788,11 @@ Finally, restart your DoltLab instance using the `./start-doltlab.sh` script whi
 ```bash
 ...
 OCI_CONFIG_FILE=/absolute/path/to/oci/config \
+OCI_KEY_FILE=/absolute/path/to/oci/private/key.pem \
 DOLT_BACKUP_URL="oci://test-doltlab-application-db-backup/my_doltlab_backup" \
 ./start-doltlab.sh
 ```
 
-Your DoltLab instance will now automatically back up its application Dolt server to your GCP bucket.
+Your DoltLab instance will now automatically back up its application Dolt server to your OCI bucket.
+
+![Backup in OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
