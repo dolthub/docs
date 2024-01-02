@@ -1723,3 +1723,73 @@ DOLT_BACKUP_URL="gs://test-doltlab-application-db-backup/my_doltlab_backup" \
 Your DoltLab instance will now automatically back up its application Dolt server to your GCP bucket.
 
 ![Backup in GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
+
+<h2 id="oci-remote-backup">OCI Remote Backup</h2>
+
+To backup DoltLab's Dolt server to an OCI remote, first create a bucket in OCI. This will be the only required resource needed.
+
+![OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket.png)
+
+Next, install the `oci` CLI tool on your DoltLab host, and run `oci setup config` to create a configuration file with credentials authorized to access your bucket. You can find information about creating an config file [here](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#configfile).
+
+`oci setup config` will create a config file and private key file that you will then need to mount into the `doltlabdb` container.
+
+First, edit the generated config file so that the `key_file` field contains the absolute path of where the generate key file will be mounted in the `doltlabdb` container.
+
+```
+[DEFAULT]
+user=ocid1.user.oc1..<unique_ID>
+fingerprint=<your_fingerprint>
+key_file=/oci_private_key.pem
+tenancy=ocid1.tenancy.oc1..<unique_ID>
+region=us-ashburn-1
+```
+
+In the above example, we've changed `key_file` to point to `/oci_private_key.pem`, where DoltLab will mount the private key file. Save these changes.
+
+Following the Dolt's url template for OCI remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#oci-remotes), the remote url we will use for this bucket will be `oci://test-doltlab-application-db-backup/my_doltlab_backup`.
+
+Ensure you have stopped your running DoltLab instance, then, like we did for the AWS and GCP remotes, we are going to uncomment the `OCI_CONFIG_FILE` and `OCI_KEY_FILE` environment variables in the `doltlabdb.environment` and `doltlabdb.volumes` block of DoltLab's `./docker-compose.yaml` file.
+
+```yaml
+...
+  doltlabdb:
+  ...
+    environment:
+      DOLT_PASSWORD: "${DOLT_PASSWORD}"
+      DOLTHUBAPI_PASSWORD: "${DOLTHUBAPI_PASSWORD}"
+...
+
+      ## Uncomment to mount OCI credentials into server container. This allows
+      ## for backing up to OCI remotes.
+
+      OCI_CONFIG_FILE: /oci_config
+    networks:
+      - default
+    volumes:
+      - doltlabdb-dolt-data:/var/lib/dolt
+      - doltlabdb-dolt-root:/.dolt
+      - doltlabdb-dolt-configs:/etc/dolt
+      - doltlabdb-dolt-backups:/backups
+
+...
+
+      ## Uncomment for backing up to OCI remotes.
+
+      - ${OCI_CONFIG_FILE}:/oci_config
+      - ${OCI_KEY_FILE}:/oci_private_key.pem
+...
+```
+
+Additionally, uncomment the `backup-syncer`, `prometheus`, and `alertmanager` like we did for the AWS and GCP remotes.
+
+Finally, restart your DoltLab instance using the `./start-doltlab.sh` script while supplying the following additional environment variables:
+
+```bash
+...
+OCI_CONFIG_FILE=/absolute/path/to/oci/config \
+DOLT_BACKUP_URL="oci://test-doltlab-application-db-backup/my_doltlab_backup" \
+./start-doltlab.sh
+```
+
+Your DoltLab instance will now automatically back up its application Dolt server to your GCP bucket.
