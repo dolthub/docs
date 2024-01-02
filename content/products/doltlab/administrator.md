@@ -1442,7 +1442,7 @@ Your DoltLab instance will now use single-sign-on through your IP for user login
 
 DoltLab Enterprise => `v2.0.3` supports automated database backups for DoltLab's application Dolt server. Support for automated backups for each Dolt database on a DoltLab instance is currently underway and will be added soon.
 
-To configure your DoltLab instance to automatically back up its Dolt database server, first, provision either a GCP bucket or and AWS S3 bucket and Dynamo DB table. You will need these to resources to create a remote backup.
+To configure your DoltLab instance to automatically back up its Dolt database server, first, provision either a GCP bucket or and AWS S3 bucket and Dynamo DB table. You will need these to resources to create a remote backup. Oracle Cloud Infrastucture storage buckets may be used as well, starting with DoltLab >= `v2.0.6`.
 
 Dolt supports a [backup](https://docs.dolthub.com/sql-reference/server/backups#dolt-backup-command) command which can be used to create backups of a Dolt instance.
 
