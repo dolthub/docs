@@ -294,7 +294,9 @@ insert into mydb.t1 values (3); -- modifying the `branch2` branch
 ### Options
 
 `-b`: Create a new branch with the given name.
+
 `-B`: Similar to `-b`, but will move a branch if it already exists.
+
 `-t`: When creating a new branch, set up 'upstream' configuration.
 
 ### Output Schema
@@ -1029,8 +1031,10 @@ Currently only interactive rebases are supported, and there is no support for re
 
 ### Options
 
-`--interactive`: Start an interactive rebase. Currently only interactive rebases are supported, so this option is required.
+`--interactive` or `-i`: Start an interactive rebase. Currently only interactive rebases are supported, so this option is required.
+
 `--continue`: Continue an interactive rebase after adjusting the rebase plan stored in `dolt_rebase`.
+
 `--abort`: Abort a rebase in progress. 
 
 ### Output Schema
