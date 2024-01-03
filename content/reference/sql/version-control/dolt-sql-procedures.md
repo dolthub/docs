@@ -20,6 +20,7 @@ title: Dolt SQL Procedures
   - [dolt_pull()](#dolt_pull)
   - [dolt_purge_dropped_databases()](#dolt_purge_dropped_databases)
   - [dolt_push()](#dolt_push)
+  - [dolt_rebase()](#dolt_rebase)
   - [dolt_remote()](#dolt_remote)
   - [dolt_reset()](#dolt_reset)
   - [dolt_revert()](#dolt_revert)
@@ -994,6 +995,123 @@ CALL DOLT_COMMIT('-a', '-m', 'create table test');
 -- Push to remote
 CALL DOLT_PUSH('origin', 'feature-branch');
 ```
+
+
+## `DOLT_REBASE()`
+
+Rewrites commit history for the current branch by replaying commits, allowing the commits to be reordered, squashed, or dropped. The commits included in the rebase plan are the commits reachable by the current branch, but NOT reachable from the branch specified as the argument when starting a rebase (also known as the upstream branch). This is the same as Git and Dolt's ["two dot log" syntax](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#two-dot-log), or |upstreamBranch|..|currentBranch|. 
+
+For example, consider the commit graph below, where a `feature` branch has branched off of a `main` branch, and both branches have added commits:
+```sql
+A → B → C → D → E → F  main
+         ↘
+           G → H → I  feature
+```
+
+If we rebase from the `feature` branch using the `main` branch as our upstream, the default rebase plan will include commits `G`, `H`, and `I`, since those commits are reachable from our current branch, but NOT reachable from the upstream branch. By default, the changes from those same commits will be reapplied, in the same order, to the tip of the upstream branch `main`. The resulting commit graph will then look like:
+```sql
+A → B → C → D → E → F  main
+                     ↘
+                       G' → H' → I'  feature
+```
+
+Rebasing is useful to clean and organize your commit history, especially before merging a feature branch back to a shared branch. For example, you can drop commits that contain debugging or test changes, or squash or fixup small commits into a single commit, or reorder commits so that related changes are adjacent in the new commit history. 
+
+```sql
+CALL DOLT_REBASE('--interactive', 'main');
+CALL DOLT_REBASE('-i', 'main');
+CALL DOLT_REBASE('--continue');
+CALL DOLT_REBASE('--abort');
+```
+
+### Limitations
+Currently only interactive rebases are supported, and there is no support for resolving conflicts that arise while executing a rebase plan. If applying a commit creates a conflict, the rebase will be automatically aborted.
+
+### Options
+
+`--interactive`: Start an interactive rebase. Currently only interactive rebases are supported, so this option is required.
+`--continue`: Continue an interactive rebase after adjusting the rebase plan stored in `dolt_rebase`.
+`--abort`: Abort a rebase in progress. 
+
+### Output Schema
+
+```text
++---------+------+-----------------------------+
+| Field   | Type | Description                 |
++---------+------+-----------------------------+
+| status  | int  | 0 if successful, 1 if not   |
+| message | text | success/failure information |
++---------+------+-----------------------------+
+```
+
+### Example
+
+```sql
+-- create a simple table
+create table t (pk int primary key);
+call dolt_commit('-Am', 'creating table t');
+
+-- create a new branch that we'll add more commits to later
+call dolt_branch('branch1');
+
+-- create another commit on the main branch, right after where branch1 branched off
+insert into t values (0);
+call dolt_commit('-am', 'inserting row 0');
+
+-- switch to branch1 and create three more commits that each insert one row 
+call dolt_checkout('branch1');
+insert into t values (1);
+call dolt_commit('-am', 'inserting row 1');
+insert into t values (2);
+call dolt_commit('-am', 'inserting row 2');
+insert into t values (3);
+call dolt_commit('-am', 'inserting row 3');
+
+-- check out what our commit history on branch1 looks like before we rebase
+select commit_hash, message from dolt_log;
++----------------------------------+----------------------------+
+| commit_hash                      | message                    |
++----------------------------------+----------------------------+
+| tsq01op7b48ij6dfa2tst60vbfm9rcus | inserting row 3            |
+| uou7dibe86e9939pu8fdtjdce5pt7v1c | inserting row 2            |
+| 3umkjmqeeep5ho7nn0iggfinajoo1l6q | inserting row 1            |
+| 35gfll6o322aq9uffdqin1dqmq7q3vek | creating table t           |
+| do1tp9u39vsja3c8umshv9p6fernr0lt | Inіtіalizе dаta repоsitоry |
++----------------------------------+----------------------------+
+
+-- start an interactive rebase and check out the default rebase plan; this will rebase 
+-- all the new commits on this branch and move them to the tip of the main branch  
+call dolt_rebase('-i', 'main');
+select * from dolt_rebase order by rebase_order;
++--------------+--------+----------------------------------+-----------------+
+| rebase_order | action | commit_hash                      | commit_message  |
++--------------+--------+----------------------------------+-----------------+
+| 1.00         | pick   | 3umkjmqeeep5ho7nn0iggfinajoo1l6q | inserting row 1 |
+| 2.00         | pick   | uou7dibe86e9939pu8fdtjdce5pt7v1c | inserting row 2 |
+| 3.00         | pick   | tsq01op7b48ij6dfa2tst60vbfm9rcus | inserting row 3 |
++--------------+--------+----------------------------------+-----------------+
+
+-- adjust the rebase plan to reword the first commit, drop the commit that inserted row 2,
+-- and combine the third commit into the previous commit  
+update dolt_rebase set action='reword', commit_message='insert rows' where rebase_order=1;
+update dolt_rebase set action='drop' where rebase_order=2;
+update dolt_rebase set action='fixup' where rebase_order=3;
+
+-- continue rebasing now that we've adjusted the rebase plan 
+call dolt_rebase('--continue');
+
+-- check out the history
+select commit_hash, message from dolt_log;
++----------------------------------+----------------------------+
+| commit_hash                      | message                    |
++----------------------------------+----------------------------+
+| 8jc1dpj25fv6f2kn3bd47uokc8hs1vp0 | insert rows                |
+| hb9fnqnrsd5ghq3fgag0kiq6nvpsasvo | inserting row 0            |
+| 35gfll6o322aq9uffdqin1dqmq7q3vek | creating table t           |
+| do1tp9u39vsja3c8umshv9p6fernr0lt | Inіtіalizе dаta repоsitоry |
++----------------------------------+----------------------------+
+```
+
 
 ## `DOLT_REMOTE()`
 
