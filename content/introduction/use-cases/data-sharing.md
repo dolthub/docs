@@ -4,19 +4,19 @@ title: Data Sharing
 
 # Problem
 
-* Do you share data with customers? 
-* Do they ask you what changed between versions you share? 
-* Do they want to actively switch versions instead of having data change out from under them? 
-* Or, are customers or vendors sharing data with you? 
-* Are you having trouble maintaining quality of scraped data?
-* When new data is shared or scraped, do downstream systems break?
-* Would you like to see exactly what changed between data versions?
-* Do you want to add automated testing to data shared with you?
-* Would you like to instantly rollback to the previous version if tests fail?
+- Do you share data with customers?
+- Do they ask you what changed between versions you share?
+- Do they want to actively switch versions instead of having data change out from under them?
+- Or, are customers or vendors sharing data with you?
+- Are you having trouble maintaining quality of scraped data?
+- When new data is shared or scraped, do downstream systems break?
+- Would you like to see exactly what changed between data versions?
+- Do you want to add automated testing to data shared with you?
+- Would you like to instantly rollback to the previous version if tests fail?
 
 # Dolt solves this by…
 
-Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data. 
+Dolt was built for sharing. The Git model of code sharing has scaled to thousands of contributors for open source software. We believe the same model can work for data.
 
 Dolt is the world's first version controlled SQL database. Git-style version control allows for decentralized, asynchronous collaboration. Every person gets their own copy of the database to read and write. DoltHub allows you to coordinate collaboration over the internet with [permissions](../../concepts/dolthub/permissions.md), [human review](../../concepts/dolthub/prs.md), [forks](../../concepts/dolthub/forks.md) and all the other distributed collaboration tools you are used to from GitHub.
 
@@ -32,12 +32,12 @@ Dolt replaces exchanging flat data files like CSVs via email, FTP servers, or ot
 
 ## External APIs
 
-Dolt is ideal for sharing data that does not have an API. But even for data with an API, Dolt is often more convenient. With Dolt, you get all the data and its history. With APIs you often have to assemble the data with multiple API calls. With APIs, the data can change out from under you, whereas with Dolt you can read a version of the data until you are ready to upgrade. DoltHub ships with a [SQL API](../../products/dolthub/dolthub-api/sql.md) so you can choose the data sharing solution that is right for your use case.
+Dolt is ideal for sharing data that does not have an API. But even for data with an API, Dolt is often more convenient. With Dolt, you get all the data and its history. With APIs you often have to assemble the data with multiple API calls. With APIs, the data can change out from under you, whereas with Dolt you can read a version of the data until you are ready to upgrade. DoltHub ships with a [SQL API](../../products/dolthub/api/sql.md) so you can choose the data sharing solution that is right for your use case.
 
 # Companies Doing This
 
-* [Bitfinex](https://www.bitfinex.com/) 
-* [KAPSARC](https://www.kapsarc.org/)
+- [Bitfinex](https://www.bitfinex.com/)
+- [KAPSARC](https://www.kapsarc.org/)
 
 # Case Studies
 
@@ -45,6 +45,6 @@ Let us know if you would like us to feature your use of Dolt for data sharing he
 
 # Other Related Articles
 
-* [Distribute Data with Dolt, not APIs](https://www.dolthub.com/blog/2020-05-18-distribute-dolt-not-api/)
-* [Data Collaboration on DoltHub](https://www.dolthub.com/blog/2020-10-05-data-collaboration-on-dolthub/)
-* [DoltHub is the Figma of Databases](https://www.dolthub.com/blog/2021-11-08-figma-of-databases/)
+- [Distribute Data with Dolt, not APIs](https://www.dolthub.com/blog/2020-05-18-distribute-dolt-not-api/)
+- [Data Collaboration on DoltHub](https://www.dolthub.com/blog/2020-10-05-data-collaboration-on-dolthub/)
+- [DoltHub is the Figma of Databases](https://www.dolthub.com/blog/2021-11-08-figma-of-databases/)
