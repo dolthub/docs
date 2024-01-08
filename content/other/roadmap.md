@@ -13,19 +13,19 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
-Roadmap last updated Dec 2023, next update Jan 2024.
+Roadmap last updated Jan 2024, next update Mar 2024.
 
 ## Upcoming features
 
 | Feature                                   | Estimate    |
 | -------                                   | ---         |
-| Rebase                                    | Q4 2023     |
-| DoltgreSQL 90% correctness                | Q4 2023     |
-| DoltgreSQL 99% correctness                | Q1 2024     |
-| Postgres type support                     | Q1 2024     |
-| Postgres function support                 | Q1 2024     |
 | Multiple DBs in one repo                  | Q1 2024     |
 | Statistics in joins                       | Q1 2024     |
+| DoltgreSQL prepared statements            | Q1 2024     |
+| DoltgreSQL 90% correctness                | Q1 2024     |
+| Postgres type support                     | Q1 2024     |
+| Postgres function support                 | Q1 2024     |
+| DoltgreSQL 99% correctness                | Q2 2024     |
 | Update multiple branches in a transaction | 2024        |
 | Row-level locking (`SELECT FOR UPDATE`)   | 2024        |
 | Transaction isolation levels              | 2024        |
@@ -48,6 +48,9 @@ Roadmap last updated Dec 2023, next update Jan 2024.
 
 | Feature                             | Launch Date |
 | -------                             | ---         |
+| Automatic JSON column merge         | Jan 2024    |
+| Rebase                              | Jan 2024    |
+| Push to running SQL server          | Dec 2023    |
 | reflog                              | Nov 2023    |
 | Virtual columns and json indexing   | Nov 2023    |
 | Postgres alpha                      | Nov 2023    |
