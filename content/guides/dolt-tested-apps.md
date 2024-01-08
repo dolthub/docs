@@ -16,6 +16,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Hibernate ](https://hibernate.org/)| Java | [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
 | [Knex.js](https://knexjs.org/) | Javascript | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
 | [EF Core](https://learn.microsoft.com/en-us/ef/core/) | C# | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample) |
+| [Laravel](https://laravel.com/) | PHP | [Blog](https://www.dolthub.com/blog/2024-01-08-dolt-laravel/) | [Code](https://github.com/dolthub/chirper) |
 
 ## Tools
 
