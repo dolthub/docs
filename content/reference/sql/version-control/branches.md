@@ -21,17 +21,6 @@ started, and can be changed for new connections with a [system
 variable](./dolt-sysvars.md#dbname_default_branch). Using database revision specifiers, clients can
 choose a specific branch, tag, or commit to pin their queries to.
 
-## Recovering a deleted branch
-The data on a branch is versioned, but the metadata of the branch head itself is not, so if you delete a 
-branch or reset it to point at an older commit, you can't revert or undo that change the same way you can 
-with your data. Instead, you can use 
-[the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) to see the history of commits
-your branch has referenced and either recreate the branch from the last referenced commit with 
-[the `dolt_branch()` stored procedure](./dolt-sql-procedures.md#dolt_branch) or reset the branch to a 
-previous commit with [the `dolt_reset()` stored procedure](./dolt-sql-procedures.md#dolt_reset). See
-[the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) for an example of recreating
-a deleted branch and more information on how the Dolt reflog works and what limitations it has.  
-
 ## Specify a database revision in the connection string
 
 The exact connection string you need to use will vary depending on your client.
@@ -129,6 +118,17 @@ CALL DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh331
 The set of branches and their HEAD commits are established at transaction start time. Changes made
 to the set of branches or their HEAD commits in other transactions will not be visible to this
 session until a new transaction begins.
+
+## Recovering a deleted branch
+The data on a branch is versioned, but the metadata of the branch head itself is not, so if you delete a 
+branch or reset it to point at an older commit, you can't revert or undo that change the same way you can 
+with your data. Instead, you can use 
+[the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) to see the history of commits
+your branch has referenced and either recreate the branch from the last referenced commit with 
+[the `dolt_branch()` stored procedure](./dolt-sql-procedures.md#dolt_branch) or reset the branch to a 
+previous commit with [the `dolt_reset()` stored procedure](./dolt-sql-procedures.md#dolt_reset). See
+[the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) for an example of recreating
+a deleted branch and more information on how the Dolt reflog works and what limitations it has.
 
 ## Restrictions on committing to multiple branches in a single transaction
 
