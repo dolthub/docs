@@ -44,7 +44,7 @@ Valid commands for dolt are
                   gc - Cleans up unreferenced data from the repository.
        filter-branch - Edits the commit history using the provided query.
           merge-base - Find the common ancestor of two commits.
-             version - Displays the current Dolt cli version.
+             version - Displays the version for the Dolt binary.
                 dump - Export all tables in the working set into a file.
                 docs - Commands for working with Dolt documents.
                stash - Stash the changes in a dirty working directory away.
@@ -324,6 +324,9 @@ dolt checkout `<table>`...
 `--b`:
 Create a new branch named `<new_branch>` and start it at `<start_point>`.
 
+`--B`:
+Similar to '-b'. Forcibly resets the branch to `<start_point>` if it exists.
+
 `-f`, `--force`:
 If there is any changes in working set, the force flag will wipe out the current changes and checkout the new branch.
 
@@ -436,6 +439,9 @@ OSS profile to use.
 
 `-u`, `--user`:
 User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
+
+`--single-branch`:
+Clone only the history leading to the tip of a single branch, either specified by --branch or the remote's HEAD (default).
 
 
 
@@ -992,7 +998,7 @@ When no refspec(s) are specified on the command line, the fetch_specs for the de
 
 **Arguments and options**
 
-`-u`, `--user`:
+`--user`:
 User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
 
 `-p`, `--prune`:
@@ -1059,8 +1065,6 @@ Searches the repository for data that is no longer referenced and no longer need
 
 If the `--shallow` flag is supplied, a faster but less thorough garbage collection will be performed.
 
-`dolt gc` won't work if there is a running server. Use `dolt sql -q 'call dolt_gc()'` instead.
-
 **Arguments and options**
 
 `-s`, `--shallow`:
@@ -1101,9 +1105,6 @@ The branch name used to initialize this database. If not provided will be taken 
 
 `--new-format`:
 Specify this flag to use the new storage format (__DOLT__).
-
-`--old-format`:
-Specify this flag to use the old storage format (__LD_1__).
 
 `--fun`
 
@@ -1402,7 +1403,7 @@ Perform the merge and stop just before creating a merge commit. Note this will n
 `--no-edit`:
 Use an auto-generated commit message when creating a merge commit. The default for interactive CLI sessions is to open an editor.
 
-`-u`, `--user`:
+`--user`:
 User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
 
 `--silent`:
@@ -1434,6 +1435,9 @@ When neither the command-line does not specify what to push, the default behavio
 
 
 **Arguments and options**
+
+`--user`:
+User name to use when authenticating with the remote. Gets password from the environment variable `DOLT_REMOTE_PASSWORD`.
 
 `-u`, `--set-upstream`:
 For every branch that is up to date or successfully pushed, add upstream (tracking) reference, used by argument-less `dolt pull` and other commands.
@@ -1963,7 +1967,7 @@ dolt sql-server [-H <host>] [-P <port>] [-u <user>] [-p <password>] [-t <timeout
 
 **Description**
 
-By default, starts a MySQL-compatible server on the dolt database in the current directory. Databases are named after the directories they appear in, with all non-alphanumeric characters replaced by the _ character. Parameters can be specified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line. If `--config <file>` is provided all other command line arguments are ignored.
+By default, starts a MySQL-compatible server on the dolt database in the current directory. Databases are named after the directories they appear in.Parameters can be specified using a yaml configuration file passed to the server via `--config <file>`, or by using the supported switches and flags to configure the server directly on the command line. If `--config <file>` is provided all other command line arguments are ignored.
 
 This is an example yaml configuration file showing all supported items and their default values:
 
@@ -2004,8 +2008,7 @@ This is an example yaml configuration file showing all supported items and their
 	  host: null
 	  port: -1
 	
-	remotesapi:
-	  port: null
+	remotesapi: {}
 	
 	privilege_file: .doltcfg/privileges.db
 	
@@ -2052,6 +2055,8 @@ SUPPORTED CONFIG FILE FIELDS:
 `listener.write_timeout_millis`: The number of milliseconds that the server will wait for a write operation
 
 `remotesapi.port`: A port to listen for remote API operations on. If set to a positive integer, this server will accept connections from clients to clone, pull, etc. databases being served.
+
+`remotesapi.read_only`: Boolean flag which disables the ability to perform pushes against the server.
 
 `user_session_vars`: A map of user name to a map of session variables to set on connection for each session.
 
@@ -2122,6 +2127,9 @@ Path for the unix socket file. Defaults to '/tmp/mysql.sock'.
 
 `--remotesapi-port`:
 Sets the port for a server which can expose the databases in this sql-server over remotesapi, so that clients can clone or pull from this server.
+
+`--remotesapi-readonly`:
+Disable writes to the sql-server via the push operations. SQL writes are unaffected by this setting.
 
 `--golden`:
 Provides a connection string to a MySQL instance to be used to validate query results
@@ -2331,7 +2339,7 @@ Imports data into a dolt table
 **Synopsis**
 
 ```bash
-dolt table import -c [-f] [--pk <field>] [--schema <file>] [--map <file>] [--continue]  [--quiet] [--disable-fk-checks] [--file-type <type>] <table> <file>
+dolt table import -c [-f] [--pk <field>] [--all-text] [--schema <file>] [--map <file>] [--continue]  [--quiet] [--disable-fk-checks] [--file-type <type>] <table> <file>
 dolt table import -u [--map <file>] [--continue] [--quiet] [--file-type <type>] <table> <file>
 dolt table import -a [--map <file>] [--continue] [--quiet] [--file-type <type>] <table> <file>
 dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
@@ -2394,11 +2402,11 @@ Update an existing table with the imported data.
 `-a`, `--append-table`:
 Require that the operation will not modify any rows in the table.
 
-`-f`, `--force`:
-If a create operation is being executed, data already exists in the destination, the force flag will allow the target to be overwritten.
-
 `-r`, `--replace-table`:
 Replace existing table with imported data while preserving the original schema.
+
+`-f`, `--force`:
+If a create operation is being executed, data already exists in the destination, the force flag will allow the target to be overwritten.
 
 `--continue`:
 Continue importing when row import errors are encountered.
@@ -2423,6 +2431,9 @@ Explicitly define the type of the file if it can't be inferred from the file ext
 
 `--delim`:
 Specify a delimiter for a csv style file with a non-comma delimiter.
+
+`--all-text`:
+Treats all fields as text. Can only be used when creating a table.
 
 
 
@@ -2513,6 +2524,30 @@ Delete a tag.
 
 `--author`:
 Specify an explicit author using the standard A U Thor `<author@example.com>` format.
+
+
+
+## `dolt version`
+
+Displays the version for the Dolt binary.
+
+**Synopsis**
+
+```bash
+dolt version [--verbose] [--feature]
+```
+
+**Description**
+
+Displays the version for the Dolt binary.
+
+**Arguments and options**
+
+`-f`, `--feature`:
+display the feature version of this repository.
+
+`-v`, `--verbose`:
+display verbose details, including the storage format of this repository.
 
 
 
