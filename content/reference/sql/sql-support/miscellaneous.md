@@ -66,6 +66,28 @@ Additional notes:
 - Join operator hints are order-insensitive
 - Join operator hints apply as long as the indicated tables are subsets of the join left/right.
 
+## Table Statistics
+
+Dolt currently supports table statistics for index costing.
+
+Statistics are collected by running `ANALYZE TABLE <table>`, are
+used implicitly by the analyzer during costed rules, have no automatic
+refresh cycle, and are not yet persisted during server restarts.
+
+Here is an example of how to initialize and observe statistics:
+
+```sql
+CREATE TABLE xy (x int primary key, y int);
+INSERT INTO xy values (1,1), (2,2);
+ANALYZE TABLE xy;
+SELECT * from information_schema.tables;
++-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| SCHEMA_NAME | TABLE_NAME | COLUMN_NAME | HISTOGRAM                                                                                                                                                                                                                                                                                                                                                      |
++-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tmp4        | xy         | x           | {"statistic": {"avg_size": 0, "buckets": [{"bound_count": 1, "distinct_count": 2, "mcv_counts": [1,1], "mcvs": [[1],[2]], "null_count": 0, "row_count": 2, "upper_bound": [2]}], "columns": ["x"], "created_at": "2023-11-14T11:33:32.250178-08:00", "distinct_count": 2, "null_count": 2, "qualifier": "tmp4.xy.PRIMARY", "row_count": 2, "types:": ["int"]}} |
++-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
 ## Collations and character sets
 
 Dolt supports a subset of the character sets and collations that MySQL supports.
