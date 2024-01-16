@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 251 of 438 MySQL functions.**
+**Currently supporting 258 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -97,14 +97,14 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `ASYMMETRIC_SIGN()`               | ❌            |                                                                                                                                               |
 | `ASYMMETRIC_VERIFY()`             | ❌            |                                                                                                                                               |
 | `ATAN()`                          | ✅            |                                                                                                                                               |
-| `ATAN2()`                         | ❌            |                                                                                                                                               |
+| `ATAN2()`                         | ✅            |                                                                                                                                               |
 | `AVG()`                           | ✅            |                                                                                                                                               |
 | `BENCHMARK()`                     | ❌            |                                                                                                                                               |
 | `BETWEEN ... AND ...`             | ✅            |                                                                                                                                               |
 | `BIN()`                           | ✅            |                                                                                                                                               |
 | `BIN_TO_UUID()`                   | ✅            |                                                                                                                                               |
 | `BIT_AND()`                       | ✅            |                                                                                                                                               |
-| `BIT_COUNT()`                     | ❌            |                                                                                                                                               |
+| `BIT_COUNT()`                     | ✅            |                                                                                                                                               |
 | `BIT_LENGTH()`                    | ✅            |                                                                                                                                               |
 | `BIT_OR()`                        | ✅            | `\                                                                                                                                            |` is supported                                                 |
 | `BIT_XOR()`                       | ✅            | `^` is supported                                                                                                                              |
@@ -116,7 +116,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CAST()`                          | ✅            | Convert between types supported. Convert between charsets is not.                                                                             |
 | `CEIL()`                          | ✅            |                                                                                                                                               |
 | `CEILING()`                       | ✅            |                                                                                                                                               |
-| `CHAR()`                          | ❌            |                                                                                                                                               |
+| `CHAR()`                          | ✅            |                                                                                                                                               |
 | `CHARACTER_LENGTH()`              | ✅            |                                                                                                                                               |
 | `CHARSET()`                       | ❌            |                                                                                                                                               |
 | `CHAR_LENGTH()`                   | ✅            |                                                                                                                                               |
@@ -163,13 +163,13 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `DEGREES()`                       | ✅            |                                                                                                                                               |
 | `DENSE_RANK()`                    | ✅            |                                                                                                                                               |
 | `DIV`                             | ✅            |                                                                                                                                               |
-| `ELT()`                           | ❌            |                                                                                                                                               |
-| `EXP()`                           | ❌            |                                                                                                                                               |
+| `ELT()`                           | ✅            |                                                                                                                                               |
+| `EXP()`                           | ✅            |                                                                                                                                               |
 | `EXPLODE()`                       | ✅            |                                                                                                                                               |
 | `EXPORT_SET()`                    | ❌            |                                                                                                                                               |
 | `EXTRACT()`                       | ✅            |                                                                                                                                               |
 | `EXTRACTVALUE()`                  | ❌            |                                                                                                                                               |
-| `FIELD()`                         | ❌            |                                                                                                                                               |
+| `FIELD()`                         | ✅            |                                                                                                                                               |
 | `FIND_IN_SET()`                   | ✅            |                                                                                                                                               |
 | `FIRST()`                         | ✅            |                                                                                                                                               |
 | `FIRST_VALUE()`                   | ✅            |                                                                                                                                               |
@@ -317,7 +317,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `NULLIF()`                        | ✅            |                                                                                                                                               |
 | `OCT()`                           | ❌            |                                                                                                                                               |
 | `OCTET_LENGTH()`                  | ❌            |                                                                                                                                               |
-| `ORD()`                           | ❌            |                                                                                                                                               |
+| `ORD()`                           | ✅            |                                                                                                                                               |
 | `OR`                              | ✅            |                                                                                                                                               |
 | `PERCENT_RANK()`                  | ✅            |                                                                                                                                               |
 | `PERIOD_ADD()`                    | ❌            |                                                                                                                                               |
