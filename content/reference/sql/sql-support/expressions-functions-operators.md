@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 250 of 438 MySQL functions.**
+**Currently supporting 251 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -121,7 +121,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CHARSET()`                       | ❌            |                                                                                                                                               |
 | `CHAR_LENGTH()`                   | ✅            |                                                                                                                                               |
 | `COALESCE()`                      | ✅            |                                                                                                                                               |
-| `COERCIBILITY()`                  | ❌            |                                                                                                                                               |
+| `COERCIBILITY()`                  | ✅            |                                                                                                                                               |
 | `COLLATION()`                     | ✅            |                                                                                                                                               |
 | `COMPRESS()`                      | ❌            |                                                                                                                                               |
 | `CONCAT()`                        | ✅            |                                                                                                                                               |
@@ -168,7 +168,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `EXPLODE()`                       | ✅            |                                                                                                                                               |
 | `EXPORT_SET()`                    | ❌            |                                                                                                                                               |
 | `EXTRACT()`                       | ✅            |                                                                                                                                               |
-| `ExtractValue()`                  | ❌            |                                                                                                                                               |
+| `EXTRACTVALUE()`                  | ❌            |                                                                                                                                               |
 | `FIELD()`                         | ❌            |                                                                                                                                               |
 | `FIND_IN_SET()`                   | ✅            |                                                                                                                                               |
 | `FIRST()`                         | ✅            |                                                                                                                                               |
@@ -191,8 +191,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GROUP_CONCAT()`                  | ✅            |                                                                                                                                               |
 | `GTID_SUBSET()`                   | ❌            |                                                                                                                                               |
 | `GTID_SUBTRACT()`                 | ❌            |                                                                                                                                               |
-| `GeomCollection()`                | ✅            |                                                                                                                                               |
-| `GeometryCollection()`            | ✅            |                                                                                                                                               |
+| `GEOMCOLLECTION()`                | ✅            |                                                                                                                                               |
+| `GEOMETRYCOLLECTION()`            | ✅            |                                                                                                                                               |
 | `HASHOF()`                        | ✅            | Returns the hash of a reference, e.g. `HASHOF("master")`)                                                                                     |     |
 | `HEX()`                           | ✅            |                                                                                                                                               |
 | `HOUR()`                          | ✅            |                                                                                                                                               |
@@ -328,8 +328,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `POWER()`                         | ✅            |                                                                                                                                               |
 | `PS_CURRENT_THREAD_ID()`          | ❌            |                                                                                                                                               |
 | `PS_THREAD_ID()`                  | ❌            |                                                                                                                                               |
-| `Point()`                         | ✅            |                                                                                                                                               |
-| `Polygon()`                       | ✅            |                                                                                                                                               |
+| `POINT()`                         | ✅            |                                                                                                                                               |
+| `POLYGON()`                       | ✅            |                                                                                                                                               |
 | `QUARTER()`                       | ❌            |                                                                                                                                               |
 | `QUOTE()`                         | ❌            |                                                                                                                                               |
 | `RADIANS()`                       | ✅            |                                                                                                                                               |
@@ -377,77 +377,77 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `STDDEV_SAMP()`                   | ❌            |                                                                                                                                               |
 | `STRCMP()`                        | ✅            |                                                                                                                                               |
 | `STR_TO_DATE()`                   | ✅            |                                                                                                                                               |
-| `ST_Area()`                       | ✅            | Geodetic not yet supported                                                                                                                    |
-| `ST_AsBinary()`                   | ✅            |                                                                                                                                               |
-| `ST_AsGeoJSON()`                  | ✅            |                                                                                                                                               |
-| `ST_AsText()`                     | ✅            |                                                                                                                                               |
-| `ST_AsWKB()`                      | ✅            |                                                                                                                                               |
-| `ST_AsWKT()`                      | ✅            |                                                                                                                                               |
-| `ST_Buffer()`                     | ❌            |                                                                                                                                               |
-| `ST_Buffer_Strategy()`            | ❌            |                                                                                                                                               |
-| `ST_Centroid()`                   | ❌            |                                                                                                                                               |
-| `ST_Contains()`                   | ❌            |                                                                                                                                               |
-| `ST_ConvexHull()`                 | ❌            |                                                                                                                                               |
-| `ST_Crosses()`                    | ❌            |                                                                                                                                               |
-| `ST_Difference()`                 | ❌            |                                                                                                                                               |
-| `ST_Dimension()`                  | ✅            |                                                                                                                                               |
-| `ST_Disjoint()`                   | ❌            |                                                                                                                                               |
-| `ST_Distance()`                   | ✅            | Geodetic not yet supported                                                                                                                    |
-| `ST_Distance_Sphere()`            | ❌            |                                                                                                                                               |
-| `ST_EndPoint()`                   | ✅            |                                                                                                                                               |
-| `ST_Envelope()`                   | ❌            |                                                                                                                                               |
-| `ST_Equals()`                     | ✅            | Only supported for `POINT`s                                                                                                                   |
-| `ST_ExteriorRing()`               | ❌            |                                                                                                                                               |
-| `ST_GeoHash()`                    | ❌            |                                                                                                                                               |
-| `ST_GeomCollFromText()`           | ✅            |                                                                                                                                               |
-| `ST_GeomCollFromWKB()`            | ✅            |                                                                                                                                               |
-| `ST_GeomFromGeoJSON()`            | ✅            |                                                                                                                                               |
-| `ST_GeomFromText()`               | ✅            |                                                                                                                                               |
-| `ST_GeomFromWKB()`                | ✅            |                                                                                                                                               |
-| `ST_GeometryN()`                  | ❌            |                                                                                                                                               |
-| `ST_GeometryType()`               | ❌            |                                                                                                                                               |
-| `ST_InteriorRingN()`              | ❌            |                                                                                                                                               |
-| `ST_Intersection()`               | ❌            |                                                                                                                                               |
-| `ST_Intersects()`                 | ✅            |                                                                                                                                               |
-| `ST_IsClosed()`                   | ✅            |                                                                                                                                               |
-| `ST_IsEmpty()`                    | ❌            |                                                                                                                                               |
-| `ST_IsSimple()`                   | ❌            |                                                                                                                                               |
-| `ST_IsValid()`                    | ❌            |                                                                                                                                               |
-| `ST_LatFromGeoHash()`             | ❌            |                                                                                                                                               |
-| `ST_Latitude()`                   | ✅            |                                                                                                                                               |
-| `ST_Length()`                     | ✅            | Geodetic not yet supported                                                                                                                    |
-| `ST_LineFromText()`               | ✅            |                                                                                                                                               |
-| `ST_LineFromWKB()`                | ✅            |                                                                                                                                               |
-| `ST_LongFromGeoHash()`            | ❌            |                                                                                                                                               |
-| `ST_Longitude()`                  | ✅            |                                                                                                                                               |
-| `ST_MLineFromText()`              | ✅            |                                                                                                                                               |
-| `ST_MLineFromWKB()`               | ✅            |                                                                                                                                               |
-| `ST_MPointFromText()`             | ✅            |                                                                                                                                               |
-| `ST_MPointFromWKB()`              | ✅            |                                                                                                                                               |
-| `ST_MPolyFromText()`              | ✅            |                                                                                                                                               |
-| `ST_MPolyFromWKB()`               | ✅            |                                                                                                                                               |
-| `ST_MakeEnvelope()`               | ❌            |                                                                                                                                               |
-| `ST_NumGeometries()`              | ❌            |                                                                                                                                               |
-| `ST_NumInteriorRing()`            | ❌            |                                                                                                                                               |
-| `ST_NumPoints()`                  | ❌            |                                                                                                                                               |
-| `ST_Overlaps()`                   | ❌            |                                                                                                                                               |
-| `ST_Perimeter()`                  | ✅            | Geodetic not yet supported. Not supported in MySQL. Follows PostGIS: https://postgis.net/docs/ST_Perimeter.html                               |
-| `ST_PointFromGeoHash()`           | ❌            |                                                                                                                                               |
-| `ST_PointFromText()`              | ✅            |                                                                                                                                               |
-| `ST_PointFromWKB()`               | ✅            |                                                                                                                                               |
-| `ST_PointN()`                     | ❌            |                                                                                                                                               |
-| `ST_PolyFromText()`               | ✅            |                                                                                                                                               |
-| `ST_PolyFromWKB()`                | ✅            |                                                                                                                                               |
+| `ST_AREA()`                       | ✅            | Geodetic not yet supported                                                                                                                    |
+| `ST_ASBINARY()`                   | ✅            |                                                                                                                                               |
+| `ST_ASGEOJSON()`                  | ✅            |                                                                                                                                               |
+| `ST_ASTEXT()`                     | ✅            |                                                                                                                                               |
+| `ST_ASWKB()`                      | ✅            |                                                                                                                                               |
+| `ST_ASWKT()`                      | ✅            |                                                                                                                                               |
+| `ST_BUFFER()`                     | ❌            |                                                                                                                                               |
+| `ST_BUFFER_STRATEGY()`            | ❌            |                                                                                                                                               |
+| `ST_CENTROID()`                   | ❌            |                                                                                                                                               |
+| `ST_CONTAINS()`                   | ❌            |                                                                                                                                               |
+| `ST_CONVEXHULL()`                 | ❌            |                                                                                                                                               |
+| `ST_CROSSES()`                    | ❌            |                                                                                                                                               |
+| `ST_DIFFERENCE()`                 | ❌            |                                                                                                                                               |
+| `ST_DIMENSION()`                  | ✅            |                                                                                                                                               |
+| `ST_DISJOINT()`                   | ❌            |                                                                                                                                               |
+| `ST_DISTANCE()`                   | ✅            | Geodetic not yet supported                                                                                                                    |
+| `ST_DISTANCE_SPHERE()`            | ❌            |                                                                                                                                               |
+| `ST_ENDPOINT()`                   | ✅            |                                                                                                                                               |
+| `ST_ENVELOPE()`                   | ❌            |                                                                                                                                               |
+| `ST_EQUALS()`                     | ✅            | Only supported for `POINT`s                                                                                                                   |
+| `ST_EXTERIORRING()`               | ❌            |                                                                                                                                               |
+| `ST_GEOHASH()`                    | ❌            |                                                                                                                                               |
+| `ST_GEOMCOLLFROMTEXT()`           | ✅            |                                                                                                                                               |
+| `ST_GEOMCOLLFROMWKB()`            | ✅            |                                                                                                                                               |
+| `ST_GEOMFROMGEOJSON()`            | ✅            |                                                                                                                                               |
+| `ST_GEOMFROMTEXT()`               | ✅            |                                                                                                                                               |
+| `ST_GEOMFROMWKB()`                | ✅            |                                                                                                                                               |
+| `ST_GEOMETRYN()`                  | ❌            |                                                                                                                                               |
+| `ST_GEOMETRYTYPE()`               | ❌            |                                                                                                                                               |
+| `ST_INTERIORRINGN()`              | ❌            |                                                                                                                                               |
+| `ST_INTERSECTION()`               | ❌            |                                                                                                                                               |
+| `ST_INTERSECTS()`                 | ✅            |                                                                                                                                               |
+| `ST_ISCLOSED()`                   | ✅            |                                                                                                                                               |
+| `ST_ISEMPTY()`                    | ❌            |                                                                                                                                               |
+| `ST_ISSIMPLE()`                   | ❌            |                                                                                                                                               |
+| `ST_ISVALID()`                    | ❌            |                                                                                                                                               |
+| `ST_LATFROMGEOHASH()`             | ❌            |                                                                                                                                               |
+| `ST_LATITUDE()`                   | ✅            |                                                                                                                                               |
+| `ST_LENGTH()`                     | ✅            | Geodetic not yet supported                                                                                                                    |
+| `ST_LINEFROMTEXT()`               | ✅            |                                                                                                                                               |
+| `ST_LINEFROMWKB()`                | ✅            |                                                                                                                                               |
+| `ST_LONGFROMGEOHASH()`            | ❌            |                                                                                                                                               |
+| `ST_LONGITUDE()`                  | ✅            |                                                                                                                                               |
+| `ST_MLINEFROMTEXT()`              | ✅            |                                                                                                                                               |
+| `ST_MLINEFROMWKB()`               | ✅            |                                                                                                                                               |
+| `ST_MPOINTFROMTEXT()`             | ✅            |                                                                                                                                               |
+| `ST_MPOINTFROMWKB()`              | ✅            |                                                                                                                                               |
+| `ST_MPOLYFROMTEXT()`              | ✅            |                                                                                                                                               |
+| `ST_MPOLYFROMWKB()`               | ✅            |                                                                                                                                               |
+| `ST_MAKEENVELOPE()`               | ❌            |                                                                                                                                               |
+| `ST_NUMGEOMETRIES()`              | ❌            |                                                                                                                                               |
+| `ST_NUMINTERIORRING()`            | ❌            |                                                                                                                                               |
+| `ST_NUMPOINTS()`                  | ❌            |                                                                                                                                               |
+| `ST_OVERLAPS()`                   | ❌            |                                                                                                                                               |
+| `ST_PERIMETER()`                  | ✅            | Geodetic not yet supported. Not supported in MySQL. Follows PostGIS: https://postgis.net/docs/ST_Perimeter.html                               |
+| `ST_POINTFROMGEOHASH()`           | ❌            |                                                                                                                                               |
+| `ST_POINTFROMTEXT()`              | ✅            |                                                                                                                                               |
+| `ST_POINTFROMWKB()`               | ✅            |                                                                                                                                               |
+| `ST_POINTN()`                     | ❌            |                                                                                                                                               |
+| `ST_POLYFROMTEXT()`               | ✅            |                                                                                                                                               |
+| `ST_POLYFROMWKB()`                | ✅            |                                                                                                                                               |
 | `ST_SRID()`                       | ✅            |                                                                                                                                               |
-| `ST_Simplify()`                   | ❌            |                                                                                                                                               |
-| `ST_StartPoint()`                 | ✅            |                                                                                                                                               |
-| `ST_SwapXY()`                     | ✅            |                                                                                                                                               |
-| `ST_SymDifference()`              | ❌            |                                                                                                                                               |
-| `ST_Touches()`                    | ❌            |                                                                                                                                               |
-| `ST_Transform()`                  | ❌            |                                                                                                                                               |
-| `ST_Union()`                      | ❌            |                                                                                                                                               |
-| `ST_Validate()`                   | ❌            |                                                                                                                                               |
-| `ST_Within()`                     | ✅            | Only supported for Point vs Geometry comparisons                                                                                              |
+| `ST_SIMPLIFY()`                   | ❌            |                                                                                                                                               |
+| `ST_STARTPOINT()`                 | ✅            |                                                                                                                                               |
+| `ST_SWAPXY()`                     | ✅            |                                                                                                                                               |
+| `ST_SYMDIFFERENCE()`              | ❌            |                                                                                                                                               |
+| `ST_TOUCHES()`                    | ❌            |                                                                                                                                               |
+| `ST_TRANSFORM()`                  | ❌            |                                                                                                                                               |
+| `ST_UNION()`                      | ❌            |                                                                                                                                               |
+| `ST_VALIDATE()`                   | ❌            |                                                                                                                                               |
+| `ST_WITHIN()`                     | ✅            | Only supported for Point vs Geometry comparisons                                                                                              |
 | `ST_X()`                          | ✅            |                                                                                                                                               |
 | `ST_Y()`                          | ✅            |                                                                                                                                               |
 | `SUBDATE()`                       | ✅            |                                                                                                                                               |
@@ -484,7 +484,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `UUID()`                          | ✅            |                                                                                                                                               |
 | `UUID_SHORT()`                    | ❌            |                                                                                                                                               |
 | `UUID_TO_BIN()`                   | ✅            |                                                                                                                                               |
-| `UpdateXML()`                     | ❌            |                                                                                                                                               |
+| `UPDATEXML()`                     | ❌            |                                                                                                                                               |
 | `VALIDATE_PASSWORD_STRENGTH()`    | ❌            |                                                                                                                                               |
 | `VALUES()`                        | ✅            |                                                                                                                                               |
 | `VARIANCE()`                      | ❌            |                                                                                                                                               |
