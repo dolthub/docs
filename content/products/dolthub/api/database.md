@@ -298,3 +298,20 @@ headers = {
 {% swagger src="../../../.gitbook/assets/dolthub-api/listreleases.json" path="/{owner}/{database}/releases" method="get" %}
 [listreleases.json](../../../.gitbook/assets/dolthub-api/listreleases.json)
 {% endswagger %}
+
+
+## List operations
+
+Here's an example of how to list `SqlWrite` operations initiated by user `liuliu` using an [authorization token](authentication.md).
+
+Listing operations requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details.
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/listoperations.json" path="/users/{username}/operations" method="get" %}
+[listoperations.json](../../../.gitbook/assets/dolthub-api/listoperations.json)
+{% endswagger %}
