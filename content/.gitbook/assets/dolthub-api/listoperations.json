@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "DoltHub API - List operations",
-        "description": "API to list operations on a database",
+        "description": "API to list operations for a user",
         "version": "1.0.0"
     },
     "servers": [
@@ -19,7 +19,7 @@
                     {
                         "name": "username",
                         "in": "path",
-                        "description": "The name of the user who initiated the operations. It is essential that this user's name matches the one performing the current list operation call.",
+                        "description": "The name of the user who initiated the operations. This user's name must match the user associated with the api token.",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -83,12 +83,12 @@
                                                     },
                                                     "operation_type": {
                                                         "type": "string",
-                                                        "description": "Type of the operation. Supported operation types are SqlWrite,SqlRead, Import, Merge, Migrate.",
+                                                        "description": "Type of the operation. Supported operation types are SqlWrite, SqlRead, Import, Merge, Migrate.",
                                                         "example": "SqlWrite"
                                                     },
                                                     "operation_status": {
                                                         "type": "string",
-                                                        "description": "Status of the operation, supported statuses are Pending, Running, Success, Failure.",
+                                                        "description": "Status of the operation. Supported statuses are Pending, Running, Success, Failure.",
                                                         "example": "liuliu"
                                                     },
                                                     "error": {
@@ -108,7 +108,7 @@
                                                     },
                                                     "updated_at": {
                                                         "type": "string",
-                                                        "description": "Timestamp of the operation update",
+                                                        "description": "Timestamp of the last operation update",
                                                         "example": "2024-01-09T22:19:50.000Z"
                                                     }
                                                 }
