@@ -1,0 +1,166 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DoltHub API - List jobs",
+        "description": "API to list jobs on a database",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://www.dolthub.com/api/v1alpha1"
+        }
+    ],
+    "paths": {
+        "/{owner}/{database}/jobs": {
+            "get": {
+                "summary": "List jobs",
+                "description": "This API endpoint allows you to list all jobs in your database.",
+                "parameters": [
+                    {
+                        "name": "owner",
+                        "in": "path",
+                        "description": "The name of the owner of the database.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "dolthub"
+                        }
+                    },
+                    {
+                        "name": "database",
+                        "in": "path",
+                        "description": "The name of the database.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "museum-collections"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "Status of the request.",
+                                            "example": "Success"
+                                        },
+                                        "database_owner": {
+                                            "type": "string",
+                                            "description": "Name of the owner of the database",
+                                            "example": "dolthub"
+                                        },
+                                        "database_name": {
+                                            "type": "string",
+                                            "description": "Name of the database",
+                                            "example": "museum-collections"
+                                        },
+                                        "jobs": {
+                                            "type": "array",
+                                            "description": "List of jobs",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "job_id": {
+                                                        "type": "string",
+                                                        "description": "Id of the job",
+                                                        "example": "repositoryOwners/dolthub/repositories/museum-collections/jobs/aa37149c-61c3-4ce2-b3d8-694d2a152257"
+                                                    },
+                                                    "creator": {
+                                                        "type": "string",
+                                                        "description": "Creator of the job",
+                                                        "example": "liuliu"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "description": "Description of the job",
+                                                        "example": "Merge pull request #9"
+                                                    },
+                                                    "job_type": {
+                                                        "type": "string",
+                                                        "description": "Type of the job. Supported job types are SqlRead, Import, Merge, Migrate.",
+                                                        "example": "Merge"
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "description": "Status of the job, supported statuses are Pending, Running, Succeeded, Failed.",
+                                                        "example": "Failed"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "description": "Timestamp of the job creation",
+                                                        "example": "2024-01-09T22:19:49.000Z"
+                                                    },
+                                                    "error": {
+                                                        "type": "string",
+                                                        "description": "Error message if the job failed",
+                                                        "example": "failed to push to branch"
+                                                    }
+                                                }
+                                            },
+                                            "maxItems": 15
+                                        },
+                                        "next_page_token": {
+                                            "type": "string",
+                                            "description": "Token for the next page of results",
+                                            "example": "AWE2Nm9uMWQ2M84_Q_ajmYOdCDIg_Ac8OuedPyAGoTT3TsBNnTSE29QPb6oJmZdbjYwdFjTwu6_ioVx4nsp3eCPoO5zyATKGsauocvy4onXjoWGfqmatl2dcm-2Ks45NPT0qRPu37HjVcaC0Qj2X5_KHcYI70fzOLn1RogexmtBlf_AtI3os4DntzhZtfp9GFtHiVekppo_26viXiKcjy0DpKay5"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. The request was invalid or could not be processed.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error getting the jobs list."
+                                        },
+                                        "database_owner": {
+                                            "type": "string",
+                                            "description": "Name of the owner of the database",
+                                            "example": "dolthub"
+                                        },
+                                        "database_name": {
+                                            "type": "string",
+                                            "description": "Name of the database",
+                                            "example": "museum-collections"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "APIKeyHeader": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "authorization"
+            }
+        }
+    }
+}
