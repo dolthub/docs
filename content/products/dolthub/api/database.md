@@ -321,3 +321,24 @@ headers = {
 {% swagger src="../../../.gitbook/assets/dolthub-api/listoperations.json" path="/users/{username}/operations" method="get" %}
 [listoperations.json](../../../.gitbook/assets/dolthub-api/listoperations.json)
 {% endswagger %}
+
+
+## List jobs
+
+DoltHub performs certain asynchronous operations through job execution, including merging, importing, SQL reading, and migrating. When these operations are initiated via the API, you receive an operation name that includes the job ID.
+
+This API endpoint lets you monitor the status of jobs started in one database. 
+
+Here is an example of how to list all the jobs on a database `museum-collections` using an [authorization token](authentication.md).
+
+Listing jobs requires authentication, so you must include this authorization header in your request. See the [Authentication](authentication.md) section for more details. 
+
+```python
+headers = {
+    'authorization': '[api token you created]'
+}
+```
+
+{% swagger src="../../../.gitbook/assets/dolthub-api/listjobs.json" path="/{owner}/{database}/jobs" method="get" %}
+[listjobs.json](../../../.gitbook/assets/dolthub-api/listjobs.json)
+{% endswagger %}

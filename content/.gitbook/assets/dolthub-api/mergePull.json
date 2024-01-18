@@ -74,7 +74,13 @@
                       },
                       "operation_name": {
                         "type": "string",
+                        "description": "The job id that is performing the merge.",
                         "example": "repositoryOwners/dolthub/repositories/museum-collections/jobs/b09a9221-9dcb-4a15-9ca8-a64656946f12"
+                      },
+                      "user_operation_name":{
+                        "type":"string",
+                        "description":"The operation id that is tied to the merge job, this will be the operation_name field in list operations response.",
+                        "example":"users/liuliu/userOperations/5e4834c9-375d-4bbd-bdaf-09eb0734127c"
                       }
                     }
                   }
