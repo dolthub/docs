@@ -128,7 +128,7 @@
                   },
                   "user_operation_name":{
                     "type":"string",
-                    "description": "The operation id that is tied to the upload job, this will be the operation_name field in list operations response.",
+                    "description": "The operation id that is associated to the upload job. It corresponds to the 'operation_name' field returned in the response of the list operations API.",
                     "example":"users/liuliu/userOperations/5e4834c9-375d-4bbd-bdaf-09eb0734127c"
                   }
                 }

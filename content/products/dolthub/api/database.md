@@ -327,7 +327,7 @@ headers = {
 
 DoltHub performs certain asynchronous operations through job execution, including merging, importing, SQL reading, and migrating. When these operations are initiated via the API, you receive an operation name that includes the job ID.
 
-This API endpoint lets you monitor the status of jobs started in one database. 
+This API endpoint lets you monitor the status of jobs started in a specific database. 
 
 Here is an example of how to list all the jobs on a database `museum-collections` using an [authorization token](authentication.md).
 
