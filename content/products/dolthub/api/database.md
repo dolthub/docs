@@ -302,7 +302,7 @@ headers = {
 
 ## List operations
 
-DoltHub provides support for asynchronous operations, including merging, SQL writing, and file importing. Using the list operations API enables users to monitor the status of their executed operations. For troubleshooting, users can inspect the `error` field within the operation object. And, the `metadata` field offers details of the operation. For instance, in a SQL write operation, the `metadata` will show the query executed, database and branch that the query ran on. To filter a specific type of operation, users can include the operationType parameter in the query. Supported operation types are SqlWrite, SqlRead, Import, Merge, and Migrate.
+DoltHub provides support for asynchronous operations, including merging, SQL writing, and file importing. Using the list operations API enables you to monitor the status of the executed operations. For troubleshooting, you can inspect the `error` field within the operation object. And, the `metadata` field offers details of the operation. For instance, in a SQL write operation, the `metadata` will show the query executed, database and branch that the query ran on. To filter a specific type of operation, you can include the `operationType` parameter in the query. Supported operation types are SqlWrite, SqlRead, Import, Merge, and Migrate. The operations list is paginated.
 
 Here's an example of how to list `SqlWrite` operations initiated by user `liuliu` using an [authorization token](authentication.md).
 
