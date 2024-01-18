@@ -306,7 +306,7 @@ DoltHub provides support for asynchronous operations, including merging, SQL wri
 
 This API endpoint lets you monitor the status of all the operations you started in one place without needing to poll the endpoints for singular operations. These operations have `error` and `metadata` fields which contain useful information for troubleshooting and debugging.
 
-For example, if you have executed a few SQL write queries using that [API endpoint](https://docs.dolthub.com/products/dolthub/api/sql#id-1.-run-query), you can list those operations using the `operationType` query parameter to filter for `SqlWrite` operations. The `metadata` will show the query executed, database and branch that the query ran on, as well as any syntax or other errors you may have encountered.
+For example, if you have executed a few SQL write queries using that [API endpoint](sql.md#writing), you can list those operations using the `operationType` query parameter to filter for `SqlWrite` operations. The `metadata` will show the query executed, database and branch that the query ran on, as well as any syntax or other errors you may have encountered.
 
 Here's an example of how to list `SqlWrite` operations initiated by user `liuliu` using an [authorization token](authentication.md).
 
