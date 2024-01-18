@@ -1,0 +1,176 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "DoltHub API - List operations",
+        "description": "API to list operations for a user",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://www.dolthub.com/api/v1alpha1"
+        }
+    ],
+    "paths": {
+        "/users/{username}/operations": {
+            "get": {
+                "summary": "List operations",
+                "description": "This API endpoint allows you to list all operations that are created by the user.",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "path",
+                        "description": "The name of the user who initiated the operations. This user's name must match the user associated with the api token.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "liuliu"
+                        }
+                    },
+                    {
+                        "name": "operationType",
+                        "in": "query",
+                        "description": "Specific type of operation for this query. Supported operation types are SqlWrite, SqlRead, Import, Merge, Migrate.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "SqlWrite"
+                        }
+                    },
+                    {
+                        "name": "pageToken",
+                        "in": "query",
+                        "description": "Token for the next page of results",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "AWE2Nm9uMWQ26pQQpqLNLXu7a60647lpiZoDFrf5WDGHo68XNC-rfr068rymbEdUHCXidRxx7_fwGBMSzQi6C_D50NcJFXm0BwRnGmmHEL4T4xxkWoX3sL5mKD-PuMRuxeHPsR0NB5Rzi70jGzblVlfBTIHPJ20c630pNLrI_spxH0tYTzMnQ4uPpr3ub9P50FEH9i4Au0gUkmvj8NUibbGWi-R1AJYplEPr="
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "description": "Status of the request.",
+                                            "example": "Success"
+                                        },
+                                        "operations": {
+                                            "type": "array",
+                                            "description": "List of operations",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "operation_name": {
+                                                        "type": "string",
+                                                        "description": "Name of the operation",
+                                                        "example": "users/liuliu/userOperations/5e4834c9-375d-4bbd-bdaf-09eb0734127c"
+                                                    },
+                                                    "creator": {
+                                                        "type": "string",
+                                                        "description": "Creator of the operation",
+                                                        "example": "liuliu"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "description": "Description of the operation",
+                                                        "example": "Run query CREATE TABLE tablename (\\n  pk INT,\\n  col1 VARCHAR(255),\\n  PRIMARY KEY (pk)\\n);"
+                                                    },
+                                                    "operation_type": {
+                                                        "type": "string",
+                                                        "description": "Type of the operation. Supported operation types are SqlWrite, SqlRead, Import, Merge, Migrate.",
+                                                        "example": "SqlWrite"
+                                                    },
+                                                    "operation_status": {
+                                                        "type": "string",
+                                                        "description": "Status of the operation. Supported statuses are Pending, Running, Success, Failure.",
+                                                        "example": "liuliu"
+                                                    },
+                                                    "error": {
+                                                        "type": "string",
+                                                        "description": "Error message if the operation failed",
+                                                        "example": "table with name tablename already exists"
+                                                    },
+                                                    "metadata": {
+                                                        "type": "string",
+                                                        "description": "Metadata of the operation",
+                                                        "example": "{'from_branch_name':'main','from_repo_name':'api-db','from_repo_owner':'liuliu','sql_query':'CREATE TABLE tablename (\\n  pk INT,\\n  col1 VARCHAR(255),\\n  PRIMARY KEY (pk)\\n);','to_branch_name':'main','to_repo_name':'api-db','to_repo_owner':'liuliu'}"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "description": "Timestamp of the operation creation",
+                                                        "example": "2024-01-09T22:19:49.000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "description": "Timestamp of the last operation update",
+                                                        "example": "2024-01-09T22:19:50.000Z"
+                                                    }
+                                                }
+                                            },
+                                            "maxItems": 15
+                                        },
+                                        "next_page_token": {
+                                            "type": "string",
+                                            "description": "Token for the next page of results",
+                                            "example": "AWE2Nm9uMWQ26pQQpqLNLXu7a60647lpiZoDFrf5WDGHo68XNC-rfr068rymbEdUHCXidRxx7_fwGBMSzQi6C_D50NcJFXm0BwRnGmmHEL4T4xxkWoX3sL5mKD-PuMRuxeHPsR0NB5Rzi70jGzblVlfBTIHPJ20c630pNLrI_spxH0tYTzMnQ4uPpr3ub9P50FEH9i4Au0gUkmvj8NUibbGWi-R1AJYplEPr="
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request. The request was invalid or could not be processed.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "Error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error getting the operations list."
+                                        },
+                                        "username": {
+                                            "type": "string",
+                                            "description": "The name of the user who initiated the operations.",
+                                            "example": "liuliu"
+                                        },
+                                        "operation_type": {
+                                            "type": "string",
+                                            "description": "Operation type if provided in the query",
+                                            "example": "SqlWrite"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "APIKeyHeader": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "APIKeyHeader": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "authorization"
+            }
+        }
+    }
+}
