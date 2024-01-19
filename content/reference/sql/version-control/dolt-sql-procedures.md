@@ -845,6 +845,7 @@ details.
 | hash         | text | hash of the merge commit             |
 | fast_forward | int  | whether the merge was a fast forward |
 | conflicts    | int  | number of conflicts created          |
+| message      | text | optional informational message       |
 +--------------+------+--------------------------------------+
 ```
 
@@ -912,6 +913,7 @@ details.
 +--------------+------+-------------------------------------+
 | fast_forward | int  | whether the pull was a fast forward |
 | conflicts    | int  | number of conflicts created         |
+| message      | text | optional informational message      |
 +--------------+------+-------------------------------------+
 ```
 
@@ -974,12 +976,12 @@ CALL DOLT_PUSH('--force', 'origin', 'main');
 ### Output Schema
 
 ```text
-+---------+------+-----------------------------+
-| Field   | Type | Description                 |
-+---------+------+-----------------------------+
-| status  | int  | 0 if successful, 1 if not   |
-| message | text | success/failure information |
-+---------+------+-----------------------------+
++---------+------+--------------------------------+
+| Field   | Type | Description                    |
++---------+------+--------------------------------+
+| status  | int  | 0 if successful, 1 if not      |
+| message | text | optional informational message |
++---------+------+--------------------------------+
 ```
 
 ### Example
