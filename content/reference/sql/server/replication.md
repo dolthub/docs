@@ -32,60 +32,44 @@ details on the differences between Remote-Based Replication and Hot Standby Repl
 The rest of this page describes configuration and considerations for both types of
 replication, starting with replication through a remote.
 
-{% hint style="info" %}
-
-### Note
-
-Replication is only available in the [Dolt SQL
-Server](../../../concepts/dolt/rdbms/server.md) context. You cannot
-trigger replication with a CLI `dolt commit`, `dolt merge`, or other
-command line invocations. If you would like to trigger replication
-from the command line, use `dolt sql` and the SQL equivalent of the
-CLI command you want, e.g. `dolt sql -q "call dolt_commit(...)"`. This
-gap will be addressed in future releases of the tool.
-{% endhint %}
-
 # Replication Through a Remote
 
 ## Configuration
 
-Dolt relies on [system
-variables](../../../concepts/dolt/sql/system-variables.md) to
-configure replication. The following system variables affect
-replication:
+Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md) to configure
+replication. The following system variables affect replication:
 
 1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote).
-   **Required for a primary.** The primary will push to the remote named on writes.
+   **Required for a primary.** The primary will push to the remote named on any branch or tag
+   update. If more than one database is being served, each must have a remote with the given name.
 1. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#doltreadreplicaremote).
-   **Required for a replica.** The replica will pull from the remote named on reads.
-1. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads).
-   **Either this variable or `@@dolt_replicate_all_heads` must be
-   set.** Used to configure specific branches (ie. HEADs) to push /
-   pull. Set to a comma-separated list of branches to be
-   replicated. The wildcard `*` may be used to match zero or more characters
-   in a branch name and is useful for selecting multiple branches. 
+   **Required for a replica.** The replica will pull from the remote named at transaction start.
+1. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads). **Either this
+   variable or `@@dolt_replicate_all_heads` must be set on a replica.** Used to configure specific
+   branches (ie. HEADs) to pull. Set to a comma-separated list of branches to be replicated. The
+   wildcard `*` may be used to match zero or more characters in a branch name and is useful for
+   selecting multiple branches. Has no effect on a primary.
 1. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads).
-   **Either this variable or `@@dolt_replicate_heads` must be set.**
-   Replicate all branches (ie. HEADs). Defaults to 0.
+   **Either this variable or `@@dolt_replicate_heads` must be set on a replica.** Pull all branches
+   and tags on a read replica (ie. HEADs). Defaults to 0. Has no effect on a primary.
 1. [`@@dolt_replication_remote_url_template`](../version-control/dolt-sysvars.md#doltreplicationremoteurltemplate).
-   _Optional._ Set to a URL template to configure the replication
-   remote for newly created databases. Without this variable set, only
-   databases that existed at server start time will replicate.
+   _Optional._ Set to a URL template to configure the replication remote for newly created
+   databases. Without this variable set, only databases that existed at server start time will be
+   replicated.
 1. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors).
    Makes replication errors warnings, instead of errors. Defaults to 0.
 1. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit).
    Makes every transaction `COMMIT` a Dolt commit to force all writes to replicate. Default 0.
-1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication).
-   Make replication asynchronous, which means that read replicas will
-   be eventually consistent with the primary. Defaults to 0.
+1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication). Set to 1
+   to make replication pushes asynchronous, which means that read replicas will be eventually
+   consistent with the primary. Defaults to 0.
 
 ### Configuring a Primary
 
 To set up a primary, you use the [`@@dolt_replicate_to_remote` system
 variable](../version-control/dolt-sysvars.md#doltreplicatetoremote). You
 set that variable to the name of the remote you would like to use for
-replication. Additionally, set either `@@dolt_replicate_all_heads` or
-`@@dolt_replicate_heads`.
+replication.
 
 In this example I am going to use a DoltHub remote to facilitate
 replication. I created an empty database on DoltHub and [configured
@@ -96,30 +80,34 @@ Then set the appropriate server variables:
 
 ```bash
 $ dolt remote add origin timsehn/replication_example
-$ dolt sql -q "set @@persist.dolt_replicate_all_heads = 1"
 $ dolt sql -q "set @@persist.dolt_replicate_to_remote = 'origin'"
 ```
 
-The next time you create a Dolt commit in a running SQL server or with
-a `dolt sql` command, Dolt will attempt to push the changes to the
-remote.
+The next time you create a Dolt commit, Dolt will attempt to push the changes to the remote.
 
 ```bash
 $ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
 $ dolt sql -q "insert into test values (0,0)"
 Query OK, 1 row affected
 $ dolt add -A
-$ dolt sql -q "call dolt_commit('-m', 'trigger replication')"
-+----------------------------------+
-| hash                             |
-+----------------------------------+
-| 7on23n1h8k22062mbebbt0ejm3i7dakd |
-+----------------------------------+
+$ dolt commit -m 'trigger replication'
 ```
 
 And we can see the changes are pushed to the remote.
 
 ![DoltHub Replication Example](../../../.gitbook/assets/replication-example.png)
+
+{% hint style="info" %}
+
+### Note
+
+Replication pushes can be triggered by running commands on the CLI even when no Dolt SQL server is
+running. CLI commands like `dolt commit`, `dolt merge`, or other command line invocations on a
+database configured to be a primary will cause any updated branches or tags to be pushed to the
+remote specified. On a replica, such commands will cause the replica to pull from the remote before
+execution.
+
+{% endhint %}
 
 #### Stopping Replication
 
@@ -155,45 +143,6 @@ Date:  Mon Jul 11 15:54:22 -0700 2022
 And now on the remote.
 
 ![DoltHub Replication Example](../../../.gitbook/assets/replication-example-2.png)
-
-#### Warn instead of fail on Replication Errors
-
-Set the [`sqlserver.global.dolt_skip_replication_errors` system
-variable](../version-control/dolt-sysvars.md#doltskipreplicationerrors)
-to print warnings rather than error if replication is misconfigured.
-
-Without this set, if we have a replication error, it fails the action.
-
-```bash
-$ dolt sql -q "set @@persist.dolt_replicate_to_remote = 'broken'"
-$ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
-failure loading hook; remote not found: 'broken'
-replication_example $ dolt log -n 1
-commit u4shvua2st16btub8mimdd2lj7iv4sdu (HEAD -> main)
-Author: Tim Sehn <tim@dolthub.com>
-Date:  Mon Jul 11 15:54:22 -0700 2022
-
-        Transaction commit
-```
-
-But if we set the `@@dolt_skip_replication_errors` variable, we get a warning instead.
-
-```bash
-$ dolt sql -q "set @@persist.dolt_skip_replication_errors = '1'"
-$ dolt sql -q "call dolt_commit('-m', 'empty commit', '--allow-empty')"
-failure loading hook; remote not found: 'broken'
-+----------------------------------+
-| hash                             |
-+----------------------------------+
-| jco517ifl1em82f5at2eo75el28dgglt |
-+----------------------------------+
-$ dolt log --n 1
-commit jco517ifl1em82f5at2eo75el28dgglt (HEAD -> main)
-Author: Tim Sehn <tim@dolthub.com>
-Date:  Mon Jul 11 16:02:01 -0700 2022
-
-        empty commit
-```
 
 #### Asynchronous replication
 
@@ -367,23 +316,10 @@ read replicas.
 
 ### Failover
 
-If the primary database processing writes fails, queries will either
-need to be routed to a replica, or queue / fail until the primary
-restarts. We do not have a purpose-built solution or documentation for
-failover recovery yet.
-
-In the meantime, it is possible to use push / pull replication to
-maintain a standby server. If the primary server fails, the standby
-and proxy would need to walk through a series of steps to create a new
-primary:
-
-1. Standby server disables read-only mode if it was used as a read
-   replica previously.
-1. Standby server recovers the most recent transactions, either from
-   the remote middleman or a primary backup.
-1. Standby sets replication varaibles to push on write.
-1. Proxy layer directs write queries to the formerly standby, now
-   primary server.
+No automated failover is possible using remote-based replicas, because there is no way to promote a
+read replica into a primary without a restart. To configure a database cluster that supports
+automated failover, please use [direct-to-standby replication
+instead](replication.md#direct-to-standby-replication).
 
 ### Multi-Primary
 
@@ -751,13 +687,16 @@ things to consider when choosing how to configure replication.
    decoupled. There is no need to change any configuration in order to add a new
    read replica, for example.
 
-3. Direct replication may experience lower replication lag in certain
+3. Direct replication may experience lower write latency in certain
    deployments, since replicating new writes directly to the running sql-server
    instance on the standby server may be expected to be faster than pushing new
    files to a remote storage solution and having the read replica download the
    files from there. On the other hand, direct replication may be less scalable in
    the number of read replicas which it can gracefully handle, since the primary
-   itself is responsible for pushing each write to each standby server.
+   itself is responsible for pushing each write to each standby server. For read 
+   replicas, read latency for direct replication is always faster, since no 
+   communication to a remote must take place. You can expect increased read latency 
+   on every transaction start of aremote-based read replica.
 
 4. The ability to replicate writes with direct replication is not coupled with
    the creation of dolt commits on a dolt branch. This may make it more
