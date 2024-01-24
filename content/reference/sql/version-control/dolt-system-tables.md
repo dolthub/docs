@@ -14,6 +14,7 @@ title: Dolt System Tables
   - [dolt_remotes](#dolt_remotes)
   - [dolt_schemas](#dolt_schemas)
   - [dolt_tags](#dolt_tags)
+  - [dolt_statistics](#dolt_statistics)
 
 - [Database History](#database-history-system-tables)
 
@@ -338,6 +339,38 @@ Then you can view them in `dolt_schemas`:
 `dolt_tags` shows information for all active tags in the current database.
 
 [DOLT_TAG()](./dolt-sql-procedures.md#dolt_tag) procedure can be used to INSERT and DELETE tags on the `dolt_tags` table.
+
+## `dolt_statistics`
+
+`dolt_statistics` includes currently collected
+database statistics. This information is stored outside of the
+commit graph and is not subject to versioning semantics.
+
+```sql
++-----------------+----------+------+-----+---------+-------+
+| Field           | Type     | Null | Key | Default | Extra |
++-----------------+----------+------+-----+---------+-------+
+| database        | text     | NO   | PRI | NULL    |       |
+| table           | text     | NO   | PRI | NULL    |       |
+| index           | text     | NO   | PRI | NULL    |       |
+| position        | bigint   | NO   | PRI | NULL    |       |
+| version         | bigint   | NO   |     | NULL    |       |
+| commit_hash     | text     | NO   |     | NULL    |       |
+| row_count       | bigint   | NO   |     | NULL    |       |
+| distinct_count  | bigint   | NO   |     | NULL    |       |
+| null_count      | bigint   | NO   |     | NULL    |       |
+| columns         | json     | NO   |     | NULL    |       |
+| types           | json     | NO   |     | NULL    |       |
+| upper_bound     | json     | NO   |     | NULL    |       |
+| upper_bound_cnt | bigint   | NO   |     | NULL    |       |
+| created_at      | datetime | NO   |     | NULL    |       |
+| mcv1            | json     | NO   |     | NULL    |       |
+| mcv2            | json     | NO   |     | NULL    |       |
+| mcv3            | json     | NO   |     | NULL    |       |
+| mcv4            | json     | NO   |     | NULL    |       |
+| mcvCounts       | json     | NO   |     | NULL    |       |
++-----------------+----------+------+-----+---------+-------+
+```
 
 ### Schema
 
