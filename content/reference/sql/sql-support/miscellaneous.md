@@ -90,7 +90,7 @@ SELECT * from information_schema.tables;
 ```
 
 Alternatively, the `dolt_statistics` table exposes histogram
-individual information:
+information:
 
 ```sql
 create table horses (id int primary key, name varchar(10), key(name));
