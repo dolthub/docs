@@ -51,6 +51,7 @@ Valid commands for dolt are
              profile - Manage dolt profiles for CLI global options.
           query-diff - Shows table diff between two queries.
               reflog - Show history of named refs.
+              rebase - Reapplies commits on top of another base tip
 ```
 
 ## Global Arguments
@@ -142,7 +143,7 @@ Manage server backups
 dolt backup [-v | --verbose]
 dolt backup add [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <name> <url>
 dolt backup remove <name>
-dolt backup restore <url> <name>
+dolt backup restore [--force] <url> <name>
 dolt backup sync <name>
 dolt backup sync-url [--aws-region <region>] [--aws-creds-type <creds-type>] [--aws-creds-file <file>] [--aws-creds-profile <profile>] <url>
 ```
@@ -163,6 +164,7 @@ aws-creds-type specifies the means by which credentials should be retrieved in o
 	role: Use the credentials installed for the current user
 	env: Looks for environment variables AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
 	file: Uses the credentials file specified by the parameter aws-creds-file
+
 	
 GCP backup urls should be of the form gs://gcs-bucket/database and will use the credentials setup using the gcloud command line available from Google.
 
@@ -172,10 +174,11 @@ The local filesystem can be used as a backup by providing a repository url in th
 Remove the backup named `<name>`. All configuration settings for the backup are removed. The contents of the backup are not affected.
 
 `restore`
-Restore a Dolt database from a given `<url>` into a specified directory `<url>`.
+Restore a Dolt database from a given `<url>` into a specified directory `<name>`. This will fail if `<name>` is already a Dolt database unless '--force' is provided, in which case the existing database will be overwritten with the contents of the restored backup.
 
 `sync`
 Snapshot the database and upload to the backup `<name>`. This includes branches, tags, working sets, and remote tracking refs.
+
 	
 `sync-url`
 Snapshot the database and upload the backup to `<url>`. Like sync, this includes branches, tags, working sets, and remote tracking refs, but it does not require you to create a named backup
@@ -190,6 +193,9 @@ Snapshot the database and upload the backup to `<url>`. Like sync, this includes
 
 `-v`, `--verbose`:
 When printing the list of backups adds additional details.
+
+`-f`, `--force`:
+When restoring a backup, overwrite the contents of the existing database with the same name.
 
 `--aws-region`
 
@@ -1167,6 +1173,9 @@ Excludes commits from revision.
 `--oneline`:
 Shows logs in a compact format.
 
+`--stat`:
+Shows the diffstat for each commit.
+
 
 
 ## `dolt login`
@@ -1505,6 +1514,42 @@ A shallow clone operation will retrieve the state of table(s) from a remote repo
 
 `-d`, `--dir`:
 directory to create and put retrieved table data.
+
+
+
+## `dolt rebase`
+
+Reapplies commits on top of another base tip
+
+**Synopsis**
+
+```bash
+dolt rebase (-i | --interactive) <upstream>
+dolt rebase (--continue | --abort)
+```
+
+**Description**
+
+Rewrites commit history for the current branch by replaying commits, allowing the commits to be reordered, 
+squashed, or dropped. The commits included in the rebase plan are the commits reachable by the current branch, but NOT 
+reachable from the branch specified as the argument when starting a rebase (also known as the upstream branch). This is 
+the same as Git and Dolt's "two dot log" syntax, or |upstreamBranch|..|currentBranch|.
+
+Rebasing is useful to clean and organize your commit history, especially before merging a feature branch back to a shared 
+branch. For example, you can drop commits that contain debugging or test changes, or squash or fixup small commits into a 
+single commit, or reorder commits so that related changes are adjacent in the new commit history.
+
+
+**Arguments and options**
+
+`--abort`:
+Abort an interactive rebase and return the working set to the pre-rebase state
+
+`--continue`:
+Continue an interactive rebase after adjusting the rebase plan
+
+`-i`, `--interactive`:
+Start an interactive rebase
 
 
 
@@ -2349,7 +2394,7 @@ dolt table import -r [--map <file>] [--file-type <type>] <table> <file>
 
 If `--create-table | -c` is given the operation will create `<table>` and import the contents of file into it.  If a table already exists at this location then the operation will fail, unless the `--force | -f` flag is provided. The force flag forces the existing table to be overwritten.
 
-The schema for the new table can be specified explicitly by providing a SQL schema definition file, or will be inferred from the imported file.  All schemas, inferred or explicitly defined must define a primary key.  If the file format being imported does not support defining a primary key, then the `--pk` parameter must supply the name of the field that should be used as the primary key.
+The schema for the new table can be specified explicitly by providing a SQL schema definition file, or will be inferred from the imported file.  All schemas, inferred or explicitly defined must define a primary key.  If the file format being imported does not support defining a primary key, then the `--pk` parameter must supply the name of the field that should be used as the primary key. If no primary key is explicitly defined, the first column in the import file will be used as the primary key.
 
 If `--update-table | -u` is given the operation will update `<table>` with the contents of file. The table's existing schema will be used, and field names will be used to match file fields with table fields unless a mapping file is specified.
 
