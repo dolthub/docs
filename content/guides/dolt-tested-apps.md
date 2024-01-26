@@ -22,6 +22,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 
 | Tool | Blog | 
 | ---- | ---- | 
+| [Metabase](https://github.com/metabase/metabase) | [Blog](https://www.dolthub.com/blog/2024-01-24-dolt-metabase/) |
 | [Excel](https://www.microsoft.com/en-us/microsoft-365/excel) | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel) | 
 | [Google Sheets](https://www.google.com/sheets/about/#overview) | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/) |
 | [XCA](https://hohnstaedt.de/xca/) | [Blog](https://www.dolthub.com/blog/2023-08-21-xca-on-dolt/) |
