@@ -7,13 +7,13 @@ title: Dolt System Variables
 - [General system setting variables](#general-system-setting-variables)
 
   - [dbname_default_branch](#dbname_default_branch)
+  - [dolt_allow_commit_conflicts](#dolt_allow_commit_conflicts)
+  - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
   - [dolt_log_level](#dolt_log_level)
   - [dolt_show_branch_databases](#dolt_show_branch_databases)
   - [dolt_show_system_tables](#dolt_show_system_tables)
   - [dolt_transaction_commit](#dolt_transaction_commit)
-  - [dolt_allow_commit_conflicts](#dolt_allow_commit_conflicts)
-  - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
-  - [dolt_transaction_commit](#dolt_transaction_commit)
+  - [dolt_transaction_commit_message](#dolt_transaction_commit_message)
   - [strict_mysql_compatibility](#strict_mysql_compatibility)
 
 
@@ -94,7 +94,14 @@ Defaults to `0`.
 
 When set to `1`, this system variable creates a Dolt commit for every
 SQL transaction commit. Commits have an auto-generated commit
-message. Defaults to `0`.
+message, unless `@@dolt_transaction_commit_message` has been set to
+a commit message to use. Defaults to `0`. 
+
+## `dolt_transaction_commit_message`
+
+When `@@dolt_transaction_commit` is enabled, if this system variable is set to a 
+string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`, 
+which means automatic Dolt commits will use a generic commit message (e.g. "Transaction commit").
 
 ## `strict_mysql_compatibility`
 
