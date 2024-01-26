@@ -68,11 +68,12 @@ Additional notes:
 
 ## Table Statistics
 
-Dolt currently supports table statistics for index costing.
+Dolt currently supports table statistics for index and join costing.
 
 Statistics are collected by running `ANALYZE TABLE <table>`, are
 used implicitly by the analyzer during costed rules, have no automatic
-refresh cycle, and are not yet persisted during server restarts.
+refresh cycle, and are persisted during server restarts since Dolt
+version `1.32.1`.
 
 Here is an example of how to initialize and observe statistics:
 
@@ -86,6 +87,30 @@ SELECT * from information_schema.tables;
 +-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | tmp4        | xy         | x           | {"statistic": {"avg_size": 0, "buckets": [{"bound_count": 1, "distinct_count": 2, "mcv_counts": [1,1], "mcvs": [[1],[2]], "null_count": 0, "row_count": 2, "upper_bound": [2]}], "columns": ["x"], "created_at": "2023-11-14T11:33:32.250178-08:00", "distinct_count": 2, "null_count": 2, "qualifier": "tmp4.xy.PRIMARY", "row_count": 2, "types:": ["int"]}} |
 +-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+```
+
+Alternatively, the `dolt_statistics` table exposes histogram
+information:
+
+```sql
+create table horses (id int primary key, name varchar(10), key(name));
+insert into horses select x, 'Steve' from (with recursive inputs(x) as (select 1 union select x+1 from inputs where x < 1000) select * from inputs) dt;
+analyze table horses;
+select `index`, `position`, row_count, distinct_count, columns, upper_bound, upper_bound_cnt, mcv1 from dolt_statistics;
++---------+----------+-----------+----------------+----------+-------------+-----------------+-----------+
+| index   | position | row_count | distinct_count | columns  | upper_bound | upper_bound_cnt | mcv1      |
++---------+----------+-----------+----------------+----------+-------------+-----------------+-----------+
+| primary | 0        | 344       | 344            | ["id"]   | [344]       | 1               | [344]     |
+| primary | 1        | 125       | 125            | ["id"]   | [469]       | 1               | [469]     |
+| primary | 2        | 249       | 249            | ["id"]   | [718]       | 1               | [718]     |
+| primary | 3        | 112       | 112            | ["id"]   | [830]       | 1               | [830]     |
+| primary | 4        | 170       | 170            | ["id"]   | [1000]      | 1               | [1000]    |
+| name    | 5        | 260       | 1              | ["name"] | ["Steve"]   | 260             | ["Steve"] |
+| name    | 6        | 237       | 1              | ["name"] | ["Steve"]   | 237             | ["Steve"] |
+| name    | 7        | 137       | 1              | ["name"] | ["Steve"]   | 137             | ["Steve"] |
+| name    | 8        | 188       | 1              | ["name"] | ["Steve"]   | 188             | ["Steve"] |
+| name    | 9        | 178       | 1              | ["name"] | ["Steve"]   | 178             | ["Steve"] |
++---------+----------+-----------+----------------+----------+-------------+-----------------+-----------+
 ```
 
 ## Collations and character sets
