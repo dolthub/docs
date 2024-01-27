@@ -93,15 +93,14 @@ Defaults to `0`.
 ## `dolt_transaction_commit`
 
 When set to `1`, this system variable creates a Dolt commit for every
-SQL transaction commit. Commits have an auto-generated commit
-message, unless `@@dolt_transaction_commit_message` has been set to
-a commit message to use. Defaults to `0`. 
+SQL transaction commit. Defaults to `0`. Commits have a standard commit
+message ("Transaction commit"), unless `@@dolt_transaction_commit_message` has been set.
 
 ## `dolt_transaction_commit_message`
 
 When `@@dolt_transaction_commit` is enabled, if this system variable is set to a 
 string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`, 
-which means automatic Dolt commits will use a generic commit message (e.g. "Transaction commit").
+which means automatic Dolt commits will use their standard commit message ("Transaction commit").
 
 ## `strict_mysql_compatibility`
 
