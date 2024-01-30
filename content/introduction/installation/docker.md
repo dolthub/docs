@@ -182,3 +182,22 @@ Database changed
 +----+------------+
 
 ```
+
+### Server liveness and readiness checks
+
+When running `dolthub/dolt-sql-server` in an environment like Kubernetes, liveness and readiness checks can be configured with something like:
+
+```yaml
+    livenessProbe:
+      exec:
+        command: ["dolt", "--host", "127.0.0.1", "--port", "3306", "--no-tls", "sql", "-q", "select current_timestamp();"]
+      initialDelaySeconds: 60
+      periodSeconds: 10
+    readinessProbe:
+      exec:
+        command: ["dolt", "--host", "127.0.0.1", "--port", "3306", "--no-tls", "sql", "-q", "select current_timestamp();"]
+      initialDelaySeconds: 40
+      periodSeconds: 10
+```
+
+This above configuration uses the `dolt` client within the server container to execute queries against the live server.
