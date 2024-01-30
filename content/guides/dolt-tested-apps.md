@@ -12,7 +12,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | ORM | Language | Blog | Sample Code | 
 | --- | ---------| ---- | ----------- |
 | [SQLAlchemy](https://www.sqlalchemy.org/) | Python | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/) | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
-| [Django](https://www.djangoproject.com/)| Python | [Blog](https://www.dolthub.com/blog/2021-06-09-running-django-on-dolt/) | - |
+| [Django](https://www.djangoproject.com/)| Python | [Blog](https://www.dolthub.com/blog/2024-01-31-dolt-django/) | [Code](https://github.com/dolthub/dolt_django) |
 | [Hibernate ](https://hibernate.org/)| Java | [Blog](https://www.dolthub.com/blog/2023-11-13-dolt-on-hibernate/) | [Code](https://github.com/dolthub/hibernate-sample) |
 | [Knex.js](https://knexjs.org/) | Javascript | [Blog](https://www.dolthub.com/blog/2023-09-27-dolt-and-knexjs/) | [Code](https://github.com/dolthub/dolt-knexjs-example) |
 | [EF Core](https://learn.microsoft.com/en-us/ef/core/) | C# | [Blog](https://www.dolthub.com/blog/2023-12-04-works-with-dolt-efcore/) | [Code](https://github.com/dolthub/efcore-sample) |
@@ -30,7 +30,3 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Looker Studio](https://lookerstudio.google.com/) | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/) |
 | [Apache Superset](https://superset.apache.org/) | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/) |
 | [Retool](https://retool.com/) | [Blog](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/) |
-
-
-
-
