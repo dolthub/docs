@@ -107,3 +107,13 @@ Note, a remote can be local to your filesystem using
 
 You can also [`dolt dump`](../reference/cli/cli.md#dolt-dump) the database and import 
 the dump to a new database using [`dolt sql`](../reference/cli/cli.md#dolt-sql).
+
+# Does Dolt collect client metrics? How can I disable it?
+
+Dolt collects anonymous usage metrics and sends them over the network to DoltHub metrics servers. No
+personally identifiable information is collected. You can disable this behavior by setting the
+`metrics.disabled` config key:
+
+```bash
+dolt config --global --add metrics.disabled true
+```
