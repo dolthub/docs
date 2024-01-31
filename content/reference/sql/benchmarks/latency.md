@@ -61,19 +61,3 @@ The Dolt version is `1.32.4`.
 |-----------------------|-----|
 <!-- END___DOLT___LATENCY_RESULTS_TABLE -->
 <br/>
-
-> NOTE: There was a recent change in these benchmarks.
-> On the night of October 31, both MySQL and Dolt write benchmarks
-> got slower but MySQL's got slower more. On writes, Dolt went from 1.3X MySQL
-> with no single measure faster than MySQL to 1.1X MySQL with five
-> individual measures faster than MySQL. This does not correspond to a
-> change in the MySQL or Dolt version.
->
-> We narrowed this performance change down to a change
-> in AWS Elastic Block Store latencies. Dolt relies on fsyncing
-> to disk less than MySQL and thus is less sensitive to disk latency.
-> We suspect some change to EBS increased disk latencies on October 31.
-> 
-> We chose to keep this benchmark because both Hosted Dolt and AWS RDS
-> MySQL rely on EBS for disk. We are closely monitoring this benchmark and
-> will be publishing more on the topic soon. 
