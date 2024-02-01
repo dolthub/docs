@@ -229,7 +229,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_DEPTH()`                    | ❌            |                                                                                                                                               |
 | `JSON_EXTRACT()`                  | ✅            |                                                                                                                                               |
 | `JSON_INSERT()`                   | ✅            |                                                                                                                                               |
-| `JSON_KEYS()`                     | ❌            |                                                                                                                                               |
+| `JSON_KEYS()`                     | ✅            |                                                                                                                                               |
 | `JSON_LENGTH()`                   | ✅            |                                                                                                                                               |
 | `JSON_MERGE()`                    | ❌            |                                                                                                                                               |
 | `JSON_MERGE_PATCH()`              | ❌            |                                                                                                                                               |
