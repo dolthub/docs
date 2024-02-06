@@ -20,8 +20,8 @@ title: Dolt SQL Functions
   - [dolt_log()](#dolt_log)
   - [dolt_patch()](#dolt_patch)
   - [dolt_reflog()](#dolt_reflog)
-  - [dolt_schema_diff](#dolt_schema_diff)
-  - [dolt_query_diff](#dolt_query_diff)
+  - [dolt_schema_diff()](#dolt_schema_diff)
+  - [dolt_query_diff()](#dolt_query_diff)
 
 # Informational Functions
 
