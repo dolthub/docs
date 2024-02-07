@@ -67,10 +67,10 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 ## Patching
 
 | Component     | Supported | Notes and limitations |
-| :------------ | :-------- | :-------------------- |
-| `cherry-pick` | ✅        |                       |
-| `rebase`      | ❌        |                       |
-| `revert`      | ✅        |                       |
+| :------------ |:----------| :-------------------- |
+| `cherry-pick` | ✅         |                       |
+| `rebase`      | ✅         |                       |
+| `revert`      | ✅         |                       |
 
 ## Debugging
 
