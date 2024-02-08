@@ -88,7 +88,7 @@ SELECT * from information_schema.tables;
 +-------------+------------+-------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ```
 
-Statistics are persisted in database's chunk store in a `refs/stats` ref stored separately from the commit graph. Each database has its own statistics store. The contents of the `refs/stats` reflect a single point-in-time, and are un-versioned. The contents of this ref in the current database can be inspected with the `dolt_statistics` system table. 
+Statistics are persisted in database's chunk store in a `refs/stats` ref stored separately from the commit graph. Each database has its own statistics store. The contents of the `refs/stats` reflect a single point-in-time for a single branch and are un-versioned. The contents of this ref in the current database can be inspected with the `dolt_statistics` system table. 
 
 ```sql
 create table horses (id int primary key, name varchar(10), key(name));
@@ -115,7 +115,7 @@ select `index`, `position`, row_count, distinct_count, columns, upper_bound, upp
 
 Static statistics become stale quickly for tables that change frequently. Users can choose to manually manage run `ANALYZE` statements, or use some form of auto-refresh.
 
-Auto-refresh statistics work the same way as partial `ANALYZE` updates. A table's "former" and "new" chunk set will 1) share common chunks preexisting in "former" 2) differ by deleted chunks only in the "former" table, and 3) differ by new chunks in the "new" table. This mirror's Dolt's inherent structural sharing. Rather than writing a new set of statistics for on every refresh interval (like an `ANALYZE` call does), we can toggle how many changes triggers the update.
+Auto-refresh statistic updates work the same way as partial `ANALYZE` updates. A table's "former" and "new" chunk set will 1) share common chunks preexisting in "former" 2) differ by deleted chunks only in the "former" table, and 3) differ by new chunks in the "new" table. This mirrors Dolt's inherent structural sharing. Rather than forcing an update on every refresh interval, we can toggle how many changes triggers the update.
 
 When the auto-refresh threshold is 0%, the auto-refresh thread behaves like a cron job that runs `ANALYZE` periodically.
 
