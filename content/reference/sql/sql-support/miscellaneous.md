@@ -151,6 +151,18 @@ A last variable blocks statistics from loading from disk on startup, or writing 
 dolt sql -q "set @@PERSIST.dolt_stats_memory_only = 1"
 ```
 
+### Stats Controller Functions
+
+Dolt exposes a set of helper functions for managing statistics collection and use:
+
+- `dolt_stats_drop()`: Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
+
+- `dolt_stats_stop()`: Cancels active auto-refresh threads for the current database.
+
+- `dolt_stats_restart()`: Stops and restarts a refresh thread for the current database with the current session's interval and threshold variables.
+
+- `dolt_stats_status()`: Returns the latest update to statistics for the current database.
+
 ### Performance
 
 Lowering check intervals and update thresholds increases the refresh read and write load. Refreshing statistics uses shortcuts to avoid reading from disk when possible, but in most cases at least needs to read the target fanout level of the tree from disk to compare previous and current chunk sets. Exceeding the refresh threshold reads all data from disk associated with the new chunk ranges, which will be the most expensive impact of auto-refresh. Dolt uses ordinal offsets to avoid reading unnecessary data, but the tree growing or shrinking by a level forces a full tablescan.
