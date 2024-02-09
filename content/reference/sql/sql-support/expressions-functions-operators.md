@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 262 of 438 MySQL functions.**
+**Currently supporting 263 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -229,7 +229,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_DEPTH()`                    | ❌            |                                                                                                                                               |
 | `JSON_EXTRACT()`                  | ✅            |                                                                                                                                               |
 | `JSON_INSERT()`                   | ✅            |                                                                                                                                               |
-| `JSON_KEYS()`                     | ❌            |                                                                                                                                               |
+| `JSON_KEYS()`                     | ✅            |                                                                                                                                               |
 | `JSON_LENGTH()`                   | ✅            |                                                                                                                                               |
 | `JSON_MERGE()`                    | ❌            |                                                                                                                                               |
 | `JSON_MERGE_PATCH()`              | ❌            |                                                                                                                                               |
