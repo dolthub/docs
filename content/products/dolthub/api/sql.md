@@ -123,7 +123,7 @@ write_json = write_res.json()
 ```
 
 {% hint style="info" %}
-Note: for larger queries you can put the query in the request body instead of using the query parameter.
+Note: for larger queries you can put the query in the request body (`json={"query": [your query]}`) instead of using the query parameter.
 {% endhint %}
 
 The `main` branch already exists in the database, and providing a `<to_branch>` that doesn't exist will create this new branch from the `<from_branch>`.
