@@ -2,8 +2,6 @@
 title: Storage Engine
 ---
 
-# Storage Engine
-
 [Dolt](https://www.doltdb.com) is the world's first [version controlled SQL database](https://www.dolthub.com/blog/2022-08-04-database-versioning/). How would you build a storage engine for such a thing?
 
 Dolt's storage engine is heavily influenced and shares code with [Noms](https://github.com/attic-labs/noms). We here at [DoltHub](https://www.dolthub.com) have immense respect for the Noms team's pioneering work, without which [Dolt](https://www.doltdb.com) would not exist.
