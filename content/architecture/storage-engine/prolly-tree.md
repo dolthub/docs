@@ -4,7 +4,7 @@ title: Prolly Tree
 
 "Prolly Tree" is short for ["Probabilistic B-tree"](https://github.com/attic-labs/noms/blob/master/doc/intro.md#prolly-trees-probabilistic-b-trees). "Prolly Tree" was coined by the good folks who built [Noms](https://github.com/attic-labs/noms), who as far as we can tell invented the data structure. We here at [DoltHub](https://www.dolthub.com) have immense respect for their pioneering work, without which [Dolt](https://www.doltdb.com) would not exist.
 
-![Prolly Tree](../images/tim-prolly-tree-example.png)
+![Prolly Tree](../.gitbook/assets/tim-prolly-tree-example.png)
 
 A Prolly Tree is a data structure closely related to a [B-tree](https://en.wikipedia.org/wiki/B-tree). Prolly Trees are generally useful but have proven particularly effective as the basis of [the storage engine](https://docs.dolthub.com/architecture/storage-engine) for [version controlled databases](https://www.dolthub.com/blog/2022-08-04-database-versioning/).
 
@@ -40,7 +40,7 @@ Prolly Trees are a variant of B-trees so let's first review some key B-tree conc
 
 A B-tree is data structure that maps keys to values. A B-tree stores key-value pairs in leaf nodes in sorted order. Internal nodes of a B-tree store pointers to children nodes and key delimiters; everything reachable from a pointer to a child node falls within a range of key values corresponding to the key delimiters before and after that pointer within the internal node.
 
-![B-tree Example](../images/tim-b-tree-example.png)
+![B-tree Example](../.gitbook/assets/tim-b-tree-example.png)
 
 A B-tree is optimized for a tradeoff between write and read performance. It's more expensive to maintain than dropping tuples into a heap without any ordering constraints, but when data is stored in a B-tree it's much quicker to seek to a given key and to do an in-order traversal of the keys with their values.
 
@@ -54,27 +54,27 @@ The easiest way to understand Prolly trees is to walk through, step-by-step, how
 
 1. **Sort**: Sort the map by its key value, so that it is laid out in order. 
 
-![Building a Prolly-Tree, Step 1](../images/tim-prolly-tree-step-1.png)
+![Building a Prolly-Tree, Step 1](../.gitbook/assets/tim-prolly-tree-step-1.png)
 
 2. **Determine Chunk Boundaries**: Use a seed, the size of the current chunk, and the key value to calculate a rolling hash. Any time the hash value is below a target value, form a chunk boundary and start a new block. Here's the chunking step on our leaf nodes:
 
-![Building a Prolly-tree, Step 2](../images/tim-prolly-tree-step-2.png)
+![Building a Prolly-tree, Step 2](../.gitbook/assets/tim-prolly-tree-step-2.png)
 
 3. **Hash each Chunk**: You now have the leaf nodes of the Prolly Tree. Compute the content address of each block by applying a strong hash function to its contents. You store the contents in a content addressed block store. Here our blocks have been addressed and stored in the block store:
 
-![Building a Prolly-tree, Step 3](../images/tim-prolly-tree-step-3.png)
+![Building a Prolly-tree, Step 3](../.gitbook/assets/tim-prolly-tree-step-3.png)
 
 4. **Finished?**: If the length of your list of content addresses is 1, then you are done. This is the content address of your tree.
 
 5. **Build a New Map** Otherwise, form the next layer of your Prolly Tree by creating a map of the highest key value in the chunk and the content address of the chunk. Here's what the entries for the first internal level of the tree would look like for our example:
 
-![Building a Prolly-tree, Step 5](../images/tim-prolly-tree-step-5.png)
+![Building a Prolly-tree, Step 5](../.gitbook/assets/tim-prolly-tree-step-5.png)
 
 6. **Return to Step 2**: Use this new map step 2. The algorithm terminates when step 4's condition is reached.
 
 Following these steps results in the following Prolly Tree. 
 
-![Prolly Tree](../images/tim-prolly-tree-example.png)
+![Prolly Tree](../.gitbook/assets/tim-prolly-tree-example.png)
 
 ## Modifying a Prolly Tree
 
@@ -84,7 +84,7 @@ The magic of Prolly Trees is not seen on construction, but on modification. As y
 
 If we update a value, we walk the tree by key to the leaf node holding the value. We then edit the referenced chunk in place. After the edit, we recalculate the content address of the chunk. We then walk up the tree recalculating each internal content address up to the root of the tree. 
 
-![Prolly Tree Value Update](../images/prolly-tree-update-value.png)
+![Prolly Tree Value Update](../.gitbook/assets/prolly-tree-update-value.png)
 
 ### Insert Keys
 
@@ -98,25 +98,25 @@ In Dolt's Prolly Tree implementation, chunks are set to be on average 4 kilobyte
 
 When you insert a key at the beginning of the key space, the tree is modified along the left edge.
 
-![Prolly Tree Beginning Insert](../images/prolly-tree-front-insert.png)
+![Prolly Tree Beginning Insert](../.gitbook/assets/prolly-tree-front-insert.png)
 
 #### At the end
 
 When you insert a key at the end of the key space, the tree is modified along the right edge.
 
-![Prolly Tree End Insert](../images/prolly-tree-back-insert.png)
+![Prolly Tree End Insert](../.gitbook/assets/prolly-tree-back-insert.png)
 
 #### In the middle
 
 When you insert a key in the middle of the key space, the tree is modified along a spline.
 
-![Prolly Tree Middle Insert](../images/prolly-tree-middle-insert.png)
+![Prolly Tree Middle Insert](../.gitbook/assets/prolly-tree-middle-insert.png)
 
 ### Delete a key
 
 When you delete a key, the tree is modified under the same rules as an insert.
 
-![Prolly Tree Delete Key](../images/prolly-tree-delete.png)
+![Prolly Tree Delete Key](../.gitbook/assets/prolly-tree-delete.png)
 
 # Properties
 
@@ -128,11 +128,11 @@ Consider a map with 4 integer keys, `(1, 2, 3, 4)` pointing at the same values. 
 
 Let's say we insert the chunks in sequential order.
 
-![Prolly Tree History Independence](../images/prolly-tree-history-independence-1.png)
+![Prolly Tree History Independence](../.gitbook/assets/prolly-tree-history-independence-1.png)
 
 Then, let's say we insert the keys in reverse order.
 
-![Prolly Tree History Independence](../images/prolly-tree-history-independence-2.png)
+![Prolly Tree History Independence](../.gitbook/assets/prolly-tree-history-independence-2.png)
 
 As you can see, we end up with the same Prolly Tree no matter which order we insert the values. It's a fun exercise to try and com e up with a sequence of inserts, updates, and deletes that result in a different tree that contains the same values. It's fun because you can't. The Prolly Tree algorithm always spits out the same tree.
 
@@ -142,19 +142,19 @@ Given history independence, the Prolly Tree difference calculation becomes quite
 
 Let's see how this algorithm works in practice. Recall the Prolly Tree where I updated the value in key 9. Let's compare it to our originally built Prolly Tree.
 
-![Prolly Tree Diff Step 1](../images/prolly-tree-diff-step-1.png)
+![Prolly Tree Diff Step 1](../.gitbook/assets/prolly-tree-diff-step-1.png)
 
 Start by comparing the root hashes. They are necessarily different.
 
-![Prolly Tree Diff Step 2](../images/prolly-tree-diff-step-2.png)
+![Prolly Tree Diff Step 2](../.gitbook/assets/prolly-tree-diff-step-2.png)
 
 Then walk both chunks identifying the subtree hashes that are different. In this case, a single hash is different.
 
-![Prolly Tree Diff Step 3](../images/prolly-tree-diff-step-3.png)
+![Prolly Tree Diff Step 3](../.gitbook/assets/prolly-tree-diff-step-3.png)
 
 Follow the pointer to the next layer and compare those chunks, finding the hashes that are different. If you are in a leaf node, produce the values that are different.
 
-![Prolly Tree Diff Step 4](../images/prolly-tree-diff-step-4.png)
+![Prolly Tree Diff Step 4](../.gitbook/assets/prolly-tree-diff-step-4.png)
 
 As you can see this algorithm scales with the size of the differences, not the size of the tree. This makes finding small differences in even large tress very fast.
 
@@ -162,7 +162,7 @@ As you can see this algorithm scales with the size of the differences, not the s
 
 Recall that Prolly trees are stored in a content addressed block store where the content address forms the lookup key for the block. 
 
-![Content Addressed Block Store](../images/../images/tim-prolly-tree-step-3.png)
+![Content Addressed Block Store](../.gitbook/assets/tim-prolly-tree-step-3.png)
 
 Thus, any blocks that share the same content address are only stored in the block store once. When they need to be retrieved they are retrieved via content address. This means that any blocks shared across versions will only be in the block store once.
 
@@ -176,7 +176,7 @@ Now that you have the general details, let's dive into some details highlighting
 
 The original Noms implementation of Prolly Trees was susceptible to a chunk size problem. You would end up with many small chunks and a few large ones. The chunk size was a geometric distribution with an average size of 4 kilobytes.
 
-![Chunk Size Geometric](../images/chunk-distribution-static-pattern.png)
+![Chunk Size Geometric](../.gitbook/assets/chunk-distribution-static-pattern.png)
 
 This is the pattern one would expect from repeated rolls of a rolling hash function. Let's imagine you have a six-sided die. You walk along the road picking up pebbles. For each pebble, you put it in a bag and roll the die. If the die shows 6 you get a new bag. The average number of pebbles you have in each bag is 3.5 but you will mostly have bags with one pebble and a few bags with >10 pebbles. The pebbles in the Noms case was the key, value byte stream and the dice was the rolling hash function.
 
@@ -184,7 +184,7 @@ Large chunks create a particular problem, especially on the read path, because y
 
 To fix this, Dolt's Prolly Tree implementation considers the chunk size when deciding whether to make a boundary. Given a target probability distribution function (PDF), Dolt uses its associated cumulative distribution function (CDF) to decide the probability of splitting a chunk of size x. Specifically, we use the formula `(CDF(end) - CDF(start)) / (1 - CDF(start))` to calculate the target probability. So, if the current chunk size is 2000 bytes the probability of triggering a boundary by appending a 64 byte key-value pair is `(CDF(2064) - CDF(2000) / 1 - CDF(2000)`. In Dolt, we want our chunk size normally distributed around 4 kilobytes and by using the above approach, we get that.
 
-![Chunk Size Normal](../images/chunk-distribution-dynamic-pattern.png)
+![Chunk Size Normal](../.gitbook/assets/chunk-distribution-dynamic-pattern.png)
 
 ## Only Consider Keys
 
