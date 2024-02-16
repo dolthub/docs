@@ -178,7 +178,7 @@ The original Noms implementation of Prolly Trees was susceptible to a chunk size
 
 ![Chunk Size Geometric](../../.gitbook/assets/chunk-distribution-static-pattern.png)
 
-This is the pattern one would expect from repeated rolls of a rolling hash function. Let's imagine you have a six-sided die. You walk along the road picking up pebbles. For each pebble, you put it in a bag and roll the die. If the die shows 6 you get a new bag. The average number of pebbles you have in each bag is 3.5 but you will mostly have bags with one pebble and a few bags with >10 pebbles. The pebbles in the Noms case was the key, value byte stream and the dice was the rolling hash function.
+This is the pattern one would expect from repeated rolls of a rolling hash function. Let's imagine you have a six-sided die. You walk along the road picking up pebbles. For each pebble, you put it in a bag and roll the die. If the die shows 6 you get a new bag. The average number of pebbles you have in each bag is 3.5 but you will mostly have bags with one pebble and a few bags with >10 pebbles. The pebbles in the Noms case was the key-value byte stream and the dice was the rolling hash function.
 
 Large chunks create a particular problem, especially on the read path, because you are more likely to be reading from large chunks. Within each chunk a binary search is performed to find the key you want. The larger the chunk the slower this is at log<sub>2</sub>(n) chunk size. So, you really want to keep a normally distributed chunk size.
 
