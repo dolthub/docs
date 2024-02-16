@@ -126,7 +126,7 @@ When you delete a key, the tree is modified under the same rules as an insert.
 
 A key property of a Prolly tree that enables fast diff and structural sharing is history independence. No matter which order you insert, update, or delete values, the Prolly tree is the same. This is best seen through example.
 
-Consider a map with 4 integer keys, `(1, 2, 3, 4)` pointing at the same values. Before hand we know the combination of keys `(1, 2)` will trigger a chunk boundary. We can know this beforehand because chunk boundaries are based on the size of the chunk and its contents. No matter which order we insert, update, or delete, if we will end up with a tree with two leaf nodes `(1, 2)`, and `(3,4)`. This also happens to be true if the keys have different values. The tree will be the same but the the chunks will have different addresses.
+Consider a map with 4 integer keys, `(1, 2, 3, 4)` pointing at the same values. Before hand we know the combination of keys `(1, 2)` will trigger a chunk boundary. We can know this beforehand because chunk boundaries are based on the size of the chunk and its contents. No matter which order we insert, update, or delete, if we will end up with a tree with two leaf nodes `(1, 2)`, and `(3,4)`. This also happens to be true if the values at these keys are different. The tree will be the same but the the chunks will have different addresses.
 
 Let's say we insert the chunks in sequential order.
 
@@ -136,7 +136,7 @@ Then, let's say we insert the keys in reverse order.
 
 ![Prolly Tree History Independence](../../.gitbook/assets/prolly-tree-history-independence-2.png)
 
-As you can see, we end up with the same Prolly Tree no matter which order we insert the values. It's a fun exercise to try and com e up with a sequence of inserts, updates, and deletes that result in a different tree that contains the same values. It's fun because you can't. The Prolly Tree algorithm always spits out the same tree.
+As you can see, we end up with the same Prolly Tree no matter which order we insert the values. It's a fun exercise to try and come up with a sequence of inserts, updates, and deletes that result in a different tree that contains the same values. It's fun because you can't. The Prolly Tree algorithm always spits out the same tree.
 
 ## Fast Diff
 
@@ -180,7 +180,7 @@ The original Noms implementation of Prolly Trees was susceptible to a chunk size
 
 ![Chunk Size Geometric](../../.gitbook/assets/chunk-distribution-static-pattern.png)
 
-This is the pattern one would expect from repeated rolls of a rolling hash function. Let's imagine you have a six-sided die. You walk along the road picking up pebbles. For each pebble, you put it in a bag and roll the die. If the die shows 6 you get a new bag. The average number of pebbles you have in each bag is 3.5 but you will mostly have bags with one pebble and a few bags with >10 pebbles. The pebbles in the Noms case was the key, value byte stream and the dice was the rolling hash function.
+This is the pattern one would expect from repeated rolls of a rolling hash function. Let's imagine you have a six-sided die. You walk along the road picking up pebbles. For each pebble, you put it in a bag and roll the die. If the die shows 6 you get a new bag. The average number of pebbles you have in each bag is 3.5 but you will mostly have bags with one pebble and a few bags with >10 pebbles. The pebbles in the Noms case was the key-value byte stream and the dice was the rolling hash function.
 
 Large chunks create a particular problem, especially on the read path, because you are more likely to be reading from large chunks. Within each chunk a binary search is performed to find the key you want. The larger the chunk the slower this is at log<sub>2</sub>(n) chunk size. So, you really want to keep a normally distributed chunk size.
 
