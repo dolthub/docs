@@ -56,7 +56,7 @@ The easiest way to understand Prolly trees is to walk through, step-by-step, how
 
 ![Building a Prolly-Tree, Step 1](../../.gitbook/assets/tim-prolly-tree-step-1.png)
 
-2. **Determine Chunk Boundaries**: Use a seed, the size of the current chunk, and the key value to calculate a rolling hash. Any time the hash value is below a target value, form a chunk boundary and start a new block. Here's the chunking step on our leaf nodes:
+2. **Determine Chunk Boundaries**: Use a seed, the size of the current chunk, the key value and a strong hash function to calculate whether this current entry represents a new chunk boundary. Any time the hash value is below a target value, form a chunk boundary and start a new block. Here's the chunking step on our leaf nodes:
 
 ![Building a Prolly-tree, Step 2](../../.gitbook/assets/tim-prolly-tree-step-2.png)
 
@@ -82,15 +82,17 @@ The magic of Prolly Trees is not seen on construction, but on modification. As y
 
 ### Update a Value
 
-If we update a value, we walk the tree by key to the leaf node holding the value. We then edit the referenced chunk in place. After the edit, we recalculate the content address of the chunk. We then walk up the tree recalculating each internal content address up to the root of the tree. 
+If we update a value, we walk the tree by key to the leaf node holding the value. We then create the new leaf chunk by directly modifying the existing value in a copy of the existing chunk (ie. [copy on write](https://en.wikipedia.org/wiki/Copy-on-write)). After the edit, we recalculate the content address of the chunk. We then walk up the tree recalculating each internal content address up to the root of the tree. 
 
 ![Prolly Tree Value Update](../../.gitbook/assets/prolly-tree-update-value.png)
+
+Note, this is only true for fixed-size value updates. If you change the length of a value, then we do have to re-chunk. Changes to NULL values or strings are not fixed length updates.
 
 ### Insert Keys
 
 We can insert keys at the beginning, middle, or end of the key space. It's helpful to visualize each type of insert.
 
-When we insert a key, we walk the tree by key to the leaf node where the key belongs. We then edit the chunk, calculate whether to split the chunk or not, and then recalculate the content address. Note, a key insert or delete has a small probability of splitting the chunk. If the rolling hash value when incorporating the new key randomly comes up below our boundary threshold, the chunk is split at the new boundary. Finally, we walk up the tree recalculating each content address up to the root of the tree.
+When we insert a key, we walk the tree by key to the leaf node where the key belongs. We then edit the chunk, calculate whether to split the chunk or not, and then recalculate the content address. Note, a key insert or a delete has a small probability of changing an existing chunk boundary. If the computed hash values for the keys, combined with the size of chunk at those keys, happens to choose a different chunk boundary, the chunk will be split at the new boundary. Finally, we walk up the tree recalculating each content address up to the root of the tree.
 
 In Dolt's Prolly Tree implementation, chunks are set to be on average 4 kilobytes. This means that you have a base probability of 1/4096 or 0.02% of triggering a chunk boundary shift with a single byte rolling hash window. A single byte window would not be enough data to provide the requisite level of randomness so the rolling hash window is set to 64 bytes, providing a base probability of a chunk split of 64/4096 or 1.6%. As we'll discuss later, the size of the chunk is considered when computing the rolling hash. So, the larger the chunk, the greater the probability the chunk will be split on the addition of a new key. Conversely, for small chunks, the probability of a chunk split is very small. This means that every edit to a table in Dolt is a minimum of 4Kb multiplied by the depth of the tree.
 
