@@ -134,7 +134,7 @@ Then, let's say we insert the keys in reverse order.
 
 ![Prolly Tree History Independence](../../.gitbook/assets/prolly-tree-history-independence-2.png)
 
-As you can see, we end up with the same Prolly Tree no matter which order we insert the values. It's a fun exercise to try and com e up with a sequence of inserts, updates, and deletes that result in a different tree that contains the same values. It's fun because you can't. The Prolly Tree algorithm always spits out the same tree.
+As you can see, we end up with the same Prolly Tree no matter which order we insert the values. It's a fun exercise to try and come up with a sequence of inserts, updates, and deletes that result in a different tree that contains the same values. It's fun because you can't. The Prolly Tree algorithm always spits out the same tree.
 
 ## Fast Diff
 
