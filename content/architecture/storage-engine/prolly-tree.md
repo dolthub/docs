@@ -124,7 +124,7 @@ When you delete a key, the tree is modified under the same rules as an insert.
 
 A key property of a Prolly tree that enables fast diff and structural sharing is history independence. No matter which order you insert, update, or delete values, the Prolly tree is the same. This is best seen through example.
 
-Consider a map with 4 integer keys, `(1, 2, 3, 4)` pointing at the same values. Before hand we know the combination of keys `(1, 2)` will trigger a chunk boundary. We can know this beforehand because chunk boundaries are based on the size of the chunk and its contents. No matter which order we insert, update, or delete, if we will end up with a tree with two leaf nodes `(1, 2)`, and `(3,4)`. This also happens to be true if the keys have different values. The tree will be the same but the the chunks will have different addresses.
+Consider a map with 4 integer keys, `(1, 2, 3, 4)` pointing at the same values. Before hand we know the combination of keys `(1, 2)` will trigger a chunk boundary. We can know this beforehand because chunk boundaries are based on the size of the chunk and its contents. No matter which order we insert, update, or delete, if we will end up with a tree with two leaf nodes `(1, 2)`, and `(3,4)`. This also happens to be true if the values at these keys are different. The tree will be the same but the the chunks will have different addresses.
 
 Let's say we insert the chunks in sequential order.
 
