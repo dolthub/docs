@@ -235,3 +235,5 @@ Upon profiling, we find most of the performance difference to be unrelated to Pr
 1. Dolt is implemented in Golang. MySQL is implemented in C.
 2. MySQL's SQL analyzer is faster than Dolt's because it is more mature.
 3. MySQL does fewer transformations on data than Dolt to get it into the necessary wire format.
+
+Dolt can [compute diffs in time proportional to the size of the differences](https://www.dolthub.com/blog/2022-06-03-dolt-diff-vs-sqlite-diff/). Dolt structurally shares [data across versions](https://www.dolthub.com/blog/2023-12-06-sizing-your-dolt-instance/#version-storage).
