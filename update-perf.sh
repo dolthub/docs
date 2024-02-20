@@ -14,8 +14,6 @@ os_type="darwin"
 
 sql_reference_dir="content/reference/sql/benchmarks"
 
-new_table="updated.md"
-
 start_template='<!-- START_%s_%s_RESULTS_TABLE -->'
 end_template='<!-- END_%s_%s_RESULTS_TABLE -->'
 
@@ -27,6 +25,7 @@ fi
 version="$1"
 storage_format="$2"
 type="$3"
+new_table="$4"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   os_type="linux"
