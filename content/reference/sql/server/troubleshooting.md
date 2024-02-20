@@ -90,36 +90,3 @@ depending on the size of the database, the size of the updates, replication sett
 factors.
 
 Improving maximum write concurrency is an ongoing project.
-
-## Session state leaking due to connection pooling
-
-Many SQL database client libraries implement some kind of connection pool, where connections to the
-database are created ahead of time and then handed out to different execution threads when needed to
-execute queries. This is typically done to reduce latency on database operations. Usually these pools
-reuse connections after they are returned to the pool.
-
-Using connection pooling with Dolt when combined with `dolt_checkout()` can be problematic, because
-a session that gets returned to the pool and re-used may behave differently (modify a different
-branch head) than a fresh connection. Consider this sequence:
-
-```sql
-call dolt_checkout('feature-branch');
-...
-call dolt_commit();
-```
-
-When this connection is returned to the pool, its session has `feature-branch` checked out. If it's
-reused by another execution thread that expects a different branch, you have a bug.
-
-To mitigate potential bugs with the checked out branch in session state, we recommend that you
-either:
-
-* Disable connection pooling if feasible
-* Configure your connection pool to not re-use connections that were returned to it
-* Use a different connection string for each branch (this may mean using multiple connection pools)
-* Augment your application logic to always begin a new unit of work with `call dolt_checkout(...)`
-  to ensure the expected branch is checked out for the session
-
-[Implementing the `COM_RESET_CONNECTION` protocol](https://github.com/dolthub/dolt/issues/3921)
-would solve the problem of leaking session state between different execution threads, but support
-for this functionality in popular libraries is spotty. For now, use the above guidance.
