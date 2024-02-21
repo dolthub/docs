@@ -14,19 +14,18 @@ os_type="darwin"
 
 sql_reference_dir="content/reference/sql/benchmarks"
 
-new_table="updated.md"
-
 start_template='<!-- START_%s_%s_RESULTS_TABLE -->'
 end_template='<!-- END_%s_%s_RESULTS_TABLE -->'
 
-if [ "$#" -ne 3 ]; then
-  echo "Must supply version and type, eg update-perf.sh 'v0.39.0' '__LD_1__|__DOLT__' 'latency|correctness'"
+if [ "$#" -ne 4 ]; then
+  echo "usage: update-perf.sh <version> <format> <type: latency/correctness> <filepath>"
   exit 1;
 fi
 
 version="$1"
 storage_format="$2"
 type="$3"
+new_table="$4"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   os_type="linux"
