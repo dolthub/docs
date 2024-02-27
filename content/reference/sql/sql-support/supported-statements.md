@@ -28,7 +28,7 @@ title: Supported Statements
 | `UPDATE`            | ✅         | No support for referring to more than one table in a single `UPDATE` statement.   |
 | `VALUES`            | ✅         |                                                                                   |
 | `WITH`              | ✅         |                                                                                   |
-| `SELECT INTO`       | ✅         | Selecting into a file is not supported.                                           |
+| `SELECT INTO`       | ✅         | Charset/Collation specification not supported.                                    |
 
 ## Data definition statements
 
