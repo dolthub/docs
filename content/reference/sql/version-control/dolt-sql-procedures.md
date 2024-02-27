@@ -545,6 +545,8 @@ CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 
 `-b`, `--branch`: The branch to be cloned. If not specified all branches will be cloned.
 
+`--depth`: Clone a single branch and limit history to the given commit depth.
+
 ### Output Schema
 
 ```text
