@@ -72,13 +72,13 @@ Parents allow for the history of branches to be computed by walking the branch f
 
 Up to this point, we are dealing only with linear history. If there is only one editor making serial changes, the commit graph will look like a long line of commits. A linear commit graph is still a graph, but not a very interesting graph. 
 
-Branches allow for non-linear history, a fork in the commit graph. Branches are often used to isolate multiple user's changes. Two users can make changes to content without worrying about what the other is changing. This capability is quite powerful. We've all worked on a shared document where people stomp on each others changes. Branches prevent stomping.
+Branches allow for non-linear history, a fork in the commit graph. Branches are often used to isolate multiple users' changes. Two users can make changes to content without worrying about what the other is changing. This capability is quite powerful. We've all worked on a shared document where people stomp on each other's changes. Branches prevent stomping.
 
 Branches are created using the `branch` command. When branches are created the `HEAD` of the branch points at a specified commit, usually the `HEAD` commit of the branch you are currently using.
 
 ![New branch](../../.gitbook/assets/commit-graph-new-branch.png)
 
-Now, using the same process above we can make a a commit on the branch. The `HEAD` of the new branch now points at this new commit. 
+Now, using the same process above we can make a commit on the branch. The `HEAD` of the new branch now points at this new commit. 
 
 ![Commits on a Branch](../../.gitbook/assets/commit-graph-commit-on-branch.png)
 
