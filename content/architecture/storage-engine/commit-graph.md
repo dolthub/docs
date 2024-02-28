@@ -78,7 +78,7 @@ Branches are created using the `branch` command. When branches are created the `
 
 ![New branch](../../.gitbook/assets/commit-graph-new-branch.png)
 
-Now, using the same process above we can make a a commit on the branch. The `HEAD` of the new branch now points at this new commit. 
+Now, using the same process above we can make a commit on the branch. The `HEAD` of the new branch now points at this new commit. 
 
 ![Commits on a Branch](../../.gitbook/assets/commit-graph-commit-on-branch.png)
 
