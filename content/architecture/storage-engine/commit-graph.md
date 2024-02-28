@@ -66,7 +66,7 @@ Commits are created using the aptly named `commit` command. When you commit your
 
 Commits have zero to many parents. The init commit has zero parents. A normal commit has one parent, representing the previous commit metadata and content. A merge commit, which we'll discuss later, has many parents. 
 
-Parents allow for the history of branches to be computed by walking the branch from its `HEAD`. This is commonly called the commit log and generated using the `log` command.
+Parents allow for the history of branches to be computed by walking the branch from its `HEAD`. This is commonly called the commit log and generated using the `log` command. For instance, in our pictured example, using the `log` command on the `main` branch here would list commits `h512kl` and `t1ms3n`.
 
 ### Branches
 
