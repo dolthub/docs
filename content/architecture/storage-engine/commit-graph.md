@@ -6,11 +6,11 @@ Dolt's unique [storage engine](https://docs.dolthub.com/architecture/storage-eng
 
 ![Dolt commit graph](../../.gitbook/assets/commit-graph-featured.png)
 
-# Git vs Dolt
+## Git vs Dolt
 
 Git and Dolt share the same [version control conceptual underpinnings](https://docs.dolthub.com/concepts/dolt/git). In Git and Dolt, the commit graph concepts are the same. In Git and Dolt, the commands to modify the commit graph are the same. The only difference is what Git and Dolt version. Git versions files. Dolt versions tables. Thus, if you know how the Git commit graph works, you know how the Dolt commit graph works. If not, read on.
 
-# What is a Commit?
+## What is a Commit?
 
 A commit is a marker in your version history that stores all the relevant information for recreating that version. A commit is identified by a unique commit hash that looks something like `9shmcqu3q4o6ke8807pedlad2cfakvl7`.
 
@@ -20,15 +20,15 @@ In Git, the content is the set of files as they existed at that point in time, i
 
 Additionally, commit metadata like author, date, and message are stored so it is easier to identify the commit you are looking for in the version history. This metadata is considered when creating the content address that you see in the commit log. So, even if two commits have the exact same content but are committed at different times or by different authors, they will have different commit hashes. 
 
-# Why put Commits in a Graph?
+## Why put Commits in a Graph?
 
 Putting Commits is a graph allows for a representation of history, branches, and merges; core concepts of version control. A branch allows for multiple evolving histories. A merge allows two disparate histories to be combined.
 
-# How to Build a Commit Graph
+### How to Build a Commit Graph
 
 The easiest way to understand the commit graph is to build one. Let's build a simple commit graph from scratch.
 
-## The Init Commit
+### The Init Commit
 
 To create a commit graph you must "initialize" one. Initialization can be done with the `init` command via the command line. This creates an "init commit". In Dolt, `create database` also creates an init commit if you are in the SQL context. 
 
@@ -40,7 +40,7 @@ The init commit is made on the default branch, usually named `main`. A branch is
 
 ![init commit on main](../../.gitbook/assets/commit-graph-main-branch.png)
 
-## `WORKING` and `STAGED`
+### `WORKING` and `STAGED`
 
 In Git and Dolt, at the `HEAD` of a branch there are two additional special references, called `STAGED` ad `WORKING`. These references point to active changes you are making to the `HEAD` of the branch. If there are no changes, the contents of `HEAD`, `STAGED`, and `WORKING` are the same. 
 
@@ -58,7 +58,7 @@ When you are ready to make a commit, you stage the changes using the `add` comma
 
 `WORKING` is often called the working set. An interesting way to think about the working set is traditional file systems that don't use Git only have a working set. Traditional databases like MySQL or Postgres only have a working set. If you create a database in Dolt and only run traditional SQL, your working set will look and act exactly like a MySQL database.
 
-## History
+### History
 
 Commits are created using the aptly named `commit` command. When you commit your `STAGED` changes, the content that is staged is moved to the tip of the branch and you have an opportunity to add metadata like message and author. The `HEAD` of the branch `main` becomes this newly created commit. 
 
@@ -68,7 +68,7 @@ Commits have zero to many parents. The init commit has zero parents. A normal co
 
 Parents allow for the history of branches to be computed by walking the branch from its `HEAD`. This is commonly called the commit log and generated using the `log` command.
 
-## Branches
+### Branches
 
 Up to this point, we are dealing only with linear history. If there is only one editor making serial changes, the commit graph will look like a long line of commits. A linear commit graph is still a graph, but not a very interesting graph. 
 
@@ -88,7 +88,7 @@ In parallel, we can make a commit on `main`.
 
 The two branches now contain different contents and share a common ancestor. As you can see, parallel, isolated evolving histories are now possible using branches.
 
-## Merges
+### Merges
 
 Merges are performed using the `merge` command. Merges allow you to join separate histories that exist on branches. Merges create a commit with multiple parents.
 
