@@ -118,3 +118,5 @@ Finally, we lay these database roots out in a commit graph of database versions.
 And, thus, you end up with Dolt's storage engine.
 
 ![Dolt's Storage Engine](../.gitbook/assets/prolly-tree-plus-commit-graph.png)
+
+Read more about the Dolt commit graph [here](./storage-engine/commit-graph.md)
