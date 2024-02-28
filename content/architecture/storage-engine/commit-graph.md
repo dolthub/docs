@@ -16,7 +16,7 @@ A commit is a marker in your version history that stores all the relevant inform
 
 A commit contains two sets of information: the content and the metadata.
 
-In Git, the content is the set of files as they existed at that point in time, identified by a content address. In Dolt, the content is the set of tables in the database at that point in time, identified by content address. In Dolt, content addresses are created using a novel data structure called a [Prolly Tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree), that allows for structural sharing, efficient diff, and fast querying.
+In Git, the content is the set of files as they existed at that point in time, identified by a content address. In Dolt, the content is the set of tables in the database at that point in time, identified by a content address. In Dolt, content addresses are created using a novel data structure called a [Prolly Tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree), that allows for structural sharing, efficient diff, and fast querying of table data.
 
 Additionally, commit metadata like author, date, and message are stored so it is easier to identify the commit you are looking for in the version history. This metadata is considered when creating the content address that you see in the commit log. So, even if two commits have the exact same content but are committed at different times or by different authors, they will have different commit hashes. 
 
@@ -50,13 +50,13 @@ When you make changes to the content of a branch, changes are made in `WORKING`.
 
 ![WORKING changes](../../.gitbook/assets/commit-graph-working-changes.png)
 
-When you are ready to make a commit, you stage the changes using the `add` command. If you stage all your changes, `STAGED` and `WORKING` point to the same content.
+When you are ready to make a commit, you stage the changes using the `add` command. If you stage all your changes, `STAGED` and `WORKING` point to the same content and thus share the same content address.
 
 ![STAGED changes](../../.gitbook/assets/commit-graph-staged-changes.png)
 
 `STAGED` and `WORKING` allow for changes to content to be tested and verified before being stored permanently in the commit graph.
 
-`WORKING` is often called the working set. An interesting way to think about the working set is traditional file systems that don't use Git only have a working set. Traditional databases like MySQL or Postgres only have a working set. If you create a database in Dolt and only run traditional SQL, your working set will look and act exactly like a MySQL instance.
+`WORKING` is often called the working set. An interesting way to think about the working set is traditional file systems that don't use Git only have a working set. Traditional databases like MySQL or Postgres only have a working set. If you create a database in Dolt and only run traditional SQL, your working set will look and act exactly like a MySQL database.
 
 ## History
 
@@ -72,9 +72,9 @@ Parents allow for the history of branches to be computed by walking the branch f
 
 Up to this point, we are dealing only with linear history. If there is only one editor making serial changes, the commit graph will look like a long line of commits. A linear commit graph is still a graph, but not a very interesting graph. 
 
-Branches allow for non-linear history, a fork in the commit graph. Branches are often used to isolate multiple users changes. Two users can make changes to content without worrying about what the other is changing. This capability is quite powerful. We've all worked on a shared document where people stomp on each others changes. Branches prevent stomping.
+Branches allow for non-linear history, a fork in the commit graph. Branches are often used to isolate multiple user's changes. Two users can make changes to content without worrying about what the other is changing. This capability is quite powerful. We've all worked on a shared document where people stomp on each others changes. Branches prevent stomping.
 
-Branches are created using the `branch` command. When branches are created the `HEAD` of the branch points at the commit you are currently on, usually the `HEAD` commit of the branch you are currently using.
+Branches are created using the `branch` command. When branches are created the `HEAD` of the branch points at a specified commit, usually the `HEAD` commit of the branch you are currently using.
 
 ![New branch](../../.gitbook/assets/commit-graph-new-branch.png)
 
@@ -99,3 +99,7 @@ Merges are performed by finding the common ancestor commit and applying the chan
 After merging, it is common to delete the branch that was merged signaling the change intended on the branch is complete.
 
 ![Merge branch deleted](../../.gitbook/assets/commit-graph-merge-branch-deleted.png)
+
+Merges can generate [conflicts](../../concepts/dolt/git/conflicts.md). If two branches modify the same value, Git and Dolt notify the user. The user has the opportunity to resolve the conflicts as part of the merge.
+
+Merges allow for collaboration among multiple users. Usually prior to merge, changes are reviewed by observing the computed differences between the branch you are merging from and the branch you are merging to. If the changes pass review, the merge is executed.
