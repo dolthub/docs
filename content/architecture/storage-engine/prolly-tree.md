@@ -192,7 +192,7 @@ To fix this, Dolt's Prolly Tree implementation considers the chunk size when dec
 
 Noms original Prolly Tree implementation considered keys and values when deciding when to make a chunk boundary. Dolt's implementation only considers keys.
 
-Dolt's Prolly Trees have the advantage of backing a SQL database. SQL databases define schema with fixed types. Fixed types have maximum sizes. Thus, any updates to values can be done in place because the values will be the same size. If we compute the rolling hash only keys, any update to values is guaranteed not to shift the chunk boundary. This is a desirable property that improves update performance.
+Dolt's Prolly Trees have the advantage of backing a SQL database. SQL databases define schema with fixed types. Fixed types have maximum sizes. Thus, any updates to values can be done in place because the values will be the same size. If we compute the rolling hash on only keys, any update to values is guaranteed not to shift the chunk boundary. This is a desirable property that improves update performance.
 
 Moreover, Noms rolling hash function, [buzhash](https://github.com/silvasur/buzhash), performed poorly for byte streams with low entropy. Tables with ordered keys, specifically time series data where very little changes at each sample, were problematic. This would again lead to very large chunks as no chunk boundary was triggered because most of the byte stream considered by the rolling hash function was the same. By considering only keys, which again are necessarily unique, Dolt's hash function created chunk boundaries more normally.
 
