@@ -129,6 +129,7 @@
 
 - [Overview](architecture/architecture.md)
 - [Storage Engine](architecture/storage-engine.md)
+  - [Commit Graph](architecture/storage-engine/commit-graph.md)
   - [Prolly Trees](architecture/storage-engine/prolly-tree.md)
 - [SQL](architecture/sql.md)
   - [Go MySQL Server](architecture/sql/go-mysql-server.md)
