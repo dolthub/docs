@@ -78,13 +78,19 @@ supported by Dolt.
 Here are Dolt's function coverage results for version `1.34.3`.
 | Supported | Total | Percent Coverage |
 |-----------|-------|------------------|
-|       263 |   438 |        60.045662 |
+|       263 |   438 |               60 |
 
 ## Skipped Engine Tests
 Here are the total number of tests skipped by the engine for 
-version `1.34.3`. These are tests that we know are failing for one
-reason or another, but haven't been able to fix yet.
+version `1.34.3`. These are edge cases that we know are failing for 
+one reason or another, but haven't been able to fix yet.
 
-| Skipped | Total | Percent Skipped |
+In general, these tests are more difficult to fix compared to 
+SQLLogicTests. These are tests we discovered during development 
+that emphasize blind spots in SQLLogicTests. 
+Additionally, these tests are unique and do not overlap in coverage
+(unlike SQLLogicTests).
+
+| Passing | Total | Percent Skipped |
 |---------|-------|-----------------|
 |     248 | 42624 |        0.581831 |
