@@ -74,14 +74,14 @@ We also measure the coverage of the functions in the SQL engine. This
 is a measure of how many of the supported MySQL functions are also
 supported by Dolt. 
 
-Here are Dolt's function coverage results for version `1.34.3`.
+Here are Dolt's function coverage results for version `1.35.0`.
 | Supported | Total | Percent Coverage |
 |-----------|-------|------------------|
 |       263 |   438 |               60 |
 
 ## Skipped Engine Tests
 Here are the total number of tests skipped by the engine for 
-version `1.34.3`. These are edge cases that we know are failing for 
+version `1.35.0`. These are edge cases that we know are failing for 
 one reason or another, but haven't been able to fix yet.
 
 In general, these tests are more difficult to fix compared to 
@@ -92,4 +92,4 @@ Additionally, these tests are unique and do not overlap in coverage
 
 | Passing | Total | Percent Skipped |
 |---------|-------|-----------------|
-|     248 | 42624 |        0.581831 |
+|   40226 | 42624 |           94.37 |
