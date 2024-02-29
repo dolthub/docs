@@ -4,6 +4,7 @@ title: Correctness
 
 # SQL Correctness
 
+## SQLLogicTests
 To measure Dolt's SQL correctness, we test each release of Dolt
 against a SQL testing suite called
 [sqllogictest](https://github.com/dolthub/sqllogictest). This suite
@@ -68,3 +69,22 @@ did not run could not complete due to a timeout earlier in the run.
 |------------------------|-----------|
 <!-- END___DOLT___CORRECTNESS_RESULTS_TABLE -->
 <br/>
+
+## Function Coverage
+We also measure the coverage of the functions in the SQL engine. This
+is a measure of how many of the supported MySQL functions are also
+supported by Dolt. 
+
+Here are Dolt's function coverage results for version `1.34.3`.
+| Supported | Total | Percent Coverage |
+|-----------|-------|------------------|
+|       263 |   438 |        60.045662 |
+
+## Skipped Engine Tests
+Here are the total number of tests skipped by the engine for 
+version `1.34.3`. These are tests that we know are failing for one
+reason or another, but haven't been able to fix yet.
+
+| Skipped | Total | Percent Skipped |
+|---------|-------|-----------------|
+|     248 | 42624 |        0.581831 |
