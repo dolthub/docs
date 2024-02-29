@@ -90,6 +90,6 @@ that emphasize blind spots in SQLLogicTests.
 Additionally, these tests are unique and do not overlap in coverage
 (unlike SQLLogicTests).
 
-| Passing | Total | Percent Skipped |
+| Passing | Total | Percent Passing |
 |---------|-------|-----------------|
-|   40226 | 42624 |           94.37 |
+|   41383 | 41549 |           99.60 |
