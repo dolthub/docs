@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 263 of 438 MySQL functions.**
+**Currently supporting 298 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -82,7 +82,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `^`                               | ✅            |                                                                                                                                               |
 | `ABS()`                           | ✅            |                                                                                                                                               |
 | `ACOS()`                          | ✅            |                                                                                                                                               |
-| `ADDDATE()`                       | ❌            | Use `DATE_ADD()` as a workaround                                                                                                              |
+| `ADDDATE()`                       | ✅            |                                                                                                                                               |
 | `ADDTIME()`                       | ❌            |                                                                                                                                               |
 | `AES_DECRYPT()`                   | ❌            |                                                                                                                                               |
 | `AES_ENCRYPT()`                   | ❌            |                                                                                                                                               |
@@ -226,7 +226,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_ARRAY_INSERT()`             | ✅            |                                                                                                                                               |
 | `JSON_CONTAINS()`                 | ✅            |                                                                                                                                               |
 | `JSON_CONTAINS_PATH()`            | ✅            |                                                                                                                                               |
-| `JSON_DEPTH()`                    | ❌            |                                                                                                                                               |
+| `JSON_DEPTH()`                    | ✅            |                                                                                                                                               |
 | `JSON_EXTRACT()`                  | ✅            |                                                                                                                                               |
 | `JSON_INSERT()`                   | ✅            |                                                                                                                                               |
 | `JSON_KEYS()`                     | ✅            |                                                                                                                                               |
@@ -248,7 +248,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_STORAGE_FREE()`             | ❌            |                                                                                                                                               |
 | `JSON_STORAGE_SIZE()`             | ❌            |                                                                                                                                               |
 | `JSON_TABLE()`                    | ✅            | `FOR ORDINALITY` and `NESTED` are not supported yet.                                                                                          |
-| `JSON_TYPE()`                     | ❌            |                                                                                                                                               |
+| `JSON_TYPE()`                     | ✅            | Inconsistencies when using MySQL Native Types                                                                                                 |
 | `JSON_UNQUOTE()`                  | ✅            |                                                                                                                                               |
 | `JSON_VALID()`                    | ✅            |                                                                                                                                               |
 | `JSON_VALUE()`                    | ✅            |                                                                                                                                               |
