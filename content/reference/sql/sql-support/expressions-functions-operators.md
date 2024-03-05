@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 298 of 438 MySQL functions.**
+**Currently supporting 300 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -236,7 +236,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_MERGE_PRESERVE()`           | ✅            |                                                                                                                                               |
 | `JSON_OBJECT()`                   | ✅            |                                                                                                                                               |
 | `JSON_OBJECTAGG()`                | ✅            |                                                                                                                                               |
-| `JSON_OVERLAPS()`                 | ❌            |                                                                                                                                               |
+| `JSON_OVERLAPS()`                 | ✅            |                                                                                                                                               |
 | `JSON_PRETTY()`                   | ❌            |                                                                                                                                               |
 | `JSON_QUOTE()`                    | ❌            |                                                                                                                                               |
 | `JSON_REMOVE()`                   | ✅            |                                                                                                                                               |
@@ -334,7 +334,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `QUOTE()`                         | ❌            |                                                                                                                                               |
 | `RADIANS()`                       | ✅            |                                                                                                                                               |
 | `RAND()`                          | ✅            |                                                                                                                                               |
-| `RANDOM_BYTES()`                  | ❌            |                                                                                                                                               |
+| `RANDOM_BYTES()`                  | ✅            |                                                                                                                                               |
 | `RANK()`                          | ✅            |                                                                                                                                               |
 | `REGEXP_INSTR()`                  | ❌            |                                                                                                                                               |
 | `REGEXP_LIKE()`                   | ✅            |                                                                                                                                               |
