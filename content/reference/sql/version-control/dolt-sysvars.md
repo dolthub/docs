@@ -10,7 +10,7 @@ title: Dolt System Variables
   - [dolt_allow_commit_conflicts](#dolt_allow_commit_conflicts)
   - [dolt_force_transaction_commit](#dolt_force_transaction_commit)
   - [dolt_log_level](#dolt_log_level)
-  - [dolt_schema_override_commit](#dolt_schema_override_commit)
+  - [dolt_override_schema](#dolt_override_schema)
   - [dolt_show_branch_databases](#dolt_show_branch_databases)
   - [dolt_show_system_tables](#dolt_show_system_tables)
   - [dolt_transaction_commit](#dolt_transaction_commit)
@@ -92,13 +92,13 @@ When set to `1`, this system variable causes all system tables to be show in `sh
 Defaults to `0`.
 
 
-## `dolt_schema_override_commit`
+## `dolt_override_schema`
 
 When set to a commit hash, branch name, or tag name, Dolt will map all table data to the schema at the specified commit, 
 branch, or tag. This is useful when you have a query that runs with a specific schema, and you want to run it with
 data that has a different schema. For example, if you add a `Birthdate` column to the `People` table in the most recent commits
 in your database, you cannot reference that column in queries run against older commits. If you enable schema overriding, and
-set `@@dolt_schema_override_commit` to a commit that contains the `Birthdate` column, you can run the same query with recent
+set `@@dolt_override_schema` to a commit that contains the `Birthdate` column, you can run the same query with recent
 commits and with older commits, without having to modify the query for the schema changes in the older commits. Dolt will
 map the table data to the schema at the specified commit, branch, or tag, and fill in the missing columns with `NULL` values.
 
@@ -111,7 +111,7 @@ SELECT Name, Birthdate FROM People;
 column "Birthdate" could not be found in any table in scope
 
 -- turning on schema overriding allows us to automatically map our data to the schema at the specified commit
-SET @@dolt_schema_override_commit = 'main';
+SET @@dolt_override_schema = 'main';
 SELECT Name, Birthdate FROM People;
 +-----------+-----------+
 | Name      | Birthdate |
