@@ -19,7 +19,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core) | C# | [Blog](https://www.dolthub.com/blog/2024-02-28-works-with-dolt-dotnet-webapp/)  | [Code](https://github.com/dolthub/dolt-dotnet-webapp-sample) |
 | [Laravel](https://laravel.com/) | PHP | [Blog](https://www.dolthub.com/blog/2024-01-08-dolt-laravel/)                   | [Code](https://github.com/dolthub/chirper) |
 | [Ruby on Rails](https://rubyonrails.org/) | Ruby | [Blog](https://www.dolthub.com/blog/2024-02-09-dolt-ruby-on-rails/)             | [Code](https://github.com/dolthub/dolt_rails) | 
-| [GORM](https://gorm.io/docs/) | Golang | [Blog](https://www.dolthub.com/blog/2024-03-15-gorm-with-dolt)             | [Code](https://github.com/dolthub/gorm_demo) | 
+| [GORM](https://gorm.io/docs/) | Golang | [Blog](https://www.dolthub.com/blog/2024-03-15-gorm-with-dolt)             | [Code](https://github.com/dolthub/gorm-demo) | 
 
 ## Tools
 
