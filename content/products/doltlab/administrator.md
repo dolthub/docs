@@ -31,6 +31,7 @@ the following information can help DoltLab Admins manually perform some common a
 24. [Improve DoltLab Performance](#doltlab-performance)
 25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
 26. [Automated Remote Backups](#doltlab-automated-backups)
+27. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -1796,3 +1797,115 @@ DOLT_BACKUP_URL="oci://test-doltlab-application-db-backup/my_doltlab_backup" \
 Your DoltLab instance will now automatically back up its application Dolt server to your OCI bucket.
 
 ![Backup in OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
+
+<h1 id="doltlab-aws-nlb">Serve DoltLab behind an AWS Network Load Balancer</h1>
+
+The following section describes how to setup an [AWS Network Load Balancer (NLB)](https://aws.amazon.com/elasticloadbalancing/network-load-balancer/) for a DoltLab instance. This guide will be using DoltLab `v2.0.8`.
+
+First, setup DoltLab `v2.0.8` on an [AWS EC2 host](https://aws.amazon.com/pm/ec2) in the same [Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) where your NLB will run. 
+
+If this instance should _only_ be accessible by the NLB, ensure that the DoltLab host is created in a private subnet and does not have public IP address.
+
+After setting up your DoltLab host, edit the host's inbound security group rules to allow all traffic on ports: `80/443`, `100`, `4321`, `50051`, and `2001`.
+
+Because the host is in a private subnet with no public IP though, only the NLB will be able to connect to the host on these ports.
+
+Next, edit the `envoy.tmpl` file included with DoltLab so that it includes the following listener for port `2001`:
+
+```yaml
+  - name: health_check_listener
+    address:
+      socket_address: { address: 0.0.0.0, port_value: 2001 }
+    traffic_direction: inbound
+    filter_chains:
+      - filters:
+        - name: envoy.filters.network.http_connection_manager
+          typed_config:
+            "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+            codec_type: auto
+            stat_prefix: http
+            route_config:
+              virtual_hosts:
+              - name: http
+                domains: ["*"]
+                routes:
+                - match: { path: "/" }
+                  direct_response:
+                    status: "200"
+                    body:
+                      inline_string: "live\n"
+            http_filters:
+            - name: envoy.filters.http.router
+            access_log:
+            - name: envoy.access_loggers.stream
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.access_loggers.stream.v3.StdoutAccessLog
+                log_format:
+                  text_format_source:
+                      [%START_TIME%]
+                      "%REQ(:METHOD)% %REQ(X-ENVOY-ORIGINAL-PATH?:PATH)% %PROTOCOL%"
+                      %RESPONSE_CODE% %GRPC_STATUS% %RESPONSE_FLAGS%
+                      %BYTES_RECEIVED% %BYTES_SENT%
+                      %DURATION% %RESP(X-ENVOY-UPSTREAM-SERVICE-TIME)%
+                      "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+                      "%REQ(USER-AGENT)%" "%REQ(X-REQUEST-ID)%" "%REQ(:AUTHORITY)%"
+                      "%UPSTREAM_HOST%"
+                      "%UPSTREAM_TRANSPORT_FAILURE_REASON%"
+```
+
+This listener will allow AWS to perform health checks against port `2001` during the NLB creation process.
+
+Similarly, edit the `docker-compose.yaml` file to expose port `2001` in the `doltlabenvoy` block:
+
+```yaml
+  doltlabenvoy:
+     ...
+     ports:
+      ...
+       - "2001:2001"  
+```
+
+Next, in AWS, create [target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-target-group.html) for each DoltLab port that the NLB will forward requests to. These ports are:
+`80/443`, `100`, `4321`, and `50051`.
+
+![Create Target Group Instances](../../.gitbook/assets/doltlab_target_group_type.png)
+
+When creating the target groups, select `Instances` as the target type. Then, select `TCP` as the port protocol, followed by the port to use for the target group. In this example we will map all target group ports to their corresponding DoltLab port, ie `80:80`, `100:100`, `4321:4321` and `50051:50051`. Select the same VPC used by your DoltLab host as well.
+
+![Create Target Group TCP](../../.gitbook/assets/doltlab_target_group_vpc.png)
+
+During target group creation, in the `Health Checks` section, click `Advanced health check settings` and select `Override` to specify the port to perform health checks on. Here, enter `2001`, the port we added to DoltLab's envoy configuration file. We will use this same port for _all_ target group health checks.
+
+![Create Target Group Health Checks](../../.gitbook/assets/doltlab_target_group_health_checks.png)
+
+After clicking `Next`, you will register targets for your new target group. Here you should see your DoltLab host. Select it and specify the port the target group will forward to. 
+
+![Create Target Group Health Register Targets](../../.gitbook/assets/doltlab_target_group_register_targets.png)
+
+Click `Include as pending below`, then click `Create target group`.
+
+Once you've created your target groups you can create the NLB.
+
+![Create NLB Select](../../.gitbook/assets/doltlab_nlb_select_load_balancer.png)
+
+Be sure to select the Network Load balancer as the other types of load balancers may require different configurations.
+
+Then, create an NLB in the same VPC and subnet as your DoltLab host that uses `Scheme: Internet-facing` and `Ip address type: IPV4`.
+
+![Create NLB Config](../../.gitbook/assets/doltlab_nlb_basic_config.png)
+
+Additionally, select the the same availabilty zone that your DoltLab host uses. You can use the `default` security group for your NLB, however the ingress rules for this group will need to be updated before inbound traffic will be able to reach your NLB.
+
+![Create NLB Listeners](../../.gitbook/assets/doltlab_nlb_listeners.png)
+
+In the Listeners section, add listeners for each target group you created, specifying the NLB port to use for each one. But again, in this example we will forward on the same port. Click `Create load balancer`.
+
+It make take a few minutes for the NLB to become ready. After it does, check each target group you created and ensure they are all healthy.
+
+Next, edit the inbound rules for the security group attached to the NLB you created so that it allows connections on the listening ports.
+
+![NLB Security group](../../.gitbook/assets/doltlab_nlb_security_group.png)
+
+On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
+
+Restart your DoltLab instance supplying this DNS name as the `HOST_IP`, and your DoltLab instance will now be running exclusively through the NLB.
