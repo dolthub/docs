@@ -23,8 +23,8 @@ the following commands as an admin user:
 % export DBNAME=postgres
 % export TABLE=t1
 % export SLOTNAME=doltgres_slot
-% psql "dbname=$DBNAME replication=database" -c "CREATE PUBLICATION $SLOTNAME FOR TABLE $TABLE"
-% psql "dbname=$DBNAME replication=database" -c "CREATE_REPLICATION_SLOT $SLOTNAME LOGICAL pgoutput"
+% psql "dbname=$DBNAME replication=database" -c "CREATE PUBLICATION $SLOTNAME FOR TABLE $TABLE;"
+% psql "dbname=$DBNAME replication=database" -c "CREATE_REPLICATION_SLOT $SLOTNAME LOGICAL pgoutput;"
 ```
 
 This setup only needs to be run once. Change the value of the exported environment variables to
@@ -35,13 +35,13 @@ administrators.
 You can also replicate all tables to Doltgres with the alternate syntax:
 
 ```sql
-CREATE PUBLICATION $SLOTNAME FOR ALL TABLES
+CREATE PUBLICATION $SLOTNAME FOR ALL TABLES;
 ```
 
 Or to replicate more than one table, separate them with commas like so:
 
 ```sql
-CREATE PUBLICATION $SLOTNAME FOR TABLE t1,t2,t3
+CREATE PUBLICATION $SLOTNAME FOR TABLE t1,t2,t3;
 ```
 
 Postgres also allows replicating only certain rows by specifying a `WHERE` clause in the `CREATE
@@ -81,14 +81,14 @@ To automatically create a Dolt commit for every replicated transaction, set the
 `dolt_transaction_commit` parameter in the `behavior` stanza to true. This will let you see diffs
 between any two replicated transactions on the primary.
 
-In every othr respect, a replication server is a normal Doltgres server, which means you can make
-other connections to it and run other queries (including queries that may interfere with
-replication).
-
 ```yaml
 behavior:
   dolt_transaction_commit: true
 ```
+
+In every other respect, a replication server is a normal Doltgres server, which means you can make
+other connections to it and run other queries (including queries that may interfere with
+replication).
 
 # Importing initial data into DoltgreSQL
 
@@ -108,4 +108,3 @@ after seeding the replica with a dump, via a multi-step process:
 
 Doltgres should now receive updates from the primary beginning at the point just after the snapshot
 was taken.
-
