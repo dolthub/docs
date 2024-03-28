@@ -84,6 +84,10 @@
   - [Install DoltLab](products/doltlab/installation.md)
   - [Administrator Guide](products/doltlab/administrator.md)
   - [API](products/doltlab/api.md)
+- [DoltgreSQL](products/doltgres/README.md)
+  - [Install DoltgreSQL](products/doltgres/installation.md)
+  - [Running the Server](products/doltgres/running-server.md)
+  - [Replication from Postgres](products/doltgres/replication-from-postgres.md)
 
 ## SQL Reference
 
