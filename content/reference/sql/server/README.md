@@ -24,6 +24,34 @@ be set on the command line or via a config file.
 View the `dolt sql-server` command documentation
 [here](../../cli/cli.md#dolt-sql-server).
 
+## Stopping the server
+
+The `dolt sql-server` process can be stopped using your operating system's process control mechanism. Dolt will stop when sent a signal like `SIGQUIT`, `SIGABRT`, or `SIGKILL`.
+
+A common way to send a `SIGKILL` is to navigate to the shell running the `dolt sql-server` process and `Ctrl-C`.
+
+Another common way to stop the server is to identify the process running `dolt sql-server` and send a signal to it using the `kill` command. 
+
+```sh
+$ ps -a | grep dolt
+66187 ttys000    0:00.00 grep dolt
+46800 ttys003  3351:00.34 dolt sql-server
+65544 ttys010    0:07.82 dolt push
+$ kill -QUIT 46800
+```
+
+## Restarting the server
+
+The `dolt sql-server` process will restart after receiving the `SIGHUP` signal.
+
+```sh
+$ ps -a | grep dolt
+66187 ttys000    0:00.00 grep dolt
+46800 ttys003  3351:00.34 dolt sql-server
+65544 ttys010    0:07.82 dolt push
+$ kill -HUP 46800
+```
+
 # dolt sql
 
 Using `dolt sql` you can issue SQL statements against a local database
