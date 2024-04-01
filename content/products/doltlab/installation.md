@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v2.0.8` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v2.1.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -39,7 +39,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v2.0.8
+export DOLTLAB_VERSION=v2.1.0
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -47,7 +47,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v2.0.8
+export DOLTLAB_VERSION=v2.1.0
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -81,13 +81,19 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v2.0.8
+export DOLTLAB_VERSION=v2.1.0
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
 ```
 
-Inside the unzipped `doltlab` directory, you'll find the following items:
+DoltLab >= `v2.1.0` no longer contains the most of the assets described below. Instead, it ships with an `installer` binary
+which is now the main interface for configuring a DoltLab instance. Inside DoltLab >= `v2.1.0` you'll find:
+
+* installer
+* smtp_connection_helper
+
+Inside DoltLab < `v2.1.0`, in the unzipped `doltlab` directory, you'll find the following items:
 
 * templates
 * envoy.tmpl
@@ -109,7 +115,9 @@ Inside the unzipped `doltlab` directory, you'll find the following items:
 * prometheus.yaml
 * prometheus-alert.rules
 * alertmanager.yaml
- 
+
+`installer`, introduced in DoltLab `v2.1.0` is used for configuring a DoltLab instance. This tool will create the appropriate assets for you to run DoltLab, based on the arguments you supply to the `installer`. For more information about working with the `installer`, please see the [installer section of the Administrator guide](./administrator.md#installer)
+
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
 
@@ -155,7 +163,9 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 
-The recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your DoltLab host environment/shell.
+For DoltLab >= `v2.1.0`, the `installer` binary can be used to configure your DoltLab instance. After successfully using the `installer`, it will write a `./start.sh` script which can be used to start DoltLab, and a `./stop.sh` script which is used for stopping DoltLab. For more information about working with the `installer`, please see the [installer section of the Administrator Guide](./administrator.md#installer).
+
+For DoltLab < `v2.1.0`, the recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your DoltLab host environment/shell.
 
 > Note, the `./start-doltlab.sh` script contains references to some of these environment variables, but not all, as some are referenced elsewhere.
 

@@ -32,6 +32,7 @@ the following information can help DoltLab Admins manually perform some common a
 25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
 26. [Automated Remote Backups](#doltlab-automated-backups)
 27. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
+27. [DoltLab Installer](#installer)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -300,6 +301,11 @@ Upgrading to newer versions of DoltLab requires downtime. This means that DoltLa
 In addition, some early versions have different database schemas than newer ones. If the docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab Admins can simply remove these Docker volumes and run the `start-doltlab.sh` script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
+<h2 id="upgrade-v208-v210"><ins>Upgrade from DoltLab <code>v2.0.8</code> to <code>v2.1.0+</code></ins></h2>
+
+The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did. 
+
+However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [installer section](#installer) for instructions on configuring DoltLab with the `installer`.
 
 <h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
 
@@ -550,7 +556,9 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 <h1 id="smtp-implicit-tls">Connect to an SMTP Server with Implicit TLS</h1>
 
-Starting with DoltLab `v0.4.2`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implicit TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
+For DoltLab `v2.1.0`, use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
+
+For DoltLab >= `v0.4.2` and < `v2.1.0`, connections to existing SMTP servers using implicit TLS (on port `465`, for example) are supported. To connect using implicit TLS, edit the `docker-compose.yaml` included in the DoltLab zip. Under the `doltlabapi` section, in the `command` block, add the following argument:
 
 ```yaml
 ...
@@ -656,7 +664,9 @@ Successfully sent email!
 
 DoltLab for non-enterprise use currently supports explicit email whitelisting to prevent account creation by unauthorized users.
 
-To enable DoltLab's email whitelisting feature, edit the `docker-compose.yaml` file included in DoltLab's zip.
+In DoltLab >= `v2.1.0`, the `installer` binary can be run with `--white-list-all-users=false` in order to disable automatically whitelisting all users.
+
+In DoltLab < `v2.1.0`, to enable DoltLab's email whitelisting feature, edit the `docker-compose.yaml` file included in DoltLab's zip.
 
 Under the `doltlabapi` section, in the `command` block, remove the argument `-dolthubWhitelistAllowAll`. Restart your DoltLab instance for this to take effect.
 
@@ -765,6 +775,8 @@ By default, DoltLab collects first-party metrics for deployed instances. We use 
 
 As of `v0.7.0`, DoltLab does not collect third-party metrics, and additionally, DoltLab's first-party metrics can be disabled. To disable metrics, edit the `start-doltlab.sh` script and remove `run_with_metrics` from the `_main` function.
 
+In DoltLab >= `v2.1.0` the `installer` can be run with `--disable-usage-metrics=true` to disable metrics.
+
 <h1 id="migrate-doltlab-databases">Migrate Old Format DoltLab Databases</h1>
 
 Unlike [DoltHub](https://www.dolthub.com), DoltLab does not support automatic database migration for old format Dolt databases. Instead, old format database hosted on DoltLab need to be migrated manually. To migrate a DoltLab database:
@@ -790,13 +802,17 @@ Add the field `logo` to the `admin-config.yaml` file with the absolute path of c
 
 Save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom logo in place of the DoltLab logo.
 
+DoltLab >= `v2.1.0` does not use an `admin-config.yaml` file, but instead uses the `installer` with the argument `--custom-logo=/path/to/custom/logo.png` to configure DoltLab to use a custom logo.
+
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
 Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. 
 
 As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
-Included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
+For DoltLab >= `v2.1.0`, custom emails can be configured with the `installer` binary by supplying the argument `--custom-email-templates=true`. The installer will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab.
+
+For DoltLab < `v2.1.0`, included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
 
 - `email/collabInvite.txt` sent to invite user to be a database collaborator.
 - `email/invite.txt` sent to invite a user to join an organization.
@@ -921,7 +937,19 @@ Starting with DoltLab `v0.8.1`, and ending with `v1.1.1`, DoltLab allows adminis
 
 As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
-You can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
+For DoltLab >= `v2.1.0`, which does not use an `admin-config.yaml`, this feature can be configured using the `installer`. The installer accepts the following arguments corresponding to the custom color you want to override:
+```bash
+--custom-color-rgb-accent-1="252, 66, 201"
+--custom-color-rgb-background-accent-1="24, 33, 52"
+--custom-color-rgb-background-gradient-start="31, 41, 66"
+--custom-color-rgb-button-1="61, 145, 240"
+--custom-color-rgb-button-2="31, 109, 198"
+--custom-color-rgb-link-1="31, 109, 198"
+--custom-color-rgb-link-2="61, 145, 240"
+--custom-color-rgb-link-light="109, 176, 252"
+```
+
+For DoltLab < `v2.1.0`, you can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
 # admin-config.yaml DoltLab >= v0.8.1, <= v1.1.1
@@ -980,7 +1008,15 @@ As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 A DoltLab "super admin" is a user who can has unrestricted access and the highest possibly permission level on all organizations, teams, and databases on a DoltLab instance. This allows these users to write to any database, public or private, merge pull-requests, delete databases and add or remove organization/team members. By default there are no "super admins" registered on a DoltLab instance, including the default user `admin`.
 
-You can define super admins for a DoltLab instance by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
+For DoltLab `v2.1.0`, which does not use an `admin-config.yaml` file, super admins can be configured using the `installer` binary with the argument `--super-admin-email`. This argument can be supplied multiple times, for example:
+
+```bash
+--super-admin-email=me@email.com
+--super-admin-email=you@email.com
+...
+```
+
+For DoltLab < `v2.1.0`, you can define super admins for a DoltLab instance by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
 
 ```yaml
 # admin-config.yaml DoltLab >= v1.0.1, <= v1.1.1
@@ -1135,7 +1171,9 @@ Starting with DoltLab `v1.0.5`, it is possible to serve a DoltLab instance behin
 
 Before you begin you will need to create valid TLS certificates on the DoltLab host. You can provision these from a [Certificate Authority](https://en.wikipedia.org/wiki/Certificate_authority) or do so with a free tool like [certbot](https://certbot.eff.org/). For this example we have created valid certs with `certbot`, `/etc/letsencrypt/live/doltlab.dolthub.com/fullchain.pem` and `/etc/letsencrypt/live/doltlab.dolthub.com/privkey.pem`.
 
-To start, shut down your DoltLab instance if it is currently running, then open four new ports on your DoltLab host. These ports will be used to forward requests to DoltLab's existing `HTTP` ports.
+For DoltLab `v2.1.0`, the `installer` can be used to configure DoltLab to run behind a reverse proxy over HTTPS. To do this, Supply the `--https` argument to the `installer`. The `installer` will generate DoltLab assets with the arguments/values required to run it behind a reverse proxy with TLS. You can now continue to the nginx section below.
+
+For DoltLab < `v2.1.0`, to start, shut down your DoltLab instance if it is currently running, then open four new ports on your DoltLab host. These ports will be used to forward requests to DoltLab's existing `HTTP` ports.
 
 In our example we will using the following new ports: `443`, `143`, `5443`, and `50043`. `443` will route requests to port `80` where DoltLab's UI is served. `143` will forward requests to port `100` where DoltLab serves database data from. `5443` will forward requests to `4321`, which DoltLab uses to enable user file uploads. And, finally, `50043` will map to `50051`, the port used by clients for cloning, pushing, pulling, and fetching data.
 
@@ -1338,12 +1376,20 @@ Once your DoltLab instance comes up, it will be served on `HTTPS` via the `nginx
 
 Starting with DoltLab `v1.0.6`, it is possible to run DoltLab over `HTTPS` with TLS natively. To do so, make sure that port `443` is open on the host running DoltLab (as well as the other required ports `100`, `4321`, and `50051`) and that you have a valid TLS certificate that uses the `HOST_IP` of the DoltLab host. We recommend creating a TLS certificate using [certbot](https://certbot.eff.org/).
 
-To start DoltLab with TLS, you will run the `./start-doltlab.sh` script with the argument `https`, and will need to supply two additional environment variables:
+For DoltLab >= `v2.1.0`, to serve DoltLab over HTTPS, run the `installer` binary with:
+
+```
+-https=true
+--tls-cert-chain=/path/to/tls/certificate/chain
+--tls-private-key=/path/to/tls/private/key
+```
+
+For DoltLab < `v2.1.0`, to start DoltLab with TLS, you will run the `./start-doltlab.sh` script with the argument `https`, and will need to supply two additional environment variables:
 
 ```bash
 ...
-export TLS_CERT_CHAIN=<path to TLS certificate chain>
-export TLS_PRIVATE_KEY=<path to TLS private key>
+export TLS_CERT_CHAIN=/path/to/tls/certificate/chain
+export TLS_PRIVATE_KEY=/path/to/tls/private/key
 ./start-doltlab.sh https
 ```
 
@@ -1357,7 +1403,15 @@ When user's upload files on a DoltLab instance, or merge a pull request, DoltLab
 
 By default, DoltLab imposes no limit to the number of concurrent Jobs that can be spawned. As a result, a DoltLab host might experience resources exhaustion as the Docker engine uses all available host resources for managing it's containers.
 
-To prevent resource exhaustion, the following can be added in DoltLab >= `v1.1.0` to limit the number of concurrent Jobs, ensuring DoltLab will not run more jobs than the configured limit, at any one time:
+For DoltLab >= `v2.1.0`, the following arguments can be used with the installer to prevent job resource exhaustion:
+
+```bash
+--job-concurrency-limit="5"
+--job-concurrency-loop-seconds="10"
+--job-max-retries="5
+```
+
+For DoltLab < `v2.1.0` and >= `v1.1.0`, to prevent resource exhaustion, the following can be added to limit the number of concurrent Jobs, ensuring DoltLab will not run more jobs than the configured limit, at any one time:
 
 ```yaml
 # docker-compose.yaml
@@ -1395,7 +1449,14 @@ Be sure to also set "Name ID Format" to "Persistent".
 
 Then, download the metadata Okta provides for this application to your DoltLab host.
 
-Next, run the `./gen_saml_certs.sh` script included with DoltLab `v2.0.0` to generate a SAML signing key and certificate. This script will create two files, `./saml_key.pem` and `./saml_cert.pem` DoltLab will use for signing SAML requests.
+For DoltLab >= `v2.1.0`, SAML single-sign-on can be configured with the `installer` by using following arguments:
+
+```bash
+--sso-saml-metadata-descriptor=/path/to/downloaded/metadata/descriptor
+--sso-saml-cert-common-name="mydoltlabinstance"
+```
+
+For DoltLab < `v2.1.0`, run the `./gen_saml_certs.sh` script included with DoltLab `v2.0.0` to generate a SAML signing key and certificate. This script will create two files, `./saml_key.pem` and `./saml_cert.pem` DoltLab will use for signing SAML requests.
 
 Finally, edit the `./docker-compose.yaml` file for DoltLab so that the following arguments are added to the `doltlabapi.command` block and `doltlabapi.volumes` block:
 
@@ -1492,7 +1553,17 @@ aws sts get-caller-identity
 }
 ```
 
-Next, we shut down our running DoltLab instance to make changes to the `docker-compose.yaml` file. In the `doltlabdb` secion, uncomment the AWS environment variables in the `doltlabdb.environment` block, as well as the ones in the `doltlabdb.volumes` block.
+For DoltLab >= `v2.1.0`, the `installer` is used to configure the AWS backup with the following arguments:
+
+```bash
+--automated-dolt-backups-url="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup"
+--aws-shared-credentials-file="/absolute/path/to/aws/credentials"
+--aws-config-file="/absolute/path/to/aws/config"
+--aws-region="aws-region"
+--aws-profile="doltlab_backuper"
+```
+
+For DoltLab < `v2.1.0`, we shut down our running DoltLab instance to make changes to the `docker-compose.yaml` file. In the `doltlabdb` secion, uncomment the AWS environment variables in the `doltlabdb.environment` block, as well as the ones in the `doltlabdb.volumes` block.
 
 ```yaml
 ...
@@ -1664,7 +1735,14 @@ Next, add GCP JSON credentials to your DoltLab host. You can find information ab
 
 Following the Dolt's url template for GCP remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#gcp-remotes), the remote url we will use for this bucket will be `gs://test-doltlab-application-db-backup/my_doltlab_backup`.
 
-Ensure you have stopped your running DoltLab instance, then, like we did for the AWS remote, we are going to uncomment the `GOOGLE_APPLICATION_CREDENTIALS` environment variables in the `doltlabdb.environment` and `doltlabdb.volumes` block of DoltLab's `./docker-compose.yaml` file.
+For DoltLab >= `v2.1.0`, the `installer` is used to configure the GCP backup with the following arguments:
+
+```bash
+--automated-dolt-backups-url="gs://test-doltlab-application-db-backup/my_doltlab_backup"
+--google-creds-file="/absolute/path/to/gcloud/credentials"
+```
+
+For DoltLab < `v2.1.0`, ensure you have stopped your running DoltLab instance, then, like we did for the AWS remote, we are going to uncomment the `GOOGLE_APPLICATION_CREDENTIALS` environment variables in the `doltlabdb.environment` and `doltlabdb.volumes` block of DoltLab's `./docker-compose.yaml` file.
 
 ```yaml
 ...
@@ -1749,6 +1827,14 @@ region=us-ashburn-1
 In the above example, we've changed `key_file` to point to `/oci_private_key.pem`, where DoltLab will mount the private key file. Save these changes.
 
 Following the Dolt's url template for OCI remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#oci-remotes), the remote url we will use for this bucket will be `oci://test-doltlab-application-db-backup/my_doltlab_backup`.
+
+For DoltLab >= `v2.1.0`, the `installer` is used to configure the GCP backup with the following arguments:
+
+```bash
+--automated-dolt-backups-url="oci://test-doltlab-application-db-backup/my_doltlab_backup"
+--oci-config-file="/absolute/path/to/oci/config"
+--oci-key-file="/absolute/path/to/oci/private/key.pem"
+```
 
 Ensure you have stopped your running DoltLab instance, then, like we did for the AWS and GCP remotes, we are going to uncomment the `OCI_CONFIG_FILE` and `OCI_KEY_FILE` environment variables in the `doltlabdb.environment` and `doltlabdb.volumes` block of DoltLab's `./docker-compose.yaml` file.
 
