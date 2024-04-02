@@ -32,7 +32,6 @@ the following information can help DoltLab Admins manually perform some common a
 25. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
 26. [Automated Remote Backups](#doltlab-automated-backups)
 27. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
-27. [DoltLab Installer](#installer)
 
 <h1 id="issues-release-notes">File Issues and View Release Notes</h1>
 
@@ -305,7 +304,7 @@ If you want to upgrade your DoltLab version without losing any data, please foll
 
 The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did. 
 
-However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [installer section](#installer) for instructions on configuring DoltLab with the `installer`.
+However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [Start DoltLab section of the Installation guide](./installation.md#start-doltlab) for instructions on configuring DoltLab with the `installer`.
 
 <h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
 

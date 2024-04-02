@@ -116,7 +116,7 @@ Inside DoltLab < `v2.1.0`, in the unzipped `doltlab` directory, you'll find the 
 * prometheus-alert.rules
 * alertmanager.yaml
 
-`installer`, introduced in DoltLab `v2.1.0` is used for configuring a DoltLab instance. This tool will create the appropriate assets for you to run DoltLab, based on the arguments you supply to the `installer`. For more information about working with the `installer`, please see the [installer section of the Administrator guide](./administrator.md#installer)
+`installer`, introduced in DoltLab `v2.1.0` is used for configuring a DoltLab instance. This tool will create the appropriate assets for you to run DoltLab, based on the arguments you supply to the `installer`.
 
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. You can customize emails by
 editing these files before starting your DoltLab instance. For more information on the contents of these files and how to change them, see the [Customize automated emails](./administrator.md#customize-automated-emails) section of the Administrator guide.  
@@ -163,7 +163,52 @@ For DoltLab `v1.0.0` and later, Dolt is the database server. To connect to it, s
 
 <h1 id="start-doltlab"><ins>Step 3: Start DoltLab</ins></h1>
 
-For DoltLab >= `v2.1.0`, the `installer` binary can be used to configure your DoltLab instance. After successfully using the `installer`, it will write a `./start.sh` script which can be used to start DoltLab, and a `./stop.sh` script which is used for stopping DoltLab. For more information about working with the `installer`, please see the [installer section of the Administrator Guide](./administrator.md#installer).
+DoltLab >= `v2.1.0` is configured with an `installer` binary that will generate the required assets to run DoltLab based on the arguments supplied.
+
+It the simplest case the `installer` will generate four assets, `docker-compose.yaml`, `envoy.json`, `start.sh`, and `stop.sh`.
+
+Use `start.sh` to start DoltLab and `stop.sh` to stop it. These scripts will reference the other generated files.
+
+```bash
+./installer \
+--host=doltlab.dolthub.com \
+--smtp-auth-method=plain \
+--smtp-host=doltlab.dolthub.com \
+--smtp-port=587 \
+--no-reply-email=me@email.com \
+--default-user-email=me@email.com
+
+2024-03-29T18:19:28.164Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
+2024-03-29T18:19:28.164Z	INFO	cmd/main.go:345	Successfully configured DoltLab	{"version": "v2.0.9"}
+2024-03-29T18:19:28.164Z	INFO	cmd/main.go:349	You can now start DoltLab using the generated script	{"start_script": "/home/ubuntu/doltlab/start.sh"}
+2024-03-29T18:19:28.164Z	INFO	cmd/main.go:354	Use the generated stop script to stop DoltLab	{"stop_script": "/home/ubuntu/doltlab/stop.sh"}
+```
+
+The installer requires the following minimum arguments:
+
+`--host`, the host name or IP address of the host running DoltLab.
+
+`--smtp-auth-method`, the smtp server's authentication method, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, and `disable`.
+
+`--smtp-host`, the smtp server's host name.
+
+`--smtp-port`, the smtp port.
+
+`--no-reply-email`, the email address to use to send automated DoltLab emails.
+
+`--default-user-email`, the email address to use for DoltLab's default user `admin`.
+
+You can now run `./start.sh` to start DoltLab:
+
+```bash
+DOLT_PASSWORD=password \
+DOLTHUBAPI_PASSWORD=password \
+EMAIL_USERNAME=myusername \
+EMAIL_PASSWORD=mypassword \
+./start.sh
+```
+
+Note that the generated `start.sh` script might require additional environment variables. Please see the list of how the environment variables defined below have changed in `v2.1.0`.
 
 For DoltLab < `v2.1.0`, the recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your DoltLab host environment/shell.
 
@@ -194,20 +239,20 @@ export TLS_PRIVATE_KEY=<path to TLS private key>
 
 > For DoltLab version <= `v0.8.4` include `export POSTGRES_USER="dolthubapi"` and rename `DOLT_PASSWORD` to `POSTGRES_PASSWORD`.
 
-`HOST_IP` should be the IP address or DNS name of the Linux host running DoltLab.<br/>
-`DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` may be set to any valid Dolt password.<br/>
-`EMAIL_USERNAME` should be a valid username authorized to use existing SMTP server.<br/>
-`EMAIL_PASSWORD` should be the password for the aforementioned username of the SMTP server.<br/>
-`EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
-`EMAIL_HOST` should be the host of the existing SMTP server.<br/>
-`NO_REPLY_EMAIL` should be the email address that receives no-reply messages.<br/>
-`DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE`, provided by us to DoltLab Enterprise customers.
-`DOLTLAB_ENTERPRISE_ONLINE_SHARED_KEY`, provided by us to DoltLab Enterprise customers.
-`DOLTLAB_ENTERPRISE_ONLINE_API_KEY`, provided by us to DoltLab Enterprise customers.
-`DOLTLAB_ENTERPRISE_ONLINE_LICENSE_KEY`, provided by us to DoltLab Enterprise customers.
-`DOLTLAB_ENTERPRISE_HARDWARE_ID`, use `./get_machine_id` binary to get the hardware ID and use the output as this value (DoltLab Enterprise only).
-`TLS_CERT_CHAIN` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS certificate chain.<br/>
-`TLS_PRIVATE_KEY` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS private key.<br/>
+`HOST_IP` should be the IP address or DNS name of the Linux host running DoltLab. In DoltLab `v2.1.0` this is replaced by the `--host` argument used with the `installer`.<br/>
+`DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` may be set to any valid Dolt password. In DoltLab `v2.1.0` these may be required by the generated `start.sh` script.<br/>
+`EMAIL_USERNAME` should be a valid username authorized to use existing SMTP server. In DoltLab `v2.1.0` this may be required by the generated `start.sh` script.<br/>
+`EMAIL_PASSWORD` should be the password for the aforementioned username of the SMTP server. In DoltLab `v2.1.0` this may be required by the generated `start.sh` script.<br/>
+`EMAIL_PORT` a `STARTTLS` port to the existing SMTP server is assumed by default. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls). In DoltLab `v2.1.0` this is replaced by the `--smtp-port` argument used with the `installer`.<br/>
+`EMAIL_HOST` should be the host of the existing SMTP server. In DoltLab `v2.1.0` this is replaced by the `--smtp-host` argument used with the `installer`.<br/>
+`NO_REPLY_EMAIL` should be the email address that receives no-reply messages. In DoltLab `v2.1.0` this is replaced by the `--no-reply-email` argument used with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE`, provided by us to DoltLab Enterprise customers. In DoltLab `v2.1.0` this is replaced by the `--enterprise-online-product-code` argument used with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_SHARED_KEY`, provided by us to DoltLab Enterprise customers. In DoltLab `v2.1.0` this is replaced by the `--enterprise-online-shared-key` argument used with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_API_KEY`, provided by us to DoltLab Enterprise customers. In DoltLab `v2.1.0` this is replaced by the `--enterprise-online-api-key` argument used with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_LICENSE_KEY`, provided by us to DoltLab Enterprise customers. In DoltLab `v2.1.0` this is replaced by the `--enterprise-online-license-key` argument used with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_HARDWARE_ID`, use `./get_machine_id` binary to get the hardware ID and use the output as this value (DoltLab Enterprise only). Not used in DoltLab `v2.1.0.`<br/>
+`TLS_CERT_CHAIN` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS certificate chain. In DoltLab `v2.1.0` this is replaced by the `--tls-cert-chain` argument used with the `installer`.<br/>
+`TLS_PRIVATE_KEY` required if running DoltLab >= `v1.0.6` with TLS, should be the the absolute path to a TLS private key. In DoltLab `v2.1.0` this is replaced by the `--tls-private-key` argument used with the `installer`.<br/>
 
 To use DoltLab with TLS ensure the certificate is for the `HOST_IP` of your DoltLab host. We recommend creating a TLS certificate with [certbot](https://certbot.eff.org/).
 
@@ -216,7 +261,7 @@ To use DoltLab with TLS ensure the certificate is for the `HOST_IP` of your Dolt
 Starting in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
 SMTP server. By default, `./start-doltlab.sh` sets the environment variable `EMAIL_AUTH_METHOD` to `plain`.
 
-Supported `EMAIL_AUTH_METHOD` options are `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`.
+Supported `EMAIL_AUTH_METHOD` options are `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`. Note that in DoltLab `v2.1.0`, this environment variable is now the `--smtp-auth-method` flag used with the `installer`.
 
 `plain` requires the environment variables `EMAIL_USERNAME` and `EMAIL_PASSWORD` to be set and uses the optional environment variable `EMAIL_IDENTITY`.
 `login` requires the environment variables `EMAIL_USERNAME` and `EMAIL_PASSWORD` to be set. This is used by Microsoft 365 (`smtp.office365.com`).
@@ -234,7 +279,10 @@ when [DoltLab's API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-
 
 This default user allows DoltLab admins to immediately sign in to DoltLab and begin using the product, even if their DoltLab instance is not successfully connected to an SMTP server.
 
-By default, the `./start-doltlab.sh` script will create a default user `DEFAULT_USER=admin` with password `DEFAULT_USER_PASSWORD=DoltLab1234` and the email address `DEFAULT_USER_EMAIL=$NO_REPLY_EMAIL`, which gets its value from the supplied `NO_REPLY_EMAIL` environment variable.
+For DoltLab >= `v2.1.0`, the default user email is configured with the `installer` using the flag `--default-user-email` and the no-reply email is configured with `--no-reply-email`. The default user's password can be overridden by defining `DEFAULT_USER_PASSWORD` when running `start.sh`.
+
+For DoltLab < `v2.1.0`, by default, the `./start-doltlab.sh` script will create a default user `DEFAULT_USER=admin` with password `DEFAULT_USER_PASSWORD=DoltLab1234` and the email address `DEFAULT_USER_EMAIL=$NO_REPLY_EMAIL`, which gets its value from the supplied `NO_REPLY_EMAIL` environment variable.
+
 To overwrite these default values, simply change the values of their corresponding environment variables.
 
 Once these variables are set, simply run the `start-doltlab.sh` script:
