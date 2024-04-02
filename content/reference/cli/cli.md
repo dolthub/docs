@@ -427,6 +427,9 @@ Name of the remote to be added to the cloned database. The default is 'origin'.
 `-b`, `--branch`:
 The branch to be cloned. If not specified all branches will be cloned.
 
+`--depth`:
+Clone a single branch and limit history to the given commit depth.
+
 `--aws-region`
 
 `--aws-creds-type`
@@ -2061,6 +2064,8 @@ This is an example yaml configuration file showing all supported items and their
 	
 	user_session_vars: []
 	
+	system_variables: {}
+	
 	jwks: []
 
 
@@ -2102,6 +2107,8 @@ SUPPORTED CONFIG FILE FIELDS:
 `remotesapi.port`: A port to listen for remote API operations on. If set to a positive integer, this server will accept connections from clients to clone, pull, etc. databases being served.
 
 `remotesapi.read_only`: Boolean flag which disables the ability to perform pushes against the server.
+
+`system_variables`: A map of system variable name to desired value for all system variable values to override.
 
 `user_session_vars`: A map of user name to a map of session variables to set on connection for each session.
 
@@ -2585,6 +2592,8 @@ dolt version [--verbose] [--feature]
 **Description**
 
 Displays the version for the Dolt binary.
+
+The out-of-date check can be disabled by running `dolt config --global --add versioncheck.disabled true`.
 
 **Arguments and options**
 
