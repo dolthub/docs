@@ -1400,8 +1400,7 @@ SELECT * FROM database1.t;
 ## `DOLT_VERIFY_CONSTRAINTS()`
 
 Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
-defined table constraints. Currently, the command only verifies foreign key
-constraints. If any constraints are violated they are written to the
+defined table constraints. If any constraints are violated they are written to the
 [DOLT_CONSTRAINT_VIOLATIONS](./dolt-system-tables.md#doltconstraintviolations) table.
 
 `DOLT_VERIFY_CONSTRAINTS` by default does not detect constraints for row changes
@@ -1425,11 +1424,11 @@ system table.
 ### Output Schema
 
 ```text
-+------------+------+----------------------+
-| Field      | Type | Description          |
-+------------+------+----------------------+
-| violations | int  | number of violations |
-+------------+------+----------------------+
++------------+------+-----------------------------------------+
+| Field      | Type | Description                             |
++------------+------+-----------------------------------------+
+| violations | int  | 1 if violations were found, otherwise 0 |
++------------+------+-----------------------------------------+
 ```
 
 ### Example
