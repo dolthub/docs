@@ -33,3 +33,4 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Looker Studio](https://lookerstudio.google.com/) | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/) |
 | [Apache Superset](https://superset.apache.org/) | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/) |
 | [Retool](https://retool.com/) | [Blog](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/) |
+| [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) | [Blog](https://www.dolthub.com/blog/2024-04-05-dolt-mediawiki-wikipedia/) |
