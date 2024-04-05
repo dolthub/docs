@@ -11,6 +11,7 @@ title: Dolt SQL Functions
   - [hashof()](#hashof)
   - [dolt_version()](#dolt_version)
   - [has_ancestor()](#has_ancestor)
+  - [last_insert_uuid()](#last_insert_uuid)
 
 - [Table Functions](#table-functions)
 
@@ -83,7 +84,7 @@ Consider the example commit graph from above:
 D---E---F---G main
 ```
 
-A hypothetic example where we substitute letters for commit
+A hypothetical example where we substitute letters for commit
 hashes would look like:
 
 ```sql
@@ -93,6 +94,45 @@ select has_ancestor('feature', 'F'); -- false
 select has_ancestor('main', 'E');    -- true
 select has_ancestor('G', 'main');    -- true
 ```
+
+## `LAST_INSERT_UUID()`
+
+The `last_insert_uuid()` function returns the UUID of the first row inserted by the last statement executed in the current session. 
+This is the UUID analogue of 
+[MySQL's `LAST_INSERT_ID()` function](https://dev.mysql.com/doc/refman/8.3/en/information-functions.html#function_last-insert-id). 
+We [recommend using UUIDs in keys instead of auto_increment values](https://www.dolthub.com/blog/2023-10-27-uuid-keys/) due to their better 
+support for merging values across distributed clones of your database. 
+
+While `last_insert_id()` uses the presence of the `auto_increment` modifier on a column to determine which automatically generated
+key value to return, `last_insert_uuid()` instead depends on the column having a specific definition. For `last_insert_uuid()`
+to grab an inserted UUID value, the column **must** be part of the table's primary key, and it **must** have one of the following type definitions:
+- `VARCHAR(36)` or `CHAR(36)` with a default value expression of `(UUID())` 
+- `VARBINARY(16)` or `BINARY(16)` with a default value expression of `(UUID_TO_BIN(UUID()))` 
+
+When the column is defined as `VARBINARY` or `BINARY` and uses the `UUID_TO_BIN()` function in the default value expression, [the `swap_flag` for `UUID_TO_BIN` may optionally be specified](https://dev.mysql.com/doc/refman/8.3/en/miscellaneous-functions.html#function_uuid-to-bin).  
+
+The following code shows how to create a table that conforms to the requirements above and demonstrates how to use `last_insert_uuid()`:
+
+```sql 
+> create table t (pk binary(16) primary key default (UUID_to_bin(UUID())), c1 varchar(100));
+
+> insert into t (c1) values ("one"), ("two");
+Query OK, 2 rows affected (0.00 sec)
+
+> select last_insert_uuid();
++--------------------------------------+
+| last_insert_uuid()                   |
++--------------------------------------+
+| 6cd58555-bb3f-45d8-9302-d32d94d8e28a |
++--------------------------------------+
+
+> select c1 from t where pk = uuid_to_bin(last_insert_uuid());
++-----+
+| c1  |
++-----+
+| one |
++-----+
+``` 
 
 # Table Functions
 
