@@ -16,14 +16,14 @@ do
   git checkout "$hash" 2>> "perf-parse-log.txt"
 
   path=""
-  [ -f "content/reference/sql/benchmarks/latency.md" ] && path="content/reference/sql/benchmarks/latency.md"
-  [ -f "content/reference/sql/latency.md" ] && path="content/reference/sql/latency.md"
-  [ -f "content/reference/performance/latency.md" ] && path="content/reference/performance/latency.md"
-  [ -f "content/introduction/why-dolt/characteristics.md" ] && path="content/introduction/why-dolt/characteristics.md"
-  [ -f "content/reference/characteristics.md" ] && path="content/reference/characteristics.md"
-  [ -f "content/reference/characteristics/performance.md" ] && path="content/reference/characteristics/performance.md"
-  [ -f "content/introduction/why-dolt/performance-characteristics.md" ] && path="content/introduction/why-dolt/performance-characteristics.md"
-  [ -f "content/reference/sql/benchmarks.md" ] && path="content/reference/sql/benchmarks.md"
+  [ -f "packages/dolt/content/reference/sql/benchmarks/latency.md" ] && path="packages/dolt/content/reference/sql/benchmarks/latency.md"
+  [ -f "packages/dolt/content/reference/sql/latency.md" ] && path="packages/dolt/content/reference/sql/latency.md"
+  [ -f "packages/dolt/content/reference/performance/latency.md" ] && path="packages/dolt/content/reference/performance/latency.md"
+  [ -f "packages/dolt/content/introduction/why-dolt/characteristics.md" ] && path="packages/dolt/content/introduction/why-dolt/characteristics.md"
+  [ -f "packages/dolt/content/reference/characteristics.md" ] && path="packages/dolt/content/reference/characteristics.md"
+  [ -f "packages/dolt/content/reference/characteristics/performance.md" ] && path="packages/dolt/content/reference/characteristics/performance.md"
+  [ -f "packages/dolt/content/introduction/why-dolt/performance-characteristics.md" ] && path="packages/dolt/content/introduction/why-dolt/performance-characteristics.md"
+  [ -f "packages/dolt/content/reference/sql/benchmarks.md" ] && path="packages/dolt/content/reference/sql/benchmarks.md"
 
   if [ -z "path" ]; then
     echo "failed to find path" && exit 1
