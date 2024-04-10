@@ -21,7 +21,7 @@
   - [Manual Data Curation](introduction/use-cases/manual-data-curation.md)
   - [Version Control for your Application](introduction/use-cases/vc-your-app.md)
   - [Versioned MySQL Replica](introduction/use-cases/versioned-replica.md)
-  - [Audit](introduction/use-cases/audit.md) 
+  - [Audit](introduction/use-cases/audit.md)
   - [Configuration Management](introduction/use-cases/configuration-management.md)
   - [Offline First](introduction/use-cases/offline-first.md)
 
@@ -121,13 +121,7 @@
   - [Transform File Uploads](products/dolthub/transform-uploads.md)
   - [Workspaces](products/dolthub/workspaces.md)
 - [DoltLab](products/doltlab/README.md)
-  - [Install DoltLab](products/doltlab/installation.md)
-  - [Administrator Guide](products/doltlab/administrator.md)
-  - [API](products/doltlab/api.md)
 - [DoltgreSQL](products/doltgres/README.md)
-  - [Install DoltgreSQL](products/doltgres/installation.md)
-  - [Running the Server](products/doltgres/running-server.md)
-  - [Replication from Postgres](products/doltgres/replication-from-postgres.md)
 
 ## Architecture
 
