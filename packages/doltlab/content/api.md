@@ -2,7 +2,6 @@
 title: "API"
 ---
 
-DoltHub and DoltLab implement the same API. 
+DoltHub and DoltLab implement the same API.
 
-Consult the [DoltHub API documentation](../dolthub/api/README.md) for more information.
-
+Consult the [DoltHub API documentation](https://docs.dolthub.com/products/dolthub/api) for more information.
