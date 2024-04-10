@@ -110,7 +110,7 @@ See the [Getting Started Guide for DoltHub](../../../products/dolthub/data-shari
 
 ## DoltLab
 
-[DoltLab](https://www.doltlab.com) is a version of [DoltHub](https://www.dolthub.com) you can deploy in your own network. It looks very similar to DoltHub. See the [DoltLab Guide](../../../products/doltlab/installation.md) if you are interested in using DoltLab as a remote.
+[DoltLab](https://www.doltlab.com) is a version of [DoltHub](https://www.dolthub.com) you can deploy in your own network. It looks very similar to DoltHub. See the [DoltLab Guide](https://docs.doltlab.com/installation.md) if you are interested in using DoltLab as a remote.
 
 ## Filesystem
 

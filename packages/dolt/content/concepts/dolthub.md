@@ -24,4 +24,4 @@ DoltHub wants to change the way data is shared and collaborated on, similar to h
 
 DoltLab is the self-hosted version of DoltHub that allows you to run your own DoltHub on-prem. If you're interested in using Dolt in production at your company, but can't push data to DoltHub, DoltLab is the product you're looking for. DoltLab provides the same web-based UI as DoltHub, backed entirely by local disk, so your data never leaves your control!
 
-Released as a simple zip file, DoltLab is a suite of publically available container images that run using Docker Compose on a single Linux host. This host can be a local desktop, or a cloud server, but by no means are any cloud resources required to start running DoltLab today.
+Released as a simple zip file, DoltLab is a suite of publicly available container images that run using Docker Compose on a single Linux host. This host can be a local desktop, or a cloud server, but by no means are any cloud resources required to start running DoltLab today.
