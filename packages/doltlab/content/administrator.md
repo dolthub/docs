@@ -300,9 +300,10 @@ Upgrading to newer versions of DoltLab requires downtime. This means that DoltLa
 In addition, some early versions have different database schemas than newer ones. If the docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab Admins can simply remove these Docker volumes and run the `start-doltlab.sh` script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
 If you want to upgrade your DoltLab version without losing any data, please follow the upgrade guidelines below.
+
 <h2 id="upgrade-v208-v210"><ins>Upgrade from DoltLab <code>v2.0.8</code> to <code>v2.1.0+</code></ins></h2>
 
-The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did. 
+The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did.
 
 However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [Start DoltLab section of the Installation guide](./installation.md#start-doltlab) for instructions on configuring DoltLab with the `installer`.
 
@@ -314,10 +315,10 @@ However, DoltLab `v2.0.0` is the first version of DoltLab that supports Enterpri
 
 If you are currently using the any of the following enterprise features in DoltLab <= `v1.1.1`, you will lose them by upgrading to DoltLab `v2.0.0`:
 
-* [Custom Automated Emails](#customize-automated-emails)
-* [Custom Logo](#use-custom-logo)
-* [Custom Color Themes](#customize-colors)
-* [Super Admins](#add-super-admins)
+- [Custom Automated Emails](#customize-automated-emails)
+- [Custom Logo](#use-custom-logo)
+- [Custom Color Themes](#customize-colors)
+- [Super Admins](#add-super-admins)
 
 <h2 id="upgrade-v084-v100"><ins>Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code></ins></h2>
 
@@ -454,7 +455,7 @@ If you need to connect to a DoltLab team member, the best way to do so is on [Di
 
 <h1 id="auth-dolt-client">Authenticate a Dolt Client to use a DoltLab Account</h1>
 
-As of Dolt `v0.39.0`, the [dolt login](../../reference/cli/cli.md#dolt-login) command can be used to authenticate against DoltLab instances.
+As of Dolt `v0.39.0`, the [dolt login](https://docs.dolthub.com/cli-reference/cli#dolt-login) command can be used to authenticate against DoltLab instances.
 
 To authenticate a client against DoltLab with this command, use the `--auth-endpoint`, `--login-url`, and `--insecure` arguments to point your Dolt client at the DoltLab instance you want to authenticate against.
 
@@ -484,7 +485,7 @@ requesting update
 Key successfully associated with user: <user> email <email>
 ```
 
-For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](../../reference/cli/cli.md#dolt-creds-new) command, which will output a new public key:
+For Dolt clients < `v0.39.0`, or to authenticate without using the `dolt login` command, first run the [dolt creds new](https://docs.dolthub.com/cli-reference/cli#dolt-creds-new) command, which will output a new public key:
 
 ```bash
 dolt creds new
@@ -492,7 +493,7 @@ Credentials created successfully.
 pub key: fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
 ```
 
-Copy the generated public key and run the [dolt creds use](../../reference/cli/cli.md#dolt-creds-use) command:
+Copy the generated public key and run the [dolt creds use](https://docs.dolthub.com/cli-reference/cli#dolt-creds-use) command:
 
 ```bash
 dolt creds use fef0kj7ia389i5atv8mcb31ksg9h3i6cji7aunm4jea9tccdl2cg
@@ -805,7 +806,7 @@ DoltLab >= `v2.1.0` does not use an `admin-config.yaml` file, but instead uses t
 
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
-Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users. 
+Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users.
 
 As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
@@ -937,6 +938,7 @@ Starting with DoltLab `v0.8.1`, and ending with `v1.1.1`, DoltLab allows adminis
 As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
 
 For DoltLab >= `v2.1.0`, which does not use an `admin-config.yaml`, this feature can be configured using the `installer`. The installer accepts the following arguments corresponding to the custom color you want to override:
+
 ```bash
 --custom-color-rgb-accent-1="252, 66, 201"
 --custom-color-rgb-background-accent-1="24, 33, 52"
@@ -1044,31 +1046,31 @@ To begin, you'll need to create a Hosted Dolt deployment that your DoltLab insta
 
 You will then see a form where you can specify details about the host you need for your DoltLab instance:
 
-![Create Deployment Page 1](../../.gitbook/assets/create_deployment_1.png)
+![Create Deployment Page 1](../.gitbook/assets/create_deployment_1.png)
 
 In the image above you can see that we defined our Hosted Dolt deployment name as `my-doltlab-db-1`, selected an AWS EC2 host with 2 CPU and 8 GB of RAM in region `us-west-2`. We've also requested 200 GB of disk. For DoltLab, these settings should be more than sufficient.
 
 We have also requested a replica instance by checking the "Enable Replication" box, and specifying `1` replica, although replication is not required for DoltLab.
 
-![Create Deployment Page 2](../../.gitbook/assets/create_deployment_2.png)
+![Create Deployment Page 2](../.gitbook/assets/create_deployment_2.png)
 
 If you want the ability to [clone this Hosted Dolt instance](https://www.dolthub.com/blog/2023-04-17-cloning-a-hosted-database/), check the box "Enable Dolt Credentials". And finally, if you want to use the SQL workbench feature for this hosted instance (which we recommend) you should also check the box "Create database users for the SQL Workbench".
 
 You will see the hourly cost of running the Hosted Dolt instance displayed above the "Create Deployment" button. Click it, and wait for the deployment to reach the "Started" state.
 
-![Hosted Deployment Started](../../.gitbook/assets/hosted_deployment_started.png)
+![Hosted Deployment Started](../.gitbook/assets/hosted_deployment_started.png)
 
 Once the deployment has come up, the deployment page will display the connection information for both the primary host and the replica, and each will be ready to use. Before connecting a DoltLab instance to the primary host, though, there are a few remaining steps to take to ensure the host has the proper state before connecting DoltLab.
 
 First, click the "Configuration" tab and uncheck the box "behavior_disable_multistatements". DoltLab will need to execute multiple statements against this database when it starts up. You can also, optionally, change the log_level to "debug". This log level setting will make sure executed queries appear in the database logs, which is helpful for debugging.
 
-![Hosted Deployment Configuration](../../.gitbook/assets/hosted_deployment_configuration.png)
+![Hosted Deployment Configuration](../.gitbook/assets/hosted_deployment_configuration.png)
 
 Click "Save Changes".
 
 Next, navigate to the "Workbench" tab and check the box "Enable Writes". This will allow you to execute writes against this instance from the SQL workbench. Click "Update".
 
-![Hosted Deployment Started](../../.gitbook/assets/enable_writes.png)
+![Hosted Deployment Started](../.gitbook/assets/enable_writes.png)
 
 Then, with writes enabled, on this same page, click "Create database" to create the database that DoltLab expects, called `dolthubapi`.
 
@@ -1162,7 +1164,7 @@ Make sure that the `DOLT_PASSWORD` environment variable matches the password you
 
 Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
 
-![Hosted Dolt Workbench](../../.gitbook/assets/hosted_dolt_workbench.png)
+![Hosted Dolt Workbench](../.gitbook/assets/hosted_dolt_workbench.png)
 
 <h1 id="doltlab-https-proxy">Serve DoltLab over HTTPS with a TLS reverse proxy</h1>
 
@@ -1208,7 +1210,7 @@ Next, edit the `doltlabapi.command` section:
       -userImportUploadsFileServiceBrowserHost "https://doltlab.dolthub.com:5443"
 ```
 
-Here we change the value of `-websiteURL` to have an `https` scheme. We also change the value of   `-userImportUploadsFileServiceBrowserHost` so that the url scheme is `https` and the port after the colon is `5443`, the new TLS port we are using to forward requests to DoltLab's user file upload service running on `HTTP` port `4321`.
+Here we change the value of `-websiteURL` to have an `https` scheme. We also change the value of `-userImportUploadsFileServiceBrowserHost` so that the url scheme is `https` and the port after the colon is `5443`, the new TLS port we are using to forward requests to DoltLab's user file upload service running on `HTTP` port `4321`.
 
 Save the changes to this file.
 
@@ -1297,9 +1299,9 @@ http {
             proxy_set_header X-Forwarded-Port $server_port;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto https;
-        }                
+        }
     }
-    
+
     server {
         listen 143 ssl;
 
@@ -1317,9 +1319,9 @@ http {
             proxy_set_header X-Forwarded-Port $server_port;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto https;
-        }                
+        }
     }
-    
+
     server {
         listen 5443 ssl;
 
@@ -1337,7 +1339,7 @@ http {
             proxy_set_header X-Forwarded-Port $server_port;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto https;
-        }                
+        }
     }
 
     server {
@@ -1350,7 +1352,7 @@ http {
 
         location / {
             grpc_pass grpc://127.0.0.1:50051;
-        }                
+        }
     }
 }
 
@@ -1414,14 +1416,14 @@ For DoltLab < `v2.1.0` and >= `v1.1.0`, to prevent resource exhaustion, the foll
 
 ```yaml
 # docker-compose.yaml
-...
-  doltlabapi:
-...
-    command:
-...
-      -jobConcurrencyLimit "5"
-      -jobConcurrencyLoopSeconds "10"
-      -jobMaxRetries "5"
+---
+doltlabapi:
+---
+command:
+---
+-jobConcurrencyLimit "5"
+-jobConcurrencyLoopSeconds "10"
+-jobMaxRetries "5"
 ```
 
 `-jobConcurrencyLimit` limits number of concurrent Jobs a DoltLab instance will run at any given time. A value of `0` indicates no limit.
@@ -1436,13 +1438,13 @@ DoltLab Enterprise => `v2.0.0` supports SAML single-sign-on. To configure your D
 
 For example, [Okta](https://www.okta.com/), a popular IP, provides an endpoint for downloading the metadata descriptor for a SAML application after you register an application on their platform.
 
-![Okta saml app creation](../../.gitbook/assets/doltlab_okta_app.png)
+![Okta saml app creation](../.gitbook/assets/doltlab_okta_app.png)
 
 During registration, Okta will ask you for the "Single Sign On Url" and an "Audience Restriction" for the application.
 
 Use the domain/host IP address of your DoltLab instance followed by `/sso/callback` for the "Single Sign On Url", and use that same domain/host IP address followed by just "/sso" for the "Audience Restriction". Since this example will be for `https://doltlab.dolthub.com`, we'll use `https://doltlab.dolthub.com/sso/callback` and `https://doltlab.dolthub.com/sso` respectively.
 
-![Okta saml settings](../../.gitbook/assets/doltlab_okta_settings.png)
+![Okta saml settings](../.gitbook/assets/doltlab_okta_settings.png)
 
 Be sure to also set "Name ID Format" to "Persistent".
 
@@ -1479,15 +1481,15 @@ Save these changes to the `./docker-compose.yaml` file and restart your DoltLab 
 
 When SAML single-sign-on is configured for DoltLab, you will see the SAML option on the sign-in page:
 
-![Sign in with saml provider](../../.gitbook/assets/doltlab_saml_signin.png)
+![Sign in with saml provider](../.gitbook/assets/doltlab_saml_signin.png)
 
 Next, as user `admin`, login to your DoltLab instance and navigate to Profile > Settings > SSO.
 
-![DoltLab profile settings](../../.gitbook/assets/doltlab_profile_settings.png)
+![DoltLab profile settings](../.gitbook/assets/doltlab_profile_settings.png)
 
 On this tab you will see the following:
 
-![Global saml sso info](../../.gitbook/assets/doltlab_saml_settings.png)
+![Global saml sso info](../.gitbook/assets/doltlab_saml_settings.png)
 
 `Assertion Consumer Service Url` displays the url where Okta should send the SAML assertion.
 
@@ -1515,11 +1517,11 @@ Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) a
 
 For our example, let's create an AWS S3 bucket called `test-doltlab-application-db-backups`.
 
-![S3 bucket test-doltlab-application-db-backups](../../.gitbook/assets/aws_remote_backup_s3.png)
+![S3 bucket test-doltlab-application-db-backups](../.gitbook/assets/aws_remote_backup_s3.png)
 
 Let's also create a Dynamo DB table in the same AWS region, and call it `test-doltlab-backup-application-db-manifest`. Notice its uses the required partition key (primary key) `db`.
 
-![Dynamo DB test-doltlab-backup-application-db-manifest](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
+![Dynamo DB test-doltlab-backup-application-db-manifest](../.gitbook/assets/aws_remote_backup_dynamodb.png)
 
 The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
 
@@ -1718,9 +1720,9 @@ DOLT_BACKUP_URL="aws://[test-doltlab-backup-application-db-manifest:test-doltlab
 
 The `backup-syncer` service will start backing up the DoltLab application database and you will see your backups stored in your S3 bucket, and the manifest stored in your DynamoDB table.
 
-![Backup in S3](../../.gitbook/assets/aws_remote_backup_s3_example.png)
+![Backup in S3](../.gitbook/assets/aws_remote_backup_s3_example.png)
 
-![Backup in Dynamo DB](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
+![Backup in Dynamo DB](../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
 
 Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
@@ -1728,7 +1730,7 @@ Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
 To backup DoltLab's Dolt server to a GCP remote, first create a bucket in GCP. This will be the only required resource needed.
 
-![GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket.png)
+![GCP bucket](../.gitbook/assets/gcp_remote_backup_bucket.png)
 
 Next, add GCP JSON credentials to your DoltLab host. You can find information about GCP credentials [here](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login).
 
@@ -1800,13 +1802,13 @@ DOLT_BACKUP_URL="gs://test-doltlab-application-db-backup/my_doltlab_backup" \
 
 Your DoltLab instance will now automatically back up its application Dolt server to your GCP bucket.
 
-![Backup in GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
+![Backup in GCP bucket](../.gitbook/assets/gcp_remote_backup_bucket_example.png)
 
 <h2 id="oci-remote-backup">OCI Remote Backup</h2>
 
 To backup DoltLab's Dolt server to an OCI remote, first create a bucket in OCI. This will be the only required resource needed.
 
-![OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket.png)
+![OCI bucket](../.gitbook/assets/oci_remote_backup_bucket.png)
 
 Next, install the `oci` CLI tool on your DoltLab host, and run `oci setup config` to create a configuration file with credentials authorized to access your bucket. You can find information about creating an config file [here](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#configfile).
 
@@ -1881,13 +1883,13 @@ DOLT_BACKUP_URL="oci://test-doltlab-application-db-backup/my_doltlab_backup" \
 
 Your DoltLab instance will now automatically back up its application Dolt server to your OCI bucket.
 
-![Backup in OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
+![Backup in OCI bucket](../.gitbook/assets/oci_remote_backup_bucket_example.png)
 
 <h1 id="doltlab-aws-nlb">Serve DoltLab behind an AWS Network Load Balancer</h1>
 
 The following section describes how to setup an [AWS Network Load Balancer (NLB)](https://aws.amazon.com/elasticloadbalancing/network-load-balancer/) for a DoltLab instance. This guide will be using DoltLab `v2.0.8`.
 
-First, setup DoltLab `v2.0.8` on an [AWS EC2 host](https://aws.amazon.com/pm/ec2) in the same [Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) where your NLB will run. 
+First, setup DoltLab `v2.0.8` on an [AWS EC2 host](https://aws.amazon.com/pm/ec2) in the same [Virtual Private Cloud (VPC)](https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html) where your NLB will run.
 
 If this instance should _only_ be accessible by the NLB, ensure that the DoltLab host is created in a private subnet and does not have public IP address.
 
@@ -1947,41 +1949,41 @@ Similarly, edit the `docker-compose.yaml` file to expose port `2001` in the `dol
      ...
      ports:
       ...
-       - "2001:2001"  
+       - "2001:2001"
 ```
 
 Next, in AWS, create [target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-target-group.html) for each DoltLab port that the NLB will forward requests to. These ports are:
 `80/443`, `100`, `4321`, and `50051`.
 
-![Create Target Group Instances](../../.gitbook/assets/doltlab_target_group_type.png)
+![Create Target Group Instances](../.gitbook/assets/doltlab_target_group_type.png)
 
 When creating the target groups, select `Instances` as the target type. Then, select `TCP` as the port protocol, followed by the port to use for the target group. In this example we will map all target group ports to their corresponding DoltLab port, ie `80:80`, `100:100`, `4321:4321` and `50051:50051`. Select the same VPC used by your DoltLab host as well.
 
-![Create Target Group TCP](../../.gitbook/assets/doltlab_target_group_vpc.png)
+![Create Target Group TCP](../.gitbook/assets/doltlab_target_group_vpc.png)
 
 During target group creation, in the `Health Checks` section, click `Advanced health check settings` and select `Override` to specify the port to perform health checks on. Here, enter `2001`, the port we added to DoltLab's envoy configuration file. We will use this same port for _all_ target group health checks.
 
-![Create Target Group Health Checks](../../.gitbook/assets/doltlab_target_group_health_checks.png)
+![Create Target Group Health Checks](../.gitbook/assets/doltlab_target_group_health_checks.png)
 
-After clicking `Next`, you will register targets for your new target group. Here you should see your DoltLab host. Select it and specify the port the target group will forward to. 
+After clicking `Next`, you will register targets for your new target group. Here you should see your DoltLab host. Select it and specify the port the target group will forward to.
 
-![Create Target Group Health Register Targets](../../.gitbook/assets/doltlab_target_group_register_targets.png)
+![Create Target Group Health Register Targets](../.gitbook/assets/doltlab_target_group_register_targets.png)
 
 Click `Include as pending below`, then click `Create target group`.
 
 Once you've created your target groups you can create the NLB.
 
-![Create NLB Select](../../.gitbook/assets/doltlab_nlb_select_load_balancer.png)
+![Create NLB Select](../.gitbook/assets/doltlab_nlb_select_load_balancer.png)
 
 Be sure to select the Network Load balancer as the other types of load balancers may require different configurations.
 
 Then, create an NLB in the same VPC and subnet as your DoltLab host that uses `Scheme: Internet-facing` and `Ip address type: IPV4`.
 
-![Create NLB Config](../../.gitbook/assets/doltlab_nlb_basic_config.png)
+![Create NLB Config](../.gitbook/assets/doltlab_nlb_basic_config.png)
 
 Additionally, select the the same availabilty zone that your DoltLab host uses. You can use the `default` security group for your NLB, however the ingress rules for this group will need to be updated before inbound traffic will be able to reach your NLB.
 
-![Create NLB Listeners](../../.gitbook/assets/doltlab_nlb_listeners.png)
+![Create NLB Listeners](../.gitbook/assets/doltlab_nlb_listeners.png)
 
 In the Listeners section, add listeners for each target group you created, specifying the NLB port to use for each one. But again, in this example we will forward on the same port. Click `Create load balancer`.
 
@@ -1989,7 +1991,7 @@ It make take a few minutes for the NLB to become ready. After it does, check eac
 
 Next, edit the inbound rules for the security group attached to the NLB you created so that it allows connections on the listening ports.
 
-![NLB Security group](../../.gitbook/assets/doltlab_nlb_security_group.png)
+![NLB Security group](../.gitbook/assets/doltlab_nlb_security_group.png)
 
 On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
 
