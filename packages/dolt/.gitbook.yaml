@@ -39,5 +39,11 @@ redirects:
   guides/dolthub-api/database: products/dolthub/dolthub-api/database.md
   guides/dolthub-api/sql: products/dolthub/dolthub-api/sql.md
   guides/doltlab/: products/doltlab/README.md
-  guides/doltlab/installation: products/doltlab/installation.md
-  guides/doltlab/administrator: products/doltlab/administrator.md
+  guides/doltlab/installation: products/doltlab/README.md
+  guides/doltlab/administrator: products/doltlab/README.md
+  products/doltlab/installation: products/doltlab/README.md
+  products/doltlab/administrator: products/doltlab/README.md
+  products/doltlab/api: products/doltlab/README.md
+  products/doltgres/installation: products/doltgres/README.md
+  products/doltgres/replication-from-postgres: products/doltgres/README.md
+  products/doltgres/running-server: products/doltgres/README.md
