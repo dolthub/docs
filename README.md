@@ -4,7 +4,7 @@ title: Dolt Documentation
 
 ## Introduction
 
-This repository contains Dolt, DoltHub, DoltLab, and Postgres documentation. Check out our [website](https://www.dolthub.com), [team](https://www.dolthub.com/team), and documentation to learn more:
+This repository contains Dolt, DoltHub, DoltLab, and Doltgres documentation. Check out our [website](https://www.dolthub.com), [team](https://www.dolthub.com/team), and documentation to learn more:
 
 - [Dolt](https://docs.dolthub.com)
 - [Doltgres](https://docs.doltgres.com)

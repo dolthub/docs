@@ -14,7 +14,7 @@ This series of documents shows:
 * 🟠 Where we support the feature but deviate from MySQL in some way 
 * ❌ Where we lack support for the SQL language feature. 
 
-This section is divided into four main categories:
+This section is divided into five main categories:
 
 1. [Data Description](data-description.md): SQL features for describing and organizing data
 2. [Expressions, Functions, Operators](expressions-functions-operators.md): SQL expressions, functions and operators used in queries
