@@ -12,7 +12,7 @@ dest_file=""
 
 os_type="darwin"
 
-sql_reference_dir="content/reference/sql/benchmarks"
+sql_reference_dir="packages/dolt/content/reference/sql/benchmarks"
 
 start_template='<!-- START_%s_%s_RESULTS_TABLE -->'
 end_template='<!-- END_%s_%s_RESULTS_TABLE -->'
