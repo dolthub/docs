@@ -181,7 +181,7 @@ Use `start.sh` to start DoltLab and `stop.sh` to stop it. These scripts will ref
 --default-user-email=me@email.com
 
 2024-03-29T18:19:28.164Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
-2024-03-29T18:19:28.164Z	INFO	cmd/main.go:345	Successfully configured DoltLab	{"version": "v2.0.9"}
+2024-03-29T18:19:28.164Z	INFO	cmd/main.go:345	Successfully configured DoltLab	{"version": "v2.1.0"}
 2024-03-29T18:19:28.164Z	INFO	cmd/main.go:349	You can now start DoltLab using the generated script	{"start_script": "/home/ubuntu/doltlab/start.sh"}
 2024-03-29T18:19:28.164Z	INFO	cmd/main.go:354	Use the generated stop script to stop DoltLab	{"stop_script": "/home/ubuntu/doltlab/stop.sh"}
 ```
