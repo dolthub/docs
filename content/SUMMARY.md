@@ -135,6 +135,7 @@
 - [Storage Engine](architecture/storage-engine.md)
   - [Commit Graph](architecture/storage-engine/commit-graph.md)
   - [Prolly Trees](architecture/storage-engine/prolly-tree.md)
+  - [Block Store](architecture/storage-engine/block-store.md)
 - [SQL](architecture/sql.md)
   - [Go MySQL Server](architecture/sql/go-mysql-server.md)
   - [Vitess](architecture/sql/vitess.md)
