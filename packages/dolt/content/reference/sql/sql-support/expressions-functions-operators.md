@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 305 of 438 MySQL functions.**
+**Currently supporting 308 of 438 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -179,7 +179,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `FORMAT_PICO_TIME()`              | ❌            |                                                                                                                                               |
 | `FOUND_ROWS()`                    | ✅            |                                                                                                                                               |
 | `FROM_BASE64()`                   | ✅            |                                                                                                                                               |
-| `FROM_DAYS()`                     | ❌            |                                                                                                                                               |
+| `FROM_DAYS()`                     | ✅            |                                                                                                                                               |
 | `FROM_UNIXTIME()`                 | ✅            |                                                                                                                                               |
 | `GET_DD_COLUMN_PRIVILEGES()`      | ❌            |                                                                                                                                               |
 | `GET_DD_CREATE_OPTIONS()`         | ❌            |                                                                                                                                               |
@@ -254,7 +254,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `JSON_VALUE()`                    | ✅            |                                                                                                                                               |
 | `LAG()`                           | ✅            |                                                                                                                                               |
 | `LAST()`                          | ✅            |                                                                                                                                               |
-| `LAST_DAY`                        | ❌            |                                                                                                                                               |
+| `LAST_DAY`                        | ✅            |                                                                                                                                               |
 | `LAST_INSERT_ID()`                | ✅            |                                                                                                                                               |
 | `LAST_VALUE()`                    | ✅            |                                                                                                                                               |
 | `LCASE()`                         | ✅            |                                                                                                                                               |
@@ -467,7 +467,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `TIME_FORMAT()`                   | ✅            |                                                                                                                                               |
 | `TIME_TO_SEC()`                   | ✅            |                                                                                                                                               |
 | `TO_BASE64()`                     | ✅            |                                                                                                                                               |
-| `TO_DAYS()`                       | ❌            |                                                                                                                                               |
+| `TO_DAYS()`                       | ✅            |                                                                                                                                               |
 | `TO_SECONDS()`                    | ❌            |                                                                                                                                               |
 | `TRIM()`                          | ✅            |                                                                                                                                               |
 | `TRUNCATE()`                      | ❌            |                                                                                                                                               |
