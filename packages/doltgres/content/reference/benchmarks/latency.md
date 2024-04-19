@@ -25,3 +25,4 @@ Latency is benchmarked for Doltgres release 0.4.0.
 
 | Overall Mean Multiple | 4.4 |
 |-----------------------|-----|
+<br/>
