@@ -14,21 +14,20 @@ So, what is different?
 
 ### Doltgres is pre-alpha
 
-Dolt is 1.0 and production ready. Doltgres is still in very active development and many required features are missing. See [../ If you are a potential user and want a feature that is missing, please [create an issue]().
+Dolt is 1.0 and production ready. Doltgres is still in very active development and many required features are missing. See [our SQL support documentation for the latest compatibility](../reference/sql-support/README.md). If you are a potential user and need something missing, please [create an issue](https://github.com/dolthub/doltgresql/issues).
 
-Check back often for progress. You can also follow our [blog](?q=doltgres) for updates, where
-we publish DoltgreSQL blogs every week.
+Check back often for progress. We are investing heavily in Doltgres. You can also follow our [blog](?q=doltgres) for updates, where we publish Doltgres blogs every week.
 
 ### Doltgres does not have a CLI
 
-Unlike Dolt, DoltgreSQL does not implement version control features via the command line and must be
+Unlike Dolt, Doltgres does not implement version control features via the command line and must be
 run as a server. For example, the Dolt CLI command to pull from a remote:
 
 ```
 % dolt pull
 ```
 
-Can only be accessed in DoltgreSQL through its corresponding [SQL stored
+Can only be accessed in Doltgres through its corresponding [SQL stored
 procedure](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures):
 
 ```bash
