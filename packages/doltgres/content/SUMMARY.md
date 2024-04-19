@@ -15,4 +15,6 @@
 - [SQL Language Support](reference/sql-support/README.md)
   - [Supported Types](reference/sql-support/supported-types.md)
   - [Supported SQL Commands](reference/sql-support/supported-commands.md)
-    
+- [Benchmarks](reference/benchmarks/README.md)
+  - [Correctness](reference/benchmarks/correctness.md)
+  - [Latency](reference/benchmarks/latency.md)
