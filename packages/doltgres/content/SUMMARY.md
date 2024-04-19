@@ -4,6 +4,7 @@
 
 - [What is Doltgres?](introduction/README.md)
 - [Installation](introduction/installation.md)
+- [Getting Started](introduction/getting-started.md)
 
 ## Guides
 
