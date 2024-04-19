@@ -8,7 +8,8 @@ title: Dolt SQL Functions
 
   - [active_branch()](#active_branch)
   - [dolt_merge_base()](#dolt_merge_base)
-  - [hashof()](#hashof)
+  - [dolt_hashof()](#dolt_hashof)
+  - [dolt_hashof_table()](#dolt_hashof_table)
   - [dolt_version()](#dolt_version)
   - [has_ancestor()](#has_ancestor)
   - [last_insert_uuid()](#last_insert_uuid)
@@ -50,12 +51,32 @@ The following would return the hash of commit `E`:
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=SELECT+DOLT_MERGE_BASE%28%27feature%27%2C+%27main%27%29%3B" %}
 
-## `HASHOF()`
+## `DOLT_HASHOF()`
 
-The `HASHOF()` function returns the commit hash of a branch or other
-commit spec.
+The `DOLT_HASHOF()` function returns the commit hash of a branch or other commit spec.
 
-{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+hashof%28%27main%27%29%3B" %}
+{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+dolt_hashof%28%27main%27%29%3B" %}
+
+## `DOLT_HASHOF_TABLE()`
+
+The `DOLT_HASHOF_TABLE()` function returns the value hash of a table. The hash is the hash of all the rows in the table,
+and is dependent on their serialization format. As such a table could have the same rows, but different hashes if the
+serialization format has changed, however if a table hash has not changed, then it's guaranteed that the table's data has
+not changed.
+
+This function can be used to watch for changes in data by storing previous hashes in your application and comparing them
+to the current hash. For example, you can use this function to get the hash of a table named `color` like so:
+
+```sql
+mysql> SELECT dolt_hashof_table('color');
++----------------------------------+
+| dolt_hashof_table('color')       |
++----------------------------------+
+| q8t28sb3h5g2lnhiojacpi7s09p4csjv |
++----------------------------------+
+1 row in set (0.01 sec)
+```
+
 
 ## `DOLT_VERSION()`
 
