@@ -16,3 +16,4 @@ Correctness is benchmarked for Doltgres release 0.4.0.
 
 | Correctness Percentage | 86.484716 |
 |------------------------|-----------|
+<br/>
