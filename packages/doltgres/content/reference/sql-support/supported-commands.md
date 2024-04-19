@@ -2,7 +2,30 @@
 title: Supported SQL Commands
 ---
 
-# Supported SQL Commands
+# Basic SQL 
+
+## Data Description (DDL)
+
+| SQL Commands             | Parses | Works | Notes and limitations  |
+|:-------------------------|:------:|:-----:|:-----------------------|
+| ALTER TABLE              |   ✅   |  ❌   |                        |
+| CREATE DATABASE          |   ✅   |  🟠   |                        |
+| CREATE TABLE             |   ✅   |  🟠   |                        |
+| DROP DATABASE            |   ✅   |  🟠   |                        |
+| DROP TABLE               |   ✅   |  🟠   |                        |
+
+## Data Manipulation (DML)
+
+| SQL Commands             | Parses | Works | Notes and limitations  |
+|:-------------------------|:------:|:-----:|:-----------------------|
+| CALL                      |   ✅   |   ✅  |                       |
+| DELETE                    |   🟠   |  🟠   |                       |
+| INSERT                    |   🟠   |  🟠   |                       |
+| SELECT                    |   🟠   |  🟠   |                       |
+| UPDATE                    |   🟠   |  🟠   |                       |
+| VALUES                    |   🟠   |  🟠   |                       |
+
+# All SQL 
 
 ## Access management statements
 
