@@ -1,4 +1,4 @@
-![](../.gitbook/assets/doltgres-preview.png)
+![](../../.gitbook/assets/doltgres-preview.png)
 
 DoltgreSQL, or Doltgres for short, is a Postgres-compatible version of [Dolt](https://www.doltdb.com). It is currently in [pre-alpha release](#doltgres-is-pre-alpha). 
 
