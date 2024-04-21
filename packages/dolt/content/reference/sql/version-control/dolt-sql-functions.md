@@ -159,8 +159,7 @@ based on the table's schema at the currently checked out branch. `DOLT_DIFF()` w
 for the `from_` columns and the schema at the `to_commit` for the `to_` columns. This can make it easier to view
 diffs where the schema of the underlying table has changed.
 
-Note that the `DOLT_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
-support aliasing or joining with other tables, and argument values must currently be literal values.
+Note that the `DOLT_DIFF()` table function currently requires that argument values be literal values.
 
 ### Options
 
@@ -305,8 +304,7 @@ rows and cells the table has at each commit.
 
 `DOLT_DIFF_STAT()` works like [CLI `dolt diff --stat` command](../../cli/cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_STAT()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
 
-Note that the `DOLT_DIFF_STAT()` table function currently has restrictions on how it can be used in queries. It does not
-support aliasing or joining with other tables, and argument values must be literal values.
+Note that the `DOLT_DIFF_STAT()` table function currently requires that argument values be literal values.
 
 ### Privileges
 
@@ -447,9 +445,7 @@ data and schema changes.
 but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table
 name is optional. It returns empty result if there are no tables with changes.
 
-Note that the `DOLT_DIFF_SUMMARY()` table function currently has restrictions on how it
-can be used in queries. It does not support aliasing or joining with other tables, and
-argument values must be literal values.
+Note that the `DOLT_DIFF()` table function currently requires that argument values be literal values.
 
 ### Privileges
 
@@ -585,9 +581,7 @@ The `DOLT_LOG` table function gets the commit log for all commits reachable from
 provided revision's `HEAD` (or the current `HEAD` if no revision is provided). `DOLT_LOG()`
 works like [CLI `dolt log` command](../../cli/cli.md#dolt-log).
 
-Note that the `DOLT_LOG()` table function currently has restrictions on how it can be used
-in queries. It does not support aliasing or joining with other tables, and argument values
-must be literal values.
+Note that the `DOLT_LOG()` table function currently requires that argument values be literal values.
 
 ### Privileges
 
@@ -917,8 +911,7 @@ call dolt_branch('prodBranch', 'v531ptpmv2tquig8v591tsjghtj84ksg');
 The `DOLT_SCHEMA_DIFF()` table function calculates the schema difference between any two commits in the database.
 Each row in the result set describes how a table was altered between the two commits, including the table's create statement at to and from commits.
 
-Note that the `DOLT_SCHEMA_DIFF()` table function currently has restrictions on how it can be used in queries. It does not
-support aliasing or joining with other tables, and argument values must currently be literal values.
+Note that the `DOLT_SCHEMA_DIFF()` table function currently requires that argument values be literal values.
 
 ### Privileges
 

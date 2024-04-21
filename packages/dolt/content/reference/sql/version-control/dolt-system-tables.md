@@ -717,16 +717,18 @@ The `dolt_diff` system table shows which tables in the current database were cha
 The `DOLT_DIFF` system table has the following columns
 
 ```text
-+-------------+----------+
-| field       | Type     |
-+-------------+----------+
-| commit_hash | text     |
-| table_name  | text     |
-| committer   | text     |
-| email       | text     |
-| date        | datetime |
-| message     | text     |
-+-------------+----------+
++---------------+----------+
+| field         | Type     |
++---------------+----------+
+| commit_hash   | text     |
+| table_name    | text     |
+| committer     | text     |
+| email         | text     |
+| date          | datetime |
+| message       | text     |
+| data_change   | boolean  |
+| schema_change | boolean  |
++---------------+----------+
 ```
 
 ### Query Details
@@ -742,12 +744,13 @@ database from [DoltHub](https://www.dolthub.com/) as our
 example, the following query uses the `dolt_diff` system table to find all commits, and the tables they changed,
 from the month of April, 2022.
 
-{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+commit_hash%2C+table_name%0AFROM+++dolt_diff%0AWHERE++date+BETWEEN+%222022-04-01%22+AND+%222022-04-30%22%3B%0A" %}
-
+{% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+commit_hash%2C+table_name%2C+schema_change%0AFROM+++dolt_diff%0AWHERE++date+BETWEEN+%222022-04-01%22+AND+%222022-04-30%22%3B%0A" %}
 
 From these results, we can see there were four commits to this database in October, 2020. Commits
 `	224helo` only changed the `dolt_schemas` table, commit `7jrvg1a` changed the `dolt_docs`
-table, and commit `5jpgb0f` made changes to two tables. To dig deeper into these changes, we can query
+table, and commit `5jpgb0f` made changes to two tables. We can also see which of these tables had changes made to their schemas vs just data.
+
+To dig deeper into these changes, we can query
 the `dolt_diff_$TABLE` system tables specific to each of the changed tables, like this:
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+count%28*%29+as+total_rows_changed%0AFROM+++dolt_diff_dolt_schemas%0AWHERE++to_commit%3D%27224helolb2bg6iqrf9b7befrflehqgnb%27%3B%0A" %}
