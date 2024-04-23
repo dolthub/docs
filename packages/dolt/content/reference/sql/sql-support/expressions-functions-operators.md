@@ -190,7 +190,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `GROUPING()`                      | ❌            |                                                                                                                                               |
 | `GROUP_CONCAT()`                  | ✅            |                                                                                                                                               |
 | `GTID_SUBSET()`                   | ❌            |                                                                                                                                               |
-| `GTID_SUBTRACT()`                 | ❌            |                                                                                                                                               |
+| `GTID_SUBTRACT()`                 | ✅            |                                                                                                                                               |
 | `GEOMCOLLECTION()`                | ✅            |                                                                                                                                               |
 | `GEOMETRYCOLLECTION()`            | ✅            |                                                                                                                                               |
 | `HASHOF()`                        | ✅            | Returns the hash of a reference, e.g. `HASHOF("master")`)                                                                                     |     |
