@@ -2,7 +2,7 @@
 title: "Installation"
 ---
 
-The latest version of DoltLab is `v2.1.0` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
+The latest version of DoltLab is `v2.1.1` and to get started running your own DoltLab instance, you can follow the steps below. To see release notes for [DoltLab's releases](https://github.com/dolthub/doltlab-issues/releases) or to report and track DoltLab issues, visit DoltLab's [issues repository](https://github.com/dolthub/doltlab-issues).
 
 Please note, that to upgrading to a newer version of DoltLab will require you to kill the older version of DoltLab and install the newer one, which may result in data loss.
 
@@ -39,7 +39,7 @@ If your host is running Ubuntu 18.04/20.04, the quickest way to install these de
 To use them:
 
 ```bash
-export DOLTLAB_VERSION=v2.1.0
+export DOLTLAB_VERSION=v2.1.1
 chmod +x ubuntu-bootstrap.sh
 sudo ./ubuntu-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -47,7 +47,7 @@ sudo newgrp docker # login as root to run docker without sudo
 ```
 
 ```bash
-export DOLTLAB_VERSION=v2.1.0
+export DOLTLAB_VERSION=v2.1.1
 chmod +x centos-bootstrap.sh
 sudo ./centos-bootstrap.sh with-sudo "$DOLTLAB_VERSION"
 cd doltlab
@@ -81,7 +81,7 @@ cd doltlab
 
 To install a specific version, run:
 ```bash
-export DOLTLAB_VERSION=v2.1.0
+export DOLTLAB_VERSION=v2.1.1
 curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-${DOLTLAB_VERSION}.zip
 unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
@@ -210,7 +210,18 @@ EMAIL_PASSWORD=mypassword \
 ./start.sh
 ```
 
-Note that the generated `start.sh` script might require additional environment variables. Please see the list of how the environment variables defined below have changed in `v2.1.0`.
+It's import to note that the first time you run `./start.sh`, DoltLab uses `DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` to initialize DoltLab's application database using the following SQL statements:
+
+```sql
+CREATE USER 'dolthubadmin' IDENTIFIED BY '$DOLT_PASSWORD';
+CREATE USER 'dolthubapi' IDENTIFIED BY '$DOLTHUBAPI_PASSWORD';
+GRANT ALL ON *.* TO 'dolthubadmin';
+GRANT ALL ON dolthubapi.* TO 'dolthubapi';
+```
+
+DoltLab's main API, `doltlabapi`, will connect to the application database as the `dolthubapi` SQL user.
+
+Please also note that the generated `start.sh` script might require additional environment variables. Please see the list of how the environment variables defined below have changed in `v2.1.0`.
 
 For DoltLab < `v2.1.0`, the recommended way to run DoltLab is with the `start-doltlab.sh` script included in DoltLab's zip folder. This script requires the following environment variables to be set in your DoltLab host environment/shell.
 
