@@ -1,17 +1,21 @@
 {
-  "name": "embedDoltHubSQL",
+  "name": "embed-dolthub-sql",
   "private": true,
   "scripts": {
+    "ci": "yarn typecheck && yarn lint",
     "lint": "eslint ./**/*.ts*",
     "typecheck": "tsc --noEmit",
     "publish-integrations": "gitbook publish .",
     "publish-integrations-staging": "gitbook publish ."
   },
   "devDependencies": {
-    "@gitbook/cli": "^0.9.0",
-    "@gitbook/runtime": "latest",
     "@cloudflare/workers-types": "latest",
+    "@gitbook/api": "*",
+    "@gitbook/cli": "^0.9.0",
+    "@gitbook/eslint-config": "^0.1.0",
+    "@gitbook/runtime": "latest",
     "@gitbook/tsconfig": "latest",
-    "@gitbook/api": "*"
+    "eslint": "^8",
+    "typescript": "^5.4.5"
   }
 }
