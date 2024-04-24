@@ -12,7 +12,6 @@ type EmbedDoltHubSQLRuntimeEnvironment = RuntimeEnvironment<EmbedDoltHubSQLConfi
 type EmbedDoltHubSQLRuntimeContext = RuntimeContext<EmbedDoltHubSQLRuntimeEnvironment>;
 
 const handleFetchEvent: FetchEventCallback<EmbedDoltHubSQLRuntimeContext> = async (_, context) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { api } = context;
     const user = api.user.getAuthenticatedUser();
 
