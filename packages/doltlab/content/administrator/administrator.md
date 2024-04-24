@@ -13,14 +13,9 @@ This guide will cover how to perform common DoltLab administrator configuration 
 7. [Connect to an SMTP server with implicit TLS](#smtp-implicit-tls)
 8. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
 9. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
-11. [Use an external Database server with DoltLab](#use-external-database)
-12. [Expose DoltLab on a closed host with ngrok](#expose-doltlab-ngrok)
-13. [DoltLab Jobs](#doltlab-jobs)
-14. [Disable Usage Metrics](#disable-metrics)
-15. [Migrate Old Format DoltLab Databases](#migrate-doltlab-databases)
-16. [Use custom Logo on DoltLab instance](#use-custom-logo)
-17. [Customize automated emails](#customize-automated-emails)
-18. [Customize DoltLab colors](#customize-colors)
+10. [Use an external database server with DoltLab](#use-external-database)
+11. [DoltLab Jobs](#doltlab-jobs)
+12. [Disable usage metrics](#disable-metrics)
 19. [Use a domain name with DoltLab](#use-domain)
 20. [Add Super Admins to a DoltLab instance](#add-super-admins)
 21. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
@@ -455,47 +450,9 @@ Execute the following `INSERT` to allow the user with `example@address.com` to c
 INSERT INTO email_whitelist_elements (email_address, updated_at, created_at) VALUES ('example@address.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 ```
 
-<h1 id="use-external-database">Use an external Database server with DoltLab</h1>
+<h1 id="use-external-database">Use an external database server with DoltLab</h1>
 
-For DoltLab `v0.8.4` and earlier, you can connect a DoltLab instance to an external PostgreSQL server version `13` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-pghost` and `-pgport` arguments.
-
-```yaml
-  doltlabapi:
-    ...
-    command:
-      ...
-      -pghost <host>
-      -pgport <port>
-      ...
-```
-
-You can also remove the `doltlabdb` section and all references to it and `doltlabdb-data` in the `docker-compose.yaml` file.
-
-Before (re)starting DoltLab with this change, you will also need to execute the following statements in your external PostgreSQL server:
-
-```sql
-CREATE ROLE dolthubapi WITH LOGIN PASSWORD '$DOLTHUBAPI_PASSWORD';
-CREATE DATABASE dolthubapi;
-GRANT ALL PRIVILEGES ON DATABASE dolthubapi TO dolthubapi;
-CREATE EXTENSION citext SCHEMA public;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO dolthubapi;
-```
-
-For DoltLab `v1.0.0` or later, you can connect a DoltLab instance to an external Dolt server version `v1.0.0` or later. To connect, in DoltLab's `docker-compose.yaml`, supply the host and port for the external server to `doltlabapi`'s `-doltHost` and `-doltPort` arguments.
-
-```yaml
-  doltlabapi:
-    ...
-    command:
-      ...
-      -doltHost <host>
-      -doltPort <port>
-      ...
-```
-
-Like with the external PostgreSQL changes described above, you can remove the `doltlabdb` section and all references to it and `doltlabdb-dolt-data`, `doltlabdb-dolt-root`, `doltlabdb-dolt-configs`, and `doltlabdb-dolt-backups` in the `docker-compose.yaml` file.
-
-Finally, before (re)starting DoltLab with this change, you will also need to execute the following statements in your external Dolt server:
+In the external Dolt database, prior to connecting your DoltLab instance, run the following SQL statements:
 
 ```sql
 CREATE USER 'dolthubadmin' IDENTIFIED BY '<password>';
@@ -504,251 +461,21 @@ GRANT ALL ON *.* TO 'dolthubadmin';
 GRANT ALL ON dolthubapi.* TO 'dolthubapi';
 ```
 
-<h1 id="expose-doltlab-ngrok">Expose a DoltLab instance with ngrok</h1>
+Next, stop your DoltLab instance if it is running. Then, supply the `--doltlabdb-host=<external db host>` and `--doltlabdb-port=<external db port>` arguments to the `installer`.
 
-As of DoltLab `v0.5.5`, DoltLab instances can be exposed with [ngrok](https://ngrok.com/). ["How to expose DoltLab with ngrok"](https://www.dolthub.com/blog/2022-08-08-expose-doltlab-with-ngrok/) contains the instructions for this process, however, we do not recommend doing this for production DoltLab instances. This process requires one of DoltLab's services to be run _without_ authentication, which may expose sensitive data. Do this at your own risk.
+When you restart your instance it should now be connected to your external Dolt database.
 
 <h1 id="doltlab-jobs">DoltLab Jobs</h1>
 
-Jobs were [recently introduced](https://www.dolthub.com/blog/2022-10-07-dolthub-jobs-and-doltlab-v0.6.0/) on [DoltHub](https://www.dolthub.com) and are available now on DoltLab ^`v0.7.0`. DoltLab Jobs are stand-alone, long-running Docker containers that perform specific tasks for DoltLab users behind the scenes. DoltLab `v0.7.0` includes a single Job type, the Import Job, for large file imports. But, additional Jobs will be added in subsequent versions of DoltLab.
+DoltLab Jobs are stand-alone, long-running Docker containers that perform specific tasks for DoltLab users behind the scenes.
 
-As a result of the new Jobs infrastructure, DoltLab now requires more memory and disk. The amount of each of these depends on how users will use your instance. Here are the current end user limits of DoltLab Jobs as of `v0.7.0`:
+As a result, DoltLab may consume additional memory and disk, depending on the number of running Jobs and their workload.
 
-| Job Type    | Database Size Limit | File Size Limit                    |
-| ----------- | ------------------- | ---------------------------------- |
-| File Import | 150 GB              | 1 GB for `.csv`, 200 MB for `.sql` |
-
-If you want to run a DoltLab instance that can support these end user limits, we recommend running DoltLab on a host with at least 64 GB of memory, and 20 TBs of disk. These recommended amounts will decrease as we continue to improve Dolt's resource efficiency and utilization.
-
-<h2 id="doltlab-job-import"><ins>Import Jobs</ins></h2>
-
-Under the hood, when a user uploads a file to DoltLab, a new Job is kicked off that copies that file into a new Docker container running a `dolt` binary. This Job container executes `dolt table import <file>` or `dolt sql < <file>`, depending on the file type of the uploaded file, which imports the data into a clone of the target database. The container finishes by opening a pull request containing the imported data.
-
-What's import to note about the Import Job process is how it can impact disk and memory utilization on a DoltLab host.
-
-For example, let's say a user uploads a 100 MB `.csv` on a 10 GB DoltLab database. First, the uploaded file is downloaded into the Job container, writing, temporarily, the 100 MB file to disk. Second, the target database is cloned into the container, using an additional 10 GB's of disk. Finally, the import process begins with `dolt table import <file>`, which uses additional disk (a variable amount), in the form of [temporary files](https://www.dolthub.com/blog/2021-08-13-generational-gc/) that Dolt writes to disk in order to perform the import.
-
-Importing also uses a variable amount of memory depending on the size of the cloned database and the size of the file being imported. In our example, the import completes in about 30 seconds, but uses about 5 GB of memory at its peak.
-
-For this reason, we recommend running DoltLab on a host with as much disk and memory as you can, especially if your users plan on doing large file imports, or a large number of imports in parallel.
-
-Import performance, memory and disk utilization are all areas of concentration for our team in the coming months. We are committed to bringing all of these down for Dolt, DoltHub, and DoltLab, so stay tuned for updates.
-
-<h1 id="disable-metrics">Disable Usage Metrics</h1>
+<h1 id="disable-metrics">Disable usage metrics</h1>
 
 By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
 
-As of `v0.7.0`, DoltLab does not collect third-party metrics, and additionally, DoltLab's first-party metrics can be disabled. To disable metrics, edit the `start-doltlab.sh` script and remove `run_with_metrics` from the `_main` function.
-
-In DoltLab >= `v2.1.0` the `installer` can be run with `--disable-usage-metrics=true` to disable metrics.
-
-<h1 id="migrate-doltlab-databases">Migrate Old Format DoltLab Databases</h1>
-
-Unlike [DoltHub](https://www.dolthub.com), DoltLab does not support automatic database migration for old format Dolt databases. Instead, old format database hosted on DoltLab need to be migrated manually. To migrate a DoltLab database:
-
-1. Create a new database on DoltLab.
-2. Clone the database you want to migrate.
-3. Run `dolt migrate` in the cloned database.
-4. Add the remote of the new DoltLab database to the cloned database with `dolt remote add <remote name> http://<host ip>:50051/<owner>/<new db name>`.
-5. Push the migrated clone to the new database with `dolt push <remote name> <branch name>`.
-
-<h1 id="use-custom-logo">Use custom logo on DoltLab instance</h1>
-
-Starting with DoltLab `v0.7.6`, DoltLab allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos used on DoltLab can have a maximum height of `24px` and a maximum width of `112px`. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab" below the custom logo.
-
-You can use a custom logo on DoltLab by creating an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
-
-```yaml
-# admin-config.yaml
-logo: /path/to/custom/logo.png
-```
-
-Add the field `logo` to the `admin-config.yaml` file with the absolute path of custom logo. `png`, `svg`, and `jpeg` are the supported image file types for the custom logo.
-
-Save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom logo in place of the DoltLab logo.
-
-DoltLab >= `v2.1.0` does not use an `admin-config.yaml` file, but instead uses the `installer` with the argument `--custom-logo=/path/to/custom/logo.png` to configure DoltLab to use a custom logo.
-
-<h1 id="customize-automated-emails">Customize automated emails</h1>
-
-Starting with DoltLab `v0.7.6`, and ending with `v1.1.1`, DoltLab allows administrators to customize the automated emails their DoltLab instance sends to its users.
-
-As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
-
-For DoltLab >= `v2.1.0`, custom emails can be configured with the `installer` binary by supplying the argument `--custom-email-templates=true`. The installer will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab.
-
-For DoltLab < `v2.1.0`, included in the DoltLab zip is a directory called `templates` that stores the [golang text template files](https://pkg.go.dev/text/template) your DoltLab instance will use to generate emails. Each file is named according to use case and the names of the files should NOT be changed.
-
-- `email/collabInvite.txt` sent to invite user to be a database collaborator.
-- `email/invite.txt` sent to invite a user to join an organization.
-- `email/issueComment.txt` sent to notify user that an issue received a comment.
-- `email/issueState.txt` sent to notify user that an issue's state has changed.
-- `email/pullComment.txt` sent to notify user that a pull request received a comment.
-- `email/pullCommits.txt` sent to notify user that a pull request received a commit.
-- `email/pullReview.txt` sent to notify user that a pull request review's state has changed.
-- `email/pullState.txt` sent to notify user that a pull request's state has changed.
-- `email/recoverPassword.txt` sent to provide user with a link to reset their password.
-- `email/resetPassword.txt` sent to notify a user that their password has been reset.
-- `email/verify.txt` sent to a user to verify their email account.
-
-To alter the text within one of the above files, we recommend only changing the hardcoded text between the [Actions](https://pkg.go.dev/text/template#hdr-Actions) and replacing the use of `{{.App}}`, which normally evaluates to "DoltLab", with the name of your company or team.
-
-You should not change any template definitions, indicated with `{{define "some-template-name"}}` syntax, within these files as `doltlabapi` specifically uses these
-definitions.
-
-To better illustrate how to modify these files, let's look at an example. Here is the default `email/verify.txt` template:
-
-```
-{{define "verifySubject" -}}
-[{{.App}}] Please verify your email address.
-{{- end}}
-
-{{define "verifyHTML" -}}
-<html>
-	<body>
-		<p>To secure access to your {{.App}} account, we need you to verify your email address: {{.Address}}.
-		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
-		<p>You’re receiving this email because you created a new {{.App}} account or added a new email address. If this wasn’t you, please ignore this email.
-	</body>
-</html>
-{{- end}}
-
-{{define "verifyText" -}}
-Hi,
-
-To secure access to your {{.App}} account, we need you to verify your email address: {{.Address}}.
-
-Click the link below to verify your email address:
-
-{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
-
-You're receiving the email because you created a new {{.App}} account or added a new email address. If this wasn't you, please ignore this email.
-{{- end}}
-```
-
-Above, three templates are defined `verifySubject`, `verifyHTML`, and `verifyText`. We will not add or remove any of these templates and we won't change their names, but we will replace the `{{.App}}` field with the name of our company, Acme, Inc.'s DoltLab instance, "AcmeLab". We'll also modify the hardcoded text to be specific to our DoltLab instance's users.
-
-After replacing `{{.App}}` with "AcmeLab", our file looks like:
-
-```
-{{define "verifySubject" -}}
-[AcmeLab] Please verify your email address.
-{{- end}}
-
-{{define "verifyHTML" -}}
-<html>
-	<body>
-		<p>To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
-		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
-		<p>You’re receiving this email because you created a new AcmeLab account or added a new email address. If this wasn’t you, please ignore this email.
-	</body>
-</html>
-{{- end}}
-
-{{define "verifyText" -}}
-Hi,
-
-To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
-
-Click the link below to verify your email address:
-
-{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
-
-You're receiving the email because you created a new AcmeLab account or added a new email address. If this wasn't you, please ignore this email.
-{{- end}}
-```
-
-Lastly, let's customize this email with the contact information of our AcmeLab admin, in case users have any questions. We want to add the same
-information to the `verifyHTML` template and the `verifyText` template so that it appears for either supported email format:
-
-```
-{{define "verifySubject" -}}
-[AcmeLab] Please verify your email address.
-{{- end}}
-
-{{define "verifyHTML" -}}
-<html>
-	<body>
-    <p>Thank you for signing up for AcmeLab!
-		<p>To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
-		<p><a href="{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}">Click here to verify your email address.</a>
-		<p>You’re receiving this email because you created a new AcmeLab account or added a new email address. If this wasn’t you, please ignore this email.
-    <p> If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
-	</body>
-</html>
-{{- end}}
-
-{{define "verifyText" -}}
-Thank you for signing up for AcmeLab!
-
-To secure access to your AcmeLab account, we need you to verify your email address: {{.Address}}.
-
-Click the link below to verify your email address:
-
-{{.BaseURL}}/users/{{.Username}}/emailAddresses/{{.Address}}/verify?token={{.Token}}
-
-You're receiving the email because you created a new AcmeLab account or added a new email address. If this wasn't you, please ignore this email.
-
-If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
-
-{{- end}}
-```
-
-Once we save our edits, we can restart our DoltLab instance for the changes to take affect.
-
-<h1 id="customize-colors">Customize DoltLab colors</h1>
-
-Starting with DoltLab `v0.8.1`, and ending with `v1.1.1`, DoltLab allows administrators to customize the color of certain assets across their DoltLab instance.
-
-As of DoltLab >= `v2.0.0`, this feature is now exclusive to DoltLab Enterprise.
-
-For DoltLab >= `v2.1.0`, which does not use an `admin-config.yaml`, this feature can be configured using the `installer`. The installer accepts the following arguments corresponding to the custom color you want to override:
-
-```bash
---custom-color-rgb-accent-1="252, 66, 201"
---custom-color-rgb-background-accent-1="24, 33, 52"
---custom-color-rgb-background-gradient-start="31, 41, 66"
---custom-color-rgb-button-1="61, 145, 240"
---custom-color-rgb-button-2="31, 109, 198"
---custom-color-rgb-link-1="31, 109, 198"
---custom-color-rgb-link-2="61, 145, 240"
---custom-color-rgb-link-light="109, 176, 252"
-```
-
-For DoltLab < `v2.1.0`, you can specify custom RGB values for DoltLab's assets by defining them in an `admin-config.yaml` file. By default, DoltLab will look for this file in the unzipped `doltlab` directory that contains DoltLab's other assets. However, this path can be overridden by setting the environment variable `ADMIN_CONFIG`.
-
-```yaml
-# admin-config.yaml DoltLab >= v0.8.1, <= v1.1.1
-theme:
-  custom:
-    rgb_accent_1: "252, 66, 201"
-    rgb_background_accent_1: "24, 33, 52"
-    rgb_background_gradient_start: "31, 41, 66"
-    rgb_button_1: "61, 145, 240"
-    rgb_button_2: "31, 109, 198"
-    rgb_link_1: "31, 109, 198"
-    rgb_link_2: "61, 145, 240"
-    rgb_link_light: "109, 176, 252"
-```
-
-```yaml
-# admin-config.yaml DoltLab >= v2.0.0
-enterprise:
-  theme:
-    custom:
-      rgb_accent_1: "252, 66, 201"
-      rgb_background_accent_1: "24, 33, 52"
-      rgb_background_gradient_start: "31, 41, 66"
-      rgb_button_1: "61, 145, 240"
-      rgb_button_2: "31, 109, 198"
-      rgb_link_1: "31, 109, 198"
-      rgb_link_2: "61, 145, 240"
-      rgb_link_light: "109, 176, 252"
-```
-
-Add the field `theme`, then `custom` to the `admin-config.yaml` file. In the `custom` block, specify the RGB values you'd like for each of the possible fields. The values above are the default RGB values used in DoltLab.
-
-After adding your custom values, save the file, and restart your DoltLab instance using the `start-doltlab.sh` script. When DoltLab restarts, you will see the custom colors across the site.
+To disable first-party metrics, run the `installer` with `--disable-usage-metrics=true`.
 
 <h1 id="use-domain">Use a domain name with DoltLab</h1>
 
