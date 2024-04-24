@@ -1,0 +1,25 @@
+name: Run CI on dolt/integration
+on:
+  pull_request:
+    paths:
+      - "packages/dolt/integration/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ci-integration-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+      - name: Install and run CI
+        working-directory: ./packages/dolt/integration
+        run: |
+          yarn
+          yarn run ci
