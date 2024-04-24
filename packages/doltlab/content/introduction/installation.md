@@ -20,7 +20,7 @@ DoltLab requires the following minimum system resources:
 * 16 GB of memory
 * 300 GB of disk (DoltLab's container images alone require about 4 GBs of disk).
 
-<h1 id="minimum-recommended-hardware">Networking requirements</h1>
+<h1 id="networking-requirements">Networking requirements</h1>
 
 DoltLab requires the following networking configuration:
 

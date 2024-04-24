@@ -92,4 +92,4 @@ For more ways to configure and run your DoltLab instance, checkout [DoltLab's Ad
 
 # Next Steps
 
-- [DoltLab Administrator Guide]()
+- [Administrator Guide]()
