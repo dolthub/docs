@@ -67,7 +67,7 @@ After running the `dolt clone` command, you should have a local copy of your Hos
 database.
 
 ```shell
-% dolt clone https://dolthub-us-housing.dbs.hosted.doltdb.com/us-housing-prices -u"username"
+% dolt clone https://dolthub-us-housing.dbs.hosted.doltdb.com/us-housing-prices --user "username"
 cloning https://dolthub-us-housing.dbs.hosted.doltdb.com/us-housing-prices
 % cd us-housing-prices
 % dolt sql -q "select count(*) from sales"
@@ -93,6 +93,11 @@ commands to your remotesapi endpoint in the same way by passing the `--user` fla
 % dolt fetch --user "[username]"
 ```
 
-Note that this remotesapi endpoint is currently read-only. Writes to remotesapi, such as
-[`dolt push`](https://docs.dolthub.com/cli-reference/cli#dolt-push), are not supported
-yet.
+## 4. Sync your upstream with changes from local copy
+
+If you make any changes on your local copy, you can push them to your upstream using
+[`dolt push`](https://docs.dolthub.com/cli-reference/cli#dolt-push).
+
+```shell
+% dolt push origin --user "[username]" HEAD:main
+```
