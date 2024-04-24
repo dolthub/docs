@@ -1,0 +1,13 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/packages/dolt/integrations"
+  schedule:
+    interval: monthly
+    time: "06:30"
+    timezone: America/Los_Angeles
+  open-pull-requests-limit: 5
+  reviewers:
+  - liuliu-dev
+  labels:
+  - dependencies

@@ -1,0 +1,1 @@
+find node_modules -type f -name '*.ts' -exec sh -c 'echo "// @ts-nocheck" > /tmp/file.tmp && cat "$1" >> /tmp/file.tmp && mv /tmp/file.tmp "$1"' _ {} \;
