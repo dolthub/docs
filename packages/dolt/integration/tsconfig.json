@@ -2,8 +2,6 @@
   "extends": "@gitbook/tsconfig/integration.json",
   "compilerOptions": {
     "lib": ["ES6", "DOM"],
-    "skipLibCheck": true
-  },
-  "include": ["src/*"],
-  "exclude": ["node_modules"]
+    "skipLibCheck": true,
+  }
 }

@@ -2,7 +2,8 @@
   "name": "embed-dolthub-sql",
   "private": true,
   "scripts": {
-    "ci": "yarn typecheck && yarn lint",
+    "ci": "yarn ignore-node-modules && yarn typecheck && yarn lint",
+    "ignore-node-modules": "sh ./ts-ignore-node-modules.sh",
     "lint": "eslint ./**/*.ts*",
     "typecheck": "tsc --noEmit",
     "publish-integrations": "gitbook publish .",
