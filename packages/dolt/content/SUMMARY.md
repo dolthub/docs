@@ -136,6 +136,7 @@
 
 ## Guides
 
+- [Cheat Sheet](guides/cheat-sheet.md)
 - [Contributing](guides/contributing.md)
   - [dolt](guides/contributing/dolt.md)
   - [go-mysql-server](guides/contributing/go-mysql-server.md)
