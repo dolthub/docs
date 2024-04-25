@@ -4,7 +4,7 @@ Download the latest DoltLab [here](https://doltlab-releases.s3.amazonaws.com/lin
 
 [DoltLab](https://www.doltlab.com) is the self-hosted version of [DoltHub](https://www.dolthub.com) that allows you to deploy and manage your own DoltHub instance on-prem. DoltLab has the same user interface and features as DoltHub so consult the [DoltHub Documentation](https://docs.dolthub.com/products/dolthub) for general questions. This DoltLab documentation focuses on installation and administration.
 
-For instructions on how to install the latest DoltLab version, checkout our [installation guide](./installation.md). After installing, learn how to operate DoltLab like a pro by reading our [administrator guide](./administrator.md).
+For instructions on how to install the latest DoltLab version, checkout our [installation guide](./introduction/installation.md). After installing, learn how to operate DoltLab like a pro by reading our [administrator guide](./guides/administrator.md).
 
 You can also get more DoltLab content by checking out our [blog](https://www.dolthub.com/blog/), where we've published the following articles about DoltLab:
 
@@ -14,3 +14,7 @@ You can also get more DoltLab content by checking out our [blog](https://www.dol
 - [Deploying a Production Ready DoltLab Instance: An example](https://www.dolthub.com/blog/2022-03-16-deploying-a-production-ready-doltlab-instance/)
 - [Monitoring a DoltLab instance with Prometheus](https://www.dolthub.com/blog/2022-05-09-monitoring-doltlab-with-prometheus/)
 - [Is DoltLab right for you?](https://www.dolthub.com/blog/2022-05-25-is-doltlab-right-for-you/)
+- [How to run DoltLab on Microsoft Azure Cloud](https://www.dolthub.com/blog/2022-08-26-run-doltlab-on-azure/)
+- [How to run DoltLab on Hosted Dolt](https://www.dolthub.com/blog/2023-07-05-running-doltlab-on-hosted-dolt/)
+- [How to expose DoltLab with ngrok](https://www.dolthub.com/blog/2022-08-08-expose-doltlab-with-ngrok/)
+- [Announcing DoltLab Enterprise edition](https://www.dolthub.com/blog/2023-10-30-announcing-doltlab-enterprise/)

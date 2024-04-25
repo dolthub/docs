@@ -17,4 +17,3 @@ For older versions of DoltLab, <= `v2.0.8`, see the following guide for instruct
 For DoltLab Enterprise options and exclusive feature configuration, see:
 
 - [Enterprise Guide](./administrator/enterprise.md)
-
