@@ -122,4 +122,4 @@ And navigating to `https://${HOST_IP}:443` in a web browser should show the Dolt
 
 # Next Steps
 
-- [DoltLab Administrator Guide]()
+- [DoltLab Administrator Guide](../../guides/administrator/pre-installer-administrator-guide.md)

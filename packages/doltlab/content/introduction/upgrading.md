@@ -24,10 +24,10 @@ However, DoltLab `v2.0.0` is the first version of DoltLab that supports Enterpri
 
 If you are currently using the any of the following enterprise features in DoltLab <= `v1.1.1`, you will lose them by upgrading to DoltLab `v2.0.0`:
 
-- [Custom Automated Emails](#customize-automated-emails)
-- [Custom Logo](#use-custom-logo)
-- [Custom Color Themes](#customize-colors)
-- [Super Admins](#add-super-admins)
+- [Custom Automated Emails](../guides/administrator/enterprise.md#customize-automated-emails)
+- [Custom Logo](../guides/administrator/enterprise.md#use-custom-logo)
+- [Custom Color Themes](../guides/administrator/enterprise.md#customize-colors)
+- [Super Admins](../guides/administrator/enterprise.md#add-super-admins)
 
 <h2 id="upgrade-v084-v100"><ins>Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code></ins></h2>
 

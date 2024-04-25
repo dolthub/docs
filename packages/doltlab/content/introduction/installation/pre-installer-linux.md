@@ -6,7 +6,7 @@ title: Pre-Installer Linux
 
 This page covers how to install and start older versions of DoltLab, up to `v2.0.8`, on a Linux host. We highly recommend installing the latest version of DoltLab, as no updates or bug fixes are added to earlier releases.
 
-Before you begin, be sure the host meets the [minimum recommended hardware requirements](), has the proper [networking configuration](), and all [dependencies]() installed.
+Before you begin, be sure the host meets the [minimum recommended hardware requirements](../installation.md#minimum-recommended-hardware), has the proper [networking configuration](../installation.md#networking-requirements), and all [dependencies](../installation.md#dependencies) installed.
 
 DoltLab is released as a single `.zip` file that contains everything you need to run it.
 

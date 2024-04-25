@@ -88,8 +88,8 @@ c409731052f0   public.ecr.aws/dolthub/doltlab/fileserviceapi-server:v2.1.1      
 
 Navigating to `http://${HOST_IP}:80` in a web browser, where `HOST_IP` is the domain name or IP address of your DoltLab host, should show the DoltLab homepage.
 
-For more ways to configure and run your DoltLab instance, checkout [DoltLab's Administrator Guide]().
+For more ways to configure and run your DoltLab instance, checkout [DoltLab's Administrator Guide](../../guides/administrator.md).
 
 # Next Steps
 
-- [Administrator Guide]()
+- [Administrator Guide](../../guides/administrator.md)
