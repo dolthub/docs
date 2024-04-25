@@ -75,7 +75,7 @@ History querying is specific to the SQL server and has no command line equivalen
 | `CALL DOLT_FETCH()`                                   | `dolt fetch`                      | Fetches all branches from the remote                       |
 | `CALL DOLT_PULL()`                                    | `dolt pull`                       | Fetch and merge commits from the remote tracking branch    |
 | `CALL DOLT_PUSH('origin', 'myBranch')`                | `dolt push origin myBranch`       | Push local commits of branch `myBranch` to remote `origin` |
-| `CALL DOLT_PUSH()`                                    | `dolt push`                       | Push local commits to the reote tracking branch            |
+| `CALL DOLT_PUSH()`                                    | `dolt push`                       | Push local commits to the remote tracking branch            |
 
 ## Advanced use cases
 
