@@ -40,7 +40,7 @@ take the same options as Git commands.
 | SQL server                                                   | Dolt CLI                            | Comments                                                  |
 | ---                                                          | -----                               | --------                                                  |
 | `SELECT * FROM dolt_diff('HEAD', 'WORKING', 'mytable')`      | `dolt diff mytable`                 | Shows the working diff for `mytable`                      |
-| `SELECT * FROM dolt_diff_stat('HEAD', 'WORKING', 'mytable')` | `dolt diff --summary mytable`       | Shows statistics for the diff of `mytable`                |
+| `SELECT * FROM dolt_diff_stat('HEAD', 'WORKING', 'mytable')` | `dolt diff --stat mytable`       | Shows statistics for the diff of `mytable`                |
 | `SELECT * FROM dolt_diff('HEAD~', 'HEAD', 'mytable')`        | `dolt diff HEAD~ HEAD mytable`      | Shows the diff between the last two commits for `mytable` |
 | `SELECT * FROM dolt_diff('HEAD', 'STAGED', 'mytable')`       | `dolt diff --cached mytable`        | Shows the staged diff for `mytable`                       |
 | `SELECT * FROM dolt_diff('branchA', 'branchB', 'mytable')`   | `dolt diff branchA branchB mytable` | Shows diff between branches two branches for `mytable`    |
