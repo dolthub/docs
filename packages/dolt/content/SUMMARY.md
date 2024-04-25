@@ -24,6 +24,7 @@
   - [Audit](introduction/use-cases/audit.md)
   - [Configuration Management](introduction/use-cases/configuration-management.md)
   - [Offline First](introduction/use-cases/offline-first.md)
+- [Cheat Sheet](introduction/cheat-sheet.md)
 
 ## Concepts
 
