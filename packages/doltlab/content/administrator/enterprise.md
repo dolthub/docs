@@ -2,6 +2,8 @@
 title: "DoltLab Enterprise Guide"
 ---
 
+# DoltLab Enterprise Guide
+
 This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Administrator's Guide]().
 
 To start DoltLab in Enterprise mode, when [running the installer](../introduction/installation/start-doltlab.md) supply the following additional arguments:
