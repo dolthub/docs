@@ -24,7 +24,6 @@
   - [Audit](introduction/use-cases/audit.md)
   - [Configuration Management](introduction/use-cases/configuration-management.md)
   - [Offline First](introduction/use-cases/offline-first.md)
-- [Cheat Sheet](introduction/cheat-sheet.md)
 
 ## Concepts
 
@@ -137,6 +136,7 @@
 
 ## Guides
 
+- [Cheat Sheet](guides/cheat-sheet.md)
 - [Contributing](guides/contributing.md)
   - [dolt](guides/contributing/dolt.md)
   - [go-mysql-server](guides/contributing/go-mysql-server.md)
