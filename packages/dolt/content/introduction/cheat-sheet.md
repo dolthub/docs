@@ -1,8 +1,12 @@
+---
+title: Dolt Cheat Sheet
+---
+
 # Dolt Cheat Sheet
 
-This cheat sheet briefly summarizes the main features of Dolt with examples. Most commands can be
-executed on the command line or a in a SQL session. Most Dolt commands take the same options as Git
-commands.
+This cheat sheet briefly summarizes the main version-control features of Dolt with simple
+examples. Most commands can be executed on the command line or in a SQL session. Most Dolt commands
+take the same options as Git commands.
 
 ## Setup and init
 
