@@ -2,7 +2,7 @@
 title: "Transforming File Uploads"
 ---
 
-DoltHub and DoltLab `v0.8.1` allow users to optionally transform files before they&apos;re imported into a database. To do this, users can provide a Transform Url at the time they&apos;re uploading a file.
+DoltHub and DoltLab >= `v0.8.1` allow users to optionally transform files before they&apos;re imported into a database. To do this, users can provide a Transform Url at the time they&apos;re uploading a file.
 
 If a Transform Url is provided, DoltHub/DoltLab will send an http `POST` request containing the uploaded file contents. In the http response
 to this request, the service receiving the request can return new file contents that will be imported into the database in place of the original file contents.
