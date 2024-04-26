@@ -2,8 +2,6 @@
 title: Upgrading DoltLab
 ---
 
-<h1 id="upgrade-doltlab">Upgrade DoltLab</h1>
-
 This page describes how to upgrade your DoltLab instance. We always recommend upgrading to the latest version of DoltLab, as older releases do not get patch updates.
 
 Also note that upgrading to a newer version of DoltLab will require downtime, as the old version of DoltLab will need to be stopped in order to install the newer one.

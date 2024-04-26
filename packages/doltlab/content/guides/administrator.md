@@ -2,8 +2,6 @@
 title: "Administrator Guides"
 ---
 
-# Administrator Guides
-
 We've created the following guides to help you run and operate your DoltLab instances.
 
 For the latest versions of DoltLab, >= `v2.1.0`, see the following guide for instructions on performing common setup and configuration options:

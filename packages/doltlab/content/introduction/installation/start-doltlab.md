@@ -2,8 +2,6 @@
 title: Start DoltLab
 ---
 
-<h1 id="start-doltlab">Start DoltLab</h1>
-
 The following describes how to start the latest versions of DoltLab, >= `v2.1.0`, that contain the `installer` binary. For instructions on how to start an older version of DoltLab that do not have the `installer`, please see the [pre-installer guide](./start-doltlab-pre-installer.md).
 
 It the simplest configuration the `installer` will generate four local DoltLab assets: a `docker-compose.yaml` file, an `envoy.json` file, a `start.sh` script, and a `stop.sh` script.

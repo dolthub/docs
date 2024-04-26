@@ -2,8 +2,6 @@
 title: Installation
 ---
 
-<h1 id="installation">Installation</h1>
-
 Below you'll find the minimum recommended hardware needed to successfully install and operate a DoltLab instance.
 
 You must have a host(s) running a supported operating system, hardware that meets or surpasses the minimum recommended hardware, the required networking configuration, and all dependencies installed the host(s) in order to run DoltLab.

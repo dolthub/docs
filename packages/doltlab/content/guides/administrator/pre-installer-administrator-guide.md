@@ -2,8 +2,6 @@
 title: "Administrator Guide (Pre-Installer)"
 ---
 
-# Administrator Guide (Pre-Installer)
-
 This guide will cover how to perform common DoltLab administrator configuration and tasks for versions <= `v2.0.8` which do not use the `installer` binary.
 
 1. [Backup DoltLab data](#backup-restore-volumes)

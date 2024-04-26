@@ -19,6 +19,7 @@
   - [Linux (older DoltLab versions)](introduction/installation/pre-installer-linux.md)
   - [Start DoltLab](introduction/installation/start-doltlab.md)
   - [Start DoltLab (older DoltLab versions)](introduction/installation/start-doltlab-pre-installer.md)
+- [Upgrade DoltLab](introduction/upgrading.md)
 - [Guides](guides/administrator.md)
   - [Administrator Guide](guides/administrator/administrator.md)
   - [Administrator Guide (older DoltLab versions)](guides/administrator/pre-installer-administrator-guide.md)

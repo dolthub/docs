@@ -2,8 +2,6 @@
 title: Start DoltLab (Pre-Installer)
 ---
 
-<h1 id="start-doltlab-pre-installer">Start DoltLab (Pre-Installer)</h1>
-
 The following describes how to start an older version of DoltLab, <= `v2.0.8`, that does not contain the `installer` binary that the latest versions of DoltLab do. These versions of DoltLab use the `.start-doltlab.sh` script included in DoltLab's `.zip` file.
 
 This script requires the following environment variables to be set in your DoltLab host environment/shell.

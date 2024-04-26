@@ -2,8 +2,6 @@
 title: Pre-Installer Linux
 ---
 
-<h1 id="install-doltlab-pre-installer-linux">Install DoltLab (pre-installer) on Linux</h1>
-
 This page covers how to install and start older versions of DoltLab, up to `v2.0.8`, on a Linux host. We highly recommend installing the latest version of DoltLab, as no updates or bug fixes are added to earlier releases.
 
 Before you begin, be sure the host meets the [minimum recommended hardware requirements](../installation.md#minimum-recommended-hardware), has the proper [networking configuration](../installation.md#networking-requirements), and all [dependencies](../installation.md#dependencies) installed.
