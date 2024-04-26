@@ -23,7 +23,7 @@
 - [Guides](guides/administrator.md)
   - [Administrator Guide](guides/administrator/administrator.md)
   - [Administrator Guide (older DoltLab versions)](guides/administrator/pre-installer-administrator-guide.md)
-  - [Enterprise Guide](guides/administrator/pre-installer-administrator-guide.md)
+  - [Enterprise Guide](guides/administrator/enterprise.md)
   - [DoltLab API](guides/dolthub/api/api.md)
   - [Workspaces](guides/dolthub/workspaces.md)
   - [Transform File Uploads](guides/dolthub/transform-uploads.md)
