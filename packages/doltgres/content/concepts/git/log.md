@@ -6,45 +6,42 @@ title: Log
 
 ## What is a log?
 
-The Dolt log is a way to visualize the Dolt commit graph in an intuitive way. When viewing the log, you are seeing a topologically sorted commit order that led to the commit you have checked out. The log is an audit trail of commits. 
+The Doltgres log is a way to visualize the Doltgres commit graph in an intuitive way. When viewing
+the log, you are seeing a topologically sorted commit order that led to the commit you have checked
+out. The log is an audit trail of commits.
 
-In Dolt, you can visualize the log of a database, a table, a row, or even a cell. 
+In Doltgres, you can visualize the log of a database, a table, a row, or even a cell.
 
-Log is usually filtered by branch. Any commits not reachable in the graph from the current commit will be omitted from the log.
+Log is usually filtered by branch. Any commits not reachable in the graph from the current commit
+will be omitted from the log.
 
 ## How to use logs
 
-Logs are useful in reverting the database to a previous state. You determine the state of the database you want via log and then use other Dolt commands to change the database to a different state.
+Logs are useful in reverting the database to a previous state. You determine the state of the
+database you want via log and then use other Doltgres commands to change the database to a different
+state.
 
-Logs are useful when trying to track down why the database is in a particular state. You use log to find the commits in question and usually follow up with diffs (i.e. differences) between two commits you found in the log.
+Logs are useful when trying to track down why the database is in a particular state. You use log to
+find the commits in question and usually follow up with diffs (i.e. differences) between two commits
+you found in the log.
 
-Logs are useful in audit. If you would like to ensure a particular value in the database has not changed since the last time you read it, log is useful in verifying this.
+Logs are useful in audit. If you would like to ensure a particular value in the database has not
+changed since the last time you read it, log is useful in verifying this.
 
-## Difference between Git log and Dolt log
+## Difference between Git log and Doltgres log
 
-Conceptually and practically log on the command line is very similar between Git and Dolt. A table is akin to a file in Git.
+Conceptually and practically log on the command line is very similar between Git and Doltgres. A
+table is akin to a file in Git.
 
-Dolt has additional log functionality beyond Git. You can produce a log of any cell (i.e. row, column pair) in the database using a SQL query against the `dolt_history_<tablename>` system table.
+Doltgres has additional log functionality beyond Git. You can produce a log of any cell (i.e. row,
+column pair) in the database using a SQL query against the `dolt_history_<tablename>` system table.
 
 ## Example
 
 ### Commit Log
 
-```bash
-% dolt log
-commit cffu3k56rtv6cf28370buivf33bb2mvr
-Author: Tim Sehn <tim@dolthub.com>
-Date:   Fri Dec 03 09:49:29 -0800 2021
-
-        This is a commit
-
-commit t5d5inj4bpc1fltrdm9uoscjdsgebaih
-Author: Tim Sehn <tim@dolthub.com>
-Date:   Fri Dec 03 09:49:10 -0800 2021
-
-        Initialize data repository
-
-docs $ dolt sql -q "select * from dolt_log"
+```sql
+select * from dolt_log;
 +----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
 | commit_hash                      | committer | email            | date                              | message                    |
 +----------------------------------+-----------+------------------+-----------------------------------+----------------------------+
@@ -56,8 +53,8 @@ docs $ dolt sql -q "select * from dolt_log"
 
 ### Cell History
 
-```
-$ dolt sql -q "select * from dolt_history_employees where id=0 order by commit_date";
+```sql
+select * from dolt_history_employees where id=0 order by commit_date;
 +------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
 | id   | last_name | first_name | start_date | commit_hash                      | committer | commit_date             |
 +------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
