@@ -12,15 +12,16 @@ This guide will cover how to perform common DoltLab administrator configuration 
 6. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
 7. [Connect to an SMTP server with implicit TLS](#smtp-implicit-tls)
 8. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
-9. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
-10. [Use an external database server with DoltLab](#use-external-database)
-11. [DoltLab Jobs](#doltlab-jobs)
-12. [Disable usage metrics](#disable-metrics)
-13. [Use a domain name with DoltLab](#use-domain)
-14. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
-15. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
-16. [Improve DoltLab performance](#doltlab-performance)
-17. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
+9. [Set up a SMTP Server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
+10. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
+11. [Use an external database server with DoltLab](#use-external-database)
+12. [DoltLab Jobs](#doltlab-jobs)
+13. [Disable usage metrics](#disable-metrics)
+14. [Use a domain name with DoltLab](#use-domain)
+15. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
+16. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
+17. [Improve DoltLab performance](#doltlab-performance)
+18. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
 
 <h1 id="issues-release-notes">File issues and view release notes</h1>
 
@@ -404,6 +405,8 @@ To send a test email using `plain` authentication with implicit TLS, run:
 Sending email with auth method: plain
 Successfully sent email!
 ```
+
+# Set up a SMTP Server using any Gmail address
 
 To quickly get up and running with an existing SMTP server, we recommend using [Gmail's](https://www.gmail.com). Once you've created a Gmail account, navigate to [your account page](https://myaccount.google.com/) and click the [Security](https://myaccount.google.com/security) tab. Under the section "How you sign in to Google", click `2-Step Verification`. If you have not yet setup 2-Step Verification, follow the prompts on this page to enable it.
 
