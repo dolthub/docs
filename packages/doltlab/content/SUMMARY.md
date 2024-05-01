@@ -9,13 +9,15 @@
 
 ## Guides
 
-- [Administrator Guide](guides/administrator/administrator.md)
-- [Enterprise Guide](guides/administrator/enterprise.md)
-- [DoltLab API](guides/dolthub/api/api.md)
-- [Workspaces](guides/dolthub/workspaces.md)
-- [Transform File Uploads](guides/dolthub/transform-uploads.md)
+- [Administrator](guides/administrator/administrator.md)
+- [Enterprise](guides/administrator/enterprise.md)
+- [Features](guides/features/README.md)
+  - [API](guides/features/api.md)
+  - [Workspaces](guides/features/workspaces.md)
+  - [Transform File Uploads](guides/features/transform-uploads.md)
 
 ## Older Versions
+
 - Installation
   - [Linux pre-installer](older/installation/pre-installer-linux.md)
   - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
