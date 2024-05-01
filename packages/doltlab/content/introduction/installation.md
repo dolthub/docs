@@ -43,11 +43,25 @@ DoltLab requires the following dependencies:
 > [amazon-ecr-credential-helper](https://github.com/awslabs/amazon-ecr-credential-helper)<br/>
 > Access to an [SMTP server](https://aws.amazon.com/what-is/smtp/), like [smtp.gmail.com](https://support.google.com/a/answer/176600?hl=en).
 
-To streamline dependency installation we've provided handy scripts to install these dependencies for the following operation systems:
+To streamline dependency installation, with DoltLab >= `v2.1.2` you can run the `installer` with one of the following flags to generate a dependency installation script:
 
-- [Ubuntu](./installation/ubuntu_dependencies.md)
-- [Centos](./installation/centos_dependencies.md)
+```bash
+# generate a script to install DoltLab dependencies on Ubuntu
+./installer --ubuntu
+```
 
-Once these dependencies are installed, we recommend following the [post-installation](https://docs.docker.com/engine/install/linux-postinstall/) steps for Docker that will allow you to run `docker` commands without using `sudo`.
+```bash
+# generate a script to install DoltLab dependencies on CentOS
+./installer --centos
+```
 
-DoltLab _requires_ a valid connection to an SMTP server it can use to send emails to its users. These emails allow for account creation and verification, password resets, two-factor authentication, and more.
+Alternatively, a version of these scripts are available here as well:
+
+- [Ubuntu](https://github.com/dolthub/doltlab-issues/blob/main/scripts/ubuntu_install.sh)
+- [Centos](https://github.com/dolthub/doltlab-issues/blob/main/scripts/centos_install.sh)
+
+Once DoltLab's dependencies are installed, we recommend following the [post-installation](https://docs.docker.com/engine/install/linux-postinstall/) steps for Docker that will allow you to run `docker` commands without using `sudo`.
+
+For a DoltLab installation that's limited to the single default user, configuring a connection to an SMTP server is _not_ required.
+
+This is only required when you want additional users to be able to create accounts on your DoltLab instance. DoltLab uses the SMTP server to send emails, which allow for account creation and verification, password resets, two-factor authentication, and more.
