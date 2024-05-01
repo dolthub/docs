@@ -286,7 +286,7 @@ When we merge, we see the `conflict` column has been set:
 ```
 
 And we can inspect what the constraint violations are using the
-[dolt_constraint_violations](./dolt-system-tables.md#doltconstraintviolations)
+[dolt_constraint_violations](./dolt-system-tables.md#dolt_constraint_violations)
 system table:
 
 ```sql
