@@ -12,7 +12,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 6. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
 7. [Connect to an SMTP server with implicit TLS](#smtp-implicit-tls)
 8. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
-9. [Set up a SMTP Server using any Gmail address]()
+9. [Set up a SMTP Server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
 10. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
 11. [Use an external database server with DoltLab](#use-external-database)
 12. [DoltLab Jobs](#doltlab-jobs)
