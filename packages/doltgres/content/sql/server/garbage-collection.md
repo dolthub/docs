@@ -4,9 +4,9 @@ title: Garbage Collection
 
 # How garbage is created
 
-Dolt creates on disk garbage. Dolt transactions that do not have a corresponding Dolt commit create on disk garbage. This garbage is most noticeable after large data imports.
+Doltgres creates on disk garbage. Doltgres transactions that do not have a corresponding Doltgres commit create on disk garbage. This garbage is most noticeable after large data imports.
 
-Specifically, writes to Dolt can result in multiple chunks of the [prolly
+Specifically, writes to Doltgres can result in multiple chunks of the [prolly
 tree](https://www.dolthub.com/blog/2020-04-01-how-dolt-stores-table-data) being rewritten,
 which [writes a large portion of the
 tree](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/#cant_share).
@@ -14,14 +14,6 @@ When you perform write operations without committing or delete a branch containi
 chunks, garbage is created.
 
 ![How garbage is created](../../../.gitbook/assets/how-garbage-is-created.png)
-
-# How to run garbage collection
-
-Garbage collection can be run offline using [`dolt gc`](../../cli/cli.md#dolt-gc) or online using [`call dolt_gc()`](../version-control/dolt-sql-procedures.md#dolt_gc).
-
-## Offline
-
-If you have access to the server where your Dolt database is located and a Dolt sql-server is not running, navigate to the directory your database is stored in and run `dolt gc`. This will cycle through all the needed chunks in your database and delete those that are unnecessary. This process is CPU and memory intensive.
 
 ## Online
 

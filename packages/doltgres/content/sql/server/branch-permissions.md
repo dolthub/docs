@@ -6,10 +6,12 @@ title: Branch Permissions
 
 ## What are Branch Permissions?
 
-Branch permissions are a way of managing how users may interact with branches when running Dolt as a server (via `dolt sql-server`).
-The branch permissions model is composed of two system tables: `dolt_branch_control` and `dolt_branch_namespace_control`.
-The former table handles branch modification, while the latter table handles branch creation.
-All operations that are not explicitly done as a client connected to a server (such as locally using the CLI) will bypass branch permissions.
+Branch permissions are a way of managing how users may interact with branches when running Doltgres
+as a server (via `doltgres sql-server`).  The branch permissions model is composed of two system
+tables: `dolt_branch_control` and `dolt_branch_namespace_control`.  The former table handles branch
+modification, while the latter table handles branch creation.  All operations that are not
+explicitly done as a client connected to a server (such as locally using the CLI) will bypass branch
+permissions.
 
 ## System Tables
 
@@ -58,7 +60,7 @@ Most characters are interpreted as-is, with the exception of three characters.
 | \         | Escapes the next character, allowing it to be compared literally. This is only useful when attempting to match one of these special characters, as it is otherwise ignored (has no effect). |
 
 Due to the above rules, it is possible to write two different expressions that have the exact same match characteristics.
-Rather than allow duplicates, Dolt processes each expression to find its most concise equivalent (folding the expression).
+Rather than allow duplicates, Doltgres processes each expression to find its most concise equivalent (folding the expression).
 There are two rules that are repeatedly applied to strings until neither applies.
 The first rule replaces `%%` with `%`.
 The second rule replaces `%_` with `_%`.
@@ -106,7 +108,7 @@ In addition to the above privileges, if a user has the `admin` permission, then 
 
 All users may read any branch.
 The branch permissions tables primarily affect modification.
-When a user (connected via a client to a Dolt instance running as a server) attempts any operation that may modify either the branch or its contents (tables, staged work, etc.), then the first system table, `dolt_branch_control`, is invoked.
+When a user (connected via a client to a Doltgres instance running as a server) attempts any operation that may modify either the branch or its contents (tables, staged work, etc.), then the first system table, `dolt_branch_control`, is invoked.
 
 To find all matching entries, we start with the global set of all entries.
 We first match against the database, which (hopefully) reduces the set of entries.
@@ -196,25 +198,10 @@ Although it appears that we grant them every global privilege, this is not the c
 This means that they are not considered an admin, however we do not have to worry about assigning privileges to allow for basic table operations.
 [You may read more about this behavior in an earlier section.](#editing-the-system-tables)
 
-```
-$ mkdir example
-
-$ cd example
-
-$ dolt init
-Successfully initialized dolt data repository.
-
-$ dolt sql -q "DELETE FROM dolt_branch_control;"
-Query OK, 0 rows affected (0.00 sec)
-
-$ dolt sql -q "CREATE USER testuser@localhost;"
-Query OK, 0 rows affected (0.00 sec)
-
-$ dolt sql -q "GRANT ALL ON *.* TO testuser@localhost;"
-Query OK, 0 rows affected (0.00 sec)
-
-$ dolt sql-server --user=root
-Starting server with Config HP="localhost:3306"|T="28800000"|R="false"|L="info"
+```sql
+DELETE FROM dolt_branch_control;
+CREATE USER testuser@localhost;
+GRANT ALL ON *.* TO testuser@localhost;
 ```
 
 ### The `write` Permission
@@ -223,18 +210,14 @@ Please refer to the [setup section](#setup) before continuing this example.
 This example shows the `write` permission in action.
 We add the `write` permission to the `testuser` user, which allows that user to modify the contents of our `main` (default) branch, while the `root` user does not have the permission and cannot make any modifications.
 
-```
-$ mysql --user=root
-mysql> USE example;
-mysql> INSERT INTO dolt_branch_control VALUES ('%', 'main', 'testuser', '%', 'write');
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+```sql
+$ psql --user=root
+INSERT INTO dolt_branch_control VALUES ('%', 'main', 'testuser', '%', 'write');
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `root`@`%` does not have the correct permissions on branch `main`
-mysql> exit;
 
-$ mysql --user=testuser
-mysql> USE example;
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
-mysql> exit;
+$ psql --user=testuser
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
 ```
 
 ### The `admin` Permission
@@ -248,60 +231,54 @@ The [special "zero or more" character](#pattern-matching) means that they may ad
 The users added are all fake, and are just used to demonstrate the capability.
 We end by showing that this only applies to the exact match expression, as the very similar `_main` branch name is still off-limits.
 
-```
-$ mysql --user=testuser
-mysql> USE example;
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+```sql
+$ psql --user=testuser
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `testuser`@`localhost` does not have the correct permissions on branch `main`
-mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
+INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
 Error 1105: `testuser`@`localhost` cannot add the row ["example", "main", "newuser", "%", "write"]
-mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main', 'newuser', '%');
+INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main', 'newuser', '%');
 Error 1105: `testuser`@`localhost` cannot add the row ["example", "main", "newuser", "%"]
-mysql> exit;
 
-$ mysql --user=root
-mysql> USE example;
-mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main%', 'testuser', '%', 'admin');
-mysql> exit;
+$ psql --user=root
+INSERT INTO dolt_branch_control VALUES ('example', 'main%', 'testuser', '%', 'admin');
 
-$ mysql --user=testuser
-mysql> USE example;
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
-mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
-mysql> INSERT INTO dolt_branch_control VALUES ('example', 'main_new', 'otheruser', '%', 'write');
-mysql> INSERT INTO dolt_branch_control VALUES ('example', '_main', 'someuser', '%', 'write');
-Error 1105: `testuser`@`localhost` cannot add the row ["example", "_main", "someuser", "%", "write"]
-mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main1', 'theuser', '%');
-mysql> INSERT INTO dolt_branch_namespace_control VALUES ('example', '_main', 'anotheruser', '%');
-Error 1105: `testuser`@`localhost` cannot add the row ["example", "_main", "anotheruser", "%"]
-mysql> exit;
+$ psql --user=testuser
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
+INSERT INTO dolt_branch_control VALUES ('example', 'main', 'newuser', '%', 'write');
+INSERT INTO dolt_branch_control VALUES ('example', 'main_new', 'otheruser', '%', 'write');
+INSERT INTO dolt_branch_control VALUES ('example', '_main', 'someuser', '%', 'write');
+
+INSERT INTO dolt_branch_namespace_control VALUES ('example', 'main1', 'theuser', '%');
+INSERT INTO dolt_branch_namespace_control VALUES ('example', '_main', 'anotheruser', '%');
 ```
 
 ### Restricting Branch Names
-Please refer to the [setup section](#setup) before continuing this example.
-This example shows how to [restrict which users are able to use branch names](#branch-creation) with the `main` prefix.
-To do this, we insert a `main%` entry into the `dolt_branch_namespace_control` table, assigning the `testuser` user.
-We create another entry with `mainroot%` as the branch name, and assign that to `root`.
-This means that `root` is able to create any branches with names that **do not** start with `main`, but is unable to create branches that **do** start with `main`.
-The exception being `mainroot`, which while having `main` as a prefix, it is considered [the longest match](#longest-match), and therefore takes precedence over the `main%` entry.
-Consequently, `testuser` cannot use `mainroot` as a prefix, as [the longest match](#longest-match) overrides their `main%` entry.
+Please refer to the [setup section](#setup) before continuing this example.  This example shows how
+to [restrict which users are able to use branch names](#branch-creation) with the `main` prefix.  To
+do this, we insert a `main%` entry into the `dolt_branch_namespace_control` table, assigning the
+`testuser` user.  We create another entry with `mainroot%` as the branch name, and assign that to
+`root`.  This means that `root` is able to create any branches with names that **do not** start with
+`main`, but is unable to create branches that **do** start with `main`.  The exception being
+`mainroot`, which while having `main` as a prefix, it is considered [the longest
+match](#longest-match), and therefore takes precedence over the `main%` entry.  Consequently,
+`testuser` cannot use `mainroot` as a prefix, as [the longest match](#longest-match) overrides their
+`main%` entry.
 
-```
-$ mysql --user=root
-mysql> USE example;
-mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'main%', 'testuser', '%');
-mysql> INSERT INTO dolt_branch_namespace_control VALUES ('%', 'mainroot%', 'root', '%');
-mysql> CALL DOLT_BRANCH('does_not_start_with_main');
+```sql
+USE example;
+INSERT INTO dolt_branch_namespace_control VALUES ('%', 'main%', 'testuser', '%');
+INSERT INTO dolt_branch_namespace_control VALUES ('%', 'mainroot%', 'root', '%');
+CALL DOLT_BRANCH('does_not_start_with_main');
 +--------+
 | status |
 +--------+
 | 0      |
 +--------+
-1 row in set (0.00 sec)
 
-mysql> CALL DOLT_BRANCH('main1');
+CALL DOLT_BRANCH('main1');
 Error 1105: `root`@`%` cannot create a branch named `main1`
-mysql> CALL DOLT_BRANCH('mainroot');
+CALL DOLT_BRANCH('mainroot');
 +--------+
 | status |
 +--------+
@@ -311,9 +288,8 @@ mysql> CALL DOLT_BRANCH('mainroot');
 
 mysql> exit;
 
-$ mysql --user=testuser
-mysql> USE example;
-mysql> CALL DOLT_BRANCH('main1');
+$ psql --user=testuser
+CALL DOLT_BRANCH('main1');
 +--------+
 | status |
 +--------+
@@ -321,29 +297,25 @@ mysql> CALL DOLT_BRANCH('main1');
 +--------+
 1 row in set (0.00 sec)
 
-mysql> CALL DOLT_BRANCH('mainroot1');
+CALL DOLT_BRANCH('mainroot1');
 Error 1105: `testuser`@`localhost` cannot create a branch named `mainroot1`
-mysql> exit;
 ```
 
 ### Multiple Databases
 
 Please refer to the [setup section](#setup) before continuing this example.
 This example simply shows how an entry in each system table is scoped to a database.
-Our pre-existing database is `example`, as Dolt uses the directory's name for its database name.
+Our pre-existing database is `example`, as Doltgres uses the directory's name for its database name.
 Therefore, we create another database named `newdb`, which the user `root` will not have any permissions on.
 
 ```
-mysql --user=root
-mysql> USE example;
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
+psql --user=root
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
 Error 1105: `root`@`%` does not have the correct permissions on branch `main`
-mysql> INSERT INTO dolt_branch_control VALUES ('example', '%', 'root', '%', 'write');
-mysql> CREATE TABLE test (pk BIGINT PRIMARY KEY);
-mysql> DROP TABLE test;
-mysql> CREATE DATABASE newdb;
-mysql> USE newdb;
-mysql> CREATE TABLE test2 (pk BIGINT PRIMARY KEY);
-Error 1105: `root`@`%` does not have the correct permissions on branch `main`
-mysql> exit;
+INSERT INTO dolt_branch_control VALUES ('example', '%', 'root', '%', 'write');
+CREATE TABLE test (pk BIGINT PRIMARY KEY);
+DROP TABLE test;
+CREATE DATABASE newdb;
+USE newdb;
+CREATE TABLE test2 (pk BIGINT PRIMARY KEY);
 ```

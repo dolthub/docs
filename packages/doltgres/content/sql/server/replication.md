@@ -4,30 +4,34 @@ title: Replication
 
 # Replication
 
-Dolt can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more Dolt servers, or can be a read-replica for a MySQL server. This page describes the two supported replication modes between a Dolt primary server and Dolt replica servers. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) for more information on setting up a Dolt server as a read-replica for a MySQL server.
+Doltgres can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more
+Doltgres servers, or can be a read-replica for a MySQL server. This page describes the two supported
+replication modes between a Doltgres primary server and Doltgres replica servers. See the [Postgres
+to Doltgres Replication guide](../../../guides/binlog-replication.md) for more information on
+setting up a Doltgres server as a read-replica for a Postgres server.
 
-In **Remote-Based Replication**, Dolt uses a remote as a middleman to facilitate replication between the
-primary and read replicas. In this mode, Dolt replication triggers on a [Dolt
-commit](../../../concepts/dolt/git/commits.md).
+In **Remote-Based Replication**, Doltgres uses a remote as a middleman to facilitate replication between the
+primary and read replicas. In this mode, Doltgres replication triggers on a [Doltgres
+commit](../../../concepts/git/commits.md).
 
 ![Read replication](../../../.gitbook/assets/dolt-read-replication.png)
 
 This is the simplest form of replication to configure and administer. Use this form of replication
-when you do **not** need the hot-standby support of Direct-to-Standby Replication. See
-[Direct vs Remote Replication](replication.md#direct-vs.-remote-replication) for more
-details on the differences between Remote-Based Replication and Hot Standby Replication.
+when you do **not** need the hot-standby support of Direct-to-Standby Replication. See [Direct vs
+Remote Replication](replication.md#direct-vs.-remote-replication) for more details on the
+differences between Remote-Based Replication and Hot Standby Replication.
 
-In **Direct-to-Standby Replication**, the primary dolt sql-server instance replicates all writes to a
-set of configured standby servers. In this mode, there is no intermediate
-[remote](../../../concepts/dolt/git/remotes.md) and all SQL transaction commits
-are replicated, not just Dolt commits.
+In **Direct-to-Standby Replication**, the primary dolt sql-server instance replicates all writes to
+a set of configured standby servers. In this mode, there is no intermediate
+[remote](../../../concepts/git/remotes.md) and all SQL transaction commits are replicated, not
+just Doltgres commits.
 
 ![Standby replication](../../../.gitbook/assets/dolt-standby-replication.png)
 
 Use this form of replication when you have high-availability requirements, and need a hot standby
-server ready to swap in for the primary. See
-[Direct vs Remote Replication](replication.md#direct-vs.-remote-replication) for more
-details on the differences between Remote-Based Replication and Hot Standby Replication.
+server ready to swap in for the primary. See [Direct vs Remote
+Replication](replication.md#direct-vs.-remote-replication) for more details on the differences
+between Remote-Based Replication and Hot Standby Replication.
 
 The rest of this page describes configuration and considerations for both types of
 replication, starting with replication through a remote.
@@ -36,7 +40,7 @@ replication, starting with replication through a remote.
 
 ## Configuration
 
-Dolt relies on [system variables](../../../concepts/dolt/sql/system-variables.md) to configure
+Doltgres relies on [system variables](../../../concepts/sql/system-variables.md) to configure
 replication. The following system variables affect replication:
 
 1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote).
@@ -59,7 +63,7 @@ replication. The following system variables affect replication:
 1. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors).
    Makes replication errors warnings, instead of errors. Defaults to 0.
 1. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit).
-   Makes every transaction `COMMIT` a Dolt commit to force all writes to replicate. Default 0.
+   Makes every transaction `COMMIT` a Doltgres commit to force all writes to replicate. Default 0.
 1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication). Set to 1
    to make replication pushes asynchronous, which means that read replicas will be eventually
    consistent with the primary. Defaults to 0.
@@ -71,78 +75,65 @@ variable](../version-control/dolt-sysvars.md#doltreplicatetoremote). You
 set that variable to the name of the remote you would like to use for
 replication.
 
-In this example I am going to use a DoltHub remote to facilitate
-replication. I created an empty database on DoltHub and [configured
-the appropriate read and write credentials on this
-host](../../../products/dolthub/data-sharing.md#dolt-login).
+Set the appropriate server variables:
 
-Then set the appropriate server variables:
-
-```bash
-$ dolt remote add origin timsehn/replication_example
-$ dolt sql -q "set @@persist.dolt_replicate_to_remote = 'origin'"
+```sql
+call dolt_remote('add', 'origin', 'file:///var/share/myremote/');
+ALTER SYSTEM SET dolt_replicate_to_remote 'origin';
 ```
-
-The next time you create a Dolt commit, Dolt will attempt to push the changes to the remote.
-
-```bash
-$ dolt sql -q "create table test (pk int, c1 int, primary key(pk))"
-$ dolt sql -q "insert into test values (0,0)"
-Query OK, 1 row affected
-$ dolt add -A
-$ dolt commit -m 'trigger replication'
-```
-
-And we can see the changes are pushed to the remote.
-
-![DoltHub Replication Example](../../../.gitbook/assets/replication-example.png)
 
 {% hint style="info" %}
 
 ### Note
 
-Replication pushes can be triggered by running commands on the CLI even when no Dolt SQL server is
-running. CLI commands like `dolt commit`, `dolt merge`, or other command line invocations on a
-database configured to be a primary will cause any updated branches or tags to be pushed to the
-remote specified. On a replica, such commands will cause the replica to pull from the remote before
-execution.
+The `ALTER SYSTEM SET` syntax is not yet supported. For the time being, you must set system
+variables in the `config.yaml` file.
 
 {% endhint %}
+
+The next time you create a Dolt commit, Doltgres will attempt to push the changes to the remote.
+
+```sql
+create table test (pk int, c1 int, primary key(pk));
+insert into test values (0,0);
+call dolt_commit('-Am', 'trigger replication');
+```
+
+After a `DOLT_COMMIT()`, changes are pushed to the configured remote.
+
+![DoltgresHub Replication Example](../../../.gitbook/assets/replication-example.png)
 
 #### Stopping Replication
 
 To stop replication unset the configuration variable.
 
 ```
-dolt sql -q "set @@persist.dolt_replicate_to_remote = ''"
+ALTER SYSTEM SET dolt_replicate_to_remote '';
 ```
 
-Note, if you have a running SQL server you must restart it after
-changing replication configuration.
+Note, you must restart the server after changing replication configuration for changes to take
+effect.
 
-#### Making every Transaction Commit a Dolt Commit
+#### Making every Transaction Commit a Doltgres Commit
 
 Often, a primary would like to replicate all transaction `COMMIT`s,
-not just Dolt commits. You can make every transaction `COMMIT` a Dolt
+not just Doltgres commits. You can make every transaction `COMMIT` a Doltgres
 commit by setting the [system variable](../../../concepts/dolt/sql/system-variables.md),
 [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With
 this setting, you lose the ability to enter commit messages.
 
-```bash
-$ dolt sql -q "set @@persist.dolt_transaction_commit = 1"
-$ dolt sql -q "insert into test values (1,1)"
-Query OK, 1 row affected
- $ dolt log -n 1
-commit u4shvua2st16btub8mimdd2lj7iv4sdu (HEAD -> main)
-Author: Tim Sehn <tim@dolthub.com>
-Date:  Mon Jul 11 15:54:22 -0700 2022
-
-        Transaction commit
+```sql
+ALTER SYSTEM SET dolt_transaction_commit TO 1;
 ```
 
-And now on the remote.
+{% hint style="info" %}
 
-![DoltHub Replication Example](../../../.gitbook/assets/replication-example-2.png)
+### Note
+
+The `ALTER SYSTEM SET` syntax is not yet supported. For the time being, you must set system
+variables in the `config.yaml` file.
+
+{% endhint %}
 
 #### Asynchronous replication
 
@@ -153,8 +144,8 @@ variable](../version-control/dolt-sysvars.md#doltasyncreplication). This
 setting will increase the speed of Dolt commits, but make read
 replicas eventually consistent.
 
-```bash
-$ dolt sql -q "set @@persist.dolt_async_replication = 1"
+```sql
+ALTER SYSTEM SET dolt_async_replication TO 1
 ```
 
 ### Configuring a Replica
@@ -162,11 +153,8 @@ $ dolt sql -q "set @@persist.dolt_async_replication = 1"
 To start a replica, you first need a clone. I'm going to call my clone
 `read_replica`.
 
-```bash
-$ dolt clone timsehn/replication_example read_replica
-cloning https://doltremoteapi.dolthub.com/timsehn/replication_example
-28 of 28 chunks complete. 0 chunks being downloaded currently.
-dolt $ cd read_replica/
+```sql
+call dolt_clone('file:///var/share/remote/replication_example', 'read_replica');
 ```
 
 Now, I'm going to configure my read replica to "pull on read" from
@@ -179,10 +167,10 @@ to pick specific branches or
 [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads)
 to replicate all branches.
 
-```bash
-$ dolt sql -q "set @@persist.dolt_replicate_heads = 'main'"
-$ dolt sql -q "set @@persist.dolt_read_replica_remote = 'origin'"
-$ dolt sql -q "select * from test"
+```sql
+ALTER SYSTEM SET dolt_replicate_heads TO 'main';
+ALTER SYSTEM SET dolt_read_replica_remote TO 'origin';
+select * from test;
 +----+----+
 | pk | c1 |
 +----+----+
@@ -191,11 +179,13 @@ $ dolt sql -q "select * from test"
 +----+----+
 ```
 
-Now on the primary.
+You must restart the replica server for changes to take effect.
 
-```bash
-$ dolt sql -q "insert into test values (2,2); call dolt_commit('-am', 'Inserted (2,2)');"
-Query OK, 1 row affected
+Now back on the primary:
+
+```sql
+insert into test values (2,2); 
+call dolt_commit('-am', 'Inserted (2,2)');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -205,8 +195,8 @@ Query OK, 1 row affected
 
 And back to the replica.
 
-```bash
-$ dolt sql -q "select * from test"
+```sql
+select * from test;
 +----+----+
 | pk | c1 |
 +----+----+
@@ -214,12 +204,6 @@ $ dolt sql -q "select * from test"
 | 1  | 1  |
 | 2  | 2  |
 +----+----+
-$ dolt log -n 1
-commit i97i9f1a3vrvd09pphiq0bbdeuf8riid (HEAD -> main, origin/main)
-Author: Tim Sehn <tim@dolthub.com>
-Date:  Mon Jul 11 16:48:37 -0700 2022
-
-        Inserted (2,2)
 ```
 
 #### Replicate all branches
@@ -231,37 +215,24 @@ or
 can be set at a time. So I unset `@@dolt_replicate_heads` and set
 `@@dolt_replicate_all_heads`.
 
-```bash
-read_replica $ dolt sql -q "set @@persist.dolt_replicate_heads = ''"
-read_replica $ dolt sql -q "set @@persist.dolt_replicate_all_heads = 1"
+```sql
+ALTER SYSTEM SET dolt_replicate_heads TO '';
+ALTER SYSTEM SET dolt_replicate_all_heads TO 1"
 ```
 
 Now I'm going to make a new branch on the primary and insert a new value on it.
 
-```bash
-replication_example $ dolt sql -q "call dolt_checkout('-b', 'branch1'); insert into test values (3,3); call dolt_commit('-am', 'Inserted (3,3)');"
-+--------+
-| status |
-+--------+
-| 0      |
-+--------+
-Query OK, 1 row affected
-+----------------------------------+
-| hash                             |
-+----------------------------------+
-| 0alihi9nll9986ossq9mc2n54j4kafhc |
-+----------------------------------+
+```sql
+call dolt_checkout('-b', 'branch1');
+insert into test values (3,3); 
+call dolt_commit('-am', 'Inserted (3,3)');
 ```
 
 The read replica now has the change when I try and read the new branch.
 
-```bash
-$ dolt sql -q "call dolt_checkout('branch1'); select * from test;"
-+--------+
-| status |
-+--------+
-| 0      |
-+--------+
+```sql
+call dolt_checkout('branch1');
+select * from test;"
 +----+----+
 | pk | c1 |
 +----+----+
@@ -294,16 +265,14 @@ using the URL template provided and begin pushing to it.
 URL, with the replacement token `{database}` in it. Some examples:
 
 ```sql
-set @@persist.dolt_replication_remote_url_template = 'file:///share/doltRemotes/{database}'; -- file based remote
-set @@persist.dolt_replication_remote_url_template = 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
-set @@persist.dolt_replication_remote_url_template = 'gs://mybucket/remotes/{database}'; -- GCP remote
+ALTER SYSTEM SET dolt_replication_remote_url_template = 'file:///share/doltRemotes/{database}'; -- file based remote
+ALTER SYSTEM SET dolt_replication_remote_url_template = 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
+ALTER SYSTEM SET dolt_replication_remote_url_template = 'gs://mybucket/remotes/{database}'; -- GCP remote
 ```
 
 For some remotes, additional configuration for authorization may be
 required in your environment. **Note**: not all remote types support
-automatic database creation yet. In particular,
-[DoltHub](https://dolthub.com) remotes do not yet support
-automatically creating remotes for new databases.
+automatic database creation yet.
 
 On read replicas, setting `@@dolt_replication_remote_url_template`
 will cause new databases created on the primary to be cloned to the
@@ -389,34 +358,25 @@ bootstrap configuration.
 
 ### Bootstrap Remotes
 
-If databases already exist when the `dolt sql-server` instance is started, they
-will need to have corresponding remotes as configured in the
-`cluster.standby_remotes` configuration. Any database created database through
-SQL `CREATE DATABASE` will automatically have remotes created corresponding to
-the `remote_url_templates`. The recommended way to run `dolt sql-server` in
-cluster mode is in a newly empty directory with:
+If databases already exist when the `doltgres sql-server` instance is started, they will need to
+have corresponding remotes as configured in the `cluster.standby_remotes` configuration. Any
+database created database through SQL `CREATE DATABASE` will automatically have remotes created
+corresponding to the `remote_url_templates`. The recommended way to run `doltgres sql-server` in cluster
+mode is in a newly empty directory with:
 
 ```sh
-$ dolt sql-server --config server.yaml --data-dir .
+$ doltgres --config server.yaml --data-dir .
 ```
 
 and then to create databases through the SQL interface.
 
-If you want to create databases before hand, you should create corresponding
+If you want to create databases beforehand, you should create corresponding
 remotes as well. For example, on `dolt-1.db` above, I could run:
 
-```sh
-$ mkdir appdb
-$ cd appdb
-$ dolt init
-$ dolt remote add standby http://dolt-2.db:50051/appdb
-```
-
-to initialize a dolt directory with a default database of `appdb`, and then I
-could run sql-server with:
-
-```sh
-$ dolt sql-server --config server.yaml
+```sql
+CREATE DATABASE appdb;
+\c appdb;
+CALL dolt_remote('add', 'standby', 'http://dolt-2.db:50051/appdb');
 ```
 
 ## Replication Behavior
@@ -554,19 +514,26 @@ The current role and configuration epoch can be accessed through global session
 variables.
 
 ```sql
-mysql> select @@GLOBAL.dolt_cluster_role, @@GLOBAL.dolt_cluster_role_epoch;
-+----------------------------+----------------------------------+
-| @@GLOBAL.dolt_cluster_role | @@GLOBAL.dolt_cluster_role_epoch |
-+----------------------------+----------------------------------+
-| primary                    |                               15 |
-+----------------------------+----------------------------------+
+show dolt_cluster_role;
++----------------------------+
+|          dolt_cluster_role |
++----------------------------+
+| primary                    |
++----------------------------+
+show dolt_cluster_role_epoch;
++----------------------------------+
+|          dolt_cluster_role_epoch |
++----------------------------------+
+|                               15 |
++----------------------------------+
+
 ```
 
 The current status of replication to the standby can be queried in a system
 table of a system database, `dolt_cluster.dolt_cluster_status`.
 
 ```sql
-mysql> select * from dolt_cluster.dolt_cluster_status;
+select * from dolt_cluster.dolt_cluster_status;
 +----------+----------------+---------+-------+------------------------+----------------------------+---------------+
 | database | standby_remote | role    | epoch | replication_lag_millis | last_update                | current_error |
 +----------+----------------+---------+-------+------------------------+----------------------------+---------------+
@@ -722,9 +689,9 @@ in this mode, only the primary replicates its writes to the configured remote
 take over write responsibilities, at which point the new primary will start
 replicating new writes to the remote.
 
-# MySQL to Dolt Replication
+# Postgres to Dolt Replication
 
-If you have an existing MySQL or MariaDB server, you can configure Dolt as a read-replica. As the Dolt read-replica
-consumes data changes from the primary server, it creates Dolt commits, giving you a read-replica with a
-versioned history of your data changes. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md)
-for more details on how to configure this.
+If you have an existing Postgres server, you can configure Doltgres as a read-replica. As the
+Doltgres read-replica consumes data changes from the primary server, it creates Dolt commits, giving
+you a read-replica with a versioned history of your data changes. See the [Postgres to Doltgres Replication
+guide](../../../guides/replication-from-postgres.md) for more details on how to configure this.

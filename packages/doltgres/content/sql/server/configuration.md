@@ -4,7 +4,7 @@ title: Configuration
 
 # Configuration
 
-A Dolt SQL server can be configured at server start time, or by
+A Doltgres SQL server can be configured at server start time, or by
 setting system variables in the SQL session. The simplest way to
 configure server behavior is to provide a config file with the
 `--config` flag. Here's an example file:
@@ -37,12 +37,12 @@ command](../../cli/cli.md#dolt-sql-server).
 
 ## System variables
 
-Dolt defines system variables that you can set in your session via the
+Doltgres defines system variables that you can set in your session via the
 `SET` syntax. Many of these can be persisted, so they remain set after
 a server restart.
 
 ```sql
-set @@dolt_transaction_commit = 1;
+set dolt_transaction_commit 1;
 ```
 
 A full list of available system variables can be found in the [docs on
