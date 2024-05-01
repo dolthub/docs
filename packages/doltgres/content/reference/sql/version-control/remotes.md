@@ -5,10 +5,10 @@ title: Using remotes
 # What are Remotes?
 
 Just like Git, Doltgres supports syncing with a [remote
-database](../../../concepts/dolt/git/remotes.md). A remote is a copy of your database that is
+database](../../../concepts/git/remotes.md). A remote is a copy of your database that is
 distinct from your local copy. It usually is stored on a separate host or service for fault
 tolerance. The primary use cases are disaster recovery and collaboration. More conceptual
-description of remotes can be found [here](../../../concepts/dolt/git/remotes.md).
+description of remotes can be found [here](../../../concepts/git/remotes.md).
 
 # Configuring Remotes
 
@@ -21,7 +21,7 @@ named `origin` is automatically configured for you.
 
 Let's go through an example of how you can push data from a local Doltgres database to a remote. In
 this example, we'll use the running Doltgres server we created in the [Getting
-Started](../../concepts/database) section to push a branch a file-based remote.
+Started](../../concepts/rdbms/database.md) section to push a branch a file-based remote.
 
 First, we need to add a new remote:
 
