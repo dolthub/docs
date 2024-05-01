@@ -19,10 +19,10 @@ the keys of the table with no primary keys are the entire form.
 Doltgres can produce diffs on the command line, as tables, or as a SQL patch.
 
 Doltgres can produce diffs at scale because the Doltgres storage engine breaks the rows in the
-database down into chunks. Each chunk is content-addressed and stored in a tree called [a Prolly
-Tree](../../architecture/storage-engine/prolly-tree.md). Thus, to calculate data diffs, Doltgres
-walks the trees at both commits, exposing the chunks that are different. For instance, if nothing
-has changed, the content address of the root of the table is unchanged.
+database down into chunks. Each chunk is content-addressed and stored in a tree called a Prolly
+Tree. Thus, to calculate data diffs, Doltgres walks the trees at both commits, exposing the chunks
+that are different. For instance, if nothing has changed, the content address of the root of the
+table is unchanged.
 
 ## How to use diffs
 
@@ -30,7 +30,8 @@ Diffs are an invaluable tool for data debugging.
 
 In human readable form, seeing what cells in your database changed can help you instantly spot
 problems in the data that may have gone overlooked. You can see diffs through a SQL query of the
-[`dolt_diff_<tablename>` system table](../../reference/sql/version-control/dolt-system-tables.md).
+[`dolt_diff_<tablename>` system
+table](../../reference/sql/version-control/dolt-system-tables.md#dolt_diff_usdtablename).
 
 ## Difference between Git diffs and Doltgres diffs
 

@@ -39,7 +39,6 @@
 ## Guides
 
 - [Cheat Sheet](guides/cheat-sheet.md)
-- [Starting the Server](guides/running-server.md)
 - [Replication from Postgres](guides/replication-from-postgres.md)
 
 ## Reference

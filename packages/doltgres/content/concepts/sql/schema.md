@@ -43,10 +43,11 @@ restricting writes to that table.
 ## Difference between MySQL Schema and Doltgres Schema
 
 Doltgres supports [most Postgres schema elements at least
-partially](../../reference/sql/sql-support/data-description.md), with more support being built out
+partially](../../reference/sql-support/supported-types.md), with more support being built out
 now.
 
 ## Interaction with Doltgres Version Control
 
 Doltgres versions your schema and data. So, if you want to see the difference between the schema of
-two different versions, Doltgres provides this using `diff` functionality. See individual SQLconcepts for how Doltgres handles each individual schema element with regards to versioning.
+two different versions, Doltgres provides this using `diff` functionality. See individual
+SQLconcepts for how Doltgres handles each individual schema element with regards to versioning.

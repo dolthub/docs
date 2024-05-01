@@ -41,7 +41,7 @@ DESCRIBE myTable AS OF 'HEAD~';
 ```
 
 Note that `AS OF` always names a revision at a specific Dolt commit. Changes on a branch's [working
-set](../../../concepts/dolt/git/working-set.md) that have not been committed to that head via `call
+set](../../../concepts/git/working-set.md) that have not been committed to that head via `call
 dolt_commit()` or similar are not visible via this syntax.
 
 ## Specifying a revision in the database name
@@ -70,7 +70,7 @@ There are other variations on this as well. See the docs on [using
 branches](branches.md) for more details.
 
 Note that this syntax applied to a branch will name that branch's [working
-set](../../../concepts/dolt/git/working-set.md) and therefore includes any changes not yet committed to
+set](../../../concepts/git/working-set.md) and therefore includes any changes not yet committed to
 the HEAD of the branch.
 
 ## Querying history using dolt system tables

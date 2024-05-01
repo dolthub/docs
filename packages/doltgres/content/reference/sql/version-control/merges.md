@@ -53,7 +53,7 @@ below. Once resolved, you will need to make a dolt commit.
 # Conflicts
 
 Merging branches can create
-[conflicts](../../../concepts/dolt/git/conflicts.md), which you must resolve
+[conflicts](../../../concepts/git/conflicts.md), which you must resolve
 before you can commit your transaction. If a merge creates conflicts,
 the `DOLT_MERGE()` function will return a non-zero result in the conflicts column.
 
@@ -61,12 +61,11 @@ Merges can generate conflicts on schema or data.
 
 ## Schema
 
-Merges with schema conflicts will prevent the merge from completing and populate
-schema conflicts rows into the `dolt_schema_conflicts` system table. This system
-table describes the conflicted table's schema on each side of the merge: `ours`
-and `theirs`. Additionally, it shows the table's schema at the
-[common-ancestor](../../cli/cli.md#dolt-merge-base) and describes why the `ours` and `theirs`
-schemas cannot be automatically merged.
+Merges with schema conflicts will prevent the merge from completing and populate schema conflicts
+rows into the `dolt_schema_conflicts` system table. This system table describes the conflicted
+table's schema on each side of the merge: `ours` and `theirs`. Additionally, it shows the table's
+schema at the common-ancestor and describes why the `ours` and `theirs` schemas cannot be
+automatically merged.
 
 ```sql
 > SELECT table_name, description, base_schema, our_schema, their_schema FROM dolt_schema_conflicts;
@@ -286,7 +285,7 @@ When we merge, we see the `conflict` column has been set:
 ```
 
 And we can inspect what the constraint violations are using the
-[dolt_constraint_violations](./dolt-system-tables.md#doltconstraintviolations)
+[dolt_constraint_violations](./dolt-system-tables.md#dolt_constraint_violations)
 system table:
 
 ```sql

@@ -4,10 +4,10 @@ title: Replication
 
 # Replication
 
-Doltgres can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more
+Doltgres can [replicate data](../../../concepts/rdbms/replication.md) between two or more
 Doltgres servers, or can be a read-replica for a MySQL server. This page describes the two supported
 replication modes between a Doltgres primary server and Doltgres replica servers. See the [Postgres
-to Doltgres Replication guide](../../../guides/binlog-replication.md) for more information on
+to Doltgres Replication guide](../../../guides/replication-from-postgres.md) for more information on
 setting up a Doltgres server as a read-replica for a Postgres server.
 
 In **Remote-Based Replication**, Doltgres uses a remote as a middleman to facilitate replication between the
@@ -43,28 +43,28 @@ replication, starting with replication through a remote.
 Doltgres relies on [system variables](../../../concepts/sql/system-variables.md) to configure
 replication. The following system variables affect replication:
 
-1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#doltreplicatetoremote).
+1. [`@@dolt_replicate_to_remote`](../version-control/dolt-sysvars.md#dolt_replicate_to_remote).
    **Required for a primary.** The primary will push to the remote named on any branch or tag
    update. If more than one database is being served, each must have a remote with the given name.
-1. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#doltreadreplicaremote).
+1. [`@@dolt_read_replica_remote`](../version-control/dolt-sysvars.md#dolt_read_replica_remote).
    **Required for a replica.** The replica will pull from the remote named at transaction start.
-1. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#doltreplicateheads). **Either this
+1. [`@@dolt_replicate_heads`](../version-control/dolt-sysvars.md#dolt_replicate_heads). **Either this
    variable or `@@dolt_replicate_all_heads` must be set on a replica.** Used to configure specific
    branches (ie. HEADs) to pull. Set to a comma-separated list of branches to be replicated. The
    wildcard `*` may be used to match zero or more characters in a branch name and is useful for
    selecting multiple branches. Has no effect on a primary.
-1. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#doltreplicateallheads).
+1. [`@@dolt_replicate_all_heads`](../version-control/dolt-sysvars.md#dolt_replicate_all_heads).
    **Either this variable or `@@dolt_replicate_heads` must be set on a replica.** Pull all branches
    and tags on a read replica (ie. HEADs). Defaults to 0. Has no effect on a primary.
-1. [`@@dolt_replication_remote_url_template`](../version-control/dolt-sysvars.md#doltreplicationremoteurltemplate).
+1. [`@@dolt_replication_remote_url_template`](../version-control/dolt-sysvars.md#dolt_replication_remoteurl_template).
    _Optional._ Set to a URL template to configure the replication remote for newly created
    databases. Without this variable set, only databases that existed at server start time will be
    replicated.
-1. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#doltskipreplicationerrors).
+1. [`@@dolt_skip_replication_errors`](../version-control/dolt-sysvars.md#dolt_skip_replication_errors).
    Makes replication errors warnings, instead of errors. Defaults to 0.
 1. [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit).
    Makes every transaction `COMMIT` a Doltgres commit to force all writes to replicate. Default 0.
-1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#doltasyncreplication). Set to 1
+1. [`@@dolt_async_replication`](../version-control/dolt-sysvars.md#dolt_async_replication). Set to 1
    to make replication pushes asynchronous, which means that read replicas will be eventually
    consistent with the primary. Defaults to 0.
 
@@ -118,7 +118,7 @@ effect.
 
 Often, a primary would like to replicate all transaction `COMMIT`s,
 not just Doltgres commits. You can make every transaction `COMMIT` a Doltgres
-commit by setting the [system variable](../../../concepts/dolt/sql/system-variables.md),
+commit by setting the [system variable](../../../concepts/sql/system-variables.md),
 [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With
 this setting, you lose the ability to enter commit messages.
 

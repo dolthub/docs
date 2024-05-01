@@ -28,9 +28,8 @@ retrieved. To manipulate the type of a column when querying you use the `CONVERT
 
 ## Difference between MySQL Types and Doltgres Types
 
-Doltgres supports [most Postgres
-types](../../../reference/sql/sql-support/data-description.md#data-types), with more being
-implemented.
+Doltgres supports [most Postgres types](../../reference/sql-support/supported-types.md), with more
+being implemented.
 
 ## Interaction with Doltgres Version Control
 

@@ -27,7 +27,7 @@ route requests automatically.
 
 [Postgres supports multiple types of
 replication](https://www.postgresql.org/docs/current/runtime-config-replication.html). Doltgres
-supports a [logical replication mode](../../../guides/binlog-replication.md), where you configure a
+supports a [logical replication mode](../../guides/replication-from-postgres.md), where you configure a
 Doltgres sql-server as a replica for an existing Postgres database. Doltgres can **NOT** act as a
 primary for replication to a Postgres database.
 

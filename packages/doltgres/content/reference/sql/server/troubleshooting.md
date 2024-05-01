@@ -8,9 +8,11 @@ Debugging a running Doltgres server can be challenging. This document covers the
 
 ## Make sure you are running the latest Doltgres version
 
-Doltgres is constantly evolving. We release a new Doltgres approximately once a week. Connect to the SQL server and run `select dolt_version()`. Make sure the version matches the latest as seen on the [GitHub releases page](https://github.com/dolthub/doltgre/releases). 
+Doltgres is constantly evolving. We release a new Doltgres approximately once a week. Connect to the
+SQL server and run `select dolt_version()`. Make sure the version matches the latest as seen on the
+[GitHub releases page](https://github.com/dolthub/doltgresql/releases).
 
-To upgrade the server, download the latest Doltgres binary for your platform and replace the Doltgres binary on your `PATH` with the downloaded one. Running the install process on most platforms again will do this for you. Restart the Doltgres server using `dolt sql-server` to have your running server start using the latest binary.
+To upgrade the server, download the latest Doltgres binary for your platform and replace the Doltgres binary on your `PATH` with the downloaded one. Running the install process on most platforms again will do this for you. Restart the Doltgres server using `doltgres` to have your running server start using the latest binary.
 
 ## Examine your CPU, Memory, and Disk usage
 
