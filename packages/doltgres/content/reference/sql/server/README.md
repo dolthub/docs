@@ -1,38 +1,69 @@
 ---
-title: Running the Doltgres SQL Server
+title: Running the DoltgreSQL Server
 ---
 
-# doltgres sql-server
-
-The `doltgres sql-server` command runs a Postgres compatible server which clients can connect to and
-execute queries against. Any library or tool that can connect to Postgres can connect to
-Doltgres. `doltgres` without any argument also starts the server.
+Start the DoltgreSQL server by running the `doltgres` command:
 
 ```bash
 % doltgres
-Starting server with Config HP="localhost:3306"|U="root"|P=""|T="28800000"|R="false"|L="info"
 ```
 
-The host, user, password, timeout, logging info and other options can
-be set on the command line or via a config file.
+# Configuration options
 
-View the `doltgres sql-server` command documentation
-[here](../../cli/cli.md#dolt-sql-server).
+Like `dolt`, `doltgres` accepts several configuration options both as command line parameters or via
+a `config.yaml` file. The [docs for the `sql-server`
+command](https://docs.dolthub.com/cli-reference/cli#dolt-sql-server) for Dolt cover most of these options. You can
+also consult `doltgres --help` for a listing of all configuration options.
 
-## Stopping the server
+# Data location
 
-The `doltgres sql-server` process can be stopped using your operating system's process control
-mechanism. Doltgres will stop when sent a signal like `SIGHUP`, `SIGQUIT`, `SIGABRT`, or `SIGKILL`.
+The location of any databases created depends on the setting of the `DOLTGRES_DATA_DIR` environment
+variable. For example:
 
-A common way to send a `SIGKILL` is to navigate to the shell running the `doltgres sql-server`
-process and `Ctrl-C`.
+```bash
+% export DOLTGRES_DATA_DIR=~/dbs/
+% doltgres &
+% psql -h 127.0.0.1 -U doltgres -c "CREATE DATABASE newDb"
+```
 
-Another common way to stop the server is to identify the process running `doltgres sql-server` and
-send a signal to it using the `kill` command.
+The `newDb` database above will be stored at the location `~/dbs/newDb`. The first time you run the
+`doltgres` command, a database named `doltgres` will be created for you in the data directory if it
+doesn't exist.
 
-```sh
-$ ps -a | grep doltgres
-66187 ttys000    0:00.00 grep doltgres
-46800 ttys003  3351:00.34 doltgres sql-server
-$ kill -QUIT 46800
+If you don't set this environment variable, it defaults to `~/doltgres/databases`.
+
+You can override this location on the command line with the `--data-dir` flag:
+
+```bash
+% doltgres --data-dir /var/doltgres/dbs
+```
+
+Or you can provide it in a `config.yaml` file:
+
+```yaml
+log_level: debug
+
+behavior:
+  read_only: false
+  autocommit: true
+
+user:
+  name: "doltgres"
+  password: "password"
+
+listener:
+  host: localhost
+  port: 5432
+  read_timeout_millis: 28800000
+  write_timeout_millis: 28800000
+
+data_dir: /var/doltgres/dbs
+
+cfg_dir: .doltcfg
+```
+
+Provide the path to the `config.yaml` on the command line with the `--config` option.
+
+```bash
+% doltgres --config config.yaml
 ```
