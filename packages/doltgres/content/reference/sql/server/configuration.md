@@ -31,9 +31,10 @@ performance:
   query_parallelism: null
 ```
 
-The full list of supported fields can be found in the [docs for the
-sql-server
-command](../../cli/cli.md#dolt-sql-server).
+The full list of supported fields can be found by running `doltgres --help`.
+
+<!-- TODO: Flesh this out with the full list of config settings, since we don't have CLI ref to fall
+    back on like dolt does -->
 
 ## System variables
 

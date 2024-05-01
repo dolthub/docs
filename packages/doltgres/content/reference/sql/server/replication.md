@@ -7,7 +7,7 @@ title: Replication
 Doltgres can [replicate data](../../../concepts/rdbms/replication.md) between two or more
 Doltgres servers, or can be a read-replica for a MySQL server. This page describes the two supported
 replication modes between a Doltgres primary server and Doltgres replica servers. See the [Postgres
-to Doltgres Replication guide](../../../guides/binlog-replication.md) for more information on
+to Doltgres Replication guide](../../../guides/replication-from-postgres.md) for more information on
 setting up a Doltgres server as a read-replica for a Postgres server.
 
 In **Remote-Based Replication**, Doltgres uses a remote as a middleman to facilitate replication between the
@@ -118,7 +118,7 @@ effect.
 
 Often, a primary would like to replicate all transaction `COMMIT`s,
 not just Doltgres commits. You can make every transaction `COMMIT` a Doltgres
-commit by setting the [system variable](../../../concepts/dolt/sql/system-variables.md),
+commit by setting the [system variable](../../../concepts/sql/system-variables.md),
 [`@@dolt_transaction_commit`](../../../reference/sql/version-control/dolt-sysvars.md#dolt_transaction_commit). With
 this setting, you lose the ability to enter commit messages.
 
