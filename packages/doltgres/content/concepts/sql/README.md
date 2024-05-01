@@ -2,13 +2,22 @@
 title: A Full-featured SQL Database
 ---
 
-Dolt is a full-featured SQL database, akin to [Postgres](https://www.postgresql.org/) or [MySQL](https://www.mysql.com/).
+Doltgres is a full-featured SQL database, akin to [Postgres](https://www.postgresql.org/) or
+[MySQL](https://www.mysql.com/).
 
-Dolt implements the MySQL SQL dialect. You connect to Dolt using a MySQL client. The goal is for Dolt to be a drop in replacement for MySQL.
+Doltgres implements the Postgres SQL dialect. You connect to Doltgres using a Postgres client. The goal
+is for Doltgres to be a drop in replacement for Postgres.
 
-Dolt has [databases](./databases.md) and [tables](./schema.md) as you'd expect. Dolt implements all MySQL [data types](./types.md). Dolt supports [secondary indexes](./indexes.md). Dolt supports [foreign key and check constraints](./constraints.md). Dolt supports [views](./views.md), [triggers](./triggers.md), and [procedures](./procedures.md). Dolt implements [users and grants](./users-grants.md) for permissions.
+Doltgres has [databases](./databases.md) and [tables](./schema.md) as you'd expect. Doltgres
+implements all Postgres [data types](./types.md). Doltgres supports [secondary
+indexes](./indexes.md). Doltgres supports [foreign key and check
+constraints](./constraints.md). Doltgres supports [views](./views.md), [triggers](./triggers.md),
+and [procedures](./procedures.md). Doltgres implements [users and grants](./users-grants.md) for
+permissions.
 
-This section of the documentation will explain Dolt's flavor of these standard SQL concepts. Perhaps more importantly, this section will also explain how these concepts interact with Dolt's version control features.
+This section of the documentation will explain Doltgres's flavor of these standard SQL
+concepts. Perhaps more importantly, this section will also explain how these concepts interact with
+Doltgres's version control features.
 
 Concepts will be tackled in the following order:
 
