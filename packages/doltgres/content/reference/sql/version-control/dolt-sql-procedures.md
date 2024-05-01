@@ -28,11 +28,11 @@ title: Dolt SQL Procedures
   - [dolt_undrop()](#dolt_undrop)
   - [dolt_verify_constraints()](#dolt_verify_constraints)
 - [Access Control](#access-control)
+
 # Dolt SQL Procedures
 
-Dolt provides native stored procedures to allow access to `dolt` CLI
-commands from within a SQL session. Each procedure is named after the
-`dolt` command line command it matches, and takes arguments in an
+Doltgres provides native stored procedures to access version control features in a SQL session. Each
+procedure is named after the `dolt` command line command it matches, and takes arguments in an
 identical form.
 
 For example, `dolt checkout -b feature-branch` is equivalent to
@@ -42,24 +42,13 @@ executing the following SQL statement:
 CALL DOLT_CHECKOUT('-b', 'feature-branch');
 ```
 
-SQL procedures are provided for all imperative CLI commands. For
-commands that inspect the state of the database and print some
-information, (`dolt diff`, `dolt log`, etc.) [system
-tables](dolt-system-tables.md) are provided instead.
-
-One important note: all procedures modify state only for the current
-session, not for all clients. So for example, whereas running `dolt checkout feature-branch` will change the working HEAD for anyone who
-subsequently runs a command from the same dolt database directory,
-running `CALL DOLT_CHECKOUT('feature-branch')` only changes the
-working HEAD for that database session. The right way to think of this
-is that the command line environment is effectively a session, one
-that happens to be shared with whomever runs CLI commands from that
-directory.
+SQL procedures are provided for all imperative version control operations. For operations that
+inspect the state of the database and print some information, (`dolt diff`, `dolt log`, etc.)
+[system tables](dolt-system-tables.md) are provided instead.
 
 ## `DOLT_ADD()`
 
-Adds working changes to staged for this session. Works exactly like
-`dolt add` on the CLI, and takes the same arguments.
+Adds working changes to staged for this session.
 
 After adding tables to the staged area, they can be committed with
 `DOLT_COMMIT()`.
@@ -336,9 +325,6 @@ CALL DOLT_CHECKOUT('main');
 Apply the changes introduced by an existing commit.
 
 Apply changes from existing commit and creates a new commit from the current HEAD.
-
-Works exactly like [`dolt cherry-pick` command](../../cli/cli.md#dolt-cherry-pick) on the CLI,
-and has the same notes and limitations.
 
 ```sql
 CALL DOLT_CHERRY_PICK('my-existing-branch~2');
@@ -706,8 +692,7 @@ CALL DOLT_CONFLICTS_RESOLVE('--ours', 't1', 't2');
 ## `DOLT_FETCH()`
 
 Fetch refs, along with the objects necessary to complete their histories
-and update remote-tracking branches. Works exactly like `dolt fetch` on
-the CLI, and takes the same arguments.
+and update remote-tracking branches..
 
 ```sql
 CALL DOLT_FETCH('origin', 'main');
@@ -790,8 +775,7 @@ closed after the run is successful.
 
 Incorporates changes from the named commits \(since the time their
 histories diverged from the current branch\) into the current
-branch. Works exactly like `dolt merge` on the CLI, and takes the same
-arguments.
+branch.
 
 Any resulting merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created. `DOLT_MERGE()` creates
@@ -876,8 +860,7 @@ CALL DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
 
 Fetch from and integrate with another database or a local branch. In
 its default mode, `dolt pull` is shorthand for `dolt fetch` followed by
-`dolt merge <remote>/<branch>`. Works exactly like `dolt pull` on the
-CLI, and takes the same arguments.
+`dolt merge <remote>/<branch>`.
 
 Any resulting merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created.
@@ -963,8 +946,7 @@ CALL dolt_purge_dropped_databases();
 ## `DOLT_PUSH()`
 
 Updates remote refs using local refs, while sending objects necessary to
-complete the given refs. Works exactly like `dolt push` on the CLI, and
-takes the same arguments.
+complete the given refs.
 
 ```sql
 CALL DOLT_PUSH('origin', 'main');
@@ -1123,10 +1105,9 @@ select commit_hash, message from dolt_log;
 
 ## `DOLT_REMOTE()`
 
-Adds a remote for a database at given url, or removes an existing remote with its remote-tracking branches
-and configuration settings. Similar to [`dolt remote` command](../../cli/cli.md#dolt-remote) on the CLI, with the
-exception of cloud provider flags. To list existing remotes, use the
-[`dolt_remotes` system table](./dolt-system-tables.md#dolt_remotes).
+Adds a remote for a database at given url, or removes an existing remote with its remote-tracking
+branches and configuration settings. To list existing remotes, use the [`dolt_remotes` system
+table](./dolt-system-tables.md#dolt_remotes).
 
 ```sql
 CALL DOLT_REMOTE('add','remote_name','remote_url');
@@ -1180,7 +1161,8 @@ SELECT * FROM dolt_remotes;
 
 ## `DOLT_RESET()`
 
-Default mode resets staged tables to their HEAD state. Can also be used to reset a database to a specific commit. Works exactly like `dolt reset` on the CLI, and takes the same arguments.
+Default mode resets staged tables to their HEAD state. Can also be used to reset a database to a
+specific commit.
 
 Like other data modifications, after a reset you must `COMMIT` the
 transaction for any changes to affected tables to be visible to other
@@ -1316,9 +1298,8 @@ SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=h
 
 ## `DOLT_TAG()`
 
-Creates a new tag that points at specified commit ref, or deletes an existing tag. Works exactly like
-[`dolt tag` command](../../cli/cli.md#dolt-tag) on the CLI, and takes the same arguments except for listing tags.
-To list existing tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
+Creates a new tag that points at specified commit ref, or deletes an existing tag.  To list existing
+tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
 CALL DOLT_TAG('tag_name', 'commit_ref');
