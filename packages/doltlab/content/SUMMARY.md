@@ -11,10 +11,10 @@
 
 - [Administrator](guides/administrator/administrator.md)
 - [Enterprise](guides/administrator/enterprise.md)
-- Features
-  - [API](guides/dolthub/api/api.md)
-  - [Workspaces](guides/dolthub/workspaces.md)
-  - [Transform File Uploads](guides/dolthub/transform-uploads.md)
+- [Features](guides/features/README.md)
+  - [API](guides/features/api.md)
+  - [Workspaces](guides/features/workspaces.md)
+  - [Transform File Uploads](guides/features/transform-uploads.md)
 
 ## Older Versions
 
