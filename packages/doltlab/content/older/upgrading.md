@@ -12,7 +12,22 @@ Additionally, some early versions have different database schemas than newer one
 
 The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did.
 
-However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [Start DoltLab guide](../introduction/installation/start-doltlab.md) for instructions on configuring DoltLab with the `installer`.
+However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. This binary uses flag arguments to replace environment variables that were required by DoltLab <= `v2.0.8`. Please see the list of environment variables below, and use their counterpart flags arguments with the `installer` instead.
+
+`HOST_IP`, the IP address or domain name of the Linux host running DoltLab. Use `--host` with the `installer`.<br/>
+`DOLT_PASSWORD`, the `dolthubadmin` password for DoltLab's application database. Use `--doltlabdb-admin-password` with the `installer`.<br/>
+`DOLTHUBAPI_PASSWORD`, the `dolthubapi` password for DoltLab's application database. Use `--doltlabdb-dolthubapi-password` with the `installer`.<br/>
+`EMAIL_USERNAME`, the username authorized to use existing SMTP server. Use `--smtp-username` with the `installer`.<br/>
+`EMAIL_PASSWORD`, the password for the aforementioned username of the SMTP server. Use `--smtp-password` with the `installer`.<br/>
+`EMAIL_PORT`, the port of an SMTP server. Use `--smtp-port` with the `installer`.<br/>
+`EMAIL_HOST`, the host of an SMTP server. Use `--smtp-host` with the `installer`.<br/>
+`NO_REPLY_EMAIL`, the email address that sends DoltLab emails. Use `--no-reply-email` with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE`, the DoltLab Enterprise product code. Use `--enterprise-online-product-code` with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_SHARED_KEY`, the DoltLab Enterprise shared key. Use `--enterprise-online-shared-key` with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_API_KEY`, the DoltLab Enterprise api key. Use `--enterprise-online-api-key` with the `installer`.<br/>
+`DOLTLAB_ENTERPRISE_ONLINE_LICENSE_KEY`, the DoltLab Enterprise license key. Use `--enterprise-online-license-key` with the `installer`.<br/>
+`TLS_CERT_CHAIN`, the absolute path to a TLS certificate chain. Use `--tls-cert-chain` with the `installer`. <br/>
+`TLS_PRIVATE_KEY`, the absolute path to a TLS private key. Use `--tls-private-key` with the `installer`.<br/>
 
 <h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
 
