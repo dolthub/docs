@@ -20,7 +20,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Laravel](https://laravel.com/)                                                           | PHP        | [Blog](https://www.dolthub.com/blog/2024-01-08-dolt-laravel/)                  | [Code](https://github.com/dolthub/chirper)                                   |
 | [Ruby on Rails](https://rubyonrails.org/)                                                 | Ruby       | [Blog](https://www.dolthub.com/blog/2024-02-09-dolt-ruby-on-rails/)            | [Code](https://github.com/dolthub/dolt_rails)                                | 
 | [GORM](https://gorm.io/docs/)                                                             | Golang     | [Blog](https://www.dolthub.com/blog/2024-03-15-gorm-with-dolt)                 | [Code](https://github.com/dolthub/gorm-demo)                                 | 
-| [Shiny](https://shiny.posit.co/)                                                          | R          | [Blog](https://www.dolthub.com/blog/2024-04-26-dolt-r-shiny/)                  | [Code](https://github.com/jennifersp/dolt_shiny)                             | 
+| [Shiny](https://shiny.posit.co/)                                                          | R          | [Blog](https://www.dolthub.com/blog/2024-04-26-dolt-r-shiny/)                  | [Code](https://github.com/dolthub/dolt_shiny)                                | 
 
 ## Tools
 
