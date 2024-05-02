@@ -12,7 +12,7 @@ Additionally, some early versions have different database schemas than newer one
 
 The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did.
 
-However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [Start DoltLab guide](./installation/start-doltlab-pre-installer.md) for instructions on configuring DoltLab with the `installer`.
+However, DoltLab `v2.1.0` requires configuring DoltLab using the included `installer` binary. Please refer to the [Start DoltLab guide](../introduction/installation/start-doltlab.md) for instructions on configuring DoltLab with the `installer`.
 
 <h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
 
