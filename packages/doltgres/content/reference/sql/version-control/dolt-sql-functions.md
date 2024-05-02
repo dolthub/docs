@@ -323,7 +323,8 @@ return empty result. Each row in the result set describes a diff stat for a sing
 number of rows unmodified, added, deleted and modified, number of cells added, deleted and modified and total number of
 rows and cells the table has at each commit.
 
-`DOLT_DIFF_STAT()` works like [CLI `dolt diff --stat` command](../../cli/cli.md#dolt-diff), but two commits are required to use the `DOLT_DIFF_STAT()` table function and the table name is optional. For keyless tables, this table function only provides the number of added and deleted rows. It returns empty result for tables with no data changes.
+For keyless tables, this table function only provides the number of added and deleted rows. It
+returns empty result for tables with no data changes.
 
 Note that the `DOLT_DIFF_STAT()` table function currently requires that argument values be literal values.
 
@@ -462,9 +463,7 @@ between any two commits in the database. Only changed tables will be listed in t
 along with the diff type ('added', 'dropped', 'modified', 'renamed') and whether there are
 data and schema changes.
 
-`DOLT_DIFF_SUMMARY()` works like [CLI `dolt diff --summary` command](../../cli/cli.md#dolt-diff),
-but two commits are required to use the `DOLT_DIFF_SUMMARY()` table function and the table
-name is optional. It returns empty result if there are no tables with changes.
+It returns empty result if there are no tables with changes.
 
 Note that the `DOLT_DIFF()` table function currently requires that argument values be literal values.
 
@@ -599,8 +598,7 @@ With result of single row:
 ## `DOLT_LOG()`
 
 The `DOLT_LOG` table function gets the commit log for all commits reachable from the
-provided revision's `HEAD` (or the current `HEAD` if no revision is provided). `DOLT_LOG()`
-works like [CLI `dolt log` command](../../cli/cli.md#dolt-log).
+provided revision's `HEAD` (or the current `HEAD` if no revision is provided).
 
 Note that the `DOLT_LOG()` table function currently requires that argument values be literal values.
 
@@ -632,9 +630,7 @@ The `DOLT_LOG()` table function takes any number of optional revision arguments:
 - `--merges`: Equivalent to min-parents == 2, this will limit the log to commits with 2 or
   more parents.
 - `--parents`: Shows all parents of each commit in the log.
-- `--decorate`: Shows refs next to commits. Valid options are short, full, no, and auto.
-  Note: the CLI `dolt log` command defaults to "short", while this table function defaults
-  to "no".
+- `--decorate`: Shows refs next to commits. Valid options are short, full, no, and auto. Defaults to "no".
 - `--not`: Excludes commits reachable by revision.
 - `--tables`: Limits the log to commits that affect the specified tables. Any number of comma separated tables can be specified.
 
@@ -725,18 +721,14 @@ Learn more about two vs three dot log [here](https://www.dolthub.com/blog/2022-1
 
 Generate the SQL statements needed to patch a table (or all tables) from a starting revision 
 to a target revision. This can be useful when you want to import data into Dolt from an external source, 
-compare differences, and generate the SQL statements needed to patch the original source. This command is
-equivalent of [`dolt diff -r sql` CLI command](../../cli/cli.md#dolt-diff).
+compare differences, and generate the SQL statements needed to patch the original source.
 Both schema and/or data diff statements are returned if applicable. Some data diff cannot be
 produced from incompatible schema changes; these are shown as warnings containing
 which table this occurred on.
 
-The order of the statements is that the schema patch comes first after the data patch. If patching all tables,
-then we recommend to turn off the foreign key checks (`SET foreign_key_checks=0;`) before applying these patch statements in order of
-them returned to avoid conflicts.
-
-Getting SQL patch statements is only available as table function for now;
-the CLI `dolt patch` command will be supported in the future.
+The order of the statements is that the schema patch comes first after the data patch. If patching
+all tables, then we recommend to turn off the foreign key checks (`SET foreign_key_checks=0;`)
+before applying these patch statements in order to avoid conflicts.
 
 ### Privileges
 

@@ -5,9 +5,9 @@ title: Backups
 # Backups
 
 There are several ways to safely backup Doltgres databases. If you are using [Hosted
-Doltgres](../../../products/hosted/README.md), then you get automatic backups without having to
-configure anything. If you are running your own Doltgres SQL server, then you need to handle your
-own backups using one of the approaches below.
+Doltgres(https://hosted.doltdb.com), then you get automatic backups without having to configure
+anything. If you are running your own Doltgres SQL server, then you need to handle your own backups
+using one of the approaches below.
 
 Backing up through [point-in-time snapshots at a block device
 level](#point-in-time-snapshots-on-block-devices) is often the easiest approach and what we
