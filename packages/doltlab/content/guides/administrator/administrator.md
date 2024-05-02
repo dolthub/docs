@@ -10,18 +10,19 @@ This guide will cover how to perform common DoltLab administrator configuration 
 4. [Send service logs to the DoltLab team](#send-service-logs)
 5. [Authenticate a Dolt client to use a DoltLab account](#auth-dolt-client)
 6. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
-7. [Connect to an SMTP server with implicit TLS](#smtp-implicit-tls)
-8. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
-9. [Set up a SMTP Server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
-10. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
-11. [Use an external database server with DoltLab](#use-external-database)
-12. [DoltLab Jobs](#doltlab-jobs)
-13. [Disable usage metrics](#disable-metrics)
-14. [Use a domain name with DoltLab](#use-domain)
-15. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
-16. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
-17. [Improve DoltLab performance](#doltlab-performance)
-18. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
+7.  [Connect DoltLab to an SMTP server](#connect-smtp-server)
+8. [Connect DoltLab to an SMTP server with implicit TLS](#smtp-implicit-tls)
+9. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
+10. [Set up a SMTP server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
+11. [Prevent unauthorized user account creation](#prevent-unauthorized-users)
+12. [Use an external database server with DoltLab](#use-external-database)
+13. [DoltLab Jobs](#doltlab-jobs)
+14. [Disable usage metrics](#disable-metrics)
+15. [Use a domain name with DoltLab](#use-domain)
+16. [Run DoltLab on Hosted Dolt](#doltlab-hosted-dolt)
+17. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
+18. [Improve DoltLab performance](#doltlab-performance)
+19. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
 
 <h1 id="issues-release-notes">File issues and view release notes</h1>
 
@@ -331,7 +332,19 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 `--add-host host.docker.internal:host-gateway` is only required if you are running the Prometheus server _on_ your DoltLab host. If its running elsewhere, this argument may be omitted, and the `host.docker.internal` hostname in `prometheus.yml` can be changed to the hostname of your DoltLab host.
 
-<h1 id="smtp-implicit-tls">Connect to an SMTP server with implicit TLS</h1>
+<h1 id="connect-smtp-server">Connect DoltLab to an SMTP server</h1>
+
+DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user `admin` can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server using the following arguments with the `installer`. The arguments you supply will be based on the authentication requires of your SMTP server.
+
+`--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.
+`--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.
+`--smtp-host`, _required_, the host name of your SMTP server, for example `smtp.gmail.com`.
+`--smtp-port`, _required_, the port of your SMTP server.
+`--smtp-username`, _required_ for authentication methods `plain` and `login`, the username for authenticating against the SMTP server.
+`--smtp-password`, _required_ for authentication methods `plain` and `login`, the password for authenticating against the SMTP server.
+`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.
+
+<h1 id="smtp-implicit-tls">Connect DoltLab to an SMTP server with implicit TLS</h1>
 
 Use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
 
@@ -341,9 +354,9 @@ Additionally, TLS verification can be skipped by adding the additional argument 
 
 DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
 
-DoltLab creates a [default user](./installation.md#doltlab-default-user), `admin`, when if first starts up, which allows administrators to sign-in to their DoltLab instance, even if they are experiencing SMTP server connection issues.
+DoltLab creates a [default user](../../introduction/installation/start-doltlab.md), `admin`, when if first starts up, which allows administrators to sign-in to their DoltLab instance, even if they are experiencing SMTP server connection issues.
 
-To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) to help diagnose the SMTP connection issues on the host running DoltLab.
+To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://github.com/dolthub/doltlab-issues/blob/main/go/cmd/smtp_connection_helper/main.go) to help diagnose the SMTP connection issues on the host running DoltLab.
 
 This tool ships in DoltLab's `.zip` file and is called `smtp_connection_helper`.
 

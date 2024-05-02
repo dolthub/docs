@@ -48,11 +48,15 @@ To streamline dependency installation, with DoltLab >= `v2.1.2` you can run the 
 ```bash
 # generate a script to install DoltLab dependencies on Ubuntu
 ./installer --ubuntu
+# run generated script to install dependencies
+./ubuntu_install.sh
 ```
 
 ```bash
 # generate a script to install DoltLab dependencies on CentOS
 ./installer --centos
+# run generated script to install dependencies
+./centos_install.sh
 ```
 
 Alternatively, a version of these scripts are available here as well:

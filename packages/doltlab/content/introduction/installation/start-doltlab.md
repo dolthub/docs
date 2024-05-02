@@ -17,55 +17,34 @@ The installer only requires the `--host` argument to configure the most basic in
 Notice the output produced by the `installer` as shown below:
 
 ```bash
-2024-04-30T19:19:56.881Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
+2024-05-02T18:52:22.113Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
 
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:511	Successfully configured DoltLab	{"version": "v2.1.2"}
+2024-05-02T18:52:22.113Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.2"}
 
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:517	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:522	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
+2024-05-02T18:52:22.114Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
+2024-05-02T18:52:22.114Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
 
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:526	Don't forget to save the values of the following environment variables contained in the "/home/ubuntu/doltlab/start.sh" script.
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:527	Variables:	{"--default-user-password": "DEFAULT_USER_PASSWORD", "--doltlabdb-admin-password": "DOLT_PASSWORD", "--doltlabdb-dolthubapi-password": "DOLTHUBAPI_PASSWORD"}
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:531	You will need to supply these values on subsequent runs of the 'installer' to prevent it from generating new values that will cause DoltLab to crash on start-up.
-
-2024-04-30T19:19:56.881Z	INFO	cmd/main.go:533	To sign-in to DoltLab as the default user, use	{"username": "admin", "password": "DEFAULT_USER_PASSWORD"}
+2024-05-02T18:52:22.114Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 ```
 
-The `installer` will tell you how to start and stop DoltLab, and to save password values it has generated and written into the start script.
+The `installer` will tell you how to start and stop DoltLab using the scripts it generated.
 
-By default, the `installer` will generate the passwords DoltLab requires to initialize it's application database and create the default user. It writes these values to the `./start.sh` script it produces.
+I will also output the username for the default user it created, and tell you where to find the password to use to sign-in as the default user on your instance.
 
-If you have no previous DoltLab installations on the host, or you have removed all Docker volumes associated with a previous DoltLab installation, these generated values will be used for DoltLab initialization, and will be required by your DoltLab installation moving forward.
+The first time DoltLab starts, a default user, `admin`, is created. This user will be the only user able create databases on the DoltLab instance until the instance is [connected to a valid SMTP server](../../guides/administrator/administrator.md#connect-smtp-server).
 
-If you run the `installer` a second time, supplying these password values back to the `installer` will prevent it from generating different password values that your now initialized DoltLab installation will _not_ recognize.
+If the argument `--default-user-email` is not provided to the `installer` before DoltLab is started for the first time, the email address associated with the default user will be `admin@localhost`. This can be updated to a valid email at anytime from the Profile > Settings page of the running DoltLab instance.
 
-```bash
-# save the generated values from ./start.sh that were used to initialize my DoltLab instance
-./installer \
---default-user-password="$DEFAULT_USER_PASSWORD" \
---doltlabdb-admin-password="$DOLT_PASSWORD" \
---doltlabdb-dolthubapi-password="$DOLTHUBAPI_PASSWORD" \
-...
-```
+Additionally, the first time the `installer` is run, it will generate the all passwords it needs to initialize your DoltLab instance. These passwords are stored in `./.secrets`.
 
-```bash
-# supply them to the installer to prevent the it from re-generating passwords that my instance won't recognize
-./installer \
---default-user-password="$DEFAULT_USER_PASSWORD" \
---doltlabdb-admin-password="$DOLT_PASSWORD" \
---doltlabdb-dolthubapi-password="$DOLTHUBAPI_PASSWORD" \
-...
-```
+* `./.secrets/default_user_pass.priv`, contains the password for the default user.
+* `./.secrets/dolt_admin_password.priv`, contains the `dolthubadmin` password for DoltLab's application database.
+* `./.secrets/dolt_dolthubapi_password.priv`, contains the `dolthubapi` password for DoltLab's application database.
+* `./.secrets/smtp_username.priv`, contains the SMTP username for an SMTP server. This will have a placeholder value if no SMTP server is configured.
+* `./.secrets/smtp_password.priv`, contains the SMTP password for an SMTP server. This will have a placeholder value if no SMTP server is configured.
+* `./.secrets/smtp_oauth_token.priv`, contains the SMTP oauth token for an SMTP server. This will have a placeholder value if no SMTP server is configured.
 
-Finally, the `installer` will output the `username` and `password` you can use to sign in to your DoltLab instance as the default user. The `password` should be the value of the `DEFAULT_USER_PASSWORD` environment variable written in `./start.sh`.
-
-You can now run `./start.sh` to start DoltLab:
-
-```bash
-./start.sh
-```
-
-To reiterate, the _first_ time you run `./start.sh`, DoltLab uses `DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` to initialize DoltLab's application database using the following SQL statements:
+DoltLab uses the values of `DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` contained in the generated secrets to initialize DoltLab's application database using the following SQL statements:
 
 ```sql
 CREATE USER 'dolthubadmin' IDENTIFIED BY '$DOLT_PASSWORD';
@@ -75,6 +54,12 @@ GRANT ALL ON dolthubapi.* TO 'dolthubapi';
 ```
 
 DoltLab's main API, `doltlabapi`, will connect to the application database as the `dolthubapi` SQL user.
+
+You can now run `./start.sh` to start DoltLab:
+
+```bash
+./start.sh
+```
 
 After running `./start.sh`, DoltLab's running services can be viewed with `docker ps`:
 
