@@ -16,29 +16,29 @@ To get your DoltLab ready host on AWS:
 
 2. Select a Ubuntu 22.04 amd64 t2.xlarge instance.
 
-![Application and instance type](../../../.gitbook/assets/getting-started/doltlab-aws-ec2-instance-type.png)
+![Application and instance type](../../.gitbook/assets/getting-started/doltlab-aws-ec2-instance-type.png)
 
 3. Create a new RSA key pair for your instance in `.pem` format.
 
-![Create new key pair](../../../.gitbook/assets/getting-started/create-new-key-pair.png)
+![Create new key pair](../../.gitbook/assets/getting-started/create-new-key-pair.png)
 
 This will create a `.pem` file and download it locally.
 
 3. Edit network settings and from the "Auto-assign public IP" drop-down menu choose "Enable".
 
-![Auto-assign public IP](../../../.gitbook/assets/getting-started/doltlab-aws-ec2-pub-ip.png)
+![Auto-assign public IP](../../.gitbook/assets/getting-started/doltlab-aws-ec2-pub-ip.png)
 
 4. Add security group rules for ports 22 (SSH), 80 (HTTP), 443 (HTTPS), 100 (CUSTOM), 4321 (CUSTOM), 50051 (CUSTOM) that allow ingress from anywhere. Specifics [here](https://docs.doltlab.com/introduction/installation#networking-requirements). You also may need to create a new VPC and Subnet here. Just use the defaults.
 
-![Security rules](../../../.gitbook/assets/getting-started/doltlab-aws-ec2-security-rules.png)
+![Security rules](../../.gitbook/assets/getting-started/doltlab-aws-ec2-security-rules.png)
 
 5. Add 300GB gp3 disk.
 
-![Storage](../../../.gitbook/assets/getting-started/doltlab-aws-ec2-storage.png)
+![Storage](../../.gitbook/assets/getting-started/doltlab-aws-ec2-storage.png)
 
 6. Click "Launch instance".
 
-![Summary](../../../.gitbook/assets/getting-started/doltlab-aws-ec2-launch-summary.png)
+![Summary](../../.gitbook/assets/getting-started/doltlab-aws-ec2-launch-summary.png)
 
 After this you should get a public IP for your new host. Mine was `54.191.163.60`.
 
@@ -269,7 +269,7 @@ Now, your DoltLab is running but it's not very useful. Only logged in users can 
 
 The DoltLab instance ships with a default user configured called `admin`. It has a password `DoltLab1234`. If you click the Sign In button in the top corner and log in as `admin`, you get a more useful set of features.
 
-![Admin Fresh DoltLab](../../../.gitbook/assets/getting-started/admin-logged-in-fresh-doltlab.png)
+![Admin Fresh DoltLab](../../.gitbook/assets/getting-started/admin-logged-in-fresh-doltlab.png)
 
 # What Works
 
@@ -277,7 +277,7 @@ The DoltLab instance ships with a default user configured called `admin`. It has
 
 A configured email server is required to create new users. If you try to create a user, you'll get an error that looks like this:
 
-![Create user error](../../../.gitbook/assets/getting-started/doltlab-create-user-error.png)
+![Create user error](../../.gitbook/assets/getting-started/doltlab-create-user-error.png)
 
 So, you only have a single admin user to play with for now.
 
@@ -287,7 +287,7 @@ You can build whatever database you can imagine using the web user interface. Th
 
 Here's a simple test database I created using SQL.
 
-![Test Database](../../../.gitbook/assets/getting-started/doltlab-admin-db.png)
+![Test Database](../../.gitbook/assets/getting-started/doltlab-admin-db.png)
 
 ## Clone Databases
 
@@ -325,7 +325,7 @@ $ dolt creds ls
 * ioohq4v4itlhgse9sv10acrknngmr6hukvm93n7k1qvo856oudug
 ```
 
-![Credentials](../../../.gitbook/assets/getting-started/doltlab-add-credentials.png)
+![Credentials](../../.gitbook/assets/getting-started/doltlab-add-credentials.png)
 
 Now you should be able to make a change and push to your DoltLab.
 
@@ -347,7 +347,7 @@ To http://54.191.163.60:50051/admin/test
 
 And I can now see my change on DoltLab!
 
-![Push](../../../.gitbook/assets/getting-started/doltlab-push.png)
+![Push](../../.gitbook/assets/getting-started/doltlab-push.png)
 
 You're now ready to try out all the Dolt and DoltLab experiences like Pull Requests, Issues, the SQL Workbench, and Diffs. Get testing and see if DoltLab is right for you and your team.
 
