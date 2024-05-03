@@ -20,8 +20,7 @@ named `origin` is automatically configured for you.
 <h1 id="pushing-to-remote">Pushing to a Remote</h1>
 
 Let's go through an example of how you can push data from a local Doltgres database to a remote. In
-this example, we'll use the running Doltgres server we created in the [Getting
-Started](../../../concepts/rdbms/database.md) section to push a branch a file-based remote.
+this example, we'll use the running Doltgres server we created in the [Getting Started](../../../concepts/rdbms/README.md) section to push a branch a file-based remote.
 
 First, we need to add a new remote:
 
