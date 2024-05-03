@@ -186,7 +186,7 @@ If `docker ps` works without `sudo`, you are in business.
 
 Now, my host is set up for DoltLab, I need to generate the configuration needed to run it. This is done with the installer as well, this time by only passing in the name of your host.
 
-````sh
+```sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host 54.191.163.60
 2024-04-30T23:38:43.844Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
 
@@ -198,6 +198,7 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host 54.191.163.60
 2024-04-30T23:38:43.844Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 
 Then, I just run the `start.sh` that was generated. This pulls all the Docker images and runs them.
+```
 
 ```sh
 ubuntu@ip-10-2-0-124:~/doltlab$ ./start.sh
@@ -257,7 +258,7 @@ cc278092afcb55de755e9b05725b86bb122eddd128264ee17134418dc154f455
  ✔ Container doltlab-doltlabapi-1             Started                      0.0s
  ✔ Container doltlab-doltlabgraphql-1         Started                      0.0s
  ✔ Container doltlab-doltlabui-1              Started                      0.0s
-````
+```
 
 Now the moment of truth, I hit the IP over `http`, not `https`, http://54.191.163.60/. Bam!
 
