@@ -8,7 +8,7 @@ You must have a host(s) running a supported operating system, hardware that meet
 
 <h1 id="supported-operating-systems">Supported operating systems</h1>
 
-- [Linux](./installation/linux.md)
+- [Linux](./installation/pre-installer-linux.md)
 
 <h1 id="minimum-recommended-hardware">Minimum recommended hardware</h1>
 
@@ -43,29 +43,9 @@ DoltLab requires the following dependencies:
 > [amazon-ecr-credential-helper](https://github.com/awslabs/amazon-ecr-credential-helper)<br/>
 > Access to an [SMTP server](https://aws.amazon.com/what-is/smtp/), like [smtp.gmail.com](https://support.google.com/a/answer/176600?hl=en).
 
-To streamline dependency installation, with DoltLab >= `v2.1.2` you can run the `installer` with one of the following flags to generate a dependency installation script:
-
-```bash
-# generate a script to install DoltLab dependencies on Ubuntu
-./installer --ubuntu
-# run generated script to install dependencies
-./ubuntu_install.sh
-```
-
-```bash
-# generate a script to install DoltLab dependencies on CentOS
-./installer --centos
-# run generated script to install dependencies
-./centos_install.sh
-```
-
-Alternatively, a version of these scripts are available here as well:
+To help streamline dependency installation, we've created the following scripts for installing DoltLab's dependencies on supported distributions:
 
 - [Ubuntu](https://github.com/dolthub/doltlab-issues/blob/main/scripts/ubuntu_install.sh)
 - [Centos](https://github.com/dolthub/doltlab-issues/blob/main/scripts/centos_install.sh)
 
 Once DoltLab's dependencies are installed, we recommend following the [post-installation](https://docs.docker.com/engine/install/linux-postinstall/) steps for Docker that will allow you to run `docker` commands without using `sudo`.
-
-For a DoltLab installation that's limited to the single default user, configuring a connection to an SMTP server is _not_ required.
-
-This is only required when you want additional users to be able to create accounts on your DoltLab instance. DoltLab uses the SMTP server to send emails, which allow for account creation and verification, password resets, two-factor authentication, and more.

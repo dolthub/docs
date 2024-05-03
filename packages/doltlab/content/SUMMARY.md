@@ -19,7 +19,7 @@
 
 ## Older Versions
 
-- Installation
+- [Installation](older/installation.md)
   - [Linux pre-installer](older/installation/pre-installer-linux.md)
   - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
 - [Upgrade](older/upgrading.md)
@@ -28,6 +28,7 @@
 ## Release Notes
 
 - [Release Notes](release-notes.md)
+  - [v2.1.2](release-notes/v2.1.2.md)
   - [v2.1.1](release-notes/v2.1.1.md)
   - [v2.1.0](release-notes/v2.1.0.md)
   - [v2.0.8](release-notes/v2.0.8.md)
