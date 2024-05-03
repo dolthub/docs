@@ -198,6 +198,7 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host 54.191.163.60
 2024-04-30T23:38:43.844Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 
 Then, I just run the `start.sh` that was generated. This pulls all the Docker images and runs them.
+```
 
 ```sh
 ubuntu@ip-10-2-0-124:~/doltlab$ ./start.sh
@@ -355,7 +356,7 @@ You're now ready to try out all the Dolt and DoltLab experiences like Pull Reque
 
 ## Create new users
 
-As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../../guides/administrator#set-up-a-smtp-server-using-any-gmail-address).
+As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../guides/administrator/administrator.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## Receive Email Notifications
 
@@ -371,7 +372,7 @@ Right now, you're stuck hitting the IP address of your host. In order to use a c
 
 ## Custom Logo/Colors
 
-Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../../guides/enterprise). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../..//guides/enterprise), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise) and [set up your custom look and feel here](../../guides/enterprise#use-custom-logo).
+Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../guides/administrator/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../..//guides/enterprise), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise) and [set up your custom look and feel here](../../guides/enterprise#use-custom-logo).
 
 ## Scalability
 

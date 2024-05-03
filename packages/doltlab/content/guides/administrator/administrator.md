@@ -10,7 +10,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 4. [Send service logs to the DoltLab team](#send-service-logs)
 5. [Authenticate a Dolt client to use a DoltLab account](#auth-dolt-client)
 6. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
-7.  [Connect DoltLab to an SMTP server](#connect-smtp-server)
+7. [Connect DoltLab to an SMTP server](#connect-smtp-server)
 8. [Connect DoltLab to an SMTP server with implicit TLS](#smtp-implicit-tls)
 9. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-connection)
 10. [Set up a SMTP server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
@@ -26,7 +26,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 
 <h1 id="issues-release-notes">File issues and view release notes</h1>
 
-DoltLab's source code is currently closed, but you can file DoltLab issues the [issues repository](https://github.com/dolthub/doltlab-issues). Release notes are available [here](../introduction/installation/release-notes.md).
+DoltLab's source code is currently closed, but you can file DoltLab issues the [issues repository](https://github.com/dolthub/doltlab-issues). Release notes are available [here](../../release-notes.md).
 
 <h1 id="backup-restore-volumes">Backup and restore volumes</h1>
 
@@ -98,7 +98,7 @@ docker volume rm doltlab_doltlabdb-dolt-data
 docker volume rm doltlab_doltlabdb-dolt-backups
 ```
 
-Next, [start DoltLab's services](../introduction/installation/start-doltlab.md) using the `start.sh` script. After the script completes, stop DoltLab once more with `./stop.sh`. Doing this will recreate the required containers so that their volumes can be updated with the commands below.
+Next, [start DoltLab's services](../installation/start-doltlab.md) using the `start.sh` script. After the script completes, stop DoltLab once more with `./stop.sh`. Doing this will recreate the required containers so that their volumes can be updated with the commands below.
 
 Once the services are stopped, `cd` into the directory containing the `remote-data.tar` backup file and run:
 
@@ -354,7 +354,7 @@ Additionally, TLS verification can be skipped by adding the additional argument 
 
 DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
 
-DoltLab creates a [default user](../../introduction/installation/start-doltlab.md), `admin`, when if first starts up, which allows administrators to sign-in to their DoltLab instance, even if they are experiencing SMTP server connection issues.
+DoltLab creates a [default user](../installation/start-doltlab.md), `admin`, when if first starts up, which allows administrators to sign-in to their DoltLab instance, even if they are experiencing SMTP server connection issues.
 
 To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://github.com/dolthub/doltlab-issues/blob/main/go/cmd/smtp_connection_helper/main.go) to help diagnose the SMTP connection issues on the host running DoltLab.
 
@@ -610,7 +610,7 @@ You can now restart DoltLab with the `./start.sh` script, and it will be served 
 
 <h1 id="doltlab-performance">Improve DoltLab performance</h1>
 
-It is possible to limit the number of concurrent Jobs running on a DoltLab host, which might be starving the host for resources and affecting DoltLab's performance. 
+It is possible to limit the number of concurrent Jobs running on a DoltLab host, which might be starving the host for resources and affecting DoltLab's performance.
 
 When users upload files on a DoltLab instance, or merge a pull request, DoltLab creates a Job corresponding to this work. These Jobs spawn new Docker containers that performs the required work.
 
