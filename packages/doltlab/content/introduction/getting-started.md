@@ -186,7 +186,7 @@ If `docker ps` works without `sudo`, you are in business.
 
 Now, my host is set up for DoltLab, I need to generate the configuration needed to run it. This is done with the installer as well, this time by only passing in the name of your host.
 
-```sh
+````sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host 54.191.163.60
 2024-04-30T23:38:43.844Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
 
@@ -257,7 +257,7 @@ cc278092afcb55de755e9b05725b86bb122eddd128264ee17134418dc154f455
  ✔ Container doltlab-doltlabapi-1             Started                      0.0s
  ✔ Container doltlab-doltlabgraphql-1         Started                      0.0s
  ✔ Container doltlab-doltlabui-1              Started                      0.0s
-```
+````
 
 Now the moment of truth, I hit the IP over `http`, not `https`, http://54.191.163.60/. Bam!
 
@@ -355,7 +355,7 @@ You're now ready to try out all the Dolt and DoltLab experiences like Pull Reque
 
 ## Create new users
 
-As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../../guides/administrator#set-up-a-smtp-server-using-any-gmail-address).
+As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../guides/administrator/administrator.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## Receive Email Notifications
 
@@ -371,7 +371,7 @@ Right now, you're stuck hitting the IP address of your host. In order to use a c
 
 ## Custom Logo/Colors
 
-Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../../guides/enterprise). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../..//guides/enterprise), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise) and [set up your custom look and feel here](../../guides/enterprise#use-custom-logo).
+Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../guides/administrator/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../..//guides/enterprise), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise) and [set up your custom look and feel here](../../guides/enterprise#use-custom-logo).
 
 ## Scalability
 

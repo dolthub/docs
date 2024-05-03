@@ -4,7 +4,7 @@ title: "DoltLab Enterprise Guide"
 
 This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Administrator's Guide](../administrator/administrator.md).
 
-To start DoltLab in Enterprise mode, when [running the installer](../introduction/installation/start-doltlab.md) supply the following additional arguments:
+To start DoltLab in Enterprise mode, when [running the installer](../installation/start-doltlab.md) supply the following additional arguments:
 
 ```bash
 ./installer \
@@ -34,7 +34,7 @@ You can use a custom logo on DoltLab by running the `installer` with the argumen
 
 DoltLab Enterprise allows administrators to customize the automated emails their DoltLab instance sends to its users.
 
-Custom emails can be configured with the `installer` by supplying the argument `--custom-email-templates=true`. The installer will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed. 
+Custom emails can be configured with the `installer` by supplying the argument `--custom-email-templates=true`. The installer will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed.
 
 - `collabInvite.txt` sent to invite user to be a database collaborator.
 - `invite.txt` sent to invite a user to join an organization.

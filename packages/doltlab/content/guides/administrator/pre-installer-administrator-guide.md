@@ -94,7 +94,7 @@ docker volume rm doltlab_doltlabdb-dolt-data
 docker volume rm doltlab_doltlabdb-dolt-backups
 ```
 
-Next, [start DoltLab's services](../introduction/installation/start-doltlab-pre-installer.md) using the `start-doltlab.sh` script. After the script completes, stop DoltLab once more with `docker-compose stop`. Doing this will recreate the required containers so that their volumes can be updated with the commands below.
+Next, [start DoltLab's services](../installation/start-doltlab.md) using the `start-doltlab.sh` script. After the script completes, stop DoltLab once more with `docker-compose stop`. Doing this will recreate the required containers so that their volumes can be updated with the commands below.
 
 Once the services are stopped, `cd` into the directory containing the `remote-data.tar` backup file and run:
 

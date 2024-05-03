@@ -2,7 +2,7 @@
 title: Start DoltLab
 ---
 
-The following describes how to start the latest versions of DoltLab, >= `v2.1.2`, that contain the `installer` binary. For instructions on how to start an older version of DoltLab that do not have the `installer`, please see the [pre-installer guide](./start-doltlab-pre-installer.md).
+The following describes how to start the latest versions of DoltLab, >= `v2.1.2`, that contain the `installer` binary. For instructions on how to start an older version of DoltLab that do not have the `installer`, please see the [pre-installer guide](../../older/installation/start-doltlab-pre-installer.md).
 
 In the simplest configuration the `installer` will generate four local DoltLab assets: a `docker-compose.yaml` file, an `envoy.json` file, a `start.sh` script, and a `stop.sh` script.
 
@@ -37,12 +37,12 @@ If the argument `--default-user-email` is not provided to the `installer` before
 
 Additionally, the first time the `installer` is run, it will generate the all passwords it needs to initialize your DoltLab instance. These passwords are stored in `./.secrets`.
 
-* `./.secrets/default_user_pass.priv`, contains the password for the default user.
-* `./.secrets/dolt_admin_password.priv`, contains the `dolthubadmin` password for DoltLab's application database.
-* `./.secrets/dolt_dolthubapi_password.priv`, contains the `dolthubapi` password for DoltLab's application database.
-* `./.secrets/smtp_username.priv`, contains the SMTP username for an SMTP server. This will have a placeholder value if no SMTP server is configured.
-* `./.secrets/smtp_password.priv`, contains the SMTP password for an SMTP server. This will have a placeholder value if no SMTP server is configured.
-* `./.secrets/smtp_oauth_token.priv`, contains the SMTP oauth token for an SMTP server. This will have a placeholder value if no SMTP server is configured.
+- `./.secrets/default_user_pass.priv`, contains the password for the default user.
+- `./.secrets/dolt_admin_password.priv`, contains the `dolthubadmin` password for DoltLab's application database.
+- `./.secrets/dolt_dolthubapi_password.priv`, contains the `dolthubapi` password for DoltLab's application database.
+- `./.secrets/smtp_username.priv`, contains the SMTP username for an SMTP server. This will have a placeholder value if no SMTP server is configured.
+- `./.secrets/smtp_password.priv`, contains the SMTP password for an SMTP server. This will have a placeholder value if no SMTP server is configured.
+- `./.secrets/smtp_oauth_token.priv`, contains the SMTP oauth token for an SMTP server. This will have a placeholder value if no SMTP server is configured.
 
 DoltLab uses the values of `DOLT_PASSWORD` and `DOLTHUBAPI_PASSWORD` contained in the generated secrets to initialize DoltLab's application database using the following SQL statements:
 
