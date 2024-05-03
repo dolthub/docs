@@ -421,9 +421,21 @@ Successfully sent email!
 
 # Set up a SMTP Server using any Gmail address
 
-To quickly get up and running with an existing SMTP server, we recommend using [Gmail's](https://www.gmail.com). Once you've created a Gmail account, navigate to [your account page](https://myaccount.google.com/) and click the [Security](https://myaccount.google.com/security) tab. Under the section "How you sign in to Google", click `2-Step Verification`. If you have not yet setup 2-Step Verification, follow the prompts on this page to enable it.
+To quickly get up and running with an existing SMTP server, we recommend using [Gmail's](https://www.gmail.com). Once you've created a Gmail account, navigate to [your account page](https://myaccount.google.com/) and click the [Security](https://myaccount.google.com/security) tab. Under the section "How you sign in to Google", click `2-Step Verification`. If you have not yet setup 2-Step Verification, follow the prompts on this page to enable it. You will need to set up 2-step verification before continuing on to the remaining steps.
 
-After 2-Step Verification is set up, at the bottom of the page click "App passwords". Select app `Mail` and select a device, then click "Generate" to generate a password. This generated password can be supplied along with your Gmail email address to send emails with `smtp_connection_helper` and DoltLab.
+After 2-Step Verification is set up, at the bottom of the page click "App passwords".
+
+![App passwords on 2-step page](../../../.gitbook/assets/gmail_app_passwords_are_here.png)
+
+If you do not see "App Passwords" at the bottom of this page, return to the Security page and in the search bar, search for "App Passwords".
+
+![App passwords in search](../../../.gitbook/assets/gmail_search_app_passwords.png)
+
+Next, name your app password, then click "Generate." You will be provided a password you can use with your DoltLab instance.
+
+![Generated password](../../../.gitbook/assets/gmail_app_password_no_worky.png)
+
+This generated password can be supplied along with your Gmail email address, as the `username`, to send emails with `smtp_connection_helper` and DoltLab.
 
 ```bash
 ./smtp_connection_helper \
@@ -437,6 +449,10 @@ After 2-Step Verification is set up, at the bottom of the page click "App passwo
 Sending email with auth method: plain
 Successfully sent email!
 ```
+
+Importantly, there have been times when these passwords do not work as expected and [we've written a blog post](https://www.dolthub.com/blog/2024-05-03-deconfusing-how-to-use-gmails-smtp-server-in-2024/) about this happening.
+
+In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
 
 <h1 id="prevent-unauthorized-users">Prevent unauthorized user account creation</h1>
 

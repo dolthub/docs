@@ -3,12 +3,13 @@
 ## Introduction
 
 - [What is DoltLab?](introduction/what-is-doltlab.md)
-- [Installation](introduction/installation.md)
-  - [Linux](introduction/installation/linux.md)
-  - [Start DoltLab](introduction/installation/start-doltlab.md)
+- [Getting Started](introduction/getting-started.md)
 
 ## Guides
 
+- [Installation](guides/installation.md)
+  - [Linux](guides/installation/linux.md)
+  - [Start DoltLab](guides/installation/start-doltlab.md)
 - [Administrator](guides/administrator/administrator.md)
 - [Enterprise](guides/administrator/enterprise.md)
 - [Features](guides/features/README.md)
