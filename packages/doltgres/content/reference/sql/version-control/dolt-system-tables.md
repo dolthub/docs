@@ -52,7 +52,6 @@ title: Dolt System Tables
 
   - [dolt_rebase](#dolt_rebase)
 
-
 # Database Metadata System Tables
 
 ## `dolt_branches`
@@ -190,7 +189,6 @@ CREATE PROCEDURE simple_proc2() SELECT name FROM category;
 ```
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_procedures%3B" %}
-
 
 ## `dolt_query_catalog`
 
@@ -413,7 +411,7 @@ Get all the tags.
 
 For every user table that has a primary key, there is a queryable system view named `dolt_blame_$tablename`
 which can be queried to see the user and commit responsible for the current value of each row.
-This is equivalent to the [`dolt blame` CLI command](../../cli/cli.md#dolt-blame).
+This is equivalent to the [`dolt blame` CLI command](https://docs.dolthub.com/cli-reference/cli#dolt-blame).
 Tables without primary keys will not have an associated `dolt_blame_$tablename`.
 
 ### Schema
@@ -456,8 +454,6 @@ To find who set the current values, we can query the `dolt_blame_city` table:
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=select+*+from+dolt_blame_city%3B" %}
 
-
-
 ## `dolt_commit_ancestors`
 
 The `dolt_commit_ancestors` table records the ancestors for every commit in the database. Each commit has one or two
@@ -478,7 +474,6 @@ merged will have `parent_index` 1.
 | parent_index | int  | NO   | PRI |         |       |
 +--------------+------+------+-----+---------+-------+
 ```
-
 
 ## `dolt_commits`
 
@@ -511,7 +506,6 @@ we can query for the five commits before April 20th, 2022, across all commits in
 (regardless of what is checked out to `HEAD`) with this query:
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_commits%0Awhere+date+%3C+%222022-04-20%22%0A" %}
-
 
 ## `dolt_history_$TABLENAME`
 
@@ -598,7 +592,6 @@ This is the same data returned by the [`dolt log` CLI command](https://docs.dolt
 The following query shows the commits reachable from the current checked out head and created by user `jennifersp` since April, 2022:
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*%0AFROM+dolt_log%0AWHERE+committer+%3D+%22jennifersp%22+and+date+%3E+%222022-04-01%22%0AORDER+BY+date%3B" %}
-
 
 # Database Diffs
 
@@ -905,7 +898,6 @@ example, the following query will retrieve the jails whose total
 num_inmates_rated_for have changed the most between 2 versions.
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/us-jails/embed/main?q=SELECT+to_county%2C+from_county%2Cto_num_inmates_rated_for%2Cfrom_num_inmates_rated_for%2C++abs%28to_num_inmates_rated_for+-+from_num_inmates_rated_for%29+AS+delta%0AFROM+dolt_diff_jails%0AWHERE+from_commit+%3D+HASHOF%28%22HEAD~3%22%29+AND+diff_type+%3D+%22modified%22%0AORDER+BY+delta+DESC%0ALIMIT+10%3B%0A" %}
-
 
 # Working Set Metadata System Tables
 
@@ -1229,7 +1221,7 @@ WHERE staged=true;
 
 ## `dolt_rebase`
 
-`dolt_rebase` is only present while an interactive rebase is in progress, and only on the branch where the rebase is being executed. For example, when rebasing the `feature1` branch, the rebase will be executed on the `dolt_rebase_feature1` branch, and the `dolt_rebase` system table will exist on that branch while the rebase is in-progress. The `dolt_rebase` system table starts off with the default rebase plan, which is to `pick` all of the commits identified for the rebase. Users can adjust the rebase plan by updating the `dolt_rebase` table to change the rebase action, reword a commit message, or even add new rows with additional commits to be applied as part of the rebase. For more details about rebasing, see [the `dolt_rebase()` stored procedure](dolt-sql-procedures.md#dolt_rebase).  
+`dolt_rebase` is only present while an interactive rebase is in progress, and only on the branch where the rebase is being executed. For example, when rebasing the `feature1` branch, the rebase will be executed on the `dolt_rebase_feature1` branch, and the `dolt_rebase` system table will exist on that branch while the rebase is in-progress. The `dolt_rebase` system table starts off with the default rebase plan, which is to `pick` all of the commits identified for the rebase. Users can adjust the rebase plan by updating the `dolt_rebase` table to change the rebase action, reword a commit message, or even add new rows with additional commits to be applied as part of the rebase. For more details about rebasing, see [the `dolt_rebase()` stored procedure](dolt-sql-procedures.md#dolt_rebase).
 
 ### Schema
 
@@ -1245,30 +1237,35 @@ WHERE staged=true;
 ```
 
 The `action` field can take one of the following rebase actions:
+
 - `pick` - apply a commit as is and keep its commit message.
 - `drop` - do not apply a commit. The row in the `dolt_rebase` table can also be deleted to drop a commit from the rebase plan.
-- `reword` - apply a commit, and use the updated commit message from the `commit_message` field in the `dolt_rebase` table for its commit message. Note that if you edit the `commit_message` but do not use the `reword` action, the original commit message will still be used. 
+- `reword` - apply a commit, and use the updated commit message from the `commit_message` field in the `dolt_rebase` table for its commit message. Note that if you edit the `commit_message` but do not use the `reword` action, the original commit message will still be used.
 - `squash` - apply a commit, but include its changes in the previous commit instead of creating a new commit. The commit message of the previous commit will be altered to include the previous commit message as well as the commit message from the squashed commit. Note that the rebase plan MUST include a `pick` or `reword` action in the plan before a `squash` action.
-- `fixup` - apply a commit, but include its changes in the previous commit instead of creating a new commit. The commit message of the previous commit will NOT be changed, and the commit message from the fixup commit will be discarded.  Note that the rebase plan MUST include a `pick` or `reword` action in the plan before a `fixup` action.
+- `fixup` - apply a commit, but include its changes in the previous commit instead of creating a new commit. The commit message of the previous commit will NOT be changed, and the commit message from the fixup commit will be discarded. Note that the rebase plan MUST include a `pick` or `reword` action in the plan before a `fixup` action.
 
 ### Example Queries
 
 To squash all commits into a single commit and include the commit messages from all commits, the following query can be used:
+
 ```sql
 update dolt_rebase set action = 'squash' where rebase_order > 1;
 ```
 
 To reword a commit with commit hash '123aef456f', be sure to set the action to `reword` and to update the `commit_message` field:
+
 ```sql
 update dolt_rebase set action = 'reword', commit_message = 'here is my new message' where commit_hash = '123aef456f';
 ```
 
 To drop the second commit in the rebase plan, you can use the `drop` action:
+
 ```sql
 update dolt_rebase set action = 'drop' where rebase_order = 2;
 ```
 
 Or you can simply delete that row from the `dolt_rebase` table:
+
 ```sql
 delete from dolt_rebase where rebase_order = 2;
 ```
