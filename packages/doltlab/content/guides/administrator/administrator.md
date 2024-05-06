@@ -454,7 +454,7 @@ Importantly, there have been times when these passwords do not work as expected 
 
 In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
 
-After you have the password, you can configure DoltLan to use it by stopping your running DoltLab, running the installer with the proper SMTP configuration, and running the newly generated `start.sh`.
+After you have the password, you can configure DoltLab to use it by stopping your running DoltLab, running the installer with the proper SMTP configuration, and running the newly generated `start.sh`.
 
 ```sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
