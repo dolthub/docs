@@ -425,15 +425,15 @@ To quickly get up and running with an existing SMTP server, we recommend using [
 
 After 2-Step Verification is set up, at the bottom of the page click "App passwords".
 
-![App passwords on 2-step page](../../../.gitbook/assets/gmail_app_passwords_are_here.png)
+![App passwords on 2-step page](../../.gitbook/assets/gmail_app_passwords_are_here.png)
 
 If you do not see "App Passwords" at the bottom of this page, return to the Security page and in the search bar, search for "App Passwords".
 
-![App passwords in search](../../../.gitbook/assets/gmail_search_app_passwords.png)
+![App passwords in search](../../.gitbook/assets/gmail_search_app_passwords.png)
 
 Next, name your app password, then click "Generate." You will be provided a password you can use with your DoltLab instance.
 
-![Generated password](../../../.gitbook/assets/gmail_app_password_no_worky.png)
+![Generated password](../../.gitbook/assets/gmail_app_password_no_worky.png)
 
 This generated password can be supplied along with your Gmail email address, as the `username`, to send emails with `smtp_connection_helper` and DoltLab.
 
