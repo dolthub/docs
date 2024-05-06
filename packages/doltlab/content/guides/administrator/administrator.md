@@ -454,6 +454,53 @@ Importantly, there have been times when these passwords do not work as expected 
 
 In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
 
+After you have the password, you can configure DoltLan to use it by stopping your running DoltLab, running the installer with the proper SMTP configuration, and running the newly generated `start.sh`.
+
+```sh
+ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
+WARN[0000] The "DOLT_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "SMTP_SERVER_USERNAME" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "SMTP_SERVER_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "SMTP_SERVER_OAUTH_TOKEN" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DEFAULT_USER_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
+[+] Stopping 7/7
+ ✔ Container doltlab-doltlabui-1              Stopped                     10.1s 
+ ✔ Container doltlab-doltlabgraphql-1         Stopped                     10.1s 
+ ✔ Container doltlab-doltlabapi-1             Stopped                      0.1s 
+ ✔ Container doltlab-doltlabremoteapi-1       Stopped                      0.1s 
+ ✔ Container doltlab-doltlabfileserviceapi-1  Stopped                      0.1s 
+ ✔ Container doltlab-doltlabdb-1              Stopped                      0.1s 
+ ✔ Container doltlab-doltlabenvoy-1           Stopped                      0.3s 
+ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
+--smtp-auth-method=plain \
+--smtp-port=587 \
+--smtp-username=tim@dolthub.com \
+--smtp-password="xxxx xxxx xxxx xxxx" \
+--no-reply-email=tim@dolthub.com 
+--smtp-host=smtp.gmail.com
+2024-05-02T19:11:03.397Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
+
+2024-05-02T19:11:03.397Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.2"}
+
+2024-05-02T19:11:03.397Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
+2024-05-02T19:11:03.397Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
+
+2024-05-02T19:11:03.397Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
+ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh 
+[+] Running 7/7
+ ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s 
+ ✔ Container doltlab-doltlabdb-1              Started                      0.5s 
+ ✔ Container doltlab-doltlabfileserviceapi-1  Started                      0.8s 
+ ✔ Container doltlab-doltlabremoteapi-1       Started                      1.1s 
+ ✔ Container doltlab-doltlabapi-1             Started                      1.3s 
+ ✔ Container doltlab-doltlabgraphql-1         Started                      1.4s 
+ ✔ Container doltlab-doltlabui-1              Started                      1.7s 
+ubuntu@ip-10-2-0-24:~/doltlab$ 
+```
+
 <h1 id="prevent-unauthorized-users">Prevent unauthorized user account creation</h1>
 
 DoltLab supports explicit email whitelisting to prevent account creation by unauthorized users.

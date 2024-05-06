@@ -23,7 +23,7 @@
   - [Linux pre-installer](older/installation/pre-installer-linux.md)
   - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
 - [Upgrade](older/upgrading.md)
-- [Administrator Guide](guides/administrator/pre-installer-administrator-guide.md)
+- [Administrator Guide](older/pre-installer-administrator-guide.md)
 
 ## Release Notes
 
