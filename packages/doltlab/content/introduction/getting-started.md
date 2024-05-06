@@ -262,7 +262,7 @@ cc278092afcb55de755e9b05725b86bb122eddd128264ee17134418dc154f455
 
 Now the moment of truth, I hit the IP over `http`, not `https`, http://54.191.163.60/. Bam!
 
-![Fresh DoltLab](../../.gitbook/assets/getting-startedfresh-doltlab.png)
+![Fresh DoltLab](../../.gitbook/assets/getting-started/fresh-doltlab.png)
 
 # Login as Admin
 
