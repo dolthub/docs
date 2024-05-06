@@ -336,13 +336,13 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user `admin` can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server using the following arguments with the `installer`. The arguments you supply will be based on the authentication requires of your SMTP server.
 
-`--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.
-`--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.
+`--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.  
+`--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.  
 `--smtp-host`, _required_, the host name of your SMTP server, for example `smtp.gmail.com`.
-`--smtp-port`, _required_, the port of your SMTP server.
-`--smtp-username`, _required_ for authentication methods `plain` and `login`, the username for authenticating against the SMTP server.
-`--smtp-password`, _required_ for authentication methods `plain` and `login`, the password for authenticating against the SMTP server.
-`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.
+`--smtp-port`, _required_, the port of your SMTP server.  
+`--smtp-username`, _required_ for authentication methods `plain` and `login`, the username for authenticating against the SMTP server.  
+`--smtp-password`, _required_ for authentication methods `plain` and `login`, the password for authenticating against the SMTP server.  
+`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.  
 
 <h1 id="smtp-implicit-tls">Connect DoltLab to an SMTP server with implicit TLS</h1>
 
