@@ -17,6 +17,11 @@
   - [Workspaces](guides/features/workspaces.md)
   - [Transform File Uploads](guides/features/transform-uploads.md)
 
+## Enterprise
+
+- [Why Enterprise?](enterprise/why.md)
+- [Getting Started](enterprise/getting-started.md)
+
 ## Older Versions
 
 - [Installation](older/installation.md)
