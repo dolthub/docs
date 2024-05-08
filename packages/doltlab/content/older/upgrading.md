@@ -8,6 +8,21 @@ Also note that upgrading to a newer version of DoltLab will require downtime, as
 
 Additionally, some early versions have different database schemas than newer ones. If the Docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab administrators can simply remove these Docker volumes and run the their DoltLab start script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
+<h2 id="upgrade-v212-v213"><ins>Upgrade from DoltLab <code>v2.1.2</code> to <code>v2.1.3+</code></ins></h2>
+
+DoltLab `v2.1.2` wrote generated passwords to a `.secrets` directory co-located with the `installer`.
+
+Before upgrading to a newer DoltLab version, collect the values of these passwords from the `.secrets` directory of the DoltLab instance you will replace. It is important to reuse these same values in the newer installation of DoltLab, since the older version was initialized with these values.
+
+After collecting the values, when running the `installer` for the newer DoltLab for the first time, supply the values to the `installer` using their corresponding flag argument to ensure the `installer` will use them and not generate new values, which will cause your instance to crash.
+
+- `./.secrets/default_user_pass.priv`, use `--default-user-password` with the `installer` to save the password for the default user.
+- `./.secrets/dolt_admin_password.priv`, use `--doltlabdb-admin-password` with the `installer` to save the `dolthubadmin` password for DoltLab's application database.
+- `./.secrets/dolt_dolthubapi_password.priv`, use `--doltlabdb-dolthubapi-password` with the `installer` to save the `dolthubapi` password for DoltLab's application database.
+- `./.secrets/smtp_username.priv`, use `--smtp-username` with the `installer` to save the SMTP username for an SMTP server. This is only required if your previous installation was connected to an SMTP server using `login` or `plain` authentication.
+- `./.secrets/smtp_password.priv`, use `--smtp-password` with the `installer` to save the SMTP password for an SMTP server. This is only required if your previous installation was connected to an SMTP server using `login` or `plain` authentication.
+- `./.secrets/smtp_oauth_token.priv`, use `--smtp-oauth-token` with the `installer` to save the SMTP oauth token for an SMTP server. This is only required if your previous installation was connected to an SMTP server using `oauthbearer` authentication.
+
 <h2 id="upgrade-v208-v210"><ins>Upgrade from DoltLab <code>v2.0.8</code> to <code>v2.1.0+</code></ins></h2>
 
 The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did.
