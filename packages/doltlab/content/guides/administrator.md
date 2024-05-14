@@ -742,12 +742,11 @@ The following are top-level `installer_config.yaml` options:
 - [whitelist_all_users](#installer-config-whitelist-all-users)
 - [services](#installer-config-reference-services)
 - [default_user](#installer-config-reference-default-user)
-- [smtp]()
+- [smtp](#installer-config-reference-smtp)
 - [scheme](#installer-config-reference-scheme)
 - [tls](#installer-config-reference-tls)
-- [encryption]()
-- [jobs]()
-- [enterprise]()
+- [jobs](#installer-config-reference-jobs)
+- [enterprise](#installer-config-reference-enterprise)
 
 <h2 id="installer-config-reference-version">version</h2>
 
@@ -858,7 +857,7 @@ _Dictionary_. Configuration options for DoltLab's default user. _Required_.
 - [password](#installer-config-reference-services-default-user-password)
 - [email](#installer-config-reference-services-default-user-email)
 
-<h4 id="installer-config-reference-services-default-user-name">name</h4>
+<h4 id="installer-config-reference-default-user-name">name</h4>
 
 _String_. The username of the default user. _Required_.
 
@@ -868,7 +867,7 @@ default_user:
   name: admin
 ```
 
-<h4 id="installer-config-reference-services-default-user-password">password</h4>
+<h4 id="installer-config-reference-default-user-password">password</h4>
 
 _String_. The password of the default user. _Required_.
 
@@ -884,7 +883,7 @@ default_user:
   password: ${MY_PASSWORD_ENV}
 ```
 
-<h4 id="installer-config-reference-services-default-user-email">email</h4>
+<h4 id="installer-config-reference-default-user-email">email</h4>
 
 _String_. The email address of the default user. _Required_.
 
@@ -892,6 +891,133 @@ _String_. The email address of the default user. _Required_.
 # example installer_config.yaml
 default_user:
   email: admin@localhost
+```
+
+<h2 id="installer-config-reference-smtp">smtp</h2>
+
+_Dictionary_. The configuration options for an external SMTP server. _Optional_
+
+- [auth_method](#installer-config-reference-smtp-auth-method)
+- [host](#installer-config-reference-smtp-host)
+- [port](#installer-config-reference-smtp-port)
+- [username](#installer-config-reference-smtp-username)
+- [password](#installer-config-reference-smtp-password)
+- [oauth_token](#installer-config-reference-smtp-oauth-token)
+- [identity](#installer-config-reference-smtp-identity)
+- [trace](#installer-config-reference-smtp-trace)
+- [implicit_tls](#installer-config-reference-smtp-implicit-tls)
+- [insecure_tls](#installer-config-reference-smtp-insecure-tls)
+
+<h4 id="installer-config-reference-smtp-auth-method">auth_method</h4>
+
+_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  auth_method: plain
+```
+
+<h4 id="installer-config-reference-smtp-host">host</h4>
+
+_String_. The host name of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  host: smtp.gmail.com
+```
+
+<h4 id="installer-config-reference-smtp-port">port</h4>
+
+_Number_. The port of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  port: 587
+```
+
+<h4 id="installer-config-reference-smtp-username">username</h4>
+
+_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  username: mysmtpusername
+```
+
+<h4 id="installer-config-reference-smtp-password">password</h4>
+
+_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  password: mypassword
+```
+
+```yaml
+# example installer_config.yaml
+smtp:
+  password: ${MY_PASSWORD_ENV}
+```
+
+<h4 id="installer-config-reference-smtp-oauth-token">oauth_token</h4>
+
+_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  oauth_token: myoauthtoken
+```
+
+```yaml
+# example installer_config.yaml
+smtp:
+  oauth_token: ${MY_TOKEN_ENV}
+```
+
+<h4 id="installer-config-reference-smtp-identity">identity</h4>
+
+_String_. The SMTP server identity. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  identity: mysmtpidentity
+```
+
+<h4 id="installer-config-reference-smtp-trace">trace</h4>
+
+_String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  trace: mysmtptrace
+```
+
+<h4 id="installer-config-reference-smtp-implicit-tls">implicit_tls</h4>
+
+_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  implicit_tls: false
+```
+
+<h4 id="installer-config-reference-smtp-insecure-tls">insecure_tls</h4>
+
+_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  insecure_tls: false
 ```
 
 <h2 id="installer-config-reference-scheme">scheme</h2>
@@ -931,3 +1057,45 @@ _String_. The absolute path to a TLS private key with `.pem` extension. _Require
 tls:
   private_key: /path/to/tls/private/key.pem
 ```
+
+<h2 id="installer-config-reference-jobs">jobs</h2>
+
+_Dictionary_. Job configuration options. _Optional_.
+
+- [concurrency_limit](#installer-config-reference-jobs-concurrency-limit)
+- [concurrency_loop_seconds](#installer-config-reference-jobs-concurrency-loop-seconds)
+- [max_retries](#installer-config-reference-jobs-max-retries)
+
+<h4 id="installer-config-reference-jobs-concurrency-limit">concurrency_limit</h4>
+
+_Number_. The maximum number of concurrent Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  concurrency_limit: 10
+```
+
+<h4 id="installer-config-reference-jobs-concurrency-loop-seconds">concurrency_loop_seconds</h4>
+
+_Number_. The wait time in seconds before scheduling the next batch of jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  concurrency_loop_seconds: 30
+```
+
+<h4 id="installer-config-reference-jobs-max-retries">max_retries</h4>
+
+_Number_. The maximum number of times to retry failed Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  max_retries: 5
+```
+
+<h2 id="installer-config-reference-enterprise">enterprise</h2>
+
+See the [Enterprise guide](./enterprise.md) for the `enterprise` section reference.
