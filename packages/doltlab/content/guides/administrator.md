@@ -366,9 +366,30 @@ Alternatively, instead of using `./installer_config.yaml`, the `installer` can b
 
 <h1 id="smtp-implicit-tls">Connect DoltLab to an SMTP server with implicit TLS</h1>
 
-Use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
+Edit `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp) set `smtp.implicit_tls` as `true`.
 
-Additionally, TLS verification can be skipped by adding the additional argument `-emailInsecureTLS`.
+```yaml
+# installer_config.yaml
+smtp:
+  implicit_tls: true
+```
+
+To skip TLS verification, set `smtp.insecure_tls` as `true`.
+
+```yaml
+# installer_config.yaml
+smtp:
+  implicit_tls: true
+  insecure_tls: true
+```
+
+Save these changes, then re-run the `installer`.
+
+```bash
+./installer
+```
+
+Alternatively, use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
 
 <h1 id="troubleshoot-smtp-connection">Troubleshoot SMTP server connection problems</h1>
 
