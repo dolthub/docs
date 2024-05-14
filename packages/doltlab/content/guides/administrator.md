@@ -335,7 +335,26 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 <h1 id="connect-smtp-server">Connect DoltLab to an SMTP server</h1>
 
-DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user `admin` can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server using the following arguments with the `installer`. The arguments you supply will be based on the authentication requires of your SMTP server.
+DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server by editing `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp). 
+
+```yaml
+# installer_config.yaml
+smtp:
+  auth_method: plain
+  host: smtp.gmail.com
+  port: 587
+  no_reply_email: me@gmail.com
+  username: me@gmail.com
+  password: mypassword
+```
+
+Save the changes to `./installer-config.yaml` then run the `installer` to regenerate DoltLab assets that enable connection to your SMTP server.
+
+```bash
+./installer
+```
+
+Alternatively, instead of using `./installer_config.yaml`, the `installer` can be run with the following flag arguments to configure DoltLab to connect to your SMTP server.
 
 `--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.  
 `--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.  
@@ -900,6 +919,7 @@ _Dictionary_. The configuration options for an external SMTP server. _Optional_
 - [auth_method](#installer-config-reference-smtp-auth-method)
 - [host](#installer-config-reference-smtp-host)
 - [port](#installer-config-reference-smtp-port)
+- [no_reply_email](#installer-config-reference-smtp-no-reply-email)
 - [username](#installer-config-reference-smtp-username)
 - [password](#installer-config-reference-smtp-password)
 - [oauth_token](#installer-config-reference-smtp-oauth-token)
@@ -936,6 +956,16 @@ _Number_. The port of the SMTP server. _Required_. See [connecting DoltLab to an
 # example installer_config.yaml
 smtp:
   port: 587
+```
+
+<h4 id="installer-config-reference-smtp-no-reply-email">no_reply_email</h4>
+
+_String_. The email address used to send emails from DoltLab. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  no_reply_email: admin@localhost
 ```
 
 <h4 id="installer-config-reference-smtp-username">username</h4>
