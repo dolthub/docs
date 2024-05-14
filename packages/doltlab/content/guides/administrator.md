@@ -23,6 +23,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 17. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 18. [Improve DoltLab performance](#doltlab-performance)
 19. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
+20. [Installer configuration file reference](#installer-config-reference)
 
 <h1 id="issues-release-notes">File issues and view release notes</h1>
 
@@ -727,3 +728,206 @@ Next, edit the inbound rules for the security group attached to the NLB you crea
 On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
 
 Restart your DoltLab instance supplying this DNS name as the `--host` to the `installer`, and your DoltLab instance will now be ready to run exclusively through the NLB.
+
+<h1 id="installer-config-reference">Installer configuration file reference</h1>
+
+DoltLab >= `v2.1.4` uses a configuration file, `./installer_config.yaml`, to configure the `installer`. Though the `installer` can still be used with command line flags, this file makes using the `installer` much, much easier.
+
+The following are top-level `installer_config.yaml` options:
+
+- [version](#installer-config-reference-version)
+- [host](#installer-config-reference-host)
+- [docker_network](#installer-config-reference-docker-network)
+- [metrics_disabled](#installer-config-reference-metrics-disabled)
+- [whitelist_all_users](#installer-config-whitelist-all-users)
+- [services](#installer-config-reference-services)
+- [default_user](#installer-config-reference-default-user)
+- [smtp]()
+- [scheme](#installer-config-reference-scheme)
+- [tls](#installer-config-reference-tls)
+- [encryption]()
+- [jobs]()
+- [enterprise]()
+
+<h2 id="installer-config-reference-version">version</h2>
+
+_String_. The version of the configuration file and DoltLab. _Required_.
+
+```yaml
+# example installer_config.yaml
+version: v2.1.4
+```
+
+<h2 id="installer-config-reference-host">host</h2>
+
+_String_. The hostname or IP address of the host running DoltLab. _Required_.
+
+```yaml
+# example installer_config.yaml
+host: mydoltlab.mycompany.com
+```
+
+```yaml
+# example installer_config.yaml
+host: 123.456.78.90
+```
+
+<h2 id="installer-config-reference-docker-network">docker_network</h2>
+
+_String_. The name of the docker network used for DoltLab, defaults to `doltlab`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+docker_network: doltlab
+```
+
+<h2 id="installer-config-reference-metrics-disabled">metrics_disabled</h2>
+
+_Boolean_. If true, disables first party usage metrics for a DoltLab instance, defaults to `false`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+metrics_disabled: false
+```
+
+<h2 id="installer-config-reference-whitelist-all-users">whitelist_all_users</h2>
+
+_Boolean_. If true, allows any user to create an account on a DoltLab instance, defaults to `true`. _Optional_
+
+```yaml
+# example installer_config.yaml
+whitelist_all_users: true
+```
+
+See [prevent unauthorized user account creation](#prevent-unauthorized-users) for more information.
+
+<h2 id="installer-config-reference-services">services</h2>
+
+_Dictionary_. Configuration options for DoltLab's various services. _Required_.
+
+- [doltlabdb](#installer-config-reference-services-doltlabdb)
+
+<h4 id="installer-config-reference-services-doltlabdb">doltlabdb</h4>
+
+_Dictionary_. Configuration options for `doltlabdb`. _Required_.
+
+- [admin_password](#installer-config-reference-services-doltlabdb-admin-password)
+- [dolthubapi_password](#installer-config-reference-services-doltlabdb-dolthubapi-password)
+
+<h4 id="installer-config-reference-services-doltlabdb-admin-password">admin_password</h4>
+
+_String_. The password used to for creating user `dolthubadmin` in DoltLab's application database. _Required_.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: "mypassword"
+```
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: ${MY_PASSWORD_ENV}
+```
+
+<h4 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h4>
+
+_String_. The password used to for creating user `dolthubapi` in DoltLab's application database. _Required_.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    dolthubapi_password: mypassword
+```
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    dolthubapi_password: ${MY_PASSWORD_ENV}
+```
+
+<h2 id="installer-config-reference-default-user">default_user</h2>
+
+_Dictionary_. Configuration options for DoltLab's default user. _Required_.
+
+- [name](#installer-config-reference-services-default-user-name)
+- [password](#installer-config-reference-services-default-user-password)
+- [email](#installer-config-reference-services-default-user-email)
+
+<h4 id="installer-config-reference-services-default-user-name">name</h4>
+
+_String_. The username of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  name: admin
+```
+
+<h4 id="installer-config-reference-services-default-user-password">password</h4>
+
+_String_. The password of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  password: mypassword
+```
+
+```yaml
+# example installer_config.yaml
+default_user:
+  password: ${MY_PASSWORD_ENV}
+```
+
+<h4 id="installer-config-reference-services-default-user-email">email</h4>
+
+_String_. The email address of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  email: admin@localhost
+```
+
+<h2 id="installer-config-reference-scheme">scheme</h2>
+
+_String_. The HTTP scheme of the DoltLab deployment, defaults to `http`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+scheme: http
+```
+
+See [how to serve DoltLab over HTTPS](#doltlab-https-natively) for more information.
+
+<h2 id="installer-config-reference-tls">tls</h2>
+
+_Dictionary_. TLS configuration options. _Optional_.
+
+- [cert_chain](#installer-config-reference-tls-cert-chain)
+- [private_key](installer-config-reference-tls-private-key)
+
+<h4 id="installer-config-reference-tls-cert-chain">cert_chain</h4>
+
+_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+
+```yaml
+# example installer_config.yaml
+tls:
+  private_key: /path/to/tls/private/key.pem
+```
+
+<h4 id="installer-config-reference-tls-private-key">private_key</h4>
+
+_String_. The absolute path to a TLS private key with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+
+```yaml
+# example installer_config.yaml
+tls:
+  private_key: /path/to/tls/private/key.pem
+```

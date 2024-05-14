@@ -8,6 +8,12 @@ Also note that upgrading to a newer version of DoltLab will require downtime, as
 
 Additionally, some early versions have different database schemas than newer ones. If the Docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab administrators can simply remove these Docker volumes and run the their DoltLab start script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
+<h2 id="upgrade-v213-v214"><ins>Upgrade from DoltLab <code>v2.1.3</code> to <code>v2.1.4+</code></ins></h2>
+
+DoltLab `v2.1.4` no longer writes or maintains a `.secrets` directory co-located with the `installer`. Instead, DoltLab >= `v2.1.4` ships with a configuration file that the `installer` uses called `./installer_config.yaml`.
+
+The default configuration file contains default values for all passwords the DoltLab requires, and is much simpler to maintain. Please see the [Installer Configuration File Reference](../guides/administrator.md#installer-config-reference) for more information.
+
 <h2 id="upgrade-v212-v213"><ins>Upgrade from DoltLab <code>v2.1.2</code> to <code>v2.1.3+</code></ins></h2>
 
 DoltLab `v2.1.2` wrote generated passwords to a `.secrets` directory co-located with the `installer`.
