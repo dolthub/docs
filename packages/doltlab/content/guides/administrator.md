@@ -897,13 +897,6 @@ services:
     admin_password: "mypassword"
 ```
 
-```yaml
-# example installer_config.yaml
-services:
-  doltlabdb:
-    admin_password: ${MY_PASSWORD_ENV}
-```
-
 <h4 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h4>
 
 _String_. The password used to for creating user `dolthubapi` in DoltLab's application database. _Required_.
@@ -913,13 +906,6 @@ _String_. The password used to for creating user `dolthubapi` in DoltLab's appli
 services:
   doltlabdb:
     dolthubapi_password: mypassword
-```
-
-```yaml
-# example installer_config.yaml
-services:
-  doltlabdb:
-    dolthubapi_password: ${MY_PASSWORD_ENV}
 ```
 
 <h2 id="installer-config-reference-default-user">default_user</h2>
@@ -948,12 +934,6 @@ _String_. The password of the default user. _Required_.
 # example installer_config.yaml
 default_user:
   password: mypassword
-```
-
-```yaml
-# example installer_config.yaml
-default_user:
-  password: ${MY_PASSWORD_ENV}
 ```
 
 <h4 id="installer-config-reference-default-user-email">email</h4>
@@ -1042,12 +1022,6 @@ smtp:
   password: mypassword
 ```
 
-```yaml
-# example installer_config.yaml
-smtp:
-  password: ${MY_PASSWORD_ENV}
-```
-
 <h4 id="installer-config-reference-smtp-oauth-token">oauth_token</h4>
 
 _String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
@@ -1056,12 +1030,6 @@ _String_. The oauth token used for connecting to the SMTP server. _Required_ for
 # example installer_config.yaml
 smtp:
   oauth_token: myoauthtoken
-```
-
-```yaml
-# example installer_config.yaml
-smtp:
-  oauth_token: ${MY_TOKEN_ENV}
 ```
 
 <h4 id="installer-config-reference-smtp-identity">identity</h4>

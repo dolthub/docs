@@ -19,8 +19,7 @@ host: ""
 # "Services" contains config for specific DoltLab services.
 # The first time DoltLab runs, it uses the passwords defined in `doltlabdb.admin_password`
 # and `doltlabdb.dolthubapi_password` to initialize DoltLab's application database.
-#
-# For production deployments, replace hardcoded password values with environment variable templates, ie. "${MY_PASS_ENV}".
+
 services:
   doltlabdb:
     admin_password: "DoltLab1234"
@@ -39,7 +38,8 @@ default_user:
 #smtp:
 #  auth_method: "plain"
 #  host: ""
-#  port: ""
+#  port: 0
+#  no_reply_email: ""
 ```
 
 Edit `installer_config.yaml` and supply the host name or IP address of your DoltLab host in the `host` field. 
