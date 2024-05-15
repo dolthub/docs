@@ -651,7 +651,22 @@ Next, we should associate the EIP with our DoltLab host by following [these step
 
 Finally, we can provision a domain name for the DoltLab host through [AWS Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html). After registering the new domain name, we need to create an `A` record that's attached to the EIP of the DoltLab host. To do so, follow the steps for creating records outlined [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html).
 
-Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and rerun the `installer` with `--host=yourdomain.com`, then restart your DoltLab instance.
+Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and update the `host` field in your `./installer_config.yaml`.
+
+```yaml
+# installer_config.yaml
+host: "yourdomain.com"
+```
+
+Save these changes, the rerun the `installer` to regenerate DoltLab assets the use your new domain name.
+
+```yaml
+./installer
+```
+
+Alternatively, if you want to use command line flags instead, rerun the `installer` with `--host=yourdomain.com`.
+
+Restart your DoltLab instance with `./start.sh`.
 
 In the event you are configuring your domain name with an Elastic Load Balancer, ensure that it specifies Target Groups for each of the ports required to operate DoltLab, `80`, `100`, `4321`, and `50051`.
 
