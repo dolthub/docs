@@ -495,7 +495,26 @@ Importantly, there have been times when these passwords do not work as expected 
 
 In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
 
-After you have the password, you can configure DoltLab to use it by stopping your running DoltLab, running the installer with the proper SMTP configuration, and running the newly generated `start.sh`.
+After you have the password, you can configure DoltLab to use it by stopping your running DoltLab and editing the `./installer_config.yaml` to [configure connection to Gmail's SMTP server](#installer-config-reference-smtp).
+
+```yaml
+# installer_config.yaml
+smtp:
+  auth_method: plain
+  host: smtp.gmail.com
+  port: 587
+  no_reply_email: tim@dolthub.com
+  username: tim@dolthub.com
+  password: "xxxx xxxx xxxx xxxx"
+```
+
+Save these changes and rerun the `installer` to regenerate assets that will connect your DoltLab to Gmail's SMTP server.
+
+```bash
+./installer
+```
+
+Alternatively, you can run the `installer` with flag arguments to configure SMTP server connection, if you don't want to use `./installer_config.yaml`:
 
 ```sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
@@ -529,7 +548,6 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
 
-2024-05-02T19:11:03.397Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh 
 [+] Running 7/7
  ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s 
@@ -541,6 +559,8 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh
  ✔ Container doltlab-doltlabui-1              Started                      1.7s 
 ubuntu@ip-10-2-0-24:~/doltlab$ 
 ```
+
+Running the newly generated `./start.sh` will start DoltLab connected to Gmail.
 
 <h1 id="prevent-unauthorized-users">Prevent unauthorized user account creation</h1>
 
