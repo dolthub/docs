@@ -624,7 +624,20 @@ As a result, DoltLab may consume additional memory and disk, depending on the nu
 
 By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
 
-To disable first-party metrics, run the `installer` with `--disable-usage-metrics=true`.
+Metrics can be disabled by setting the [metrics_disabled](#installer-config-reference-metrics-disabled) field of the `./installer_config.yaml`:
+
+```yaml
+# installer_config.yaml
+metrics_disabled: true
+```
+
+Save these changes, then rerun the `installer` to regenerate DoltLab assets that disable usage metrics.
+
+```bash
+./installer
+```
+
+Alternatively, to disable first-party metrics using command line arguments, run the `installer` with `--disable-usage-metrics=true`.
 
 <h1 id="use-domain">Use a domain name with DoltLab</h1>
 
