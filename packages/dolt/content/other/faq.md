@@ -96,11 +96,11 @@ doc with the given name to stdout.
 
 ## How do I squash the history of a Dolt database? I only want the latest.
 
-You can perform a shallow [clone](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures#dolt_clone) of a repository by using the `--depth` flag. If you only want
+You can perform a shallow [clone](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures#dolt_clone) of a database by using the `--depth` flag. If you only want
 the latest change, specify a depth of 1. The [CLI](https://docs.dolthub.com/sql-reference/version-control/dolt-sql-procedures#dolt_clone) also supports this:
 
 ```bash
-dolt clone --depth 1 <repository>
+dolt clone --depth 1 <database>
 ```
 
 # Does Dolt collect client metrics? How can I disable it?
