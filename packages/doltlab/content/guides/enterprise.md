@@ -4,15 +4,31 @@ title: "DoltLab Enterprise Guide"
 
 This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Administrator's Guide](../administrator/administrator.md).
 
-To start DoltLab in Enterprise mode, when [running the installer](../installation/start-doltlab.md) supply the following additional arguments:
+To start DoltLab in Enterprise mode, edit the `installer_config.yaml` file, supplying your Enterprise license keys:
+
+```yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that allow it to run in Enterprise mode.
+
+```bash
+./installer
+```
+
+Alternatively, you can supply command line flags to the `installer` like so:
 
 ```bash
 ./installer \
 ... \
---enterprise-online-product-code=<product code> \
---enterprise-online-shared-key=<shared key> \
---enterprise-online-api-key=<api key> \
---enterprise-online-license-key=<license key>
+--enterprise-online-product-code="yourproductcode" \
+--enterprise-online-shared-key="yoursharedkey" \
+--enterprise-online-api-key="yourapikey" \
+--enterprise-online-license-key="yourlicensekey"
 ```
 
 The values for these arguments will be provided to you by our DoltLab team. The following contents on this page covers how to configure various Enterprise features for your DoltLab instance.
@@ -29,13 +45,53 @@ The values for these arguments will be provided to you by our DoltLab team. The 
 
 DoltLab Enterprise allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos custom logos must have a maximum height of `24px` and a maximum width of `112px`. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab" below the custom logo.
 
-You can use a custom logo on DoltLab by running the `installer` with the argument `--custom-logo=/path/to/custom/logo.png`.
+You can use a custom logo on DoltLab by editing `./installer_config.yaml` and providing the path to your custom logo:
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  customize:
+    logo: /absolute/path/to/custom/logo.png
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that use your custom logo.
+
+```bash
+./installer
+```
+
+Alternatively, you can run the `installer` with the argument `--custom-logo=/absolute/path/to/custom/logo.png`.
 
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
 DoltLab Enterprise allows administrators to customize the automated emails their DoltLab instance sends to its users.
 
-Custom emails can be configured with the `installer` by supplying the argument `--custom-email-templates=true`. The installer will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed.
+Custom emails can be configured with the `installer` by editing `./installer_config.yaml` and setting `enterprise.customize.email_templates` to `true`.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  customize:
+    email_templates: true
+```
+
+Save these changes and rerun the `installer` to generate email template files you can customize, that DoltLab will use.
+
+```bash
+./installer
+```
+
+Alternatively, you can supply the argument `--custom-email-templates=true` to the `installer` instead.
+
+Once run, the `installer` will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed.
 
 - `collabInvite.txt` sent to invite user to be a database collaborator.
 - `invite.txt` sent to invite a user to join an organization.
@@ -157,16 +213,44 @@ Once we save our edits, we can restart our DoltLab instance for the changes to t
 
 DoltLab Enterprise allows administrators to customize the color of certain assets across their DoltLab instance.
 
-For configuring custom colors, the `installer` accepts the following arguments corresponding to the custom color you want to override:
+For configuring custom colors, edit the `./installer_config.yaml`, adding:
+
+```yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  customize:
+    color_overrides:
+      rgb_accent_1: "252, 66, 201"
+      rgb_background_accent_1: "24, 33, 52"
+      rgb_background_gradient_start: "31, 41, 66"
+      rgb_button_1: "61, 145, 240"
+      rgb_button_2: "31, 109, 198"
+      rgb_link_1: "31, 109, 198"
+      rgb_link_2: "61, 145, 240"
+      rgb_link_light: "109, 176, 252"
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that use your custom colors.
 
 ```bash
---custom-color-rgb-accent-1="252, 66, 201"
---custom-color-rgb-background-accent-1="24, 33, 52"
---custom-color-rgb-background-gradient-start="31, 41, 66"
---custom-color-rgb-button-1="61, 145, 240"
---custom-color-rgb-button-2="31, 109, 198"
---custom-color-rgb-link-1="31, 109, 198"
---custom-color-rgb-link-2="61, 145, 240"
+./installer
+```
+
+Alternatively, you can run the `installer` with the following arguments corresponding to the custom color you want to override:
+
+```bash
+./installer \
+...
+--custom-color-rgb-accent-1="252, 66, 201" \
+--custom-color-rgb-background-accent-1="24, 33, 52" \
+--custom-color-rgb-background-gradient-start="31, 41, 66" \
+--custom-color-rgb-button-1="61, 145, 240" \
+--custom-color-rgb-button-2="31, 109, 198" \
+--custom-color-rgb-link-1="31, 109, 198" \
+--custom-color-rgb-link-2="61, 145, 240" \
 --custom-color-rgb-link-light="109, 176, 252"
 ```
 
@@ -176,12 +260,25 @@ DoltLab Enterprise allows administrators to specify users who will be "super adm
 
 A DoltLab "super admin" is a user granted unrestricted access and the highest possibly permission level on all organizations, teams, and databases on a DoltLab instance. This allows these users to write to any database, public or private, merge pull-requests, delete databases and add or remove organization/team members. By default there are no "super admins" registered on a DoltLab instance, including the default user `admin`.
 
-Super admins can be configured using the `installer`with the argument `--super-admin-email`. This argument can be supplied multiple times, for example:
+Super admins can be configured by editing the `./installer_config.yaml` file and specifying the email addresses for users you want to be super admins.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  super_admins: ["me@email.com", "you@email.com"]
+```
+
+Alternatively, you can use the `installer` with the argument `--super-admin-email` instead. This argument can be supplied multiple times, for example:
 
 ```bash
---super-admin-email=me@email.com
---super-admin-email=you@email.com
+./installer \
 ...
+--super-admin-email=me@email.com \
+--super-admin-email=you@email.com
 ```
 
 <h1 id="doltlab-single-sign-on">Configure SAML Single-Sign-On</h1>
@@ -202,10 +299,32 @@ Be sure to also set "Name ID Format" to "Persistent".
 
 Then, download the metadata Okta provides for this application to your DoltLab host.
 
-Next, run the `installer` with following arguments included:
+Next, edit `./installer_config.yaml` with the path to the metadata descriptor and the common name to use when generating the saml certificate.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  saml:
+    metadata_descriptor_file: "/absolute/path/to/downloaded/metadata/descriptor"
+    cert_common_name: "mydoltlabinstance"
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets the enable saml single-sign-on.
 
 ```bash
---sso-saml-metadata-descriptor=/path/to/downloaded/metadata/descriptor
+./installer
+```
+
+Alternatively, the `installer` can be run with the following arguments to do the same thing:
+
+```bash
+./installer \
+...
+--sso-saml-metadata-descriptor=/absolute/path/to/downloaded/metadata/descriptor \
 --sso-saml-cert-common-name="mydoltlabinstance"
 ```
 
@@ -284,13 +403,38 @@ aws sts get-caller-identity
 }
 ```
 
-Next, run the `installer` with the following arguments to configure the AWS backup:
+Next, edit the `./installer_config.yaml` file to configure automated backups.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  automated_backups:
+    remote_url: "aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup"
+    aws_region: "aws-region"
+    aws_profile: "doltlab_backuper"
+    aws_shared_credentials_file: "/absolute/path/to/aws/credentials"
+    aws_config_file: "/absolute/path/to/aws/config"
+```
+
+Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
 
 ```bash
---automated-dolt-backups-url="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup"
---aws-shared-credentials-file="/absolute/path/to/aws/credentials"
---aws-config-file="/absolute/path/to/aws/config"
---aws-region="aws-region"
+./installer
+```
+
+Alternatively, run the `installer` with the following arguments to configure the AWS backup:
+
+```bash
+./installer \
+...
+--automated-dolt-backups-url="aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup" \
+--aws-shared-credentials-file="/absolute/path/to/aws/credentials" \
+--aws-config-file="/absolute/path/to/aws/config" \
+--aws-region="aws-region" \
 --aws-profile="doltlab_backuper"
 ```
 
@@ -342,10 +486,32 @@ Next, add GCP JSON credentials to your DoltLab host. You can find information ab
 
 Following the Dolt's url template for GCP remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#gcp-remotes), the remote url we will use for this bucket will be `gs://test-doltlab-application-db-backup/my_doltlab_backup`.
 
-Run the `installer` with the following arguments to create automated GCP backups:
+Next, edit `./installer_config.yaml` and supply your GCP remote information.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  automated_backups:
+    remote_url: "gs://test-doltlab-application-db-backup/my_doltlab_backup"
+    google_credentials_file: "/absolute/path/to/gcloud/credentials"
+```
+
+Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
 
 ```bash
---automated-dolt-backups-url="gs://test-doltlab-application-db-backup/my_doltlab_backup"
+./installer
+```
+
+Alternatively, run the `installer` with the following arguments to create automated GCP backups:
+
+```bash
+./installer \
+...
+--automated-dolt-backups-url="gs://test-doltlab-application-db-backup/my_doltlab_backup" \
 --google-creds-file="/absolute/path/to/gcloud/credentials"
 ```
 
@@ -380,11 +546,34 @@ In the above example, we've changed `key_file` to point to `/oci_private_key.pem
 
 Following the Dolt's url template for OCI remotes as outlined in [this blog](https://www.dolthub.com/blog/2021-07-19-remotes/#oci-remotes), the remote url we will use for this bucket will be `oci://test-doltlab-application-db-backup/my_doltlab_backup`.
 
-Next, run the `installer` with the following arguments to configure the OCI backups:
+Next, edit `./installer_config.yaml` and supply your OCI remote information.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  automated_backups:
+    remote_url: "oci://test-doltlab-application-db-backup/my_doltlab_backup"
+    oci_config_file: "/absolute/path/to/oci/config"
+    oci_key_file: "/absolute/path/to/oci/private/key.pem"
+```
+
+Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to OCI.
 
 ```bash
---automated-dolt-backups-url="oci://test-doltlab-application-db-backup/my_doltlab_backup"
---oci-config-file="/absolute/path/to/oci/config"
+./installer
+```
+
+Alternatively, you can run the `installer` with the following arguments to configure the OCI backups:
+
+```bash
+./installer \
+...
+--automated-dolt-backups-url="oci://test-doltlab-application-db-backup/my_doltlab_backup" \
+--oci-config-file="/absolute/path/to/oci/config" \
 --oci-key-file="/absolute/path/to/oci/private/key.pem"
 ```
 
@@ -476,7 +665,26 @@ Starting with your `doltlabdb` host and from within the unzipped `doltlab` direc
 sudo newgrp docker
 ```
 
-Next, run the `installer` with the `--doltlabdb-only` argument. Be sure to also supply the arguments for DoltLab Enterprise mode, as those are required as well.
+Next, edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabdb_only` to `true`.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabdb_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabdb` only.
+
+```bash
+./installer
+```
+
+Alternatively, run the `installer` with the `--doltlabdb-only` argument. Be sure to also supply the arguments for DoltLab Enterprise mode, as those are required as well.
 
 ```bash
 ./installer \
