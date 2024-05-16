@@ -9,6 +9,7 @@ The `installer` uses a configuration file shipped with DoltLab called `installer
 # Configuration File Reference
 
 ```yaml
+# installer_config.yaml
 version: "v2.1.4"
 host: "127.0.0.1"
 docker_network: "doltlab"
@@ -120,7 +121,7 @@ The following are top-level `installer_config.yaml` options:
 _String_. The version of the configuration file and DoltLab. _Required_.
 
 ```yaml
-# example installer_config.yaml
+# installer_config.yaml
 version: v2.1.4
 ```
 
@@ -138,6 +139,8 @@ host: mydoltlab.mycompany.com
 host: 123.456.78.90
 ```
 
+Command line equivalent [--host](#host).
+
 <h2 id="installer-config-reference-docker-network">docker_network</h2>
 
 _String_. The name of the docker network used for DoltLab, defaults to `doltlab`. _Optional_.
@@ -147,6 +150,8 @@ _String_. The name of the docker network used for DoltLab, defaults to `doltlab`
 docker_network: doltlab
 ```
 
+Command line equivalent [--docker-network](#docker-network).
+
 <h2 id="installer-config-reference-metrics-disabled">metrics_disabled</h2>
 
 _Boolean_. If true, disables first party usage metrics for a DoltLab instance, defaults to `false`. _Optional_.
@@ -155,6 +160,8 @@ _Boolean_. If true, disables first party usage metrics for a DoltLab instance, d
 # example installer_config.yaml
 metrics_disabled: false
 ```
+
+Command line equivalent [--disable-usage-metrics](#disable-usage-metrics).
 
 <h2 id="installer-config-reference-whitelist-all-users">whitelist_all_users</h2>
 
@@ -166,6 +173,8 @@ whitelist_all_users: true
 ```
 
 See [prevent unauthorized user account creation](#prevent-unauthorized-users) for more information.
+
+Command line equivalent [--white-list-all-users](#white-list-all-users).
 
 <h2 id="installer-config-reference-services">services</h2>
 
@@ -191,6 +200,8 @@ services:
     admin_password: "mypassword"
 ```
 
+Command line equivalent [--doltlabdb-admin-password](#doltlabdb-admin-password).
+
 <h4 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h4>
 
 _String_. The password used to for creating user `dolthubapi` in DoltLab's application database. _Required_.
@@ -201,6 +212,8 @@ services:
   doltlabdb:
     dolthubapi_password: mypassword
 ```
+
+Command line equivalent [--doltlabdb-dolthubapi-password](#doltlabdb-dolthubapi-password).
 
 <h2 id="installer-config-reference-default-user">default_user</h2>
 
@@ -220,6 +233,8 @@ default_user:
   name: admin
 ```
 
+Command line equivalent [--default-user](#default-user).
+
 <h4 id="installer-config-reference-default-user-password">password</h4>
 
 _String_. The password of the default user. _Required_.
@@ -229,6 +244,8 @@ _String_. The password of the default user. _Required_.
 default_user:
   password: mypassword
 ```
+
+Command line equivalent [--default-user-password](#default-user-password).
 
 <h4 id="installer-config-reference-default-user-email">email</h4>
 
@@ -240,9 +257,11 @@ default_user:
   email: admin@localhost
 ```
 
+Command line equivalent [--default-user-email](#default-user-email).
+
 <h2 id="installer-config-reference-smtp">smtp</h2>
 
-_Dictionary_. The configuration options for an external SMTP server. _Optional_
+_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
 
 - [auth_method](#installer-config-reference-smtp-auth-method)
 - [host](#installer-config-reference-smtp-host)
@@ -258,7 +277,7 @@ _Dictionary_. The configuration options for an external SMTP server. _Optional_
 
 <h4 id="installer-config-reference-smtp-auth-method">auth_method</h4>
 
-_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`.
 
 ```yaml
 # example installer_config.yaml
@@ -266,9 +285,11 @@ smtp:
   auth_method: plain
 ```
 
+Command line equivalent [--smtp-auth-method](#smtp-auth-method).
+
 <h4 id="installer-config-reference-smtp-host">host</h4>
 
-_String_. The host name of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The host name of the SMTP server. _Required_.
 
 ```yaml
 # example installer_config.yaml
@@ -276,9 +297,11 @@ smtp:
   host: smtp.gmail.com
 ```
 
+Command line equivalent [--smtp-host](#smtp-host).
+
 <h4 id="installer-config-reference-smtp-port">port</h4>
 
-_Number_. The port of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_Number_. The port of the SMTP server. _Required_.
 
 ```yaml
 # example installer_config.yaml
@@ -286,9 +309,11 @@ smtp:
   port: 587
 ```
 
+Command line equivalent [--smtp-port](#smtp-port).
+
 <h4 id="installer-config-reference-smtp-no-reply-email">no_reply_email</h4>
 
-_String_. The email address used to send emails from DoltLab. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The email address used to send emails from DoltLab. _Required_.
 
 ```yaml
 # example installer_config.yaml
@@ -296,9 +321,11 @@ smtp:
   no_reply_email: admin@localhost
 ```
 
+Command line equivalent [--no-reply-email](#no-reply-email).
+
 <h4 id="installer-config-reference-smtp-username">username</h4>
 
-_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
 
 ```yaml
 # example installer_config.yaml
@@ -306,9 +333,11 @@ smtp:
   username: mysmtpusername
 ```
 
+Command line equivalent [--smtp-username](#smtp-username).
+
 <h4 id="installer-config-reference-smtp-password">password</h4>
 
-_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
 
 ```yaml
 # example installer_config.yaml
@@ -316,15 +345,19 @@ smtp:
   password: mypassword
 ```
 
+Command line equivalent [--smtp-password](#smtp-password).
+
 <h4 id="installer-config-reference-smtp-oauth-token">oauth_token</h4>
 
-_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`.
 
 ```yaml
 # example installer_config.yaml
 smtp:
   oauth_token: myoauthtoken
 ```
+
+Command line equivalent [--smtp-oauth-token](#smtp-oauth-token).
 
 <h4 id="installer-config-reference-smtp-identity">identity</h4>
 
@@ -336,6 +369,8 @@ smtp:
   identity: mysmtpidentity
 ```
 
+Command line equivalent [--smtp-identity](#smtp-identity).
+
 <h4 id="installer-config-reference-smtp-trace">trace</h4>
 
 _String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
@@ -345,6 +380,8 @@ _String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP 
 smtp:
   trace: mysmtptrace
 ```
+
+Command line equivalent [--smtp-trace](#smtp-trace).
 
 <h4 id="installer-config-reference-smtp-implicit-tls">implicit_tls</h4>
 
@@ -356,6 +393,8 @@ smtp:
   implicit_tls: false
 ```
 
+Command line equivalent [--smtp-implicit-tls](#smtp-implicit-tls).
+
 <h4 id="installer-config-reference-smtp-insecure-tls">insecure_tls</h4>
 
 _Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
@@ -365,6 +404,8 @@ _Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_.
 smtp:
   insecure_tls: false
 ```
+
+Command line equivalent [--smtp-insecure-tls](#smtp-insecure-tls).
 
 <h2 id="installer-config-reference-scheme">scheme</h2>
 
@@ -377,26 +418,30 @@ scheme: http
 
 See [how to serve DoltLab over HTTPS](#doltlab-https-natively) for more information.
 
+Command line equivalent [--scheme](#scheme).
+
 <h2 id="installer-config-reference-tls">tls</h2>
 
-_Dictionary_. TLS configuration options. _Optional_.
+_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](doltlab-https-natively) for more information.
 
 - [cert_chain](#installer-config-reference-tls-cert-chain)
 - [private_key](installer-config-reference-tls-private-key)
 
 <h4 id="installer-config-reference-tls-cert-chain">cert_chain</h4>
 
-_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_.
 
 ```yaml
 # example installer_config.yaml
 tls:
-  private_key: /path/to/tls/private/key.pem
+  cert_chain: /path/to/tls/cert/chain.pem
 ```
+
+Command line equivalent [--tls-cert-chain](#tls-cert-chain).
 
 <h4 id="installer-config-reference-tls-private-key">private_key</h4>
 
-_String_. The absolute path to a TLS private key with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+_String_. The absolute path to a TLS private key with `.pem` extension. _Required_.
 
 ```yaml
 # example installer_config.yaml
@@ -404,9 +449,11 @@ tls:
   private_key: /path/to/tls/private/key.pem
 ```
 
+Command line equivalent [--tls-private-key](#tls-private-key).
+
 <h2 id="installer-config-reference-jobs">jobs</h2>
 
-_Dictionary_. Job configuration options. _Optional_.
+_Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
 
 - [concurrency_limit](#installer-config-reference-jobs-concurrency-limit)
 - [concurrency_loop_seconds](#installer-config-reference-jobs-concurrency-loop-seconds)
@@ -414,7 +461,7 @@ _Dictionary_. Job configuration options. _Optional_.
 
 <h4 id="installer-config-reference-jobs-concurrency-limit">concurrency_limit</h4>
 
-_Number_. The maximum number of concurrent Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+_Number_. The maximum number of concurrent Jobs. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -422,9 +469,11 @@ jobs:
   concurrency_limit: 10
 ```
 
+Command line equivalent [--job-concurrency-limit](#job-concurrency-limit).
+
 <h4 id="installer-config-reference-jobs-concurrency-loop-seconds">concurrency_loop_seconds</h4>
 
-_Number_. The wait time in seconds before scheduling the next batch of jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+_Number_. The wait time in seconds before scheduling the next batch of jobs. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -432,15 +481,19 @@ jobs:
   concurrency_loop_seconds: 30
 ```
 
+Command line equivalent [--job-concurrency-loop-seconds](#job-concurrency-loop-seconds).
+
 <h4 id="installer-config-reference-jobs-max-retries">max_retries</h4>
 
-_Number_. The maximum number of times to retry failed Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+_Number_. The maximum number of times to retry failed Jobs. _Optional_.
 
 ```yaml
 # example installer_config.yaml
 jobs:
   max_retries: 5
 ```
+
+Command line equivalent [--job-max-retries](#job-max-retries).
 
 <h2 id="installer-config-reference-enterprise">enterprise</h2>
 
@@ -466,6 +519,8 @@ enterprise:
   online_product_code: "myproductcode"
 ```
 
+Command line equivalent [--enterprise-online-product-code](#enterprise-online-product-code).
+
 <h4 id="installer-config-reference-enterprise-online-shared-key">online_shared_key</h4>
 
 _String_. The online shared key for your Enterprise account. _Required_.
@@ -475,6 +530,8 @@ _String_. The online shared key for your Enterprise account. _Required_.
 enterprise:
   online_shared_key: "mysharedkey"
 ```
+
+Command line equivalent [--enterprise-online-shared-key](#enterprise-online-shared-key).
 
 <h4 id="installer-config-reference-enterprise-online-api-key">online_api_key</h4>
 
@@ -486,6 +543,8 @@ enterprise:
   online_api_key: "myapikey"
 ```
 
+Command line equivalent [--enterprise-online-api-key](#enterprise-online-api-key).
+
 <h4 id="installer-config-reference-enterprise-online-license-key">online_license_key</h4>
 
 _String_. The online license key for your Enterprise account. _Required_.
@@ -495,6 +554,8 @@ _String_. The online license key for your Enterprise account. _Required_.
 enterprise:
   online_license_key: "mylicensekey"
 ```
+
+Command line equivalent [--enterprise-online-license-key](#enterprise-online-license-key).
 
 <h4 id="installer-config-reference-enterprise-customize">customize</h4>
 
@@ -506,7 +567,7 @@ _Dictionary_. Customizable option configuration. _Optional_.
 
 <h4 id="installer-config-reference-enterprise-customize-email-templates">email_templates</h4>
 
-_Boolean_. If true, generates email templates that can be customized. _Optional_.
+_Boolean_. If true, generates email templates that can be customized. _Optional_. See [customizing DoltLab emails](../guides/enterprise.md#customize-automated-emails) for more information.
 
 ```yaml
 # example installer_config.yaml
@@ -514,9 +575,11 @@ enterprise:
   email_templates: true
 ```
 
+Command line equivalent [--custom-email-templates](#custom-email-templates).
+
 <h4 id="installer-config-reference-enterprise-customize-logo">logo</h4>
 
-_String_. Absolute path to custom logo file. _Optional_.
+_String_. Absolute path to custom logo file. _Optional_. See [customizing DoltLab's logo](../guides/enterprise.md#use-custom-logo) for more information.
 
 ```yaml
 # example installer_config.yaml
@@ -524,9 +587,11 @@ enterprise:
   logo: "/path/to/custom/logo.png"
 ```
 
+Command line equivalent [--custom-logo](#custom-logo).
+
 <h4 id="installer-config-reference-enterprise-customize-color-overrides">color_overrides</h4>
 
-_Dictionary_. Color override options. _Optional_.
+_Dictionary_. Color override options. _Optional_. See [customizing DoltLab colors](../guides/enterprise.md#customize-colors) for more information.
 
 - [rgb_accent_1](#installer-config-reference-enterprise-color-overrides-rgb-accent-1)
 - [rgb_background_accent_1](#installer-config-reference-enterprise-color-overrides-rgb-background-accent-1)
@@ -539,7 +604,7 @@ _Dictionary_. Color override options. _Optional_.
 
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-accent-1">rgb_accent_1</h4>
 
-_String_. Comma separated RGB color used to replace accent 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace accent 1. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -549,9 +614,11 @@ enterprise:
       rgb_accent_1: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-accent-1](#custom-color-rgb-accent-1).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-accent-1">rgb_background_accent_1</h4>
 
-_String_. Comma separated RGB color used to replace background accent 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace background accent 1. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -561,9 +628,11 @@ enterprise:
       rgb_background_accent_1: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-background-accent-1](#custom-color-rgb-background-accent-1).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-gradient-start">rgb_background_gradient_start</h4>
 
-_String_. Comma separated RGB color used to replace background gradient start. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace background gradient start. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -573,9 +642,11 @@ enterprise:
       rgb_background_gradient_start: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-background-gradient-start](#custom-color-rgb-background-gradient-start).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-1">rgb_button_1</h4>
 
-_String_. Comma separated RGB color used to replace button 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace button 1. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -585,9 +656,11 @@ enterprise:
       rgb_button_1: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-button-1](#custom-color-rgb-button-1).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-2">rgb_button_2</h4>
 
-_String_. Comma separated RGB color used to replace button 2. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace button 2. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -597,9 +670,11 @@ enterprise:
       rgb_button_2: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-button-2](#custom-color-rgb-button-2).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-1">rgb_link_1</h4>
 
-_String_. Comma separated RGB color used to replace link 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace link 1. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -609,9 +684,11 @@ enterprise:
       rgb_link_1: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-link-1](#custom-color-rgb-link-1).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-2">rgb_link_2</h4>
 
-_String_. Comma separated RGB color used to replace link 2. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace link 2. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -621,9 +698,11 @@ enterprise:
       rgb_link_2: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-link-2](#custom-color-rgb-link-2).
+
 <h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-light">rgb_link_light</h4>
 
-_String_. Comma separated RGB color used to replace link light. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+_String_. Comma separated RGB color used to replace link light. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -633,9 +712,11 @@ enterprise:
       rgb_link_light: "5, 117, 245"
 ```
 
+Command line equivalent [--custom-color-rgb-link-light](#custom-color-rgb-link-light).
+
 <h4 id="installer-config-reference-enterprise-automated-backups">automated_backups</h4>
 
-_Dictionary_. Automated backups options. _Optional_.
+_Dictionary_. Automated backups options. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
 
 - [remote_url](#installer-config-reference-enterprise-automated-backups-remote-url)
 - [cron_schedule](#installer-config-reference-enterprise-automated-backups-cron-schedule)
@@ -650,7 +731,7 @@ _Dictionary_. Automated backups options. _Optional_.
 
 <h4 id="installer-config-reference-enterprise-automated-backups-remote-url">remote_url</h4>
 
-_String_. Remote url for pushing `doltlabdb` backups. _Required_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Remote url for pushing `doltlabdb` backups. _Required_.
 
 ```yaml
 # example installer_config.yaml
@@ -659,9 +740,11 @@ enterprise:
     remote_url: "aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name"
 ```
 
+Command line equivalent [--automated-dolt-backups-url](#automated-dolt-backups-url).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-cron-schedule">cron_schedule</h4>
 
-_String_. Cron schedule for backup frequency. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Cron schedule for backup frequency. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -670,9 +753,11 @@ enterprise:
     cron_schedule: "*/15 * * * *"
 ```
 
+Command line equivalent [--automated-dolt-backups-cron-schedule](#automated-dolt-backups-cron-schedule).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-backup-on-boot">backup_on_boot</h4>
 
-_Boolean_. If true, creates first backup when DoltLab is started. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_Boolean_. If true, creates first backup when DoltLab is started. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -681,9 +766,11 @@ enterprise:
     backup_on_boot: true
 ```
 
+Command line equivalent [--automated-dolt-backups-backup-on-boot](#automated-dolt-backups-backup-on-boot).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-aws-region">aws_region</h4>
 
-_String_. AWS region. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. AWS region. _Required_ if `remote_url` has scheme `aws://`.
 
 ```yaml
 # example installer_config.yaml
@@ -692,9 +779,11 @@ enterprise:
     aws_region: "us-west-2"
 ```
 
+Command line equivalent [--aws-region](#aws-region).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-aws-profile">aws_profile</h4>
 
-_String_. AWS profile name. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. AWS profile name. _Required_ if `remote_url` has scheme `aws://`.
 
 ```yaml
 # example installer_config.yaml
@@ -703,9 +792,11 @@ enterprise:
     aws_profile: "doltlab_backuper"
 ```
 
+Command line equivalent [--aws-profile](#aws-profile).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-aws-shared-credentials-file">aws_shared_credentials_file</h4>
 
-_String_. Absolute path to AWS shared credentials file. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Absolute path to AWS shared credentials file. _Required_ if `remote_url` has scheme `aws://`.
 
 ```yaml
 # example installer_config.yaml
@@ -714,9 +805,11 @@ enterprise:
     aws_shared_credentials_file: "/absolute/path/to/aws/credentials"
 ```
 
+Command line equivalent [--aws-shared-credentials-file](#aws-shared-credentials-file).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-aws-config-file">aws_config_file</h4>
 
-_String_. Absolute path to AWS config file. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Absolute path to AWS config file. _Required_ if `remote_url` has scheme `aws://`.
 
 ```yaml
 # example installer_config.yaml
@@ -725,9 +818,11 @@ enterprise:
     aws_config_file: "/absolute/path/to/aws/config"
 ```
 
+Command line equivalent [--aws-config-file](#aws-config-file).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-google-credentials-file">google_credentials_file</h4>
 
-_String_. Absolute path to Google cloud application credentials file. _Required_ if `remote_url` has scheme `gs://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Absolute path to Google cloud application credentials file. _Required_ if `remote_url` has scheme `gs://`.
 
 ```yaml
 # example installer_config.yaml
@@ -736,9 +831,11 @@ enterprise:
     google_credentials_file: "/absolute/path/to/gcloud/credentials"
 ```
 
+Command line equivalent [--google-creds-file](#google-creds-file).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-oci-config-file">oci_config_file</h4>
 
-_String_. Absolute path to Oracle cloud configuration file. _Required_ if `remote_url` has scheme `oci://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Absolute path to Oracle cloud configuration file. _Required_ if `remote_url` has scheme `oci://`.
 
 ```yaml
 # example installer_config.yaml
@@ -747,9 +844,11 @@ enterprise:
     oci_config_file: "/absolute/path/to/oci/config"
 ```
 
+Command line equivalent [--oci-config-file](#oci-config-file).
+
 <h4 id="installer-config-reference-enterprise-automated-backups-oci-key-file">oci_key_file</h4>
 
-_String_. Absolute path to Oracle cloud key file. _Required_ if `remote_url` has scheme `oci://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_String_. Absolute path to Oracle cloud key file. _Required_ if `remote_url` has scheme `oci://`.
 
 ```yaml
 # example installer_config.yaml
@@ -758,9 +857,11 @@ enterprise:
     oci_key_file: "/absolute/path/to/oci/key"
 ```
 
+Command line equivalent [--oci-key-file](#oci-key-file).
+
 <h4 id="installer-config-reference-enterprise-multihost">multihost</h4>
 
-_Dictionary_. Multi-host deployment options. _Optional_.
+_Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
 
 - [doltlabdb_only](#installer-config-reference-enterprise-multihost-doltlabdb-only)
 - [doltlabapi_only](#installer-config-reference-enterprise-multihost-doltlabapi-only)
@@ -771,7 +872,7 @@ _Dictionary_. Multi-host deployment options. _Optional_.
 
 <h4 id="installer-config-reference-enterprise-multihost-doltlabdb-only">doltlabdb_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabdb` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabdb` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -780,9 +881,11 @@ enterprise:
     doltlabdb_only: true
 ```
 
+Command line equivalent [--doltlabdb-only](#doltlabdb-only).
+
 <h4 id="installer-config-reference-enterprise-multihost-doltlabapi-only">doltlabapi_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabapi` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -791,9 +894,11 @@ enterprise:
     doltlabapi_only: true
 ```
 
+Command line equivalent [--doltlabapi-only](#doltlabapi-only).
+
 <h4 id="installer-config-reference-enterprise-multihost-doltlabremoteapi-only">doltlabremoteapi_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabremoteapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabremoteapi` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -802,9 +907,11 @@ enterprise:
     doltlabremoteapi_only: true
 ```
 
+Command line equivalent [--doltlabremoteapi-only](#doltlabremoteapi-only).
+
 <h4 id="installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only">doltlabfileserviceapi_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabfileserviceapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabfileserviceapi` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -813,9 +920,11 @@ enterprise:
     doltlabfileserviceapi_only: true
 ```
 
+Command line equivalent [--doltlabfileserviceapi-only](#doltlabfileserviceapi-only).
+
 <h4 id="installer-config-reference-enterprise-multihost-doltlabgraphql-only">doltlabgraphql_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabgraphql` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabgraphql` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -824,9 +933,11 @@ enterprise:
     doltlabgraphql_only: true
 ```
 
+Command line equivalent [--doltlabgraphql-only](#doltlabgraphql-only).
+
 <h4 id="installer-config-reference-enterprise-multihost-doltlabui-only">doltlabui_only</h4>
 
-_Boolean_. If true, makes deployment the `doltlabui` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Boolean_. If true, makes deployment the `doltlabui` service only. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -835,15 +946,19 @@ enterprise:
     doltlabui_only: true
 ```
 
+Command line equivalent [--doltlabui-only](#doltlabui-only).
+
 <h4 id="installer-config-reference-enterprise-super-admins">super_admins</h4>
 
-_String_ _Array_. Email addresses for users granted "super admin" privileges. See [super admins](./enterprise.md#add-super-admins) for more information.
+_String_ _Array_. Email addresses for users granted "super admin" privileges.
 
 ```yaml
 # example installer_config.yaml
 enterprise:
   super_admins: ["admin1@email.com", "admin2@gmail.com"]
 ```
+
+Command line equivalent [--super-admin-email](#super-admin-email).
 
 <h4 id="installer-config-reference-enterprise-saml">saml</h4>
 
@@ -863,6 +978,8 @@ enterprise:
     metadata_descriptor_file: "/absolute/path/to/metadata/descriptor/file"
 ```
 
+Command line equivalent [--sso-saml-metadata-descriptor](#sso-saml-metadata-descriptor).
+
 <h4 id="installer-config-reference-enterprise-saml-cert-common-name">cert_common_name</h4>
 
 _String_. Common name to use in generated SAML certificate. _Required_.
@@ -873,6 +990,8 @@ enterprise:
   saml:
     cert_common_name: "mydoltlabcommonname"
 ```
+
+Command line equivalent [--sso-saml-cert-common-name](#sso-saml-cert-common-name).
 
 # Command Line Interface Reference
 
