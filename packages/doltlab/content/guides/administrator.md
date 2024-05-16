@@ -23,6 +23,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 17. [Serve DoltLab over HTTPS natively](#doltlab-https-natively)
 18. [Improve DoltLab performance](#doltlab-performance)
 19. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
+20. [Installer configuration file reference](#installer-config-reference)
 
 <h1 id="issues-release-notes">File issues and view release notes</h1>
 
@@ -334,7 +335,26 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 <h1 id="connect-smtp-server">Connect DoltLab to an SMTP server</h1>
 
-DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user `admin` can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server using the following arguments with the `installer`. The arguments you supply will be based on the authentication requires of your SMTP server.
+DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server by editing `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp). 
+
+```yaml
+# installer_config.yaml
+smtp:
+  auth_method: plain
+  host: smtp.gmail.com
+  port: 587
+  no_reply_email: me@gmail.com
+  username: me@gmail.com
+  password: mypassword
+```
+
+Save the changes to `./installer-config.yaml` then run the `installer` to regenerate DoltLab assets that enable connection to your SMTP server.
+
+```bash
+./installer
+```
+
+Alternatively, instead of using `./installer_config.yaml`, the `installer` can be run with the following flag arguments to configure DoltLab to connect to your SMTP server.
 
 `--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.  
 `--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.  
@@ -346,9 +366,30 @@ DoltLab's most basic configuration does not require connection to an SMTP server
 
 <h1 id="smtp-implicit-tls">Connect DoltLab to an SMTP server with implicit TLS</h1>
 
-Use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
+Edit `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp) set `smtp.implicit_tls` as `true`.
 
-Additionally, TLS verification can be skipped by adding the additional argument `-emailInsecureTLS`.
+```yaml
+# installer_config.yaml
+smtp:
+  implicit_tls: true
+```
+
+To skip TLS verification, set `smtp.insecure_tls` as `true`.
+
+```yaml
+# installer_config.yaml
+smtp:
+  implicit_tls: true
+  insecure_tls: true
+```
+
+Save these changes, then re-run the `installer`.
+
+```bash
+./installer
+```
+
+Alternatively, use `--smtp-implicit-tls=true` with the `installer` to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
 
 <h1 id="troubleshoot-smtp-connection">Troubleshoot SMTP server connection problems</h1>
 
@@ -454,7 +495,26 @@ Importantly, there have been times when these passwords do not work as expected 
 
 In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
 
-After you have the password, you can configure DoltLab to use it by stopping your running DoltLab, running the installer with the proper SMTP configuration, and running the newly generated `start.sh`.
+After you have the password, you can configure DoltLab to use it by stopping your running DoltLab and editing the `./installer_config.yaml` to [configure connection to Gmail's SMTP server](#installer-config-reference-smtp).
+
+```yaml
+# installer_config.yaml
+smtp:
+  auth_method: plain
+  host: smtp.gmail.com
+  port: 587
+  no_reply_email: tim@dolthub.com
+  username: tim@dolthub.com
+  password: "xxxx xxxx xxxx xxxx"
+```
+
+Save these changes and rerun the `installer` to regenerate assets that will connect your DoltLab to Gmail's SMTP server.
+
+```bash
+./installer
+```
+
+Alternatively, you can run the `installer` with flag arguments to configure SMTP server connection, if you don't want to use `./installer_config.yaml`:
 
 ```sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
@@ -488,7 +548,6 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
 
-2024-05-02T19:11:03.397Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh 
 [+] Running 7/7
  ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s 
@@ -501,13 +560,28 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh
 ubuntu@ip-10-2-0-24:~/doltlab$ 
 ```
 
+Running the newly generated `./start.sh` will start DoltLab connected to Gmail.
+
 <h1 id="prevent-unauthorized-users">Prevent unauthorized user account creation</h1>
 
 DoltLab supports explicit email whitelisting to prevent account creation by unauthorized users.
 
-To only permit whitelisted emails to create accounts on your DoltLab instance, run the `installer` binary with `--white-list-all-users=false`, which disables automatically whitelisting all users.
+To only permit whitelisted emails to create accounts on your DoltLab instance, edit `./installer_config.yaml` to [configure explicit email whitelisting](#installer-config-whitelist-all-users).
 
-Next, to whitelist an email for account creation in your instance, you will need to insert their email address into the `email_whitelist_elements` table.
+```yaml
+# installer_config.yaml
+whitelist_all_user: false
+```
+
+Save these changes, then rerun the `installer` to regenerate DoltLab assets that will require explicit whitelisting of new user accounts.
+
+```bash
+./installer
+```
+
+Alternatively, run the `installer` with `--white-list-all-users=false`, which disables automatically whitelisting all users.
+
+Next, once you've restarted you DoltLab instance with the regenerated `installer` assets, to whitelist an email for account creation in your instance, you will need to insert their email address into the `email_whitelist_elements` table.
 
 To do this run the script generated by the `installer`, called `./doltlabdb/shell-db.sh`.
 
@@ -550,7 +624,20 @@ As a result, DoltLab may consume additional memory and disk, depending on the nu
 
 By default, DoltLab collects first-party metrics for deployed instances. We use DoltLab's metrics to determine how many resources to allocate toward its development and improvement.
 
-To disable first-party metrics, run the `installer` with `--disable-usage-metrics=true`.
+Metrics can be disabled by setting the [metrics_disabled](#installer-config-reference-metrics-disabled) field of the `./installer_config.yaml`:
+
+```yaml
+# installer_config.yaml
+metrics_disabled: true
+```
+
+Save these changes, then rerun the `installer` to regenerate DoltLab assets that disable usage metrics.
+
+```bash
+./installer
+```
+
+Alternatively, to disable first-party metrics using command line arguments, run the `installer` with `--disable-usage-metrics=true`.
 
 <h1 id="use-domain">Use a domain name with DoltLab</h1>
 
@@ -564,7 +651,22 @@ Next, we should associate the EIP with our DoltLab host by following [these step
 
 Finally, we can provision a domain name for the DoltLab host through [AWS Route 53](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html). After registering the new domain name, we need to create an `A` record that's attached to the EIP of the DoltLab host. To do so, follow the steps for creating records outlined [here](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resource-record-sets-creating.html).
 
-Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and rerun the `installer` with `--host=yourdomain.com`, then restart your DoltLab instance.
+Your DoltLab host should now be accessible via your new domain name. You can now stop your DoltLab server and update the `host` field in your `./installer_config.yaml`.
+
+```yaml
+# installer_config.yaml
+host: "yourdomain.com"
+```
+
+Save these changes, the rerun the `installer` to regenerate DoltLab assets the use your new domain name.
+
+```yaml
+./installer
+```
+
+Alternatively, if you want to use command line flags instead, rerun the `installer` with `--host=yourdomain.com`.
+
+Restart your DoltLab instance with `./start.sh`.
 
 In the event you are configuring your domain name with an Elastic Load Balancer, ensure that it specifies Target Groups for each of the ports required to operate DoltLab, `80`, `100`, `4321`, and `50051`.
 
@@ -623,9 +725,26 @@ This instance is now ready for a DoltLab connection.
 
 <h2>Rerun DoltLab's Installer</h2>
 
-To connect DoltLab to `my-doltlab-db-1`, ensure that your DoltLab instance is stopped. Next, rerun the `installer` with `--doltlabdb-host` referring to the host name of the Hosted Dolt instance, `--doltlabdb-port` referring to the port, and `--doltlabdb-tls-skip-verify=true`.
+To connect DoltLab to `my-doltlab-db-1`, ensure that your DoltLab instance is stopped. 
 
-There's one additional edit to the `docker-compose.yaml` file to make before we can start DoltLab. Edit the value of the `-doltHost`argument in the `doltlabapi.command` section to match the host of the primary `my-doltlab-db-1` host. In our example, this would be `dolthub-my-doltlab-db-1.dbs.hosted.doltdb.com`.
+Next, edit the `services.doltlabdb.host`, `services.doltlabdb.port`, and `services.doltlabdb.tls_skip_verify` fields of the `installer_config.yaml`.
+
+```yaml
+# installer_config.yaml
+services:
+  doltlabdb:
+    host: "dolthub-my-doltlab-db-1.dbs.hosted.doltdb.com"
+    port: 3306
+    tls_skip_verify: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will use your hosted instance as DoltLab's application database.
+
+```bash
+./installer
+```
+
+Alternatively, rerun the `installer` with `--doltlabdb-host` referring to the host name of the Hosted Dolt instance, `--doltlabdb-port` referring to the port, and `--doltlabdb-tls-skip-verify=true` if you'd prefer to use command line arguments.
 
 ```bash
 ./installer \
@@ -634,8 +753,6 @@ There's one additional edit to the `docker-compose.yaml` file to make before we 
 --doltlabdb-port=3306 \
 --doltlabdb-tls-skip-verify=true
 ```
-
-Make sure that the `DOLT_PASSWORD` environment variable matches the password you used when creating user `dolthubadmin`, and `DOLTHUBAPI_PASSWORD` matches the password you used when creating user `dolthubapi`.
 
 Start DoltLab using the `./start.sh` script generated by the `installer`. Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
 
@@ -727,3 +844,353 @@ Next, edit the inbound rules for the security group attached to the NLB you crea
 On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
 
 Restart your DoltLab instance supplying this DNS name as the `--host` to the `installer`, and your DoltLab instance will now be ready to run exclusively through the NLB.
+
+<h1 id="installer-config-reference">Installer configuration file reference</h1>
+
+DoltLab >= `v2.1.4` uses a configuration file, `./installer_config.yaml`, to configure the `installer`. Though the `installer` can still be used with command line flags, this file makes using the `installer` much, much easier.
+
+The following are top-level `installer_config.yaml` options:
+
+- [version](#installer-config-reference-version)
+- [host](#installer-config-reference-host)
+- [docker_network](#installer-config-reference-docker-network)
+- [metrics_disabled](#installer-config-reference-metrics-disabled)
+- [whitelist_all_users](#installer-config-whitelist-all-users)
+- [services](#installer-config-reference-services)
+- [default_user](#installer-config-reference-default-user)
+- [smtp](#installer-config-reference-smtp)
+- [scheme](#installer-config-reference-scheme)
+- [tls](#installer-config-reference-tls)
+- [jobs](#installer-config-reference-jobs)
+- [enterprise](#installer-config-reference-enterprise)
+
+<h2 id="installer-config-reference-version">version</h2>
+
+_String_. The version of the configuration file and DoltLab. _Required_.
+
+```yaml
+# example installer_config.yaml
+version: v2.1.4
+```
+
+<h2 id="installer-config-reference-host">host</h2>
+
+_String_. The hostname or IP address of the host running DoltLab. _Required_.
+
+```yaml
+# example installer_config.yaml
+host: mydoltlab.mycompany.com
+```
+
+```yaml
+# example installer_config.yaml
+host: 123.456.78.90
+```
+
+<h2 id="installer-config-reference-docker-network">docker_network</h2>
+
+_String_. The name of the docker network used for DoltLab, defaults to `doltlab`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+docker_network: doltlab
+```
+
+<h2 id="installer-config-reference-metrics-disabled">metrics_disabled</h2>
+
+_Boolean_. If true, disables first party usage metrics for a DoltLab instance, defaults to `false`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+metrics_disabled: false
+```
+
+<h2 id="installer-config-reference-whitelist-all-users">whitelist_all_users</h2>
+
+_Boolean_. If true, allows any user to create an account on a DoltLab instance, defaults to `true`. _Optional_
+
+```yaml
+# example installer_config.yaml
+whitelist_all_users: true
+```
+
+See [prevent unauthorized user account creation](#prevent-unauthorized-users) for more information.
+
+<h2 id="installer-config-reference-services">services</h2>
+
+_Dictionary_. Configuration options for DoltLab's various services. _Required_.
+
+- [doltlabdb](#installer-config-reference-services-doltlabdb)
+
+<h4 id="installer-config-reference-services-doltlabdb">doltlabdb</h4>
+
+_Dictionary_. Configuration options for `doltlabdb`. _Required_.
+
+- [admin_password](#installer-config-reference-services-doltlabdb-admin-password)
+- [dolthubapi_password](#installer-config-reference-services-doltlabdb-dolthubapi-password)
+
+<h4 id="installer-config-reference-services-doltlabdb-admin-password">admin_password</h4>
+
+_String_. The password used to for creating user `dolthubadmin` in DoltLab's application database. _Required_.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: "mypassword"
+```
+
+<h4 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h4>
+
+_String_. The password used to for creating user `dolthubapi` in DoltLab's application database. _Required_.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    dolthubapi_password: mypassword
+```
+
+<h2 id="installer-config-reference-default-user">default_user</h2>
+
+_Dictionary_. Configuration options for DoltLab's default user. _Required_.
+
+- [name](#installer-config-reference-services-default-user-name)
+- [password](#installer-config-reference-services-default-user-password)
+- [email](#installer-config-reference-services-default-user-email)
+
+<h4 id="installer-config-reference-default-user-name">name</h4>
+
+_String_. The username of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  name: admin
+```
+
+<h4 id="installer-config-reference-default-user-password">password</h4>
+
+_String_. The password of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  password: mypassword
+```
+
+<h4 id="installer-config-reference-default-user-email">email</h4>
+
+_String_. The email address of the default user. _Required_.
+
+```yaml
+# example installer_config.yaml
+default_user:
+  email: admin@localhost
+```
+
+<h2 id="installer-config-reference-smtp">smtp</h2>
+
+_Dictionary_. The configuration options for an external SMTP server. _Optional_
+
+- [auth_method](#installer-config-reference-smtp-auth-method)
+- [host](#installer-config-reference-smtp-host)
+- [port](#installer-config-reference-smtp-port)
+- [no_reply_email](#installer-config-reference-smtp-no-reply-email)
+- [username](#installer-config-reference-smtp-username)
+- [password](#installer-config-reference-smtp-password)
+- [oauth_token](#installer-config-reference-smtp-oauth-token)
+- [identity](#installer-config-reference-smtp-identity)
+- [trace](#installer-config-reference-smtp-trace)
+- [implicit_tls](#installer-config-reference-smtp-implicit-tls)
+- [insecure_tls](#installer-config-reference-smtp-insecure-tls)
+
+<h4 id="installer-config-reference-smtp-auth-method">auth_method</h4>
+
+_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  auth_method: plain
+```
+
+<h4 id="installer-config-reference-smtp-host">host</h4>
+
+_String_. The host name of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  host: smtp.gmail.com
+```
+
+<h4 id="installer-config-reference-smtp-port">port</h4>
+
+_Number_. The port of the SMTP server. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  port: 587
+```
+
+<h4 id="installer-config-reference-smtp-no-reply-email">no_reply_email</h4>
+
+_String_. The email address used to send emails from DoltLab. _Required_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  no_reply_email: admin@localhost
+```
+
+<h4 id="installer-config-reference-smtp-username">username</h4>
+
+_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  username: mysmtpusername
+```
+
+<h4 id="installer-config-reference-smtp-password">password</h4>
+
+_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  password: mypassword
+```
+
+<h4 id="installer-config-reference-smtp-oauth-token">oauth_token</h4>
+
+_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  oauth_token: myoauthtoken
+```
+
+<h4 id="installer-config-reference-smtp-identity">identity</h4>
+
+_String_. The SMTP server identity. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  identity: mysmtpidentity
+```
+
+<h4 id="installer-config-reference-smtp-trace">trace</h4>
+
+_String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  trace: mysmtptrace
+```
+
+<h4 id="installer-config-reference-smtp-implicit-tls">implicit_tls</h4>
+
+_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  implicit_tls: false
+```
+
+<h4 id="installer-config-reference-smtp-insecure-tls">insecure_tls</h4>
+
+_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+
+```yaml
+# example installer_config.yaml
+smtp:
+  insecure_tls: false
+```
+
+<h2 id="installer-config-reference-scheme">scheme</h2>
+
+_String_. The HTTP scheme of the DoltLab deployment, defaults to `http`. _Optional_.
+
+```yaml
+# example installer_config.yaml
+scheme: http
+```
+
+See [how to serve DoltLab over HTTPS](#doltlab-https-natively) for more information.
+
+<h2 id="installer-config-reference-tls">tls</h2>
+
+_Dictionary_. TLS configuration options. _Optional_.
+
+- [cert_chain](#installer-config-reference-tls-cert-chain)
+- [private_key](installer-config-reference-tls-private-key)
+
+<h4 id="installer-config-reference-tls-cert-chain">cert_chain</h4>
+
+_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+
+```yaml
+# example installer_config.yaml
+tls:
+  private_key: /path/to/tls/private/key.pem
+```
+
+<h4 id="installer-config-reference-tls-private-key">private_key</h4>
+
+_String_. The absolute path to a TLS private key with `.pem` extension. _Required_ for serving DoltLab [natively over HTTPS](doltlab-https-natively).
+
+```yaml
+# example installer_config.yaml
+tls:
+  private_key: /path/to/tls/private/key.pem
+```
+
+<h2 id="installer-config-reference-jobs">jobs</h2>
+
+_Dictionary_. Job configuration options. _Optional_.
+
+- [concurrency_limit](#installer-config-reference-jobs-concurrency-limit)
+- [concurrency_loop_seconds](#installer-config-reference-jobs-concurrency-loop-seconds)
+- [max_retries](#installer-config-reference-jobs-max-retries)
+
+<h4 id="installer-config-reference-jobs-concurrency-limit">concurrency_limit</h4>
+
+_Number_. The maximum number of concurrent Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  concurrency_limit: 10
+```
+
+<h4 id="installer-config-reference-jobs-concurrency-loop-seconds">concurrency_loop_seconds</h4>
+
+_Number_. The wait time in seconds before scheduling the next batch of jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  concurrency_loop_seconds: 30
+```
+
+<h4 id="installer-config-reference-jobs-max-retries">max_retries</h4>
+
+_Number_. The maximum number of times to retry failed Jobs. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+
+```yaml
+# example installer_config.yaml
+jobs:
+  max_retries: 5
+```
+
+<h2 id="installer-config-reference-enterprise">enterprise</h2>
+
+See the [Enterprise guide](./enterprise.md) for the `enterprise` section reference.
