@@ -12,6 +12,8 @@
   - [Start DoltLab](guides/installation/start-doltlab.md)
 - [Administrator](guides/administrator.md)
 - [Enterprise](guides/enterprise.md)
+- [Reference](guides/reference.md)
+  -[Installer](guides/reference/installer.md)
 - [Features](guides/features/README.md)
   - [API](guides/features/api.md)
   - [Workspaces](guides/features/workspaces.md)
@@ -29,6 +31,10 @@
   - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
 - [Upgrade](older/upgrading.md)
 - [Administrator Guide](older/pre-installer-administrator-guide.md)
+
+## Reference
+
+- [Installer](reference/installer.md)
 
 ## Release Notes
 
