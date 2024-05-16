@@ -178,16 +178,49 @@ Command line equivalent [--white-list-all-users](#white-list-all-users).
 
 <h2 id="installer-config-reference-services">services</h2>
 
-_Dictionary_. Configuration options for DoltLab's various services. _Required_.
+_Dictionary_. Configuration options for DoltLab's various services. `doltlabdb` passwords are _Required_ in single host deployments, other service definitions are _Required_ for multi-host deployments.
 
 - [doltlabdb](#installer-config-reference-services-doltlabdb)
+- [doltlabapi](#installer-config-reference-services-doltlabapi)
+- [doltlabremoteapi](#installer-config-reference-services-doltlabremoteapi)
+- [doltlabfileserviceapi](#installer-config-reference-services-doltlabfileserviceapi)
+- [doltlabgraphql](#installer-config-reference-services-doltlabgraphql)
+- [doltlabui](#installer-config-reference-services-doltlabui)
 
 <h4 id="installer-config-reference-services-doltlabdb">doltlabdb</h4>
 
-_Dictionary_. Configuration options for `doltlabdb`. _Required_.
+_Dictionary_. Configuration options for `doltlabdb`.
 
+- [host](#installer-config-reference-services-doltlabdb-host)
+- [port](#installer-config-reference-services-doltlabdb-port)
 - [admin_password](#installer-config-reference-services-doltlabdb-admin-password)
 - [dolthubapi_password](#installer-config-reference-services-doltlabdb-dolthubapi-password)
+
+<h4 id="installer-config-reference-services-doltlabdb-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for multi-host deployments.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabdb-host](#doltlabdb-host).
+
+<h4 id="installer-config-reference-services-doltlabdb-port">port</h4>
+
+_Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    port: 3306
+```
+
+Command line equivalent [--doltlabdb-port](#doltlabdb-port).
 
 <h4 id="installer-config-reference-services-doltlabdb-admin-password">admin_password</h4>
 
@@ -214,6 +247,199 @@ services:
 ```
 
 Command line equivalent [--doltlabdb-dolthubapi-password](#doltlabdb-dolthubapi-password).
+
+<h4 id="installer-config-reference-services-doltlabapi">doltlabapi</h4>
+
+_Dictionary_. Configuration options for `doltlabapi`.
+
+- [host](#installer-config-reference-services-doltlabapi-host)
+- [port](#installer-config-reference-services-doltlabapi-port)
+- [csv_port](#installer-config-reference-services-doltlabapi-csv-port)
+
+<h4 id="installer-config-reference-services-doltlabapi-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabapi-host](#doltlabapi-host).
+
+<h4 id="installer-config-reference-services-doltlabapi-port">port</h4>
+
+_Number_. The port for `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    port: 3306
+```
+
+Command line equivalent [--doltlabapi-port](#doltlabapi-port).
+
+<h4 id="installer-config-reference-services-doltlabapi-csv-port">csv_port</h4>
+
+_Number_. The port for `doltlabapi`'s csv service. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    csv_port: 3306
+```
+
+Command line equivalent [--doltlabapi-csv-port](#doltlabapi-csv-port).
+
+<h4 id="installer-config-reference-services-doltlabremoteapi">doltlabremoteapi</h4>
+
+_Dictionary_. Configuration options for `doltlabremoteapi`.
+
+- [host](#installer-config-reference-services-doltlabremoteapi-host)
+- [port](#installer-config-reference-services-doltlabremoteapi-port)
+- [file_server_port](#installer-config-reference-services-doltlabremoteapi-file-server-port)
+
+<h4 id="installer-config-reference-services-doltlabremoteapi-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabremoteapi-host](#doltlabremoteapi-host).
+
+<h4 id="installer-config-reference-services-doltlabremoteapi-port">port</h4>
+
+_Number_. The port for `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    port: 3306
+```
+
+Command line equivalent [--doltlabremoteapi-port](#doltlabremoteapi-port).
+
+<h4 id="installer-config-reference-services-doltlabremoteapi-file-server-port">port</h4>
+
+_Number_. The port for `doltlabremoteapi`'s file server. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    file_server_port: 100
+```
+
+Command line equivalent [--doltlabremoteapi-file-server-port](#doltlabremoteapi-file-server-port).
+
+<h4 id="installer-config-reference-services-doltlabfileserviceapi">doltlabfileserviceapi</h4>
+
+_Dictionary_. Configuration options for `doltlabapifileserviceapi`.
+
+- [host](#installer-config-reference-services-doltlabfileserviceapi-host)
+- [port](#installer-config-reference-services-doltlabfileserviceapi-port)
+
+<h4 id="installer-config-reference-services-doltlabfileserviceapi-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabfileserviceapi:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabfileserviceapi-host](#doltlabfileserviceapi-host).
+
+<h4 id="installer-config-reference-services-doltlabfileserviceapi-port">port</h4>
+
+_Number_. The port for `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabfileserviceapi:
+    port: 4321
+```
+
+Command line equivalent [--doltlabfileserviceapi-port](#doltlabfileserviceapi-port).
+
+<h4 id="installer-config-reference-services-doltlabgraphql">doltlabgraphql</h4>
+
+_Dictionary_. Configuration options for `doltlabgraphql`.
+
+- [host](#installer-config-reference-services-doltlabgraphql-host)
+- [port](#installer-config-reference-services-doltlabgraphql-port)
+
+<h4 id="installer-config-reference-services-doltlabgraphql-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabgraphql:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabgraphql-host](#doltlabgraphql-host).
+
+<h4 id="installer-config-reference-services-doltlabgraphql-port">port</h4>
+
+_Number_. The port for `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabgraphql:
+    port: 9000
+```
+
+Command line equivalent [--doltlabgraphql-port](#doltlabgraphql-port).
+
+<h4 id="installer-config-reference-services-doltlabui">doltlabui</h4>
+
+_Dictionary_. Configuration options for `doltlabui`.
+
+- [host](#installer-config-reference-services-doltlabui-host)
+- [port](#installer-config-reference-services-doltlabui-port)
+
+<h4 id="installer-config-reference-services-doltlabui-host">host</h4>
+
+_String_. The host name or IP address of the host running `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabui:
+    host: "127.0.0.1"
+```
+
+Command line equivalent [--doltlabui-host](#doltlabui-host).
+
+<h4 id="installer-config-reference-services-doltlabui-port">port</h4>
+
+_Number_. The port for `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabui:
+    port: 80
+```
+
+Command line equivalent [--doltlabui-port](#doltlabui-port).
 
 <h2 id="installer-config-reference-default-user">default_user</h2>
 
@@ -716,7 +942,7 @@ Command line equivalent [--custom-color-rgb-link-light](#custom-color-rgb-link-l
 
 <h4 id="installer-config-reference-enterprise-automated-backups">automated_backups</h4>
 
-_Dictionary_. Automated backups options. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+_Dictionary_. Automated backups options. _Optional_. See [automated backups](../guides/enterprise.md#doltlab-automated-backups) for more information.
 
 - [remote_url](#installer-config-reference-enterprise-automated-backups-remote-url)
 - [cron_schedule](#installer-config-reference-enterprise-automated-backups-cron-schedule)
@@ -861,7 +1087,7 @@ Command line equivalent [--oci-key-file](#oci-key-file).
 
 <h4 id="installer-config-reference-enterprise-multihost">multihost</h4>
 
-_Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+_Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment) for more information.
 
 - [doltlabdb_only](#installer-config-reference-enterprise-multihost-doltlabdb-only)
 - [doltlabapi_only](#installer-config-reference-enterprise-multihost-doltlabapi-only)
@@ -962,7 +1188,7 @@ Command line equivalent [--super-admin-email](#super-admin-email).
 
 <h4 id="installer-config-reference-enterprise-saml">saml</h4>
 
-_Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](./enterprise.md#doltlab-single-sign-on) for more information.
+_Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](../guides/enterprise.md#doltlab-single-sign-on) for more information.
 
 - [metadata_descriptor_file](#installer-config-reference-enterprise-saml-metadata-descriptor-file)
 - [cert_common_name](#installer-config-reference-enterprise-saml-cert-common-name)
