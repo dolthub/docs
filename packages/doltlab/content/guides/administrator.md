@@ -1229,4 +1229,432 @@ jobs:
 
 <h2 id="installer-config-reference-enterprise">enterprise</h2>
 
-See the [Enterprise guide](./enterprise.md) for the `enterprise` section reference.
+_Dictionary_. Enterprise configuration options. _Optional_.
+
+- [online_product_code](#installer-config-reference-enterprise-online-product-code)
+- [online_shared_key](#installer-config-reference-enterprise-online-shared-key)
+- [online_api_key](#installer-config-reference-enterprise-online-api-key)
+- [online_license_key](#installer-config-reference-enterprise-online-license-key)
+- [customize](#installer-config-reference-enterprise-customize)
+- [automated_backups](#installer-config-reference-enterprise-automated-backups)
+- [multihost](#installer-config-reference-enterprise-multihost)
+- [super_admins](#installer-config-reference-enterprise-super-admins)
+- [saml](#installer-config-reference-enterprise-saml)
+
+<h4 id="installer-config-reference-enterprise-online-product-code">online_product_code</h4>
+
+_String_. The online product code for your Enterprise account. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  online_product_code: "myproductcode"
+```
+
+<h4 id="installer-config-reference-enterprise-online-shared-key">online_shared_key</h4>
+
+_String_. The online shared key for your Enterprise account. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  online_shared_key: "mysharedkey"
+```
+
+<h4 id="installer-config-reference-enterprise-online-api-key">online_api_key</h4>
+
+_String_. The online api key for your Enterprise account. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  online_api_key: "myapikey"
+```
+
+<h4 id="installer-config-reference-enterprise-online-license-key">online_license_key</h4>
+
+_String_. The online license key for your Enterprise account. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  online_license_key: "mylicensekey"
+```
+
+<h4 id="installer-config-reference-enterprise-customize">customize</h4>
+
+_Dictionary_. Customizable option configuration. _Optional_.
+
+- [email_templates](#installer-config-reference-enterprise-customize-email-templates)
+- [logo](#installer-config-reference-enterprise-customize-logo)
+- [color_overrides](#installer-config-reference-enterprise-customize-color-overrides)
+
+<h4 id="installer-config-reference-enterprise-customize-email-templates">email_templates</h4>
+
+_Boolean_. If true, generates email templates that can be customized. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  email_templates: true
+```
+
+<h4 id="installer-config-reference-enterprise-customize-logo">logo</h4>
+
+_String_. Absolute path to custom logo file. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  logo: "/path/to/custom/logo.png"
+```
+
+<h4 id="installer-config-reference-enterprise-customize-color-overrides">color_overrides</h4>
+
+_Dictionary_. Color override options. _Optional_.
+
+- [rgb_accent_1](#installer-config-reference-enterprise-color-overrides-rgb-accent-1)
+- [rgb_background_accent_1](#installer-config-reference-enterprise-color-overrides-rgb-background-accent-1)
+- [rgb_background_gradient_start](#installer-config-reference-enterprise-color-overrides-rgb-background-gradient-start)
+- [rgb_button_1](#installer-config-reference-enterprise-color-overrides-rgb-button-1)
+- [rgb_button_2](#installer-config-reference-enterprise-color-overrides-rgb-button-2)
+- [rgb_link_1](#installer-config-reference-enterprise-color-overrides-rgb-link-1)
+- [rgb_link_2](#installer-config-reference-enterprise-color-overrides-rgb-link-2)
+- [rgb_link_light](#installer-config-reference-enterprise-color-overrides-rgb-link-light)
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-accent-1">rgb_accent_1</h4>
+
+_String_. Comma separated RGB color used to replace accent 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_accent_1: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-accent-1">rgb_background_accent_1</h4>
+
+_String_. Comma separated RGB color used to replace background accent 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_background_accent_1: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-gradient-start">rgb_background_gradient_start</h4>
+
+_String_. Comma separated RGB color used to replace background gradient start. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_background_gradient_start: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-1">rgb_button_1</h4>
+
+_String_. Comma separated RGB color used to replace button 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_button_1: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-2">rgb_button_2</h4>
+
+_String_. Comma separated RGB color used to replace button 2. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_button_2: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-1">rgb_link_1</h4>
+
+_String_. Comma separated RGB color used to replace link 1. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_link_1: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-2">rgb_link_2</h4>
+
+_String_. Comma separated RGB color used to replace link 2. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_link_2: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-light">rgb_link_light</h4>
+
+_String_. Comma separated RGB color used to replace link light. _Optional_. See [customizing DoltLab colors](./enterprise.md#customize-colors) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_link_light: "5, 117, 245"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups">automated_backups</h4>
+
+_Dictionary_. Automated backups options. _Optional_.
+
+- [remote_url](#installer-config-reference-enterprise-automated-backups-remote-url)
+- [cron_schedule](#installer-config-reference-enterprise-automated-backups-cron-schedule)
+- [backup_on_boot](#installer-config-reference-enterprise-automated-backups-backup-on-boot)
+- [aws_region](#installer-config-reference-enterprise-automated-backups-aws-region)
+- [aws_profile](#installer-config-reference-enterprise-automated-backups-aws-profile)
+- [aws_shared_credentials_file](#installer-config-reference-enterprise-automated-backups-aws-shared-credentials-file)
+- [aws_config_file](#installer-config-reference-enterprise-automated-backups-aws-config-file)
+- [google_credentials_file](#installer-config-reference-enterprise-automated-backups-google-credentials-file)
+- [oci_config_file](#installer-config-reference-enterprise-automated-backups-oci-config-file)
+- [oci_key_file](#installer-config-reference-enterprise-automated-backups-oci-key-file)
+
+<h4 id="installer-config-reference-enterprise-automated-backups-remote-url">remote_url</h4>
+
+_String_. Remote url for pushing `doltlabdb` backups. _Required_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    remote_url: "aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-cron-schedule">cron_schedule</h4>
+
+_String_. Cron schedule for backup frequency. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    cron_schedule: "*/15 * * * *"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-backup-on-boot">backup_on_boot</h4>
+
+_Boolean_. If true, creates first backup when DoltLab is started. _Optional_. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    backup_on_boot: true
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-aws-region">aws_region</h4>
+
+_String_. AWS region. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    aws_region: "us-west-2"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-aws-profile">aws_profile</h4>
+
+_String_. AWS profile name. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    aws_profile: "doltlab_backuper"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-aws-shared-credentials-file">aws_shared_credentials_file</h4>
+
+_String_. Absolute path to AWS shared credentials file. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    aws_shared_credentials_file: "/absolute/path/to/aws/credentials"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-aws-config-file">aws_config_file</h4>
+
+_String_. Absolute path to AWS config file. _Required_ if `remote_url` has scheme `aws://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    aws_config_file: "/absolute/path/to/aws/config"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-google-credentials-file">google_credentials_file</h4>
+
+_String_. Absolute path to Google cloud application credentials file. _Required_ if `remote_url` has scheme `gs://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    google_credentials_file: "/absolute/path/to/gcloud/credentials"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-oci-config-file">oci_config_file</h4>
+
+_String_. Absolute path to Oracle cloud configuration file. _Required_ if `remote_url` has scheme `oci://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    oci_config_file: "/absolute/path/to/oci/config"
+```
+
+<h4 id="installer-config-reference-enterprise-automated-backups-oci-key-file">oci_key_file</h4>
+
+_String_. Absolute path to Oracle cloud key file. _Required_ if `remote_url` has scheme `oci://`. See [automated backups](./enterprise.md#doltlab-automated-backups) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  automated_backups:
+    oci_key_file: "/absolute/path/to/oci/key"
+```
+
+<h4 id="installer-config-reference-enterprise-multihost">multihost</h4>
+
+_Dictionary_. Multi-host deployment options. _Optional_.
+
+- [doltlabdb_only](#installer-config-reference-enterprise-multihost-doltlabdb-only)
+- [doltlabapi_only](#installer-config-reference-enterprise-multihost-doltlabapi-only)
+- [doltlabremoteapi_only](#installer-config-reference-enterprise-multihost-doltlabremoteapi-only)
+- [doltlabfileserviceapi_only](#installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only)
+- [doltlabgraphql_only](#installer-config-reference-enterprise-multihost-doltlabgraphql-only)
+- [doltlabui_only](#installer-config-reference-enterprise-multihost-doltlabui-only)
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabdb-only">doltlabdb_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabdb` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabdb_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabapi-only">doltlabapi_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabapi_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabremoteapi-only">doltlabremoteapi_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabremoteapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabremoteapi_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only">doltlabfileserviceapi_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabfileserviceapi` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabfileserviceapi_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabgraphql-only">doltlabgraphql_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabgraphql` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabgraphql_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-multihost-doltlabui-only">doltlabui_only</h4>
+
+_Boolean_. If true, makes deployment the `doltlabui` service only. _Optional_. See [configuring multi-host deployments](./enterprise.md#multihost-deployment) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  multihost:
+    doltlabui_only: true
+```
+
+<h4 id="installer-config-reference-enterprise-super-admins">super_admins</h4>
+
+_String_ _Array_. Email addresses for users granted "super admin" privileges. See [super admins](./enterprise.md#add-super-admins) for more information.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  super_admins: ["admin1@email.com", "admin2@gmail.com"]
+```
+
+<h4 id="installer-config-reference-enterprise-saml">saml</h4>
+
+_Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](./enterprise.md#doltlab-single-sign-on) for more information.
+
+- [metadata_descriptor_file](#installer-config-reference-enterprise-saml-metadata-descriptor-file)
+- [cert_common_name](#installer-config-reference-enterprise-saml-cert-common-name)
+
+<h4 id="installer-config-reference-enterprise-saml-metadata-descriptor-file">metadata_descriptor_file</h4>
+
+_String_. Absolute path to metadata descriptor file. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  saml:
+    metadata_descriptor_file: "/absolute/path/to/metadata/descriptor/file"
+```
+
+<h4 id="installer-config-reference-enterprise-saml-cert-common-name">cert_common_name</h4>
+
+_String_. Common name to use in generated SAML certificate. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  saml:
+    cert_common_name: "mydoltlabcommonname"
+```
