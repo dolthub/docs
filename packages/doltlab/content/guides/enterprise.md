@@ -669,6 +669,12 @@ Next, edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabdb
 
 ```yaml
 # installer_config.yaml
+
+services:
+  doltlabdb:
+    dolthubapi_password: "9jjalvilpiod0n5u4q30"
+    admin_password: "1H8srd1QVbBbG1pJRcpP"
+
 enterprise:
   online_product_code: "yourproductcode"
   online_shared_key: "yoursharedkey"
@@ -692,26 +698,26 @@ Alternatively, run the `installer` with the `--doltlabdb-only` argument. Be sure
 --enterprise-online-api-key=your_api_key \
 --enterprise-online-shared-key=your_shared_key \
 --enterprise-online-license-key=your_license_key \
---doltlabdb-only 
+--doltlabdb-only \
+--doltlabdb-admin-password="1H8srd1QVbBbG1pJRcpP" \
+--doltlabdb-dolthubapi-password="9jjalvilpiod0n5u4q30"
 ```
 
-This will produce output like the following:
+`services.doltlabdb.admin_password`, or `--doltlabdb-admin-password`, is required and is used to create user `dolthubadmin`.</br>
+`services.doltlabdb.dolthubapi_password`, or `--doltlabdb-dolthubapi-password`, is required and is used to create user `dolthubapi`.</br>
+
+Running the `installer` will produce output like the following:
 
 ```bash
-2024-05-06T20:13:52.080Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.2"}
+2024-05-06T20:13:52.080Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.4"}
 
 2024-05-06T20:13:52.081Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
 2024-05-06T20:13:52.082Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
 ```
 
-Running the `installer` will generate a password for the `dolthubapi` user of DoltLab's application database. DoltLab's main API will need to connect to the application database as this user, so you will need to make note of this generated password.
+When the generated `./start.sh` script runs for the first time, the `doltlabdb` database is initialized with two users, `dolthubadmin` and `dolthubapi`. Their passwords are the values of `services.doltlabdb.admin_password` (--doltlabdb-admin-password) and `services.doltlabdb.dolthubapi_password` (--doltlabdb-dolthubapi-password), respectively.
 
-You can find the generated password at `./secrets/dolt_dolthubapi_password.priv`:
-
-```bash
-cat .secrets/dolt_dolthubapi_password.priv 
-export DOLTHUBAPI_PASSWORD="9jjalvilpiod0n5u4q30"
-```
+DoltLab's main API will connect to `doltlabdb` as the user `dolthubapi`, so you will need to make note of this password for use later on.
 
 Now start `doltlabdb` by running `./start.sh`:
 
@@ -724,7 +730,7 @@ You can see the running services by running `docker ps`:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                   COMMAND                  CREATED              STATUS              PORTS                                                  NAMES
-1f5483db7c97   public.ecr.aws/dolthub/doltlab/dolt-sql-server:v2.1.2   "tini -- docker-entr…"   About a minute ago   Up About a minute   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   doltlab-doltlabdb-1
+1f5483db7c97   public.ecr.aws/dolthub/doltlab/dolt-sql-server:v2.1.4   "tini -- docker-entr…"   About a minute ago   Up About a minute   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   doltlab-doltlabdb-1
 ```
 
 ## doltlabapi
@@ -735,7 +741,59 @@ Now connect to your `doltlabapi` host, `cd` into the `doltlab` directory, and en
 sudo newgrp docker
 ```
 
-Run the `installer` with the `--doltlabapi-only` flag and the other required arguments in order to configure the `doltlabapi` instance.
+Edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabapi_only` to `true`, as well as specifying the other required fields/sections.
+
+```yaml
+# installer_config.yaml
+
+host: "35.91.149.175"
+
+services:
+  doltlabdb:
+    host: "52.43.136.146"
+    port: 3306
+    dolthubapi_password: "9jjalvilpiod0n5u4q30"
+
+  doltlabremoteapi:
+    host: "34.222.48.69"
+    port: 50051
+    file_server_port: 100
+
+  doltlabfileserviceapi:
+    host: "34.221.204.184"
+    port: 4321
+
+  doltlabui:
+    host: "35.94.142.32"
+    port: 80
+
+default_user:
+  email: "me@email.com"
+
+smtp:
+  host: "smtp.email.com"
+  port: 587
+  auth_method: "plain"
+  username: "******"
+  password: "************"
+  no_reply_email: me@email.com
+
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabapi_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabapi` only.
+
+```bash
+./installer
+```
+
+Alternatively, you can run the `installer` with the `--doltlabapi-only` flag and the other required arguments in order to configure the `doltlabapi` instance.
 
 ```bash
 ./installer \
@@ -764,37 +822,33 @@ Run the `installer` with the `--doltlabapi-only` flag and the other required arg
 --default-user-email=me@email.com
 ```
 
-`--host`, is required and should be the IP address of the `doltlabapi` host. </br>
-`--doltlabdb-host` is required and is the IP address of the `doltlabdb` host.</br>
-`--doltlabdb-port`, is required and should be the value `3306`. This port value should not be changed.</br>
-`--doltlabremoteapi-host`, is required and is the IP address of the `doltlabremoteapi` host.</br>
-`--doltlabremoteapi-port`, is required and should be the value `50051`. This port value should not be changed.</br>
-`--doltlabremoteapi-file-server-port`, is required and should be the value `100`. This port value should not be changed.</br>
-`--doltlabfileserviceapi-host`, is required and is the IP address of the `doltlabfileserviceapi` host.</br>
-`--doltlabfileserviceapi-port`, is required and should be the value `4321`. This port value should not be changed.</br>
-`--doltlabui-host`, is required and is the IP address of the `doltlabui` host.</br>
-`--doltlabui-port`, is required and should be the value `80`. This port value should not be changed.</br>
-`--doltlabdb-dolthubapi-password`, is required and should be `dolthubapi` password generated by the `installer` on the `doltlabdb` host.</br>
-`--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`--smtp-username`, is required for authentication method `plain`, and is the username used to connect to the SMTP server.</br>
-`--smtp-password`, is required for authentication method `plain`, and is the password used to connect to the SMTP server.</br>
-`--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`--default-user-email`, is optional and is the email address to associate with the [default user](../installation/start-doltlab.md) `admin`.</br>
+`host`, or `--host`, is required and should be the IP address of the `doltlabapi` host. </br>
+`services.doltlabdb.host`, or `--doltlabdb-host` is required and is the IP address of the `doltlabdb` host.</br>
+`services.doltlabdb.port`, or `--doltlabdb-port`, is required and should be the value `3306`. This port value should not be changed.</br>
+`services.doltlabremoteapi.host`, or `--doltlabremoteapi-host`, is required and is the IP address of the `doltlabremoteapi` host.</br>
+`services.doltlabremoteapi.port`, or `--doltlabremoteapi-port`, is required and should be the value `50051`. This port value should not be changed.</br>
+`services.doltlabremoteapi.file_server_port`, or `--doltlabremoteapi-file-server-port`, is required and should be the value `100`. This port value should not be changed.</br>
+`services.doltlabfileserviceapi.host`, or `--doltlabfileserviceapi-host`, is required and is the IP address of the `doltlabfileserviceapi` host.</br>
+`services.doltlabfileserviceapi.port`, or `--doltlabfileserviceapi-port`, is required and should be the value `4321`. This port value should not be changed.</br>
+`services.doltlabui.host`, or `--doltlabui-host`, is required and is the IP address of the `doltlabui` host.</br>
+`services.doltlabui.port`, or `--doltlabui-port`, is required and should be the value `80`. This port value should not be changed.</br>
+`services.doltlabdb.dolthubapi_password`, or `--doltlabdb-dolthubapi-password`, is required and should be the `services.doltlabdb.dolthubapi_password` value defined on the `doltlabdb` host.</br>
+`smtp.host`, or `--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`smtp.port`, or `--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`smtp.auth_method`, or `--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`smtp.username`, or `--smtp-username`, is required for authentication method `plain`, and is the username used to connect to the SMTP server.</br>
+`smtp.password`, or `--smtp-password`, is required for authentication method `plain`, and is the password used to connect to the SMTP server.</br>
+`smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](../installation/start-doltlab.md) `admin`.</br>
 
 After running the `installer`, you will see output like the following:
 
 ```bash
-2024-05-06T21:06:19.124Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.2"}
+2024-05-06T21:06:19.124Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.4"}
 
 2024-05-06T21:06:19.125Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
 2024-05-06T21:06:19.126Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
-
-2024-05-06T21:06:19.126Z	INFO	cmd/main.go:628	To sign-in to DoltLab as the default user, use	{"username": "admin", "password: value of DEFAULT_USER_PASSWORD, stored at": "/home/ubuntu/doltlab/.secrets/default_user_pass.priv"}
 ```
-
-The `installer` will tell you how to find the default user password so it can be used to login to the DoltLab instance once all services are deployed.
 
 You can now run `./start.sh`:
 
@@ -807,7 +861,7 @@ Running `docker ps` will show the running services:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                     COMMAND                  CREATED              STATUS              
-14b440a088c1   public.ecr.aws/dolthub/doltlab/dolthubapi-server:v2.1.2   "/app/go/services/do…"   About a minute ago   Up About a minute                                                                                                                                                                    doltlab-doltlabapi-1
+14b440a088c1   public.ecr.aws/dolthub/doltlab/dolthubapi-server:v2.1.4   "/app/go/services/do…"   About a minute ago   Up About a minute                                                                                                                                                                    doltlab-doltlabapi-1
 6215f1c26441   envoyproxy/envoy:v1.28-latest                             "/docker-entrypoint.…"   38 minutes ago       Up About a minute   0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:9443-9444->9443-9444/tcp, :::9443-9444->9443-9444/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
 
@@ -819,23 +873,50 @@ Now connect to your `doltlabremoteapi` host, `cd` into the `doltlab` directory, 
 sudo newgrp docker
 ```
 
-Run the `installer` with the `--doltlabremoteapi-only` flag and the other required arguments in order to configure the `doltlabremoteapi` instance.
+Edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabremoteapi_only` to `true`, as well as specifying the other required fields/sections.
+
+```yaml
+# installer_config.yaml
+
+host: "34.222.48.69"
+
+services:
+  doltlabapi:
+    host: "35.91.149.175"
+    port: 9443
+
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabremoteapi_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabremoteapi` only.
+
+```bash
+./installer
+```
+
+Alternatively, run the `installer` with the `--doltlabremoteapi-only` flag and the other required arguments in order to configure the `doltlabremoteapi` instance.
 
 ```bash
 ./installer \
---enterprise-online-product-code=your_product_code \
---enterprise-online-api-key=your_api_key \
---enterprise-online-shared-key=your_shared_key \
---enterprise-online-license-key=your_license_key \
+--enterprise-online-product-code=yourproductcode \
+--enterprise-online-api-key=yourapikey \
+--enterprise-online-shared-key=yoursharedkey \
+--enterprise-online-license-key=yourlicensekey \
 --doltlabremoteapi-only \
 --host=34.222.48.69 \
 --doltlabapi-host=35.91.149.175 \
 --doltlabapi-port=9443
 ```
 
-`--host`, is required and should be the IP address of the `doltlabremoteapi` host. </br>
-`--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host. </br>
-`--doltlabapi-port`, is required and the value should be `9443`. This port value should not be changed. </br>
+`host`, or `--host`, is required and should be the IP address of the `doltlabremoteapi` host. </br>
+`services.doltlabapi.host`, or `--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host. </br>
+`services.doltlabapi.port`, or `--doltlabapi-port`, is required and the value should be `9443`. This port value should not be changed. </br>
 
 You can now run `./start.sh`:
 
@@ -846,7 +927,7 @@ You can now run `./start.sh`:
 Running `docker ps` will show the running services:
 
 ```bash
-3bef32ba8c14   public.ecr.aws/dolthub/doltlab/doltremoteapi-server:v2.1.2   "/app/go/services/do…"   10 seconds ago   Up 8 seconds                                                                                                                                                                                                                                      doltlab-doltlabremoteapi-1
+3bef32ba8c14   public.ecr.aws/dolthub/doltlab/doltremoteapi-server:v2.1.4   "/app/go/services/do…"   10 seconds ago   Up 8 seconds                                                                                                                                                                                                                                      doltlab-doltlabremoteapi-1
 eba5520bcf10   envoyproxy/envoy:v1.28-latest                                "/docker-entrypoint.…"   12 seconds ago   Up 9 seconds   0.0.0.0:100->100/tcp, :::100->100/tcp, 0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:7770->7770/tcp, :::7770->7770/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 0.0.0.0:50051->50051/tcp, :::50051->50051/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
 
@@ -858,14 +939,46 @@ Now connect to your `doltlabfileserviceapi` host, `cd` into the `doltlab` direct
 sudo newgrp docker
 ```
 
-Run the `installer` with the `--doltlabfileserviceapi-only` flag and the other required arguments in order to configure the `doltlabfileserviceapi` instance.
+Edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabfileserviceapi_only` to `true`, as well as specifying the other required fields/sections.
+
+```yaml
+# installer_config.yaml
+
+services:
+  doltlabapi:
+    host: "35.91.149.175"
+    port: 9443
+
+  doltlabremoteapi:
+    host: "34.222.48.69"
+    port: 50051
+
+  doltlabui:
+    host: "35.94.142.32"
+
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabfileserviceapi_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabfileserviceapi` only.
+
+```bash
+./installer
+```
+
+Alternatively, run the `installer` with the `--doltlabfileserviceapi-only` flag and the other required arguments in order to configure the `doltlabfileserviceapi` instance.
 
 ```bash
 ./installer \
---enterprise-online-product-code=your_product_code \
---enterprise-online-api-key=your_api_key \
---enterprise-online-shared-key=your_shared_key \
---enterprise-online-license-key=your_license_key \
+--enterprise-online-product-code=yourproductcode \
+--enterprise-online-api-key=yourapikey \
+--enterprise-online-shared-key=yoursharedkey \
+--enterprise-online-license-key=yourlicensekey \
 --doltlabfileserviceapi-only \
 --doltlabapi-host=35.91.149.175 \
 --doltlabapi-port=9443 \
@@ -874,11 +987,11 @@ Run the `installer` with the `--doltlabfileserviceapi-only` flag and the other r
 --doltlabui-host=35.94.142.32
 ```
 
-`--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host.
-`--doltlabapi-port`, is required and should be the value `9443`. This port value should not be changed.
-`--doltlabremoteapi-host`, is required and should be the IP address of the `doltlabremoteapi` host.
-`--doltlabremoteapi-port`, is required and should be the value `50051`. This port value should not be changed.
-`--doltlabui-host`, is required and should be the IP address of the `doltlabui` host.
+`services.doltlabapi.host`, or `--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host. </br>
+`services.doltlabapi.port`, or `--doltlabapi-port`, is required and should be the value `9443`. This port value should not be changed. </br>
+`services.doltlabremoteapi.host`, or `--doltlabremoteapi-host`, is required and should be the IP address of the `doltlabremoteapi` host. </br>
+`services.doltlabremoteapi.port`, or `--doltlabremoteapi-port`, is required and should be the value `50051`. This port value should not be changed. </br>
+`services.doltlabui.host`, or `--doltlabui-host`, is required and should be the IP address of the `doltlabui` host. </br>
 
 You can now run `./start.sh`:
 
@@ -891,7 +1004,7 @@ Running `docker ps` will show the running services:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                         COMMAND                  CREATED         STATUS         PORTS                                                                                                                                        NAMES
-cba4ed0160c6   public.ecr.aws/dolthub/doltlab/fileserviceapi-server:v2.1.2   "/app/go/services/fi…"   5 seconds ago   Up 3 seconds                                                                                                                                                doltlab-doltlabfileserviceapi-1
+cba4ed0160c6   public.ecr.aws/dolthub/doltlab/fileserviceapi-server:v2.1.4   "/app/go/services/fi…"   5 seconds ago   Up 3 seconds                                                                                                                                                doltlab-doltlabfileserviceapi-1
 109bcbe3a254   envoyproxy/envoy:v1.28-latest                                 "/docker-entrypoint.…"   6 seconds ago   Up 3 seconds   0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:4321->4321/tcp, :::4321->4321/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
 
@@ -903,21 +1016,46 @@ Now connect to your `doltlabgraphql` host, `cd` into the `doltlab` directory, an
 sudo newgrp docker
 ```
 
-Run the `installer` with the `--doltlabgraphql-only` flag and the other required arguments in order to configure the `doltlabgraphql` instance.
+Edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabgraphql_only` to `true`, as well as specifying the other required fields/sections.
+
+```yaml
+# installer_config.yaml
+
+services:
+  doltlabapi:
+    host: "35.91.149.175"
+    port: 9443
+
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabgraphql_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabgraphql` only.
+
+```bash
+./installer
+```
+
+Alternatively, run the `installer` with the `--doltlabgraphql-only` flag and the other required arguments in order to configure the `doltlabgraphql` instance.
 
 ```bash
 ./installer \
---enterprise-online-product-code=your_product_code \
---enterprise-online-api-key=your_api_key \
---enterprise-online-shared-key=your_shared_key \
---enterprise-online-license-key=your_license_key \
+--enterprise-online-product-code=yourproductcode \
+--enterprise-online-api-key=yourapikey \
+--enterprise-online-shared-key=yoursharedkey \
+--enterprise-online-license-key=yourlicensekey \
 --doltlabgraphql-only \
 --doltlabapi-host=35.91.149.175 \
 --doltlabapi-port=9443
 ```
 
-`--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host.
-`--doltlabapi-port`, is required and should be the value `9443`. This port value should not be changed.
+`services.doltlabapi.host`, or `--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host. </br>
+`services.doltlabapi.port`, `--doltlabapi-port`, is required and should be the value `9443`. This port value should not be changed. </br>
 
 You can now run `./start.sh`:
 
@@ -930,7 +1068,7 @@ Running `docker ps` will show the running services:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                             COMMAND                  CREATED          STATUS          PORTS                                                                                                                                        NAMES
-243caaad3540   public.ecr.aws/dolthub/doltlab/dolthubapi-graphql-server:v2.1.2   "docker-entrypoint.s…"   58 seconds ago   Up 57 seconds   9000/tcp                                                                                                                                     doltlab-doltlabgraphql-1
+243caaad3540   public.ecr.aws/dolthub/doltlab/dolthubapi-graphql-server:v2.1.4   "docker-entrypoint.s…"   58 seconds ago   Up 57 seconds   9000/tcp                                                                                                                                     doltlab-doltlabgraphql-1
 0d656cf21fd3   envoyproxy/envoy:v1.28-latest                                     "/docker-entrypoint.…"   59 seconds ago   Up 57 seconds   0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:9000->9000/tcp, :::9000->9000/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
 
@@ -942,14 +1080,43 @@ Now connect to your `doltlabui` host, `cd` into the `doltlab` directory, and ens
 sudo newgrp docker
 ```
 
+Edit the `./installer_config.yaml` and set `enterprise.multihost.doltlabui_only` to `true`, as well as specifying the other required fields/sections.
+
+```yaml
+# installer_config.yaml
+
+services:
+  doltlabapi:
+    host: "35.91.149.175"
+    csv_port: 9444
+
+  doltlabgraphql:
+    host: "35.91.70.84"
+    port: 9000
+
+enterprise:
+  online_product_code: "yourproductcode"
+  online_shared_key: "yoursharedkey"
+  online_api_key: "yourapikey"
+  online_license_key: "yourlicensekey"
+  multihost:
+    doltlabui_only: true
+```
+
+Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabui` only.
+
+```bash
+./installer
+```
+
 Run the `installer` with the `--doltlabui-only` flag and the other required arguments in order to configure the `doltlabui` instance.
 
 ```bash
 ./installer \
---enterprise-online-product-code=your_product_code \
---enterprise-online-api-key=your_api_key \
---enterprise-online-shared-key=your_shared_key \
---enterprise-online-license-key=your_license_key \
+--enterprise-online-product-code=yourproductcode \
+--enterprise-online-api-key=yourapikey \
+--enterprise-online-shared-key=yoursharedkey \
+--enterprise-online-license-key=yourlicensekey \
 --doltlabui-only \
 --doltlabapi-host=35.91.149.175 \
 --doltlabapi-csv-port=9444 \
@@ -957,10 +1124,10 @@ Run the `installer` with the `--doltlabui-only` flag and the other required argu
 --doltlabgraphql-host=35.91.70.84
 ```
 
-`--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host.
-`--doltlab-csv-port`, is required and should be the value `9444`. This port value should not be changed.
-`--doltlabgrapqhl-port`, is required and should be the value `9000`. This port value should not be changed.
-`--doltlabgraphql-host`, is required and should be the IP address of the `doltlabgraphql` host.
+`services.doltlabapi.host`, or `--doltlabapi-host`, is required and should be the IP address of the `doltlabapi` host. </br>
+`services.doltlabapi.csv_port`, or `--doltlab-csv-port`, is required and should be the value `9444`. This port value should not be changed. </br>
+`services.doltlabgraphql.port`, or `--doltlabgrapqhl-port`, is required and should be the value `9000`. This port value should not be changed. </br>
+`services.doltlabgraphql.host`, or `--doltlabgraphql-host`, is required and should be the IP address of the `doltlabgraphql` host. </br>
 
 You can now run `./start.sh`:
 
@@ -973,7 +1140,7 @@ Running `docker ps` will show the running services:
 ```bash
 docker ps
 CONTAINER ID   IMAGE                                                  COMMAND                  CREATED         STATUS         PORTS                                                                                                                                NAMES
-f36ac9f7831f   public.ecr.aws/dolthub/doltlab/dolthub-server:v2.1.2   "docker-entrypoint.s…"   5 seconds ago   Up 3 seconds   3000/tcp                                                                                                                             doltlab-doltlabui-1
+f36ac9f7831f   public.ecr.aws/dolthub/doltlab/dolthub-server:v2.1.4   "docker-entrypoint.s…"   5 seconds ago   Up 3 seconds   3000/tcp                                                                                                                             doltlab-doltlabui-1
 d6803cd65898   envoyproxy/envoy:v1.28-latest                          "/docker-entrypoint.…"   7 seconds ago   Up 4 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp, 0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
 
