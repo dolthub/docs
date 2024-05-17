@@ -1365,7 +1365,7 @@ Configuration file equivalent [password](#installer-config-reference-services-de
 
 <h2 id="disable-usage-metrics">--disable-usage-metrics</h2>
 
-_Boolean_. If true, will collect first-party metrics.
+_Boolean_. If true, will not collect first-party metrics.
 
 Configuration file equivalent [metrics_disabled](#installer-config-reference-metrics-disabled).
 
