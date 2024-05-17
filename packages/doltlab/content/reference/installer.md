@@ -1235,113 +1235,6 @@ Command line equivalent [--sso-saml-cert-common-name](#sso-saml-cert-common-name
 
 # Command Line Interface Reference
 
-```bash
-Usage of ./installer:
-    	
-  -doltlabdb-port int
-    	port of doltlabdb instance
-  -doltlabdb-tls-skip-verify
-    	if true will disable tls verification for doltlabdb
-  -doltlabfileserviceapi-host string
-    	host name for doltlabfileserviceapi in multi-host configuration, DoltLab Enterprise only
-  -doltlabfileserviceapi-only
-    	if true, will only run doltlabfileserviceapi. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only
-  -doltlabfileserviceapi-port int
-    	port for doltlabfileserviceapi in multi-host configuration, DoltLab Enterprise only
-  -doltlabfileserviceapi-token-file string
-    	path to token file used to encrypt/decrypt DoltLab tokens sent from doltlabfileserviceapi
-  -doltlabgraphql-host string
-    	host name for doltlabgraphql in multi-host configuration, DoltLab Enterprise only
-  -doltlabgraphql-only
-    	if true, will only run doltlabgraphql. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only
-  -doltlabgraphql-port int
-    	port for doltlabgraphql in multi-host configuration, DoltLab Enterprise only
-  -doltlabremoteapi-file-server-port int
-    	port for doltlabremoteapi file server in multi-host configuration, DoltLab Enterprise only
-  -doltlabremoteapi-host string
-    	host name for doltlabremoteapi in multi-host configuration, DoltLab Enterprise only
-  -doltlabremoteapi-only
-    	if true, will only run doltlabremoteapi. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only
-  -doltlabremoteapi-port int
-    	port for doltlabremoteapi in multi-host configuration, DoltLab Enterprise only
-  -doltlabremoteapi-token-file string
-    	path to token file used to encrypt/decrypt DoltLab tokens sent from doltlabremoteapi
-  -doltlabui-host string
-    	host name for doltlabui in multi-host configuration, DoltLab Enterprise only
-  -doltlabui-only
-    	if true, will only run doltlabui. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only
-  -doltlabui-port int
-    	port for doltlabui in multi-host configuration, DoltLab Enterprise only
-  -enterprise-online-api-key string
-    	api key for DoltLab Enterprise
-  -enterprise-online-license-key string
-    	license key for DoltLab Enterprise
-  -enterprise-online-product-code string
-    	product code for DoltLab Enterprise
-  -enterprise-online-shared-key string
-    	shared key for DoltLab Enterprise
-  -google-creds-file string
-    	google application credentials file, used for configuring automated doltlabdb backups to google cloud storage, DoltLab Enterprise only
-  -health-check-port int
-    	port to use for health checks against doltlabenvoy
-  -help
-    	print usage information
-  -host string
-    	host name of the instance running DoltLab
-  -host-certs string
-    	path to host certs (default "/etc/ssl/certs/ca-certificates.crt")
-  -https
-    	if true will set the url scheme of DoltLab to https
-  -job-concurrency-limit int
-    	concurrency limit of running jobs
-  -job-concurrency-loop-seconds int
-    	number of seconds to wait before checking for jobs to schedule
-  -job-max-retries int
-    	number of times to retry a failed job before giving up
-  -no-reply-email string
-    	email address used in no reply emails sent from DoltLab
-  -oci-config-file string
-    	oracle cloud config file, used for configuring automated doltlabdb backups to oracle cloud, DoltLab Enterprise only
-  -oci-key-file string
-    	oracle cloud key file, used for configuring automated doltlabdb backups to oracle cloud, DoltLab Enterprise only
-  -smtp-auth-method string
-    	smtp server authentication method, one of 'plain', 'login', 'anonymous', 'external', 'oauthbearer', 'disable'
-  -smtp-client-hostname string
-    	smtp client hostname
-  -smtp-host string
-    	smtp server host
-  -smtp-identity string
-    	smtp server identity
-  -smtp-implicit-tls
-    	if true will use implicit TLS for smtp connection
-  -smtp-insecure-tls
-    	if true will use insecure TLS smtp connection
-  -smtp-oauth-token string
-    	smtp server oauth token
-  -smtp-password string
-    	smtp server password
-  -smtp-port int
-    	smtp server port
-  -smtp-trace string
-    	smtp server trace
-  -smtp-username string
-    	smtp server username
-  -sso-saml-cert-common-name string
-    	common name used the saml signing certificate DoltLab generates, DoltLab Enterprise only
-  -sso-saml-metadata-descriptor string
-    	path to saml metadata descriptor which is used to configure saml sso, DoltLab Enterprise only
-  -super-admin-email value
-    	email address of super admin user
-  -tls-cert-chain string
-    	path to TLS certificate chain, required for serving DoltLab over HTTPS
-  -tls-private-key string
-    	path to TLS private key, required for serving DoltLab over HTTPS
-  -ubuntu
-    	if true will generate a script to install DoltLab's dependencies on Ubuntu
-  -white-list-all-users
-    	if true allows all users create accounts on this DoltLab instance (default true)
-```
-
 <h2 id="automated-dolt-backups-backup-on-boot">--automated-dolt-backups-backup-on-boot</h2>
 
 If true, will create a backup when the `backup-syncer` service comes online, DoltLab Enterprise only (default true).
@@ -1531,140 +1424,279 @@ If true, will only run `doltlabdb` on the host. This is used for running DoltLab
 Configuration file equivalent [doltlabdb_only](#installer-config-reference-enterprise-multihost-doltlabdb-only)
 
 <h2 id="doltlabdb-port">--doltlabdb-port</h2>
+
+The port of `doltlabdb`.
+
 Configuration file equivalent [port](#installer-config-reference-services-doltlabdb-port).
 
 <h2 id="doltlabdb-tls-skip-verify">--doltlabdb-tls-skip-verify</h2>
+
+If true, will disable TLS verification for connection to `doltlabdb`.
+
 Configuration file equivalent [tls_skip_verify](#installer-config-reference-services-doltlabdb-tls-skip-verify).
 
 <h2 id="doltlabfileserviceapi-host">--doltlabfileserviceapi-host</h2>
+
+The hostname or IP address for `doltlabfileserviceapi`.
+
 Configuration file equivalent [host](#installer-config-reference-services-doltlabfileserviceapi-host).
 
 <h2 id="doltlabfileserviceapi-only">--doltlabfileserviceapi-only</h2>
+
+If true, will only run `doltlabfileserviceapi` on the host. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only.
+
 Configuration file equivalent [doltlabfileserviceapi_only](#installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only).
 
 <h2 id="doltlabfileserviceapi-port">--doltlabfileserviceapi-port</h2>
+
+The port for `doltlabfileserviceapi`.
+
 Configuration file equivalent [port](#installer-config-reference-services-doltlabfileserviceapi-port).
 
 <h2 id="doltlabgraphql-host">--doltlabgraphql-host</h2>
+
+The hostname or IP address for `doltlabgraphql`.
+
 Configuration file equivalent [host](#installer-config-reference-services-doltlabgrapqhl-host).
 
 <h2 id="doltlabgraphql-only">--doltlabgraphql-only</h2>
+
+If true, will only run `doltlabgraphql` on the host. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only.
+
 Configuration file equivalent [doltlabgraphql_only](#installer-config-reference-enterprise-multihost-doltlabgraphql-only).
 
 <h2 id="doltlabgraphql-port">--doltlabgraphql-port</h2>
+
+The port for `doltlabgraphql`.
+
 Configuration file equivalent [port](#installer-config-reference-services-doltlabgrapqhl-port).
 
 <h2 id="doltlabremoteapi-file-server-port">--doltlabremoteapi-file-server-port</h2>
+
+The port for `doltlabremoteapi`'s file server.
+
 Configuration file equivalent [file_server_port](#installer-config-reference-services-doltlabremoteapi-file-server-port).
 
 <h2 id="doltlabremoteapi-host">--doltlabremoteapi-host</h2>
+
+The hostname for `doltlabremoteapi`.
+
 Configuration file equivalent [host](#installer-config-reference-services-doltlabremoteapi-host).
 
 <h2 id="doltlabremoteapi-only">--doltlabremoteapi-only</h2>
+
+If true, will only run `doltlabremoteapi` on the host. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only.
+
 Configuration file equivalent [doltlabremoteapi_only](#installer-config-reference-enterprise-multihost-doltlabremoteapi-only).
 
 <h2 id="doltlabremoteapi-port">--doltlabremoteapi-port</h2>
+
+The port for `doltlabremoteapi`.
+
 Configuration file equivalent [port](#installer-config-reference-services-doltlabremoteapi-port).
 
 <h2 id="doltlabui-host">--doltlabui-host</h2>
+
+The hostname or IP address of `doltlabui`.
+
 Configuration file equivalent [host](#installer-config-reference-services-doltlabui-host).
 
 <h2 id="doltlabui-only">--doltlabui-only</h2>
+
+If true, will only run `doltlabui` on the host. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only.
+
 Configuration file equivalent [](#installer-config-reference-enterprise-multihost-doltlabui-only).
 
 <h2 id="doltlabui-port">--doltlabui-port</h2>
+
+The port for `doltlabui`.
+
 Configuration file equivalent [port](#installer-config-reference-services-doltlabui-port).
 
 <h2 id="enterprise-online-api-key">--enterprise-online-api-key</h2>
+
+The api key for DoltLab Enterprise.
+
 Configuration file equivalent [online_api_key](#installer-config-reference-enterprise-online-api-key).
 
 <h2 id="enterprise-online-license-key">--enterprise-online-license-key</h2>
+
+The license key for DoltLab Enterprise.
+
 Configuration file equivalent [license_key](#installer-config-reference-enterprise-online-license-key).
 
 <h2 id="enterprise-online-product-code">--enterprise-online-product-code</h2>
+
+The product code for DoltLab Enterprise.
+
 Configuration file equivalent [product_code](#installer-config-reference-enterprise-online-product-code).
 
 <h2 id="enterprise-online-shared-key">--enterprise-online-shared-key</h2>
+
+The shared key for DoltLab Enterprise.
+
 Configuration file equivalent [shared_key](#installer-config-reference-enterprise-online-shared-key).
 
 <h2 id="google-creds-file">--google-creds-file</h2>
+
+Absolute path to a Google application credentials file, used for configuring automated `doltlabdb backups` to Google Cloud Storage, DoltLab Enterprise only.
+
 Configuration file equivalent [google_credentials_file](#installer-config-reference-enterprise-automated-backups-google-credentials-file).
 
 <h2 id="help">--help</h2>
 
+Print `installer` usage information.
+
 <h2 id="host">--host</h2>
+
+The hostname or IP address of the host running DoltLab or one of its services.
+
 Configuration file equivalent [host](#installer-config-reference-host).
 
 <h2 id="https">--https</h2>
+
+If true, will set the url scheme of DoltLab to `https://`.
+
 Configuration file equivalent [scheme](##installer-config-reference-scheme).
 
 <h2 id="job-concurrency-limit">--job-concurrency-limit</h2>
+
+The limit of concurrent `running` Jobs.
+
 Configuration file equivalent [concurrency_limit](#installer-config-reference-jobs-concurrency-limit).
 
 <h2 id="job-concurrency-loop-seconds">--job-concurrency-loop-seconds</h2>
+
+The number of seconds to wait before attempting to schedule more `pending` Jobs.
+
 Configuration file equivalent [concurrency_loop_seconds](#installer-config-reference-jobs-concurrency-loop-seconds).
 
 <h2 id="job-max-retries">--job-max-retries</h2>
+
+The number of times to retry `failed` Jobs.
+
 Configuration file equivalent [max_retries](#installer-config-reference-jobs-max-retries).
 
 <h2 id="no-reply-email">--no-reply-email</h2>
+
+The email address used as the "from" address in emails sent from DoltLab.
+
 Configuration file equivalent [no_reply_email](#installer-config-reference-smtp-no-reply-email).
 
 <h2 id="oci-config-file">--oci-config-file</h2>
+
+Absolute path to an Oracle Cloud config file, used for configuring automated doltlabdb backups to Oracle Cloud, DoltLab Enterprise only.
+
 Configuration file equivalent [oci_config_file](#installer-config-reference-enterprise-automated-backups-oci-config-file).
 
 <h2 id="oci-key-file">--oci-key-file</h2>
+
+Absolute path to an Oracle Cloud key file, used for configuring automated doltlabdb backups to Oracle Cloud, DoltLab Enterprise only.
+
 Configuration file equivalent [oci_key_file](#installer-config-reference-enterprise-automated-backups-oci-key-file).
 
 <h2 id="smtp-auth-method">--smtp-auth-method</h2>
+
+The authentication method of an SMTP server, one of `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`.
+
 Configuration file equivalent [auth_method](#installer-config-reference-smtp-auth-method).
 
 <h2 id="smtp-client-hostname">--smtp-client-hostname</h2>
+
+The client hostname of an SMTP server.
+
 Configuration file equivalent [client_hostname](#installer-config-reference-smtp-client-hostname).
 
 <h2 id="smtp-host">--smtp-host</h2>
+
+The hostname of an SMTP server.
+
 Configuration file equivalent [host](#installer-config-reference-smtp-host).
 
 <h2 id="smtp-identity">--smtp-identity</h2>
+
+The identity of an SMTP server.
+
 Configuration file equivalent [identity](#installer-config-reference-smtp-identity).
 
 <h2 id="smtp-implicit-tls">--smtp-implicit-tls</h2>
+
+If true, will use implicit TLS when DoltLab connects to the SMTP server.
+
 Configuration file equivalent [implicit_tls](#installer-config-reference-smtp-implicit-tls).
 
 <h2 id="smtp-insecure-tls">--smtp-insecure-tls</h2>
+
+If true, will skip TLS verification when DoltLab connects to the SMTP server.
+
 Configuration file equivalent [insecure_tls](#installer-config-reference-smtp-insecure-tls).
 
 <h2 id="smtp-oauth-token">--smtp-oauth-token</h2>
+
+The Oauth token used for authenticating against an SMTP server.
+
 Configuration file equivalent [oauth_token](#installer-config-reference-smtp-oauth-token).
 
 <h2 id="smtp-password">--smtp-password</h2>
+
+The password used for authenticating against an SMTP server.
+
 Configuration file equivalent [password](#installer-config-reference-smtp-password).
 
 <h2 id="smtp-port">--smtp-port</h2>
+
+The port of an SMTP server.
+
 Configuration file equivalent [port](#installer-config-reference-smtp-port).
 
 <h2 id="smtp-trace">--smtp-trace</h2>
+
+The trace of an SMTP server.
+
 Configuration file equivalent [trace](#installer-config-reference-smtp-trace).
 
 <h2 id="smtp-username">--smtp-username</h2>
+
+The username used for authenticating against an SMTP server.
+
 Configuration file equivalent [username](#installer-config-reference-smtp-username).
 
 <h2 id="sso-saml-cert-common-name">--sso-saml-cert-common-name</h2>
+
+The common name used for generating the SAML signing certificate, DoltLab Enterprise only.
+
 Configuration file equivalent [cert_common_name](#installer-config-reference-enterprise-saml-cert-common-name).
 
 <h2 id="sso-saml-metadata-descriptor">--sso-saml-metadata-descriptor</h2>
+
+Absolute path to the SAML metadata descriptor file from an identity provider, DoltLab Enterprise only.
+
 Configuration file equivalent [metadata_descriptor_file](#installer-config-reference-enterprise-saml-metadata-descriptor-file).
 
 <h2 id="super-admin-email">--super-admin-email</h2>
+
+The email address of a DoltLab user granted "super admin" privileges. Can be supplied multiple times. DoltLab Enterprise only.
+
 Configuration file equivalent [super_admins](#installer-config-reference-enterprise-super-admins).
 
 <h2 id="tls-cert-chain">--tls-cert-chain</h2>
+
+Absolute path to TLS certificate chain with `.pem` extension.
+
 Configuration file equivalent [cert_chain](#installer-config-reference-tls-cert-chain).
 
 <h2 id="tls-private-key">--tls-private-key</h2>
+
+Absolute path to TLS private key with `.pem` extension.
+
 Configuration file equivalent [private_key](#installer-config-reference-tls-private-key).
 
 <h2 id="ubuntu">--ubuntu</h2>
 
+If true will generate a script to install DoltLab's dependencies on Ubuntu.
+
 <h2 id="white-list-all-users">--white-list-all-users</h2>
+
+If true, allows all users create accounts on a DoltLab instance, (default true).
+
 Configuration file equivalent [whitelist_all_users](#installer-config-whitelist-all-users).
