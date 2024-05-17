@@ -30,6 +30,10 @@
 - [Upgrade](older/upgrading.md)
 - [Administrator Guide](older/pre-installer-administrator-guide.md)
 
+## Reference
+
+- [Installer](reference/installer.md)
+
 ## Release Notes
 
 - [Release Notes](release-notes.md)

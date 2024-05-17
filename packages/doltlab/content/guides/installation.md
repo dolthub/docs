@@ -43,7 +43,7 @@ DoltLab requires the following dependencies:
 > [amazon-ecr-credential-helper](https://github.com/awslabs/amazon-ecr-credential-helper)<br/>
 > Access to an [SMTP server](https://aws.amazon.com/what-is/smtp/), like [smtp.gmail.com](https://support.google.com/a/answer/176600?hl=en).
 
-To streamline dependency installation, with DoltLab >= `v2.1.2` you can run the `installer` with one of the following flags to generate a dependency installation script:
+To streamline dependency installation, with DoltLab >= `v2.1.2` you can run the [installer](../reference/installer.md) with one of the following flags to generate a dependency installation script:
 
 ```bash
 # generate a script to install DoltLab dependencies on Ubuntu
