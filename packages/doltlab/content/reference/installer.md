@@ -1221,6 +1221,92 @@ Command line equivalent [--sso-saml-cert-common-name](#sso-saml-cert-common-name
 
 # Command Line Interface Reference
 
+<h4 id="automated-dolt-backups-backup-on-boot">--automated-dolt-backups-backup-on-boot</h4>
+<h4 id="automated-dolt-backups-cron-schedule">--automated-dolt-backups-cron-schedule</h4>
+<h4 id="automated-dolt-backups-url">--automated-dolt-backups-url</h4>
+<h4 id="aws-config-file">--aws-config-file</h4>
+<h4 id="aws-profile">--aws-profile</h4>
+<h4 id="aws-region">--aws-region</h4>
+<h4 id="aws-shared-credentials-file">--aws-shared-credentials-file</h4>
+<h4 id="centos">--centos</h4>
+<h4 id="config">--config</h4>
+<h4 id="custom-color-rgb-accent-1">--custom-color-rgb-accent-1</h4>
+<h4 id="custom-color-rgb-background-accent-1">--custom-color-rgb-background-accent-1</h4>
+<h4 id="custom-color-rgb-background-gradient-start">--custom-color-rgb-background-gradient-start</h4>
+<h4 id="custom-color-rgb-button-1">--custom-color-rgb-button-1</h4>
+<h4 id="custom-color-rgb-button-2">--custom-color-rgb-button-2</h4>
+<h4 id="custom-color-rgb-link-1">--custom-color-rgb-link-1</h4>
+<h4 id="custom-color-rgb-link-2">--custom-color-rgb-link-2</h4>
+<h4 id="custom-color-rgb-link-light">--custom-color-rgb-link-light</h4>
+<h4 id="custom-email-templates">--custom-email-templates</h4>
+<h4 id="custom-logo">--custom-logo</h4>
+<h4 id="default-user">--default-user</h4>
+<h4 id="default-user-email">--default-user-email</h4>
+<h4 id="default-user-password">--default-user-password</h4>
+<h4 id="disable-usage-metrics">--disable-usage-metrics</h4>
+
+<h4 id="docker-network">--docker-network</h4>
+<h4 id="doltlabapi-csv-port">--doltlabapi-csv-port</h4>
+<h4 id="doltlabapi-host">--doltlabapi-host</h4>
+<h4 id="doltlabapi-only">--doltlabapi-only</h4>
+<h4 id="doltlabapi-port">--doltlabapi-port</h4>
+<h4 id="doltlabapi-token-file">--doltlabapi-token-file</h4>
+<h4 id="-doltlabdb-admin-password">---doltlabdb-admin-password</h4>
+<h4 id="doltlabdb-dolthubapi-password">--doltlabdb-dolthubapi-password</h4>
+<h4 id="doltlabdb-host">--doltlabdb-host</h4>
+<h4 id="doltlabdb-port">--doltlabdb-port</h4>
+<h4 id="doltlabdb-tls-skip-verify">--doltlabdb-tls-skip-verify</h4>
+<h4 id="doltlabfileserviceapi-host">--doltlabfileserviceapi-host</h4>
+<h4 id="doltlabfileserviceapi-only">--doltlabfileserviceapi-only</h4>
+<h4 id="doltlabfileserviceapi-port">--doltlabfileserviceapi-port</h4>
+<h4 id="doltlabfileserviceapi-token-file">--doltlabfileserviceapi-token-file</h4>
+<h4 id="doltlabgraphql-host">--doltlabgraphql-host</h4>
+<h4 id="doltlabgraphql-only">--doltlabgraphql-only</h4>
+<h4 id="doltlabgraphql-port">--doltlabgraphql-port</h4>
+<h4 id="doltlabremoteapi-file-server-port">--doltlabremoteapi-file-server-port</h4>
+<h4 id="doltlabremoteapi-host">--doltlabremoteapi-host</h4>
+<h4 id="doltlabremoteapi-only">--doltlabremoteapi-only</h4>
+<h4 id="doltlabremoteapi-port">--doltlabremoteapi-port</h4>
+<h4 id="doltlabremoteapi-token-file">--doltlabremoteapi-token-file</h4>
+<h4 id="doltlabui-host">--doltlabui-host</h4>
+<h4 id="doltlabui-only">--doltlabui-only</h4>
+<h4 id="doltlabui-port">--doltlabui-port</h4>
+<h4 id="enterprise-online-api-key">--enterprise-online-api-key</h4>
+<h4 id="enterprise-online-license-key">--enterprise-online-license-key</h4>
+<h4 id="enterprise-online-product-code">--enterprise-online-product-code</h4>
+<h4 id="enterprise-online-shared-key">--enterprise-online-shared-key</h4>
+<h4 id="google-creds-file">--google-creds-file</h4>
+<h4 id="health-check-port">--health-check-port</h4>
+<h4 id="help">--help</h4>
+<h4 id="host">--host</h4>
+<h4 id="host-certs">--host-certs</h4>
+<h4 id="https">--https</h4>
+<h4 id="job-concurrency-limit">--job-concurrency-limit</h4>
+<h4 id="job-concurrency-loop-seconds">--job-concurrency-loop-seconds</h4>
+<h4 id="job-max-retries">--job-max-retries</h4>
+<h4 id="no-reply-email">--no-reply-email</h4>
+<h4 id="oci-config-file">--oci-config-file</h4>
+<h4 id="oci-key-file">--oci-key-file</h4>
+<h4 id="smtp-auth-method">--smtp-auth-method</h4>
+<h4 id="smtp-client-hostname">--smtp-client-hostname</h4>
+<h4 id="smtp-host">--smtp-host</h4>
+<h4 id="smtp-identity">--smtp-identity</h4>
+<h4 id="smtp-implicit-tls">--smtp-implicit-tls</h4>
+<h4 id="smtp-insecure-tls">--smtp-insecure-tls</h4>
+<h4 id="smtp-oauth-token">--smtp-oauth-token</h4>
+<h4 id="smtp-password">--smtp-password</h4>
+<h4 id="smtp-port">--smtp-port</h4>
+<h4 id="smtp-trace">--smtp-trace</h4>
+<h4 id="smtp-username">--smtp-username</h4>
+<h4 id="sso-saml-cert-common-name">--sso-saml-cert-common-name</h4>
+<h4 id="sso-saml-metadata-descriptor">--sso-saml-metadata-descriptor</h4>
+<h4 id="super-admin-email">--super-admin-email</h4>
+<h4 id="tls-cert-chain">--tls-cert-chain</h4>
+<h4 id="tls-private-key">--tls-private-key</h4>
+<h4 id="ubuntu">--ubuntu</h4>
+<h4 id="white-list-all-users">--white-list-all-users</h4>
+
+
 ```bash
 Usage of ./installer:
   -automated-dolt-backups-backup-on-boot
@@ -1281,8 +1367,6 @@ Usage of ./installer:
     	port for doltlabapi in multi-host configuration, DoltLab Enterprise only
   -doltlabapi-token-file string
     	path to token file used to encrypt/decrypt DoltLab tokens sent from doltlabapi
-  -doltlabbackupsyncer-only
-    	if true, will only run doltlabbackupsyncer. This is used for running DoltLab services across multiple hosts. DoltLab Enterprise only
   -doltlabdb-admin-password string
     	admin password of the doltlabdb instance
   -doltlabdb-dolthubapi-password string
@@ -1359,7 +1443,7 @@ Usage of ./installer:
     	oracle cloud key file, used for configuring automated doltlabdb backups to oracle cloud, DoltLab Enterprise only
   -smtp-auth-method string
     	smtp server authentication method, one of 'plain', 'login', 'anonymous', 'external', 'oauthbearer', 'disable'
-  -smtp-client-multiHostHostname string
+  -smtp-client-hostname string
     	smtp client hostname
   -smtp-host string
     	smtp server host
