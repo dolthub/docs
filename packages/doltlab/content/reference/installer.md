@@ -48,6 +48,7 @@ smtp:
   host: "scheme: "http""
   port: 587
   auth_method: "plain"
+  no_reply_email: "user@email.com"
   username: "user@email.com"
   password: "*****"
   oauth_token: "*****"
@@ -187,7 +188,7 @@ _Dictionary_. Configuration options for DoltLab's various services. `doltlabdb` 
 - [doltlabgraphql](#installer-config-reference-services-doltlabgraphql)
 - [doltlabui](#installer-config-reference-services-doltlabui)
 
-<h4 id="installer-config-reference-services-doltlabdb">doltlabdb</h4>
+<h2 id="installer-config-reference-services-doltlabdb">doltlabdb</h2>
 
 _Dictionary_. Configuration options for `doltlabdb`.
 
@@ -197,7 +198,7 @@ _Dictionary_. Configuration options for `doltlabdb`.
 - [dolthubapi_password](#installer-config-reference-services-doltlabdb-dolthubapi-password)
 - [tls_skip_verify](#installer-config-reference-services-doltlabdb-tls-skip-verify)
 
-<h4 id="installer-config-reference-services-doltlabdb-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabdb-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for multi-host deployments.
 
@@ -210,7 +211,7 @@ services:
 
 Command line equivalent [--doltlabdb-host](#doltlabdb-host).
 
-<h4 id="installer-config-reference-services-doltlabdb-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabdb-port">port</h2>
 
 _Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -223,7 +224,7 @@ services:
 
 Command line equivalent [--doltlabdb-port](#doltlabdb-port).
 
-<h4 id="installer-config-reference-services-doltlabdb-admin-password">admin_password</h4>
+<h2 id="installer-config-reference-services-doltlabdb-admin-password">admin_password</h2>
 
 _String_. The password used to for creating user `dolthubadmin` in DoltLab's application database. _Required_.
 
@@ -236,7 +237,7 @@ services:
 
 Command line equivalent [--doltlabdb-admin-password](#doltlabdb-admin-password).
 
-<h4 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h4>
+<h2 id="installer-config-reference-services-doltlabdb-dolthubapi-password">dolthubapi_password</h2>
 
 _String_. The password used to for creating user `dolthubapi` in DoltLab's application database. _Required_.
 
@@ -249,7 +250,7 @@ services:
 
 Command line equivalent [--doltlabdb-dolthubapi-password](#doltlabdb-dolthubapi-password).
 
-<h4 id="installer-config-reference-services-doltlabdb-tls-skip-verify">tls_skip_verify</h4>
+<h2 id="installer-config-reference-services-doltlabdb-tls-skip-verify">tls_skip_verify</h2>
 
 _String_. If true, skips TLS verification during connection to `doltlabdb`. _Optional_.
 
@@ -262,7 +263,7 @@ services:
 
 Command line equivalent [--doltlabdb-tls-skip-verify](#doltlabdb-tls-skip-verify).
 
-<h4 id="installer-config-reference-services-doltlabapi">doltlabapi</h4>
+<h2 id="installer-config-reference-services-doltlabapi">doltlabapi</h2>
 
 _Dictionary_. Configuration options for `doltlabapi`.
 
@@ -270,7 +271,7 @@ _Dictionary_. Configuration options for `doltlabapi`.
 - [port](#installer-config-reference-services-doltlabapi-port)
 - [csv_port](#installer-config-reference-services-doltlabapi-csv-port)
 
-<h4 id="installer-config-reference-services-doltlabapi-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabapi-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -283,7 +284,7 @@ services:
 
 Command line equivalent [--doltlabapi-host](#doltlabapi-host).
 
-<h4 id="installer-config-reference-services-doltlabapi-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabapi-port">port</h2>
 
 _Number_. The port for `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -296,7 +297,7 @@ services:
 
 Command line equivalent [--doltlabapi-port](#doltlabapi-port).
 
-<h4 id="installer-config-reference-services-doltlabapi-csv-port">csv_port</h4>
+<h2 id="installer-config-reference-services-doltlabapi-csv-port">csv_port</h2>
 
 _Number_. The port for `doltlabapi`'s csv service. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -309,7 +310,7 @@ services:
 
 Command line equivalent [--doltlabapi-csv-port](#doltlabapi-csv-port).
 
-<h4 id="installer-config-reference-services-doltlabremoteapi">doltlabremoteapi</h4>
+<h2 id="installer-config-reference-services-doltlabremoteapi">doltlabremoteapi</h2>
 
 _Dictionary_. Configuration options for `doltlabremoteapi`.
 
@@ -317,7 +318,7 @@ _Dictionary_. Configuration options for `doltlabremoteapi`.
 - [port](#installer-config-reference-services-doltlabremoteapi-port)
 - [file_server_port](#installer-config-reference-services-doltlabremoteapi-file-server-port)
 
-<h4 id="installer-config-reference-services-doltlabremoteapi-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabremoteapi-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -330,7 +331,7 @@ services:
 
 Command line equivalent [--doltlabremoteapi-host](#doltlabremoteapi-host).
 
-<h4 id="installer-config-reference-services-doltlabremoteapi-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabremoteapi-port">port</h2>
 
 _Number_. The port for `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -343,7 +344,7 @@ services:
 
 Command line equivalent [--doltlabremoteapi-port](#doltlabremoteapi-port).
 
-<h4 id="installer-config-reference-services-doltlabremoteapi-file-server-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabremoteapi-file-server-port">port</h2>
 
 _Number_. The port for `doltlabremoteapi`'s file server. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -356,14 +357,14 @@ services:
 
 Command line equivalent [--doltlabremoteapi-file-server-port](#doltlabremoteapi-file-server-port).
 
-<h4 id="installer-config-reference-services-doltlabfileserviceapi">doltlabfileserviceapi</h4>
+<h2 id="installer-config-reference-services-doltlabfileserviceapi">doltlabfileserviceapi</h2>
 
 _Dictionary_. Configuration options for `doltlabapifileserviceapi`.
 
 - [host](#installer-config-reference-services-doltlabfileserviceapi-host)
 - [port](#installer-config-reference-services-doltlabfileserviceapi-port)
 
-<h4 id="installer-config-reference-services-doltlabfileserviceapi-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabfileserviceapi-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -376,7 +377,7 @@ services:
 
 Command line equivalent [--doltlabfileserviceapi-host](#doltlabfileserviceapi-host).
 
-<h4 id="installer-config-reference-services-doltlabfileserviceapi-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabfileserviceapi-port">port</h2>
 
 _Number_. The port for `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -389,14 +390,14 @@ services:
 
 Command line equivalent [--doltlabfileserviceapi-port](#doltlabfileserviceapi-port).
 
-<h4 id="installer-config-reference-services-doltlabgraphql">doltlabgraphql</h4>
+<h2 id="installer-config-reference-services-doltlabgraphql">doltlabgraphql</h2>
 
 _Dictionary_. Configuration options for `doltlabgraphql`.
 
 - [host](#installer-config-reference-services-doltlabgraphql-host)
 - [port](#installer-config-reference-services-doltlabgraphql-port)
 
-<h4 id="installer-config-reference-services-doltlabgraphql-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabgraphql-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -409,7 +410,7 @@ services:
 
 Command line equivalent [--doltlabgraphql-host](#doltlabgraphql-host).
 
-<h4 id="installer-config-reference-services-doltlabgraphql-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabgraphql-port">port</h2>
 
 _Number_. The port for `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -422,14 +423,14 @@ services:
 
 Command line equivalent [--doltlabgraphql-port](#doltlabgraphql-port).
 
-<h4 id="installer-config-reference-services-doltlabui">doltlabui</h4>
+<h2 id="installer-config-reference-services-doltlabui">doltlabui</h2>
 
 _Dictionary_. Configuration options for `doltlabui`.
 
 - [host](#installer-config-reference-services-doltlabui-host)
 - [port](#installer-config-reference-services-doltlabui-port)
 
-<h4 id="installer-config-reference-services-doltlabui-host">host</h4>
+<h2 id="installer-config-reference-services-doltlabui-host">host</h2>
 
 _String_. The host name or IP address of the host running `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -442,7 +443,7 @@ services:
 
 Command line equivalent [--doltlabui-host](#doltlabui-host).
 
-<h4 id="installer-config-reference-services-doltlabui-port">port</h4>
+<h2 id="installer-config-reference-services-doltlabui-port">port</h2>
 
 _Number_. The port for `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
 
@@ -463,7 +464,7 @@ _Dictionary_. Configuration options for DoltLab's default user. _Required_.
 - [password](#installer-config-reference-services-default-user-password)
 - [email](#installer-config-reference-services-default-user-email)
 
-<h4 id="installer-config-reference-default-user-name">name</h4>
+<h2 id="installer-config-reference-default-user-name">name</h2>
 
 _String_. The username of the default user. _Required_.
 
@@ -475,7 +476,7 @@ default_user:
 
 Command line equivalent [--default-user](#default-user).
 
-<h4 id="installer-config-reference-default-user-password">password</h4>
+<h2 id="installer-config-reference-default-user-password">password</h2>
 
 _String_. The password of the default user. _Required_.
 
@@ -487,7 +488,7 @@ default_user:
 
 Command line equivalent [--default-user-password](#default-user-password).
 
-<h4 id="installer-config-reference-default-user-email">email</h4>
+<h2 id="installer-config-reference-default-user-email">email</h2>
 
 _String_. The email address of the default user. _Required_.
 
@@ -515,7 +516,7 @@ _Dictionary_. The configuration options for an external SMTP server. _Optional_.
 - [implicit_tls](#installer-config-reference-smtp-implicit-tls)
 - [insecure_tls](#installer-config-reference-smtp-insecure-tls)
 
-<h4 id="installer-config-reference-smtp-auth-method">auth_method</h4>
+<h2 id="installer-config-reference-smtp-auth-method">auth_method</h2>
 
 _String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`.
 
@@ -527,7 +528,7 @@ smtp:
 
 Command line equivalent [--smtp-auth-method](#smtp-auth-method).
 
-<h4 id="installer-config-reference-smtp-host">host</h4>
+<h2 id="installer-config-reference-smtp-host">host</h2>
 
 _String_. The host name of the SMTP server. _Required_.
 
@@ -539,7 +540,7 @@ smtp:
 
 Command line equivalent [--smtp-host](#smtp-host).
 
-<h4 id="installer-config-reference-smtp-port">port</h4>
+<h2 id="installer-config-reference-smtp-port">port</h2>
 
 _Number_. The port of the SMTP server. _Required_.
 
@@ -551,7 +552,7 @@ smtp:
 
 Command line equivalent [--smtp-port](#smtp-port).
 
-<h4 id="installer-config-reference-smtp-no-reply-email">no_reply_email</h4>
+<h2 id="installer-config-reference-smtp-no-reply-email">no_reply_email</h2>
 
 _String_. The email address used to send emails from DoltLab. _Required_.
 
@@ -563,7 +564,7 @@ smtp:
 
 Command line equivalent [--no-reply-email](#no-reply-email).
 
-<h4 id="installer-config-reference-smtp-username">username</h4>
+<h2 id="installer-config-reference-smtp-username">username</h2>
 
 _String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
 
@@ -575,7 +576,7 @@ smtp:
 
 Command line equivalent [--smtp-username](#smtp-username).
 
-<h4 id="installer-config-reference-smtp-password">password</h4>
+<h2 id="installer-config-reference-smtp-password">password</h2>
 
 _String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
 
@@ -587,7 +588,7 @@ smtp:
 
 Command line equivalent [--smtp-password](#smtp-password).
 
-<h4 id="installer-config-reference-smtp-oauth-token">oauth_token</h4>
+<h2 id="installer-config-reference-smtp-oauth-token">oauth_token</h2>
 
 _String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`.
 
@@ -599,7 +600,7 @@ smtp:
 
 Command line equivalent [--smtp-oauth-token](#smtp-oauth-token).
 
-<h4 id="installer-config-reference-smtp-identity">identity</h4>
+<h2 id="installer-config-reference-smtp-identity">identity</h2>
 
 _String_. The SMTP server identity. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
 
@@ -611,7 +612,7 @@ smtp:
 
 Command line equivalent [--smtp-identity](#smtp-identity).
 
-<h4 id="installer-config-reference-smtp-trace">trace</h4>
+<h2 id="installer-config-reference-smtp-trace">trace</h2>
 
 _String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
 
@@ -623,7 +624,7 @@ smtp:
 
 Command line equivalent [--smtp-trace](#smtp-trace).
 
-<h4 id="installer-config-reference-smtp-implicit-tls">implicit_tls</h4>
+<h2 id="installer-config-reference-smtp-implicit-tls">implicit_tls</h2>
 
 _Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
 
@@ -635,7 +636,7 @@ smtp:
 
 Command line equivalent [--smtp-implicit-tls](#smtp-implicit-tls).
 
-<h4 id="installer-config-reference-smtp-insecure-tls">insecure_tls</h4>
+<h2 id="installer-config-reference-smtp-insecure-tls">insecure_tls</h2>
 
 _Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
 
@@ -667,7 +668,7 @@ _Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab native
 - [cert_chain](#installer-config-reference-tls-cert-chain)
 - [private_key](installer-config-reference-tls-private-key)
 
-<h4 id="installer-config-reference-tls-cert-chain">cert_chain</h4>
+<h2 id="installer-config-reference-tls-cert-chain">cert_chain</h2>
 
 _String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_.
 
@@ -679,7 +680,7 @@ tls:
 
 Command line equivalent [--tls-cert-chain](#tls-cert-chain).
 
-<h4 id="installer-config-reference-tls-private-key">private_key</h4>
+<h2 id="installer-config-reference-tls-private-key">private_key</h2>
 
 _String_. The absolute path to a TLS private key with `.pem` extension. _Required_.
 
@@ -699,7 +700,7 @@ _Dictionary_. Job configuration options. _Optional_. See [improving DoltLab perf
 - [concurrency_loop_seconds](#installer-config-reference-jobs-concurrency-loop-seconds)
 - [max_retries](#installer-config-reference-jobs-max-retries)
 
-<h4 id="installer-config-reference-jobs-concurrency-limit">concurrency_limit</h4>
+<h2 id="installer-config-reference-jobs-concurrency-limit">concurrency_limit</h2>
 
 _Number_. The maximum number of concurrent Jobs. _Optional_.
 
@@ -711,7 +712,7 @@ jobs:
 
 Command line equivalent [--job-concurrency-limit](#job-concurrency-limit).
 
-<h4 id="installer-config-reference-jobs-concurrency-loop-seconds">concurrency_loop_seconds</h4>
+<h2 id="installer-config-reference-jobs-concurrency-loop-seconds">concurrency_loop_seconds</h2>
 
 _Number_. The wait time in seconds before scheduling the next batch of jobs. _Optional_.
 
@@ -723,7 +724,7 @@ jobs:
 
 Command line equivalent [--job-concurrency-loop-seconds](#job-concurrency-loop-seconds).
 
-<h4 id="installer-config-reference-jobs-max-retries">max_retries</h4>
+<h2 id="installer-config-reference-jobs-max-retries">max_retries</h2>
 
 _Number_. The maximum number of times to retry failed Jobs. _Optional_.
 
@@ -749,7 +750,7 @@ _Dictionary_. Enterprise configuration options. _Optional_.
 - [super_admins](#installer-config-reference-enterprise-super-admins)
 - [saml](#installer-config-reference-enterprise-saml)
 
-<h4 id="installer-config-reference-enterprise-online-product-code">online_product_code</h4>
+<h2 id="installer-config-reference-enterprise-online-product-code">online_product_code</h2>
 
 _String_. The online product code for your Enterprise account. _Required_.
 
@@ -761,7 +762,7 @@ enterprise:
 
 Command line equivalent [--enterprise-online-product-code](#enterprise-online-product-code).
 
-<h4 id="installer-config-reference-enterprise-online-shared-key">online_shared_key</h4>
+<h2 id="installer-config-reference-enterprise-online-shared-key">online_shared_key</h2>
 
 _String_. The online shared key for your Enterprise account. _Required_.
 
@@ -773,7 +774,7 @@ enterprise:
 
 Command line equivalent [--enterprise-online-shared-key](#enterprise-online-shared-key).
 
-<h4 id="installer-config-reference-enterprise-online-api-key">online_api_key</h4>
+<h2 id="installer-config-reference-enterprise-online-api-key">online_api_key</h2>
 
 _String_. The online api key for your Enterprise account. _Required_.
 
@@ -785,7 +786,7 @@ enterprise:
 
 Command line equivalent [--enterprise-online-api-key](#enterprise-online-api-key).
 
-<h4 id="installer-config-reference-enterprise-online-license-key">online_license_key</h4>
+<h2 id="installer-config-reference-enterprise-online-license-key">online_license_key</h2>
 
 _String_. The online license key for your Enterprise account. _Required_.
 
@@ -797,7 +798,7 @@ enterprise:
 
 Command line equivalent [--enterprise-online-license-key](#enterprise-online-license-key).
 
-<h4 id="installer-config-reference-enterprise-customize">customize</h4>
+<h2 id="installer-config-reference-enterprise-customize">customize</h2>
 
 _Dictionary_. Customizable option configuration. _Optional_.
 
@@ -805,7 +806,7 @@ _Dictionary_. Customizable option configuration. _Optional_.
 - [logo](#installer-config-reference-enterprise-customize-logo)
 - [color_overrides](#installer-config-reference-enterprise-customize-color-overrides)
 
-<h4 id="installer-config-reference-enterprise-customize-email-templates">email_templates</h4>
+<h2 id="installer-config-reference-enterprise-customize-email-templates">email_templates</h2>
 
 _Boolean_. If true, generates email templates that can be customized. _Optional_. See [customizing DoltLab emails](../guides/enterprise.md#customize-automated-emails) for more information.
 
@@ -817,7 +818,7 @@ enterprise:
 
 Command line equivalent [--custom-email-templates](#custom-email-templates).
 
-<h4 id="installer-config-reference-enterprise-customize-logo">logo</h4>
+<h2 id="installer-config-reference-enterprise-customize-logo">logo</h2>
 
 _String_. Absolute path to custom logo file. _Optional_. See [customizing DoltLab's logo](../guides/enterprise.md#use-custom-logo) for more information.
 
@@ -829,7 +830,7 @@ enterprise:
 
 Command line equivalent [--custom-logo](#custom-logo).
 
-<h4 id="installer-config-reference-enterprise-customize-color-overrides">color_overrides</h4>
+<h2 id="installer-config-reference-enterprise-customize-color-overrides">color_overrides</h2>
 
 _Dictionary_. Color override options. _Optional_. See [customizing DoltLab colors](../guides/enterprise.md#customize-colors) for more information.
 
@@ -842,7 +843,7 @@ _Dictionary_. Color override options. _Optional_. See [customizing DoltLab color
 - [rgb_link_2](#installer-config-reference-enterprise-color-overrides-rgb-link-2)
 - [rgb_link_light](#installer-config-reference-enterprise-color-overrides-rgb-link-light)
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-accent-1">rgb_accent_1</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-accent-1">rgb_accent_1</h2>
 
 _String_. Comma separated RGB color used to replace accent 1. _Optional_.
 
@@ -856,7 +857,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-accent-1](#custom-color-rgb-accent-1).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-accent-1">rgb_background_accent_1</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-background-accent-1">rgb_background_accent_1</h2>
 
 _String_. Comma separated RGB color used to replace background accent 1. _Optional_.
 
@@ -870,7 +871,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-background-accent-1](#custom-color-rgb-background-accent-1).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-background-gradient-start">rgb_background_gradient_start</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-background-gradient-start">rgb_background_gradient_start</h2>
 
 _String_. Comma separated RGB color used to replace background gradient start. _Optional_.
 
@@ -884,7 +885,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-background-gradient-start](#custom-color-rgb-background-gradient-start).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-1">rgb_button_1</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-button-1">rgb_button_1</h2>
 
 _String_. Comma separated RGB color used to replace button 1. _Optional_.
 
@@ -898,7 +899,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-button-1](#custom-color-rgb-button-1).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-button-2">rgb_button_2</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-button-2">rgb_button_2</h2>
 
 _String_. Comma separated RGB color used to replace button 2. _Optional_.
 
@@ -912,7 +913,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-button-2](#custom-color-rgb-button-2).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-1">rgb_link_1</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-link-1">rgb_link_1</h2>
 
 _String_. Comma separated RGB color used to replace link 1. _Optional_.
 
@@ -926,7 +927,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-link-1](#custom-color-rgb-link-1).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-2">rgb_link_2</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-link-2">rgb_link_2</h2>
 
 _String_. Comma separated RGB color used to replace link 2. _Optional_.
 
@@ -940,7 +941,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-link-2](#custom-color-rgb-link-2).
 
-<h4 id="installer-config-reference-enterprise-color-overrides-rgb-link-light">rgb_link_light</h4>
+<h2 id="installer-config-reference-enterprise-color-overrides-rgb-link-light">rgb_link_light</h2>
 
 _String_. Comma separated RGB color used to replace link light. _Optional_.
 
@@ -954,7 +955,7 @@ enterprise:
 
 Command line equivalent [--custom-color-rgb-link-light](#custom-color-rgb-link-light).
 
-<h4 id="installer-config-reference-enterprise-automated-backups">automated_backups</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups">automated_backups</h2>
 
 _Dictionary_. Automated backups options. _Optional_. See [automated backups](../guides/enterprise.md#doltlab-automated-backups) for more information.
 
@@ -969,7 +970,7 @@ _Dictionary_. Automated backups options. _Optional_. See [automated backups](../
 - [oci_config_file](#installer-config-reference-enterprise-automated-backups-oci-config-file)
 - [oci_key_file](#installer-config-reference-enterprise-automated-backups-oci-key-file)
 
-<h4 id="installer-config-reference-enterprise-automated-backups-remote-url">remote_url</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-remote-url">remote_url</h2>
 
 _String_. Remote url for pushing `doltlabdb` backups. _Required_.
 
@@ -982,7 +983,7 @@ enterprise:
 
 Command line equivalent [--automated-dolt-backups-url](#automated-dolt-backups-url).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-cron-schedule">cron_schedule</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-cron-schedule">cron_schedule</h2>
 
 _String_. Cron schedule for backup frequency. _Optional_.
 
@@ -995,7 +996,7 @@ enterprise:
 
 Command line equivalent [--automated-dolt-backups-cron-schedule](#automated-dolt-backups-cron-schedule).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-backup-on-boot">backup_on_boot</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-backup-on-boot">backup_on_boot</h2>
 
 _Boolean_. If true, creates first backup when DoltLab is started. _Optional_.
 
@@ -1008,7 +1009,7 @@ enterprise:
 
 Command line equivalent [--automated-dolt-backups-backup-on-boot](#automated-dolt-backups-backup-on-boot).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-aws-region">aws_region</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-aws-region">aws_region</h2>
 
 _String_. AWS region. _Required_ if `remote_url` has scheme `aws://`.
 
@@ -1021,7 +1022,7 @@ enterprise:
 
 Command line equivalent [--aws-region](#aws-region).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-aws-profile">aws_profile</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-aws-profile">aws_profile</h2>
 
 _String_. AWS profile name. _Required_ if `remote_url` has scheme `aws://`.
 
@@ -1034,7 +1035,7 @@ enterprise:
 
 Command line equivalent [--aws-profile](#aws-profile).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-aws-shared-credentials-file">aws_shared_credentials_file</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-aws-shared-credentials-file">aws_shared_credentials_file</h2>
 
 _String_. Absolute path to AWS shared credentials file. _Required_ if `remote_url` has scheme `aws://`.
 
@@ -1047,7 +1048,7 @@ enterprise:
 
 Command line equivalent [--aws-shared-credentials-file](#aws-shared-credentials-file).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-aws-config-file">aws_config_file</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-aws-config-file">aws_config_file</h2>
 
 _String_. Absolute path to AWS config file. _Required_ if `remote_url` has scheme `aws://`.
 
@@ -1060,7 +1061,7 @@ enterprise:
 
 Command line equivalent [--aws-config-file](#aws-config-file).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-google-credentials-file">google_credentials_file</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-google-credentials-file">google_credentials_file</h2>
 
 _String_. Absolute path to Google cloud application credentials file. _Required_ if `remote_url` has scheme `gs://`.
 
@@ -1073,7 +1074,7 @@ enterprise:
 
 Command line equivalent [--google-creds-file](#google-creds-file).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-oci-config-file">oci_config_file</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-oci-config-file">oci_config_file</h2>
 
 _String_. Absolute path to Oracle cloud configuration file. _Required_ if `remote_url` has scheme `oci://`.
 
@@ -1086,7 +1087,7 @@ enterprise:
 
 Command line equivalent [--oci-config-file](#oci-config-file).
 
-<h4 id="installer-config-reference-enterprise-automated-backups-oci-key-file">oci_key_file</h4>
+<h2 id="installer-config-reference-enterprise-automated-backups-oci-key-file">oci_key_file</h2>
 
 _String_. Absolute path to Oracle cloud key file. _Required_ if `remote_url` has scheme `oci://`.
 
@@ -1099,7 +1100,7 @@ enterprise:
 
 Command line equivalent [--oci-key-file](#oci-key-file).
 
-<h4 id="installer-config-reference-enterprise-multihost">multihost</h4>
+<h2 id="installer-config-reference-enterprise-multihost">multihost</h2>
 
 _Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment) for more information.
 
@@ -1110,7 +1111,7 @@ _Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-
 - [doltlabgraphql_only](#installer-config-reference-enterprise-multihost-doltlabgraphql-only)
 - [doltlabui_only](#installer-config-reference-enterprise-multihost-doltlabui-only)
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabdb-only">doltlabdb_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabdb-only">doltlabdb_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabdb` service only. _Optional_.
 
@@ -1123,7 +1124,7 @@ enterprise:
 
 Command line equivalent [--doltlabdb-only](#doltlabdb-only).
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabapi-only">doltlabapi_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabapi-only">doltlabapi_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabapi` service only. _Optional_.
 
@@ -1136,7 +1137,7 @@ enterprise:
 
 Command line equivalent [--doltlabapi-only](#doltlabapi-only).
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabremoteapi-only">doltlabremoteapi_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabremoteapi-only">doltlabremoteapi_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabremoteapi` service only. _Optional_.
 
@@ -1149,7 +1150,7 @@ enterprise:
 
 Command line equivalent [--doltlabremoteapi-only](#doltlabremoteapi-only).
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only">doltlabfileserviceapi_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabfileserviceapi-only">doltlabfileserviceapi_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabfileserviceapi` service only. _Optional_.
 
@@ -1162,7 +1163,7 @@ enterprise:
 
 Command line equivalent [--doltlabfileserviceapi-only](#doltlabfileserviceapi-only).
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabgraphql-only">doltlabgraphql_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabgraphql-only">doltlabgraphql_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabgraphql` service only. _Optional_.
 
@@ -1175,7 +1176,7 @@ enterprise:
 
 Command line equivalent [--doltlabgraphql-only](#doltlabgraphql-only).
 
-<h4 id="installer-config-reference-enterprise-multihost-doltlabui-only">doltlabui_only</h4>
+<h2 id="installer-config-reference-enterprise-multihost-doltlabui-only">doltlabui_only</h2>
 
 _Boolean_. If true, makes deployment the `doltlabui` service only. _Optional_.
 
@@ -1188,7 +1189,7 @@ enterprise:
 
 Command line equivalent [--doltlabui-only](#doltlabui-only).
 
-<h4 id="installer-config-reference-enterprise-super-admins">super_admins</h4>
+<h2 id="installer-config-reference-enterprise-super-admins">super_admins</h2>
 
 _String_ _Array_. Email addresses for users granted "super admin" privileges.
 
@@ -1200,14 +1201,14 @@ enterprise:
 
 Command line equivalent [--super-admin-email](#super-admin-email).
 
-<h4 id="installer-config-reference-enterprise-saml">saml</h4>
+<h2 id="installer-config-reference-enterprise-saml">saml</h2>
 
 _Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](../guides/enterprise.md#doltlab-single-sign-on) for more information.
 
 - [metadata_descriptor_file](#installer-config-reference-enterprise-saml-metadata-descriptor-file)
 - [cert_common_name](#installer-config-reference-enterprise-saml-cert-common-name)
 
-<h4 id="installer-config-reference-enterprise-saml-metadata-descriptor-file">metadata_descriptor_file</h4>
+<h2 id="installer-config-reference-enterprise-saml-metadata-descriptor-file">metadata_descriptor_file</h2>
 
 _String_. Absolute path to metadata descriptor file. _Required_.
 
@@ -1220,7 +1221,7 @@ enterprise:
 
 Command line equivalent [--sso-saml-metadata-descriptor](#sso-saml-metadata-descriptor).
 
-<h4 id="installer-config-reference-enterprise-saml-cert-common-name">cert_common_name</h4>
+<h2 id="installer-config-reference-enterprise-saml-cert-common-name">cert_common_name</h2>
 
 _String_. Common name to use in generated SAML certificate. _Required_.
 
