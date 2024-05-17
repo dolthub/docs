@@ -14,13 +14,13 @@ enterprise:
   online_license_key: "yourlicensekey"
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that allow it to run in Enterprise mode.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that allow it to run in Enterprise mode.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can supply command line flags to the `installer` like so:
+Alternatively, you can supply command line flags to the [installer](../reference/installer.md) like so:
 
 ```bash
 ./installer \
@@ -58,19 +58,19 @@ enterprise:
     logo: /absolute/path/to/custom/logo.png
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that use your custom logo.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that use your custom logo.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can run the `installer` with the argument `--custom-logo=/absolute/path/to/custom/logo.png`.
+Alternatively, you can run the [installer](../reference/installer.md) with the argument `--custom-logo=/absolute/path/to/custom/logo.png`.
 
 <h1 id="customize-automated-emails">Customize automated emails</h1>
 
 DoltLab Enterprise allows administrators to customize the automated emails their DoltLab instance sends to its users.
 
-Custom emails can be configured with the `installer` by editing `./installer_config.yaml` and setting `enterprise.customize.email_templates` to `true`.
+Custom emails can be configured with the [installer](../reference/installer.md) by editing `./installer_config.yaml` and setting `enterprise.customize.email_templates` to `true`.
 
 ```yaml
 # installer_config.yaml
@@ -83,15 +83,15 @@ enterprise:
     email_templates: true
 ```
 
-Save these changes and rerun the `installer` to generate email template files you can customize, that DoltLab will use.
+Save these changes and rerun the [installer](../reference/installer.md) to generate email template files you can customize, that DoltLab will use.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can supply the argument `--custom-email-templates=true` to the `installer` instead.
+Alternatively, you can supply the argument `--custom-email-templates=true` to the [installer](../reference/installer.md) instead.
 
-Once run, the `installer` will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed.
+Once run, the [installer](../reference/installer.md) will generate the email template files at `./doltlabapi/templates/email` which match the files described below. You can customize these files and they will be used by DoltLab. Each file is named according to use-case. The names and paths of these files should NOT be changed.
 
 - `collabInvite.txt` sent to invite user to be a database collaborator.
 - `invite.txt` sent to invite a user to join an organization.
@@ -233,13 +233,13 @@ enterprise:
       rgb_link_light: "109, 176, 252"
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that use your custom colors.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that use your custom colors.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can run the `installer` with the following arguments corresponding to the custom color you want to override:
+Alternatively, you can run the [installer](../reference/installer.md) with the following arguments corresponding to the custom color you want to override:
 
 ```bash
 ./installer \
@@ -272,7 +272,7 @@ enterprise:
   super_admins: ["me@email.com", "you@email.com"]
 ```
 
-Alternatively, you can use the `installer` with the argument `--super-admin-email` instead. This argument can be supplied multiple times, for example:
+Alternatively, you can use the [installer](../reference/installer.md) with the argument `--super-admin-email` instead. This argument can be supplied multiple times, for example:
 
 ```bash
 ./installer \
@@ -313,13 +313,13 @@ enterprise:
     cert_common_name: "mydoltlabinstance"
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets the enable saml single-sign-on.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets the enable saml single-sign-on.
 
 ```bash
 ./installer
 ```
 
-Alternatively, the `installer` can be run with the following arguments to do the same thing:
+Alternatively, the [installer](../reference/installer.md) can be run with the following arguments to do the same thing:
 
 ```bash
 ./installer \
@@ -420,13 +420,13 @@ enterprise:
     aws_config_file: "/absolute/path/to/aws/config"
 ```
 
-Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
+Save these edits and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the following arguments to configure the AWS backup:
+Alternatively, run the [installer](../reference/installer.md) with the following arguments to configure the AWS backup:
 
 ```bash
 ./installer \
@@ -438,7 +438,7 @@ Alternatively, run the `installer` with the following arguments to configure the
 --aws-profile="doltlab_backuper"
 ```
 
-DoltLab will use a combination of Prometheus and Alertmanager to notify you if your regularly scheduled backup fails for some reason. You'll need to edit the Alertmanager configuration file generated by the `installer` at `./alertmanager/alertmanager.yaml` and include your SMTP authentication information in the `global` section. The other sections do not need to be edited:
+DoltLab will use a combination of Prometheus and Alertmanager to notify you if your regularly scheduled backup fails for some reason. You'll need to edit the Alertmanager configuration file generated by the [installer](../reference/installer.md) at `./alertmanager/alertmanager.yaml` and include your SMTP authentication information in the `global` section. The other sections do not need to be edited:
 
 ```yaml
 global:
@@ -500,13 +500,13 @@ enterprise:
     google_credentials_file: "/absolute/path/to/gcloud/credentials"
 ```
 
-Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
+Save these edits and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will automatically backup `doltlabdb` to AWS.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the following arguments to create automated GCP backups:
+Alternatively, run the [installer](../reference/installer.md) with the following arguments to create automated GCP backups:
 
 ```bash
 ./installer \
@@ -515,7 +515,7 @@ Alternatively, run the `installer` with the following arguments to create automa
 --google-creds-file="/absolute/path/to/gcloud/credentials"
 ```
 
-Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the `installer`, as shown in the AWS backups section, to receive notifications of backup failures.
+Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [installer](../reference/installer.md), as shown in the AWS backups section, to receive notifications of backup failures.
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your GCP bucket.
 
@@ -561,13 +561,13 @@ enterprise:
     oci_key_file: "/absolute/path/to/oci/private/key.pem"
 ```
 
-Save these edits and rerun the `installer` to regenerate DoltLab assets that will automatically backup `doltlabdb` to OCI.
+Save these edits and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will automatically backup `doltlabdb` to OCI.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can run the `installer` with the following arguments to configure the OCI backups:
+Alternatively, you can run the [installer](../reference/installer.md) with the following arguments to configure the OCI backups:
 
 ```bash
 ./installer \
@@ -577,7 +577,7 @@ Alternatively, you can run the `installer` with the following arguments to confi
 --oci-key-file="/absolute/path/to/oci/private/key.pem"
 ```
 
-Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the `installer`, as shown in the AWS backups section, to receive notifications of backup failures.
+Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [installer](../reference/installer.md), as shown in the AWS backups section, to receive notifications of backup failures.
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your OCI bucket.
 
@@ -591,7 +591,7 @@ The following guide will walkthrough deploying a DoltLab instance whose set of s
 
 ![Diagram of multi-host DoltLab](../../.gitbook/assets/multihost_doltlab.svg)
 
-The diagram above depicts the multi-host architecture for DoltLab. Each independent service runs on a distinct host, and is served behind it's own reverse proxy. Both the service and the proxy run via Docker compose, and are easily configured using the `installer`. At the time of this writing, multi-host deployments are only available over `http`. For `https` support, please [file an issue in our issues repository](https://github.com/dolthub/doltlab-issues).
+The diagram above depicts the multi-host architecture for DoltLab. Each independent service runs on a distinct host, and is served behind it's own reverse proxy. Both the service and the proxy run via Docker compose, and are easily configured using the [installer](../reference/installer.md). At the time of this writing, multi-host deployments are only available over `http`. For `https` support, please [file an issue in our issues repository](https://github.com/dolthub/doltlab-issues).
 
 To get started with a DoltLab multi-host deployment, you'll need to provision a host per DoltLab service. Here are our hardware recommendations for each service:
 
@@ -632,7 +632,7 @@ curl -LO https://doltlab-releases.s3.amazonaws.com/linux/amd64/doltlab-latest.zi
 sudo apt install unzip
 ```
 
-You can then unzip DoltLab's contents and install it's dependencies using the installation script generated by the `installer`.
+You can then unzip DoltLab's contents and install it's dependencies using the installation script generated by the [installer](../reference/installer.md).
 
 ```bash
 # unzip DoltLab contents
@@ -648,7 +648,7 @@ cd doltlab
 
 Again, you should complete this process on each host before moving on to the subsequent steps.
 
-Next, we will use the `installer` to configure the separate services on each host in the following order:
+Next, we will use the [installer](../reference/installer.md) to configure the separate services on each host in the following order:
 
 - `doltlabdb`
 - `doltlabapi`
@@ -684,13 +684,13 @@ enterprise:
     doltlabdb_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabdb` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabdb` only.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the `--doltlabdb-only` argument. Be sure to also supply the arguments for DoltLab Enterprise mode, as those are required as well.
+Alternatively, run the [installer](../reference/installer.md) with the `--doltlabdb-only` argument. Be sure to also supply the arguments for DoltLab Enterprise mode, as those are required as well.
 
 ```bash
 ./installer \
@@ -706,7 +706,7 @@ Alternatively, run the `installer` with the `--doltlabdb-only` argument. Be sure
 `services.doltlabdb.admin_password`, or `--doltlabdb-admin-password`, is required and is used to create user `dolthubadmin`.</br>
 `services.doltlabdb.dolthubapi_password`, or `--doltlabdb-dolthubapi-password`, is required and is used to create user `dolthubapi`.</br>
 
-Running the `installer` will produce output like the following:
+Running the [installer](../reference/installer.md) will produce output like the following:
 
 ```bash
 2024-05-06T20:13:52.080Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.4"}
@@ -787,13 +787,13 @@ enterprise:
     doltlabapi_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabapi` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabapi` only.
 
 ```bash
 ./installer
 ```
 
-Alternatively, you can run the `installer` with the `--doltlabapi-only` flag and the other required arguments in order to configure the `doltlabapi` instance.
+Alternatively, you can run the [installer](../reference/installer.md) with the `--doltlabapi-only` flag and the other required arguments in order to configure the `doltlabapi` instance.
 
 ```bash
 ./installer \
@@ -841,7 +841,7 @@ Alternatively, you can run the `installer` with the `--doltlabapi-only` flag and
 `smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
 `default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](../installation/start-doltlab.md) `admin`.</br>
 
-After running the `installer`, you will see output like the following:
+After running the [installer](../reference/installer.md), you will see output like the following:
 
 ```bash
 2024-05-06T21:06:19.124Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.4"}
@@ -894,13 +894,13 @@ enterprise:
     doltlabremoteapi_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabremoteapi` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabremoteapi` only.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the `--doltlabremoteapi-only` flag and the other required arguments in order to configure the `doltlabremoteapi` instance.
+Alternatively, run the [installer](../reference/installer.md) with the `--doltlabremoteapi-only` flag and the other required arguments in order to configure the `doltlabremoteapi` instance.
 
 ```bash
 ./installer \
@@ -965,13 +965,13 @@ enterprise:
     doltlabfileserviceapi_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabfileserviceapi` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabfileserviceapi` only.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the `--doltlabfileserviceapi-only` flag and the other required arguments in order to configure the `doltlabfileserviceapi` instance.
+Alternatively, run the [installer](../reference/installer.md) with the `--doltlabfileserviceapi-only` flag and the other required arguments in order to configure the `doltlabfileserviceapi` instance.
 
 ```bash
 ./installer \
@@ -1035,13 +1035,13 @@ enterprise:
     doltlabgraphql_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabgraphql` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabgraphql` only.
 
 ```bash
 ./installer
 ```
 
-Alternatively, run the `installer` with the `--doltlabgraphql-only` flag and the other required arguments in order to configure the `doltlabgraphql` instance.
+Alternatively, run the [installer](../reference/installer.md) with the `--doltlabgraphql-only` flag and the other required arguments in order to configure the `doltlabgraphql` instance.
 
 ```bash
 ./installer \
@@ -1103,13 +1103,13 @@ enterprise:
     doltlabui_only: true
 ```
 
-Save these changes and rerun the `installer` to regenerate DoltLab assets that will make this deployment `doltlabui` only.
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will make this deployment `doltlabui` only.
 
 ```bash
 ./installer
 ```
 
-Run the `installer` with the `--doltlabui-only` flag and the other required arguments in order to configure the `doltlabui` instance.
+Run the [installer](../reference/installer.md) with the `--doltlabui-only` flag and the other required arguments in order to configure the `doltlabui` instance.
 
 ```bash
 ./installer \

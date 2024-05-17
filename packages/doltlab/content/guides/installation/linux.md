@@ -25,14 +25,14 @@ unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
 ```
 
-The contents of the resulting `doltlab` directory can vary depending on the version installed. The following instructions will refer to DoltLab versions >= `v2.1.0` that contain the `installer` binary. For installation instructions for DoltLab <= `2.0.8`, please see the [pre-installer installation instructions](./pre-installer-linux.md).
+The contents of the resulting `doltlab` directory can vary depending on the version installed. The following instructions will refer to DoltLab versions >= `v2.1.0` that contain the [installer](../../reference/installer.md) binary. For installation instructions for DoltLab <= `2.0.8`, please see the [pre-installer installation instructions](./pre-installer-linux.md).
 
 Inside the `doltlab` directory you'll find the following binaries:
 
 - installer
 - smtp_connection_helper
 
-The `installer` binary, is the primary interface for configuring a DoltLab instance. This tool will create all other assets DoltLab needs to run, based on the arguments you supply it.
+The [installer](../../reference/installer.md) binary, is the primary interface for configuring a DoltLab instance. This tool will create all other assets DoltLab needs to run, based on the arguments you supply it.
 
 The `smtp_connection_helper` binary can be used to help you troubleshoot any issues connecting your DoltLab instance to your existing SMTP server. This tool uses similar code to DoltLab's email service and sends a test email if the connection to the SMTP server is properly configured. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](../administrator/administrator.md#troubleshoot-smtp-connection).
 
