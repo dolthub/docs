@@ -4,7 +4,7 @@ title: "Administrator Guide (Pre-Installer)"
 
 This guide will cover how to perform common DoltLab administrator configuration and tasks for versions <= `v2.0.8` which do not use the `installer` binary.
 
-1. [Backup DoltLab data](#backup-restore-volumes)
+1. [Backup DoltLab data](#backup-and-restore-volumes)
 2. [Authenticate a Dolt client to use DoltLab account](#auth-dolt-client)
 3. [Monitor DoltLab with cAdvisor and Prometheus](#prometheus)
 4. [Connect to an SMTP server with implicit TLS](#smtp-implicit-tls)
@@ -22,7 +22,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 16. [Improve DoltLab performance](#doltlab-performance)
 17. [Serve DoltLab behind an AWS Network Load Balancer](#doltlab-aws-nlb)
 
-<h1 id="backup-restore-volumes">Backup and restore volumes</h1>
+# Backup and restore volumes
 
 DoltLab persists all data to local disk using Docker volumes. To backup or restore DoltLab's data, we recommend the following steps which follow Docker's official [volume backup and restore documentation](https://docs.docker.com/storage/volumes/#back-up-restore-or-migrate-data-volumes), with the exception of DoltLab's PostgreSQL server.
 
