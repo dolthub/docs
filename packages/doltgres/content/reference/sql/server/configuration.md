@@ -14,21 +14,20 @@ log_level: info
 
 behavior:
   read_only: false
-  autocommit: true
 
 user:
   name: root
-  password: ""
+  password: password
 
 listener:
   host: localhost
-  port: 3306
-  max_connections: 100
+  port: 5432
   read_timeout_millis: 28800000
   write_timeout_millis: 28800000
+  
+data_dir: /var/doltgres/dbs
 
-performance:
-  query_parallelism: null
+cfg_dir: .doltcfg
 ```
 
 The full list of supported fields can be found by running `doltgres --help`.
