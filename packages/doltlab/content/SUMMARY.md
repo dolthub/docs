@@ -33,6 +33,8 @@
 ## Reference
 
 - [Installer](reference/installer.md)
+  - [Configuration file reference](reference/installer/configuration-file.md)
+  - [Command line reference](reference/installer/cli.md)
 
 ## Release Notes
 

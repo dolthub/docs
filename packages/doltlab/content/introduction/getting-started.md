@@ -272,7 +272,7 @@ The DoltLab instance ships with a default user configured called `admin`. It has
 
 ![Admin Fresh DoltLab](../../.gitbook/assets/getting-started/admin-logged-in-fresh-doltlab.png)
 
-# What Works
+# Basic Configuration
 
 ## Single user
 
