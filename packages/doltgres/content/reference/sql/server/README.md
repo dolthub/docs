@@ -45,7 +45,6 @@ log_level: debug
 
 behavior:
   read_only: false
-  autocommit: true
 
 user:
   name: "doltgres"
