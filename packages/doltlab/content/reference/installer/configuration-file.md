@@ -197,7 +197,7 @@ _Dictionary_. Configuration options for `doltlabdb`.
 
 <h4 id="doltlabdb-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for multi-host deployments.
+_String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../../guides/administrator.md#use-external-database) and for multi-host deployments.
 
 ```yaml
 # example installer_config.yaml
@@ -210,7 +210,7 @@ Command line equivalent [doltlabdb-host](./cli.md#doltlabdb-host).
 
 <h4 id="doltlabdb-port">port</h4>
 
-_Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../guides/administrator.md#use-external-database) and for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../../guides/administrator.md#use-external-database) and for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -270,7 +270,7 @@ _Dictionary_. Configuration options for `doltlabapi`.
 
 <h4 id="doltlabapi-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_String_. The host name or IP address of the host running `doltlabapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -283,7 +283,7 @@ Command line equivalent [doltlabapi-host](./cli.md#doltlabapi-host).
 
 <h4 id="doltlabapi-port">port</h4>
 
-_Number_. The port for `doltlabapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -296,7 +296,7 @@ Command line equivalent [doltlabapi-port](./cli.md#doltlabapi-port).
 
 #### csv_port
 
-_Number_. The port for `doltlabapi`'s csv service. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabapi`'s csv service. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -317,7 +317,7 @@ _Dictionary_. Configuration options for `doltlabremoteapi`.
 
 <h4 id="doltlabremoteapi-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_String_. The host name or IP address of the host running `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -330,7 +330,7 @@ Command line equivalent [doltlabremoteapi-host](./cli.md#doltlabremoteapi-host).
 
 <h4 id="doltlabremoteapi-port">port</h4>
 
-_Number_. The port for `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabremoteapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -343,7 +343,7 @@ Command line equivalent [doltlabremoteapi-port](./cli.md#doltlabremoteapi-port).
 
 <h4 id="doltlabremoteapi-port">port</h4>
 
-_Number_. The port for `doltlabremoteapi`'s file server. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabremoteapi`'s file server. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -363,7 +363,7 @@ _Dictionary_. Configuration options for `doltlabapifileserviceapi`.
 
 <h4 id="doltlabfileserviceapi-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_String_. The host name or IP address of the host running `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -376,7 +376,7 @@ Command line equivalent [doltlabfileserviceapi-host](./cli.md#doltlabfileservice
 
 <h4 id="doltlabfileserviceapi-port">port</h4>
 
-_Number_. The port for `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabfileserviceapi`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -396,7 +396,7 @@ _Dictionary_. Configuration options for `doltlabgraphql`.
 
 <h4 id="doltlabgraphql-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_String_. The host name or IP address of the host running `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -409,7 +409,7 @@ Command line equivalent [doltlabgraphql-host](./cli.md#doltlabgraphql-host).
 
 <h4 id="doltlabgraphql-port">port</h4>
 
-_Number_. The port for `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabgraphql`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -429,7 +429,7 @@ _Dictionary_. Configuration options for `doltlabui`.
 
 <h4 id="doltlabui-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_String_. The host name or IP address of the host running `doltlabui`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -442,7 +442,7 @@ Command line equivalent [doltlabui-host](./cli.md#doltlabui-host).
 
 <h4 id="doltlabui-port">port</h4>
 
-_Number_. The port for `doltlabui`. _Required_ for [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment).
+_Number_. The port for `doltlabui`. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment).
 
 ```yaml
 # example installer_config.yaml
@@ -499,7 +499,7 @@ Command line equivalent [default-user-email](./cli.md#default-user-email).
 
 ## smtp
 
-_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](../../guides/administrator.md#connect-smtp-server) for more information.
 
 - [auth_method](#auth_method)
 - [host](#smtp-host)
@@ -599,8 +599,7 @@ Command line equivalent [smtp-oauth-token](./cli.md#smtp-oauth-token).
 
 ### identity
 
-_String_. The SMTP server identity. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
-
+_String_. The SMTP server identity. _Optional_.
 ```yaml
 # example installer_config.yaml
 smtp:
@@ -611,7 +610,7 @@ Command line equivalent [smtp-identity](./cli.md#smtp-identity).
 
 ### trace
 
-_String_. The SMTP server trace. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_String_. The SMTP server trace. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -623,7 +622,7 @@ Command line equivalent [smtp-trace](./cli.md#smtp-trace).
 
 ### implicit_tls
 
-_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -635,7 +634,7 @@ Command line equivalent [smtp-implicit-tls](./cli.md#smtp-implicit-tls).
 
 ### insecure_tls
 
-_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](#connect-smtp-server) for more information.
+_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_.
 
 ```yaml
 # example installer_config.yaml
@@ -660,7 +659,7 @@ Command line equivalent [scheme](./cli.md#scheme).
 
 ## tls
 
-_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](doltlab-https-natively) for more information.
+_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/administrator.md#doltlab-https-natively) for more information.
 
 - [cert_chain](#cert_chain)
 - [private_key](private_key)
@@ -691,7 +690,7 @@ Command line equivalent [tls-private-key](./cli.md#tls-private-key).
 
 ## jobs
 
-_Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](#doltlab-performance) for more information.
+_Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](../../guides/administrator.md#doltlab-performance) for more information.
 
 - [concurrency_limit](#concurrency_limit)
 - [concurrency_loop_seconds](#concurrency_loop_seconds)
@@ -805,7 +804,7 @@ _Dictionary_. Customizable option configuration. _Optional_.
 
 #### email_templates
 
-_Boolean_. If true, generates email templates that can be customized. _Optional_. See [customizing DoltLab emails](../guides/enterprise.md#customize-automated-emails) for more information.
+_Boolean_. If true, generates email templates that can be customized. _Optional_. See [customizing DoltLab emails](../../guides/enterprise.md#customize-automated-emails) for more information.
 
 ```yaml
 # example installer_config.yaml
@@ -817,7 +816,7 @@ Command line equivalent [custom-email-templates](./cli.md#custom-email-templates
 
 #### logo
 
-_String_. Absolute path to custom logo file. _Optional_. See [customizing DoltLab's logo](../guides/enterprise.md#use-custom-logo) for more information.
+_String_. Absolute path to custom logo file. _Optional_. See [customizing DoltLab's logo](../../guides/enterprise.md#use-custom-logo) for more information.
 
 ```yaml
 # example installer_config.yaml
@@ -829,7 +828,7 @@ Command line equivalent [custom-logo](./cli.md#custom-logo).
 
 #### color_overrides
 
-_Dictionary_. Color override options. _Optional_. See [customizing DoltLab colors](../guides/enterprise.md#customize-colors) for more information.
+_Dictionary_. Color override options. _Optional_. See [customizing DoltLab colors](../../guides/enterprise.md#customize-colors) for more information.
 
 - [rgb_accent_1](#rgb_accent_1)
 - [rgb_background_accent_1](#rgb_background_accent_1)
@@ -954,7 +953,7 @@ Command line equivalent [custom-color-rgb-link-light](./cli.md#custom-color-rgb-
 
 ### automated_backups
 
-_Dictionary_. Automated backups options. _Optional_. See [automated backups](../guides/enterprise.md#doltlab-automated-backups) for more information.
+_Dictionary_. Automated backups options. _Optional_. See [automated backups](../../guides/enterprise.md#doltlab-automated-backups) for more information.
 
 - [remote_url](#remote_url)
 - [cron_schedule](#cron_schedule)
@@ -1099,7 +1098,7 @@ Command line equivalent [oci-key-file](./cli.md#oci-key-file).
 
 ### multihost
 
-_Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](../guides/enterprise.md#multihost-deployment) for more information.
+_Dictionary_. Multi-host deployment options. _Optional_. See [configuring multi-host deployments](../../guides/enterprise.md#multihost-deployment) for more information.
 
 - [doltlabdb_only](#doltlabdb_only)
 - [doltlabapi_only](#doltlabapi_only)
@@ -1200,7 +1199,7 @@ Command line equivalent [super-admin-email](./cli.md#super-admin-email).
 
 ## saml
 
-_Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](../guides/enterprise.md#doltlab-single-sign-on) for more information.
+_Dictionary_. Saml single-sign-on options. _Optional_. See [saml configuration](../../guides/enterprise.md#doltlab-single-sign-on) for more information.
 
 - [metadata_descriptor_file](#metadata_descriptor_file)
 - [cert_common_name](#cert_common_name)
