@@ -61,7 +61,7 @@ GRANT ALL ON dolthubapi.* TO 'dolthubapi';
 
 DoltLab's main API, `doltlabapi`, will connect to the application database as the `dolthubapi` SQL user.
 
-<h5 id="doltlab-smtp-auth">Supported SMTP Authentication methods</h5>
+### Supported SMTP Authentication methods
 
 Starting in DoltLab `v0.3.1`, admins can use different SMTP authentication protocols to connect to an existing
 SMTP server. By default, `./start-doltlab.sh` sets the environment variable `EMAIL_AUTH_METHOD` to `plain`.
@@ -77,7 +77,7 @@ Supported `EMAIL_AUTH_METHOD` options are `plain`, `login`, `anonymous`, `extern
 
 If you are experiencing any SMTP server connection issues (or DoltLab account creation issues) please see [the SMTP troubleshooting guide](./administrator.md#troubleshoot-smtp-connection).
 
-<h5 id="doltlab-default-user">Default user `admin`</h5>
+### Default user `admin`
 
 Starting with DoltLab `v0.4.1`, the default user `admin` is created,
 when [DoltLab's API server](https://www.dolthub.com/blog/2022-02-25-doltlab-101-services-and-roadmap/#doltlab-api-server) starts.

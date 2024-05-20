@@ -33,15 +33,15 @@ Alternatively, you can supply command line flags to the [installer](../reference
 
 The values for these arguments will be provided to you by our DoltLab team. The following contents on this page covers how to configure various Enterprise features for your DoltLab instance.
 
-1. [Use custom Logo on DoltLab instance](#use-custom-logo)
+1. [Use custom Logo on DoltLab instance](#use-custom-logo-on-doltlab-instance)
 2. [Customize automated emails](#customize-automated-emails)
-3. [Customize DoltLab colors](#customize-colors)
-4. [Add Super Admins to a DoltLab instance](#add-super-admins)
-5. [Configure SAML Single-Sign-on](#doltlab-single-sign-on)
-6. [Automated Remote Backups](#doltlab-automated-backups)
-7. [Deploy DoltLab across multiple hosts](#multihost-deployment)
+3. [Customize DoltLab colors](#customize-doltlab-colors)
+4. [Add Super Admins to a DoltLab instance](#add-super-admins-to-a-doltlab-instance)
+5. [Configure SAML Single-Sign-on](#configure-saml-single-sign-on)
+6. [Automated Remote Backups](#automated-remote-backups)
+7. [Deploy DoltLab across multiple hosts](#deploy-doltlab-across-multiple-hosts)
 
-<h1 id="use-custom-logo">Use custom logo on DoltLab instance</h1>
+# Use custom logo on DoltLab instance
 
 DoltLab Enterprise allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos custom logos must have a maximum height of `24px` and a maximum width of `112px`. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab" below the custom logo.
 
@@ -66,7 +66,7 @@ Save these changes and rerun the [installer](../reference/installer.md) to regen
 
 Alternatively, you can run the [installer](../reference/installer.md) with the argument `--custom-logo=/absolute/path/to/custom/logo.png`.
 
-<h1 id="customize-automated-emails">Customize automated emails</h1>
+# Customize automated emails
 
 DoltLab Enterprise allows administrators to customize the automated emails their DoltLab instance sends to its users.
 
@@ -209,7 +209,7 @@ If you need further assistance, please reach out to Kevin at kevin@acmeinc.com.
 
 Once we save our edits, we can restart our DoltLab instance for the changes to take affect.
 
-<h1 id="customize-colors">Customize DoltLab colors</h1>
+# Customize DoltLab colors
 
 DoltLab Enterprise allows administrators to customize the color of certain assets across their DoltLab instance.
 
@@ -254,7 +254,7 @@ Alternatively, you can run the [installer](../reference/installer.md) with the f
 --custom-color-rgb-link-light="109, 176, 252"
 ```
 
-<h1 id="add-super-admins">Add Super Admins to a DoltLab instance</h1>
+# Add Super Admins to a DoltLab instance
 
 DoltLab Enterprise allows administrators to specify users who will be "super admins" on their DoltLab instance.
 
@@ -281,7 +281,7 @@ Alternatively, you can use the [installer](../reference/installer.md) with the a
 --super-admin-email=you@email.com
 ```
 
-<h1 id="doltlab-single-sign-on">Configure SAML Single-Sign-On</h1>
+# Configure SAML Single-Sign-On
 
 DoltLab Enterprise supports SAML single-sign-on. To configure your DoltLab instance to use single-sign-on, you will first need an Identity Provider (IP) to provide you with a metadata descriptor.
 
@@ -350,7 +350,7 @@ On this tab you will see the following:
 
 Your Enterprise instance will now use single-sign-on through your IP for user login and account creation.
 
-<h1 id="doltlab-automated-backups">Automated Remote Backups</h1>
+# Automated Remote Backups
 
 DoltLab Enterprise supports automated database backups for DoltLab's application Dolt server. To backup database data of all the Dolt databases hosted on your DoltLab instance, we recommend taking regular snapshots of the host's filesystem.
 
@@ -360,7 +360,7 @@ Dolt supports a [backup](https://docs.dolthub.com/sql-reference/server/backups#d
 
 Let's walk through setting up automated backups using an AWS remote backup first.
 
-<h2 id="aws-remote-backup">AWS Remote Backup</h2>
+## AWS Remote Backup
 
 Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) as a backup destination, but requires that two resources be provisioned. As stated in [this helpful blog post](https://www.dolthub.com/blog/2021-07-19-remotes/#aws-remotes), "AWS remotes use a combination of Dynamo DB and S3. The Dynamo table can be created with any name but must have a primary key with the name `db`."
 
@@ -476,7 +476,7 @@ Finally, start DoltLab using the `./start.sh` script. DoltLab will create the fi
 
 Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
-<h2 id="gcp-remote-backup">GCP Remote Backup</h2>
+## GCP Remote Backup
 
 To backup DoltLab's Dolt server to a GCP remote, first create a bucket in GCP. This will be the only required resource needed.
 
@@ -521,7 +521,7 @@ Once you start your Enterprise instance with `./start.sh`, it will now automatic
 
 ![Backup in GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
 
-<h2 id="oci-remote-backup">OCI Remote Backup</h2>
+## OCI Remote Backup
 
 To backup DoltLab's Dolt server to an OCI remote, first create a bucket in OCI. This will be the only required resource needed.
 
@@ -583,7 +583,7 @@ Once you start your Enterprise instance with `./start.sh`, it will now automatic
 
 ![Backup in OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
 
-<h1 id="multihost-deployment">Deploy DoltLab across multiple hosts</h1>
+# Deploy DoltLab across multiple hosts
 
 DoltLab's services can be deployed across multiple hosts which allow DoltLab's services to be scaled independently.
 

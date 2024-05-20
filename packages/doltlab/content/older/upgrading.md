@@ -8,13 +8,13 @@ Also note that upgrading to a newer version of DoltLab will require downtime, as
 
 Additionally, some early versions have different database schemas than newer ones. If the Docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab administrators can simply remove these Docker volumes and run the their DoltLab start script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
-<h2 id="upgrade-v213-v214"><ins>Upgrade from DoltLab <code>v2.1.3</code> to <code>v2.1.4+</code></ins></h2>
+# Upgrade from DoltLab <code>v2.1.3</code> to <code>v2.1.4+</code>
 
 DoltLab `v2.1.4` no longer writes or maintains a `.secrets` directory co-located with the `installer`. Instead, DoltLab >= `v2.1.4` ships with a configuration file that the `installer` uses called `./installer_config.yaml`.
 
 The default configuration file contains default values for all passwords the DoltLab requires, and is much simpler to maintain. Please see the [Installer Configuration File Reference](../guides/administrator.md#installer-config-reference) for more information.
 
-<h2 id="upgrade-v212-v213"><ins>Upgrade from DoltLab <code>v2.1.2</code> to <code>v2.1.3+</code></ins></h2>
+# Upgrade from DoltLab <code>v2.1.2</code> to <code>v2.1.3+</code>
 
 DoltLab `v2.1.2` wrote generated passwords to a `.secrets` directory co-located with the `installer`.
 
@@ -29,7 +29,7 @@ After collecting the values, when running the `installer` for the newer DoltLab 
 - `./.secrets/smtp_password.priv`, use `--smtp-password` with the `installer` to save the SMTP password for an SMTP server. This is only required if your previous installation was connected to an SMTP server using `login` or `plain` authentication.
 - `./.secrets/smtp_oauth_token.priv`, use `--smtp-oauth-token` with the `installer` to save the SMTP oauth token for an SMTP server. This is only required if your previous installation was connected to an SMTP server using `oauthbearer` authentication.
 
-<h2 id="upgrade-v208-v210"><ins>Upgrade from DoltLab <code>v2.0.8</code> to <code>v2.1.0+</code></ins></h2>
+# Upgrade from DoltLab <code>v2.0.8</code> to <code>v2.1.0+</code>
 
 The upgrade process for DoltLab `v2.0.8` to `v2.1.0` has not changed, and only requires replacing DoltLab `v2.0.8` with DoltLab `v2.1.0`, the way previous upgrades did.
 
@@ -50,7 +50,7 @@ However, DoltLab `v2.1.0` requires configuring DoltLab using the included `insta
 `TLS_CERT_CHAIN`, the absolute path to a TLS certificate chain. Use `--tls-cert-chain` with the `installer`. <br/>
 `TLS_PRIVATE_KEY`, the absolute path to a TLS private key. Use `--tls-private-key` with the `installer`.<br/>
 
-<h2 id="upgrade-v111-v200"><ins>Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code></ins></h2>
+# Upgrade from DoltLab <code>v1.1.1</code> to <code>v2.0.0+</code>
 
 The upgrade process for DoltLab `v1.1.1` to `v2.0.0` has not changed, and only requires replacing DoltLab `v1.1.1` with DoltLab `v2.0.0`, the way previous upgrades did.
 
@@ -63,7 +63,7 @@ If you are currently using the any of the following enterprise features in DoltL
 - [Custom Color Themes](../guides/administrator/enterprise.md#customize-colors)
 - [Super Admins](../guides/administrator/enterprise.md#add-super-admins)
 
-<h2 id="upgrade-v084-v100"><ins>Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code></ins></h2>
+# Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code>
 
 DoltLab `v0.8.4` is the final version of DoltLab released using PostgreSQL as the database backing DoltLab's API. Starting with DoltLab `v1.0.0`, DoltLab runs on Dolt.
 
@@ -86,11 +86,11 @@ DOLTHUBAPI_PASSWORD=<DOLTHUBAPI_PASSWORD> \
 
 Once the script completes, DoltLab `v1.0.0` can be started and all data from `v0.8.4` will be present.
 
-<h2 id="upgrade-v060-v070"><ins>Upgrade from DoltLab <code>v0.6.0</code> to <code>v0.7.0+</code></ins></h2>
+# Upgrade from DoltLab <code>v0.6.0</code> to <code>v0.7.0+</code>
 
 Starting with DoltLab `v0.7.0`, the `./start-doltlab.sh` script will create a `doltlab` docker network externally, instead of allowing Docker Compose to create the network automatically. If you're upgrading to `v0.7.0` or higher from an earlier DoltLab version, remove any `doltlab` or `*_doltlab` networks on the host before installing `v0.7.0`.
 
-<h2 id="upgrade-v030-plus"><ins>Upgrade from DoltLab <code>v0.3.0+</code></ins></h2>
+# Upgrade from DoltLab <code>v0.3.0+</code>
 
 DoltLab versions >= `v0.3.0` support schema migrations without data loss. To upgrade to a DoltLab version after `v0.3.0`, simply stop your old version of DoltLab, then download and unzip the newer DoltLab version to the same location as your previous version. This will ensure that when you [start the new version](./installation.md#start-doltlab) of DoltLab using the `start-doltlab.sh` script, the old DoltLab version's Docker volumes get attached to the new version's containers.
 
@@ -110,11 +110,11 @@ cd doltlab
 ./start-doltlab.sh
 ```
 
-<h2 id="upgrade-v020-v030"><ins>Upgrade from DoltLab <code>v0.2.0</code> to <code>v0.3.0</code></ins></h2>
+# Upgrade from DoltLab <code>v0.2.0</code> to <code>v0.3.0</code>
 
 To upgrade without data loss, follow the same instructions for upgrading found in the [Upgrade from DoltLab <code>v0.1.0</code> <code>v0.2.0</code>](#upgrade-v010-v020) section.
 
-<h2 id="upgrade-v010-v020"><ins>Upgrade from DoltLab <code>v0.1.0</code> to <code>v0.2.0</code> Without Data Loss</ins></h2>
+# Upgrade from DoltLab <code>v0.1.0</code> to <code>v0.2.0</code> Without Data Loss
 
 To upgrade DoltLab `v0.1.0` to `v0.2.0`, leave DoltLab `v0.1.0`'s services running and connect a PostgreSQL client from inside the `doltlab_doltlab` Docker network to the running `doltlab_doltlabdb_1` server. On the DoltLab host machine, run:
 
