@@ -12,7 +12,7 @@ All the commands you know from Git work exactly the same in Dolt. Git versions f
 
 Dolt is a [version controlled database](https://www.dolthub.com/blog/2021-09-17-database-version-control/). Dolt is [Git for Data](https://www.dolthub.com/blog/2020-03-06-so-you-want-git-for-data/). Dolt is a [Versioned MySQL Replica](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/).
 
-{% embed url="https://youtu.be/3F6LwZt6e-A" %}
+{% embed url="https://www.youtube.com/embed/H2iZy0Cme10?si=iMjkiGIatgZnGE_3" %}
 
 ## Version Controlled Database
 
