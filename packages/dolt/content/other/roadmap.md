@@ -24,7 +24,7 @@ Roadmap last updated May 2024, next update July 2024.
 | Zstd dictionary compression                                                       | Q2 2024     |
 | Doltgres 90% correctness                                                          | Q2 2024     |
 | [Dolt to MySQL binlog replication](https://github.com/dolthub/dolt/issues/7512)   | Q2 2024     |
-| [Automatic table statistics](https://github.com/dolthub/dolt/issues/6161)         | Q3 2024     |
+| Automatic table statistics                                                        | Q3 2024     |
 | [Rebase conflict resolution support](https://github.com/dolthub/dolt/issues/7820) | Q3 2024     |
 | Doltgres 99% correctness                                                          | Q3 2024     |
 | [Customized merge rules](https://github.com/dolthub/dolt/issues/7680)             | Q3 2024     |
