@@ -39,6 +39,7 @@
 ## Release Notes
 
 - [Release Notes](release-notes.md)
+  - [v2.1.5](release-notes/v2.1.5.md)
   - [v2.1.4](release-notes/v2.1.4.md)
   - [v2.1.3](release-notes/v2.1.3.md)
   - [v2.1.2](release-notes/v2.1.2.md)
