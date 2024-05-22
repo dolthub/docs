@@ -838,6 +838,8 @@ _Dictionary_. Color override options. _Optional_. See [customizing DoltLab color
 - [rgb_link_1](#rgb_link_1)
 - [rgb_link_2](#rgb_link_2)
 - [rgb_link_light](#rgb_link_light)
+- [rgb_primary](#rgb_primary)
+- [rgb_code_background](#rgb_code_background)
 
 ##### rgb_accent_1
 
@@ -950,6 +952,34 @@ enterprise:
 ```
 
 Command line equivalent [custom-color-rgb-link-light](./cli.md#custom-color-rgb-link-light).
+
+##### rgb_primary
+
+_String_. Comma separated RGB color used to replace primary. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_primary: "5, 117, 245"
+```
+
+Command line equivalent [custom-color-rgb-primary](./cli.md#custom-color-rgb-primary).
+
+##### rgb_code_background
+
+_String_. Comma separated RGB color used to replace code background. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  customize:
+    color_overrides:
+      rgb_code_background: "5, 117, 245"
+```
+
+Command line equivalent [custom-color-rgb-code-background](./cli.md#custom-color-rgb-code-background).
 
 ### automated_backups
 
