@@ -4,7 +4,7 @@ title: Pre-Installer Linux
 
 This page covers how to install and start older versions of DoltLab, up to `v2.0.8`, on a Linux host. We highly recommend installing the latest version of DoltLab, as no updates or bug fixes are added to earlier releases.
 
-Before you begin, be sure the host meets the [minimum recommended hardware requirements](../installation.md#minimum-recommended-hardware), has the proper [networking configuration](../installation.md#networking-requirements), and all [dependencies](../installation.md#dependencies) installed.
+Before you begin, be sure the host meets the [minimum recommended hardware requirements](./README.md#minimum-recommended-hardware), has the proper [networking configuration](./README.md#networking-requirements), and all [dependencies](./README.md#dependencies) installed.
 
 DoltLab is released as a single `.zip` file that contains everything you need to run it.
 
@@ -19,26 +19,26 @@ cd doltlab
 
 Inside the resulting `doltlab` directory, you'll find the following items:
 
-* templates
-* envoy.tmpl
-* envoy-tls.tmpl
-* config_loader
-* gentokenenckey
-* send_doltlab_deployed_event
-* smtp_connection_helper
-* get_machine_id
-* gen_saml_key
-* gen_saml_cert
-* gent_saml_certs.sh
-* migrate_postgres_dolt.sh
-* dolt_db_cli.sh
-* shell-db.sh
-* docker-compose.yaml
-* docker-compose-tls.yaml
-* start-doltlab.sh
-* prometheus.yaml
-* prometheus-alert.rules
-* alertmanager.yaml
+- templates
+- envoy.tmpl
+- envoy-tls.tmpl
+- config_loader
+- gentokenenckey
+- send_doltlab_deployed_event
+- smtp_connection_helper
+- get_machine_id
+- gen_saml_key
+- gen_saml_cert
+- gent_saml_certs.sh
+- migrate_postgres_dolt.sh
+- dolt_db_cli.sh
+- shell-db.sh
+- docker-compose.yaml
+- docker-compose-tls.yaml
+- start-doltlab.sh
+- prometheus.yaml
+- prometheus-alert.rules
+- alertmanager.yaml
 
 `templates` contains email templates used by `doltlabapi` to send automated emails to users of your DoltLab instance. Used by DoltLab Enterprise only.
 
@@ -52,7 +52,7 @@ Inside the resulting `doltlab` directory, you'll find the following items:
 
 `send_doltlab_deployed_event` is a binary that sends a single request to our metrics server, letting us track how many DoltLab instances get deployed each day. This information helps us properly fund and staff our DoltLab team. The source for this binary is [here](https://gist.github.com/coffeegoddd/cc1c7c765af56f6523bc5faffbc19e7a).
 
-The `smtp_connection_helper` binary can be used to help you troubleshoot any issues connecting your DoltLab instance to your existing SMTP server. This tool uses similar code to DoltLab's email service and sends a test email if the connection to the SMTP server is properly configured. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](./administrator.md#troubleshoot-smtp-connection).
+The `smtp_connection_helper` binary can be used to help you troubleshoot any issues connecting your DoltLab instance to your existing SMTP server. This tool uses similar code to DoltLab's email service and sends a test email if the connection to the SMTP server is properly configured. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](../pre-installer-administrator-guide.md#troubleshoot-smtp-connection).
 
 `get_machine_id` is a binary used to determine the hardware ID of the DoltLab host. Used by DoltLab Enterprise only.
 
@@ -62,7 +62,7 @@ The `smtp_connection_helper` binary can be used to help you troubleshoot any iss
 
 `gen_saml_certs.sh` is a script that uses `gen_saml_key` and `gen_saml_cert` to create a signing certificate for SAML single-sign-on. Used by DoltLab Enterprise only. The script requires a single argument, the `common name` to use for the certificate.
 
-`migrate_postgres_dolt.sh` is a script available in DoltLab `v1.0.0`+. Prior to DoltLab `v1.0.0`, DoltLab used PostgreSQL as its database. But, starting with `v1.0.0`, DoltLab uses Dolt as its database. This script is used when upgrading from an older DoltLab instance to DoltLab `v1.0.0` and will copy the data from the existing, older DoltLab instance into the new Dolt database backing DoltLab `v1.0.0`. Please see [the guide](./administrator.md#upgrade-v080-v100) for using this script to copy existing data during upgrade.
+`migrate_postgres_dolt.sh` is a script available in DoltLab `v1.0.0`+. Prior to DoltLab `v1.0.0`, DoltLab used PostgreSQL as its database. But, starting with `v1.0.0`, DoltLab uses Dolt as its database. This script is used when upgrading from an older DoltLab instance to DoltLab `v1.0.0` and will copy the data from the existing, older DoltLab instance into the new Dolt database backing DoltLab `v1.0.0`. Please see [the guide](../upgrading.md#upgrade-from-doltlab-v0.8.4-to-v1.0.0) for using this script to copy existing data during upgrade.
 
 `dolt_db_cli.sh` is a script available in DoltLab `v1.0.0`+, useful for restoring DoltLab's Dolt server from a backup.
 
