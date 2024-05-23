@@ -2,8 +2,6 @@
 title: Vitess
 ---
 
-# Vitess
-
 Dolt's SQL server runs on [a fork of
 Vitess](https://github.com/dolthub/vitess). Vitess is a MySQL database
 sharding solution that was created to scale YouTube:

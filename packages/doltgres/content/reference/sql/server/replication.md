@@ -101,7 +101,7 @@ call dolt_commit('-Am', 'trigger replication');
 
 After a `DOLT_COMMIT()`, changes are pushed to the configured remote.
 
-![DoltgresHub Replication Example](../../../.gitbook/assets/replication-example.png)
+![DoltHub Replication Example](../../../.gitbook/assets/replication-example.png)
 
 #### Stopping Replication
 
@@ -184,7 +184,7 @@ You must restart the replica server for changes to take effect.
 Now back on the primary:
 
 ```sql
-insert into test values (2,2); 
+insert into test values (2,2);
 call dolt_commit('-am', 'Inserted (2,2)');
 +----------------------------------+
 | hash                             |
@@ -224,7 +224,7 @@ Now I'm going to make a new branch on the primary and insert a new value on it.
 
 ```sql
 call dolt_checkout('-b', 'branch1');
-insert into test values (3,3); 
+insert into test values (3,3);
 call dolt_commit('-am', 'Inserted (3,3)');
 ```
 
@@ -315,8 +315,8 @@ On `dolt-1.db`, we will have a `config.yaml` like:
 ```yaml
 cluster:
   standby_remotes:
-  - name: standby
-    remote_url_template: http://dolt-2.db:50051/{database}
+    - name: standby
+      remote_url_template: http://dolt-2.db:50051/{database}
   bootstrap_role: primary
   bootstrap_epoch: 1
   remotesapi:
@@ -328,8 +328,8 @@ On `dolt-2.db`, we will have:
 ```yaml
 cluster:
   standby_remotes:
-  - name: standby
-    remote_url_template: http://dolt-1.db:50051/{database}
+    - name: standby
+      remote_url_template: http://dolt-1.db:50051/{database}
   bootstrap_role: standby
   bootstrap_epoch: 1
   remotesapi:
@@ -660,9 +660,9 @@ things to consider when choosing how to configure replication.
    files to a remote storage solution and having the read replica download the
    files from there. On the other hand, direct replication may be less scalable in
    the number of read replicas which it can gracefully handle, since the primary
-   itself is responsible for pushing each write to each standby server. For read 
-   replicas, read latency for direct replication is always faster, since no 
-   communication to a remote must take place. You can expect increased read latency 
+   itself is responsible for pushing each write to each standby server. For read
+   replicas, read latency for direct replication is always faster, since no
+   communication to a remote must take place. You can expect increased read latency
    on every transaction start of aremote-based read replica.
 
 4. The ability to replicate writes with direct replication is not coupled with

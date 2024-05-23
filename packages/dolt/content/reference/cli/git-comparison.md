@@ -4,8 +4,6 @@ title: "Git Comparison"
 
 We aim to match our CLI command behavior as closely to their Git equivalent as possible. This page lists the commands that are currently supported, and any known limitations.
 
-# Git Comparison
-
 ## Setup and Config
 
 | Component | Supported | Notes and limitations |
@@ -67,10 +65,10 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 ## Patching
 
 | Component     | Supported | Notes and limitations |
-| :------------ |:----------| :-------------------- |
-| `cherry-pick` | ✅         |                       |
-| `rebase`      | ✅         |                       |
-| `revert`      | ✅         |                       |
+| :------------ | :-------- | :-------------------- |
+| `cherry-pick` | ✅        |                       |
+| `rebase`      | ✅        |                       |
+| `revert`      | ✅        |                       |
 
 ## Debugging
 
@@ -82,13 +80,12 @@ We aim to match our CLI command behavior as closely to their Git equivalent as p
 ## Administration
 
 | Component       | Supported | Notes and limitations                                                                                                                                                                               |
-|:----------------|:----------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-------------- | :-------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `clean`         | 🟠        | [does not completely match Git's behavior](https://github.com/dolthub/dolt/issues/6313)                                                                                                             |
-| `gc`            | ✅         |                                                                                                                                                                                                     |
-| `fsck`          | ❌         |                                                                                                                                                                                                     |
-| `reflog`        | ✅         | [does not completely match Git's behavior](https://www.dolthub.com/blog/2023-11-17-dolt-reflog/):<br/> <li>only supports named references (not Git's special refs)</li> <li>shows deleted refs</li> |
-| `filter-branch` | ✅         |                                                                                                                                                                                                     |
-
+| `gc`            | ✅        |                                                                                                                                                                                                     |
+| `fsck`          | ❌        |                                                                                                                                                                                                     |
+| `reflog`        | ✅        | [does not completely match Git's behavior](https://www.dolthub.com/blog/2023-11-17-dolt-reflog/):<br/> <li>only supports named references (not Git's special refs)</li> <li>shows deleted refs</li> |
+| `filter-branch` | ✅        |                                                                                                                                                                                                     |
 
 ## Plumbing Commands
 

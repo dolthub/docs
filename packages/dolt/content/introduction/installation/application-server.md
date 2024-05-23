@@ -2,8 +2,6 @@
 title: Application Server
 ---
 
-# Application Server
-
 These instructions are for bootstrapping dolt as an application
 database server. They assume you are starting from scratch on a Linux
 machine without dolt installed or running.

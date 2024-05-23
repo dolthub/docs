@@ -2,8 +2,6 @@
 title: Replication
 ---
 
-# Replication
-
 ## What is Replication?
 
 Replication is the ability for an RDBMS to synchronize a primary server with one or more read
