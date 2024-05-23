@@ -37,7 +37,7 @@ export TLS_PRIVATE_KEY=<path to TLS private key>
 `DOLT_PASSWORD`, and `DOLTHUBAPI_PASSWORD` may be set to any valid Dolt password.<br/>
 `EMAIL_USERNAME`, should be a valid username authorized to use existing SMTP server.<br/>
 `EMAIL_PASSWORD`, should be the password for the aforementioned username of the SMTP server.<br/>
-`EMAIL_PORT`, port to the existing SMTP server. By default, this is assumed to be a `STARTTLS` port. To use an implicit TLS port, [please follow these steps](./administrator.md#smtp-implicit-tls).<br/>
+`EMAIL_PORT`, port to the existing SMTP server. By default, this is assumed to be a `STARTTLS` port. To use an implicit TLS port, [please follow these steps](../pre-installer-administrator-guide.md#connect-to-an-smtp-server-with-implicit-tls).<br/>
 `EMAIL_HOST`, should be the host of the existing SMTP server.<br/>
 `NO_REPLY_EMAIL` should be the email address that sends DoltLab emails.<br/>
 `DOLTLAB_ENTERPRISE_ONLINE_PRODUCT_CODE`, used by DoltLab Enterprise only.<br/>
@@ -75,7 +75,7 @@ Supported `EMAIL_AUTH_METHOD` options are `plain`, `login`, `anonymous`, `extern
 `oauthbearer` requires the environment variables `EMAIL_USERNAME` and `EMAIL_OAUTH_TOKEN` to be set.
 `disable` will result in an unauthenticated SMTP server connection.
 
-If you are experiencing any SMTP server connection issues (or DoltLab account creation issues) please see [the SMTP troubleshooting guide](./administrator.md#troubleshoot-smtp-connection).
+If you are experiencing any SMTP server connection issues (or DoltLab account creation issues) please see [the SMTP troubleshooting guide](../pre-installer-administrator-guide.md#troubleshoot-smtp-server-connection-problems).
 
 ### Default user `admin`
 
@@ -120,4 +120,4 @@ And navigating to `https://${HOST_IP}:443` in a web browser should show the Dolt
 
 # Next Steps
 
-- [DoltLab Administrator Guide](../../guides/administrator/pre-installer-administrator-guide.md)
+- [DoltLab Administrator Guide](../pre-installer-administrator-guide.md)

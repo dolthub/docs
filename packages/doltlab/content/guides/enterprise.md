@@ -1,8 +1,10 @@
 ---
-title: "DoltLab Enterprise Guide"
+title: "Enterprise Administrator Guide"
 ---
 
-This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Administrator's Guide](../administrator/administrator.md).
+# Enterprise Administrator Guide
+
+This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Basic Administrator's Guide](./basic.md).
 
 To start DoltLab in Enterprise mode, edit the `installer_config.yaml` file, supplying your Enterprise license keys:
 
@@ -97,7 +99,7 @@ enterprise:
 Once I save my changes, rerun the installer (`./installer`), and restart (`./start.sh`), I
 should see my new Starbucks logo.
 
-![DoltLab Starbucks](../../.gitbook/assets/doltlab-starbucks-logo.png)
+![](../../.gitbook/assets/doltlab-starbucks-logo.png)
 
 # Customize automated emails
 
@@ -356,7 +358,7 @@ $ ./start.sh
 
 And now DoltLab is Starbucks branded!
 
-![Starbucks DoltLab](../../.gitbook/assets/doltlab-starbucks.png)
+![](../../.gitbook/assets/doltlab-starbucks.png)
 
 See other examples of utilizing colors to brand DoltLab for some well-known companies
 [here](https://dolthub.awsdev.ld-corp.com/blog/2024-05-23-customizing-doltlab-colors/#other-examples).
@@ -394,13 +396,13 @@ DoltLab Enterprise supports SAML single-sign-on. To configure your DoltLab insta
 
 For example, [Okta](https://www.okta.com/), a popular IP, provides an endpoint for downloading the metadata descriptor for a SAML application after you register an application on their platform.
 
-![Okta saml app creation](../../.gitbook/assets/doltlab_okta_app.png)
+![](../../.gitbook/assets/doltlab_okta_app.png)
 
 During registration, Okta will ask you for the "Single Sign On Url" and an "Audience Restriction" for the application.
 
 Use the domain/host IP address of your DoltLab instance followed by `/sso/callback` for the "Single Sign On Url", and use that same domain/host IP address followed by just "/sso" for the "Audience Restriction". Since this example will be for `https://doltlab.dolthub.com`, we'll use `https://doltlab.dolthub.com/sso/callback` and `https://doltlab.dolthub.com/sso` respectively.
 
-![Okta saml settings](../../.gitbook/assets/doltlab_okta_settings.png)
+![](../../.gitbook/assets/doltlab_okta_settings.png)
 
 Be sure to also set "Name ID Format" to "Persistent".
 
@@ -437,15 +439,15 @@ Alternatively, the [installer](../reference/installer.md) can be run with the fo
 
 When SAML single-sign-on is configured, you will see the SAML option on the sign-in page:
 
-![Sign in with saml provider](../../.gitbook/assets/doltlab_saml_signin.png)
+![](../../.gitbook/assets/doltlab_saml_signin.png)
 
 Next, as user `admin`, login to your DoltLab instance and navigate to `Profile` > `Settings` > `SSO`.
 
-![DoltLab profile settings](../../.gitbook/assets/doltlab_profile_settings.png)
+![](../../.gitbook/assets/doltlab_profile_settings.png)
 
 On this tab you will see the following:
 
-![Global saml sso info](../../.gitbook/assets/doltlab_saml_settings.png)
+![](../../.gitbook/assets/doltlab_saml_settings.png)
 
 `Assertion Consumer Service Url` displays the url where Okta should send the SAML assertion.
 
@@ -473,11 +475,11 @@ Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) a
 
 For our example, let's create an AWS S3 bucket called `test-doltlab-application-db-backups`.
 
-![S3 bucket test-doltlab-application-db-backups](../../.gitbook/assets/aws_remote_backup_s3.png)
+![](../../.gitbook/assets/aws_remote_backup_s3.png)
 
 Let's also create a Dynamo DB table in the same AWS region, and call it `test-doltlab-backup-application-db-manifest`. Notice its uses the required partition key (primary key) `db`.
 
-![Dynamo DB test-doltlab-backup-application-db-manifest](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
+![](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
 
 The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
 
@@ -577,9 +579,9 @@ For more configuration options, please consult the [AlertManager documentaion](h
 
 Finally, start DoltLab using the `./start.sh` script. DoltLab will create the first backup when started, and by default, will create backups at midnight each night. You will see your backups stored in your S3 bucket, and the manifest stored in your DynamoDB table.
 
-![Backup in S3](../../.gitbook/assets/aws_remote_backup_s3_example.png)
+![](../../.gitbook/assets/aws_remote_backup_s3_example.png)
 
-![Backup in Dynamo DB](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
+![](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
 
 Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
@@ -587,7 +589,7 @@ Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
 To backup DoltLab's Dolt server to a GCP remote, first create a bucket in GCP. This will be the only required resource needed.
 
-![GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket.png)
+![](../../.gitbook/assets/gcp_remote_backup_bucket.png)
 
 Next, add GCP JSON credentials to your DoltLab host. You can find information about GCP credentials [here](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login).
 
@@ -626,13 +628,13 @@ Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [inst
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your GCP bucket.
 
-![Backup in GCP bucket](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
+![](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
 
 ## OCI Remote Backup
 
 To backup DoltLab's Dolt server to an OCI remote, first create a bucket in OCI. This will be the only required resource needed.
 
-![OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket.png)
+![](../../.gitbook/assets/oci_remote_backup_bucket.png)
 
 Next, install the `oci` CLI tool on your DoltLab host, and run `oci setup config` to create a configuration file with credentials authorized to access your bucket. You can find information about creating an config file [here](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#configfile).
 
@@ -688,7 +690,7 @@ Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [inst
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your OCI bucket.
 
-![Backup in OCI bucket](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
+![](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
 
 # Deploy DoltLab across multiple hosts
 
@@ -696,7 +698,7 @@ DoltLab's services can be deployed across multiple hosts which allow DoltLab's s
 
 The following guide will walkthrough deploying a DoltLab instance whose set of services each run on separate host machines.
 
-![Diagram of multi-host DoltLab](../../.gitbook/assets/multihost_doltlab.svg)
+![](../../.gitbook/assets/multihost_doltlab.svg)
 
 The diagram above depicts the multi-host architecture for DoltLab. Each independent service runs on a distinct host, and is served behind it's own reverse proxy. Both the service and the proxy run via Docker compose, and are easily configured using the [installer](../reference/installer.md). At the time of this writing, multi-host deployments are only available over `http`. For `https` support, please [file an issue in our issues repository](https://github.com/dolthub/doltlab-issues).
 
@@ -940,13 +942,13 @@ Alternatively, you can run the [installer](../reference/installer.md) with the `
 `services.doltlabui.host`, or `--doltlabui-host`, is required and is the IP address of the `doltlabui` host.</br>
 `services.doltlabui.port`, or `--doltlabui-port`, is required and should be the value `80`. This port value should not be changed.</br>
 `services.doltlabdb.dolthubapi_password`, or `--doltlabdb-dolthubapi-password`, is required and should be the `services.doltlabdb.dolthubapi_password` value defined on the `doltlabdb` host.</br>
-`smtp.host`, or `--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`smtp.port`, or `--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`smtp.auth_method`, or `--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`smtp.host`, or `--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`smtp.port`, or `--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`smtp.auth_method`, or `--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
 `smtp.username`, or `--smtp-username`, is required for authentication method `plain`, and is the username used to connect to the SMTP server.</br>
 `smtp.password`, or `--smtp-password`, is required for authentication method `plain`, and is the password used to connect to the SMTP server.</br>
-`smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](../installation/start-doltlab.md) `admin`.</br>
+`smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](./installation/start-doltlab.md) `admin`.</br>
 
 After running the [installer](../reference/installer.md), you will see output like the following:
 

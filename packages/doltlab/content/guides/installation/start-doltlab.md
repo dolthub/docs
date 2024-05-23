@@ -31,7 +31,6 @@ default_user:
   name: "admin"
   password: "DoltLab1234"
   email: "admin@localhost"
-
 ## "SMTP" is used to configure a connection to an existing SMTP server. Optional.
 ## For more information on connecting your instance to an SMTP server,
 ## see https://docs.doltlab.com/guides/administrator#connect-smtp-server.
@@ -42,13 +41,12 @@ default_user:
 #  no_reply_email: ""
 ```
 
-Edit `installer_config.yaml` and supply the host name or IP address of your DoltLab host in the `host` field. 
+Edit `installer_config.yaml` and supply the host name or IP address of your DoltLab host in the `host` field.
 
 ```yaml
 # installer_config.yaml
-...
+---
 host: "12.34.567.890"
-...
 ```
 
 Save these changes, then run the installer:
@@ -70,7 +68,7 @@ Notice the output produced by the [installer](../../reference/installer.md) as s
 
 The [installer](../../reference/installer.md) will tell you how to start and stop DoltLab using the scripts it generated.
 
-Importantly, the first time DoltLab starts, a default user, `admin`, with email `admin@localhost` is created. This user will be the only user able create databases on the DoltLab instance until the instance is [connected to a valid SMTP server](../../guides/administrator/administrator.md#connect-smtp-server). The email associated with the default user can be updated to a valid email at anytime before starting DoltLab for the first time, or if DoltLab has already created the default user, from the Profile > Settings page of the running DoltLab instance.
+Importantly, the first time DoltLab starts, a default user, `admin`, with email `admin@localhost` is created. This user will be the only user able create databases on the DoltLab instance until the instance is [connected to a valid SMTP server](../basic.md#connect-smtp-server). The email associated with the default user can be updated to a valid email at anytime before starting DoltLab for the first time, or if DoltLab has already created the default user, from the Profile > Settings page of the running DoltLab instance.
 
 Additionally, the first time the DoltLab is started, it will use the values in `services.doltlabdb.admin_password` and `services.doltlabdb.dolthubapi_password` to initialize DoltLab's application database using the following SQL statements:
 
@@ -105,8 +103,8 @@ dc3380071331   envoyproxy/envoy:v1.28-latest                                    
 
 Navigating to `http://${HOST_IP}:80` in a web browser, where `HOST_IP` is the domain name or IP address of your DoltLab host, should show the DoltLab homepage.
 
-For more ways to configure and run your DoltLab instance, checkout [DoltLab's Administrator Guide](../../guides/administrator.md).
+For more ways to configure and run your DoltLab instance, checkout [DoltLab's Administrator Guide](../basic.md).
 
 # Next Steps
 
-- [Administrator Guide](../../guides/administrator.md)
+- [Administrator Guide](../basic.md)
