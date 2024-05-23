@@ -187,7 +187,7 @@ SET session_replication_role = replica;
 ...
 ```
 
-[Start DoltLab's services](../installation/start-doltlab.md) again using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `postgres-dump.sql` file and run:
+[Start DoltLab's services](./installation/start-doltlab-pre-installer.md) again using the `start-doltlab.sh` script. After the script completes, `cd` into the directory containing the `postgres-dump.sql` file and run:
 
 > For DoltLab `v0.7.0` and later, use `--network doltlab` below.
 
