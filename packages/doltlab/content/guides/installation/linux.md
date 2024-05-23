@@ -2,7 +2,7 @@
 title: Linux
 ---
 
-This page covers how to install and start DoltLab on a Linux host. Before you begin, be sure the host meets the [minimum recommended hardware requirements](../installation.md#minimum-recommended-hardware), has the proper [networking configuration](../installation.md#networking-requirements), and all [dependencies](../installation.md#dependencies) installed.
+This page covers how to install and start DoltLab on a Linux host. Before you begin, be sure the host meets the [minimum recommended hardware requirements](./README.md#minimum-recommended-hardware), has the proper [networking configuration](./README.md#networking-requirements), and all [dependencies](./README.md#dependencies) installed.
 
 DoltLab is released as a single `.zip` file that contains everything you need to run it. Release notes for each release can be viewed [here](../../reference/release-notes/README.md).
 
@@ -25,7 +25,7 @@ unzip doltlab-${DOLTLAB_VERSION}.zip -d doltlab
 cd doltlab
 ```
 
-The contents of the resulting `doltlab` directory can vary depending on the version installed. The following instructions will refer to DoltLab versions >= `v2.1.0` that contain the [installer](../../reference/installer.md) binary. For installation instructions for DoltLab <= `2.0.8`, please see the [pre-installer installation instructions](./pre-installer-linux.md).
+The contents of the resulting `doltlab` directory can vary depending on the version installed. The following instructions will refer to DoltLab versions >= `v2.1.0` that contain the [installer](../../reference/installer.md) binary. For installation instructions for DoltLab <= `2.0.8`, please see the [pre-installer installation instructions](../../older/installation/pre-installer-linux.md).
 
 Inside the `doltlab` directory you'll find the following binaries:
 

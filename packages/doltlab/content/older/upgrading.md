@@ -83,10 +83,10 @@ However, DoltLab `v2.0.0` is the first version of DoltLab that supports Enterpri
 
 If you are currently using the any of the following enterprise features in DoltLab <= `v1.1.1`, you will lose them by upgrading to DoltLab `v2.0.0`:
 
-- [Custom Automated Emails](../guides/administrator/enterprise.md#customize-automated-emails)
-- [Custom Logo](../guides/administrator/enterprise.md#use-custom-logo)
-- [Custom Color Themes](../guides/administrator/enterprise.md#customize-colors)
-- [Super Admins](../guides/administrator/enterprise.md#add-super-admins)
+- [Custom Automated Emails](../guides/enterprise.md#customize-automated-emails)
+- [Custom Logo](../guides/enterprise.md#use-custom-logo)
+- [Custom Color Themes](../guides/enterprise.md#customize-colors)
+- [Super Admins](../guides/enterprise.md#add-super-admins)
 
 # Upgrade from DoltLab <code>v0.8.4</code> to <code>v1.0.0+</code>
 
@@ -117,7 +117,7 @@ Starting with DoltLab `v0.7.0`, the `./start-doltlab.sh` script will create a `d
 
 # Upgrade from DoltLab <code>v0.3.0+</code>
 
-DoltLab versions >= `v0.3.0` support schema migrations without data loss. To upgrade to a DoltLab version after `v0.3.0`, simply stop your old version of DoltLab, then download and unzip the newer DoltLab version to the same location as your previous version. This will ensure that when you [start the new version](./installation.md#start-doltlab) of DoltLab using the `start-doltlab.sh` script, the old DoltLab version's Docker volumes get attached to the new version's containers.
+DoltLab versions >= `v0.3.0` support schema migrations without data loss. To upgrade to a DoltLab version after `v0.3.0`, simply stop your old version of DoltLab, then download and unzip the newer DoltLab version to the same location as your previous version. This will ensure that when you [start the new version](./installation/README.md#start-doltlab) of DoltLab using the `start-doltlab.sh` script, the old DoltLab version's Docker volumes get attached to the new version's containers.
 
 ```bash
 # stop old DoltLab
@@ -189,7 +189,7 @@ Next, remove the Docker volume used with DoltLab `v0.1.0`'s `doltlab_doltlabdb_1
 docker volume rm doltlab_doltlabdb-data
 ```
 
-[Download DoltLab](./installation.md#download-doltlab) `v0.2.0`, unzip it's contents, and [start DoltLab](./installation.md#start-doltlab) `v0.2.0`'s services by running the `start-doltlab.sh` script.
+[Download DoltLab](./installation/README.md#download-doltlab) `v0.2.0`, unzip it's contents, and [start DoltLab](./installation/README.md#start-doltlab) `v0.2.0`'s services by running the `start-doltlab.sh` script.
 
 After the script completes, confirm DoltLab `v0.2.0`'s services are running with `docker ps`:
 

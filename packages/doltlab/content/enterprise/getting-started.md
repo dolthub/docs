@@ -2,7 +2,7 @@
 Title: Getting Started
 ---
 
-To run DoltLab Enterprise, you'll need a free version of DoltLab running first. The easiest way to do that is using an AWS EC2 host. This is covered in our [Getting Started guide](../introduction/getting-started). Setting up DoltLab on a EC2 host takes less than 30 minutes.
+To run DoltLab Enterprise, you'll need a free version of DoltLab running first. The easiest way to do that is using an AWS EC2 host. This is covered in our [Getting Started guide](../introduction/getting-started.md). Setting up DoltLab on a EC2 host takes less than 30 minutes.
 
 ## Set Up Enterprise
 

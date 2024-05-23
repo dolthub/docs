@@ -12,7 +12,7 @@
 
 ## Administrator Guides
 
-- [Installation](guides/installation.md)
+- [Installation](guides/installation/README.md)
   - [Linux](guides/installation/linux.md)
   - [Start DoltLab](guides/installation/start-doltlab.md)
 - [Basic](guides/basic.md)
@@ -50,7 +50,7 @@
 
 ## Older Versions
 
-- [Installation](older/installation.md)
+- [Installation](older/installation/README.md)
   - [Linux pre-installer](older/installation/pre-installer-linux.md)
   - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
 - [Upgrade](older/upgrading.md)
