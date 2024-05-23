@@ -334,7 +334,7 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 # Connect DoltLab to an SMTP server
 
-DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server by editing `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp). 
+DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server by editing `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp).
 
 ```yaml
 # installer_config.yaml
@@ -361,7 +361,7 @@ Alternatively, instead of using `./installer_config.yaml`, the [installer](../re
 `--smtp-port`, _required_, the port of your SMTP server.  
 `--smtp-username`, _required_ for authentication methods `plain` and `login`, the username for authenticating against the SMTP server.  
 `--smtp-password`, _required_ for authentication methods `plain` and `login`, the password for authenticating against the SMTP server.  
-`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.  
+`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.
 
 # Connect DoltLab to an SMTP server with implicit TLS
 
@@ -465,15 +465,15 @@ To quickly get up and running with an existing SMTP server, we recommend using [
 
 After 2-Step Verification is set up, at the bottom of the page click "App passwords".
 
-![App passwords on 2-step page](../../.gitbook/assets/gmail_app_passwords_are_here.png)
+![](../../.gitbook/assets/gmail_app_passwords_are_here.png)
 
 If you do not see "App Passwords" at the bottom of this page, return to the Security page and in the search bar, search for "App Passwords".
 
-![App passwords in search](../../.gitbook/assets/gmail_search_app_passwords.png)
+![](../../.gitbook/assets/gmail_search_app_passwords.png)
 
 Next, name your app password, then click "Generate." You will be provided a password you can use with your DoltLab instance.
 
-![Generated password](../../.gitbook/assets/gmail_app_password_no_worky.png)
+![](../../.gitbook/assets/gmail_app_password_no_worky.png)
 
 This generated password can be supplied along with your Gmail email address, as the `username`, to send emails with `smtp_connection_helper` and DoltLab.
 
@@ -517,28 +517,28 @@ Alternatively, you can run the [installer](../reference/installer.md) with flag 
 
 ```sh
 ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
-WARN[0000] The "DOLT_PASSWORD" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "SMTP_SERVER_USERNAME" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "SMTP_SERVER_PASSWORD" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "SMTP_SERVER_OAUTH_TOKEN" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "DEFAULT_USER_PASSWORD" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "DOLT_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "SMTP_SERVER_USERNAME" variable is not set. Defaulting to a blank string.
+WARN[0000] The "SMTP_SERVER_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "SMTP_SERVER_OAUTH_TOKEN" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DEFAULT_USER_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
+WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
 [+] Stopping 7/7
- ✔ Container doltlab-doltlabui-1              Stopped                     10.1s 
- ✔ Container doltlab-doltlabgraphql-1         Stopped                     10.1s 
- ✔ Container doltlab-doltlabapi-1             Stopped                      0.1s 
- ✔ Container doltlab-doltlabremoteapi-1       Stopped                      0.1s 
- ✔ Container doltlab-doltlabfileserviceapi-1  Stopped                      0.1s 
- ✔ Container doltlab-doltlabdb-1              Stopped                      0.1s 
- ✔ Container doltlab-doltlabenvoy-1           Stopped                      0.3s 
+ ✔ Container doltlab-doltlabui-1              Stopped                     10.1s
+ ✔ Container doltlab-doltlabgraphql-1         Stopped                     10.1s
+ ✔ Container doltlab-doltlabapi-1             Stopped                      0.1s
+ ✔ Container doltlab-doltlabremoteapi-1       Stopped                      0.1s
+ ✔ Container doltlab-doltlabfileserviceapi-1  Stopped                      0.1s
+ ✔ Container doltlab-doltlabdb-1              Stopped                      0.1s
+ ✔ Container doltlab-doltlabenvoy-1           Stopped                      0.3s
 ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
 --smtp-auth-method=plain \
 --smtp-port=587 \
 --smtp-username=tim@dolthub.com \
 --smtp-password="xxxx xxxx xxxx xxxx" \
---no-reply-email=tim@dolthub.com 
+--no-reply-email=tim@dolthub.com
 --smtp-host=smtp.gmail.com
 2024-05-02T19:11:03.397Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
 
@@ -547,16 +547,16 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
 2024-05-02T19:11:03.397Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
 
-ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh 
+ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh
 [+] Running 7/7
- ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s 
- ✔ Container doltlab-doltlabdb-1              Started                      0.5s 
- ✔ Container doltlab-doltlabfileserviceapi-1  Started                      0.8s 
- ✔ Container doltlab-doltlabremoteapi-1       Started                      1.1s 
- ✔ Container doltlab-doltlabapi-1             Started                      1.3s 
- ✔ Container doltlab-doltlabgraphql-1         Started                      1.4s 
- ✔ Container doltlab-doltlabui-1              Started                      1.7s 
-ubuntu@ip-10-2-0-24:~/doltlab$ 
+ ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s
+ ✔ Container doltlab-doltlabdb-1              Started                      0.5s
+ ✔ Container doltlab-doltlabfileserviceapi-1  Started                      0.8s
+ ✔ Container doltlab-doltlabremoteapi-1       Started                      1.1s
+ ✔ Container doltlab-doltlabapi-1             Started                      1.3s
+ ✔ Container doltlab-doltlabgraphql-1         Started                      1.4s
+ ✔ Container doltlab-doltlabui-1              Started                      1.7s
+ubuntu@ip-10-2-0-24:~/doltlab$
 ```
 
 Running the newly generated `./start.sh` will start DoltLab connected to Gmail.
@@ -681,31 +681,31 @@ To begin, you'll need to create a Hosted Dolt deployment that your DoltLab insta
 
 You will then see a form where you can specify details about the host you need for your DoltLab instance:
 
-![Create Deployment Page 1](../.gitbook/assets/create_deployment_1.png)
+![](../.gitbook/assets/create_deployment_1.png)
 
 In the image above you can see that we defined our Hosted Dolt deployment name as `my-doltlab-db-1`, selected an AWS EC2 host with 2 CPU and 8 GB of RAM in region `us-west-2`. We've also requested 200 GB of disk. For DoltLab, these settings should be more than sufficient.
 
 We have also requested a replica instance by checking the "Enable Replication" box, and specifying `1` replica, although replication is not required for DoltLab.
 
-![Create Deployment Page 2](../.gitbook/assets/create_deployment_2.png)
+![](../.gitbook/assets/create_deployment_2.png)
 
 If you want the ability to [clone this Hosted Dolt instance](https://www.dolthub.com/blog/2023-04-17-cloning-a-hosted-database/), check the box "Enable Dolt Credentials". And finally, if you want to use the SQL workbench feature for this hosted instance (which we recommend) you should also check the box "Create database users for the SQL Workbench".
 
 You will see the hourly cost of running the Hosted Dolt instance displayed above the "Create Deployment" button. Click it, and wait for the deployment to reach the "Started" state.
 
-![Hosted Deployment Started](../.gitbook/assets/hosted_deployment_started.png)
+![](../.gitbook/assets/hosted_deployment_started.png)
 
 Once the deployment has come up, the deployment page will display the connection information for both the primary host and the replica, and each will be ready to use. Before connecting a DoltLab instance to the primary host, though, there are a few remaining steps to take to ensure the host has the proper state before connecting DoltLab.
 
 First, click the "Configuration" tab and uncheck the box "behavior_disable_multistatements". DoltLab will need to execute multiple statements against this database when it starts up. You can also, optionally, change the log_level to "debug". This log level setting will make sure executed queries appear in the database logs, which is helpful for debugging.
 
-![Hosted Deployment Configuration](../.gitbook/assets/hosted_deployment_configuration.png)
+![](../.gitbook/assets/hosted_deployment_configuration.png)
 
 Click "Save Changes".
 
 Next, navigate to the "Workbench" tab and check the box "Enable Writes". This will allow you to execute writes against this instance from the SQL workbench. Click "Update".
 
-![Hosted Deployment Started](../.gitbook/assets/enable_writes.png)
+![](../.gitbook/assets/enable_writes.png)
 
 Then, with writes enabled, on this same page, click "Create database" to create the database that DoltLab expects, called `dolthubapi`.
 
@@ -724,7 +724,7 @@ This instance is now ready for a DoltLab connection.
 
 ## Rerun DoltLab's Installer
 
-To connect DoltLab to `my-doltlab-db-1`, ensure that your DoltLab instance is stopped. 
+To connect DoltLab to `my-doltlab-db-1`, ensure that your DoltLab instance is stopped.
 
 Next, edit the `services.doltlabdb.host`, `services.doltlabdb.port`, and `services.doltlabdb.tls_skip_verify` fields of the `installer_config.yaml`.
 
@@ -755,7 +755,7 @@ Alternatively, rerun the [installer](../reference/installer.md) with `--doltlabd
 
 Start DoltLab using the `./start.sh` script generated by the [installer](../reference/installer.md). Once DoltLab is running successfully against `my-doltlab-db-1`, you can create a database on DoltLab, for example called `test-db`, and you will see live changes to the database reflected in the Hosted Dolt workbench:
 
-![Hosted Dolt Workbench](../.gitbook/assets/hosted_dolt_workbench.png)
+![](../.gitbook/assets/hosted_dolt_workbench.png)
 
 # Serve DoltLab over HTTPS natively
 
@@ -838,35 +838,35 @@ Because the host is in a private subnet with no public IP though, only the NLB w
 Next, in AWS, create [target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-target-group.html) for each DoltLab port that the NLB will forward requests to. These ports are:
 `80/443`, `100`, `4321`, and `50051`.
 
-![Create Target Group Instances](../.gitbook/assets/doltlab_target_group_type.png)
+![](../.gitbook/assets/doltlab_target_group_type.png)
 
 When creating the target groups, select `Instances` as the target type. Then, select `TCP` as the port protocol, followed by the port to use for the target group. In this example we will map all target group ports to their corresponding DoltLab port, ie `80:80`, `100:100`, `4321:4321` and `50051:50051`. Select the same VPC used by your DoltLab host as well.
 
-![Create Target Group TCP](../.gitbook/assets/doltlab_target_group_vpc.png)
+![](../.gitbook/assets/doltlab_target_group_vpc.png)
 
 During target group creation, in the `Health Checks` section, click `Advanced health check settings` and select `Override` to specify the port to perform health checks on. Here, enter `2001`, the health check port for DoltLab's Envoy proxy, `doltlabenvoy`. We will use this same port for _all_ target group health checks.
 
-![Create Target Group Health Checks](../.gitbook/assets/doltlab_target_group_health_checks.png)
+![](../.gitbook/assets/doltlab_target_group_health_checks.png)
 
 After clicking `Next`, you will register targets for your new target group. Here you should see your DoltLab host. Select it and specify the port the target group will forward to.
 
-![Create Target Group Health Register Targets](../.gitbook/assets/doltlab_target_group_register_targets.png)
+![](../.gitbook/assets/doltlab_target_group_register_targets.png)
 
 Click `Include as pending below`, then click `Create target group`.
 
 Once you've created your target groups you can create the NLB.
 
-![Create NLB Select](../.gitbook/assets/doltlab_nlb_select_load_balancer.png)
+![](../.gitbook/assets/doltlab_nlb_select_load_balancer.png)
 
 Be sure to select the Network Load balancer as the other types of load balancers may require different configurations.
 
 Then, create an NLB in the same VPC and subnet as your DoltLab host that uses `Scheme: Internet-facing` and `Ip address type: IPV4`.
 
-![Create NLB Config](../.gitbook/assets/doltlab_nlb_basic_config.png)
+![](../.gitbook/assets/doltlab_nlb_basic_config.png)
 
-Additionally, select the the same availabilty zone that your DoltLab host uses. You can use the `default` security group for your NLB, however the ingress rules for this group will need to be updated before inbound traffic will be able to reach your NLB.
+Additionally, select the the same availability zone that your DoltLab host uses. You can use the `default` security group for your NLB, however the ingress rules for this group will need to be updated before inbound traffic will be able to reach your NLB.
 
-![Create NLB Listeners](../.gitbook/assets/doltlab_nlb_listeners.png)
+![](../.gitbook/assets/doltlab_nlb_listeners.png)
 
 In the Listeners section, add listeners for each target group you created, specifying the NLB port to use for each one. But again, in this example we will forward on the same port. Click `Create load balancer`.
 
@@ -874,7 +874,7 @@ It make take a few minutes for the NLB to become ready. After it does, check eac
 
 Next, edit the inbound rules for the security group attached to the NLB you created so that it allows connections on the listening ports.
 
-![NLB Security group](../.gitbook/assets/doltlab_nlb_security_group.png)
+![](../.gitbook/assets/doltlab_nlb_security_group.png)
 
 On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
 
