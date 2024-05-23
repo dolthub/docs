@@ -54,7 +54,7 @@ pushing to a remote can serve as a backup for some use cases.
 
 ### Configure a remote
 
-This example uses DoltgresHub as a remote, but you can use Doltgres with [other remotes like
+This example uses DoltHub as a remote, but you can use Doltgres with [other remotes like
 filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/).
 
 ```sql

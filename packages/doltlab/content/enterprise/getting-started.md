@@ -28,7 +28,7 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh
 
 Hit your DoltLab to make sure it works:
 
-![](../../.gitbook/assets/doltlab-enterprise-works.png)
+![](../.gitbook/assets/doltlab-enterprise-works.png)
 
 You'll notice you have an Enterprise logo and the footer says "ENTERPRISE" in the version string. If you see those, your DoltLab Enterprise is working.
 
@@ -38,7 +38,7 @@ Most Enterprise features are enabled by [passing arguments to the installer](../
 
 As some of you know, [DoltHub was initially Liquidata](https://www.dolthub.com/blog/2020-09-25-dolthub-rebrand/) and the logo was pretty sick.
 
-![](../../.gitbook/assets/ld-logo.png)
+![](../.gitbook/assets/ld-logo.png)
 
 I'm going to make a DoltLab Enterprise instance that is Liquidata branded. Oh what could have been?
 
@@ -61,6 +61,6 @@ ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 --enterprise-onl
 
 Then I start my instance and I get a new look and feel.
 
-![](../../.gitbook/assets/doltlab-custom-logo.png)
+![](../.gitbook/assets/doltlab-custom-logo.png)
 
 Again, most of the features are enabled using the installer, so get used to running that to change your running DoltLab.

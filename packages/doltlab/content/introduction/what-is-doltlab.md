@@ -4,7 +4,7 @@ title: What is DoltLab?
 
 # What is DoltLab?
 
-![](../../.gitbook/assets/doltlab-preview.png)
+![](../.gitbook/assets/doltlab-preview.png)
 
 DoltLab gets its name from the combination of Dolt and [GitLab](https://about.gitlab.com/), because GitLab is the version of GitHub that you can host yourself and DoltLab is the version of [DoltHub](https://www.dolthub.com) that you can host yourself.
 

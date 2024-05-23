@@ -99,7 +99,7 @@ enterprise:
 Once I save my changes, rerun the installer (`./installer`), and restart (`./start.sh`), I
 should see my new Starbucks logo.
 
-![](../../.gitbook/assets/doltlab-starbucks-logo.png)
+![](../.gitbook/assets/doltlab-starbucks-logo.png)
 
 # Customize automated emails
 
@@ -268,7 +268,7 @@ they are used for:
 Here is a visual guide for where customizable colors are used on the database
 page on DoltLab:
 
-![Click to enlarge](../../.gitbook/assets/doltlab-labeled-colors.png)
+![Click to enlarge](../.gitbook/assets/doltlab-labeled-colors.png)
 
 In order to configure these customized colors, you'll need the
 [RGB](https://en.wikipedia.org/wiki/RGB_color_model) value of each color. Each color value
@@ -358,7 +358,7 @@ $ ./start.sh
 
 And now DoltLab is Starbucks branded!
 
-![](../../.gitbook/assets/doltlab-starbucks.png)
+![](../.gitbook/assets/doltlab-starbucks.png)
 
 See other examples of utilizing colors to brand DoltLab for some well-known companies
 [here](https://dolthub.awsdev.ld-corp.com/blog/2024-05-23-customizing-doltlab-colors/#other-examples).
@@ -396,13 +396,13 @@ DoltLab Enterprise supports SAML single-sign-on. To configure your DoltLab insta
 
 For example, [Okta](https://www.okta.com/), a popular IP, provides an endpoint for downloading the metadata descriptor for a SAML application after you register an application on their platform.
 
-![](../../.gitbook/assets/doltlab_okta_app.png)
+![](../.gitbook/assets/doltlab_okta_app.png)
 
 During registration, Okta will ask you for the "Single Sign On Url" and an "Audience Restriction" for the application.
 
 Use the domain/host IP address of your DoltLab instance followed by `/sso/callback` for the "Single Sign On Url", and use that same domain/host IP address followed by just "/sso" for the "Audience Restriction". Since this example will be for `https://doltlab.dolthub.com`, we'll use `https://doltlab.dolthub.com/sso/callback` and `https://doltlab.dolthub.com/sso` respectively.
 
-![](../../.gitbook/assets/doltlab_okta_settings.png)
+![](../.gitbook/assets/doltlab_okta_settings.png)
 
 Be sure to also set "Name ID Format" to "Persistent".
 
@@ -439,15 +439,15 @@ Alternatively, the [installer](../reference/installer.md) can be run with the fo
 
 When SAML single-sign-on is configured, you will see the SAML option on the sign-in page:
 
-![](../../.gitbook/assets/doltlab_saml_signin.png)
+![](../.gitbook/assets/doltlab_saml_signin.png)
 
 Next, as user `admin`, login to your DoltLab instance and navigate to `Profile` > `Settings` > `SSO`.
 
-![](../../.gitbook/assets/doltlab_profile_settings.png)
+![](../.gitbook/assets/doltlab_profile_settings.png)
 
 On this tab you will see the following:
 
-![](../../.gitbook/assets/doltlab_saml_settings.png)
+![](../.gitbook/assets/doltlab_saml_settings.png)
 
 `Assertion Consumer Service Url` displays the url where Okta should send the SAML assertion.
 
@@ -475,11 +475,11 @@ Dolt can use an [AWS Remote](https://www.dolthub.com/blog/2021-07-19-remotes/) a
 
 For our example, let's create an AWS S3 bucket called `test-doltlab-application-db-backups`.
 
-![](../../.gitbook/assets/aws_remote_backup_s3.png)
+![](../.gitbook/assets/aws_remote_backup_s3.png)
 
 Let's also create a Dynamo DB table in the same AWS region, and call it `test-doltlab-backup-application-db-manifest`. Notice its uses the required partition key (primary key) `db`.
 
-![](../../.gitbook/assets/aws_remote_backup_dynamodb.png)
+![](../.gitbook/assets/aws_remote_backup_dynamodb.png)
 
 The AWS remote url for our DoltLab instance which is determined by the template `aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/backup_name`, will be `aws://[test-doltlab-backup-application-db-manifest:test-doltlab-application-db-backups]/my_doltlab_backup`.
 
@@ -579,9 +579,9 @@ For more configuration options, please consult the [AlertManager documentaion](h
 
 Finally, start DoltLab using the `./start.sh` script. DoltLab will create the first backup when started, and by default, will create backups at midnight each night. You will see your backups stored in your S3 bucket, and the manifest stored in your DynamoDB table.
 
-![](../../.gitbook/assets/aws_remote_backup_s3_example.png)
+![](../.gitbook/assets/aws_remote_backup_s3_example.png)
 
-![](../../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
+![](../.gitbook/assets/aws_remote_backup_dynamodb_example.png)
 
 Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
@@ -589,7 +589,7 @@ Your DoltLab's Dolt server is now automatically backing up to your AWS remote.
 
 To backup DoltLab's Dolt server to a GCP remote, first create a bucket in GCP. This will be the only required resource needed.
 
-![](../../.gitbook/assets/gcp_remote_backup_bucket.png)
+![](../.gitbook/assets/gcp_remote_backup_bucket.png)
 
 Next, add GCP JSON credentials to your DoltLab host. You can find information about GCP credentials [here](https://cloud.google.com/sdk/gcloud/reference/auth/application-default/login).
 
@@ -628,13 +628,13 @@ Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [inst
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your GCP bucket.
 
-![](../../.gitbook/assets/gcp_remote_backup_bucket_example.png)
+![](../.gitbook/assets/gcp_remote_backup_bucket_example.png)
 
 ## OCI Remote Backup
 
 To backup DoltLab's Dolt server to an OCI remote, first create a bucket in OCI. This will be the only required resource needed.
 
-![](../../.gitbook/assets/oci_remote_backup_bucket.png)
+![](../.gitbook/assets/oci_remote_backup_bucket.png)
 
 Next, install the `oci` CLI tool on your DoltLab host, and run `oci setup config` to create a configuration file with credentials authorized to access your bucket. You can find information about creating an config file [here](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm#configfile).
 
@@ -690,7 +690,7 @@ Finally, edit the `./alertmanager/alertmanager.yaml` file generated by the [inst
 
 Once you start your Enterprise instance with `./start.sh`, it will now automatically back up its application Dolt server to your OCI bucket.
 
-![](../../.gitbook/assets/oci_remote_backup_bucket_example.png)
+![](../.gitbook/assets/oci_remote_backup_bucket_example.png)
 
 # Deploy DoltLab across multiple hosts
 
@@ -698,7 +698,7 @@ DoltLab's services can be deployed across multiple hosts which allow DoltLab's s
 
 The following guide will walkthrough deploying a DoltLab instance whose set of services each run on separate host machines.
 
-![](../../.gitbook/assets/multihost_doltlab.svg)
+![](../.gitbook/assets/multihost_doltlab.svg)
 
 The diagram above depicts the multi-host architecture for DoltLab. Each independent service runs on a distinct host, and is served behind it's own reverse proxy. Both the service and the proxy run via Docker compose, and are easily configured using the [installer](../reference/installer.md). At the time of this writing, multi-host deployments are only available over `http`. For `https` support, please [file an issue in our issues repository](https://github.com/dolthub/doltlab-issues).
 

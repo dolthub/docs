@@ -2,8 +2,6 @@
 title: Go MySQL Server
 ---
 
-# Go MySQL Server
-
 [go-mysql-server](https://github.com/dolthub/go-mysql-server) is the
 query engine for Dolt. It's a MySQL compatible parser, server, and
 query execution engine written in pure Go. As with Dolt, its goal is
