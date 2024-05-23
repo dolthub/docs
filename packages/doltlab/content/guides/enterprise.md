@@ -43,7 +43,7 @@ The values for these arguments will be provided to you by our DoltLab team. The 
 
 # Use custom logo on DoltLab instance
 
-DoltLab Enterprise allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos custom logos must have a maximum height of `24px` and a maximum width of `112px`. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab" below the custom logo.
+DoltLab Enterprise allows administrators to customize the logo used across their DoltLab instance. At the time of this writing, custom logos custom logos must have a maximum height of `32px` and a maximum width of `240px`. They will be visible in the top navbar of every page and the footer of some pages, so therefore should work against dark backgrounds. If a custom logo is used on DoltLab, the footer of the DoltLab instance will display the text "Powered by DoltLab [version]" next to the custom logo.
 
 You can use a custom logo on DoltLab by editing `./installer_config.yaml` and providing the path to your custom logo:
 
@@ -65,6 +65,39 @@ Save these changes and rerun the [installer](../reference/installer.md) to regen
 ```
 
 Alternatively, you can run the [installer](../reference/installer.md) with the argument `--custom-logo=/absolute/path/to/custom/logo.png`.
+
+You should see your new logo when you restart (`./start.sh`) your instance.
+
+## Example
+
+We'll use Starbucks as an example. First I need to find a logo that works well with a dark
+background. I found a white Starbucks logo and copy that image file over to my DoltLab
+host.
+
+I create a `logos` folder on my host and use `scp` to securely copy my logo image.
+
+```bash
+$ scp ~/Desktop/starbucks-logo.png ubuntu@54.191.163.60:/home/ubuntu/logos
+starbucks-logo.png
+```
+
+Note that this will not work if you create the `logos` folder while running `sudo newgrp docker`.
+
+Once my image is there, I can add the absolute path to my image to the installer
+configuration file.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  # other enterprise config
+  customize:
+    logo: /home/ubuntu/logos/starbucks-logo.png
+```
+
+Once I save my changes, rerun the installer (`./installer`), and restart (`./start.sh`), I
+should see my new Starbucks logo.
+
+![DoltLab Starbucks](../../.gitbook/assets/doltlab-starbucks-logo.png)
 
 # Customize automated emails
 
@@ -211,9 +244,38 @@ Once we save our edits, we can restart our DoltLab instance for the changes to t
 
 # Customize DoltLab colors
 
-DoltLab Enterprise allows administrators to customize the color of certain assets across their DoltLab instance.
+DoltLab Enterprise allows administrators to customize the color of certain assets across
+their DoltLab instance. This is current list of colors that you can customize and what
+they are used for:
 
-For configuring custom colors, edit the `./installer_config.yaml`, adding:
+- `accent_1`: An accent color used sparingly to highlight certain features, such as active tabs.
+- `background_accent_1`: An accent background color used often for headers. As the primary
+  background color for DoltLab is white/grey and not configurable, is expected that is
+  color is dark enough to work with light or white text.
+- `background_gradient_start`: A background color used to create a gradient for some
+  headers in combination with `background_accent_1`. If you do not want a gradient you can
+  use the same value as `background_accent_1`.
+- `button_1`: Primary button color.
+- `button_2`: Secondary button color, used for hover states.
+- `link_1`: Primary link color.
+- `link_2`: Secondary link color, used for hover states.
+- `link_light`: Tertiary link color, used for links on dark backgrounds.
+- `primary`: Primary text color, also used for some outlines.
+- `code_background`: Dark background color for code blocks.
+
+Here is a visual guide for where customizable colors are used on the database
+page on DoltLab:
+
+![Click to enlarge](../../.gitbook/assets/doltlab-labeled-colors.png)
+
+In order to configure these customized colors, you'll need the
+[RGB](https://en.wikipedia.org/wiki/RGB_color_model) value of each color. Each color value
+must include three comma-separated colors. We use dynamic [Tailwind
+themes](https://tailwindcss.com/docs/theme) to implement these custom colors. You can
+learn more about the specifics of how this is implemented
+[here](https://www.dolthub.com/blog/2024-03-20-dynamic-tailwind-themes/).
+
+Once you decide on the color palette, edit the `./installer_config.yaml`, adding:
 
 ```yaml
 enterprise:
@@ -231,6 +293,8 @@ enterprise:
       rgb_link_1: "31, 109, 198"
       rgb_link_2: "61, 145, 240"
       rgb_link_light: "109, 176, 252"
+      rgb_primary: "0, 0, 0"
+      rgb_code_background: "24, 33, 52"
 ```
 
 Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that use your custom colors.
@@ -243,7 +307,7 @@ Alternatively, you can run the [installer](../reference/installer.md) with the f
 
 ```bash
 ./installer \
-...
+... \
 --custom-color-rgb-accent-1="252, 66, 201" \
 --custom-color-rgb-background-accent-1="24, 33, 52" \
 --custom-color-rgb-background-gradient-start="31, 41, 66" \
@@ -251,8 +315,51 @@ Alternatively, you can run the [installer](../reference/installer.md) with the f
 --custom-color-rgb-button-2="31, 109, 198" \
 --custom-color-rgb-link-1="31, 109, 198" \
 --custom-color-rgb-link-2="61, 145, 240" \
---custom-color-rgb-link-light="109, 176, 252"
+--custom-color-rgb-link-light="109, 176, 252" \
+--custom-color-rgb-primary="0, 0, 0" \
+--custom-color-rgb-code-background="24, 33, 52"
 ```
+
+You should see your new colors when you restart (`./start.sh`) your instance.
+
+## Example
+
+Using Starbucks as an example again, we use their [color
+guide](https://creative.starbucks.com/color/) to choose some colors to brand our DoltLab
+and then add them to the installer configuration.
+
+```yaml
+# installer_config.yaml
+enterprise:
+  # other enterprise config
+  customize:
+    logo: /home/ubuntu/logos/starbucks-logo.png
+    color_overrides:
+      rgb_accent_1: "219, 168, 61"
+      rgb_background_accent_1: "41, 96, 68"
+      rgb_background_gradient_start: "50, 115, 78"
+      rgb_button_1: "50, 115, 78"
+      rgb_link_1: "50, 115, 78"
+      rgb_button_2: "41, 96, 68"
+      rgb_link_2: "41, 96, 68"
+      rgb_link_light: "216, 232, 226"
+      rgb_primary: "36, 56, 50"
+      rgb_code_background: "41, 96, 68"
+```
+
+I rerun the installer and restart:
+
+```bash
+$ ./installer
+$ ./start.sh
+```
+
+And now DoltLab is Starbucks branded!
+
+![Starbucks DoltLab](../../.gitbook/assets/doltlab-starbucks.png)
+
+See other examples of utilizing colors to brand DoltLab for some well-known companies
+[here](https://dolthub.awsdev.ld-corp.com/blog/2024-05-23-customizing-doltlab-colors/#other-examples).
 
 # Add Super Admins to a DoltLab instance
 
@@ -860,7 +967,7 @@ Running `docker ps` will show the running services:
 
 ```bash
 docker ps
-CONTAINER ID   IMAGE                                                     COMMAND                  CREATED              STATUS              
+CONTAINER ID   IMAGE                                                     COMMAND                  CREATED              STATUS
 14b440a088c1   public.ecr.aws/dolthub/doltlab/dolthubapi-server:v2.1.4   "/app/go/services/do…"   About a minute ago   Up About a minute                                                                                                                                                                    doltlab-doltlabapi-1
 6215f1c26441   envoyproxy/envoy:v1.28-latest                             "/docker-entrypoint.…"   38 minutes ago       Up About a minute   0.0.0.0:2001->2001/tcp, :::2001->2001/tcp, 0.0.0.0:9443-9444->9443-9444/tcp, :::9443-9444->9443-9444/tcp, 0.0.0.0:9901->9901/tcp, :::9901->9901/tcp, 10000/tcp   doltlab-doltlabenvoy-1
 ```
