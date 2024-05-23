@@ -12,19 +12,25 @@ Additionally, some early versions have different database schemas than newer one
 
 When upgrading from DoltLab `v2.1.4` that uses an `installer_config.yaml` to newer DoltLab, which also uses that configuration file, you can simply reuse your previous `installer_config.yaml` with the newer DoltLab version.
 
+First, be sure to stop your running DoltLab instance with `./stop.sh`.
+
 Simply copy the old file into the same directory as the new DoltLab's [installer](../reference/installer.md) binary, and rerun it.
 
+Be sure rename your old `doltlab` directory and unzip the new version of DoltLab using the name `doltlab`. Currently, [changing the parent directory name will change cause Docker to load the wrong data volumes](https://github.com/dolthub/doltlab-issues/issues/90).
+
 ```bash
+mv doltlab doltlab-old
 unzip doltlab-v2.1.5.zip -d doltlab
-cp installer_config.yaml doltlab/
+cp doltlab-old/installer_config.yaml doltlab/
 cd doltlab
 ./installer
+./start.sh
 ```
 
 You can also run the [installer](../reference/installer.md) for the newer version of DoltLab with the [config](../reference/installer/cli.md#config) flag:
 
 ```bash
-./installer --config=/path/to/previously/used/installer_config.yaml
+./installer --config=doltlab-old/installer_config.yaml
 ```
 
 # Upgrade from DoltLab <code>v2.1.3</code> to <code>v2.1.4+</code>
