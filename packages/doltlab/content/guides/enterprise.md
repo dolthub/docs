@@ -1,5 +1,5 @@
 ---
-title: "DoltLab Enterprise Guide"
+title: "Enterprise Administrator Guide"
 ---
 
 This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Basic Administrator's Guide](./basic.md).
