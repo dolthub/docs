@@ -34,7 +34,7 @@ You'll notice you have an Enterprise logo and the footer says "ENTERPRISE" in th
 
 ## Enable Features
 
-Most Enterprise features are enabled by [passing arguments to the installer](../guides/enterprise). To show off an Enterprise features, I'm going to give my DoltLab a custom logo.
+Most Enterprise features are enabled by [passing arguments to the installer](../guides/enterprise.md). To show off an Enterprise features, I'm going to give my DoltLab a custom logo.
 
 As some of you know, [DoltHub was initially Liquidata](https://www.dolthub.com/blog/2020-09-25-dolthub-rebrand/) and the logo was pretty sick.
 

@@ -37,7 +37,7 @@ You can also run the [installer](../reference/installer.md) for the newer versio
 
 DoltLab `v2.1.4` no longer writes or maintains a `.secrets` directory co-located with the `installer`. Instead, DoltLab >= `v2.1.4` ships with a configuration file that the `installer` uses called `./installer_config.yaml`.
 
-The default configuration file contains default values for all passwords the DoltLab requires, and is much simpler to maintain. Please see the [Installer Configuration File Reference](../guides/administrator.md#installer-config-reference) for more information.
+The default configuration file contains default values for all passwords the DoltLab requires, and is much simpler to maintain. Please see the [Installer Configuration File Reference](../reference/installer/configuration-file.md) for more information.
 
 # Upgrade from DoltLab <code>v2.1.2</code> to <code>v2.1.3+</code>
 

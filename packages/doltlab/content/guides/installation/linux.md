@@ -34,7 +34,7 @@ Inside the `doltlab` directory you'll find the following binaries:
 
 The [installer](../../reference/installer.md) binary, is the primary interface for configuring a DoltLab instance. This tool will create all other assets DoltLab needs to run, based on the arguments you supply it.
 
-The `smtp_connection_helper` binary can be used to help you troubleshoot any issues connecting your DoltLab instance to your existing SMTP server. This tool uses similar code to DoltLab's email service and sends a test email if the connection to the SMTP server is properly configured. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](../administrator/administrator.md#troubleshoot-smtp-connection).
+The `smtp_connection_helper` binary can be used to help you troubleshoot any issues connecting your DoltLab instance to your existing SMTP server. This tool uses similar code to DoltLab's email service and sends a test email if the connection to the SMTP server is properly configured. The source code for the tool is available [here](https://gist.github.com/coffeegoddd/66f5aeec98640ff8a22a1b6910826667) and basic instructions for using the tool are [here](../basic.md#troubleshoot-smtp-connection).
 
 # Next Steps
 

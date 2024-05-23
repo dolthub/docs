@@ -2,7 +2,7 @@
 title: "DoltLab Enterprise Guide"
 ---
 
-This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Administrator's Guide](../administrator/administrator.md).
+This guide will cover how to run DoltLab in Enterprise mode and use exclusive features not covered in the [Basic Administrator's Guide](./basic.md).
 
 To start DoltLab in Enterprise mode, edit the `installer_config.yaml` file, supplying your Enterprise license keys:
 
@@ -940,13 +940,13 @@ Alternatively, you can run the [installer](../reference/installer.md) with the `
 `services.doltlabui.host`, or `--doltlabui-host`, is required and is the IP address of the `doltlabui` host.</br>
 `services.doltlabui.port`, or `--doltlabui-port`, is required and should be the value `80`. This port value should not be changed.</br>
 `services.doltlabdb.dolthubapi_password`, or `--doltlabdb-dolthubapi-password`, is required and should be the `services.doltlabdb.dolthubapi_password` value defined on the `doltlabdb` host.</br>
-`smtp.host`, or `--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`smtp.port`, or `--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`smtp.auth_method`, or `--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
+`smtp.host`, or `--smtp-host`, is optional and is the host name of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`smtp.port`, or `--smtp-port`, is optional and is the port of an SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`smtp.auth_method`, or `--smtp-auth-method`, is optional and is the authentication method supported by the SMTP server. It is only required if users other than `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
 `smtp.username`, or `--smtp-username`, is required for authentication method `plain`, and is the username used to connect to the SMTP server.</br>
 `smtp.password`, or `--smtp-password`, is required for authentication method `plain`, and is the password used to connect to the SMTP server.</br>
-`smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](../administrator.md#connect-smtp-server) for more information.</br>
-`default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](../installation/start-doltlab.md) `admin`.</br>
+`smtp.no_reply_email`, or `--no-reply-email`, is optional and is the email used to send automated DoltLab emails. It is only required if users other that `admin` will be using the DoltLab instance. See [connecting DoltLab to an SMTP server](./basic.md#connect-smtp-server) for more information.</br>
+`default_user.email`, or `--default-user-email`, is optional and is the email address to associate with the [default user](./installation/start-doltlab.md) `admin`.</br>
 
 After running the [installer](../reference/installer.md), you will see output like the following:
 

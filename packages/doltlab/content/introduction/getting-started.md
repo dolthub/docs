@@ -356,15 +356,15 @@ You're now ready to try out all the Dolt and DoltLab experiences like Pull Reque
 
 ## Create new users
 
-As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../guides/administrator/administrator.md#set-up-a-smtp-server-using-any-gmail-address).
+As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## Receive Email Notifications
 
-DoltLab sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../../guides/administrator#set-up-a-smtp-server-using-any-gmail-address).
+DoltLab sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## HTTPS
 
-Your DoltLab is currently set up to only use HTTP which is fairly insecure. If it's running on your internal network and you have other threat mitigations, this may be OK. But having it sit on the public internet on AWS without HTTPS is probably not what you want. [Learn how to set up HTTPS on your DoltLab here](../../guides/administrator#doltlab-https-natively).
+Your DoltLab is currently set up to only use HTTP which is fairly insecure. If it's running on your internal network and you have other threat mitigations, this may be OK. But having it sit on the public internet on AWS without HTTPS is probably not what you want. [Learn how to set up HTTPS on your DoltLab here](../guides/basic.md#doltlab-https-natively).
 
 ## Custom URL
 
@@ -372,8 +372,8 @@ Right now, you're stuck hitting the IP address of your host. In order to use a c
 
 ## Custom Logo/Colors
 
-Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../guides/administrator/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../..//guides/enterprise), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise) and [set up your custom look and feel here](../../guides/enterprise#use-custom-logo).
+Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../guides/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../guides/enterprise.md), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../guides/enterprise.md) and [set up your custom look and feel here](../guides/enterprise.md#use-custom-logo).
 
 ## Scalability
 
-Lastly, your DoltLab is running on a single host. All the components will scale to the size of that host including storing all the databases that are created. Storage and compute requirements can get big quickly. In order to break your DoltLab up into multiple instances and use cloud storage to store your databases, you need [DoltLab Enterprise](https://docs.doltlab.com/guides/enterprise). Learn [how to set up Enterprise here](../../guides/enterprise).
+Lastly, your DoltLab is running on a single host. All the components will scale to the size of that host including storing all the databases that are created. Storage and compute requirements can get big quickly. In order to break your DoltLab up into multiple instances and use cloud storage to store your databases, you need [DoltLab Enterprise](../guides/enterprise.md). Learn [how to set up Enterprise here](../guides/enterprise.md).

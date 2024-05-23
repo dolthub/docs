@@ -170,7 +170,7 @@ _Boolean_. If true, allows any user to create an account on a DoltLab instance, 
 whitelist_all_users: true
 ```
 
-See [prevent unauthorized user account creation](../../guides/administrator.md#prevent-unauthorized-user-account-creation) for more information.
+See [prevent unauthorized user account creation](../../guides/basic.md#prevent-unauthorized-user-account-creation) for more information.
 
 Command line equivalent [white-list-all-users](./cli.md#white-list-all-users).
 
@@ -197,7 +197,7 @@ _Dictionary_. Configuration options for `doltlabdb`.
 
 <h4 id="doltlabdb-host">host</h4>
 
-_String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../../guides/administrator.md#use-external-database) and for multi-host deployments.
+_String_. The host name or IP address of the host running `doltlabdb`. _Required_ for [configuring an external application database](../../guides/basic.md#use-external-database) and for multi-host deployments.
 
 ```yaml
 # example installer_config.yaml
@@ -210,7 +210,7 @@ Command line equivalent [doltlabdb-host](./cli.md#doltlabdb-host).
 
 <h4 id="doltlabdb-port">port</h4>
 
-_Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../../guides/administrator.md#use-external-database) and for [configuring multi-host deployments](../../guides/enterprise.md#deploy-doltlab-across-multiple-hosts).
+_Number_. The port for `doltlabdb`. _Required_ for [configuring an external application database](../../guides/basic.md#use-external-database) and for [configuring multi-host deployments](../../guides/basic.md#deploy-doltlab-across-multiple-hosts).
 
 ```yaml
 # example installer_config.yaml
@@ -499,7 +499,7 @@ Command line equivalent [default-user-email](./cli.md#default-user-email).
 
 ## smtp
 
-_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](../../guides/administrator.md#connect-doltlab-to-an-smtp-server) for more information.
+_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](../../guides/basic.md#connect-doltlab-to-an-smtp-server) for more information.
 
 - [auth_method](#auth_method)
 - [host](#smtp-host)
@@ -600,6 +600,7 @@ Command line equivalent [smtp-oauth-token](./cli.md#smtp-oauth-token).
 ### identity
 
 _String_. The SMTP server identity. _Optional_.
+
 ```yaml
 # example installer_config.yaml
 smtp:
@@ -659,7 +660,7 @@ Command line equivalent [scheme](./cli.md#scheme).
 
 ## tls
 
-_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/administrator.md#serve-doltlab-over-https-natively) for more information.
+_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/basic.md#serve-doltlab-over-https-natively) for more information.
 
 - [cert_chain](#cert_chain)
 - [private_key](private_key)
@@ -690,7 +691,7 @@ Command line equivalent [tls-private-key](./cli.md#tls-private-key).
 
 ## jobs
 
-_Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](../../guides/administrator.md#improve-doltlab-performance) for more information.
+_Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](../../guides/basic.md#improve-doltlab-performance) for more information.
 
 - [concurrency_limit](#concurrency_limit)
 - [concurrency_loop_seconds](#concurrency_loop_seconds)

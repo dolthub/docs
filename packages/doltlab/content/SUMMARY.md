@@ -5,30 +5,26 @@
 - [What is DoltLab?](introduction/what-is-doltlab.md)
 - [Getting Started](introduction/getting-started.md)
 
-## Guides
-
-- [Installation](guides/installation.md)
-  - [Linux](guides/installation/linux.md)
-  - [Start DoltLab](guides/installation/start-doltlab.md)
-- [Administrator](guides/administrator.md)
-- [Enterprise](guides/enterprise.md)
-- [Features](guides/features/README.md)
-  - [API](guides/features/api.md)
-  - [Workspaces](guides/features/workspaces.md)
-  - [Transform File Uploads](guides/features/transform-uploads.md)
-
 ## Enterprise
 
 - [Why Enterprise?](enterprise/why.md)
 - [Getting Started](enterprise/getting-started.md)
 
-## Older Versions
+## Administrator Guides
 
-- [Installation](older/installation.md)
-  - [Linux pre-installer](older/installation/pre-installer-linux.md)
-  - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
-- [Upgrade](older/upgrading.md)
-- [Administrator Guide](older/pre-installer-administrator-guide.md)
+- [Installation](guides/installation.md)
+  - [Linux](guides/installation/linux.md)
+  - [Start DoltLab](guides/installation/start-doltlab.md)
+- [Basic](guides/basic.md)
+- [Enterprise](guides/enterprise.md)
+
+## Features
+
+- [Basic](features/basic/README.md)
+- [Advanced](features/advanced/README.md)
+  - [API](features/advanced/api.md)
+  - [Workspaces](features/advanced/workspaces.md)
+  - [Transform File Uploads](features/advanced/transform-uploads.md)
 
 ## Reference
 
@@ -54,4 +50,11 @@
   - [v2.0.2](release-notes/v2.0.2.md)
   - [v2.0.1](release-notes/v2.0.1.md)
   - [v2.0.0](release-notes/v2.0.0.md)
-    
+
+## Older Versions
+
+- [Installation](older/installation.md)
+  - [Linux pre-installer](older/installation/pre-installer-linux.md)
+  - [Start DoltLab pre-installer](older/installation/start-doltlab-pre-installer.md)
+- [Upgrade](older/upgrading.md)
+- [Administrator Guide](older/pre-installer-administrator-guide.md)
