@@ -6,7 +6,7 @@ structure:
 
 redirects:
   guides/administrator: guides/basic.md
-  guides/features: features/advanced/README.md
+  guides/features: features/basic/README.md
   guides/features/api: features/advanced/api.md
   guides/features/workspaces: features/advanced/workspaces.md
   guides/features/transform-uploads: features/advanced/transform-uploads.md

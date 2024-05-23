@@ -20,8 +20,8 @@
 
 ## Features
 
-- [Basic](features/basic/README.md)
-- [Advanced](features/advanced/README.md)
+- [Basic Features](features/basic/README.md)
+- [Advanced Features](features/advanced/README.md)
   - [API](features/advanced/api.md)
   - [Workspaces](features/advanced/workspaces.md)
   - [Transform File Uploads](features/advanced/transform-uploads.md)
