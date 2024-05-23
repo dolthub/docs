@@ -4,7 +4,7 @@ title: Linux
 
 This page covers how to install and start DoltLab on a Linux host. Before you begin, be sure the host meets the [minimum recommended hardware requirements](../installation.md#minimum-recommended-hardware), has the proper [networking configuration](../installation.md#networking-requirements), and all [dependencies](../installation.md#dependencies) installed.
 
-DoltLab is released as a single `.zip` file that contains everything you need to run it. Release notes for each release can be viewed [here](./release-notes.md).
+DoltLab is released as a single `.zip` file that contains everything you need to run it. Release notes for each release can be viewed [here](../../reference/release-notes/README.md).
 
 > NOTE: We highly recommend installing (and upgrading to) the latest DoltLab version whenever possible.
 

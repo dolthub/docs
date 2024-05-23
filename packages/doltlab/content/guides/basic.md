@@ -28,7 +28,7 @@ This guide will cover how to perform common DoltLab administrator configuration 
 
 # File issues and view release notes
 
-DoltLab's source code is currently closed, but you can file DoltLab issues the [issues repository](https://github.com/dolthub/doltlab-issues). Release notes are available [here](../../release-notes.md).
+DoltLab's source code is currently closed, but you can file DoltLab issues the [issues repository](https://github.com/dolthub/doltlab-issues). Release notes are available [here](../reference/release-notes/README.md).
 
 # Backup and restore volumes
 
