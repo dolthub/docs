@@ -21,13 +21,14 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Ruby on Rails](https://rubyonrails.org/)                                                 | Ruby       | [Blog](https://www.dolthub.com/blog/2024-02-09-dolt-ruby-on-rails/)            | [Code](https://github.com/dolthub/dolt_rails)                                | 
 | [GORM](https://gorm.io/docs/)                                                             | Golang     | [Blog](https://www.dolthub.com/blog/2024-03-15-gorm-with-dolt)                 | [Code](https://github.com/dolthub/gorm-demo)                                 | 
 | [Shiny](https://shiny.posit.co/)                                                          | R          | [Blog](https://www.dolthub.com/blog/2024-04-26-dolt-r-shiny/)                  | [Code](https://github.com/dolthub/dolt_shiny)                                | 
+| [Ecto](https://hexdocs.pm/ecto/Ecto.html)                                                 | Elixir     | [Blog](https://www.dolthub.com/blog/2021-07-16-ecto-dolt/)                     | [Code](https://github.com/VinaiRachakonda/Ecto-Dolt-Sample)                  |
 
 ## Tools
 
 | Tool                                                           | Blog                                                                         | 
 |----------------------------------------------------------------|------------------------------------------------------------------------------| 
 | [Apache Superset](https://superset.apache.org/)                | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/)               |
-| [Datadog](https://www.datadoghq.com/)                                                 | [Blog](https://www.dolthub.com/blog/2024-05-17-dolt-datadog-dashboards/)                                                                  |
+| [Datadog](https://www.datadoghq.com/)                          | [Blog](https://www.dolthub.com/blog/2024-05-17-dolt-datadog-dashboards/)     |
 | [Excel](https://www.microsoft.com/en-us/microsoft-365/excel)   | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel)                   | 
 | [Google Sheets](https://www.google.com/sheets/about/#overview) | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/)          |
 | [Looker Studio](https://lookerstudio.google.com/)              | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/)                 |
