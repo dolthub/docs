@@ -698,6 +698,8 @@ and update remote-tracking branches..
 CALL DOLT_FETCH('origin', 'main');
 CALL DOLT_FETCH('origin', 'feature-branch');
 CALL DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
+CALL DOLT_FETCH('origin', NULL);
+CALL DOLT_FETCH('origin');
 ```
 
 ### Options
@@ -726,6 +728,9 @@ SELECT HASHOF('origin/main');
 -- Merge remote main with current branch
 CALL DOLT_MERGE('origin/main');
 ```
+
+### Notes
+Dropping the second argument, or passing NULL, will result is using the default refspec.
 
 ## `DOLT_GC()`
 
