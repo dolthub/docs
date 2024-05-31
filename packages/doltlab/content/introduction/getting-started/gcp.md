@@ -1,6 +1,4 @@
----
-title: Get A Ubuntu Host on GCP
----
+# Get A Ubuntu Host on GCP
 
 We need a properly configured Ubuntu host to run DoltLab on. This will take a few steps. Start by going to [Google Cloud Platform console](https://console.cloud.google.com/).
 
