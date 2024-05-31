@@ -6,90 +6,13 @@ title: Getting Started
 
 This guide will walk through the simplest way to set up a basic DoltLab installation. Once complete, you'll have a DoltLab running on an internet-accessible EC2 instance that works for a single `admin` user. Some features like multiple users, HTTPS, and custom logo and colors are not enabled but links to documentation to enable those things are provided.
 
-# Get a Ubuntu Host
+# Get a Ubuntu Host and SSH in
 
-The first thing you will need is an internet accessible Ubuntu host. We use AWS here but any cloud will do.
+The first thing you will need is an internet accessible Ubuntu host. We have documentation on how to get a DoltLab ready Ubuntu host on:
 
-To get your DoltLab ready host on AWS:
-
-1. Go to [AWS EC2 console](https://console.aws.amazon.com/ec2/) and click "Launch instance".
-
-2. Select a Ubuntu 22.04 amd64 t2.xlarge instance.
-
-![](../.gitbook/assets/getting-started/doltlab-aws-ec2-instance-type.png)
-
-3. Create a new RSA key pair for your instance in `.pem` format.
-
-![](../.gitbook/assets/getting-started/create-new-key-pair.png)
-
-This will create a `.pem` file and download it locally.
-
-3. Edit network settings and from the "Auto-assign public IP" drop-down menu choose "Enable".
-
-![](../.gitbook/assets/getting-started/doltlab-aws-ec2-pub-ip.png)
-
-4. Add security group rules for ports 22 (SSH), 80 (HTTP), 443 (HTTPS), 100 (CUSTOM), 4321 (CUSTOM), 50051 (CUSTOM) that allow ingress from anywhere. Specifics [here](https://docs.doltlab.com/introduction/installation#networking-requirements). You also may need to create a new VPC and Subnet here. Just use the defaults.
-
-![](../.gitbook/assets/getting-started/doltlab-aws-ec2-security-rules.png)
-
-5. Add 300GB gp3 disk.
-
-![](../.gitbook/assets/getting-started/doltlab-aws-ec2-storage.png)
-
-6. Click "Launch instance".
-
-![](../.gitbook/assets/getting-started/doltlab-aws-ec2-launch-summary.png)
-
-After this you should get a public IP for your new host. Mine was `54.191.163.60`.
-
-# SSH to your New Host
-
-Now I need to SSH to this host. I copy the `.pem` file I created when I launched the instance to my `.ssh` folder, give it appropriate permissions and then I can ssh to my new host.
-
-```sh
-$ cp ~/Downloads/doltlab.pem ~/.ssh
-$ chmod 600 .ssh/doltlab.pem
-$ ssh -i ~/.ssh/doltlab.pem ubuntu@54.191.163.60
-Enter passphrase for key '/Users/timsehn/.ssh/y':
-Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-1014-aws x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/pro
-
-  System information as of Thu Apr 25 17:17:23 UTC 2024
-
-  System load:  0.0185546875       Processes:             124
-  Usage of /:   0.5% of 339.02GB   Users logged in:       0
-  Memory usage: 1%                 IPv4 address for eth0: 10.2.0.124
-  Swap usage:   0%
-
-Expanded Security Maintenance for Applications is not enabled.
-
-0 updates can be applied immediately.
-
-Enable ESM Apps to receive additional future security updates.
-See https://ubuntu.com/esm or run: sudo pro status
-
-
-The list of available updates is more than a week old.
-To check for new updates run: sudo apt update
-
-
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
-
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-
-ubuntu@ip-10-2-0-124:~$
-```
-
-I'm in!
+1. [AWS](./aws.md)
+2. [Azure](./azure.md)
+3. [GCP](./gcp.md)
 
 # Download DoltLab and its Dependencies
 
@@ -262,7 +185,7 @@ cc278092afcb55de755e9b05725b86bb122eddd128264ee17134418dc154f455
 
 Now the moment of truth, I hit the IP over `http`, not `https`, http://54.191.163.60/. Bam!
 
-![](../.gitbook/assets/getting-started/fresh-doltlab.png)
+![](../../.gitbook/assets/getting-started/fresh-doltlab.png)
 
 # Login as Admin
 
@@ -270,7 +193,7 @@ Now, your DoltLab is running but it's not very useful. Only logged in users can 
 
 The DoltLab instance ships with a default user configured called `admin`. It has a password `DoltLab1234`. If you click the Sign In button in the top corner and log in as `admin`, you get a more useful set of features.
 
-![](../.gitbook/assets/getting-started/admin-logged-in-fresh-doltlab.png)
+![](../../.gitbook/assets/getting-started/admin-logged-in-fresh-doltlab.png)
 
 # Basic Configuration
 
@@ -278,7 +201,7 @@ The DoltLab instance ships with a default user configured called `admin`. It has
 
 A configured email server is required to create new users. If you try to create a user, you'll get an error that looks like this:
 
-![](../.gitbook/assets/getting-started/doltlab-create-user-error.png)
+![](../../.gitbook/assets/getting-started/doltlab-create-user-error.png)
 
 So, you only have a single admin user to play with for now.
 
@@ -288,7 +211,7 @@ You can build whatever database you can imagine using the web user interface. Th
 
 Here's a simple test database I created using SQL.
 
-![](../.gitbook/assets/getting-started/doltlab-admin-db.png)
+![](../../.gitbook/assets/getting-started/doltlab-admin-db.png)
 
 ## Clone Databases
 
@@ -326,7 +249,7 @@ $ dolt creds ls
 * ioohq4v4itlhgse9sv10acrknngmr6hukvm93n7k1qvo856oudug
 ```
 
-![](../.gitbook/assets/getting-started/doltlab-add-credentials.png)
+![](../../.gitbook/assets/getting-started/doltlab-add-credentials.png)
 
 Now you should be able to make a change and push to your DoltLab.
 
@@ -348,7 +271,7 @@ To http://54.191.163.60:50051/admin/test
 
 And I can now see my change on DoltLab!
 
-![](../.gitbook/assets/getting-started/doltlab-push.png)
+![](../../.gitbook/assets/getting-started/doltlab-push.png)
 
 You're now ready to try out all the Dolt and DoltLab experiences like Pull Requests, Issues, the SQL Workbench, and Diffs. Get testing and see if DoltLab is right for you and your team.
 
@@ -356,15 +279,15 @@ You're now ready to try out all the Dolt and DoltLab experiences like Pull Reque
 
 ## Create new users
 
-As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
+As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## Receive Email Notifications
 
-DoltLab sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
+DoltLab sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## HTTPS
 
-Your DoltLab is currently set up to only use HTTP which is fairly insecure. If it's running on your internal network and you have other threat mitigations, this may be OK. But having it sit on the public internet on AWS without HTTPS is probably not what you want. [Learn how to set up HTTPS on your DoltLab here](../guides/basic.md#doltlab-https-natively).
+Your DoltLab is currently set up to only use HTTP which is fairly insecure. If it's running on your internal network and you have other threat mitigations, this may be OK. But having it sit on the public internet on AWS without HTTPS is probably not what you want. [Learn how to set up HTTPS on your DoltLab here](../../guides/basic.md#doltlab-https-natively).
 
 ## Custom URL
 
@@ -372,8 +295,8 @@ Right now, you're stuck hitting the IP address of your host. In order to use a c
 
 ## Custom Logo/Colors
 
-Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../guides/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../guides/enterprise.md), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../guides/enterprise.md) and [set up your custom look and feel here](../guides/enterprise.md#use-custom-logo).
+Yay! Our first DoltLab Enterprise feature. If you would like a custom logo and color scheme for your DoltLab instance, you are going to need [DoltLab Enterprise](../../guides/enterprise.md). DoltLab Enterprise is $5,000/month for unlimited users. It comes with Enterprise Support for Dolt as well. Among [other features](../../guides/enterprise.md), DoltLab Enterprise allows you to customize the look and feel of your DoltLab instance. Learn how to [configure your DoltLab as Enterprise](../../guides/enterprise.md) and [set up your custom look and feel here](../../guides/enterprise.md#use-custom-logo).
 
 ## Scalability
 
-Lastly, your DoltLab is running on a single host. All the components will scale to the size of that host including storing all the databases that are created. Storage and compute requirements can get big quickly. In order to break your DoltLab up into multiple instances and use cloud storage to store your databases, you need [DoltLab Enterprise](../guides/enterprise.md). Learn [how to set up Enterprise here](../guides/enterprise.md).
+Lastly, your DoltLab is running on a single host. All the components will scale to the size of that host including storing all the databases that are created. Storage and compute requirements can get big quickly. In order to break your DoltLab up into multiple instances and use cloud storage to store your databases, you need [DoltLab Enterprise](../../guides/enterprise.md). Learn [how to set up Enterprise here](../../guides/enterprise.md).
