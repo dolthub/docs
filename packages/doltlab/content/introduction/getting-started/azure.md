@@ -1,6 +1,4 @@
----
-title: Get A Ubuntu Host on Azure
----
+# Get A Ubuntu Host on Azure
 
 The first step for setting up DoltLab in Microsoft Azure Cloud is provisioning a [virtual machine](https://azure.microsoft.com/en-us/products/virtual-machines). A virtual machine in Azure is Microsoft's equivalent to [EC2](https://aws.amazon.com/pm/ec2) in AWS.
 
