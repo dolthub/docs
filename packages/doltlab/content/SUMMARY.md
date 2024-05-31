@@ -3,7 +3,10 @@
 ## Introduction
 
 - [What is DoltLab?](introduction/what-is-doltlab.md)
-- [Getting Started](introduction/getting-started.md)
+- [Getting Started](introduction/getting-started/getting-started.md)
+  - [AWS](introduction/getting-started/aws.md)
+  - [Azure](introduction/getting-started/azure.md)
+  - [GCP](introduction/getting-started/gcp.md)
 
 ## Enterprise
 
