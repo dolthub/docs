@@ -25,7 +25,7 @@ A Postgres and Dolt table function the same on the surface. `CREATE` and `ALTER`
 same on both.
 
 Dolt and Postgres are [row major](https://en.wikipedia.org/wiki/Row-_and_column-major_order),
-meaning row values are stored next to each other. However, MySQL stores data in a binary tree
+meaning row values are stored next to each other. However, Postgres stores data in a binary tree
 structure while Dolt stores table data on disk using a content-addressed binary tree called a
 [prolly tree](https://docs.dolthub.com/architecture/storage-engine/prolly-tree). This setup makes Dolt [fairly
 comparable in query performance to Postgres](../../reference/benchmarks/latency.md) while also

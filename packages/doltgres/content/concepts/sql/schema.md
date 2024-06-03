@@ -6,7 +6,7 @@ title: Schema
 
 ## What is a Schema?
 
-Schema defines the shape of the data in your database. 
+Schema defines the shape of the data in your database.
 
 <!-- TODO: talk about database schemas -->
 
@@ -40,7 +40,7 @@ Changing schema can be a costly operation. For instance, adding an index to a co
 database requires scanning the entire table and writing a new index artifact, usually while also
 restricting writes to that table.
 
-## Difference between MySQL Schema and Doltgres Schema
+## Difference between Postgres Schema and Doltgres Schema
 
 Doltgres supports [most Postgres schema elements at least
 partially](../../reference/sql-support/supported-types.md), with more support being built out

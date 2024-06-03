@@ -11,7 +11,7 @@ key is a unique identification or id number.
 
 In most databases, a map of primary keys to the values of the other columns in the table is how the
 data is laid out on disk or memory. This makes row lookups by primary key indexed lookups. Indexed
-lookups can be accomplished in constant time (ie. O(1)).  Thus, use of primary keys in table
+lookups can be accomplished in constant time (ie. O(1)). Thus, use of primary keys in table
 definition and queries is a common database performance optimization. [Secondary
 Indexes](./indexes.md) are called "secondary" to distinguish them from primary keys.
 
@@ -30,7 +30,7 @@ database applications assign a primary key, usually called `id`, on row creation
 
 <!-- TODO: talk about sequences in primary keys -->
 
-## Difference between MySQL Primary Keys and Doltgres Primary Keys
+## Difference between Postgres Primary Keys and Doltgres Primary Keys
 
 Postgres and Doltgres primary keys are functionally the same. You use the same syntax to define and
 alter them.

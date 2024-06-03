@@ -164,7 +164,7 @@ remote endpoint. To configure this, you include a `remotesapi:` configuration st
 `config.yaml` file given to `sql-server` command. The stanza currently supports a single integer
 field, `port:`, which defines the TCP port the remotesapi endpoint will be exposed on. Providing a
 port will cause the sql-server process to run a remotesapi endpoint on the provided port. The
-listening IP address is the same as for the SQL server itself. If the MySQL server itself is
+listening IP address is the same as for the SQL server itself. If the Postgres server itself is
 configured with a TLS key and certificate then the endpoint will use the same TLS configuration as
 the SQL server endpoint itself and it will require HTTPS.
 
