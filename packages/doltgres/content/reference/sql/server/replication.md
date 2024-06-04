@@ -5,7 +5,7 @@ title: Replication
 # Replication
 
 Doltgres can [replicate data](../../../concepts/rdbms/replication.md) between two or more
-Doltgres servers, or can be a read-replica for a MySQL server. This page describes the two supported
+Doltgres servers, or can be a read-replica for a Postgres server. This page describes the two supported
 replication modes between a Doltgres primary server and Doltgres replica servers. See the [Postgres
 to Doltgres Replication guide](../../../guides/replication-from-postgres.md) for more information on
 setting up a Doltgres server as a read-replica for a Postgres server.

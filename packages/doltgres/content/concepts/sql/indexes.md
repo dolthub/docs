@@ -23,9 +23,9 @@ performance. Additionally, you should have the disk space available to store the
 
 You create indexes using the `CREATE INDEX` SQL statement.
 
-## Difference between MySQL Secondary Indexes and Doltgres Secondary Indexes
+## Difference between Postgres Secondary Indexes and Doltgres Secondary Indexes
 
-Functionally, Doltgres and MySQL indexes are equivalent. 
+Functionally, Doltgres and Postgres indexes are equivalent.
 
 ## Interaction with Doltgres Version Control
 
@@ -37,6 +37,7 @@ Doltgres will merge indexes as part of a Doltgres merge. This can be used to off
 to a branch or offline clone.
 
 ## Example
+
 ```
 create index index1 on complex(c1);
 ```

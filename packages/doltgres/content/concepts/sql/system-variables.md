@@ -26,7 +26,7 @@ support should have the same lifecycle behavior as Postgres.
 We also have Doltgres-specific system variables, which can be found
 [here](../../reference/sql/version-control/dolt-sysvars.md). Most dolt specific variables are
 prefixed with either `dolt_...` or the database's name (ex: `mydb_...`). These can be listed in the
-MySQL shell with show queries: `show all`.
+Postgres shell with show queries: `show all`.
 
 ## Interaction with Doltgres Version Control
 

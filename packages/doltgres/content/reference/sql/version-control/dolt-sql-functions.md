@@ -12,7 +12,6 @@ title: Dolt SQL Functions
   - [dolt_hashof_table()](#dolt_hashof_table)
   - [dolt_version()](#dolt_version)
   - [has_ancestor()](#has_ancestor)
-  - [last_insert_uuid()](#last_insert_uuid)
 
 - [Table Functions](#table-functions)
 
@@ -68,7 +67,7 @@ This function can be used to watch for changes in data by storing previous hashe
 to the current hash. For example, you can use this function to get the hash of a table named `color` like so:
 
 ```sql
-mysql> SELECT dolt_hashof_table('color');
+SELECT dolt_hashof_table('color');
 +----------------------------------+
 | dolt_hashof_table('color')       |
 +----------------------------------+
@@ -77,14 +76,13 @@ mysql> SELECT dolt_hashof_table('color');
 1 row in set (0.01 sec)
 ```
 
-
 ## `DOLT_VERSION()`
 
 The `DOLT_VERSION()` function returns the version string for the Dolt
 binary.
 
 ```sql
-mysql> select dolt_version();
+select dolt_version();
 +----------------+
 | dolt_version() |
 +----------------+
@@ -115,45 +113,6 @@ select has_ancestor('feature', 'F'); -- false
 select has_ancestor('main', 'E');    -- true
 select has_ancestor('G', 'main');    -- true
 ```
-
-## `LAST_INSERT_UUID()`
-
-The `last_insert_uuid()` function returns the UUID of the first row inserted by the last statement executed in the current session. 
-This is the UUID analogue of 
-[MySQL's `LAST_INSERT_ID()` function](https://dev.mysql.com/doc/refman/8.3/en/information-functions.html#function_last-insert-id). 
-We [recommend using UUIDs in keys instead of auto_increment values](https://www.dolthub.com/blog/2023-10-27-uuid-keys/) due to their better 
-support for merging values across distributed clones of your database. 
-
-While `last_insert_id()` uses the presence of the `auto_increment` modifier on a column to determine which automatically generated
-key value to return, `last_insert_uuid()` instead depends on the column having a specific definition. For `last_insert_uuid()`
-to grab an inserted UUID value, the column **must** be part of the table's primary key, and it **must** have one of the following type definitions:
-- `VARCHAR(36)` or `CHAR(36)` with a default value expression of `(UUID())` 
-- `VARBINARY(16)` or `BINARY(16)` with a default value expression of `(UUID_TO_BIN(UUID()))` 
-
-When the column is defined as `VARBINARY` or `BINARY` and uses the `UUID_TO_BIN()` function in the default value expression, [the `swap_flag` for `UUID_TO_BIN` may optionally be specified](https://dev.mysql.com/doc/refman/8.3/en/miscellaneous-functions.html#function_uuid-to-bin).  
-
-The following code shows how to create a table that conforms to the requirements above and demonstrates how to use `last_insert_uuid()`:
-
-```sql 
-> create table t (pk binary(16) primary key default (UUID_to_bin(UUID())), c1 varchar(100));
-
-> insert into t (c1) values ("one"), ("two");
-Query OK, 2 rows affected (0.00 sec)
-
-> select last_insert_uuid();
-+--------------------------------------+
-| last_insert_uuid()                   |
-+--------------------------------------+
-| 6cd58555-bb3f-45d8-9302-d32d94d8e28a |
-+--------------------------------------+
-
-> select c1 from t where pk = uuid_to_bin(last_insert_uuid());
-+-----+
-| c1  |
-+-----+
-| one |
-+-----+
-``` 
 
 # Table Functions
 
@@ -719,8 +678,8 @@ Learn more about two vs three dot log [here](https://www.dolthub.com/blog/2022-1
 
 ## `DOLT_PATCH()`
 
-Generate the SQL statements needed to patch a table (or all tables) from a starting revision 
-to a target revision. This can be useful when you want to import data into Dolt from an external source, 
+Generate the SQL statements needed to patch a table (or all tables) from a starting revision
+to a target revision. This can be useful when you want to import data into Dolt from an external source,
 compare differences, and generate the SQL statements needed to patch the original source.
 Both schema and/or data diff statements are returned if applicable. Some data diff cannot be
 produced from incompatible schema changes; these are shown as warnings containing
@@ -856,15 +815,16 @@ With result of single row:
 
 ## `DOLT_REFLOG()`
 
-The `DOLT_REFLOG()` table function shows the history of named refs (e.g. branches and tags), which is useful when you want to understand how a branch or tag has changed over time to reference different commits, particularly for information that isn't surfaced through the `dolt_log` system table or `dolt_log()` table function. For example, if you use `dolt_reset()` to change the commit a branch points to, you can use `dolt_reflog()` to see what commit the branch was pointing to before it was moved to that commit. Another common use case for `dolt_reflog()` is to recreate a branch or tag that was accidentally deleted. The example section below shows how to recreate a deleted branch.  
+The `DOLT_REFLOG()` table function shows the history of named refs (e.g. branches and tags), which is useful when you want to understand how a branch or tag has changed over time to reference different commits, particularly for information that isn't surfaced through the `dolt_log` system table or `dolt_log()` table function. For example, if you use `dolt_reset()` to change the commit a branch points to, you can use `dolt_reflog()` to see what commit the branch was pointing to before it was moved to that commit. Another common use case for `dolt_reflog()` is to recreate a branch or tag that was accidentally deleted. The example section below shows how to recreate a deleted branch.
 
-The data from Dolt's reflog comes from [Dolt's journaling chunk store](https://www.dolthub.com/blog/2023-03-08-dolt-chunk-journal/). This data is local to a Dolt database and never included when pushing, pulling, or cloning a Dolt database. This means when you clone a Dolt database, it will not have any reflog data until you perform operations that change what commit branches or tags reference.   
+The data from Dolt's reflog comes from [Dolt's journaling chunk store](https://www.dolthub.com/blog/2023-03-08-dolt-chunk-journal/). This data is local to a Dolt database and never included when pushing, pulling, or cloning a Dolt database. This means when you clone a Dolt database, it will not have any reflog data until you perform operations that change what commit branches or tags reference.
 
 Dolt's reflog is similar to [Git's reflog](https://git-scm.com/docs/git-reflog), but there are a few differences:
+
 - The Dolt reflog currently only supports named references, such as branches and tags, and not any of Git's special refs (e.g. `HEAD`, `FETCH-HEAD`, `MERGE-HEAD`).
 - The Dolt reflog can be queried for the log of references, even after a reference has been deleted. In Git, once a branch or tag is deleted, the reflog for that ref is also deleted and to find the last commit a branch or tag pointed to you have to use Git's special `HEAD` reflog to find the commit, which can sometimes be challenging. Dolt makes this much easier by allowing you to see the history for a deleted ref so you can easily see the last commit a branch or tag pointed to before it was deleted.
 
-### Privileges 
+### Privileges
 
 There are no special privileges required to use the `dolt_reflog()` table function.
 
@@ -894,14 +854,14 @@ The `dolt_reflog()` table function can also be called with the `--all` flag to s
 
 ### Example
 
-The example below shows how to recreate a branch that was deleted by finding the last commit it referenced in Dolt's reflog. 
+The example below shows how to recreate a branch that was deleted by finding the last commit it referenced in Dolt's reflog.
 
 ```sql
 -- Someone accidentally deletes the wrong branch!
 call dolt_branch('-D', 'prodBranch');
 
 -- After we realize the wrong branch has been deleted, we query the Dolt reflog on the same Dolt database instance
--- where the branch was deleted to see what commits the prodBranch branch has referenced. Using the same Dolt 
+-- where the branch was deleted to see what commits the prodBranch branch has referenced. Using the same Dolt
 -- instance is important, since reflog information is always local and not included when pushing/pulling databases.
 select * from dolt_reflog('prodBranch');
 +-----------------------+---------------------+----------------------------------+-------------------------------+
@@ -917,7 +877,6 @@ select * from dolt_reflog('prodBranch');
 -- just need to create a branch with the same name, pointing to that last commit.
 call dolt_branch('prodBranch', 'v531ptpmv2tquig8v591tsjghtj84ksg');
 ```
-
 
 ## `DOLT_SCHEMA_DIFF()`
 
@@ -1128,6 +1087,7 @@ The `DOLT_QUERY_DIFF()` table function calculates the data difference between an
 For this example, we have the table `t` in two branches `main` and `other`.
 
 On `main`, the table `t` has the following data:
+
 ```text
 +---+----+
 | i | j  |
@@ -1140,6 +1100,7 @@ On `main`, the table `t` has the following data:
 ```
 
 On `other`, the table `t` has the following data:
+
 ```text
 +---+---+
 | i | j |

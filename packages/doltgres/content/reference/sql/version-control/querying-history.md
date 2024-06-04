@@ -49,7 +49,7 @@ dolt_commit()` or similar are not visible via this syntax.
 You can connect to any commit in the database history by including its commit hash in the name of
 the database, like this:
 
-`mysql://127.0.0.1:3306/mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
+`postgres://127.0.0.1:3306/mydb/ia1ibijq8hq1llr7u85uivsi5lh3310p`
 
 The database will be read-only in this case. You can do the same thing on an existing connection
 with a `USE` statement.

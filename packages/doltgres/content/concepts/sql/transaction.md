@@ -6,7 +6,7 @@ title: Transactions
 
 ## What is a Transaction?
 
-A transaction is the unit of change isolation is a database. 
+A transaction is the unit of change isolation is a database.
 
 ## How to use Transactions
 
@@ -21,17 +21,17 @@ back to the way it was when the transaction began.
 Postgres and Doltgres both automatically commit every statement that wasn't explicitly placed in a
 transaction with a `BEGIN` statement.
 
-## Difference between MySQL Transaction and Doltgres Transaction
+## Difference between Postgres Transaction and Doltgres Transaction
 
 Doltgres uses the Read Committed transaction model whereas Postgres supports [all transaction
 isolation levels](https://www.postgresql.org/docs/current/transaction-iso.html).
 
 ## Interaction with Doltgres Version Control
 
-Traditional SQL transactions exist in isolation from Doltgres version control features. 
+Traditional SQL transactions exist in isolation from Doltgres version control features.
 
 Doltgres can be thought of having two layers of transactions. The first layer accessed with `BEGIN`
-and `COMMIT` SQL statements is the same as MySQL. Doltgres adds an additional second layer with
+and `COMMIT` SQL statements is the same as Postgres. Doltgres adds an additional second layer with
 branches and Doltgres commits. Branches can be thought of as long running transactions that may or
 may not be merged.
 
@@ -41,7 +41,7 @@ variable](./system-variables.md),
 
 ## Example
 
-```
+```sql
 BEGIN;
 select * from docs;
 +----+----+
@@ -63,8 +63,8 @@ select * from docs;
 | 2  | 2  |
 | 3  | 0  |
 +----+----+
-mysql> rollback;
-mysql> select * from docs;
+database=# rollback;
+database=# select * from docs;
 +----+----+
 | pk | c1 |
 +----+----+
