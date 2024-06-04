@@ -12,8 +12,8 @@ the staging set. The staging set is committed by issuing a `dolt_commit()` comma
 appropriate metadata.
 
 If you start a Doltgres SQL server and start making changes, you are making changes to the working
-set. If you never make a commit, your working set is a standard MySQL database. So, a way to think
-about your working set is Doltgres without version control features, just a standard MySQL
+set. If you never make a commit, your working set is a standard Postgres database. So, a way to think
+about your working set is Doltgres without version control features, just a standard Postgres
 relational database.
 
 ## How to use Working Sets
@@ -24,7 +24,7 @@ to a working set, you can `dolt_reset()` or `dolt_checkout()` to the previous co
 
 ## Difference between Git Working Sets and Doltgres Working Sets
 
-Git working sets change files. Doltgres working sets change tables. 
+Git working sets change files. Doltgres working sets change tables.
 
 On the command line, working set changes do follow to the newly checked out branch, just like
 Git. However, in SQL server mode, working set changes are not transferred to the newly checked out
@@ -91,7 +91,7 @@ call dolt_checkout('branch2');
 +--------+
 | 0      |
 +--------+
-mysql> select * from docs ;
+select * from docs ;
 +----+----+
 | pk | c1 |
 +----+----+

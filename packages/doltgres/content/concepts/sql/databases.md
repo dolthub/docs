@@ -24,7 +24,7 @@ When you connect a client to a running server, you can see the databases being s
 command in the `psql` shell. To use a specific database, you issue a `\c <database>` statement. You
 can also specify the database in the connection string to connect to a particular database.
 
-## Difference between MySQL Databases and Doltgres Databases
+## Difference between Postgres Databases and Doltgres Databases
 
 In Doltgres, databases act like they do in Postgres.
 

@@ -6,7 +6,7 @@ title: Constraints
 
 ## What is a Constraint?
 
-Constraints restrict the values allowed in a column. There are multiple forms of constraints: 
+Constraints restrict the values allowed in a column. There are multiple forms of constraints:
 
 1. `NOT NULL` or `UNIQUE` in the column definition
 2. Check constraints
@@ -14,9 +14,9 @@ Constraints restrict the values allowed in a column. There are multiple forms of
 
 Simple constraints like `NOT NULL` and `UNIQUE` can be added when defining a column. These constrain the column to not be NULL and only contain unique values, respectively.
 
-Check constraints allow the database user to define more complex constraints, like ranges on numerical values. 
+Check constraints allow the database user to define more complex constraints, like ranges on numerical values.
 
-Foreign key constraints allow you to reference and define relations between other tables in your database. 
+Foreign key constraints allow you to reference and define relations between other tables in your database.
 
 ## How to use Constraints
 
@@ -26,9 +26,9 @@ database.
 
 You can add constraints when running `CREATE TABLE` statements or add them to existing tables using `ALTER` statements.
 
-## Difference between MySQL Constraints and Doltgres Constraints
+## Difference between Postgres Constraints and Doltgres Constraints
 
-MySQL and Doltgres constraints are functionally equivalent.
+Postgres and Doltgres constraints are functionally equivalent.
 
 ## Interaction with Doltgres Version Control
 
@@ -49,15 +49,15 @@ making a Doltgres commit.
 
 ```sql
 create table employees (
-    id int, 
-    last_name varchar(100), 
-    first_name varchar(100), 
-    age int, 
-    primary key(id), 
+    id int,
+    last_name varchar(100),
+    first_name varchar(100),
+    age int,
+    primary key(id),
     constraint over_18 check (age >= 18));
-create table pay (id int, 
-    salary int, 
-    primary key(id), 
+create table pay (id int,
+    salary int,
+    primary key(id),
     foreign key (id) references employees(id));
 ```
 

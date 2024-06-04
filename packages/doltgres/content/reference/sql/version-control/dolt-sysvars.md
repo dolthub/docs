@@ -15,8 +15,6 @@ title: Dolt System Variables
   - [dolt_show_system_tables](#dolt_show_system_tables)
   - [dolt_transaction_commit](#dolt_transaction_commit)
   - [dolt_transaction_commit_message](#dolt_transaction_commit_message)
-  - [strict_mysql_compatibility](#strict_mysql_compatibility)
-
 
 - [Replication variables](#replication-variables)
 
@@ -30,7 +28,7 @@ title: Dolt System Variables
   - [dolt_skip_replication_errors](#dolt_skip_replication_errors)
 
 - [Session metadata variables](#session-metadata-variables)
-  
+
   - [dbname_head_ref](#dbname_head_ref)
   - [dbname_head](#dbname_head)
   - [dbname_working](#dbname_working)
@@ -62,18 +60,18 @@ branch-derived databases are not displayed (although they can still be
 used).
 
 ```sql
-fresh> show databases;
+fresh=# show databases;
 +--------------------+
 | Database           |
 +--------------------+
 | fresh              |
 | information_schema |
-| mysql              |
+| postgres           |
 +--------------------+
 3 rows in set (0.00 sec)
 
-fresh> set @@dolt_show_branch_databases = 1;
-fresh> show databases;
+fresh=# set @@dolt_show_branch_databases = 1;
+fresh=# show databases;
 +--------------------+
 | Database           |
 +--------------------+
@@ -81,20 +79,19 @@ fresh> show databases;
 | fresh/b1           |
 | fresh/main         |
 | information_schema |
-| mysql              |
+| postgres           |
 +--------------------+
 5 rows in set (0.00 sec)
 ```
 
 ## `dolt_show_system_tables`
 
-When set to `1`, this system variable causes all system tables to be show in `show tables` and in `information_schema.tables`. 
+When set to `1`, this system variable causes all system tables to be show in `show tables` and in `information_schema.tables`.
 Defaults to `0`.
-
 
 ## `dolt_override_schema`
 
-When set to a commit hash, branch name, or tag name, Dolt will map all table data to the schema at the specified commit, 
+When set to a commit hash, branch name, or tag name, Dolt will map all table data to the schema at the specified commit,
 branch, or tag. This is useful when you have a query that runs with a specific schema, and you want to run it with
 data that has a different schema. For example, if you add a `Birthdate` column to the `People` table in the most recent commits
 in your database, you cannot reference that column in queries run against older commits. If you enable schema overriding, and
@@ -124,7 +121,6 @@ SELECT Name, Birthdate FROM People;
 Note that when this session variable is set, the active Dolt session becomes read-only. To disable schema overriding,
 simply set this variable to `NULL`.
 
-
 ## `dolt_transaction_commit`
 
 When set to `1`, this system variable creates a Dolt commit for every
@@ -133,18 +129,9 @@ message ("Transaction commit"), unless `@@dolt_transaction_commit_message` has b
 
 ## `dolt_transaction_commit_message`
 
-When `@@dolt_transaction_commit` is enabled, if this system variable is set to a 
-string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`, 
+When `@@dolt_transaction_commit` is enabled, if this system variable is set to a
+string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`,
 which means automatic Dolt commits will use their standard commit message ("Transaction commit").
-
-## `strict_mysql_compatibility`
-
-When set to `1`, Dolt will disable some extensions to MySQL behavior that are intended to increase compatibility
-with other database engines in the MySQL family. For example, for compatibility with MariaDB, Dolt supports an 
-extension to MySQL's behavior that allows `TEXT` and `BLOB` columns to be used in unique indexes without specifying
-a prefix length. Users who want Dolt to behave exactly like MySQL and not support these extensions can set this
-system variable to `1`. For wider compatibility, this system variable defaults to `0` to enable these extensions
-by default.
 
 ## `dolt_allow_commit_conflicts`
 
@@ -168,15 +155,15 @@ This system variable should be set on replication primaries to name a remote to 
 [Replication](../server/replication.md).
 
 ```sql
-mysql> select name from dolt_remotes;
+select name from dolt_remotes;
 +---------+
 | name    |
 +---------+
 | remote1 |
 | origin  |
 +---------+
-mysql> SET @@GLOBAL.dolt_replicate_to_remote = remote1;
-mysql> CALL dolt_commit('-am', 'push on write');
+SET @@GLOBAL.dolt_replicate_to_remote = remote1;
+CALL dolt_commit('-am', 'push on write');
 ```
 
 ## `dolt_async_replication`
@@ -187,8 +174,8 @@ synchronous, but it may also increase the remote replication delay. See
 [Replication](../server/replication.md).
 
 ```sql
-mysql> SET @@GLOBAL.dolt_replicate_to_remote = remote1;
-mysql> SET @@GLOBAL.dolt_async_replication = 1;
+SET @@GLOBAL.dolt_replicate_to_remote = remote1;
+SET @@GLOBAL.dolt_async_replication = 1;
 ```
 
 ## `dolt_read_replica_remote`
@@ -200,9 +187,9 @@ Setting either `dolt_replicate_heads` or `dolt_replicate_all_heads` is
 also required for read replicas. See [Replication](../server/replication.md).
 
 ```sql
-mysql> SET @@GLOBAL.dolt_read_replica_remote = origin;
-mysql> SET @@GLOBAL.dolt_replicate_heads = main;
-mysql> START TRANSACTION;
+SET @@GLOBAL.dolt_read_replica_remote = origin;
+SET @@GLOBAL.dolt_replicate_heads = main;
+START TRANSACTION;
 ```
 
 ## `dolt_replicate_all_heads`
@@ -212,21 +199,21 @@ with `dolt_read_replica_remote`. Use is mutually exclusive with `dolt_replicate_
 [Replication](../server/replication.md).
 
 ```sql
-mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
+SET @@GLOBAL.dolt_replicate_all_heads = 1;
 ```
 
 ## `dolt_replicate_heads`
 
 This system variable specifies which branch heads a read replica will fetch.
-The wildcard `*` may be used to match zero or more characters in a branch name 
-and is useful for selecting multiple branch names. 
+The wildcard `*` may be used to match zero or more characters in a branch name
+and is useful for selecting multiple branch names.
 Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 `dolt_replicate_all_heads`. See [Replication](../server/replication.md).
 
 ```sql
-mysql> SET @@GLOBAL.dolt_replicate_heads = main;
-mysql> SET @@GLOBAL.dolt_replicate_heads = "main,feature1,feature2";
-mysql> SET @@GLOBAL.dolt_replicate_heads = "main,release*";
+SET @@GLOBAL.dolt_replicate_heads = main;
+SET @@GLOBAL.dolt_replicate_heads = "main,feature1,feature2";
+SET @@GLOBAL.dolt_replicate_heads = "main,release*";
 ```
 
 ## `dolt_replication_remote_url_template`
@@ -258,7 +245,7 @@ Set this variable to `1` to ignore replication errors on a read replica. Replica
 a warning rather than causing queries to fail. Defaults to `0`.
 
 ```sql
-mysql> SET @@GLOBAL.dolt_skip_replication_errors = 1;
+SET @@GLOBAL.dolt_skip_replication_errors = 1;
 ```
 
 # Session metadata variables

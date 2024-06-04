@@ -7,9 +7,9 @@ title: Branch Permissions
 ## What are Branch Permissions?
 
 Branch permissions are a way of managing how users may interact with branches when running Doltgres
-as a server (via `doltgres sql-server`).  The branch permissions model is composed of two system
-tables: `dolt_branch_control` and `dolt_branch_namespace_control`.  The former table handles branch
-modification, while the latter table handles branch creation.  All operations that are not
+as a server (via `doltgres sql-server`). The branch permissions model is composed of two system
+tables: `dolt_branch_control` and `dolt_branch_namespace_control`. The former table handles branch
+modification, while the latter table handles branch creation. All operations that are not
 explicitly done as a client connected to a server (such as locally using the CLI) will bypass branch
 permissions.
 
@@ -21,7 +21,7 @@ Each column is composed of a string that represents a pattern-matching expressio
 ### `dolt_branch_control`
 
 | Column      | Type                          | Collation          |
-|:------------|:------------------------------|:-------------------|
+| :---------- | :---------------------------- | :----------------- |
 | database    | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
 | branch      | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
 | user        | VARCHAR(16383)                | utf8mb4_0900_bin   |
@@ -31,7 +31,7 @@ Each column is composed of a string that represents a pattern-matching expressio
 ### `dolt_branch_namespace_control`
 
 | Column   | Type           | Collation          |
-|:---------|:---------------|:-------------------|
+| :------- | :------------- | :----------------- |
 | database | VARCHAR(16383) | utf8mb4_0900_ai_ci |
 | branch   | VARCHAR(16383) | utf8mb4_0900_ai_ci |
 | user     | VARCHAR(16383) | utf8mb4_0900_bin   |
@@ -40,7 +40,7 @@ Each column is composed of a string that represents a pattern-matching expressio
 ### Available Permissions
 
 | Permission | Effect                                                                                                                                                                                                                              |
-|:-----------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :--------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | admin      | Grants all permissions available. In addition, grants write access to entries on both system tables, as long as the database and branch are equivalent, or they're subset of the database + branch that this permission belongs to. |
 | write      | Grants the ability to write on the branch, as well as modify the branch in all possible ways (rename, delete, etc.).                                                                                                                |
 | read       | Does not explicitly grant any permissions, as having the ability to read a branch is an irrevocable right for all users. This is just for the visual convenience, versus having an empty field.                                     |
@@ -54,8 +54,8 @@ The form of pattern matching that each column implements is very similar to how 
 Most characters are interpreted as-is, with the exception of three characters.
 
 | Character | Function                                                                                                                                                                                    |
-|:----------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| _         | Matches a single character, regardless of what that character is.                                                                                                                           |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| \_        | Matches a single character, regardless of what that character is.                                                                                                                           |
 | %         | Matches zero or more characters, regardless of what those characters are.                                                                                                                   |
 | \         | Escapes the next character, allowing it to be compared literally. This is only useful when attempting to match one of these special characters, as it is otherwise ignored (has no effect). |
 
@@ -93,7 +93,7 @@ The modification of both system tables are controlled by two entities: the privi
 Any user that satisfies the privilege requirements may edit the appropriate entries in both system tables.
 
 | Scope        | Privileges                                                         | Remarks                                                                                                                                                 |
-|:-------------|:-------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :----------- | :----------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `*.*`        | SUPER, GRANT OPTION                                                | Considered a global admin. May edit any entry in either table, including entries containing special characters.                                         |
 | `*.*`        | CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, EXECUTE, GRANT OPTION | Same as above.                                                                                                                                          |
 | `database.*` | CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, EXECUTE, GRANT OPTION | Considered a database admin. May edit entries only for their specific database. This also excludes all databases that contain _any_ special characters. |
@@ -152,9 +152,11 @@ It is worth noting that operations such as renaming a branch also require the co
 This is because a rename may be viewed as a copy and delete, therefore it is modifying the original branch.
 
 To turn `dolt_branch_namespace_control` into a blacklist (just like `dolt_branch_control`), then run the following statement:
+
 ```sql
 INSERT INTO dolt_branch_namespace_control VALUES ('%', '%', '', '');
 ```
+
 This will add an entry that will match every possible branch, but will never match a user as a user will never have an empty user and host.
 Due to the longest match rule, this entry will be ignored when a valid match is found.
 
@@ -175,8 +177,8 @@ The following examples are a small snippet that shows branch permissions in acti
 It is assumed that this document has been read in full, as concepts that are explained in previous sections are not explained in-depth.
 The [setup section](#setup) is run before each example, therefore remember to have a dedicated terminal window for [setup](#setup) if you want to try any of these examples yourself.
 All examples other than [setup](#setup) will exclusively use the second terminal window.
-All examples will use MySQL's default client, `mysql`.
-Feel free to use your desired MySQL client.
+All examples will use Postgres' default client, `psql`.
+Feel free to use your desired Postgres client.
 
 ### Setup
 
@@ -254,14 +256,15 @@ INSERT INTO dolt_branch_namespace_control VALUES ('example', '_main', 'anotherus
 ```
 
 ### Restricting Branch Names
-Please refer to the [setup section](#setup) before continuing this example.  This example shows how
-to [restrict which users are able to use branch names](#branch-creation) with the `main` prefix.  To
+
+Please refer to the [setup section](#setup) before continuing this example. This example shows how
+to [restrict which users are able to use branch names](#branch-creation) with the `main` prefix. To
 do this, we insert a `main%` entry into the `dolt_branch_namespace_control` table, assigning the
-`testuser` user.  We create another entry with `mainroot%` as the branch name, and assign that to
-`root`.  This means that `root` is able to create any branches with names that **do not** start with
-`main`, but is unable to create branches that **do** start with `main`.  The exception being
+`testuser` user. We create another entry with `mainroot%` as the branch name, and assign that to
+`root`. This means that `root` is able to create any branches with names that **do not** start with
+`main`, but is unable to create branches that **do** start with `main`. The exception being
 `mainroot`, which while having `main` as a prefix, it is considered [the longest
-match](#longest-match), and therefore takes precedence over the `main%` entry.  Consequently,
+match](#longest-match), and therefore takes precedence over the `main%` entry. Consequently,
 `testuser` cannot use `mainroot` as a prefix, as [the longest match](#longest-match) overrides their
 `main%` entry.
 
@@ -286,7 +289,7 @@ CALL DOLT_BRANCH('mainroot');
 +--------+
 1 row in set (0.00 sec)
 
-mysql> exit;
+example=# exit;
 
 $ psql --user=testuser
 CALL DOLT_BRANCH('main1');

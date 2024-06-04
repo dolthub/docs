@@ -26,7 +26,7 @@ type of a column with `ALTER` statements.
 When querying tables, the type of the column defines which functions can be used on the data
 retrieved. To manipulate the type of a column when querying you use the `CONVERT()` function.
 
-## Difference between MySQL Types and Doltgres Types
+## Difference between Postgres Types and Doltgres Types
 
 Doltgres supports [most Postgres types](../../reference/sql-support/supported-types.md), with more
 being implemented.

@@ -166,13 +166,12 @@ Branch names have a few restrictions which are similar to the constraints Git pu
 - May not contain '..' (two periods)
 - May not contain '@{'
 - May not contain ASCII control characters
-- May not contain characters: ':', '?', '\[', '\\', '^', '~', '*'
+- May not contain characters: ':', '?', '\[', '\\', '^', '~', '\*'
 - May not contain whitespace (spaces, tabs, newlines)
 - May not end with '/'
 - May not end with '.lock'
 - May not be HEAD (case insensitive)
 - May not be indistinguishable from a commit hash. 32 characters, where all characters are 0-9 or a-z (case sensitive)
-
 
 The `dolt_branch()` procedure implicitly commits the current transaction and begins a new one.
 
@@ -730,6 +729,7 @@ CALL DOLT_MERGE('origin/main');
 ```
 
 ### Notes
+
 Dropping the second argument, or passing NULL, will result is using the default refspec.
 
 ## `DOLT_GC()`
@@ -741,6 +741,7 @@ sql-server will block all writes while garbage collection is in progress.
 CALL DOLT_GC();
 CALL DOLT_GC('--shallow');
 ```
+
 ### Options
 
 `--shallow` Performs a faster but less thorough garbage collection.
@@ -757,23 +758,23 @@ CALL DOLT_GC('--shallow');
 
 ### Notes
 
-To prevent concurrent writes potentially referencing garbage collected chunks, running 
-`call dolt_gc()` will break all open connections to the running server. In flight 
-queries on those connections may fail and must be retried. Re-establishing connections 
+To prevent concurrent writes potentially referencing garbage collected chunks, running
+`call dolt_gc()` will break all open connections to the running server. In flight
+queries on those connections may fail and must be retried. Re-establishing connections
 after they are broken is safe.
 
-At the end of the run, the connection which ran call dolt_gc() will be left open in order 
-to deliver the results of the operation itself. The connection will be left in a terminally 
+At the end of the run, the connection which ran call dolt_gc() will be left open in order
+to deliver the results of the operation itself. The connection will be left in a terminally
 broken state where any attempt to run a query on it will result in the following error:
 
 ```
-ERROR 1105 (HY000): this connection was established when this server performed an online 
+ERROR 1105 (HY000): this connection was established when this server performed an online
 garbage collection. this connection can no longer be used. please reconnect.
 ```
 
-The connection should be closed. In some connection pools it can be awkward to cause a 
-single connection to actually close. If you need to run call dolt_gc() programmatically, 
-one work around is to use a separate connection pool with a size of 1 which can be 
+The connection should be closed. In some connection pools it can be awkward to cause a
+single connection to actually close. If you need to run call dolt_gc() programmatically,
+one work around is to use a separate connection pool with a size of 1 which can be
 closed after the run is successful.
 
 ## `DOLT_MERGE()`
@@ -886,7 +887,7 @@ commit history
 `--force`: Ignores any foreign key warnings and proceeds with the commit.
 
 When merging a branch, your session state must be clean. `COMMIT`
-or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new dolt
+or`ROLLBACK` any changes, then `DOLT_COMMIT()` to create a new Dolt
 commit on the target branch.
 
 If the merge causes conflicts or constraint violations, you must
@@ -922,30 +923,29 @@ CALL DOLT_PULL('origin', 'some-branch');
 SELECT * FROM dolt_log LIMIT 5;
 ```
 
-
 ## `DOLT_PURGE_DROPPED_DATABASES()`
 
-Permanently deletes any dropped databases that are being held in a temporary holding area. When a Dolt database is 
+Permanently deletes any dropped databases that are being held in a temporary holding area. When a Dolt database is
 dropped, it is moved to a temporary holding area where the [`dolt_undrop()` stored procedure](#dolt_undrop) can restore
 it. The `dolt_purge_dropped_databases()` stored procedure clears this holding area and permanently deletes any data
 from those databases. This action is not reversible, so callers should be cautious about using it. The main benefit
 of using this function is to reclaim disk space used by the temporary holding area. Because this is a destructive
-operation, callers must have `SUPER` privileges in order to execute it. 
+operation, callers must have `SUPER` privileges in order to execute it.
 
 ### Example
 
 ```sql
--- Create a database and populate a table in the working set 
+-- Create a database and populate a table in the working set
 CREATE DATABASE database1;
 use database1;
 create table t(pk int primary key);
 
--- Dropping the database will move it to a temporary holding area 
+-- Dropping the database will move it to a temporary holding area
 DROP DATABASE database1;
 
 -- At this point, the database can be restored by calling dolt_undrop('database1'), but
 -- instead, we permanently delete it by calling dolt_purge_dropped_databases().
-CALL dolt_purge_dropped_databases(); 
+CALL dolt_purge_dropped_databases();
 ```
 
 ## `DOLT_PUSH()`
@@ -989,12 +989,12 @@ CALL DOLT_COMMIT('-a', '-m', 'create table test');
 CALL DOLT_PUSH('origin', 'feature-branch');
 ```
 
-
 ## `DOLT_REBASE()`
 
-Rewrites commit history for the current branch by replaying commits, allowing the commits to be reordered, squashed, or dropped. The commits included in the rebase plan are the commits reachable by the current branch, but NOT reachable from the branch specified as the argument when starting a rebase (also known as the upstream branch). This is the same as Git and Dolt's ["two dot log" syntax](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#two-dot-log), or |upstreamBranch|..|currentBranch|. 
+Rewrites commit history for the current branch by replaying commits, allowing the commits to be reordered, squashed, or dropped. The commits included in the rebase plan are the commits reachable by the current branch, but NOT reachable from the branch specified as the argument when starting a rebase (also known as the upstream branch). This is the same as Git and Dolt's ["two dot log" syntax](https://www.dolthub.com/blog/2022-11-11-two-and-three-dot-diff-and-log/#two-dot-log), or |upstreamBranch|..|currentBranch|.
 
 For example, consider the commit graph below, where a `feature` branch has branched off of a `main` branch, and both branches have added commits:
+
 ```sql
 A → B → C → D → E → F  main
          ↘
@@ -1002,13 +1002,14 @@ A → B → C → D → E → F  main
 ```
 
 If we rebase from the `feature` branch using the `main` branch as our upstream, the default rebase plan will include commits `G`, `H`, and `I`, since those commits are reachable from our current branch, but NOT reachable from the upstream branch. By default, the changes from those same commits will be reapplied, in the same order, to the tip of the upstream branch `main`. The resulting commit graph will then look like:
+
 ```sql
 A → B → C → D → E → F  main
                      ↘
                        G' → H' → I'  feature
 ```
 
-Rebasing is useful to clean and organize your commit history, especially before merging a feature branch back to a shared branch. For example, you can drop commits that contain debugging or test changes, or squash or fixup small commits into a single commit, or reorder commits so that related changes are adjacent in the new commit history. 
+Rebasing is useful to clean and organize your commit history, especially before merging a feature branch back to a shared branch. For example, you can drop commits that contain debugging or test changes, or squash or fixup small commits into a single commit, or reorder commits so that related changes are adjacent in the new commit history.
 
 ```sql
 CALL DOLT_REBASE('--interactive', 'main');
@@ -1018,6 +1019,7 @@ CALL DOLT_REBASE('--abort');
 ```
 
 ### Limitations
+
 Currently only interactive rebases are supported, and there is no support for resolving conflicts that arise while executing a rebase plan. If applying a commit creates a conflict, the rebase will be automatically aborted.
 
 ### Options
@@ -1026,7 +1028,7 @@ Currently only interactive rebases are supported, and there is no support for re
 
 `--continue`: Continue an interactive rebase after adjusting the rebase plan stored in `dolt_rebase`.
 
-`--abort`: Abort a rebase in progress. 
+`--abort`: Abort a rebase in progress.
 
 ### Output Schema
 
@@ -1053,7 +1055,7 @@ call dolt_branch('branch1');
 insert into t values (0);
 call dolt_commit('-am', 'inserting row 0');
 
--- switch to branch1 and create three more commits that each insert one row 
+-- switch to branch1 and create three more commits that each insert one row
 call dolt_checkout('branch1');
 insert into t values (1);
 call dolt_commit('-am', 'inserting row 1');
@@ -1074,8 +1076,8 @@ select commit_hash, message from dolt_log;
 | do1tp9u39vsja3c8umshv9p6fernr0lt | Inіtіalizе dаta repоsitоry |
 +----------------------------------+----------------------------+
 
--- start an interactive rebase and check out the default rebase plan; this will rebase 
--- all the new commits on this branch and move them to the tip of the main branch  
+-- start an interactive rebase and check out the default rebase plan; this will rebase
+-- all the new commits on this branch and move them to the tip of the main branch
 call dolt_rebase('-i', 'main');
 select * from dolt_rebase order by rebase_order;
 +--------------+--------+----------------------------------+-----------------+
@@ -1087,12 +1089,12 @@ select * from dolt_rebase order by rebase_order;
 +--------------+--------+----------------------------------+-----------------+
 
 -- adjust the rebase plan to reword the first commit, drop the commit that inserted row 2,
--- and combine the third commit into the previous commit  
+-- and combine the third commit into the previous commit
 update dolt_rebase set action='reword', commit_message='insert rows' where rebase_order=1;
 update dolt_rebase set action='drop' where rebase_order=2;
 update dolt_rebase set action='fixup' where rebase_order=3;
 
--- continue rebasing now that we've adjusted the rebase plan 
+-- continue rebasing now that we've adjusted the rebase plan
 call dolt_rebase('--continue');
 
 -- check out the history
@@ -1106,7 +1108,6 @@ select commit_hash, message from dolt_log;
 | do1tp9u39vsja3c8umshv9p6fernr0lt | Inіtіalizе dаta repоsitоry |
 +----------------------------------+----------------------------+
 ```
-
 
 ## `DOLT_REMOTE()`
 
@@ -1303,7 +1304,7 @@ SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=h
 
 ## `DOLT_TAG()`
 
-Creates a new tag that points at specified commit ref, or deletes an existing tag.  To list existing
+Creates a new tag that points at specified commit ref, or deletes an existing tag. To list existing
 tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
@@ -1352,7 +1353,7 @@ CALL DOLT_TAG('v1','head','-m','creating v1 tag');
 
 ## `DOLT_UNDROP()`
 
-Restores a dropped database. See the [`dolt_purge_dropped_databases()` stored procedure](#dolt_purge_dropped_databases) for info on how to permanently remove dropped databases. 
+Restores a dropped database. See the [`dolt_purge_dropped_databases()` stored procedure](#dolt_purge_dropped_databases) for info on how to permanently remove dropped databases.
 
 ```sql
 CALL DOLT_UNDROP(<database_name>);
@@ -1366,19 +1367,19 @@ CALL DOLT_UNDROP(<database_name>);
 ### Example
 
 ```sql
--- Create a database and populate a table in the working set 
+-- Create a database and populate a table in the working set
 CREATE DATABASE database1;
 use database1;
 create table t(pk int primary key);
 
--- Dropping the database will move it to a temporary holding area 
+-- Dropping the database will move it to a temporary holding area
 DROP DATABASE database1;
-     
+
 -- calling dolt_undrop() with no arguments will return an error message that
 -- lists the dropped database that are available to be restored
 CALL dolt_undrop();
 
--- Use dolt_undrop() to restore it 
+-- Use dolt_undrop() to restore it
 CALL dolt_undrop('database1');
 SELECT * FROM database1.t;
 ```
@@ -1558,7 +1559,8 @@ SELECT * from dolt_constraint_violations_child;
 ```
 
 # Access Control
-Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
+
+Dolt stored procedures are access controlled using the GRANT permissions system. Postgres database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
 
 Users who need common Dolt capability such as adding and committing to a branch will need Execute permission granted on the database in question. As a privileged user, you can grant access with the following command:
 
@@ -1580,17 +1582,18 @@ mydb> REVOKE EXECUTE ON mydb.* FROM pat@localhost
 ```
 
 ## Administrative Procedures
+
 The follow procedures are considered administrative, and as a result users are required to have explicit grants to use them.
 
-* dolt_backup
-* dolt_clone
-* dolt_fetch
-* dolt_undrop
-* dolt_purge_dropped_databases
-* dolt_gc
-* dolt_pull
-* dolt_push
-* dolt_remote
+- dolt_backup
+- dolt_clone
+- dolt_fetch
+- dolt_undrop
+- dolt_purge_dropped_databases
+- dolt_gc
+- dolt_pull
+- dolt_push
+- dolt_remote
 
 For example, if a service account requires the ability to start `dolt_gc`, then it must have specific permissions to do so:
 
