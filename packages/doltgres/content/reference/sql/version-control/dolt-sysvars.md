@@ -15,7 +15,6 @@ title: Dolt System Variables
   - [dolt_show_system_tables](#dolt_show_system_tables)
   - [dolt_transaction_commit](#dolt_transaction_commit)
   - [dolt_transaction_commit_message](#dolt_transaction_commit_message)
-  - [strict_mysql_compatibility](#strict_mysql_compatibility)
 
 - [Replication variables](#replication-variables)
 
@@ -61,18 +60,18 @@ branch-derived databases are not displayed (although they can still be
 used).
 
 ```sql
-fresh> show databases;
+fresh=# show databases;
 +--------------------+
 | Database           |
 +--------------------+
 | fresh              |
 | information_schema |
-| mysql              |
+| postgres           |
 +--------------------+
 3 rows in set (0.00 sec)
 
-fresh> set @@dolt_show_branch_databases = 1;
-fresh> show databases;
+fresh=# set @@dolt_show_branch_databases = 1;
+fresh=# show databases;
 +--------------------+
 | Database           |
 +--------------------+
@@ -80,7 +79,7 @@ fresh> show databases;
 | fresh/b1           |
 | fresh/main         |
 | information_schema |
-| mysql              |
+| postgres           |
 +--------------------+
 5 rows in set (0.00 sec)
 ```
@@ -133,15 +132,6 @@ message ("Transaction commit"), unless `@@dolt_transaction_commit_message` has b
 When `@@dolt_transaction_commit` is enabled, if this system variable is set to a
 string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`,
 which means automatic Dolt commits will use their standard commit message ("Transaction commit").
-
-## `strict_mysql_compatibility`
-
-When set to `1`, Dolt will disable some extensions to MySQL behavior that are intended to increase compatibility
-with other database engines in the MySQL family. For example, for compatibility with MariaDB, Dolt supports an
-extension to MySQL's behavior that allows `TEXT` and `BLOB` columns to be used in unique indexes without specifying
-a prefix length. Users who want Dolt to behave exactly like MySQL and not support these extensions can set this
-system variable to `1`. For wider compatibility, this system variable defaults to `0` to enable these extensions
-by default.
 
 ## `dolt_allow_commit_conflicts`
 

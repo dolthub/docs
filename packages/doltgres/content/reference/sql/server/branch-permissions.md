@@ -289,7 +289,7 @@ CALL DOLT_BRANCH('mainroot');
 +--------+
 1 row in set (0.00 sec)
 
-exit;
+example=# exit;
 
 $ psql --user=testuser
 CALL DOLT_BRANCH('main1');

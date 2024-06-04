@@ -41,7 +41,7 @@ variable](./system-variables.md),
 
 ## Example
 
-```
+```sql
 BEGIN;
 select * from docs;
 +----+----+
@@ -63,8 +63,8 @@ select * from docs;
 | 2  | 2  |
 | 3  | 0  |
 +----+----+
-rollback;
-select * from docs;
+database=# rollback;
+database=# select * from docs;
 +----+----+
 | pk | c1 |
 +----+----+
