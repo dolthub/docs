@@ -28,39 +28,39 @@ attempt to run as many queries as possible in a fixed 2 minute time
 window. The `Dolt` and `MySQL` columns show the median latency in 
 milliseconds (ms) of each query during that 2 minute time window.
 
-The Dolt version is `1.39.3`.
+The Dolt version is `1.39.4`.
 
 <!-- START___DOLT___LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |-------------------------|-------|--------|----------|
-| covering\_index\_scan   |  2.07 |   2.97 |      1.4 |
-| groupby\_scan           | 13.22 |  17.01 |      1.3 |
-| index\_join             |  1.34 |   5.28 |      3.9 |
-| index\_join\_scan       |  1.27 |   2.22 |      1.7 |
-| index\_scan             | 34.95 |  52.89 |      1.5 |
-| oltp\_point\_select     |  0.18 |    0.5 |      2.8 |
-| oltp\_read\_only        |  3.49 |   8.13 |      2.3 |
-| select\_random\_points  |  0.34 |   0.81 |      2.4 |
-| select\_random\_ranges  |  0.39 |   0.95 |      2.4 |
-| table\_scan             | 34.95 |  54.83 |      1.6 |
-| types\_table\_scan      | 75.82 | 137.35 |      1.8 |
-| reads\_mean\_multiplier |       |        |      2.1 |
+| covering\_index\_scan   |  2.11 |   2.97 |      1.4 |
+| groupby\_scan           | 13.22 |  17.32 |      1.3 |
+| index\_join             |  1.34 |   5.47 |      4.1 |
+| index\_join\_scan       |  1.27 |   2.26 |      1.8 |
+| index\_scan             | 34.33 |  54.83 |      1.6 |
+| oltp\_point\_select     |  0.18 |   0.52 |      2.9 |
+| oltp\_read\_only        |  3.55 |   8.28 |      2.3 |
+| select\_random\_points  |  0.34 |   0.83 |      2.4 |
+| select\_random\_ranges  |  0.39 |   0.97 |      2.5 |
+| table\_scan             | 34.33 |  54.83 |      1.6 |
+| types\_table\_scan      | 77.19 | 139.85 |      1.8 |
+| reads\_mean\_multiplier |       |        |      2.2 |
 
-|       Write Tests        | MySQL | Dolt  | Multiple |
-|--------------------------|-------|-------|----------|
-| oltp\_delete\_insert     |  7.98 |  6.21 |      0.8 |
-| oltp\_insert             |  3.82 |  3.07 |      0.8 |
-| oltp\_read\_write        |  8.58 | 14.73 |      1.7 |
-| oltp\_update\_index      |  3.89 |  3.19 |      0.8 |
-| oltp\_update\_non\_index |  3.89 |  3.13 |      0.8 |
-| oltp\_write\_only        |  5.37 |  6.55 |      1.2 |
-| types\_delete\_insert    |   7.7 |  6.79 |      0.9 |
-| writes\_mean\_multiplier |       |       |      1.0 |
+|       Write Tests        | MySQL | Dolt | Multiple |
+|--------------------------|-------|------|----------|
+| oltp\_delete\_insert     |  8.13 | 6.21 |      0.8 |
+| oltp\_insert             |  3.82 | 3.02 |      0.8 |
+| oltp\_read\_write        |  8.58 | 15.0 |      1.7 |
+| oltp\_update\_index      |  3.89 | 3.13 |      0.8 |
+| oltp\_update\_non\_index |  3.89 | 3.07 |      0.8 |
+| oltp\_write\_only        |  5.47 | 6.55 |      1.2 |
+| types\_delete\_insert    |   7.7 | 6.79 |      0.9 |
+| writes\_mean\_multiplier |       |      |      1.0 |
 
 |    TPC-C TPS Tests    | MySQL | Dolt  | Multiple |
 |-----------------------|-------|-------|----------|
-| tpcc-scale-factor-1   | 99.71 | 25.77 |      4.2 |
-| tpcc\_tps\_multiplier |       |       |      3.9 |
+| tpcc-scale-factor-1   | 98.38 | 26.01 |      4.0 |
+| tpcc\_tps\_multiplier |       |       |      3.8 |
 
 | Overall Mean Multiple | 2.33 |
 |-----------------------|------|
