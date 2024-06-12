@@ -35,6 +35,7 @@
   - [Configuration file reference](reference/installer/configuration-file.md)
   - [Command line reference](reference/installer/cli.md)
 - [Release Notes](reference/release-notes/README.md)
+  - [v2.1.6](reference/release-notes/v2.1.6.md)
   - [v2.1.5](reference/release-notes/v2.1.5.md)
   - [v2.1.4](reference/release-notes/v2.1.4.md)
   - [v2.1.3](reference/release-notes/v2.1.3.md)

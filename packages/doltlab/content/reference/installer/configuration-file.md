@@ -12,6 +12,7 @@ host: "127.0.0.1"
 docker_network: "doltlab"
 metrics_disabled: false
 whitelist_all_users: true
+use_env: false
 scheme: "http"
 services:
   doltlabdb:
@@ -20,6 +21,11 @@ services:
     admin_password: "*****"
     dolthubapi_password: "*****"
     tls_skip_verify: true
+    volume_paths:
+      data_volume_path: "/local/path/to/store/database/data"
+      root_volume_path: "/local/path/to/store/database/root"
+      backups_volume_path: "/local/path/to/store/database/file/backups"
+      configs_volume_path: "/local/path/to/store/database/configs"
   doltlabapi:
     host: "127.0.0.1"
     port: 9443
@@ -28,9 +34,13 @@ services:
     host: "127.0.0.1"
     port: 50051
     file_server_port: 100
+    volume_paths:
+      data_volume_path: "/local/path/to/store/remote/data"
   doltlabfileserviceapi:
     host: "127.0.0.1"
     port: 4321
+    volume_paths:
+      uploads_volume_path: "/local/path/to/store/uploads"
   doltlabgraphql:
     host: "127.0.0.1"
     port: 9000
@@ -106,6 +116,7 @@ The following are top-level `installer_config.yaml` options:
 - [docker_network](#docker_network)
 - [metrics_disabled](#metrics_disabled)
 - [whitelist_all_users](#whitelist_all_users)
+- [use_env](#use_env)
 - [services](#services)
 - [default_user](#default_user)
 - [smtp](#smtp)
@@ -174,6 +185,17 @@ See [prevent unauthorized user account creation](../../guides/basic.md#prevent-u
 
 Command line equivalent [white-list-all-users](./cli.md#white-list-all-users).
 
+## use_env
+
+_Boolean_. If true, sensitive values will not be written to generated assets and environment variables will be expected instead.
+
+```yaml
+# example installer_config.yaml
+use_env: true
+```
+
+Command line equivalent [use-env](./cli.md#use-env).
+
 ## services
 
 _Dictionary_. Configuration options for DoltLab's various services. `doltlabdb` passwords are _Required_ in single host deployments, other service definitions are _Required_ for multi-host deployments.
@@ -194,6 +216,7 @@ _Dictionary_. Configuration options for `doltlabdb`.
 - [admin_password](#admin_password)
 - [dolthubapi_password](#dolthubapi_password)
 - [tls_skip_verify](#tls_skip_verify)
+- [volume_paths](#doltlabdb-volume-paths)
 
 <h4 id="doltlabdb-host">host</h4>
 
@@ -260,6 +283,71 @@ services:
 
 Command line equivalent [doltlabdb-tls-skip-verify](./cli.md#doltlabdb-tls-skip-verify).
 
+<h4 id="doltlabdb-volume-paths">volume_paths</h4>
+
+_Dictionary_. Local paths used for persisting `doltlabdb` Docker volumes.
+
+- [data_volume_path](#doltlabdb-data-volume-path)
+- [root_volume_path](#root_volume_path)
+- [backups_volume_path](#backups_volume_path)
+- [configs_volume_path](#configs_volume_path)
+
+<h4 id="doltlabdb-data-volume-path">data_volume_path</h4>
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-data' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    volume_paths:
+      data_volume_path: "/local/path/for/persisting/data"
+```
+
+Command line equivalent [doltlabdb-data-volume-host-path](./cli.md#doltlabdb-data-volume-host-path).
+
+#### root_volume_path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-root' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    volume_paths:
+      root_volume_path: "/local/path/for/persisting/doltlabdb/root"
+```
+
+Command line equivalent [doltlabdb-root-volume-host-path](./cli.md#doltlabdb-root-volume-host-path).
+
+#### backups_volume_path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-backups' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    volume_paths:
+      backups_volume_path: "/local/path/for/persisting/file/backups"
+```
+
+Command line equivalent [doltlabdb-backups-volume-host-path](./cli.md#doltlabdb-backups-volume-host-path).
+
+#### configs_volume_path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-configs' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabdb:
+    volume_paths:
+      configs_volume_path: "/local/path/for/persisting/doltlabdb/configs"
+```
+
+Command line equivalent [doltlabdb-configs-volume-host-path](./cli.md#doltlabdb-configs-volume-host-path).
+
 ### doltlabapi
 
 _Dictionary_. Configuration options for `doltlabapi`.
@@ -314,6 +402,7 @@ _Dictionary_. Configuration options for `doltlabremoteapi`.
 - [host](#doltlabremoteapi-host)
 - [port](#doltlabremoteapi-port)
 - [file_server_port](#file_server_port)
+- [volume_paths](#doltlabremoteapi-volume-paths)
 
 <h4 id="doltlabremoteapi-host">host</h4>
 
@@ -341,7 +430,7 @@ services:
 
 Command line equivalent [doltlabremoteapi-port](./cli.md#doltlabremoteapi-port).
 
-<h4 id="doltlabremoteapi-port">port</h4>
+#### file_server_port
 
 _Number_. The port for `doltlabremoteapi`'s file server. _Required_ for [configuring multi-host deployments](../../guides/enterprise.md#deploy-doltlab-across-multiple-hosts).
 
@@ -354,12 +443,33 @@ services:
 
 Command line equivalent [doltlabremoteapi-file-server-port](./cli.md#doltlabremoteapi-file-server-port).
 
+<h4 id="doltlabremoteapi-volume-paths">volume_paths</h4>
+
+_Dictionary_. Local paths used for persisting `doltlabremoteapi` Docker volumes.
+
+- [data_volume_path](#doltlabremoteapi-data-volume-path)
+
+<h4 id="doltlabremoteapi-data-volume-path">data_volume_path</h4>
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlab-remote-storage' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    volume_paths:
+      data_volume_path: "/path/for/persisting/remote/data"
+```
+
+Command line equivalent [doltlabremoteapi-data-volume-host-path](./cli.md#doltlabremoteapi-data-volume-host-path).
+
 ### doltlabfileserviceapi
 
 _Dictionary_. Configuration options for `doltlabapifileserviceapi`.
 
 - [host](#doltlabfileserviceapi-host)
 - [port](#doltlabfileserviceapi-port)
+- [volume_paths](#doltlabfileserviceapi-volume-paths)
 
 <h4 id="doltlabfileserviceapi-host">host</h4>
 
@@ -386,6 +496,26 @@ services:
 ```
 
 Command line equivalent [doltlabfileserviceapi-port](./cli.md#doltlabfileserviceapi-port).
+
+<h4 id="doltlabfileserviceapi-volume-paths">volume_paths</h4>
+
+_Dictionary_. Local paths used for persisting `doltlabfileserviceapi` Docker volumes.
+
+- [uploads_volume_path](#uploads_volume_path)
+
+<h4 id="doltlabfileserviceapi-uploads-volume-path">uploads_volume_path</h4>
+
+_String_. The path to an existing directory on the DoltLab host for persisting the 'doltlab-user-uploads' Docker volume.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabfileserviceapi:
+    volume_paths:
+      uploads_volume_path: "/path/for/persisting/user/uploads"
+```
+
+Command line equivalent [doltlabfileserviceapi-uploads-volume-host-path](./cli.md#doltlabfileserviceapi-uploads-volume-host-path).
 
 ### doltlabgraphql
 

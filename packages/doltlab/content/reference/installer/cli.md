@@ -186,6 +186,24 @@ _String_. The `dolthubadmin` SQL user password of the `doltlabdb` instance.
 
 Configuration file equivalent [admin_password](./configuration-file.md#admin_password).
 
+## doltlabdb-backups-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-backups' Docker volume.
+
+Configuration file equivalent [backups_volume_path](./configuration-file.md#backups_volume_path).
+
+## doltlabdb-config-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-configs' Docker volume.
+
+Configuration file equivalent [configs_volume_path](./configuration-file.md#configs_volume_path).
+
+## doltlabdb-data-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-data' Docker volume.
+
+Configuration file equivalent [data_volume_path](./configuration-file.md#doltlabdb-data-volume-path).
+
 ## doltlabdb-dolthubapi-password
 
 _String_. The `dolthubapi` SQL user password of the `doltlabdb` instance.
@@ -209,6 +227,12 @@ Configuration file equivalent [doltlabdb_only](./configuration-file.md#doltlabdb
 _Number_. The port of `doltlabdb`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabdb-port).
+
+## doltlabdb-root-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-root' Docker volume.
+
+Configuration file equivalent [root_volume_path](./configuration-file.md#root_volume_path).
 
 ## doltlabdb-tls-skip-verify
 
@@ -234,6 +258,12 @@ _Number_. The port for `doltlabfileserviceapi`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabfileserviceapi-port).
 
+## doltlabfileserviceapi-uploads-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host for persisting the 'doltlab-user-uploads' Docker volume.
+
+Configuration file equivalent [uploads_volume_path](./configuration-file.md#uploads_volume_path).
+
 ## doltlabgraphql-host
 
 _String_. The hostname or IP address for `doltlabgraphql`.
@@ -251,6 +281,12 @@ Configuration file equivalent [doltlabgraphql_only](./configuration-file.md#dolt
 _Number_. The port for `doltlabgraphql`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabgrapqhl-port).
+
+## doltlabremoteapi-data-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlab-remote-storage' Docker volume.
+
+Configuration file equivalent [data_volume_path](./configuration-file.md#doltlabremoteapi-data-volume-path).
 
 ## doltlabremoteapi-file-server-port
 
@@ -475,6 +511,12 @@ Configuration file equivalent [private_key](./configuration-file.md#private_key)
 ## ubuntu
 
 _Boolean_. If true will generate a script to install DoltLab's dependencies on Ubuntu.
+
+## use-env
+
+_Boolean_. If true, sensitive values will not be written to generated assets and environment variables will be expected instead.
+
+Configuration file equivalent [use_env](./configuration-file.md#use_env).
 
 ## whitelist-all-users
 
