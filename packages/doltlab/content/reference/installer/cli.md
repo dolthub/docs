@@ -156,6 +156,18 @@ _String_. The docker network to run DoltLab in, (default "doltlab").
 
 Configuration file equivalent [docker_network](./configuration-file.md#docker_network).
 
+## doltlabapi-asyncworker-aws-sqs-queue
+
+_String_. The name of the SQS queue used for processing asynchronous tasks, DoltLab Enterprise only.
+
+Configuration file equivalent [asyncworker_aws_sqs_queue](./configuration-file.md#asyncworker_aws_sqs_queue).
+
+## doltlabapi-aws-region
+
+_String_. The AWS region for 'doltlabapi' cloud storage AWS resources, DoltLab Enterprise only.
+
+Configuration file equivalent [aws_region](./configuration-file.md#doltlabapi-aws-region).
+
 ## doltlabapi-csv-port
 
 _Number_. The port for `doltlabapi`'s CSV service.
@@ -180,11 +192,35 @@ _Number_. The port for `doltlabapi`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabapi-port).
 
-## -doltlabdb-admin-password
+## doltlabapi-query-job-aws-s3-bucket
+
+_String_. The name of the S3 bucket used to store the results of SQL query Jobs, DoltLab Enterprise only.
+
+Configuration file equivalent [query_job_aws_bucket](./configuration-file.md#query_job_aws_bucket).
+
+## doltlabdb-admin-password
 
 _String_. The `dolthubadmin` SQL user password of the `doltlabdb` instance.
 
 Configuration file equivalent [admin_password](./configuration-file.md#admin_password).
+
+## doltlabdb-backups-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-backups' Docker volume.
+
+Configuration file equivalent [backups_volume_path](./configuration-file.md#backups_volume_path).
+
+## doltlabdb-config-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-configs' Docker volume.
+
+Configuration file equivalent [configs_volume_path](./configuration-file.md#configs_volume_path).
+
+## doltlabdb-data-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-data' Docker volume.
+
+Configuration file equivalent [data_volume_path](./configuration-file.md#doltlabdb-data-volume-path).
 
 ## doltlabdb-dolthubapi-password
 
@@ -210,6 +246,12 @@ _Number_. The port of `doltlabdb`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabdb-port).
 
+## doltlabdb-root-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlabdb-dolt-root' Docker volume.
+
+Configuration file equivalent [root_volume_path](./configuration-file.md#root_volume_path).
+
 ## doltlabdb-tls-skip-verify
 
 _Boolean_. If true, will disable TLS verification for connection to `doltlabdb`.
@@ -234,6 +276,12 @@ _Number_. The port for `doltlabfileserviceapi`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabfileserviceapi-port).
 
+## doltlabfileserviceapi-uploads-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host for persisting the 'doltlab-user-uploads' Docker volume.
+
+Configuration file equivalent [uploads_volume_path](./configuration-file.md#uploads_volume_path).
+
 ## doltlabgraphql-host
 
 _String_. The hostname or IP address for `doltlabgraphql`.
@@ -251,6 +299,12 @@ Configuration file equivalent [doltlabgraphql_only](./configuration-file.md#dolt
 _Number_. The port for `doltlabgraphql`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabgrapqhl-port).
+
+## doltlabremoteapi-data-volume-host-path
+
+_String_. The path to an existing directory on the DoltLab host used for persisting the 'doltlab-remote-storage' Docker volume.
+
+Configuration file equivalent [data_volume_path](./configuration-file.md#doltlabremoteapi-data-volume-path).
 
 ## doltlabremoteapi-file-server-port
 
@@ -274,7 +328,25 @@ Configuration file equivalent [doltlabremoteapi_only](./configuration-file.md#do
 
 _Number_. The port for `doltlabremoteapi`.
 
-Configuration file equivalent [port](#doltlabremoteapi-port).
+Configuration file equivalent [port](./configuration-file.md#doltlabremoteapi-port).
+
+## doltlabremoteapi-storage-aws-bucket
+
+_String_. The AWS S3 bucket used for storing remote data files. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_bucket](./configuration-file.md#doltlabremoteapi-aws-bucket).
+
+## doltlabremoteapi-storage-aws-dynamodb-table
+
+_String_. The AWS DynamoDb table name used for storing the manifest of remote databases. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_dynamodb_table](./configuration-file.md#aws_dynamodb_table).
+
+## doltlabremoteapi-storage-aws-region
+
+_String_. The AWS region where the DynamoDb table is located. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_region](./configuration-file.md#doltlabremoteapi-aws-region).
 
 ## doltlabui-host
 
@@ -475,6 +547,12 @@ Configuration file equivalent [private_key](./configuration-file.md#private_key)
 ## ubuntu
 
 _Boolean_. If true will generate a script to install DoltLab's dependencies on Ubuntu.
+
+## use-env
+
+_Boolean_. If true, sensitive values will not be written to generated assets and environment variables will be expected instead.
+
+Configuration file equivalent [use_env](./configuration-file.md#use_env).
 
 ## whitelist-all-users
 

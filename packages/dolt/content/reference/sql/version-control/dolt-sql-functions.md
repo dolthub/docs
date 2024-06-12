@@ -10,6 +10,7 @@ title: Dolt SQL Functions
   - [dolt_merge_base()](#dolt_merge_base)
   - [dolt_hashof()](#dolt_hashof)
   - [dolt_hashof_table()](#dolt_hashof_table)
+  - [dolt_hashof_db()](#dolt_hashof_db)
   - [dolt_version()](#dolt_version)
   - [has_ancestor()](#has_ancestor)
   - [last_insert_uuid()](#last_insert_uuid)
@@ -77,6 +78,33 @@ mysql> SELECT dolt_hashof_table('color');
 1 row in set (0.01 sec)
 ```
 
+## `DOLT_HASHOF_DB()`
+
+The `DOLT_HASHOF_DB()` function returns the value hash of the entire versioned database. The hash is the hash of all tables
+(schema and data) in the database, and includes additional versioned items such as stored procedures and triggers. The hash
+does not include unversioned items such as tables which have been [ignored](dolt-system-tables.md#dolt_ignore). The function
+takes an optional argument to specify a branch or one of the values of 'STAGED', 'WORKING', or 'HEAD' (default no argument call
+is equivalent to 'WORKING').
+
+This function can be used to watch for changes in the database by storing previous hashes in your application and comparing them
+to the current hash. For example, you can use this function to get the hash of the entire database like so:
+
+```sql
+mysql> SELECT dolt_hashof_db();
++----------------------------------+
+| dolt_hashof_db()                 |
++----------------------------------+
+| 1q8t28sb3h5g2lnhiojacpi7s09p4csj |
++----------------------------------+
+```
+
+It should be noted that if you are connected to branch 'main' and you call `dolt_hashof_db('feature')`, the hash may be different
+than if you were connected to branch 'feature' and called `dolt_hashof_db()`. This happens if there exist changes to the working set on
+branch 'feature' that have not been committed.  Calling `dolt_hashof_db('feature')` while on 'main' is equivalent to calling
+`dolt_hashof_db('HEAD')` while on branch 'feature'.
+
+The general recommendation when trying to look for changes to the database is to connect to the branch you want to use, then
+call `dolt_hashof_db()` without any arguments.  Any change in the hash means that the database has changed.
 
 ## `DOLT_VERSION()`
 
