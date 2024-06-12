@@ -156,6 +156,18 @@ _String_. The docker network to run DoltLab in, (default "doltlab").
 
 Configuration file equivalent [docker_network](./configuration-file.md#docker_network).
 
+## doltlabapi-asyncworker-aws-sqs-queue
+
+_String_. The name of the SQS queue used for processing asynchronous tasks, DoltLab Enterprise only.
+
+Configuration file equivalent [asyncworker_aws_sqs_queue](./configuration-file.md#asyncworker_aws_sqs_queue).
+
+## doltlabapi-aws-region
+
+_String_. The AWS region for 'doltlabapi' cloud storage AWS resources, DoltLab Enterprise only.
+
+Configuration file equivalent [aws_region](./configuration-file.md#doltlabapi-aws-region).
+
 ## doltlabapi-csv-port
 
 _Number_. The port for `doltlabapi`'s CSV service.
@@ -180,7 +192,13 @@ _Number_. The port for `doltlabapi`.
 
 Configuration file equivalent [port](./configuration-file.md#doltlabapi-port).
 
-## -doltlabdb-admin-password
+## doltlabapi-query-job-aws-s3-bucket
+
+_String_. The name of the S3 bucket used to store the results of SQL query Jobs, DoltLab Enterprise only.
+
+Configuration file equivalent [query_job_aws_bucket](./configuration-file.md#query_job_aws_bucket).
+
+## doltlabdb-admin-password
 
 _String_. The `dolthubadmin` SQL user password of the `doltlabdb` instance.
 
@@ -310,7 +328,25 @@ Configuration file equivalent [doltlabremoteapi_only](./configuration-file.md#do
 
 _Number_. The port for `doltlabremoteapi`.
 
-Configuration file equivalent [port](#doltlabremoteapi-port).
+Configuration file equivalent [port](./configuration-file.md#doltlabremoteapi-port).
+
+## doltlabremoteapi-storage-aws-bucket
+
+_String_. The AWS S3 bucket used for storing remote data files. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_bucket](./configuration-file.md#doltlabremoteapi-aws-bucket).
+
+## doltlabremoteapi-storage-aws-dynamodb-table
+
+_String_. The AWS DynamoDb table name used for storing the manifest of remote databases. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_dynamodb_table](./configuration-file.md#aws_dynamodb_table).
+
+## doltlabremoteapi-storage-aws-region
+
+_String_. The AWS region where the DynamoDb table is located. DoltLab Enterprise only.
+
+Configuration file equivalent [aws_region](./configuration-file.md#doltlabremoteapi-aws-region).
 
 ## doltlabui-host
 

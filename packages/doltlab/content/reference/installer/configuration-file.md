@@ -30,10 +30,19 @@ services:
     host: "127.0.0.1"
     port: 9443
     csv_port: 9444
+    cloud_storage:
+      aws_region: "us-west-2"
+      user_import_uploads_aws_bucket: "uploads-bucket"
+      query_job_aws_bucket: "query-job-bucket"
+      asyncworker_aws_sqs_queue: "async-queue"
   doltlabremoteapi:
     host: "127.0.0.1"
     port: 50051
     file_server_port: 100
+    cloud_storage:
+      aws_region: "us-west-2"
+      aws_bucket: "data-bucket"
+      aws_dynamodb_table: "manifest-db"
     volume_paths:
       data_volume_path: "/local/path/to/store/remote/data"
   doltlabfileserviceapi:
@@ -355,6 +364,7 @@ _Dictionary_. Configuration options for `doltlabapi`.
 - [host](#doltlabapi-host)
 - [port](#doltlabapi-port)
 - [csv_port](#csv_port)
+- [cloud_storage](#doltlabapi-cloud-storage)
 
 <h4 id="doltlabapi-host">host</h4>
 
@@ -395,6 +405,57 @@ services:
 
 Command line equivalent [doltlabapi-csv-port](./cli.md#doltlabapi-csv-port).
 
+<h4 id="doltlabapi-cloud-storage">cloud_storage</h4>
+
+_Dictionary_. Configuration options for persisting `doltlabapi` data to cloud resources.
+
+- [aws_region](#doltlabapi-aws-region)
+- [user_import_uploads_aws_bucket](#user_import_uploads_aws_bucket)
+- [query_job_aws_bucket](#query_job_aws_bucket)
+- [asyncworker_aws_sqs_queue](#asyncworker_aws_sqs_queue)
+
+<h5 id="doltlabapi-aws-region">aws_region</h5>
+
+_String_. The AWS region for 'doltlabapi' cloud storage AWS resources, DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    cloud_storage:
+      aws_region: "us-east-2"
+```
+
+Command line equivalent [doltlabapi-aws-region](./cli.md#doltlabapi-aws-region).
+
+##### user_import_uploads_aws_bucket
+
+_String_. The name of the S3 bucket used to store user uploaded files, DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    cloud_storage:
+      user_import_uploads_aws_bucket: "uploads-bucket"
+```
+
+Command line equivalent [doltlabapi-user-import-uploads-aws-s3-bucket](./cli.md#doltlabapi-user-import-uploads-aws-s3-bucket).
+
+##### asyncworker_aws_sqs_queue
+
+_String_. The name of the SQS queue used for processing asynchronous tasks, DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabapi:
+    cloud_storage:
+      asyncworker_aws_sqs_queue: "async-queue"
+```
+
+Command line equivalent [doltlabapi-asyncworker-aws-sqs-queue](./cli.md#doltlabapi-asyncworker-aws-sqs-queue).
+
 ### doltlabremoteapi
 
 _Dictionary_. Configuration options for `doltlabremoteapi`.
@@ -403,6 +464,7 @@ _Dictionary_. Configuration options for `doltlabremoteapi`.
 - [port](#doltlabremoteapi-port)
 - [file_server_port](#file_server_port)
 - [volume_paths](#doltlabremoteapi-volume-paths)
+- [cloud_storage](#doltlabremoteapi-cloud-storage)
 
 <h4 id="doltlabremoteapi-host">host</h4>
 
@@ -462,6 +524,56 @@ services:
 ```
 
 Command line equivalent [doltlabremoteapi-data-volume-host-path](./cli.md#doltlabremoteapi-data-volume-host-path).
+
+<h4 id="doltlabremoteapi-cloud-storage">cloud_storage</h4>
+
+_Dictionary_. Configuration options for persisting `doltlabremoteapi` data to cloud resources.
+
+- [aws_region](#doltlabremoteapi-aws-region)
+- [aws_bucket](#doltlabremoteapi-aws-bucket)
+- [aws_dynamodb_table](#aws_dynamodb_table)
+
+<h5 id="doltlabremoteapi-aws-region">aws_region</h5>
+
+_String_. The AWS region where the DynamoDb table is located. DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    cloud_storage:
+      aws_region: "us-west-2"
+```
+
+Command line equivalent [doltlabremoteapi-storage-aws-region](./cli.md#doltlabremoteapi-storage-aws-region).
+
+<h5 id="doltlabremoteapi-aws-bucket">aws_bucket</h5>
+
+_String_. The AWS S3 bucket used for storing remote data files. DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    cloud_storage:
+      aws_bucket: "remote-bucket"
+```
+
+Command line equivalent [doltlabremoteapi-storage-aws-bucket](./cli.md#doltlabremoteapi-storage-aws-bucket).
+
+##### aws_dynamodb_table
+
+_String_. The AWS DynamoDb table name used for storing the manifest of remote databases. DoltLab Enterprise only.
+
+```yaml
+# example installer_config.yaml
+services:
+  doltlabremoteapi:
+    cloud_storage:
+      aws_dynamodb_table: "manifest-db"
+```
+
+Command line equivalent [doltlabremoteapi-storage-aws-dynamodb-table](./cli.md#doltlabremoteapi-storage-aws-dynamodb-table).
 
 ### doltlabfileserviceapi
 
