@@ -126,7 +126,7 @@ title: Supported SQL Commands
 | CREATE TRANSFORM                 |   ❌    |   ❌   |                       |
 | CREATE TRIGGER                   |   ✅    |   ❌   |                       |
 | CREATE TYPE                      |   ✅    |   ❌   |                       |
-| CREATE VIEW                      |   ✅    |   ❌   |                       |
+| CREATE VIEW                      |   ✅    |  🟠   |                       |
 | DROP ACCESS METHOD               |   ❌    |   ❌   |                       |
 | DROP AGGREGATE                   |   ✅    |   ❌   |                       |
 | DROP CAST                        |   ❌    |   ❌   |                       |
