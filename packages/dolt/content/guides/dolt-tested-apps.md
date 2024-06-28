@@ -23,6 +23,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Ruby on Rails](https://rubyonrails.org/)                                                 | Ruby       | [Blog](https://www.dolthub.com/blog/2024-02-09-dolt-ruby-on-rails/)            | [Code](https://github.com/dolthub/dolt_rails)                                | 
 | [SQLAlchemy](https://www.sqlalchemy.org/)                                                 | Python     | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/)   | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
 | [Shiny](https://shiny.posit.co/)                                                          | R          | [Blog](https://www.dolthub.com/blog/2024-04-26-dolt-r-shiny/)                  | [Code](https://github.com/dolthub/dolt_shiny)                                | 
+| [Prisma](https://www.prisma.io/)                                                          | TypeScript | [Blog](https://www.dolthub.com/blog/2024-06-28-dolt-and-prisma/)               | [Code](https://github.com/dolthub/dolt-prisma-example)                       | 
 
 ## Tools
 
