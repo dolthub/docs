@@ -137,7 +137,7 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/current
 
 | SQL Type Name | Supported |
 | :------------ | :-------- |
-| oid           | ❌        |
+| oid           | ✅        |
 | regclass      | ❌        |
 | regcollation  | ❌        |
 | regconfig     | ❌        |
