@@ -64,6 +64,7 @@
 - [SQL Language Support](reference/sql-support/README.md)
   - [Supported Types](reference/sql-support/supported-types.md)
   - [Supported SQL Commands](reference/sql-support/supported-commands.md)
+  - [System Catalog Schema](reference/sql-support/system-catalog-schema.md)
 - [Supported Clients](reference/sql/supported-clients/README.md)
   - [Programmatic](reference/sql/supported-clients/clients.md)
 - [Benchmarks](reference/benchmarks/README.md)
