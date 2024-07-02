@@ -47,10 +47,10 @@ For example, `timestamp` takes in a precision, but does not enforce it.
 | int8range      |     ❌      |                               |
 | interval       |     ❌      |                               |
 | interval[]     |     ❌      |                               |
-| json           |     ❌      |                               |
-| json[]         |     ❌      |                               |
-| jsonb          |     ❌      |                               |
-| jsonb[]        |     ❌      |                               |
+| json           |     🟠      |                               |
+| json[]         |     🟠      |                               |
+| jsonb          |     🟠      |                               |
+| jsonb[]        |     🟠      |                               |
 | line           |     ❌      |                               |
 | line[]         |     ❌      |                               |
 | lseg           |     ❌      |                               |
@@ -138,6 +138,7 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/current
 | SQL Type Name | Supported |
 | :------------ | :-------- |
 | oid           | ✅        |
+| xid           | 🟠        |
 | regclass      | ❌        |
 | regcollation  | ❌        |
 | regconfig     | ❌        |
