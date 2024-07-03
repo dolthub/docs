@@ -6,6 +6,7 @@ DoltLab is currently closed-source, but the [dolthub/doltlab-issues](https://git
 
 The following is a list of release notes for available DoltLab versions >= `v2.0.0`. DoltLab and DoltHub share the same source code. For this reason, we list fixes related to DoltLab issues in the `DoltLab Features/Bug Fixes` section of the release notes, and fixes corresponding to DoltHub issuers in the `DoltLab Features/Bug Fixes` section.
 
+- [DoltLab v2.2.0](./v2.2.0.md)
 - [DoltLab v2.1.6](./v2.1.6.md)
 - [DoltLab v2.1.5](./v2.1.5.md)
 - [DoltLab v2.1.4](./v2.1.4.md)
