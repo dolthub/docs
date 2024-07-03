@@ -8,6 +8,20 @@ Also note that upgrading to a newer version of DoltLab will require downtime, as
 
 Additionally, some early versions have different database schemas than newer ones. If the Docker volumes of an old version of DoltLab contain non-precious or test-only data, then DoltLab administrators can simply remove these Docker volumes and run the their DoltLab start script from the newer DoltLab version. This script will simply create new Docker volumes with the appropriate schema for that DoltLab version.
 
+# Upgrade from DoltLab <code>v2.1.6</code> to <code>v2.2.0+</code>
+
+There are important differences to be aware of when upgrading from DoltLab `v2.1.6` to DoltLab >= `v2.2.0`. In DoltLab >= `v2.2.0`, organizations and teams are exclusive to DoltLab Enterprise.
+
+This means that if you're old DoltLab instance uses organizations or teams, after upgrading to DoltLab >= `v2.2.0`, you will see 404 errors when attempting to view the profile pages for existing organizations or teams. Any databases owned by those organizations will still be available, and function normally.
+
+Additionally, use of an SMTP server is also exclusive to DoltLab Enterprise. This means that new users created on your DoltLab instance will be automatically verified, database collaborator invitations will be automatically accepted, and two-factor authentication will be disabled.
+
+If a user needs to reset their password, the DoltLab administrator can reset the password on the user's behalf by navigating to Profile > Settings > Reset user passwords.
+
+Finally, in the `installer_config.yaml`, the [smtp](../reference/installer/configuration-file.md#smtp) configuration is now part of the [enterprise](../reference/installer/configuration-file.md#enterprise) configuration section. Please see [connecting DoltLab to an SMTP server](../guides/enterprise.md#connect-doltlab-to-an-smtp-server) for more information.
+
+Aside from the `smtp` configuration change in the `installer_config.yaml`, no other changes are need to `installer_config.yaml` to upgrade to DoltLab `v2.2.0`, simply ensuring that the `version` is `v2.2.0` is sufficient.
+
 # Upgrade from DoltLab <code>v2.1.4</code> to <code>v2.1.5+</code>
 
 When upgrading from DoltLab `v2.1.4` that uses an `installer_config.yaml` to newer DoltLab, which also uses that configuration file, you can simply reuse your previous `installer_config.yaml` with the newer DoltLab version.
