@@ -49,6 +49,28 @@ Edit `installer_config.yaml` and supply the host name or IP address of your Dolt
 host: "12.34.567.890"
 ```
 
+Additionally, edit the default passwords in the following sections to be more secure values:
+
+```yaml
+# installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: "MySecurePassword1"
+    dolthubapi_password: "MySecurePassword2"
+```
+
+```yaml
+# installer_config.yaml
+default_user:
+  name: "admin"
+  password: "MySecurePassword3"
+  email: "admin@localhost"
+```
+
+It is important to change these passwords _before_ starting DoltLab with the `./start.sh` script for the first time, since on DoltLab's first run, the application database backing DoltLab will be initialized with these passwords and persisted to disk.
+
+These passwords can be changed later on, but requires a [couple additional steps](../basic.md#update-application-database-passwords).
+
 Save these changes, then run the installer:
 
 ```bash
