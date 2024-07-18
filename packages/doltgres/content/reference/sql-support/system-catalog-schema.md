@@ -168,34 +168,34 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/func
 Supported functions work as `SELECT [function]`, but not yet as `SELECT * FROM [function]`.
 {% endhint %}
 
-| Function                                | Supported | Notes and limitations            |
-| :-------------------------------------- | :-------- | :------------------------------- |
-| current_catalog                         | ✅        |                                  |
-| current_database()                      | ✅        |                                  |
-| current_query()                         | ❌        |                                  |
-| current_role                            | ❌        |                                  |
-| current_schema[()]                      | ✅        |                                  |
-| current_schemas(bool)                   | ✅        |                                  |
-| current_user                            | ❌        |                                  |
-| inet_client_addr()                      | ❌        |                                  |
-| inet_client_port()                      | ❌        |                                  |
-| inet_server_addr()                      | ❌        |                                  |
-| inet_server_port()                      | ❌        |                                  |
-| pg_backend_pid()                        | ❌        |                                  |
-| pg_blocking_pids(integer)               | ❌        |                                  |
-| pg_conf_load_time()                     | ❌        |                                  |
-| pg_current_logfile([text])              | ❌        |                                  |
-| pg_my_temp_schema()                     | ❌        |                                  |
-| pg_is_other_temp_schema(oid)            | ❌        |                                  |
-| pg_jit_available()                      | ❌        |                                  |
-| pg_listening_channels()                 | ❌        |                                  |
-| pg_notification_queue_usage()           | ❌        |                                  |
-| pg_postmaster_start_time()              | ❌        |                                  |
-| pg_safe_snapshot_blocking_pids(integer) | ❌        |                                  |
-| pg_trigger_depth()                      | ❌        |                                  |
-| session_user                            | ❌        |                                  |
-| user                                    | ❌        |                                  |
-| version()                               | 🟠        | Parses but version is inaccurate |
+| Function                                | Supported | Notes and limitations                |
+| :-------------------------------------- | :-------- | :----------------------------------- |
+| current_catalog                         | ✅        |                                      |
+| current_database()                      | ✅        |                                      |
+| current_query()                         | ❌        |                                      |
+| current_role                            | ❌        |                                      |
+| current_schema[()]                      | ✅        |                                      |
+| current_schemas(bool)                   | ✅        |                                      |
+| current_user                            | ❌        |                                      |
+| inet_client_addr()                      | ❌        |                                      |
+| inet_client_port()                      | ❌        |                                      |
+| inet_server_addr()                      | ❌        |                                      |
+| inet_server_port()                      | ❌        |                                      |
+| pg_backend_pid()                        | ❌        |                                      |
+| pg_blocking_pids(integer)               | ❌        |                                      |
+| pg_conf_load_time()                     | ❌        |                                      |
+| pg_current_logfile([text])              | ❌        |                                      |
+| pg_my_temp_schema()                     | ❌        |                                      |
+| pg_is_other_temp_schema(oid)            | ❌        |                                      |
+| pg_jit_available()                      | ❌        |                                      |
+| pg_listening_channels()                 | ❌        |                                      |
+| pg_notification_queue_usage()           | ❌        |                                      |
+| pg_postmaster_start_time()              | ❌        |                                      |
+| pg_safe_snapshot_blocking_pids(integer) | ❌        |                                      |
+| pg_trigger_depth()                      | ❌        |                                      |
+| session_user                            | ❌        |                                      |
+| user                                    | ❌        |                                      |
+| version()                               | 🟠        | Includes version but not system info |
 
 ## System Catalog Information Functions
 
@@ -230,15 +230,15 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/func
 | pg_tablespace_location(pod)                  | ❌        |                       |
 | pg_typeof("any")                             | ❌        |                       |
 | COLLATION FOR("any)                          | ❌        |                       |
-| to_regclass(text)                            | ❌        |                       |
+| to_regclass(text)                            | ✅        |                       |
 | to_regcollation(text)                        | ❌        |                       |
 | to_regnamespace(text)                        | ❌        |                       |
 | to_regoper(text)                             | ❌        |                       |
 | to_regoperator(text)                         | ❌        |                       |
-| to_regproc(text)                             | ❌        |                       |
+| to_regproc(text)                             | ✅        |                       |
 | to_regprocedure(text)                        | ❌        |                       |
 | to_regrole(text)                             | ❌        |                       |
-| to_regtype(text)                             | ❌        |                       |
+| to_regtype(text)                             | ✅        |                       |
 
 ## Schema Visibility Inquiry Functions
 
@@ -264,9 +264,9 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/func
 
 See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/functions-info.html#FUNCTIONS-INFO-COMMENT-TABLE).
 
-| Function                      | Supported | Notes and limitations |
-| :---------------------------- | :-------- | :-------------------- |
-| col_description(oid, integer) | ❌        |                       |
-| obj_description(oid, name)    | ❌        |                       |
-| obj_description(oid)          | ❌        |                       |
-| shobj_description(oid, name)  | ❌        |                       |
+| Function                      | Supported | Notes and limitations      |
+| :---------------------------- | :-------- | :------------------------- |
+| col_description(oid, integer) | 🟠        | Parses but not implemented |
+| obj_description(oid, name)    | 🟠        | Parses but not implemented |
+| obj_description(oid)          | ❌        | Deprecated in Postgres     |
+| shobj_description(oid, name)  | 🟠        | Parses but not implemented |
