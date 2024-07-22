@@ -203,7 +203,7 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/func
 
 | Function                                     | Supported | Notes and limitations |
 | :------------------------------------------- | :-------- | :-------------------- |
-| format_type(oid, integer)                    | ❌        |                       |
+| format_type(oid, integer)                    | ✅        |                       |
 | pg_char_to_encoding(name)                    | ❌        |                       |
 | pg_encoding_to_char(integer)                 | ❌        |                       |
 | pg_get_catalog_foreign_keys()                | ❌        |                       |
