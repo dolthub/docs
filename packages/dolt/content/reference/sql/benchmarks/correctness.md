@@ -54,18 +54,37 @@ AND col3 IN (3,9,0))))) OR col4 <= 4.25 OR ((col3 = 5))) OR (((col0 >
 0)) AND col0 > 6 AND (col4 >= 6.56)))
 ```
 
-Here are Dolt's sqllogictest results for version `1.41.3`.  Tests that
+Here are Dolt's sqllogictest results for version `1.42.2`.  Tests that
 did not run could not complete due to a timeout earlier in the run.
 <!-- START___DOLT___CORRECTNESS_RESULTS_TABLE -->
-| Results |  Count  |
-|---------|---------|
-| ok      | 5937457 |
+|       Read Tests        | MySQL |  Dolt  | Multiple |
+|-------------------------|-------|--------|----------|
+| covering\_index\_scan   |  2.07 |   3.02 |      1.5 |
+| groupby\_scan           | 13.22 |  17.32 |      1.3 |
+| index\_join             |  1.37 |   5.37 |      3.9 |
+| index\_join\_scan       |  1.27 |   2.57 |      2.0 |
+| index\_scan             | 34.33 |  54.83 |      1.6 |
+| oltp\_point\_select     |  0.18 |   0.46 |      2.6 |
+| oltp\_read\_only        |  3.49 |    7.7 |      2.2 |
+| select\_random\_points  |  0.34 |   0.75 |      2.2 |
+| select\_random\_ranges  |  0.39 |    0.9 |      2.3 |
+| table\_scan             | 34.33 |  56.84 |      1.7 |
+| types\_table\_scan      | 74.46 | 144.97 |      1.9 |
+| reads\_mean\_multiplier |       |        |      2.1 |
 
-| Total Tests | 5937457 |
-|-------------|---------|
+|       Write Tests        | MySQL | Dolt  | Multiple |
+|--------------------------|-------|-------|----------|
+| oltp\_delete\_insert     |  8.13 |  6.09 |      0.7 |
+| oltp\_insert             |  3.82 |  3.02 |      0.8 |
+| oltp\_read\_write        |  8.58 | 13.95 |      1.6 |
+| oltp\_update\_index      |  3.89 |  3.07 |      0.8 |
+| oltp\_update\_non\_index |  3.89 |  3.02 |      0.8 |
+| oltp\_write\_only        |  5.37 |  6.32 |      1.2 |
+| types\_delete\_insert    |   7.7 |  6.67 |      0.9 |
+| writes\_mean\_multiplier |       |       |      1.0 |
 
-| Correctness Percentage | 100.0 |
-|------------------------|-------|
+| Overall Mean Multiple | 1.55 |
+|-----------------------|------|
 <!-- END___DOLT___CORRECTNESS_RESULTS_TABLE -->
 <br/>
 
