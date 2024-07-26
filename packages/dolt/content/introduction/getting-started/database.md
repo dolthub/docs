@@ -72,7 +72,7 @@ As you can see, Dolt supports any MySQL-compatible client.
 
 Now we're actually ready to do something interesting. I'll stay in the `mysql` client and execute the following SQL statements to create a database called `getting_started`. The `getting_started` database will have three tables: `employees`, `teams`, and `employees_teams`.
 
-```
+```sql
 mysql> create database getting_started;
 Query OK, 1 row affected (0.04 sec)
 
@@ -122,7 +122,7 @@ The naming of the system tables and stored procedures follows the `dolt_<command
 
 So, we add and commit our new schema like so.
 
-```
+```sql
 mysql> call dolt_add('teams', 'employees', 'employees_teams');
 +--------+
 | status |
@@ -157,7 +157,7 @@ Note, a Dolt commit is different than a standard SQL transaction `COMMIT`. In th
 
 Now, I'm going to populate the database with a few employees here at DoltHub. Then, I'll assign the employees to two teams: engineering and sales. The CEO wears many hats at a start up so he'll be assigned to multiple teams.
 
-```
+```sql
 mysql> insert into employees values
     (0, 'Sehn', 'Tim'),
     (1, 'Hendriks', 'Brian'),
@@ -190,7 +190,7 @@ ERROR 1452 (HY000): cannot add or update a child row - Foreign key violation on 
 
 Oops, I violated a constraint. It looks like I created the table with teams before employees. You should always specify your columns when you insert, not rely on natural ordering. Serves me right! Dolt comes with the full power of a modern SQL relational database to ensure data integrity.
 
-```
+```sql
 mysql> insert into employees_teams(employee_id, team_id) values
     (0,0),
     (1,0),
@@ -219,7 +219,7 @@ Looks like everything is inserted and correct. I was able to list the members of
 
 Now, what if you want to see what changed in your working set before you make a commit? You use the `dolt_status` and `dolt_diff_<tablename>` system tables.
 
-```
+```sql
 mysql> select * from dolt_status;
 +-----------------+--------+----------+
 | table_name      | staged | status   |
@@ -246,7 +246,7 @@ As you can see from the diff I've added the correct values to the `employees` ta
 
 Let's finish off with another Dolt commit this time adding all modified tables using `-am`.
 
-```
+```sql
 mysql> call dolt_commit('-am', 'Populated tables with data');
 +----------------------------------+
 | hash                             |
@@ -258,7 +258,7 @@ mysql> call dolt_commit('-am', 'Populated tables with data');
 
 You can inspect the log using `dolt_log` and see which tables changed in each commit using an unscoped `dolt_diff`. Unscoped `dolt_diff` tells you whether schema, data, or both changed in that particular commit for the table.
 
-```
+```sql
 mysql> select * from dolt_log;
 +----------------------------------+-----------+-----------------+-------------------------+----------------------------+
 | commit_hash                      | committer | email           | date                    | message                    |
@@ -287,7 +287,7 @@ mysql> select * from dolt_diff;
 
 Dolt supports undoing changes via `call dolt_reset()`. Let's imagine I accidentally drop a table.
 
-```
+```sql
 mysql> drop table employees_teams;
 Query OK, 0 rows affected (0.01 sec)
 
@@ -303,7 +303,7 @@ mysql> show tables;
 
 In a traditional database, this could be disastrous. In Dolt, you're one command away from getting your table back.
 
-```
+```sql
 mysql> call dolt_reset('--hard');
 +--------+
 | status |
@@ -345,7 +345,7 @@ To make changes on a branch, I use the `dolt_checkout()` stored procedure. Using
 
 Tableplus gives me the ability to enter a multiple line SQL script on the SQL tab. I entered the following SQL to checkout a branch, update, insert, delete, and finally Dolt commit my changes.
 
-```SQL
+```sql
 call dolt_checkout('-b','modifications');
 update employees SET first_name='Timothy' where first_name='Tim';
 insert INTO employees (id, first_name, last_name) values (4,'Daylon', 'Wilkins');
@@ -360,7 +360,7 @@ Here's the result in Tableplus.
 
 Back in my terminal, I cannot see the table modifications made in Tableplus because they happened on a different branch than the one I have checked out in my session.
 
-```
+```sql
 mysql> select * from dolt_branches;
 +---------------+----------------------------------+------------------+------------------------+-------------------------+----------------------------+
 | name          | hash                             | latest_committer | latest_committer_email | latest_commit_date      | latest_commit_message      |
@@ -392,7 +392,7 @@ mysql> select * from employees;
 
 I can query the branch no matter what I have checked out using SQL `as of` syntax.
 
-```
+```sql
 mysql> select * from employees as of 'modifications';
 +------+------------+------------+
 | id   | last_name  | first_name |
@@ -408,7 +408,7 @@ mysql> select * from employees as of 'modifications';
 
 If I'd like to see the diff between the two branches, I can use the `dolt_diff()` table function. It takes two branches and the table name as arguments.
 
-```
+```sql
 mysql> select * from dolt_diff('main', 'modifications', 'employees');
 +--------------+---------------+-------+---------------+-------------------------+----------------+-----------------+---------+-------------+-------------------------+-----------+
 | to_last_name | to_first_name | to_id | to_commit     | to_commit_date          | from_last_name | from_first_name | from_id | from_commit | from_commit_date        | diff_type |
@@ -425,7 +425,7 @@ As you can see, you have the full power of Git-style branches and diffs in a SQL
 
 I can also make schema changes on branches for isolated testing of new schema. I'm going to add a `start_date` column on a new branch and populate it.
 
-```
+```sql
 mysql> call dolt_checkout('-b', 'schema_changes');
 +--------+
 | status |
@@ -471,7 +471,7 @@ Changing schema on a branch gives you a new method for doing isolated integratio
 
 Let's assume all the testing of the new schema on the `schema_changes` branch and data on the `modifications` branch completed flawlessly. It's time to merge all our edits together onto `main`. This is done using the `dolt_merge` stored procedure.
 
-```
+```sql
 mysql> call dolt_checkout('main');
 +--------+
 | status |
@@ -505,7 +505,7 @@ mysql> select * from employees;
 
 Schema change successful. We now have start dates. Data changes are next.
 
-```
+```sql
 mysql> call dolt_merge('modifications');
 +--------------+
 | no_conflicts |
@@ -529,7 +529,7 @@ mysql> select * from employees;
 
 Data changes successful as well. As you can see, I am now "Timothy" instead of "Tim", Daylon is added, and we all have start dates except for Daylon who was added on a different branch.
 
-```
+```sql
 mysql> select first_name, last_name, team_name from employees
     join employees_teams on (employees.id=employees_teams.employee_id)
     join teams on (teams.id=employees_teams.team_id)
@@ -546,7 +546,7 @@ I'm also gone from the Sales Team. Engineering is life.
 
 Now, we have a database with all the schema and data changes merged and ready for use.
 
-```
+```sql
 mysql> select * from dolt_log;
 +----------------------------------+-----------+-----------------+-------------------------+----------------------------------------+
 | commit_hash                      | committer | email           | date                    | message                                |
@@ -567,7 +567,7 @@ Which commit changed my first name? With Dolt you have lineage for every cell in
 
 `dolt_history_<tablename>` shows you the state of the row at every commit.
 
-```
+```sql
 mysql> select * from dolt_history_employees where id=0 order by commit_date;
 +------+-----------+------------+------------+----------------------------------+-----------+-------------------------+
 | id   | last_name | first_name | start_date | commit_hash                      | committer | commit_date             |
@@ -582,7 +582,7 @@ mysql> select * from dolt_history_employees where id=0 order by commit_date;
 
 `dolt_diff_<tablename>` allows you to filter the history down to only commits when the cell in question changed. In this case, I'm interested in the commits that are changing my first name. Note, there are two commits that changed my name because one is the original change and the second is the merge commit.
 
-```
+```sql
 mysql> select to_commit,from_first_name,to_first_name from dolt_diff_employees
     where (from_id=0 or to_id=0) and (from_first_name <> to_first_name or from_first_name is NULL)
     order by to_commit_date;
