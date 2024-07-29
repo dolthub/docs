@@ -46,6 +46,8 @@ The values for these arguments will be provided to you by our DoltLab team. The 
 9. [Connect DoltLab to an SMTP server with implicit TLS](#connect-doltlab-to-an-smtp-server-with-implicit-tls)
 10. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-server-connection-problems)
 11. [Set up a SMTP server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
+12. [Serve DoltLab over HTTPS natively](#serve-doltlab-over-https-natively)
+13. [Automatically upgrade DoltLab](#automatically-upgrade-doltlab)
 
 # Use custom logo on DoltLab instance
 
@@ -1487,3 +1489,59 @@ ubuntu@ip-10-2-0-24:~/doltlab$
 ```
 
 Running the newly generated `./start.sh` will start DoltLab connected to Gmail.
+
+# Serve DoltLab over HTTPS natively
+
+First, make sure that port `443` is open on the host running DoltLab (as well as the other required ports `100`, `4321`, and `50051`) and that you have a valid TLS certificate configured for your DoltLab host. We recommend creating a TLS certificate using [certbot](https://certbot.eff.org/).
+
+Next, edit `installer_config.yaml` to contain the following:
+
+```yaml
+# installer_config.yaml
+scheme: https
+tls:
+  cert_chain: /path/to/tls/certificate/chain
+  private_key: /path/to/tls/private/key
+```
+
+Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will be served over HTTPS.
+
+```bash
+./installer
+```
+
+Alternatively, if you prefer to use command line flags, run the [installer](../reference/installer.md) with:
+
+```bash
+./installer \
+...
+-https=true \
+--tls-cert-chain=/path/to/tls/certificate/chain \
+--tls-private-key=/path/to/tls/private/key
+```
+
+You can now restart DoltLab with the `./start.sh` script, and it will be served over HTTPS.
+
+# Automatically upgrade DoltLab
+
+DoltLab >= `v2.3.0` supports automatic upgrades.
+
+To automatically upgrade your DoltLab instance to the latest version, first ensure your instance is stopped by running the `./stop.sh` script. Next run the [installer](../reference/installer.md) with the [upgrade](../reference/installer/cli.md#upgrade) flag:
+
+```bash
+./installer --upgrade
+```
+
+This will produce output like the following:
+
+```bash
+2024-07-26T18:32:56.999Z	INFO	run/upgrade.go:33	Preparing to upgrade DoltLab
+2024-07-26T18:32:57.054Z	INFO	run/upgrade.go:67	Downloading and unpacking latest version	{"version": "v2.3.1"}
+2024-07-26T18:32:58.850Z	INFO	cmd/main.go:614	Please rerun the 'installer' to generate new assets for your upgraded DoltLab
+```
+
+After this completes, you will have the latest DoltLab version. Rerun the `installer` to regenerate the DoltLab assets for the upgraded version.
+
+```bash
+./installer
+```
