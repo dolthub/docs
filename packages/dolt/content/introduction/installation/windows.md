@@ -18,6 +18,12 @@ choco install dolt
 
 We provide both `.msi` files and `.zip` files.
 
+## Scoop
+
+```powershell
+scoop install dolt
+```
+
 ## MSI Files
 
 The easiest way to install Dolt on Windows is to use our MSI files that are provided with each release, they can be found in the Assets section of our release. Grab the latest [here](https://github.com/dolthub/dolt/releases/latest).
