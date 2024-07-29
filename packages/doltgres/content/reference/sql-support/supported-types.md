@@ -106,16 +106,16 @@ For example, `timestamp` takes in a precision, but does not enforce it.
 | SQL Type Name           | Implemented |
 | :---------------------- | :---------: |
 | any                     |     ❌      |
-| anyarray                |     🟠      |
+| anyarray                |     ✅      |
 | anycompatible           |     ❌      |
 | anycompatiblearray      |     ❌      |
 | anycompatiblemultirange |     ❌      |
 | anycompatiblenonarray   |     ❌      |
 | anycompatiblerange      |     ❌      |
-| anyelement              |     ❌      |
+| anyelement              |     ✅      |
 | anyenum                 |     ❌      |
 | anymultirange           |     ❌      |
-| anynonarray             |     ❌      |
+| anynonarray             |     ✅      |
 | anyrange                |     ❌      |
 | cstring                 |     ❌      |
 | event_trigger           |     ❌      |
@@ -139,14 +139,14 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/current
 | :------------ | :-------- |
 | oid           | ✅        |
 | xid           | 🟠        |
-| regclass      | ❌        |
+| regclass      | ✅        |
 | regcollation  | ❌        |
 | regconfig     | ❌        |
 | regdictionary | ❌        |
 | regnamespace  | ❌        |
 | regoper       | ❌        |
 | regoperator   | ❌        |
-| regproc       | ❌        |
+| regproc       | ✅        |
 | regprocedure  | ❌        |
 | regrole       | ❌        |
-| regtype       | ❌        |
+| regtype       | ✅        |
