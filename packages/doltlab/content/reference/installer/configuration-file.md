@@ -902,7 +902,7 @@ Command line equivalent [scheme](./cli.md#scheme).
 
 ## tls
 
-_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/basic.md#serve-doltlab-over-https-natively) for more information.
+_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/enterprise.md#serve-doltlab-over-https-natively) for more information.
 
 - [cert_chain](#cert_chain)
 - [private_key](#private_key)
