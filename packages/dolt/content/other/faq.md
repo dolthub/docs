@@ -79,20 +79,13 @@ bumped to the front of the line.
 
 ## Does Dolt support my favorite SQL workbench / tool?
 
-Probably! Have you tried it? If you try it and it doesn't work, [let
+Probably! Have you tried it? We have [blogs and sample code](../guides/dolt-tested-apps.md)
+for many popular ORMs and tools.
+
+If you try it and it doesn't work, [let
 us know with an issue](https://github.com/dolthub/dolt/issues) or in
-[our Discord](https://discord.gg/s8uVgc3) and we'll see what
-we can do. A lot of times we can fix small compatibility issues really
-quick, like the same week. And even if we can't, we want to know about
-it! Our goal is to be a 100% drop-in replacement for MySQL.
-
-## How does Dolt Docs work? What happened to my `README.md` and `LICENSE.md`?
-
-Previously, Dolt automatically synced doc files from the file system to the
-`dolt_docs` table. This process is now manual and performed with the `dolt docs`
-CLI command. `dolt docs upload [doc name] [file name]` reads a file into the
-`dolt_docs` table with the given name. `dolt docs print [doc name]` prints a
-doc with the given name to stdout.
+[our Discord](https://discord.gg/s8uVgc3) and we'll [fix it in 24 hours](https://www.dolthub.com/blog/2024-05-15-24-hour-bug-fixes/). 
+Our goal is to be a 100% drop-in replacement for MySQL.
 
 ## How do I squash the history of a Dolt database? I only want the latest.
 
