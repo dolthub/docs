@@ -548,6 +548,10 @@ Configuration file equivalent [private_key](./configuration-file.md#private_key)
 
 _Boolean_. If true will generate a script to install DoltLab's dependencies on Ubuntu.
 
+## upgrade
+
+_Boolean_. If true will upgrade DoltLab to the latest version. DoltLab Enterprise only.
+
 ## use-env
 
 _Boolean_. If true, sensitive values will not be written to generated assets and environment variables will be expected instead.

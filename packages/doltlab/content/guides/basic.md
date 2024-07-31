@@ -12,19 +12,15 @@ This guide will cover how to perform common DoltLab administrator configuration 
 4. [Send service logs to the DoltLab team](#send-service-logs)
 5. [Authenticate a Dolt client to use a DoltLab account](#authenticate-a-dolt-client-to-use-a-doltlab-account)
 6. [Monitor DoltLab with cAdvisor and Prometheus](#monitor-doltlab-with-cadvisor-and-prometheus)
-7. [Connect DoltLab to an SMTP server](#connect-doltlab-to-an-smtp-server)
-8. [Connect DoltLab to an SMTP server with implicit TLS](#connect-doltlab-to-an-smtp-server-with-implicit-tls)
-9. [Troubleshoot SMTP server connection problems](#troubleshoot-smtp-server-connection-problems)
-10. [Set up a SMTP server using any Gmail address](#set-up-a-smtp-server-using-any-gmail-address)
-11. [Prevent unauthorized user account creation](#prevent-unauthorized-user-account-creation)
-12. [Use an external database server with DoltLab](#use-an-external-database-server-with-doltlab)
-13. [DoltLab Jobs](#doltlab-jobs)
-14. [Disable usage metrics](#disable-usage-metrics)
-15. [Use a domain name with DoltLab](#use-a-domain-name-with-doltlab)
-16. [Run DoltLab on Hosted Dolt](#run-doltlab-on-hosted-dolt)
-17. [Serve DoltLab over HTTPS natively](#serve-doltlab-over-https-natively)
-18. [Improve DoltLab performance](#improve-doltlab-performance)
-19. [Serve DoltLab behind an AWS Network Load Balancer](#serve-doltlab-behind-an-aws-network-load-balancer)
+7. [Prevent unauthorized user account creation](#prevent-unauthorized-user-account-creation)
+8. [Use an external database server with DoltLab](#use-an-external-database-server-with-doltlab)
+9. [DoltLab Jobs](#doltlab-jobs)
+10. [Disable usage metrics](#disable-usage-metrics)
+11. [Use a domain name with DoltLab](#use-a-domain-name-with-doltlab)
+12. [Run DoltLab on Hosted Dolt](#run-doltlab-on-hosted-dolt)
+13. [Improve DoltLab performance](#improve-doltlab-performance)
+14. [Serve DoltLab behind an AWS Network Load Balancer](#serve-doltlab-behind-an-aws-network-load-balancer)
+15. [Update database passwords](#update-application-database-passwords)
 
 # File issues and view release notes
 
@@ -334,235 +330,6 @@ docker run -d --add-host host.docker.internal:host-gateway --name=prometheus -p 
 
 `--add-host host.docker.internal:host-gateway` is only required if you are running the Prometheus server _on_ your DoltLab host. If its running elsewhere, this argument may be omitted, and the `host.docker.internal` hostname in `prometheus.yml` can be changed to the hostname of your DoltLab host.
 
-# Connect DoltLab to an SMTP server
-
-DoltLab's most basic configuration does not require connection to an SMTP server. In this configuration, only the default user can use the DoltLab instance, as new account creation on DoltLab _requires_ an SMTP server to be connected to the instance. To enable account creation on DoltLab and enable its full suite of features, connect DoltLab to an SMTP server by editing `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp).
-
-```yaml
-# installer_config.yaml
-smtp:
-  auth_method: plain
-  host: smtp.gmail.com
-  port: 587
-  no_reply_email: me@gmail.com
-  username: me@gmail.com
-  password: mypassword
-```
-
-Save the changes to `./installer-config.yaml` then run the [installer](../reference/installer.md) to regenerate DoltLab assets that enable connection to your SMTP server.
-
-```bash
-./installer
-```
-
-Alternatively, instead of using `./installer_config.yaml`, the [installer](../reference/installer.md) can be run with the following flag arguments to configure DoltLab to connect to your SMTP server.
-
-`--no-reply-email`, _required_, the "from" email address for all emails sent by DoltLab to users of your instance. Ensure your SMTP server allows emails to be sent by this address.  
-`--smtp-auth-method`, _required_, the authentication method supported by your SMTP server, one of `plain`, `login`, `external`, `anonymous`, `oauthbearer`, or `disable`.  
-`--smtp-host`, _required_, the host name of your SMTP server, for example `smtp.gmail.com`.
-`--smtp-port`, _required_, the port of your SMTP server.  
-`--smtp-username`, _required_ for authentication methods `plain` and `login`, the username for authenticating against the SMTP server.  
-`--smtp-password`, _required_ for authentication methods `plain` and `login`, the password for authenticating against the SMTP server.  
-`--smtp-oauth-token`, _required_ for authentication method `oauthbearer`,the oauth token used for authentication against the SMTP server.
-
-# Connect DoltLab to an SMTP server with implicit TLS
-
-Edit `./installer_config.yaml` [to configure the SMTP server connection](#installer-config-reference-smtp) set `smtp.implicit_tls` as `true`.
-
-```yaml
-# installer_config.yaml
-smtp:
-  implicit_tls: true
-```
-
-To skip TLS verification, set `smtp.insecure_tls` as `true`.
-
-```yaml
-# installer_config.yaml
-smtp:
-  implicit_tls: true
-  insecure_tls: true
-```
-
-Save these changes, then re-run the [installer](../reference/installer.md).
-
-```bash
-./installer
-```
-
-Alternatively, use `--smtp-implicit-tls=true` with the [installer](../reference/installer.md) to use implicit TLS. Use `--smtp-insecure-tls=true` to skip TLS verification.
-
-# Troubleshoot SMTP server connection problems
-
-DoltLab requires a connection to an existing SMTP server in order for users to create accounts, verify email addresses, reset forgotten passwords, and collaborate on databases.
-
-DoltLab creates a [default user](./installation/start-doltlab.md), `admin`, when if first starts up, which allows administrators to sign-in to their DoltLab instance, even if they are experiencing SMTP server connection issues.
-
-To help troubleshoot and resolve SMTP server connection issues, we've published the following [go tool](https://github.com/dolthub/doltlab-issues/blob/main/go/cmd/smtp_connection_helper/main.go) to help diagnose the SMTP connection issues on the host running DoltLab.
-
-This tool ships in DoltLab's `.zip` file and is called `smtp_connection_helper`.
-
-For usage run `./smtp_connection_helper --help` which will output:
-
-```bash
-
-'smtp_connection_helper' is a simple tool used to ensure you can successfully connect to an smtp server.
-If the connection is successful, this tool will send a test email to a single recipient from a single sender.
-By default 'smtp_connection_helper' will attempt to connect to the SMTP server with STARTTLS. To use implicit TLS, use --implicit-tls
-
-Usage:
-
-./smtp_connection_helper \
---host <smtp hostname> \
---port <smtp port> \
---from <email address> \
---to <email address> \
---message {This is a test email message sent with smtp_connection_helper!} \
---subject {Testing SMTP Server Connection} \
---client-hostname {localhost} \
---auth <plain|login|external|anonymous|oauthbearer|disable> \
-[--username smtp username] \
-[--password smtp password] \
-[--token smtp oauth token] \
-[--identity smtp identity] \
-[--trace anonymous trace] \
-[--implicit-tls] \
-[--insecure]
-```
-
-To send a test email using `plain` authentication, run:
-
-```bash
-./smtp_connection_helper \
---host existing.smtp.server.hostname \
---port 587 \ #STARTTLS port
---auth plain \
---username XXXXXXXX \
---password YYYYYYY \
---from email@address.com \
---to email@address.com
-Sending email with auth method: plain
-Successfully sent email!
-```
-
-To send a test email using `plain` authentication with implicit TLS, run:
-
-```bash
-./smtp_connection_helper \
---host existing.smtp.server.hostname \
---port 465 \ #TLS Wrapper Port
---implicit-tls \
---auth plain \
---username XXXXXXXX \
---password YYYYYYY \
---from email@address.com \
---to email@address.com
-Sending email with auth method: plain
-Successfully sent email!
-```
-
-# Set up a SMTP Server using any Gmail address
-
-To quickly get up and running with an existing SMTP server, we recommend using [Gmail's](https://www.gmail.com). Once you've created a Gmail account, navigate to [your account page](https://myaccount.google.com/) and click the [Security](https://myaccount.google.com/security) tab. Under the section "How you sign in to Google", click `2-Step Verification`. If you have not yet setup 2-Step Verification, follow the prompts on this page to enable it. You will need to set up 2-step verification before continuing on to the remaining steps.
-
-After 2-Step Verification is set up, at the bottom of the page click "App passwords".
-
-![](../.gitbook/assets/gmail_app_passwords_are_here.png)
-
-If you do not see "App Passwords" at the bottom of this page, return to the Security page and in the search bar, search for "App Passwords".
-
-![](../.gitbook/assets/gmail_search_app_passwords.png)
-
-Next, name your app password, then click "Generate." You will be provided a password you can use with your DoltLab instance.
-
-![](../.gitbook/assets/gmail_app_password_no_worky.png)
-
-This generated password can be supplied along with your Gmail email address, as the `username`, to send emails with `smtp_connection_helper` and DoltLab.
-
-```bash
-./smtp_connection_helper \
---host smtp.gmail.com \
---port 587 \
---auth plain \
---username example@gmail.com \
---password <generated App password> \
---from example@gmail.com \
---to email@address.com
-Sending email with auth method: plain
-Successfully sent email!
-```
-
-Importantly, there have been times when these passwords do not work as expected and [we've written a blog post](https://www.dolthub.com/blog/2024-05-03-deconfusing-how-to-use-gmails-smtp-server-in-2024/) about this happening.
-
-In the event the password you generated results in a "Bad credentials" error, try generating a new app password, and using that one instead. For some reason, this seems to work. We do not know the root cause, but as far as we can tell, stems from an issue/bug on Google's side.
-
-After you have the password, you can configure DoltLab to use it by stopping your running DoltLab and editing the `./installer_config.yaml` to [configure connection to Gmail's SMTP server](#installer-config-reference-smtp).
-
-```yaml
-# installer_config.yaml
-smtp:
-  auth_method: plain
-  host: smtp.gmail.com
-  port: 587
-  no_reply_email: tim@dolthub.com
-  username: tim@dolthub.com
-  password: "xxxx xxxx xxxx xxxx"
-```
-
-Save these changes and rerun the [installer](../reference/installer.md) to regenerate assets that will connect your DoltLab to Gmail's SMTP server.
-
-```bash
-./installer
-```
-
-Alternatively, you can run the [installer](../reference/installer.md) with flag arguments to configure SMTP server connection, if you don't want to use `./installer_config.yaml`:
-
-```sh
-ubuntu@ip-10-2-0-24:~/doltlab$ ./stop.sh
-WARN[0000] The "DOLT_PASSWORD" variable is not set. Defaulting to a blank string.
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
-WARN[0000] The "SMTP_SERVER_USERNAME" variable is not set. Defaulting to a blank string.
-WARN[0000] The "SMTP_SERVER_PASSWORD" variable is not set. Defaulting to a blank string.
-WARN[0000] The "SMTP_SERVER_OAUTH_TOKEN" variable is not set. Defaulting to a blank string.
-WARN[0000] The "DEFAULT_USER_PASSWORD" variable is not set. Defaulting to a blank string.
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
-WARN[0000] The "DOLTHUBAPI_PASSWORD" variable is not set. Defaulting to a blank string.
-[+] Stopping 7/7
- ✔ Container doltlab-doltlabui-1              Stopped                     10.1s
- ✔ Container doltlab-doltlabgraphql-1         Stopped                     10.1s
- ✔ Container doltlab-doltlabapi-1             Stopped                      0.1s
- ✔ Container doltlab-doltlabremoteapi-1       Stopped                      0.1s
- ✔ Container doltlab-doltlabfileserviceapi-1  Stopped                      0.1s
- ✔ Container doltlab-doltlabdb-1              Stopped                      0.1s
- ✔ Container doltlab-doltlabenvoy-1           Stopped                      0.3s
-ubuntu@ip-10-2-0-24:~/doltlab$ ./installer --host=54.191.163.60 \
---smtp-auth-method=plain \
---smtp-port=587 \
---smtp-username=tim@dolthub.com \
---smtp-password="xxxx xxxx xxxx xxxx" \
---no-reply-email=tim@dolthub.com
---smtp-host=smtp.gmail.com
-2024-05-02T19:11:03.397Z	INFO	metrics/emitter.go:111	Successfully sent DoltLab usage metrics
-
-2024-05-02T19:11:03.397Z	INFO	cmd/main.go:519	Successfully configured DoltLab	{"version": "v2.1.2"}
-
-2024-05-02T19:11:03.397Z	INFO	cmd/main.go:525	To start DoltLab, use:	{"script": "/home/ubuntu/doltlab/start.sh"}
-2024-05-02T19:11:03.397Z	INFO	cmd/main.go:530	To stop DoltLab, use:	{"script": "/home/ubuntu/doltlab/stop.sh"}
-
-ubuntu@ip-10-2-0-24:~/doltlab$ ./start.sh
-[+] Running 7/7
- ✔ Container doltlab-doltlabenvoy-1           Started                      0.5s
- ✔ Container doltlab-doltlabdb-1              Started                      0.5s
- ✔ Container doltlab-doltlabfileserviceapi-1  Started                      0.8s
- ✔ Container doltlab-doltlabremoteapi-1       Started                      1.1s
- ✔ Container doltlab-doltlabapi-1             Started                      1.3s
- ✔ Container doltlab-doltlabgraphql-1         Started                      1.4s
- ✔ Container doltlab-doltlabui-1              Started                      1.7s
-ubuntu@ip-10-2-0-24:~/doltlab$
-```
-
-Running the newly generated `./start.sh` will start DoltLab connected to Gmail.
-
 # Prevent unauthorized user account creation
 
 DoltLab supports explicit email whitelisting to prevent account creation by unauthorized users.
@@ -759,38 +526,6 @@ Start DoltLab using the `./start.sh` script generated by the [installer](../refe
 
 ![](../.gitbook/assets/hosted_dolt_workbench.png)
 
-# Serve DoltLab over HTTPS natively
-
-First, make sure that port `443` is open on the host running DoltLab (as well as the other required ports `100`, `4321`, and `50051`) and that you have a valid TLS certificate configured for your DoltLab host. We recommend creating a TLS certificate using [certbot](https://certbot.eff.org/).
-
-Next, edit `installer_config.yaml` to contain the following:
-
-```yaml
-# installer_config.yaml
-scheme: https
-tls:
-  cert_chain: /path/to/tls/certificate/chain
-  private_key: /path/to/tls/private/key
-```
-
-Save these changes and rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will be served over HTTPS.
-
-```bash
-./installer
-```
-
-Alternatively, if you prefer to use command line flags, run the [installer](../reference/installer.md) with:
-
-```bash
-./installer \
-...
--https=true \
---tls-cert-chain=/path/to/tls/certificate/chain \
---tls-private-key=/path/to/tls/private/key
-```
-
-You can now restart DoltLab with the `./start.sh` script, and it will be served over HTTPS.
-
 # Improve DoltLab performance
 
 It is possible to limit the number of concurrent Jobs running on a DoltLab host, which might be starving the host for resources and affecting DoltLab's performance.
@@ -833,12 +568,12 @@ First, setup DoltLab on an [AWS EC2 host](https://aws.amazon.com/pm/ec2) in the 
 
 If this instance should _only_ be accessible by the NLB, ensure that the DoltLab host is created in a private subnet and does not have public IP address.
 
-After setting up your DoltLab host, edit the host's inbound security group rules to allow all traffic on ports: `80/443`, `100`, `4321`, `50051`, and `2001`.
+After setting up your DoltLab host, edit the host's inbound security group rules to allow all traffic on ports: `80`, `100`, `4321`, `50051`, and `2001`.
 
 Because the host is in a private subnet with no public IP though, only the NLB will be able to connect to the host on these ports.
 
 Next, in AWS, create [target groups](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/create-target-group.html) for each DoltLab port that the NLB will forward requests to. These ports are:
-`80/443`, `100`, `4321`, and `50051`.
+`80`, `100`, `4321`, and `50051`.
 
 ![](../.gitbook/assets/doltlab_target_group_type.png)
 
@@ -881,3 +616,55 @@ Next, edit the inbound rules for the security group attached to the NLB you crea
 On the NLB page you should now see the DNS name of your NLB which can be used to connect to your DoltLab instance.
 
 Restart your DoltLab instance supplying this DNS name as the `--host` to the [installer](../reference/installer.md), and your DoltLab instance will now be ready to run exclusively through the NLB.
+
+# Update application database passwords
+
+If DoltLab has never been started before on the host using the `start.sh` script, the passwords for its application database `doltlabdb` can be updated simply by editing their value in the `installer_config.yaml`, and then running the `installer`.
+
+```yaml
+# installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: "MySecurePassword1"
+    dolthubapi_password: "MySecurePassword2"
+```
+
+```bash
+# run the installer to regenerate DoltLab assets
+./installer
+```
+
+If DoltLab _has_ been started before, then its application database has been initialized already, and has existing passwords for the SQL users `dolthubadmin` and `dolthubapi`. Changing the passwords in this instance requires DoltLab to be running, so that you can connect to the appliciation database `doltlabdb` with a SQL shell.
+
+Ensure that DoltLab is running by executing the `./start.sh` script. Then, run `./doltlabdb/shell-db.sh` to open a SQL shell against `doltlabdb`. You will see a prompt like:
+
+```bash
+mysql>
+```
+
+Next, update the passwords for the users `dolthubadmin` and `dolthubapi` to the values of your choosing:
+
+```bash
+mysql> alter user dolthubadmin identified by 'NewPasswordHere';
+mysql> alter user dolthubapi identified by 'NewPasswordHere';
+```
+
+Close the SQL shell, and stop DoltLab with `./stop.sh`.
+
+Next, update `installer_config.yaml` to contain the new passwords you changed in the live database:
+
+```yaml
+# installer_config.yaml
+services:
+  doltlabdb:
+    admin_password: "NewPasswordHere"
+    dolthubapi_password: "NewPasswordHere"
+```
+
+Finally, rerun the `installer` to regenerate DoltLab's assets with the new password values.
+
+```bash
+./installer
+```
+
+Completing these steps ensures that the passwords are consistent on disk _and_ in the assets generated by the `installer`. You can now restart DoltLab.

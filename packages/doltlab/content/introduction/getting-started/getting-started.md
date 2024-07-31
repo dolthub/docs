@@ -279,11 +279,11 @@ You're now ready to try out all the Dolt and DoltLab experiences like Pull Reque
 
 ## Create new users
 
-As discussed in [the single user section](#single-user), creating users requires a working SMTP server to send emails. Configuring an email server for DoltLab is beyond the scope of this Getting Started guide. You have a bunch of options, the simplest being using any Gmail address' SMTP server. Consult [this guide to set up an email server for DoltLab](../../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
+As discussed in [the single user section](#single-user), creating users in DoltLab <= `v2.1.6` requires a working SMTP server to send emails. However, DoltLab >= `v2.2.0` does not require an SMTP server connection in order for new users to create accounts on your DoltLab instance. In this newer version, an SMTP server connection can only be made with DoltLab Enterprise. For more information, consult [this guide to set up an email server for DoltLab](../../guides/enterprise.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## Receive Email Notifications
 
-DoltLab sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../../guides/basic.md#set-up-a-smtp-server-using-any-gmail-address).
+DoltLab Enterprise sends emails for password resets, pull request and issue status, and a few other use cases. Obviously, these also won't work without a running email server. Consult [this guide to set up an email server for DoltLab](../../guides/enterprise.md#set-up-a-smtp-server-using-any-gmail-address).
 
 ## HTTPS
 

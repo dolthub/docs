@@ -23,6 +23,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 | [Ruby on Rails](https://rubyonrails.org/)                                                 | Ruby       | [Blog](https://www.dolthub.com/blog/2024-02-09-dolt-ruby-on-rails/)            | [Code](https://github.com/dolthub/dolt_rails)                                | 
 | [SQLAlchemy](https://www.sqlalchemy.org/)                                                 | Python     | [Blog](https://www.dolthub.com/blog/2023-07-12-sql-alchemy-getting-started/)   | [Code](https://github.com/timsehn/dolt-sqlalchemy-getting-started/tree/main) |
 | [Shiny](https://shiny.posit.co/)                                                          | R          | [Blog](https://www.dolthub.com/blog/2024-04-26-dolt-r-shiny/)                  | [Code](https://github.com/dolthub/dolt_shiny)                                | 
+| [Prisma](https://www.prisma.io/)                                                          | TypeScript | [Blog](https://www.dolthub.com/blog/2024-06-28-dolt-and-prisma/)               | [Code](https://github.com/dolthub/dolt-prisma-example)                       | 
 
 ## Tools
 
@@ -30,6 +31,7 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 |----------------------------------------------------------------|------------------------------------------------------------------------------| 
 | [Apache Superset](https://superset.apache.org/)                | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/)               |
 | [Datadog](https://www.datadoghq.com/)                          | [Blog](https://www.dolthub.com/blog/2024-05-17-dolt-datadog-dashboards/)     |
+| [Debezium](https://debezium.io/)                               | [Blog](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/)    |
 | [Excel](https://www.microsoft.com/en-us/microsoft-365/excel)   | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel)                   | 
 | [Google Sheets](https://www.google.com/sheets/about/#overview) | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/)          |
 | [Looker Studio](https://lookerstudio.google.com/)              | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/)                 |
