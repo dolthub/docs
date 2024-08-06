@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 308 of 438 MySQL functions.**
+**Currently supporting 308 of 431 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -108,10 +108,6 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `BIT_LENGTH()`                    | ✅            |                                                                                                                                               |
 | `BIT_OR()`                        | ✅            | `\` is supported                                                                                                                              |
 | `BIT_XOR()`                       | ✅            | `^` is supported                                                                                                                              |
-| `CAN_ACCESS_COLUMN()`             | ❌            |                                                                                                                                               |
-| `CAN_ACCESS_DATABASE()`           | ❌            |                                                                                                                                               |
-| `CAN_ACCESS_TABLE()`              | ❌            |                                                                                                                                               |
-| `CAN_ACCESS_VIEW()`               | ❌            |                                                                                                                                               |
 | `CASE`                            | ✅            |                                                                                                                                               |
 | `CAST()`                          | ✅            | Convert between types supported. Convert between charsets is not.                                                                             |
 | `CEIL()`                          | ✅            |                                                                                                                                               |
@@ -181,9 +177,6 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `FROM_BASE64()`                   | ✅            |                                                                                                                                               |
 | `FROM_DAYS()`                     | ✅            |                                                                                                                                               |
 | `FROM_UNIXTIME()`                 | ✅            |                                                                                                                                               |
-| `GET_DD_COLUMN_PRIVILEGES()`      | ❌            |                                                                                                                                               |
-| `GET_DD_CREATE_OPTIONS()`         | ❌            |                                                                                                                                               |
-| `GET_DD_INDEX_SUB_PART_LENGTH()`  | ❌            |                                                                                                                                               |
 | `GET_FORMAT()`                    | ❌            |                                                                                                                                               |
 | `GET_LOCK()`                      | ✅            |                                                                                                                                               |
 | `GREATEST()`                      | ✅            |                                                                                                                                               |
