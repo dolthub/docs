@@ -729,7 +729,6 @@ CALL DOLT_MERGE('origin/main');
 ```
 
 ### Notes
-
 Dropping the second argument, or passing NULL, will result is using the default refspec.
 
 ## `DOLT_GC()`

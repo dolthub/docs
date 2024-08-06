@@ -19,7 +19,7 @@ what you need.
 | [pg_am](https://www.postgresql.org/docs/current/catalog-pg-am.html)                                       | ✅     | ❌        |
 | [pg_amop](https://www.postgresql.org/docs/current/catalog-pg-amop.html)                                   | ✅     | ❌        |
 | [pg_amproc](https://www.postgresql.org/docs/current/catalog-pg-amproc.html)                               | ✅     | ❌        |
-| [pg_attrdef](https://www.postgresql.org/docs/current/catalog-pg-attrdef.html)                             | ✅     | ❌        |
+| [pg_attrdef](https://www.postgresql.org/docs/current/catalog-pg-attrdef.html)                             | ✅     | 🟠        |
 | [pg_attribute](https://www.postgresql.org/docs/current/catalog-pg-attribute.html)                         | ✅     | 🟠        |
 | [pg_auth_members](https://www.postgresql.org/docs/current/catalog-pg-auth-members.html)                   | ✅     | ❌        |
 | [pg_authid](https://www.postgresql.org/docs/current/catalog-pg-authid.html)                               | ✅     | ❌        |
@@ -201,44 +201,44 @@ Supported functions work as `SELECT [function]`, but not yet as `SELECT * FROM [
 
 See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/functions-info.html#FUNCTIONS-INFO-CATALOG-TABLE).
 
-| Function                                     | Supported | Notes and limitations |
-| :------------------------------------------- | :-------- | :-------------------- |
-| format_type(oid, integer)                    | ✅        |                       |
-| pg_char_to_encoding(name)                    | ❌        |                       |
-| pg_encoding_to_char(integer)                 | ❌        |                       |
-| pg_get_catalog_foreign_keys()                | ❌        |                       |
-| pg_get_constraintdef(oid [, boolean])        | ❌        |                       |
-| pg_get_expr(pg_node_tree, oid [, boolean])   | ❌        |                       |
-| pg_get_functiondef(oid)                      | ❌        |                       |
-| pg_get_function_arguments(oid)               | ❌        |                       |
-| pg_get_function_identity_arguments(oid)      | ❌        |                       |
-| pg_get_function_result(oid)                  | ❌        |                       |
-| pg_get_indexdef(oid [, integer, boolean])    | ❌        |                       |
-| pg_get_keywords()                            | ❌        |                       |
-| pg_get_ruledef(oid [, boolean])              | ❌        |                       |
-| pg_get_serial_sequence(text, text)           | ❌        |                       |
-| pg_get_statisticsobjdef(oid)                 | ❌        |                       |
-| pg_get_triggerdef(oid [, boolean])           | ❌        |                       |
-| pg_get_userbyid(oid)                         | ❌        |                       |
-| pg_get_viewdef(oid [, boolean])              | ❌        |                       |
-| pg_get_viewdef(text [, boolean])             | ❌        |                       |
-| pg_index_column_has_property(regclass, text) | ❌        |                       |
-| pg_indexam_has_property(oid, text)           | ❌        |                       |
-| pg_options_to_table(text[])                  | ❌        |                       |
-| pg_settings_get_flags(text)                  | ❌        |                       |
-| pg_tablespace_databases(oid)                 | ❌        |                       |
-| pg_tablespace_location(pod)                  | ❌        |                       |
-| pg_typeof("any")                             | ❌        |                       |
-| COLLATION FOR("any)                          | ❌        |                       |
-| to_regclass(text)                            | ✅        |                       |
-| to_regcollation(text)                        | ❌        |                       |
-| to_regnamespace(text)                        | ❌        |                       |
-| to_regoper(text)                             | ❌        |                       |
-| to_regoperator(text)                         | ❌        |                       |
-| to_regproc(text)                             | ✅        |                       |
-| to_regprocedure(text)                        | ❌        |                       |
-| to_regrole(text)                             | ❌        |                       |
-| to_regtype(text)                             | ✅        |                       |
+| Function                                     | Supported | Notes and limitations   |
+| :------------------------------------------- | :-------- | :---------------------- |
+| format_type(oid, integer)                    | ✅        |                         |
+| pg_char_to_encoding(name)                    | ❌        |                         |
+| pg_encoding_to_char(integer)                 | ❌        |                         |
+| pg_get_catalog_foreign_keys()                | ❌        |                         |
+| pg_get_constraintdef(oid [, boolean])        | ✅        |                         |
+| pg_get_expr(pg_node_tree, oid [, boolean])   | 🟠        | Parses, not implemented |
+| pg_get_functiondef(oid)                      | ❌        |                         |
+| pg_get_function_arguments(oid)               | ❌        |                         |
+| pg_get_function_identity_arguments(oid)      | ❌        |                         |
+| pg_get_function_result(oid)                  | ❌        |                         |
+| pg_get_indexdef(oid [, integer, boolean])    | ❌        |                         |
+| pg_get_keywords()                            | ❌        |                         |
+| pg_get_ruledef(oid [, boolean])              | ❌        |                         |
+| pg_get_serial_sequence(text, text)           | ❌        |                         |
+| pg_get_statisticsobjdef(oid)                 | ❌        |                         |
+| pg_get_triggerdef(oid [, boolean])           | ❌        |                         |
+| pg_get_userbyid(oid)                         | ❌        |                         |
+| pg_get_viewdef(oid [, boolean])              | ❌        |                         |
+| pg_get_viewdef(text [, boolean])             | ❌        |                         |
+| pg_index_column_has_property(regclass, text) | ❌        |                         |
+| pg_indexam_has_property(oid, text)           | ❌        |                         |
+| pg_options_to_table(text[])                  | ❌        |                         |
+| pg_settings_get_flags(text)                  | ❌        |                         |
+| pg_tablespace_databases(oid)                 | ❌        |                         |
+| pg_tablespace_location(pod)                  | ❌        |                         |
+| pg_typeof("any")                             | ❌        |                         |
+| COLLATION FOR("any)                          | ❌        |                         |
+| to_regclass(text)                            | ✅        |                         |
+| to_regcollation(text)                        | ❌        |                         |
+| to_regnamespace(text)                        | ❌        |                         |
+| to_regoper(text)                             | ❌        |                         |
+| to_regoperator(text)                         | ❌        |                         |
+| to_regproc(text)                             | ✅        |                         |
+| to_regprocedure(text)                        | ❌        |                         |
+| to_regrole(text)                             | ❌        |                         |
+| to_regtype(text)                             | ✅        |                         |
 
 ## Schema Visibility Inquiry Functions
 
