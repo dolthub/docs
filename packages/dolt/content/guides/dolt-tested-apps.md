@@ -27,17 +27,18 @@ Let us know what else you'd like to see tested by sending us [email](mailto:inte
 
 ## Tools
 
-| Tool                                                           | Blog                                                                         | 
-|----------------------------------------------------------------|------------------------------------------------------------------------------| 
-| [Apache Superset](https://superset.apache.org/)                | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/)               |
-| [Datadog](https://www.datadoghq.com/)                          | [Blog](https://www.dolthub.com/blog/2024-05-17-dolt-datadog-dashboards/)     |
-| [Debezium](https://debezium.io/)                               | [Blog](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/)    |
-| [Excel](https://www.microsoft.com/en-us/microsoft-365/excel)   | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel)                   | 
-| [Google Sheets](https://www.google.com/sheets/about/#overview) | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/)          |
-| [Looker Studio](https://lookerstudio.google.com/)              | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/)                 |
-| [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki)          | [Blog](https://www.dolthub.com/blog/2024-04-05-dolt-mediawiki-wikipedia/)    |
-| [Metabase](https://github.com/metabase/metabase)               | [Blog](https://www.dolthub.com/blog/2024-01-24-dolt-metabase/)               |
-| [R Studio](https://posit.co/download/rstudio-desktop/)         | [Blog](https://www.dolthub.com/blog/2022-02-14-dolt-and-r/)                  |
-| [Retool](https://retool.com/)                                  | [Blog](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/) |
-| [WordPress](https://wordpress.com/)                            | [Blog](https://www.dolthub.com/blog/2023-08-04-wordpress-on-dolt/)           |
-| [XCA](https://hohnstaedt.de/xca/)                              | [Blog](https://www.dolthub.com/blog/2023-08-21-xca-on-dolt/)                 |
+| Tool                                                                                       | Blog                                                                                       | 
+|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------| 
+| [Apache Superset](https://superset.apache.org/)                                            | [Blog](https://www.dolthub.com/blog/2023-01-27-dolt-superset/)                             |
+| [Datadog](https://www.datadoghq.com/)                                                      | [Blog](https://www.dolthub.com/blog/2024-05-17-dolt-datadog-dashboards/)                   |
+| [Debezium](https://debezium.io/)                                                           | [Blog](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/)                  |
+| [Excel](https://www.microsoft.com/en-us/microsoft-365/excel)                               | [Blog](https://www.dolthub.com/blog/2023-11-24-dolt-excel)                                 | 
+| [Google Sheets](https://www.google.com/sheets/about/#overview)                             | [Blog](https://www.dolthub.com/blog/2023-09-15-dolt-google-sheets/)                        |
+| [Looker Studio](https://lookerstudio.google.com/)                                          | [Blog](https://www.dolthub.com/blog/2023-02-13-dolt-looker/)                               |
+| [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki)                                      | [Blog](https://www.dolthub.com/blog/2024-04-05-dolt-mediawiki-wikipedia/)                  |
+| [Metabase](https://github.com/metabase/metabase)                                           | [Blog](https://www.dolthub.com/blog/2024-01-24-dolt-metabase/)                             |
+| [Python MySQL Replication](https://github.com/julien-duponchelle/python-mysql-replication) | [Blog](https://www.dolthub.com/blog/2024-08-08-python-mysql-replication-works-with-dolt/)  |
+| [R Studio](https://posit.co/download/rstudio-desktop/)                                     | [Blog](https://www.dolthub.com/blog/2022-02-14-dolt-and-r/)                                |
+| [Retool](https://retool.com/)                                                              | [Blog](https://www.dolthub.com/blog/2023-01-03-superpower-retool-with-dolt/)               |
+| [WordPress](https://wordpress.com/)                                                        | [Blog](https://www.dolthub.com/blog/2023-08-04-wordpress-on-dolt/)                         |
+| [XCA](https://hohnstaedt.de/xca/)                                                          | [Blog](https://www.dolthub.com/blog/2023-08-21-xca-on-dolt/)                               |
