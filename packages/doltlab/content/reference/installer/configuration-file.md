@@ -7,13 +7,12 @@ title: Installer configuration file reference
 ```yaml
 # installer_config.yaml
 
-version: "v2.1.4"
+version: "v2.3.0"
 host: "127.0.0.1"
 docker_network: "doltlab"
 metrics_disabled: false
 whitelist_all_users: true
 use_env: false
-scheme: "http"
 services:
   doltlabdb:
     host: "127.0.0.1"
@@ -60,22 +59,6 @@ default_user:
   name: "admin"
   email: "admin@localhost"
   password: "*****"
-smtp:
-  host: "scheme: "http""
-  port: 587
-  auth_method: "plain"
-  no_reply_email: "user@email.com"
-  username: "user@email.com"
-  password: "*****"
-  oauth_token: "*****"
-  identity: "doltlab"
-  trace: "doltlab"
-  client_hostname: "doltlab"
-  implicit_tls: false
-  insecure_tls: false
-tls:
-  cert_chain: "/path/to/cert.pem"
-  private_key: "/path/to/key.pem"
 jobs:
   concurrency_limit: 10
   concurrency_loop_seconds: 30
@@ -85,6 +68,23 @@ enterprise:
   online_shared_key: "*****"
   online_api_key: "*****"
   online_license_key: "*****"
+  scheme: "http"
+  tls:
+    cert_chain: "/path/to/cert.pem"
+    private_key: "/path/to/key.pem"
+  smtp:
+    host: "smtp.email.com"
+    port: 587
+    auth_method: "plain"
+    no_reply_email: "user@email.com"
+    username: "user@email.com"
+    password: "*****"
+    oauth_token: "*****"
+    identity: "doltlab"
+    trace: "doltlab"
+    client_hostname: "doltlab"
+    implicit_tls: false
+    insecure_tls: false
   saml:
     metadata_descriptor_file: "/path/to/metadata/descriptor"
     cert_common_name: "doltlab"
@@ -128,9 +128,6 @@ The following are top-level `installer_config.yaml` options:
 - [use_env](#use_env)
 - [services](#services)
 - [default_user](#default_user)
-- [smtp](#smtp)
-- [scheme](#scheme)
-- [tls](#tls)
 - [jobs](#jobs)
 - [enterprise](#enterprise)
 
@@ -739,198 +736,6 @@ default_user:
 
 Command line equivalent [default-user-email](./cli.md#default-user-email).
 
-## smtp
-
-_Dictionary_. The configuration options for an external SMTP server. _Optional_. See [connecting DoltLab to an SMTP server](../../guides/basic.md#connect-doltlab-to-an-smtp-server) for more information.
-
-- [auth_method](#auth_method)
-- [host](#smtp-host)
-- [port](#smtp-port)
-- [no_reply_email](#no_reply_email)
-- [username](#username)
-- [password](#smtp-password)
-- [oauth_token](#oauth-token)
-- [identity](#identity)
-- [trace](#trace)
-- [implicit_tls](#implicit-tls)
-- [insecure_tls](#insecure-tls)
-
-### auth_method
-
-_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  auth_method: plain
-```
-
-Command line equivalent [smtp-auth-method](./cli.md#smtp-auth-method).
-
-<h3 id="smtp-host">host</h3>
-
-_String_. The host name of the SMTP server. _Required_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  host: smtp.gmail.com
-```
-
-Command line equivalent [smtp-host](./cli.md#smtp-host).
-
-<h3 id="smtp-port">port</h3>
-
-_Number_. The port of the SMTP server. _Required_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  port: 587
-```
-
-Command line equivalent [smtp-port](./cli.md#smtp-port).
-
-### no_reply_email
-
-_String_. The email address used to send emails from DoltLab. _Required_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  no_reply_email: admin@localhost
-```
-
-Command line equivalent [no-reply-email](./cli.md#no-reply-email).
-
-### username
-
-_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  username: mysmtpusername
-```
-
-Command line equivalent [smtp-username](./cli.md#smtp-username).
-
-<h3 id="smtp-password">password</h3>
-
-_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  password: mypassword
-```
-
-Command line equivalent [smtp-password](./cli.md#smtp-password).
-
-### oauth_token
-
-_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  oauth_token: myoauthtoken
-```
-
-Command line equivalent [smtp-oauth-token](./cli.md#smtp-oauth-token).
-
-### identity
-
-_String_. The SMTP server identity. _Optional_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  identity: mysmtpidentity
-```
-
-Command line equivalent [smtp-identity](./cli.md#smtp-identity).
-
-### trace
-
-_String_. The SMTP server trace. _Optional_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  trace: mysmtptrace
-```
-
-Command line equivalent [smtp-trace](./cli.md#smtp-trace).
-
-### implicit_tls
-
-_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  implicit_tls: false
-```
-
-Command line equivalent [smtp-implicit-tls](./cli.md#smtp-implicit-tls).
-
-### insecure_tls
-
-_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_.
-
-```yaml
-# example installer_config.yaml
-smtp:
-  insecure_tls: false
-```
-
-Command line equivalent [smtp-insecure-tls](./cli.md#smtp-insecure-tls).
-
-## scheme
-
-_String_. The HTTP scheme of the DoltLab deployment, defaults to `http`. _Optional_.
-
-```yaml
-# example installer_config.yaml
-scheme: http
-```
-
-See [how to serve DoltLab over HTTPS](#doltlab-https-natively) for more information.
-
-Command line equivalent [scheme](./cli.md#scheme).
-
-## tls
-
-_Dictionary_. TLS configuration options. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/enterprise.md#serve-doltlab-over-https-natively) for more information.
-
-- [cert_chain](#cert_chain)
-- [private_key](#private_key)
-
-### cert_chain
-
-_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_.
-
-```yaml
-# example installer_config.yaml
-tls:
-  cert_chain: /path/to/tls/cert/chain.pem
-```
-
-Command line equivalent [tls-cert-chain](./cli.md#tls-cert-chain).
-
-### private_key
-
-_String_. The absolute path to a TLS private key with `.pem` extension. _Required_.
-
-```yaml
-# example installer_config.yaml
-tls:
-  private_key: /path/to/tls/private/key.pem
-```
-
-Command line equivalent [tls-private-key](./cli.md#tls-private-key).
-
 ## jobs
 
 _Dictionary_. Job configuration options. _Optional_. See [improving DoltLab performance](../../guides/basic.md#improve-doltlab-performance) for more information.
@@ -983,6 +788,9 @@ _Dictionary_. Enterprise configuration options. _Optional_.
 - [online_shared_key](#online_shared_key)
 - [online_api_key](#online_api_key)
 - [online_license_key](#online_license_key)
+- [scheme](#scheme)
+- [tls](#tls)
+- [smtp](#smtp)
 - [customize](#customize)
 - [automated_backups](#automated_backups)
 - [multihost](#multihost)
@@ -1037,6 +845,212 @@ enterprise:
 
 Command line equivalent [enterprise-online-license-key](./cli.md#enterprise-online-license-key).
 
+## scheme
+
+_String_. The HTTP scheme of the DoltLab deployment, defaults to `http`. DoltLab Enterprise only. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  scheme: http
+```
+
+See [how to serve DoltLab over HTTPS](../../guides/enterprise.md#doltlab-https-natively) for more information.
+
+Command line equivalent [scheme](./cli.md#scheme).
+
+## tls
+
+_Dictionary_. TLS configuration options. DoltLab Enterprise only. _Optional_. See [serving DoltLab natively over HTTPS](../../guides/enterprise.md#serve-doltlab-over-https-natively) for more information.
+
+- [cert_chain](#cert_chain)
+- [private_key](#private_key)
+
+### cert_chain
+
+_String_. The absolute path to a TLS certificate chain with `.pem` extension. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  tls:
+    cert_chain: /path/to/tls/cert/chain.pem
+```
+
+Command line equivalent [tls-cert-chain](./cli.md#tls-cert-chain).
+
+### private_key
+
+_String_. The absolute path to a TLS private key with `.pem` extension. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  tls:
+    private_key: /path/to/tls/private/key.pem
+```
+
+Command line equivalent [tls-private-key](./cli.md#tls-private-key).
+
+## smtp
+
+_Dictionary_. The configuration options for an external SMTP server. DoltLab Enterprise only. _Optional_. See [connecting DoltLab to an SMTP server](../../guides/enterprise.md#connect-doltlab-to-an-smtp-server) for more information.
+
+- [auth_method](#auth_method)
+- [host](#smtp-host)
+- [port](#smtp-port)
+- [no_reply_email](#no_reply_email)
+- [username](#username)
+- [password](#smtp-password)
+- [oauth_token](#oauth-token)
+- [identity](#identity)
+- [trace](#trace)
+- [implicit_tls](#implicit-tls)
+- [insecure_tls](#insecure-tls)
+
+### auth_method
+
+_String_. The authentication method used by the SMTP server. _Required_. One of `plain`, `login`, `oauthbearer`, `anonymous`, `external`, and `disable`.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    auth_method: plain
+```
+
+Command line equivalent [smtp-auth-method](./cli.md#smtp-auth-method).
+
+<h3 id="smtp-host">host</h3>
+
+_String_. The host name of the SMTP server. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    host: smtp.gmail.com
+```
+
+Command line equivalent [smtp-host](./cli.md#smtp-host).
+
+<h3 id="smtp-port">port</h3>
+
+_Number_. The port of the SMTP server. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    port: 587
+```
+
+Command line equivalent [smtp-port](./cli.md#smtp-port).
+
+### no_reply_email
+
+_String_. The email address used to send emails from DoltLab. _Required_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    no_reply_email: admin@localhost
+```
+
+Command line equivalent [no-reply-email](./cli.md#no-reply-email).
+
+### username
+
+_String_. The username used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    username: mysmtpusername
+```
+
+Command line equivalent [smtp-username](./cli.md#smtp-username).
+
+<h3 id="smtp-password">password</h3>
+
+_String_. The password used for connecting to the SMTP server. _Required_ for `auth_method` `login` and `plain`.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    password: mypassword
+```
+
+Command line equivalent [smtp-password](./cli.md#smtp-password).
+
+### oauth_token
+
+_String_. The oauth token used for connecting to the SMTP server. _Required_ for `auth_method` `oauthbearer`.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    oauth_token: myoauthtoken
+```
+
+Command line equivalent [smtp-oauth-token](./cli.md#smtp-oauth-token).
+
+### identity
+
+_String_. The SMTP server identity. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    identity: mysmtpidentity
+```
+
+Command line equivalent [smtp-identity](./cli.md#smtp-identity).
+
+### trace
+
+_String_. The SMTP server trace. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    trace: mysmtptrace
+```
+
+Command line equivalent [smtp-trace](./cli.md#smtp-trace).
+
+### implicit_tls
+
+_Boolean_. If true, uses implicit TLS to connect to the SMTP server. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    implicit_tls: false
+```
+
+Command line equivalent [smtp-implicit-tls](./cli.md#smtp-implicit-tls).
+
+### insecure_tls
+
+_Boolean_. If true, uses insecure TLS to connect to the SMTP server. _Optional_.
+
+```yaml
+# example installer_config.yaml
+enterprise:
+  smtp:
+    insecure_tls: false
+```
+
+Command line equivalent [smtp-insecure-tls](./cli.md#smtp-insecure-tls).
+
 ### customize
 
 _Dictionary_. Customizable option configuration. _Optional_.
@@ -1047,7 +1061,7 @@ _Dictionary_. Customizable option configuration. _Optional_.
 
 #### email_templates
 
-_Boolean_. If true, generates email templates that can be customized. _Optional_. See [customizing DoltLab emails](../../guides/enterprise.md#customize-automated-emails) for more information.
+_Boolean_. If true, generates email templates that can be customized. DoltLab Enterprise only. _Optional_. See [customizing DoltLab emails](../../guides/enterprise.md#customize-automated-emails) for more information.
 
 ```yaml
 # example installer_config.yaml

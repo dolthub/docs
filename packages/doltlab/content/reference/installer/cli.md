@@ -408,7 +408,7 @@ Configuration file equivalent [host](./configuration-file.md#host).
 
 ## https
 
-_Boolean_. If true, will set the url scheme of DoltLab to `https://`.
+_Boolean_. If true, will set the url scheme of DoltLab to `https://`. DoltLab Enterprise only.
 
 Configuration file equivalent [scheme](./configuration-file.md#scheme).
 
@@ -432,7 +432,7 @@ Configuration file equivalent [max_retries](./configuration-file.md#max_retries)
 
 ## no-reply-email
 
-_String_. The email address used as the "from" address in emails sent from DoltLab.
+_String_. The email address used as the "from" address in emails sent from DoltLab. DoltLab Enterprise only.
 
 Configuration file equivalent [no_reply_email](./configuration-file.md#no_reply_email).
 
@@ -450,67 +450,67 @@ Configuration file equivalent [oci_key_file](./configuration-file.md#oci_key_fil
 
 ## smtp-auth-method
 
-_String_. The authentication method of an SMTP server, one of `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`.
+_String_. The authentication method of an SMTP server, one of `plain`, `login`, `anonymous`, `external`, `oauthbearer`, or `disable`. DoltLab Enterprise only.
 
 Configuration file equivalent [auth_method](./configuration-file.md#auth_method).
 
 ## smtp-client-hostname
 
-_String_. The client hostname of an SMTP server.
+_String_. The client hostname of an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [client_hostname](./configuration-file.md#client_hostname).
 
 ## smtp-host
 
-_String_. The hostname of an SMTP server.
+_String_. The hostname of an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [host](./configuration-file.md#smtp-host).
 
 ## smtp-identity
 
-_String_. The identity of an SMTP server.
+_String_. The identity of an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [identity](./configuration-file.md#identity).
 
 ## smtp-implicit-tls
 
-_Boolean_. If true, will use implicit TLS when DoltLab connects to the SMTP server.
+_Boolean_. If true, will use implicit TLS when DoltLab connects to the SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [implicit_tls](./configuration-file.md#implicit_tls).
 
 ## smtp-insecure-tls
 
-_String_. If true, will skip TLS verification when DoltLab connects to the SMTP server.
+_String_. If true, will skip TLS verification when DoltLab connects to the SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [insecure_tls](./configuration-file.md#insecure_tls).
 
 ## smtp-oauth-token
 
-_String_. The Oauth token used for authenticating against an SMTP server.
+_String_. The Oauth token used for authenticating against an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [oauth_token](./configuration-file.md#oauth_token).
 
 ## smtp-password
 
-_String_. The password used for authenticating against an SMTP server.
+_String_. The password used for authenticating against an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [password](./configuration-file.md#smtp-password).
 
 ## smtp-port
 
-_Number_. The port of an SMTP server.
+_Number_. The port of an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [port](./configuration-file.md#smtp-port).
 
 ## smtp-trace
 
-_String_. The trace of an SMTP server.
+_String_. The trace of an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [trace](./configuration-file.md#trace).
 
 ## smtp-username
 
-_String_. The username used for authenticating against an SMTP server.
+_String_. The username used for authenticating against an SMTP server. DoltLab Enterprise only.
 
 Configuration file equivalent [username](./configuration-file.md#username).
 
@@ -534,13 +534,13 @@ Configuration file equivalent [super_admins](./configuration-file.md#super_admin
 
 ## tls-cert-chain
 
-_String_. Absolute path to TLS certificate chain with `.pem` extension.
+_String_. Absolute path to TLS certificate chain with `.pem` extension. DoltLab Enterprise only.
 
 Configuration file equivalent [cert_chain](./configuration-file.md#cert_chain).
 
 ## tls-private-key
 
-_String_. Absolute path to TLS private key with `.pem` extension.
+_String_. Absolute path to TLS private key with `.pem` extension. DoltLab Enterprise only.
 
 Configuration file equivalent [private_key](./configuration-file.md#private_key).
 
