@@ -1179,6 +1179,9 @@ Shows logs in a compact format.
 `--stat`:
 Shows the diffstat for each commit.
 
+`--graph`:
+Shows a graphical representation of the commit history.
+
 
 
 ## `dolt login`
