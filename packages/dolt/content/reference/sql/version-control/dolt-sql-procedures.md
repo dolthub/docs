@@ -347,7 +347,12 @@ CALL DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');
 
 ### Options
 
-No options for this procedure.
+`--abort`:
+Abort the current conflict resolution process, and revert all changes from the in-process cherry-pick operation.
+
+`--allow-empty`:
+Allow empty commits to be cherry-picked. Note that use of this option only keeps commits that were initially empty. Commits which become empty, due to a previous commit, will cause cherry-pick to fail.
+
 
 ### Output Schema
 
@@ -1045,7 +1050,11 @@ Currently only interactive rebases are supported, and there is no support for re
 
 `--continue`: Continue an interactive rebase after adjusting the rebase plan stored in `dolt_rebase`.
 
-`--abort`: Abort a rebase in progress. 
+`--abort`: Abort a rebase in progress.
+
+`--empty`:
+How to handle commits that are not empty to start, but which become empty after rebasing. Valid values are: drop (default) or keep
+
 
 ### Output Schema
 
