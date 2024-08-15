@@ -366,6 +366,9 @@ If any data conflicts, schema conflicts, or constraint violations are detected d
 `--abort`:
 Abort the current conflict resolution process, and revert all changes from the in-process cherry-pick operation.
 
+`--allow-empty`:
+Allow empty commits to be cherry-picked. Note that use of this option only keeps commits that were initially empty. Commits which become empty, due to a previous commit, will cause cherry-pick to fail.
+
 
 
 ## `dolt clean`
@@ -499,7 +502,7 @@ Specify an explicit author using the standard A U Thor `<author@example.com>` fo
 Adds all existing, changed tables (but not new tables) in the working set to the staged set.
 
 `-A`, `--ALL`:
-Adds all tables (including new tables) in the working set to the staged set.
+Adds all tables and databases (including new tables) in the working set to the staged set.
 
 `--amend`:
 Amend previous commit
@@ -872,6 +875,9 @@ Determines how to display modified rows with tabular output. Valid values are ro
 `-R`, `--reverse`:
 Reverses the direction of the diff.
 
+`--name-only`:
+Only shows table names.
+
 
 
 ## `dolt docs diff`
@@ -1047,6 +1053,9 @@ logs more information
 `-b`, `--branches`:
 filter all branches
 
+`--apply-to-uncommitted`:
+apply changes to uncommitted tables
+
 `-a`, `--all`:
 filter all branches and tags
 
@@ -1180,7 +1189,7 @@ Shows logs in a compact format.
 Shows the diffstat for each commit.
 
 `--graph`:
-Shows a graphical representation of the commit history.
+Shows the commit graph.
 
 
 
@@ -1547,6 +1556,9 @@ single commit, or reorder commits so that related changes are adjacent in the ne
 
 
 **Arguments and options**
+
+`--empty`:
+How to handle commits that are not empty to start, but which become empty after rebasing. Valid values are: drop (default) or keep
 
 `--abort`:
 Abort an interactive rebase and return the working set to the pre-rebase state
@@ -2066,8 +2078,6 @@ This is an example yaml configuration file showing all supported items and their
 	branch_control_file: .doltcfg/branch_control.db
 	
 	user_session_vars: []
-	
-	system_variables: {}
 	
 	jwks: []
 
