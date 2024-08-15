@@ -45,8 +45,8 @@ For example, `timestamp` takes in a precision, but does not enforce it.
 | int8[]         |     ✅      | bigint[]                      |
 | int8multirange |     ❌      |                               |
 | int8range      |     ❌      |                               |
-| interval       |     ❌      |                               |
-| interval[]     |     ❌      |                               |
+| interval       |     ✅      |                               |
+| interval[]     |     ✅      |                               |
 | json           |     🟠      |                               |
 | json[]         |     🟠      |                               |
 | jsonb          |     🟠      |                               |
