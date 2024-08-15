@@ -2,7 +2,7 @@
 title: Supported Functions 
 ---
 
-Doltgres currently supports a subset of [the Postgres functions](https://www.postgresql.org/docs/15/functions.html)
+Doltgres currently supports a subset of [Postgres functions](https://www.postgresql.org/docs/15/functions.html)
 for the built-in data types. If you need any Postgres function that is not available in Doltgres yet, 
 you can [open a GitHub issue](https://github.com/dolthub/doltgresql/issues) to let us know what you need.
 
