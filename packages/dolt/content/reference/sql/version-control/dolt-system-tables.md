@@ -38,6 +38,7 @@ title: Dolt System Tables
   - [dolt_schema_conflicts](#dolt_schema_conflicts)
   - [dolt_merge_status](#dolt_merge_status)
   - [dolt_status](#dolt_status)
+  - [dolt_workspace\_$tablename](#dolt_workspace_usdtablename)
 
 - [Constraint Validation](#constraint-violation-system-tables)
 
@@ -1107,6 +1108,71 @@ WHERE staged=false;
 | one_pk     | false  | new table |
 +------------+--------+-----------+
 ```
+
+## `dolt_workspace_$TABLENAME`
+
+This system table shows you which rows have been changed in your workspace and if they are staged.
+Any table listed in `dolt_status` table will have a non-empty corresponding `dolt_workspace_$TABLENAME`
+table. Changes listed are all relative to the HEAD of the current branch.
+
+These tables can be modified in order to update what changes are staged for commit.
+[Workspace review](https://www.dolthub.com/blog/2024-08-16-workspace-review/)
+
+### Schema
+
+Each row in the `dolt_workspace_$TABLENAME` corresponds to a single row update in the table.
+
+```text
++------------------+----------+
+| field            | type     |
++------------------+----------+
+| id               | int      |
+| staged           | bool     |
+| diff_type        | varchar  |
+| to_x             | ...      |
+| to_y             | ...      |
+| from_x           | ...      |
+| from_y           | ...      |
++------------------+----------+
+```
+
+The `staged` column will be `TRUE` when the changes are going to be committed on the next
+call to [`dolt_commit()`](dolt-sql-procedures.md#dolt_commit). Changes which have `staged = FALSE` are present in your
+workspace which means all queries in your session contain them but they will not be recorded
+in the event that [`dolt_commit()`](dolt-sql-procedures.md#dolt_commit) is executed.
+
+There are two ways you can alter the state of your workspace using these tables.
+1) The `staged` column can be toggled for any row. If changing from false to true, the row values will be moved
+to staging. If there are already staged changes for that row, they will be overwritten. If changing from true to
+false, the row values will be unstaged. If there are other changes in the workspace for that row, the workspace
+change will be preserved and the staged change will be dropped.
+2) Any row which has `staged = FALSE` can be deleted. This will result in reverting the change in question.
+
+### Example Query
+```sql
+SELECT *
+FROM dolt_workspace_mytable
+WHERE staged=false
+```
+```text
++----+--------+-----------+-------+----------+---------+------------+
+| id | staged | diff_type | to_id | to_value | from_id | from_value |
++----+--------+-----------+-------+----------+---------+------------+
+| 0  | false  | modified  | 3     | 44       | 3       | 31         |
+| 1  | false  | modified  | 4     | 68       | 4       | 1          |
+| 2  | false  | modified  | 9     | 47       | 9       | 59         |
++----+--------+-----------+-------+----------+---------+------------+
+3 rows in set (0.00 sec)
+```
+
+```sql
+UPDATE dolt_workspace_mytable SET staged = TRUE WHERE to_id = 3;
+call dolt_commit("-m", "Added row id 3 in my table")
+```
+
+### Notes
+The `dolt_workspace_$TABLENAME` tables are generated based on the session state when inspected,
+so they can not be considered stable on a branch which has multiple editors.
 
 # Constraint Violation System Tables
 
