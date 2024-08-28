@@ -325,12 +325,6 @@ SET PERSIST_ONLY back_log = 1000;
 SET @@PERSIST_ONLY.back_log = 1000;
 ```
 
-### CLI
-
-```bash
-$ dolt sql -q "set @@persist.max_connections = 1000"
-```
-
 ### Limitations
 
 Deleting variables with `RESET PERSIST` is not supported.

@@ -9,9 +9,7 @@ title: Branch Permissions
 Branch permissions are a way of managing how users may interact with branches when running Doltgres
 as a server (via `doltgres sql-server`). The branch permissions model is composed of two system
 tables: `dolt_branch_control` and `dolt_branch_namespace_control`. The former table handles branch
-modification, while the latter table handles branch creation. All operations that are not
-explicitly done as a client connected to a server (such as locally using the CLI) will bypass branch
-permissions.
+modification, while the latter table handles branch creation.
 
 ## System Tables
 
