@@ -1112,13 +1112,18 @@ WHERE staged=false;
 ## `dolt_workspace_$TABLENAME`
 
 This system table shows you which rows have been changed in your workspace and if they are staged.
-Any table listed in `dolt_status` table will have a non-empty corresponding `dolt_workspace_$TABLENAME`
-table. Changes listed are all relative to the HEAD of the current branch.
+It is the union of rows changed from HEAD to STAGED, and STAGED to WORKING. Any table listed in
+`dolt_status` table will have a non-empty corresponding `dolt_workspace_$TABLENAME` table. Changes
+listed are all relative to the HEAD of the current branch.
 
 These tables can be modified in order to update what changes are staged for commit.
 [Workspace review](https://www.dolthub.com/blog/2024-08-16-workspace-review/)
 
 ### Schema
+
+The schema of the source table is going to effect the schema of the workspace table. The first
+three column are always the same, then the schema of the source table is used to create "to_" and
+"from_" columns.
 
 Each row in the `dolt_workspace_$TABLENAME` corresponds to a single row update in the table.
 
@@ -1146,7 +1151,7 @@ There are two ways you can alter the state of your workspace using these tables.
 to staging. If there are already staged changes for that row, they will be overwritten. If changing from true to
 false, the row values will be unstaged. If there are other changes in the workspace for that row, the workspace
 change will be preserved and the staged change will be dropped.
-2) Any row which has `staged = FALSE` can be deleted. This will result in reverting the change in question.
+2) Any row which has `staged = FALSE` can be deleted. This will result in reverting the change to the row in the source table.
 
 ### Example Query
 ```sql
