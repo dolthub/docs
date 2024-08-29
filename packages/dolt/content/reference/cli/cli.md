@@ -348,7 +348,7 @@ Apply the changes introduced by an existing commit.
 **Synopsis**
 
 ```bash
-dolt cherry-pick <commit>
+dolt cherry-pick [--allow-empty] <commit>
 ```
 
 **Description**
@@ -1539,7 +1539,7 @@ Reapplies commits on top of another base tip
 **Synopsis**
 
 ```bash
-dolt rebase (-i | --interactive) <upstream>
+dolt rebase (-i | --interactive) [--empty=drop|keep] <upstream>
 dolt rebase (--continue | --abort)
 ```
 
