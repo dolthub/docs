@@ -34,8 +34,6 @@ title: Dolt System Variables
   - [dbname_working](#dbname_working)
   - [dbname_staged](#dbname_staged)
 
-- [Persisting System Variables](#persisting-system-variables)
-
 # General system setting variables
 
 ## `dbname_default_branch`
@@ -48,7 +46,7 @@ the server started. For a database named `mydb`, this variable will be named
 
 This system variable controls logging levels in the server. Valid values are `error`, `warn`,
 `info`, `debug`, or `trace`. This value overrides whatever was specified on the command line for
-`dolt sql-server` or in the `config.yaml` file.
+`doltgres` or in the `config.yaml` file.
 
 ## `dolt_show_branch_databases`
 
@@ -60,33 +58,28 @@ branch-derived databases are not displayed (although they can still be
 used).
 
 ```sql
-fresh=# show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| fresh              |
-| information_schema |
-| postgres           |
-+--------------------+
-3 rows in set (0.00 sec)
+fresh=> SELECT datname FROM pg_database;
+ datname
+----------
+ postgres
+ fresh
+(2 rows)
 
-fresh=# set @@dolt_show_branch_databases = 1;
-fresh=# show databases;
-+--------------------+
-| Database           |
-+--------------------+
-| fresh              |
-| fresh/b1           |
-| fresh/main         |
-| information_schema |
-| postgres           |
-+--------------------+
-5 rows in set (0.00 sec)
+fresh=> SET dolt_show_branch_databases TO 1;
+SET
+fresh=> SELECT datname FROM pg_database;
+ datname
+-----------
+ fresh
+ fresh/b1
+ fresh/main
+ postgres
+(4 rows)
 ```
 
 ## `dolt_show_system_tables`
 
-When set to `1`, this system variable causes all system tables to be show in `show tables` and in `information_schema.tables`.
+When set to `1`, this system variable causes all system tables to be shown in `pg_tables` and in `information_schema.tables`.
 Defaults to `0`.
 
 ## `dolt_override_schema`
@@ -95,7 +88,7 @@ When set to a commit hash, branch name, or tag name, Dolt will map all table dat
 branch, or tag. This is useful when you have a query that runs with a specific schema, and you want to run it with
 data that has a different schema. For example, if you add a `Birthdate` column to the `People` table in the most recent commits
 in your database, you cannot reference that column in queries run against older commits. If you enable schema overriding, and
-set `@@dolt_override_schema` to a commit that contains the `Birthdate` column, you can run the same query with recent
+set `dolt_override_schema` to a commit that contains the `Birthdate` column, you can run the same query with recent
 commits and with older commits, without having to modify the query for the schema changes in the older commits. Dolt will
 map the table data to the schema at the specified commit, branch, or tag, and fill in the missing columns with `NULL` values.
 
@@ -108,28 +101,27 @@ SELECT Name, Birthdate FROM People;
 column "Birthdate" could not be found in any table in scope
 
 -- turning on schema overriding allows us to automatically map our data to the schema at the specified commit
-SET @@dolt_override_schema = 'main';
+SET dolt_override_schema TO 'main';
 SELECT Name, Birthdate FROM People;
-+-----------+-----------+
-| Name      | Birthdate |
-+-----------+-----------+
-| Billy     | NULL      |
-| Jimbo     | NULL      |
-+-----------+-----------+
+ Name      | Birthdate
+-----------+-----------
+ Billy     | NULL
+ Jimbo     | NULL
+(2 rows)
 ```
 
-Note that when this session variable is set, the active Dolt session becomes read-only. To disable schema overriding,
+Note that when this session variable is set, the active Doltgres session becomes read-only. To disable schema overriding,
 simply set this variable to `NULL`.
 
 ## `dolt_transaction_commit`
 
 When set to `1`, this system variable creates a Dolt commit for every
 SQL transaction commit. Defaults to `0`. Commits have a standard commit
-message ("Transaction commit"), unless `@@dolt_transaction_commit_message` has been set.
+message ("Transaction commit"), unless `dolt_transaction_commit_message` has been set.
 
 ## `dolt_transaction_commit_message`
 
-When `@@dolt_transaction_commit` is enabled, if this system variable is set to a
+When `dolt_transaction_commit` is enabled, if this system variable is set to a
 string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`,
 which means automatic Dolt commits will use their standard commit message ("Transaction commit").
 
@@ -156,13 +148,13 @@ This system variable should be set on replication primaries to name a remote to 
 
 ```sql
 select name from dolt_remotes;
-+---------+
-| name    |
-+---------+
-| remote1 |
-| origin  |
-+---------+
-SET @@GLOBAL.dolt_replicate_to_remote = remote1;
+ name
+---------
+ remote1
+ origin
+(2 rows)
+
+SET dolt_replicate_to_remote TO remote1;
 CALL dolt_commit('-am', 'push on write');
 ```
 
@@ -174,8 +166,8 @@ synchronous, but it may also increase the remote replication delay. See
 [Replication](../server/replication.md).
 
 ```sql
-SET @@GLOBAL.dolt_replicate_to_remote = remote1;
-SET @@GLOBAL.dolt_async_replication = 1;
+SET dolt_replicate_to_remote TO remote1;
+SET dolt_async_replication TO 1;
 ```
 
 ## `dolt_read_replica_remote`
@@ -187,8 +179,8 @@ Setting either `dolt_replicate_heads` or `dolt_replicate_all_heads` is
 also required for read replicas. See [Replication](../server/replication.md).
 
 ```sql
-SET @@GLOBAL.dolt_read_replica_remote = origin;
-SET @@GLOBAL.dolt_replicate_heads = main;
+SET dolt_read_replica_remote TO origin;
+SET dolt_replicate_heads TO main;
 START TRANSACTION;
 ```
 
@@ -199,7 +191,7 @@ with `dolt_read_replica_remote`. Use is mutually exclusive with `dolt_replicate_
 [Replication](../server/replication.md).
 
 ```sql
-SET @@GLOBAL.dolt_replicate_all_heads = 1;
+SET dolt_replicate_all_heads TO 1;
 ```
 
 ## `dolt_replicate_heads`
@@ -211,9 +203,9 @@ Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 `dolt_replicate_all_heads`. See [Replication](../server/replication.md).
 
 ```sql
-SET @@GLOBAL.dolt_replicate_heads = main;
-SET @@GLOBAL.dolt_replicate_heads = "main,feature1,feature2";
-SET @@GLOBAL.dolt_replicate_heads = "main,release*";
+SET dolt_replicate_heads TO main;
+SET dolt_replicate_heads TO "main,feature1,feature2";
+SET dolt_replicate_heads TO "main,release*";
 ```
 
 ## `dolt_replication_remote_url_template`
@@ -223,9 +215,9 @@ to the URL template supplied. This URL template must include the `{database}` pl
 examples:
 
 ```sql
-set @@persist.dolt_replication_remote_url_template = 'file:///share/doltRemotes/{database}'; -- file based remote
-set @@persist.dolt_replication_remote_url_template = 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
-set @@persist.dolt_replication_remote_url_template = 'gs://mybucket/remotes/{database}'; -- GCP remote
+set dolt_replication_remote_url_template TO 'file:///share/doltRemotes/{database}'; -- file based remote
+set dolt_replication_remote_url_template TO 'aws://dynamo-table:s3-bucket/{database}'; -- AWS remote
+set dolt_replication_remote_url_template TO 'gs://mybucket/remotes/{database}'; -- GCP remote
 ```
 
 On a read replica, setting this variable will cause the server to attempt to clone any unknown
@@ -235,7 +227,7 @@ remote. See [Replication](../server/replication.md).
 ## `dolt_read_replica_force_pull`
 
 Set this variable to `1` to cause read replicas to always pull their local copies of remote heads even
-when they have diverged from the local copy, which can occur in the case of a `dolt push -f`. A
+when they have diverged from the local copy, which can occur in the case of a `call dolt_push('-f')`. A
 setting of `0` causes read replicas to reject remote head updates that cannot be fast-forward merged
 into the local copy. Defaults to `1`.
 
@@ -245,7 +237,7 @@ Set this variable to `1` to ignore replication errors on a read replica. Replica
 a warning rather than causing queries to fail. Defaults to `0`.
 
 ```sql
-SET @@GLOBAL.dolt_skip_replication_errors = 1;
+SET dolt_skip_replication_errors TO 1;
 ```
 
 # Session metadata variables
@@ -254,22 +246,21 @@ SET @@GLOBAL.dolt_skip_replication_errors = 1;
 
 Each session defines a system variable that controls the current
 session head. For a database called `mydb`, this variable
-will be called `@@mydb_head_ref` and be set to the current head.
+will be called `mydb_head_ref` and be set to the current head.
 
 ```sql
-mydb> select @@mydb_head_ref;
-+-------------------------+
-| @@SESSION.mydb_head_ref |
-+-------------------------+
-| refs/heads/master       |
-+-------------------------+
+mydb=> select mydb_head_ref;
+mydb_head_ref
+------------------
+refs/heads/main
+(1 row)
 ```
 
 You can set this session variable to switch your current head. Use either `refs/heads/branchName` or
 just `branchName`:
 
 ```sql
-SET @@mydb_head_ref = 'feature-branch'
+SET mydb_head_ref TO 'feature-branch'
 ```
 
 This is equivalent to:
@@ -281,50 +272,16 @@ call dolt_checkout('feature-branch')
 ## `dbname_head`
 
 This system variable reflects the current HEAD commit's hash. For a database called `mydb`, this
-variable will be called `@@mydb_head`. It is read-only.
+variable will be called `mydb_head`. It is read-only.
 
 ## `dbname_working`
 
 This system variable reflects the current working root value's hash. For a database called `mydb`,
-this variable will be called `@@mydb_working`. Its value corresponds to the current working
+this variable will be called `mydb_working`. Its value corresponds to the current working
 hash. Selecting it is useful for diagnostics. It is read-only.
 
 ## `dbname_staged`
 
 This system variable reflects the current staged root value's hash. For a database called `mydb`,
-this variable will be called `@@mydb_staged` Selecting it is useful for diagnostics. It is
+this variable will be called `mydb_staged` Selecting it is useful for diagnostics. It is
 read-only.
-
-# Persisting System Variables
-
-Dolt supports a limited form of system variable persistence. The same way session variables can be
-changed with `SET`, global variables can be persisted to disk with `SET PERSIST`. Persisted system
-variables survive restarts, loading back into the global variables namespace on startup.
-
-Dolt supports `SET PERSIST` and `SET PERSIST_ONLY` by writing system
-variables to the local `.dolt/config.json`. The same result can be
-achieved with the CLI by appending `sqlserver.global.` prefix to
-keys with the `dolt config add --local` command. System
-variables are used as session variables, and the SQL interface is
-the encouraged access point. Variables that affect server startup, like
-replication, must be set before instantiation.
-
-## Examples
-
-### `SET PERSIST`
-
-```sql
-SET PERSIST max_connections = 1000;
-SET @@PERSIST.max_connections = 1000;
-```
-
-### `SET PERSIST_ONLY`
-
-```sql
-SET PERSIST_ONLY back_log = 1000;
-SET @@PERSIST_ONLY.back_log = 1000;
-```
-
-### Limitations
-
-Deleting variables with `RESET PERSIST` is not supported.
