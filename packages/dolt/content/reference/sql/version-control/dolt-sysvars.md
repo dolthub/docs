@@ -17,7 +17,6 @@ title: Dolt System Variables
   - [dolt_transaction_commit_message](#dolt_transaction_commit_message)
   - [strict_mysql_compatibility](#strict_mysql_compatibility)
 
-
 - [Replication variables](#replication-variables)
 
   - [dolt_replicate_to_remote](#dolt_replicate_to_remote)
@@ -30,7 +29,7 @@ title: Dolt System Variables
   - [dolt_skip_replication_errors](#dolt_skip_replication_errors)
 
 - [Session metadata variables](#session-metadata-variables)
-  
+
   - [dbname_head_ref](#dbname_head_ref)
   - [dbname_head](#dbname_head)
   - [dbname_working](#dbname_working)
@@ -88,13 +87,12 @@ fresh> show databases;
 
 ## `dolt_show_system_tables`
 
-When set to `1`, this system variable causes all system tables to be show in `show tables` and in `information_schema.tables`. 
+When set to `1`, this system variable causes all system tables to be shown in `show tables` and in `information_schema.tables`.
 Defaults to `0`.
-
 
 ## `dolt_override_schema`
 
-When set to a commit hash, branch name, or tag name, Dolt will map all table data to the schema at the specified commit, 
+When set to a commit hash, branch name, or tag name, Dolt will map all table data to the schema at the specified commit,
 branch, or tag. This is useful when you have a query that runs with a specific schema, and you want to run it with
 data that has a different schema. For example, if you add a `Birthdate` column to the `People` table in the most recent commits
 in your database, you cannot reference that column in queries run against older commits. If you enable schema overriding, and
@@ -124,7 +122,6 @@ SELECT Name, Birthdate FROM People;
 Note that when this session variable is set, the active Dolt session becomes read-only. To disable schema overriding,
 simply set this variable to `NULL`.
 
-
 ## `dolt_transaction_commit`
 
 When set to `1`, this system variable creates a Dolt commit for every
@@ -133,14 +130,14 @@ message ("Transaction commit"), unless `@@dolt_transaction_commit_message` has b
 
 ## `dolt_transaction_commit_message`
 
-When `@@dolt_transaction_commit` is enabled, if this system variable is set to a 
-string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`, 
+When `@@dolt_transaction_commit` is enabled, if this system variable is set to a
+string, it will be used as the message for the automatic Dolt commit. Defaults to `NULL`,
 which means automatic Dolt commits will use their standard commit message ("Transaction commit").
 
 ## `strict_mysql_compatibility`
 
 When set to `1`, Dolt will disable some extensions to MySQL behavior that are intended to increase compatibility
-with other database engines in the MySQL family. For example, for compatibility with MariaDB, Dolt supports an 
+with other database engines in the MySQL family. For example, for compatibility with MariaDB, Dolt supports an
 extension to MySQL's behavior that allows `TEXT` and `BLOB` columns to be used in unique indexes without specifying
 a prefix length. Users who want Dolt to behave exactly like MySQL and not support these extensions can set this
 system variable to `1`. For wider compatibility, this system variable defaults to `0` to enable these extensions
@@ -218,8 +215,8 @@ mysql> SET @@GLOBAL.dolt_replicate_all_heads = 1;
 ## `dolt_replicate_heads`
 
 This system variable specifies which branch heads a read replica will fetch.
-The wildcard `*` may be used to match zero or more characters in a branch name 
-and is useful for selecting multiple branch names. 
+The wildcard `*` may be used to match zero or more characters in a branch name
+and is useful for selecting multiple branch names.
 Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 `dolt_replicate_all_heads`. See [Replication](../server/replication.md).
 

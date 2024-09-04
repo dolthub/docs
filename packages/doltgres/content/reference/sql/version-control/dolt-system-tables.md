@@ -190,72 +190,12 @@ CREATE PROCEDURE simple_proc2() SELECT name FROM category;
 
 {% embed url="https://www.dolthub.com/repositories/dolthub/first-hour-db/embed/main?q=SELECT+*+FROM+dolt_procedures%3B" %}
 
-## `dolt_query_catalog`
-
-The `dolt_query_catalog` system table stores named queries for your database.
-Like all data stored in Dolt, these named queries are versioned alongside your data, so
-after you create, modify, or remove a named query, you'll need to commit that change to save it.  
-You can use the Dolt CLI to save and execute named queries or you can use the  
-`dolt_query_catalog` system table directly to add, modify, or delete named queries.
-All named queries are displayed in the Queries tab of your database on
-[DoltHub](https://www.dolthub.com/).
-
-### Schema
-
-```text
-+---------------+-----------------+------+-----+---------+-------+
-| Field         | Type            | Null | Key | Default | Extra |
-+---------------+-----------------+------+-----+---------+-------+
-| id            | varchar(16383)  | NO   | PRI |         |       |
-| display_order | bigint unsigned | NO   |     |         |       |
-| name          | varchar(16383)  | YES  |     |         |       |
-| query         | varchar(16383)  | YES  |     |         |       |
-| description   | varchar(16383)  | YES  |     |         |       |
-+---------------+-----------------+------+-----+---------+-------+
-```
-
-### Example Query
-
-Using the `dolthub/docs_examples` from DoltHub as an example, you can create a
-named query using the CLI, or by directly inserting into the `dolt_query_catalog` table.
-
-```shell
-> dolt sql -q "select * from tablename" -s "select all" -m "Query to select all records from tablename"
-```
-
-After creating a named query, you can view it in the `dolt_query_catalog` table:
-
-{% embed url="https://www.dolthub.com/repositories/dolthub/docs_examples/embed/main?q=select+*+from+dolt_query_catalog%3B" %}
-
-Then you can use the dolt CLI to execute it:
-
-```shell
-> dolt sql -x "Large Irises"
-Executing saved query 'Large Irises':
-select distinct(class) from classified_measurements where petal_length_cm > 5
-+------------+
-| class)     |
-+------------+
-| versicolor |
-| virginica  |
-+------------+
-```
-
-Last, but not least, if you want to persist that named query, be sure to commit your change to the
-`dolt_query_catalog` table.
-
-```shell
-dolt add dolt_query_catalog
-dolt commit -m "Adding new named query"
-```
-
 ## `dolt_remotes`
 
 `dolt_remotes` returns the remote subcontents of the `repo_state.json`, similar
 to running `dolt remote -v` from the command line.
 
-The `dolt_remotes` table is currently read only. Use the CLI `dolt remote` functions
-to add, update or delete remotes.
+The `dolt_remotes` table is currently read only. Use the [`dolt_remote()` procedure](./dolt-sql-procedures.md#dolt_remote) to add, update or delete remotes.
 
 ### Schema
 
@@ -487,7 +427,6 @@ checked out branch, whereas `dolt_commits` shows all commits from the entire dat
 ### Schema
 
 ```text
-> describe dolt_commits;
 +-------------+----------+------+-----+---------+-------+
 | Field       | Type     | Null | Key | Default | Extra |
 +-------------+----------+------+-----+---------+-------+
