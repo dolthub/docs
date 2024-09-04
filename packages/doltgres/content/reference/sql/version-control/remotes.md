@@ -17,7 +17,7 @@ procedure](./dolt-sql-procedures.md#dolt_remote). You configure a remote with a 
 URL. When you want to use the remote, you refer to it by name. When you clone a remote, a remote
 named `origin` is automatically configured for you.
 
-<h1 id="pushing-to-remote">Pushing to a Remote</h1>
+# Pushing to a Remote
 
 Let's go through an example of how you can push data from a local Doltgres database to a remote. In
 this example, we'll use the running Doltgres server we created in the [Getting Started](../../../concepts/rdbms/README.md) section to push a branch a file-based remote.
@@ -36,7 +36,7 @@ call dolt_remote('add', 'origin', 'file:///var/share/remotes');
 
 And then we can push:
 
-```
+```sql
 call dolt_push('origin', 'main');
 +--------+
 | status |
@@ -66,31 +66,31 @@ mounted to the filesystem. To add a filesystem based remote use a URL with the `
 
 - Adding a remote
 
-```
-dolt remote add origin file:///Users/brian/datasets/menus
+```sql
+call dolt_remote('add', 'origin', 'file:///Users/brian/datasets/menus')
 ```
 
 - Cloning
 
-```
-dolt clone file:///Users/brian/datasets/menus
+```sql
+call dolt_clone('file:///Users/brian/datasets/menus')
 ```
 
 **Windows Examples**
 
 - Adding a remote
 
-```
-dolt remote add origin file:///c:/Users/brian/datasets/menus
+```sql
+call dolt_remote('add', 'origin', 'file:///c:/Users/brian/datasets/menus')
 ```
 
 - Cloning
 
-```
-dolt clone file:///c:/Users/brian/datasets/menus
+```sql
+call dolt_clone('file:///c:/Users/brian/datasets/menus')
 ```
 
-It's important to note that a directory-based remote is not the same as a workspace for a dolt clone, and the directory listed above as a remote file URL is not a dolt repository created or cloned with the [Dolt](https://doltdb.com) cli. Similarly, a [Dolt](https://doltdb.com) repository directory's file URL [cannot be used as a remote directly](https://github.com/dolthub/dolt/issues/1860).
+It's important to note that a directory-based remote is not the same as a workspace for a dolt clone, and the directory listed above as a remote file URL is not a Doltgres database created or cloned with Doltgres. Similarly, a Doltgres database directory's file URL [cannot be used as a remote directly](https://github.com/dolthub/dolt/issues/1860).
 
 ## AWS
 
@@ -101,53 +101,41 @@ must have a primary key with the name "db".
 
 This single DynamoDB table can be used for multiple unrelated remote repositories. Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
 
-```
-dolt remote add origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
+```sql
+call dolt_remote('add', 'origin', 'aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus')
 ```
 
 This same URL can then be used to clone this database by another user.
 
-```
-dolt clone aws://[dolt_remotes:dolt_remotes_storage]/menus
-```
-
-In order to initialize your system to be able to connect to your AWS cloud resources see [Amazon's documentation](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) on configuring your credential file. [Dolt](https://doltdb.com) also provides additional parameters you may need to provide when adding an AWS remote such as `aws-creds-profile`, and `aws-region`.`aws-creds-profile` allows you to select a profile from your credential file. If it is not provided then the default profile is used. `aws-region` allows you to specify the region in which your DynamoDB table and S3 bucket are located. If not provided, it will use the default region from the current profile.
-
-```
-dolt remote add --aws-creds-profile prod-profile --aws-region us-west-2 origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
-```
-
-or
-
-```
-dolt clone --aws-creds-profile prod-profile --aws-region us-west-2 origin aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus
+```sql
+call dolt_clone('aws://[dolt_remotes:dolt_remotes_storage]/menus')
 ```
 
 ## GCS
 
-Google Cloud Platform remotes use Google Cloud Storage (GCS). You can create or use an existing GCS bucket to host one or more [Dolt](https://doltdb.com) remotes. To add a GCP remote provide a URL with the `gs://` protocol like so:
+Google Cloud Platform remotes use Google Cloud Storage (GCS). You can create or use an existing GCS bucket to host one or more Doltgres remotes. To add a GCP remote provide a URL with the `gs://` protocol like so:
 
-```
-dolt remote add origin gs://BUCKET/path/for/remote
+```sql
+call dolt_remote('add', 'origin', 'gs://BUCKET/path/for/remote')
 ```
 
-In order to initialize [Dolt](https://doltdb.com) to use your GCP credentials you will need to install the `gcloud` command line tool and run `gcloud auth login`. See the [Google document](https://cloud.google.com/sdk/gcloud/reference/auth/login) for details.
+In order to initialize Doltgres to use your GCP credentials you will need to install the `gcloud` command line tool and run `gcloud auth login`. See the [Google document](https://cloud.google.com/sdk/gcloud/reference/auth/login) for details.
 
 ## OCI
 
-Oracle Cloud Infrastructure (OCI) remotes use Oracle Cloud Object Storage. You can create or use an existing OCI bucket to host one or more [Dolt](https://doltdb.com) remotes. To add an OCI remote provide a URL with the `oci://` protocol like so:
+Oracle Cloud Infrastructure (OCI) remotes use Oracle Cloud Object Storage. You can create or use an existing OCI bucket to host one or more Doltgres remotes. To add an OCI remote provide a URL with the `oci://` protocol like so:
 
-```
-dolt remote add origin oci://BUCKET/path/for/remote
+```sql
+call dolt_remote('add', 'origin', 'oci://BUCKET/path/for/remote')
 ```
 
-In order to initialize [Dolt](https://doltdb.com) to use your OCI credentials you will need to install the `oci` command line tool and run `oci session authenticate`. See the [Oracle document](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clitoken.htm) for details.
+In order to initialize Doltgres to use your OCI credentials you will need to install the `oci` command line tool and run `oci session authenticate`. See the [Oracle document](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clitoken.htm) for details.
 
 ## HTTP(s) Remotes
 
-[Dolt](https://doltdb.com) supports remotes which use the protocol `http://` and `https://`. Remote servers must implement the GRPC methods defined by the [ChunkStoreService interface](https://github.com/dolthub/dolt/blob/master/proto/dolt/services/remotesapi/v1alpha1/chunkstore.proto#L23).
+Doltgres supports remotes which use the protocol `http://` and `https://`. Remote servers must implement the GRPC methods defined by the [ChunkStoreService interface](https://github.com/dolthub/dolt/blob/master/proto/dolt/services/remotesapi/v1alpha1/chunkstore.proto#L23).
 
-[Dolt](https://doltdb.com) provides a [sample remote server](https://github.com/dolthub/dolt/tree/master/go/utils/remotesrv) that we use for integration testing which could be deployed to serve your remotes as well, though you would want to extend the sample functionality to support things like auth. In our integration tests we install and run the remote server locally:
+Doltgres provides a [sample remote server](https://github.com/dolthub/dolt/tree/master/go/utils/remotesrv) that we use for integration testing which could be deployed to serve your remotes as well, though you would want to extend the sample functionality to support things like auth. In our integration tests we install and run the remote server locally:
 
 ```
 remotesrv --http-port 1234 --dir ./remote_storage

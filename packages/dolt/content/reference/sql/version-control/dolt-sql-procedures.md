@@ -1037,12 +1037,13 @@ Rebasing is useful to clean and organize your commit history, especially before 
 ```sql
 CALL DOLT_REBASE('--interactive', 'main');
 CALL DOLT_REBASE('-i', 'main');
+CALL DOLT_REBASE('-i', '--empty=keep', 'main');
 CALL DOLT_REBASE('--continue');
 CALL DOLT_REBASE('--abort');
 ```
 
 ### Limitations
-Currently only interactive rebases are supported, and there is no support for resolving conflicts that arise while executing a rebase plan. If applying a commit creates a conflict, the rebase will be automatically aborted.
+Currently only interactive rebases are supported. Conflict resolution for data conflicts is supported through Dolt's standard conflict resolution process, but conflict resolution for schema conflicts is not supported. If a rebase encounters a schema conflict, the rebase will be automatically aborted.
 
 ### Options
 
@@ -1053,7 +1054,7 @@ Currently only interactive rebases are supported, and there is no support for re
 `--abort`: Abort a rebase in progress.
 
 `--empty`:
-How to handle commits that are not empty to start, but which become empty after rebasing. Valid values are: drop (default) or keep
+How to handle commits that are not empty to start, but which become empty after rebasing. Valid values are: drop (default) or keep. This option may only be specified when starting a rebase, and is not valid when continuing a rebase.
 
 
 ### Output Schema
