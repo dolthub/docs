@@ -92,4 +92,4 @@ Additionally, these tests are unique and do not overlap in coverage
 
 | Passing | Total | Percent Passing |
 |---------|-------|-----------------|
-|   44435 | 44211 |           99.50 |
+|   44211 | 44435 |           99.50 |
