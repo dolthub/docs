@@ -54,7 +54,7 @@ AND col3 IN (3,9,0))))) OR col4 <= 4.25 OR ((col3 = 5))) OR (((col0 >
 0)) AND col0 > 6 AND (col4 >= 6.56)))
 ```
 
-Here are Dolt's sqllogictest results for version `1.42.17`.  Tests that
+Here are Dolt's sqllogictest results for version `1.42.18`.  Tests that
 did not run could not complete due to a timeout earlier in the run.
 <!-- START___DOLT___CORRECTNESS_RESULTS_TABLE -->
 | Results |  Count  |
@@ -74,14 +74,14 @@ We also measure the coverage of the functions in the SQL engine. This
 is a measure of how many of the supported MySQL functions are also
 supported by Dolt. 
 
-Here are Dolt's function coverage results for version `1.42.5`.
+Here are Dolt's function coverage results for version `1.42.18`.
 | Supported | Total | Percent Coverage |
 |-----------|-------|------------------|
-|       308 |   431 |               71 |
+|       310 |   431 |               72 |
 
 ## Skipped Engine Tests
 Here are the total number of tests skipped by the engine for 
-version `1.42.5`. These are edge cases that we know are failing for 
+version `1.42.18`. These are edge cases that we know are failing for 
 one reason or another, but haven't been able to fix yet.
 
 In general, these tests are more difficult to fix compared to 
@@ -92,4 +92,4 @@ Additionally, these tests are unique and do not overlap in coverage
 
 | Passing | Total | Percent Passing |
 |---------|-------|-----------------|
-|   43607 | 43825 |           99.50 |
+|   44211 | 44435 |           99.50 |
