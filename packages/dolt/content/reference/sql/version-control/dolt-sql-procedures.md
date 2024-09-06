@@ -1592,6 +1592,34 @@ SELECT * from dolt_constraint_violations_child;
 */
 ```
 
+# Statistics Updates
+
+Control functions are used to start and stop background thread activity related to statistics updates.
+See [stats documentation](../sql-support/miscellaneous.md#stats-controller-functions) for more information.
+
+## `dolt_stats_restart()`
+
+If no thread is active for the current database, start a new update
+thread with the current session's interval and threshold parameters
+(`dolt_stats_auto_refresh_interval` and
+`dolt_stats_auto_refresh_threshold`).  If a thread is already active for
+this database, the thread is stopped and started with the new
+parameters.
+
+## `dolt_stats_stop()`
+
+Stop the update thread for the current database
+(otherwise no-op).
+
+## `dolt_stats_status()`
+
+Returns the latest update to statistics for the current database.
+
+## `dolt_stats_drop()`
+
+Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
+Stops update thread if active.
+
 # Access Control
 Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
 
@@ -1636,31 +1664,3 @@ database> GRANT EXECUTE ON PROCEDURE mydb.dolt_gc TO service_account@localhost
 `dolt_push()`, `dolt_fetch()`, and `dolt_pull()` are considered administrative operations currently because they all use a shared credential to talk to remote servers. User level access to remotes, and the ability to store user level credentials for them is on our [roadmap](https://github.com/dolthub/dolt/issues/6639).
 
 The root user, or any other user with super privileges is allowed to call all procedures.
-
-# Statistics Updates
-
-Control functions are used to start and stop background thread activity related to statistics updates.
-See [stats documentation](../sql-support/miscellaneous.md#stats-controller-functions) for more information.
-
-## `dolt_stats_restart()`
-
-If no thread is active for the current database, start a new update
-thread with the current session's interval and threshold parameters
-(`dolt_stats_auto_refresh_interval` and
-`dolt_stats_auto_refresh_threshold`).  If a thread is already active for
-this database, the thread is stopped and started with the new
-parameters.
-
-## `dolt_stats_stop()`
-
-Stop the update thread for the current database
-(otherwise no-op).
-
-## `dolt_stats_status()`
-
-Returns the latest update to statistics for the current database.
-
-## `dolt_stats_drop()`
-
-Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
-Stops update thread if active.
