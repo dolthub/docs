@@ -28,6 +28,11 @@ title: Dolt SQL Procedures
   - [dolt_undrop()](#dolt_undrop)
   - [dolt_verify_constraints()](#dolt_verify_constraints)
 - [Access Control](#access-control)
+- [Statistics Updates](#statistics-updates)
+  - [dolt_stats_restart()](#dolt_stats_restart)
+  - [dolt_stats_stop()](#dolt_stats_stop)
+  - [dolt_stats_status()](#dolt_stats_status)
+  - [dolt_stats_drop()](#dolt_stats_drop)
 # Dolt SQL Procedures
 
 Dolt provides native stored procedures to allow access to `dolt` CLI
@@ -1631,3 +1636,24 @@ database> GRANT EXECUTE ON PROCEDURE mydb.dolt_gc TO service_account@localhost
 `dolt_push()`, `dolt_fetch()`, and `dolt_pull()` are considered administrative operations currently because they all use a shared credential to talk to remote servers. User level access to remotes, and the ability to store user level credentials for them is on our [roadmap](https://github.com/dolthub/dolt/issues/6639).
 
 The root user, or any other user with super privileges is allowed to call all procedures.
+
+# Statistics Updates
+
+Control functions are used to start and stop background thread activity related to statistics updates.
+See [stats documentation](../sql-support/miscellaneous#stats-controller-functions) for more information.
+
+## `dolt_stats_restart()`
+
+Stops and restarts a refresh thread for the current database with the current session's interval and threshold variables.
+
+## `dolt_stats_stop()`
+
+Cancels active auto-refresh threads for the current database.
+
+## `dolt_stats_status()`
+
+Returns the latest update to statistics for the current database.
+
+## `dolt_stats_drop()`
+
+Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
