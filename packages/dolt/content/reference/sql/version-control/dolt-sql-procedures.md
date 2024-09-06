@@ -27,12 +27,12 @@ title: Dolt SQL Procedures
   - [dolt_tag()](#dolt_tag)
   - [dolt_undrop()](#dolt_undrop)
   - [dolt_verify_constraints()](#dolt_verify_constraints)
-- [Access Control](#access-control)
 - [Statistics Updates](#statistics-updates)
   - [dolt_stats_restart()](#dolt_stats_restart)
   - [dolt_stats_stop()](#dolt_stats_stop)
   - [dolt_stats_status()](#dolt_stats_status)
   - [dolt_stats_drop()](#dolt_stats_drop)
+- [Access Control](#access-control)
 # Dolt SQL Procedures
 
 Dolt provides native stored procedures to allow access to `dolt` CLI
