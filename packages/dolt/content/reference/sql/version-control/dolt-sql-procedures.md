@@ -1640,15 +1640,21 @@ The root user, or any other user with super privileges is allowed to call all pr
 # Statistics Updates
 
 Control functions are used to start and stop background thread activity related to statistics updates.
-See [stats documentation](../sql-support/miscellaneous#stats-controller-functions) for more information.
+See [stats documentation](../sql-support/miscellaneous.md#stats-controller-functions) for more information.
 
 ## `dolt_stats_restart()`
 
-Stops and restarts a refresh thread for the current database with the current session's interval and threshold variables.
+If no thread is active for the current database, start a new update
+thread with the current session's interval and threshold parameters
+(`dolt_stats_auto_refresh_interval` and
+`dolt_stats_auto_refresh_threshold`).  If a thread is already active for
+this database, the thread is stopped and started with the new
+parameters.
 
 ## `dolt_stats_stop()`
 
-Cancels active auto-refresh threads for the current database.
+Stop the update thread for the current database
+(otherwise no-op).
 
 ## `dolt_stats_status()`
 
@@ -1657,3 +1663,4 @@ Returns the latest update to statistics for the current database.
 ## `dolt_stats_drop()`
 
 Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
+Stops update thread if active.
