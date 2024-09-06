@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 308 of 431 MySQL functions.**
+**Currently supporting 310 of 431 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -189,7 +189,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `HASHOF()`                        | ✅            | Returns the hash of a reference, e.g. `HASHOF("master")`)                                                                                     |     |
 | `HEX()`                           | ✅            |                                                                                                                                               |
 | `HOUR()`                          | ✅            |                                                                                                                                               |
-| `ICU_VERSION()`                   | ❌            |                                                                                                                                               |
+| `ICU_VERSION()`                   | ✅            |                                                                                                                                               |
 | `IF()`                            | ✅            |                                                                                                                                               |
 | `IFNULL()`                        | ✅            |                                                                                                                                               |
 | `IN()`                            | ✅            |                                                                                                                                               |
@@ -295,7 +295,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `MultiLineString()`               | ✅            |                                                                                                                                               |
 | `MultiPoint()`                    | ✅            |                                                                                                                                               |
 | `MultiPolygon()`                  | ✅            |                                                                                                                                               |
-| `NAME_CONST()`                    | ❌            |                                                                                                                                               |
+| `NAME_CONST()`                    | ✅            |                                                                                                                                               |
 | `NOT`, `!`                        | ✅            |                                                                                                                                               |
 | `NOT BETWEEN ... AND ...`         | ✅            |                                                                                                                                               |
 | `NOT IN()`                        | ✅            |                                                                                                                                               |
