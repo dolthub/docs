@@ -27,6 +27,11 @@ title: Dolt SQL Procedures
   - [dolt_tag()](#dolt_tag)
   - [dolt_undrop()](#dolt_undrop)
   - [dolt_verify_constraints()](#dolt_verify_constraints)
+- [Statistics Updates](#statistics-updates)
+  - [dolt_stats_restart()](#dolt_stats_restart)
+  - [dolt_stats_stop()](#dolt_stats_stop)
+  - [dolt_stats_status()](#dolt_stats_status)
+  - [dolt_stats_drop()](#dolt_stats_drop)
 - [Access Control](#access-control)
 # Dolt SQL Procedures
 
@@ -1586,6 +1591,34 @@ SELECT * from dolt_constraint_violations_child;
 +----------------+----+-----------+
 */
 ```
+
+# Statistics Updates
+
+Control functions are used to start and stop background thread activity related to statistics updates.
+See [stats documentation](../sql-support/miscellaneous.md#stats-controller-functions) for more information.
+
+## `dolt_stats_restart()`
+
+If no thread is active for the current database, start a new update
+thread with the current session's interval and threshold parameters
+(`dolt_stats_auto_refresh_interval` and
+`dolt_stats_auto_refresh_threshold`).  If a thread is already active for
+this database, the thread is stopped and started with the new
+parameters.
+
+## `dolt_stats_stop()`
+
+Stop the update thread for the current database
+(otherwise no-op).
+
+## `dolt_stats_status()`
+
+Returns the latest update to statistics for the current database.
+
+## `dolt_stats_drop()`
+
+Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
+Stops update thread if active.
 
 # Access Control
 Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
