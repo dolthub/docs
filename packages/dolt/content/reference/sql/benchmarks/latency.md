@@ -28,20 +28,20 @@ attempt to run as many queries as possible in a fixed 2 minute time
 window. The `Dolt` and `MySQL` columns show the median latency in 
 milliseconds (ms) of each query during that 2 minute time window.
 
-The Dolt version is `1.42.17`.
+The Dolt version is `1.42.18`.
 
 <!-- START___DOLT___LATENCY_RESULTS_TABLE -->
 |       Read Tests        | MySQL |  Dolt  | Multiple |
 |-------------------------|-------|--------|----------|
-| covering\_index\_scan   |  2.07 |   0.65 |      0.3 |
-| groupby\_scan           |  13.7 |  16.71 |      1.2 |
+| covering\_index\_scan   |  2.07 |   0.67 |      0.3 |
+| groupby\_scan           | 13.22 |  16.41 |      1.2 |
 | index\_join             |  1.37 |   2.66 |      1.9 |
 | index\_join\_scan       |   1.3 |   2.11 |      1.6 |
-| index\_scan             | 34.95 |  54.83 |      1.6 |
+| index\_scan             | 34.33 |  54.83 |      1.6 |
 | oltp\_point\_select     |  0.18 |    0.3 |      1.7 |
-| oltp\_read\_only        |  3.49 |   5.77 |      1.7 |
+| oltp\_read\_only        |  3.49 |   5.88 |      1.7 |
 | select\_random\_points  |  0.34 |   0.67 |      2.0 |
-| select\_random\_ranges  |  0.39 |   0.69 |      1.8 |
+| select\_random\_ranges  |  0.39 |    0.7 |      1.8 |
 | table\_scan             | 34.95 |  54.83 |      1.6 |
 | types\_table\_scan      | 75.82 | 144.97 |      1.9 |
 | reads\_mean\_multiplier |       |        |      1.6 |
@@ -59,7 +59,7 @@ The Dolt version is `1.42.17`.
 
 |    TPC-C TPS Tests    | MySQL | Dolt  | Multiple |
 |-----------------------|-------|-------|----------|
-| tpcc-scale-factor-1   | 98.27 | 39.08 |      2.5 |
+| tpcc-scale-factor-1   | 98.44 | 39.11 |      2.5 |
 | tpcc\_tps\_multiplier |       |       |      2.5 |
 
 | Overall Mean Multiple | 1.67 |
