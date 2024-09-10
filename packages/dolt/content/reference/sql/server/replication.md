@@ -4,7 +4,7 @@ title: Replication
 
 # Replication
 
-Dolt can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more Dolt servers, or can be a read-replica for a MySQL server. This page describes the two supported replication modes between a Dolt primary server and Dolt replica servers. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) for more information on setting up a Dolt server as a read-replica for a MySQL server.
+Dolt can [replicate data](../../../concepts/dolt/rdbms/replication.md) between two or more Dolt servers, or between Dolt and a MySQL server. This page describes the two supported replication modes between a Dolt primary server and Dolt replica servers. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md) for more information on setting up a Dolt server as a read-replica for a MySQL server, and [our blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/) for instructions on running a MySQL server as a replica of a Dolt primary.
 
 In **Remote-Based Replication**, Dolt uses a remote as a middleman to facilitate replication between the
 primary and read replicas. In this mode, Dolt replication triggers on a [Dolt
@@ -506,7 +506,7 @@ In the configured example, if you run the first statement on `dolt-1.db` and
 the second statement on `dolt-2.db`, you will have performed an oderly failover
 from `dolt-1.db` to make `dolt-2.db` the new primary.
 
-### Atomatic Role Transitions
+### Automatic Role Transitions
 
 It can happen that server instances learn about new role configuration from
 their peers as they attempt to replicate writes or when they receive a
@@ -728,3 +728,12 @@ If you have an existing MySQL or MariaDB server, you can configure Dolt as a rea
 consumes data changes from the primary server, it creates Dolt commits, giving you a read-replica with a
 versioned history of your data changes. See the [MySQL to Dolt Replication guide](../../../guides/binlog-replication.md)
 for more details on how to configure this.
+
+# Dolt to MySQL Replication
+
+If you want to run Dolt as your primary database server, you can still replicate a single branch to a MySQL database.
+This is often useful for change data capture (CDC) or data warehouse use cases that require pulling data via 
+MySQL's replication protocol. 
+For example, you can [use Debezium to monitor changes in a Dolt database](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/) for CDC use cases.
+See our [blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/) for 
+more details on setting up Dolt to MySQL replication.  

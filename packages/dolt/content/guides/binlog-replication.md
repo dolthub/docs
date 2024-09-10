@@ -2,10 +2,11 @@
 title: MySQL to Dolt Replication (Preview)
 ---
 
-Dolt binlog replication allows a Dolt SQL Server to consume binlog replication events from a MySQL or MariaDB source database. This is a convenient way to try out Dolt in an existing system – there is no need to migrate your database, just configure Dolt as a replica and as your data replicates to the Dolt server, it will build up a commit history. You can access all the data versioning features of Dolt from the Dolt replica to audit how your data has changed, recover deleted data, or view the state of your data at any point in time.
+MySQL to Dolt replication allows a Dolt SQL Server to consume binlog replication events from a MySQL or MariaDB source database. This is a convenient way to try out Dolt in an existing system – there is no need to migrate your database, just configure Dolt as a replica and as your data replicates to the Dolt server, it will build up a commit history. You can access all the data versioning features of Dolt from the Dolt replica to audit how your data has changed, recover deleted data, or view the state of your data at any point in time.
 
 ![Binlog replication](../.gitbook/assets/dolt-binlog-replication.png)
 
+If you're looking for to replicate data in the opposite direction (i.e. where the Dolt server is the primary and the MySQL server is the replica), check out [our blog post on Dolt to MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview). 
 
 ## Requirements for MySQL Primary Server
 
@@ -83,8 +84,6 @@ Clear out replication source and filtering configuration: `RESET REPLICA ALL;`
 ## Limitations
 
 **Syntax gaps** – Dolt aims for 100% compatibility with MySQL, but there are still some gaps in supported syntax that we're actively working on filling in. Overall, Dolt supports the **vast** majority of MySQL's syntax, although you may still find a statement that executes on the MySQL primary, but won't execute on the Dolt read-replica because of a syntax gap. Please [let us know](https://github.com/dolthub/dolt/issues/new) if you hit this so we can help find a temporary workaround and fill in the syntax gap for you.    
-
-**Replica mode only** – Dolt can only consume binlog events as a replica; it cannot act as a primary and produce binlog events.
 
 **Replication channels** – only the default replication channel ("") is supported.
 
