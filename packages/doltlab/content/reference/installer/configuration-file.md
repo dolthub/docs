@@ -189,7 +189,7 @@ whitelist_all_users: true
 
 See [prevent unauthorized user account creation](../../guides/basic.md#prevent-unauthorized-user-account-creation) for more information.
 
-Command line equivalent [white-list-all-users](./cli.md#white-list-all-users).
+Command line equivalent [whitelist-all-users](./cli.md#whitelist-all-users).
 
 ## use_env
 
