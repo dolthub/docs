@@ -338,7 +338,7 @@ To only permit whitelisted emails to create accounts on your DoltLab instance, e
 
 ```yaml
 # installer_config.yaml
-whitelist_all_user: false
+whitelist_all_users: false
 ```
 
 Save these changes, then rerun the [installer](../reference/installer.md) to regenerate DoltLab assets that will require explicit whitelisting of new user accounts.
@@ -347,7 +347,7 @@ Save these changes, then rerun the [installer](../reference/installer.md) to reg
 ./installer
 ```
 
-Alternatively, run the [installer](../reference/installer.md) with `--white-list-all-users=false`, which disables automatically whitelisting all users.
+Alternatively, run the [installer](../reference/installer.md) with `--whitelist-all-users=false`, which disables automatically whitelisting all users.
 
 Next, once you've restarted you DoltLab instance with the regenerated [installer](../reference/installer.md) assets, to whitelist an email for account creation in your instance, you will need to insert their email address into the `email_whitelist_elements` table.
 
