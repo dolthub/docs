@@ -114,7 +114,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CEILING()`                       | ✅            |                                                                                                                                               |
 | `CHAR()`                          | ✅            |                                                                                                                                               |
 | `CHARACTER_LENGTH()`              | ✅            |                                                                                                                                               |
-| `CHARSET()`                       | ❌            |                                                                                                                                               |
+| `CHARSET()`                       | ✅            |                                                                                                                                               |
 | `CHAR_LENGTH()`                   | ✅            |                                                                                                                                               |
 | `COALESCE()`                      | ✅            |                                                                                                                                               |
 | `COERCIBILITY()`                  | ✅            |                                                                                                                                               |
@@ -177,7 +177,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `FROM_BASE64()`                   | ✅            |                                                                                                                                               |
 | `FROM_DAYS()`                     | ✅            |                                                                                                                                               |
 | `FROM_UNIXTIME()`                 | ✅            |                                                                                                                                               |
-| `GET_FORMAT()`                    | ❌            |                                                                                                                                               |
+| `GET_FORMAT()`                    | ✅            |                                                                                                                                               |
 | `GET_LOCK()`                      | ✅            |                                                                                                                                               |
 | `GREATEST()`                      | ✅            |                                                                                                                                               |
 | `GROUPING()`                      | ❌            |                                                                                                                                               |
