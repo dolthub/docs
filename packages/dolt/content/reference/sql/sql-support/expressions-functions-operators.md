@@ -119,7 +119,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()`                      | ✅            |                                                                                                                                               |
 | `COERCIBILITY()`                  | ✅            |                                                                                                                                               |
 | `COLLATION()`                     | ✅            |                                                                                                                                               |
-| `COMPRESS()`                      | ✅            |                                                                                                                                               |
+| `COMPRESS()`                      | ✅            | Golang's zlib library is slightly different than MySQL's, so compressed data may not match                                                    |
 | `CONCAT()`                        | ✅            |                                                                                                                                               |
 | `CONCAT_WS()`                     | ✅            |                                                                                                                                               |
 | `CONNECTION_ID()`                 | ✅            |                                                                                                                                               |
