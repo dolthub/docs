@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 312 of 431 MySQL functions.**
+**Currently supporting 315 of 431 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -119,7 +119,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `COALESCE()`                      | ✅            |                                                                                                                                               |
 | `COERCIBILITY()`                  | ✅            |                                                                                                                                               |
 | `COLLATION()`                     | ✅            |                                                                                                                                               |
-| `COMPRESS()`                      | ❌            |                                                                                                                                               |
+| `COMPRESS()`                      | ✅            |                                                                                                                                               |
 | `CONCAT()`                        | ✅            |                                                                                                                                               |
 | `CONCAT_WS()`                     | ✅            |                                                                                                                                               |
 | `CONNECTION_ID()`                 | ✅            |                                                                                                                                               |
@@ -465,8 +465,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `TRIM()`                          | ✅            |                                                                                                                                               |
 | `TRUNCATE()`                      | ❌            |                                                                                                                                               |
 | `UCASE()`                         | ✅            |                                                                                                                                               |
-| `UNCOMPRESS()`                    | ❌            |                                                                                                                                               |
-| `UNCOMPRESSED_LENGTH()`           | ❌            |                                                                                                                                               |
+| `UNCOMPRESS()`                    | ✅            |                                                                                                                                               |
+| `UNCOMPRESSED_LENGTH()`           | ✅            |                                                                                                                                               |
 | `UNHEX()`                         | ✅            |                                                                                                                                               |
 | `UNIX_TIMESTAMP()`                | ✅            |                                                                                                                                               |
 | `UPPER()`                         | ✅            |                                                                                                                                               |
