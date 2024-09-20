@@ -77,7 +77,7 @@ supported by Dolt.
 Here are Dolt's function coverage results for version `1.42.20`.
 | Supported | Total | Percent Coverage |
 |-----------|-------|------------------|
-|       312 |   431 |               72 |
+|       316 |   431 |               73 |
 
 ## Skipped Engine Tests
 Here are the total number of tests skipped by the engine for 
