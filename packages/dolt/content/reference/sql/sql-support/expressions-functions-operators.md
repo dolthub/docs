@@ -54,7 +54,7 @@ title: "Expressions, Functions, and Operators"
 
 ## Functions and operators
 
-**Currently supporting 310 of 431 MySQL functions.**
+**Currently supporting 316 of 431 MySQL functions.**
 
 Most functions are simple to implement. If you need one that isn't implemented, [please file an issue](https://github.com/dolthub/dolt/issues). We can fulfill most requests for new functions within 24 hours.
 
@@ -114,12 +114,12 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `CEILING()`                       | ✅            |                                                                                                                                               |
 | `CHAR()`                          | ✅            |                                                                                                                                               |
 | `CHARACTER_LENGTH()`              | ✅            |                                                                                                                                               |
-| `CHARSET()`                       | ❌            |                                                                                                                                               |
+| `CHARSET()`                       | ✅            |                                                                                                                                               |
 | `CHAR_LENGTH()`                   | ✅            |                                                                                                                                               |
 | `COALESCE()`                      | ✅            |                                                                                                                                               |
 | `COERCIBILITY()`                  | ✅            |                                                                                                                                               |
 | `COLLATION()`                     | ✅            |                                                                                                                                               |
-| `COMPRESS()`                      | ❌            |                                                                                                                                               |
+| `COMPRESS()`                      | ✅            | Golang's zlib library is slightly different than MySQL's, so compressed data may not match                                                    |
 | `CONCAT()`                        | ✅            |                                                                                                                                               |
 | `CONCAT_WS()`                     | ✅            |                                                                                                                                               |
 | `CONNECTION_ID()`                 | ✅            |                                                                                                                                               |
@@ -177,7 +177,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `FROM_BASE64()`                   | ✅            |                                                                                                                                               |
 | `FROM_DAYS()`                     | ✅            |                                                                                                                                               |
 | `FROM_UNIXTIME()`                 | ✅            |                                                                                                                                               |
-| `GET_FORMAT()`                    | ❌            |                                                                                                                                               |
+| `GET_FORMAT()`                    | ✅            |                                                                                                                                               |
 | `GET_LOCK()`                      | ✅            |                                                                                                                                               |
 | `GREATEST()`                      | ✅            |                                                                                                                                               |
 | `GROUPING()`                      | ❌            |                                                                                                                                               |
@@ -465,8 +465,8 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `TRIM()`                          | ✅            |                                                                                                                                               |
 | `TRUNCATE()`                      | ❌            |                                                                                                                                               |
 | `UCASE()`                         | ✅            |                                                                                                                                               |
-| `UNCOMPRESS()`                    | ❌            |                                                                                                                                               |
-| `UNCOMPRESSED_LENGTH()`           | ❌            |                                                                                                                                               |
+| `UNCOMPRESS()`                    | ✅            |                                                                                                                                               |
+| `UNCOMPRESSED_LENGTH()`           | ✅            |                                                                                                                                               |
 | `UNHEX()`                         | ✅            |                                                                                                                                               |
 | `UNIX_TIMESTAMP()`                | ✅            |                                                                                                                                               |
 | `UPPER()`                         | ✅            |                                                                                                                                               |
@@ -478,7 +478,7 @@ Most functions are simple to implement. If you need one that isn't implemented, 
 | `UUID_SHORT()`                    | ❌            |                                                                                                                                               |
 | `UUID_TO_BIN()`                   | ✅            |                                                                                                                                               |
 | `UPDATEXML()`                     | ❌            |                                                                                                                                               |
-| `VALIDATE_PASSWORD_STRENGTH()`    | ❌            |                                                                                                                                               |
+| `VALIDATE_PASSWORD_STRENGTH()`    | ✅            |                                                                                                                                               |
 | `VALUES()`                        | ✅            |                                                                                                                                               |
 | `VARIANCE()`                      | ❌            |                                                                                                                                               |
 | `VAR_POP()`                       | ❌            |                                                                                                                                               |
