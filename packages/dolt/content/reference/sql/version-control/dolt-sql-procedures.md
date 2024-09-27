@@ -1418,6 +1418,10 @@ CALL dolt_undrop('database1');
 SELECT * FROM database1.t;
 ```
 
+### Usage Notes
+
+Dropped databases are moved to the `.dolt_dropped_databases` directory in the Dolt data directory. If a database with the same name is dropped multiple times, the previous copy will be renamed to `<database_name>.backup.<timestamp>`. This enables you to restore a previously dropped database, even if it was recreated and dropped again. To restore a previous version, rename the backup directory to the original database name and then call `dolt_undrop('<database_name>')`. If you do not rename the directory and use the name with the timestamp when you call `dolt_undrop()`, then the database will be restored with the timestamp in the name.   
+
 ## `DOLT_VERIFY_CONSTRAINTS()`
 
 Verifies that working set changes (inserts, updates, and/or deletes) satisfy the
