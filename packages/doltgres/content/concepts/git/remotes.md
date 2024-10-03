@@ -49,7 +49,7 @@ location for your Doltgres remote.
 ## Example
 
 ```sql
-call dolt_clone('file:///var/share/doltgres-remotes/docs');
+select dolt_clone('file:///var/share/doltgres-remotes/docs');
 \c docs;
 select * from docs;
 +----+----+
@@ -65,6 +65,6 @@ select * from docs;
 | 1  | 1  |
 | 2  | 2  |
 +----+----+
-call dolt_commit('-m', 'Committing inserts so I can push it to my remote');
-call dolt_push('origin', 'main');
+select dolt_commit('-m', 'Committing inserts so I can push it to my remote');
+select dolt_push('origin', 'main');
 ```

@@ -94,7 +94,7 @@ map the table data to the schema at the specified commit, branch, or tag, and fi
 
 ```sql
 -- check out an older branch that has a different schema
-CALL dolt_checkout('olderBranch');
+SELECT dolt_checkout('olderBranch');
 
 -- running a query that references the Birthdate column will fail
 SELECT Name, Birthdate FROM People;
@@ -155,7 +155,7 @@ select name from dolt_remotes;
 (2 rows)
 
 SET dolt_replicate_to_remote TO remote1;
-CALL dolt_commit('-am', 'push on write');
+SELECT dolt_commit('-am', 'push on write');
 ```
 
 ## `dolt_async_replication`
@@ -204,8 +204,8 @@ Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 
 ```sql
 SET dolt_replicate_heads TO main;
-SET dolt_replicate_heads TO "main,feature1,feature2";
-SET dolt_replicate_heads TO "main,release*";
+SET dolt_replicate_heads TO 'main,feature1,feature2';
+SET dolt_replicate_heads TO 'main,release*';
 ```
 
 ## `dolt_replication_remote_url_template`
@@ -227,7 +227,7 @@ remote. See [Replication](../server/replication.md).
 ## `dolt_read_replica_force_pull`
 
 Set this variable to `1` to cause read replicas to always pull their local copies of remote heads even
-when they have diverged from the local copy, which can occur in the case of a `call dolt_push('-f')`. A
+when they have diverged from the local copy, which can occur in the case of a `select dolt_push('-f')`. A
 setting of `0` causes read replicas to reject remote head updates that cannot be fast-forward merged
 into the local copy. Defaults to `1`.
 
@@ -266,7 +266,7 @@ SET mydb_head_ref TO 'feature-branch'
 This is equivalent to:
 
 ```sql
-call dolt_checkout('feature-branch')
+select dolt_checkout('feature-branch')
 ```
 
 ## `dbname_head`

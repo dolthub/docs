@@ -36,7 +36,7 @@ To replicate your database off host so you can restore if you lose the host, Dol
 different concepts: remotes and backups.
 
 Using a [remote](../git/remotes.md) for backup allows you to back up all committed changes. You add
-a remote using the [`call dolt_remote()`
+a remote using the [`select dolt_remote()`
 procedure](../../reference/sql/version-control/dolt-sql-procedures.md#dolt_remote). Then you push a
 branch to a remote using the [`dolt_push()`
 procedure](../../reference/sql/version-control/dolt-sql-procedures.md#dolt_push).

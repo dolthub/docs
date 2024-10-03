@@ -66,38 +66,38 @@ create table pay (id int,
 ```sql
 insert into employees values (0, 'Smith', 'Ella', 34), (1, 'Baker', 'Jack', 27);
 insert into pay values (0, 50000);
-call dolt_commit('-am', "Data for foreign key doc");
+select dolt_commit('-am', 'Data for foreign key doc');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
 | kgjb1tdbqt3vsn2e3nv06n5a6jdaqtk8 |
 +----------------------------------+
-call dolt_checkout('-b', 'delete-parent');
+select dolt_checkout('-b', 'delete-parent');
 +--------+
 | status |
 +--------+
 | 0      |
 +--------+
 delete from employees where id=1;
-call dolt_commit('-am', "Deleted Jack Baker, id=1");
+select dolt_commit('-am', 'Deleted Jack Baker, id=1');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
 | pd8r1j7or0aonincnc8iutsdjqnkmtsb |
 +----------------------------------+
-call dolt_checkout('main');
+select dolt_checkout('main');
 +--------+
 | status |
 +--------+
 | 0      |
 +--------+
 insert into pay values (1, 48000);
-call dolt_commit('-am', "Added salary for Jack Baker id=1");
+select dolt_commit('-am', 'Added salary for Jack Baker id=1');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
 | 44h9p2k59o59rc1lcenkg4dghe052um0 |
 +----------------------------------+
-call dolt_merge('delete-parent');
+select dolt_merge('delete-parent');
 Error 1105: Constraint violation from merge detected, cannot commit transaction. Constraint violations from a merge must be resolved using the dolt_constraint_violations table before committing a transaction. To commit transactions with constraint violations set @@dolt_force_transaction_commit=1
 ```

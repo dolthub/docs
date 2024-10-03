@@ -2,10 +2,10 @@
 title: Using branches and database revisions
 ---
 
-# Using branches and database revisions 
+# Using branches and database revisions
 
 Branches and database revisions allow you to work with your data at any commit in your database's
-commit graph.  This is useful for isolating development on different branches, analyzing historical
+commit graph. This is useful for isolating development on different branches, analyzing historical
 data, tracking data lineage, and much more.
 
 Unlike other relational databases, Doltgres has multiple heads, one for each branch in the database. A
@@ -93,20 +93,20 @@ SELECT * from `mydatabase/v1.0`.accounts;
 ## Switch branches with the `DOLT_CHECKOUT()` procedure
 
 The `DOLT_CHECKOUT()` SQL procedure provides identical functionality to
-the `dolt checkout` command on the command line, and accepts the same
+the `dolt checkout` command on the Dolt command line, and accepts the same
 arguments.
 
-`CALL DOLT_CHECKOUT('feature-branch');` switches the session to the
+`SELECT DOLT_CHECKOUT('feature-branch');` switches the session to the
 `feature-branch` branch. You can also switch to a new branch, like so:
 
 ```sql
-CALL DOLT_CHECKOUT('-b', 'new-branch');
+SELECT DOLT_CHECKOUT('-b', 'new-branch');
 ```
 
 You can switch to a new branch with a starting commit as well:
 
 ```sql
-CALL DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
+SELECT DOLT_CHECKOUT('-b', 'new-branch-at-commit', 'ia1ibijq8hq1llr7u85uivsi5lh3310p')
 ```
 
 ## Branches and transactions
@@ -117,12 +117,12 @@ session until a new transaction begins.
 
 ## Recovering a deleted branch
 
-The data on a branch is versioned, but the metadata of the branch head itself is not, so if you delete a 
-branch or reset it to point at an older commit, you can't revert or undo that change the same way you can 
-with your data. Instead, you can use 
+The data on a branch is versioned, but the metadata of the branch head itself is not, so if you delete a
+branch or reset it to point at an older commit, you can't revert or undo that change the same way you can
+with your data. Instead, you can use
 [the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) to see the history of commits
-your branch has referenced and either recreate the branch from the last referenced commit with 
-[the `dolt_branch()` stored procedure](./dolt-sql-procedures.md#dolt_branch) or reset the branch to a 
+your branch has referenced and either recreate the branch from the last referenced commit with
+[the `dolt_branch()` stored procedure](./dolt-sql-procedures.md#dolt_branch) or reset the branch to a
 previous commit with [the `dolt_reset()` stored procedure](./dolt-sql-procedures.md#dolt_reset). See
 [the `dolt_reflog()` table function](./dolt-sql-functions.md#dolt_reflog) for an example of recreating
 a deleted branch and more information on how the Doltgres reflog works and what limitations it has.
@@ -145,9 +145,9 @@ sequence also fails.
 
 ```sql
 start transaction;
-call dolt_checkout('branch1');
+select dolt_checkout('branch1');
 insert into t1 values (100);
-call dolt_checkout('branch2');
+select dolt_checkout('branch2');
 insert into t1 values (200);
 commit; -- ERROR: can only commit changes to one branch at a time
 ```
@@ -160,10 +160,10 @@ transaction that modifies more than one branch.
 If you use a database name that isn't qualified by a branch or other revision specifier, it still
 resolves to a particular branch. The rules for this are subtle.
 
-* If `dolt_checkout()` was called to switch the checked-out branch previously in this session, an
+- If `dolt_checkout()` was called to switch the checked-out branch previously in this session, an
   unqualified database name will resolve to that branch. `dolt_checkout()` has the side-effect of
   changing what branch an unqualified database name resolves to for the remainder of a session.
-* Otherwise, an unqualified database name resolves to the default branch, typically `main`.
+- Otherwise, an unqualified database name resolves to the default branch, typically `main`.
 
 An example:
 
@@ -182,9 +182,9 @@ In the last line, `mydb` resolves to `mydb/main` because no branch was checked o
 Using `dolt_checkout()` changes this behavior:
 
 ```sql
-call dolt_checkout('branch1');
+select dolt_checkout('branch1');
 insert into t1 values (1); -- modifying the `branch1` branch
-call dolt_checkout('branch2');
+select dolt_checkout('branch2');
 insert into t1 values (2); -- modifying the `branch2` branch
 use mydb;
 insert into t1 values (3); -- modifying the `branch2` branch
