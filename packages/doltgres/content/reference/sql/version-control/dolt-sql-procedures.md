@@ -485,28 +485,28 @@ select dolt_add('tracked');
 
 -- Observe database status
 select * from dolt_status;
-+------------+--------+-----------+
-| table_name | staged | status    |
-+------------+--------+-----------+
-| tracked    | true   | new table |
-| untracked  | false  | new table |
-+------------+--------+-----------+
++-------------------+--------+-----------+
+| table_name        | staged | status    |
++-------------------+--------+-----------+
+| public.tracked    | 1      | new table |
+| public.untracked  | 0      | new table |
++-------------------+--------+-----------+
 
 -- Clear untracked tables
 select dolt_clean('untracked');
 
 -- Observe final status
 select * from dolt_status;
-+------------+--------+-----------+
-| table_name | staged | status    |
-+------------+--------+-----------+
-| tracked    | true   | new table |
-+------------+--------+-----------+
++-----------------+--------+-----------+
+| table_name      | staged | status    |
++-----------------+--------+-----------+
+| public.tracked  | 1      | new table |
++-----------------+--------+-----------+
 
 -- Committed and tracked tables are preserved
-show tables;
+select tablename from pg_tables;
 +----------------+
-| Tables_in_tmp3 |
+| tablename      |
 +----------------+
 | committed      |
 | tracked        |

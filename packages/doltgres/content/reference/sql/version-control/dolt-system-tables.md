@@ -648,7 +648,7 @@ The `dolt_diff` system table shows which tables in the current database were cha
 
 The `DOLT_DIFF` system table has the following columns
 
-```text
+```sql
 +---------------+----------+
 | field         | Type     |
 +---------------+----------+
@@ -699,7 +699,7 @@ the value `WORKING` for their `commit_hash`.
 
 The `DOLT_COLUMN_DIFF` system table has the following columns
 
-```text
+```sql
 +-------------+----------+
 | field       | Type     |
 +-------------+----------+
@@ -759,7 +759,7 @@ showing the diff, instead of the 10 individual deltas.
 
 Every Dolt diff table will have the columns
 
-```text
+```sql
 +------------------+----------+
 | field            | type     |
 +------------------+----------+
@@ -780,7 +780,7 @@ be columns in the result set named `from_X` and `to_X` with the same type as `X`
 
 For a table named `states` with the following schema:
 
-```text
+```sql
 +------------+--------+
 | field      | type   |
 +------------+--------+
@@ -792,7 +792,7 @@ For a table named `states` with the following schema:
 
 The schema for `dolt_diff_states` would be:
 
-```text
+```sql
 +------------------+----------+
 | field            | type     |
 +-----------------+-----------+
@@ -998,11 +998,11 @@ dolt merge right
 
 Output of `SELECT * from dolt_merge_status;`:
 
-```
+```sql
 +------------+--------+----------------------------------+-----------------+-----------------+
 | is_merging | source | source_commit                    | target          | unmerged_tables |
 +------------+--------+----------------------------------+-----------------+-----------------+
-| true       | right  | fbghslue1k9cfgbi00ti4r8417frgbca | refs/heads/main | t               |
+| 1          | right  | fbghslue1k9cfgbi00ti4r8417frgbca | refs/heads/main | t               |
 +------------+--------+----------------------------------+-----------------+-----------------+
 ```
 
@@ -1013,7 +1013,7 @@ running `dolt status` from the command line.
 
 ### Schema
 
-```text
+```sql
 +------------+---------+------+-----+
 | Field      | Type    | Null | Key |
 +------------+---------+------+-----+
@@ -1031,12 +1031,12 @@ FROM dolt_status
 WHERE staged=false;
 ```
 
-```text
-+------------+--------+-----------+
-| table_name | staged | status    |
-+------------+--------+-----------+
-| one_pk     | false  | new table |
-+------------+--------+-----------+
+```sql
++----------------+--------+-----------+
+| table_name     | staged | status    |
++----------------+--------+-----------+
+| public.one_pk  | 0      | new table |
++----------------+--------+-----------+
 ```
 
 # Constraint Violation System Tables
@@ -1147,13 +1147,13 @@ FROM dolt_status
 WHERE staged=true;
 ```
 
-```text
-+---------------------+--------+-----------+
-| table_name          | staged | status    |
-+---------------------+--------+-----------+
-| foo                 | true   | new table |
-| generated_exception | true   | new table |
-+---------------------+--------+-----------+
+```sql
++----------------------------+--------+-----------+
+| table_name                 | staged | status    |
++----------------------------+--------+-----------+
+| public.foo                 | 1      | new table |
+| public.generated_exception | 1      | new table |
++----------------------------+--------+-----------+
 ```
 
 # Rebasing Tables

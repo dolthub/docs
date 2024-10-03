@@ -92,11 +92,11 @@ getting_started=> select dolt_add('teams', 'employees', 'employees_teams');
       0
 (1 row)
 getting_started=> select * from dolt_status;
-   table_name    | staged |  status
------------------+--------+-----------
- employees       | 1      | new table
- employees_teams | 1      | new table
- teams           | 1      | new table
+   table_name           | staged |  status
+------------------------+--------+-----------
+ public.employees       | 1      | new table
+ public.employees_teams | 1      | new table
+ public.teams           | 1      | new table
 (3 rows)
 
 getting_started=> select dolt_commit('-m', 'Created initial schema');
