@@ -48,7 +48,7 @@ merge using the [dolt_merge_status](./dolt-system-tables.md#doltmergestatus) sys
 
 If conflicts/constraint-violations were encountered, the current transaction
 will be left incomplete and you should resolve them using the instructions
-below. Once resolved, you will need to make a dolt commit.
+below. Once resolved, you will need to make a Dolt commit.
 
 # Conflicts
 

@@ -8,7 +8,7 @@ Dolt databases allow you to query the data at any point in the commit
 history. There are several ways to do so.
 
 Please note: when querying history, the unit of snapshot is the dolt
-commit. SQL transaction commits do not create a dolt commit by
+commit. SQL transaction commits do not create a Dolt commit by
 default.
 
 ## Querying past snapshots with `AS OF`
@@ -73,9 +73,9 @@ Note that this syntax applied to a branch will name that branch's [working
 set](../../../concepts/git/working-set.md) and therefore includes any changes not yet committed to
 the HEAD of the branch.
 
-## Querying history using dolt system tables
+## Querying history using Dolt system tables
 
-For every table in the database, dolt also provides a set of system
+For every table in the database, Dolt also provides a set of system
 tables that you can query to see past values of rows, diffs between
 revisions, and more.
 
@@ -84,8 +84,8 @@ a table.
 
 ```sql
 SELECT * FROM dolt_history_mytable
-WHERE state = "Virginia"
-ORDER BY "commit_date"
+WHERE state = 'Virginia'
+ORDER BY 'commit_date'
 
 +----------+------------+----------+-------------+-----------+---------------------------------+
 | state    | population | capital  | commit_hash | committer | commit_date                     |

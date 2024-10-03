@@ -84,8 +84,8 @@ USE mydb;
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage all changes.
 SELECT DOLT_ADD('-A');
@@ -309,8 +309,8 @@ SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage and commit all  changes.
 SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
@@ -634,8 +634,8 @@ USE mydb;
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage all changes and commit.
 SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
@@ -763,7 +763,7 @@ To prevent concurrent writes potentially referencing garbage collected chunks, r
 queries on those connections may fail and must be retried. Re-establishing connections
 after they are broken is safe.
 
-At the end of the run, the connection which ran select dolt_gc() will be left open in order
+At the end of the run, the connection which ran `select dolt_gc()` will be left open in order
 to deliver the results of the operation itself. The connection will be left in a terminally
 broken state where any attempt to run a query on it will result in the following error:
 
@@ -773,7 +773,7 @@ garbage collection. this connection can no longer be used. please reconnect.
 ```
 
 The connection should be closed. In some connection pools it can be awkward to cause a
-single connection to actually close. If you need to run select dolt_gc() programmatically,
+single connection to actually close. If you need to run `select dolt_gc()` programmatically,
 one work around is to use a separate connection pool with a size of 1 which can be
 closed after the run is successful.
 
@@ -852,8 +852,8 @@ SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage and commit all  changes.
 SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
@@ -1215,16 +1215,16 @@ USE mydb;
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Reset the changes permanently.
 SELECT DOLT_RESET('--hard');
 
 -- Makes some more changes.
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage the table.
 SELECT DOLT_ADD('table')
@@ -1263,15 +1263,15 @@ SELECT DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ```sql
 -- Create a table and add data in multiple commits
 CREATE TABLE t1(pk INT PRIMARY KEY, c VARCHAR(255));
-SELECT dolt_add("t1")
-SELECT dolt_commit("-m", "Creating table t1");
-INSERT INTO t1 VALUES(1, "a"), (2, "b"), (3, "c");
-SELECT dolt_commit("-am", "Adding some data");
-insert into t1 VALUES(10, "aa"), (20, "bb"), (30, "cc");
-SELECT dolt_commit("-am", "Adding some more data");
+SELECT dolt_add('t1')
+SELECT dolt_commit('-m', 'Creating table t1');
+INSERT INTO t1 VALUES(1, 'a'), (2, 'b'), (3, 'c');
+SELECT dolt_commit('-am', 'Adding some data');
+insert into t1 VALUES(10, 'aa'), (20, 'bb'), (30, 'cc');
+SELECT dolt_commit('-am', 'Adding some more data');
 
 -- Examine the changes made in the commit immediately before the current HEAD commit
-SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD~1");
+SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof('HEAD~1');
 +-------+------+----------------------------------+-----------+
 | to_pk | to_c | to_commit                        | diff_type |
 +-------+------+----------------------------------+-----------+
@@ -1281,7 +1281,7 @@ SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hasho
 +-------+------+----------------------------------+-----------+
 
 -- Revert the commit immediately before the current HEAD commit
-SELECT dolt_revert("HEAD~1");
+SELECT dolt_revert('HEAD~1');
 
 -- Check out the new commit created by dolt_revert
 SELECT commit_hash, message FROM dolt_log limit 1;
@@ -1292,7 +1292,7 @@ SELECT commit_hash, message FROM dolt_log limit 1;
 +----------------------------------+---------------------------+
 
 -- View the exact changes made by the revert commit
-SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD");
+SELECT from_pk, from_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof('HEAD');
 +---------+--------+----------------------------------+-----------+
 | from_pk | from_c | to_commit                        | diff_type |
 +---------+--------+----------------------------------+-----------+
@@ -1341,8 +1341,8 @@ USE mydb;
 
 -- Make modifications
 UPDATE table
-SET column = "new value"
-WHERE pk = "key";
+SET column = 'new value'
+WHERE pk = 'key';
 
 -- Stage and commit all changes.
 SELECT DOLT_COMMIT('-am', 'committing all changes');

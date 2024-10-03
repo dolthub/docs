@@ -35,7 +35,7 @@ Doltgres to do things like:
 You should make a commit when you want to be able to use the current version of the database to do
 one of the above things.
 
-To create a commit, you select the `DOLT_COMMIT()` stored procedure. A user and commit message are
+To create a commit, you call the `DOLT_COMMIT()` stored procedure. A user and commit message are
 required. Your user is defined in configuration. You provide a commit message via the user
 interface.
 

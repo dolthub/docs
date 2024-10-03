@@ -76,7 +76,7 @@ See detailed list in the [Postgres docs](https://www.postgresql.org/docs/15/func
 | pg_tablespace_databases(oid)                 | ❌        |                         |
 | pg_tablespace_location(pod)                  | ❌        |                         |
 | pg_typeof("any")                             | ❌        |                         |
-| COLLATION FOR("any)                          | ❌        |                         |
+| COLLATION FOR("any")                         | ❌        |                         |
 | to_regclass(text)                            | ✅        |                         |
 | to_regcollation(text)                        | ❌        |                         |
 | to_regnamespace(text)                        | ❌        |                         |

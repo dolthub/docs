@@ -18,7 +18,7 @@ title: Supported SQL Commands
 
 | SQL Commands | Parses | Works | Notes and limitations |
 | :----------- | :----: | :---: | :-------------------- |
-| SELECT       |   ✅   |  ✅   |                       |
+| CALL         |   ✅   |  ✅   |                       |
 | DELETE       |   🟠   |  🟠   |                       |
 | INSERT       |   🟠   |  🟠   |                       |
 | SELECT       |   🟠   |  🟠   |                       |
@@ -172,7 +172,7 @@ title: Supported SQL Commands
 
 | SQL Commands              | Parses | Works | Notes and limitations |
 | :------------------------ | :----: | :---: | :-------------------- |
-| SELECT                    |   ✅   |  ✅   |                       |
+| CALL                      |   ✅   |  ✅   |                       |
 | CLOSE                     |   ❌   |  ❌   |                       |
 | CREATE TABLE AS           |   ✅   |  ❌   |                       |
 | CLUSTER                   |   ❌   |  ❌   |                       |

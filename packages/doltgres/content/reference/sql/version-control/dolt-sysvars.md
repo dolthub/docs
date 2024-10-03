@@ -204,8 +204,8 @@ Pair with `dolt_read_replica_remote`. Use is mutually exclusive with
 
 ```sql
 SET dolt_replicate_heads TO main;
-SET dolt_replicate_heads TO "main,feature1,feature2";
-SET dolt_replicate_heads TO "main,release*";
+SET dolt_replicate_heads TO 'main,feature1,feature2';
+SET dolt_replicate_heads TO 'main,release*';
 ```
 
 ## `dolt_replication_remote_url_template`

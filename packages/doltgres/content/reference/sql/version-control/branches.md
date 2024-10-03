@@ -93,7 +93,7 @@ SELECT * from `mydatabase/v1.0`.accounts;
 ## Switch branches with the `DOLT_CHECKOUT()` procedure
 
 The `DOLT_CHECKOUT()` SQL procedure provides identical functionality to
-the `dolt checkout` command on the command line, and accepts the same
+the `dolt checkout` command on the Dolt command line, and accepts the same
 arguments.
 
 `SELECT DOLT_CHECKOUT('feature-branch');` switches the session to the

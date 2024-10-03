@@ -19,7 +19,7 @@ details on when conflicts are generated and when they are not.
 
 A commit that is created on a branch where a merge operation took place has two parent commits.
 
-There is a special type of merge select a "Fast-forward" merge. Fast-forward merges happen when no
+There is a special type of merge called a "Fast-forward" merge. Fast-forward merges happen when no
 changes happened on the branch you are merging into since you branched. In the commit log,
 fast-forward merges do not create merge commits, they just append the current branch's commits to
 the end of the branch you are merging into.

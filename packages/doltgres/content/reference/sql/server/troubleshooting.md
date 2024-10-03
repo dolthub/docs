@@ -40,7 +40,7 @@ Doltgres creates disk garbage on write. This can sometimes become a substantial 
 
 To run garbage collection online, run [`select dolt_gc()`](../version-control/dolt-sql-procedures.md#dolt_gc). We are working on having this procedure run periodically in the background.
 
-Disk garbage is especially pronounced after imports. We recommend concluding imports with a `select dolt_gc()` select.
+Disk garbage is especially pronounced after imports. We recommend concluding imports with a `select dolt_gc()` call.
 
 Another potential cause is a commit-heavy workflow that uses a database design that is antagonistic to Doltgres's structural sharing. We've written thoroughly about this [here](https://www.dolthub.com/blog/2020-05-13-dolt-commit-graph-and-structural-sharing/), but some examples include
 

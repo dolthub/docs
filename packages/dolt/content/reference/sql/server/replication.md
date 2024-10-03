@@ -346,8 +346,8 @@ On `dolt-1.db`, we will have a `config.yaml` like:
 ```yaml
 cluster:
   standby_remotes:
-  - name: standby
-    remote_url_template: http://dolt-2.db:50051/{database}
+    - name: standby
+      remote_url_template: http://dolt-2.db:50051/{database}
   bootstrap_role: primary
   bootstrap_epoch: 1
   remotesapi:
@@ -359,8 +359,8 @@ On `dolt-2.db`, we will have:
 ```yaml
 cluster:
   standby_remotes:
-  - name: standby
-    remote_url_template: http://dolt-1.db:50051/{database}
+    - name: standby
+      remote_url_template: http://dolt-1.db:50051/{database}
   bootstrap_role: standby
   bootstrap_epoch: 1
   remotesapi:
@@ -503,7 +503,7 @@ epoch. The behavior will be the following:
    all queries with an error asking the user to reconnect.
 
 In the configured example, if you run the first statement on `dolt-1.db` and
-the second statement on `dolt-2.db`, you will have performed an oderly failover
+the second statement on `dolt-2.db`, you will have performed an orderly failover
 from `dolt-1.db` to make `dolt-2.db` the new primary.
 
 ### Automatic Role Transitions
@@ -693,9 +693,9 @@ things to consider when choosing how to configure replication.
    files to a remote storage solution and having the read replica download the
    files from there. On the other hand, direct replication may be less scalable in
    the number of read replicas which it can gracefully handle, since the primary
-   itself is responsible for pushing each write to each standby server. For read 
-   replicas, read latency for direct replication is always faster, since no 
-   communication to a remote must take place. You can expect increased read latency 
+   itself is responsible for pushing each write to each standby server. For read
+   replicas, read latency for direct replication is always faster, since no
+   communication to a remote must take place. You can expect increased read latency
    on every transaction start of aremote-based read replica.
 
 4. The ability to replicate writes with direct replication is not coupled with
@@ -732,8 +732,8 @@ for more details on how to configure this.
 # Dolt to MySQL Replication
 
 If you want to run Dolt as your primary database server, you can still replicate a single branch to a MySQL database.
-This is often useful for change data capture (CDC) or data warehouse use cases that require pulling data via 
-MySQL's replication protocol. 
+This is often useful for change data capture (CDC) or data warehouse use cases that require pulling data via
+MySQL's replication protocol.
 For example, you can [use Debezium to monitor changes in a Dolt database](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/) for CDC use cases.
-See our [blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/) for 
-more details on setting up Dolt to MySQL replication.  
+See our [blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/) for
+more details on setting up Dolt to MySQL replication.

@@ -427,11 +427,11 @@ epoch. The behavior will be the following:
 
 1. The server will be put into read-only mode.
 
-2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role`
-   select itself, will be canceled and the connection for the queries will be
+2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role()`
+   call itself, will be canceled and the connection for the queries will be
    terminated.
 
-3. The select will block until replication of every database to each
+3. The call will block until replication of every database to each
    `standby_replica` is completed.
 
 4. If the final replications complete successfully, the new role and new
@@ -439,7 +439,7 @@ epoch. The behavior will be the following:
    the new role is not assumed &mdash; the database is placed back into read-write
    mode and remains a `primary` at the old epoch.
 
-5. If the select is successful, the connection over which it was made will be
+5. If the call is successful, the connection over which it was made will be
    tainted. It will fail all queries with an error asking the user to reconnect.
 
 To make a current standby become a primary, run the following:
@@ -453,17 +453,17 @@ epoch. The behavior will be the following:
 
 1. The server will be put into read-write mode.
 
-2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role`
-   select itself, will be canceled and the connection for the queries will be
+2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role()`
+   call itself, will be canceled and the connection for the queries will be
    terminated.
 
 3. The new role and epoch will be applied on the server.
 
-4. The connection over which the select was made will be tainted. It will fail
+4. The connection over which the call was made will be tainted. It will fail
    all queries with an error asking the user to reconnect.
 
 In the configured example, if you run the first statement on `dolt-1.db` and
-the second statement on `dolt-2.db`, you will have performed an oderly failover
+the second statement on `dolt-2.db`, you will have performed an orderly failover
 from `dolt-1.db` to make `dolt-2.db` the new primary.
 
 ### Atomatic Role Transitions
@@ -501,7 +501,7 @@ communicate with these servers and see the `detected_broken_config` role at the
 same epoch, those servers will also transition to `detected_broken_config`. A
 server which is in `detected_broken_config` will become a `standby` if it
 receives a replication request from a primary at a higher configuration epoch.
-It can also change its role based on a select to `dolt_assume_cluster_role`.
+It can also change its role based on a call to `dolt_assume_cluster_role`.
 
 A server never automatically transitions to be a primary.
 

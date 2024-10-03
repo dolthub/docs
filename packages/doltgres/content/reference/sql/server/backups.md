@@ -68,7 +68,7 @@ use backup_example;
 create table test (pk int, c1 int, primary key(pk));
 insert into test values (0,0);
 select dolt_add('test');
-select dolt_commit('-m', "Created table and inserted values to be backed up");
+select dolt_commit('-m', 'Created table and inserted values to be backed up');
 +----------------------------------+
 | hash                             |
 +----------------------------------+

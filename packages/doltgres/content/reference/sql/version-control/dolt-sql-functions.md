@@ -82,7 +82,7 @@ SELECT dolt_hashof_table('color');
 The `DOLT_HASHOF_DB()` function returns the value hash of the entire versioned database. The hash is the hash of all tables
 (schema and data) in the database, and includes additional versioned items such as stored procedures and triggers. The hash
 does not include unversioned items such as tables which have been [ignored](dolt-system-tables.md#dolt_ignore). The function
-takes an optional argument to specify a branch or one of the values of 'STAGED', 'WORKING', or 'HEAD' (default no argument select
+takes an optional argument to specify a branch or one of the values of 'STAGED', 'WORKING', or 'HEAD' (default no argument call
 is equivalent to 'WORKING').
 
 This function can be used to watch for changes in the database by storing previous hashes in your application and comparing them
@@ -97,13 +97,13 @@ mysql> SELECT dolt_hashof_db();
 +----------------------------------+
 ```
 
-It should be noted that if you are connected to branch 'main' and you select `dolt_hashof_db('feature')`, the hash may be different
+It should be noted that if you are connected to branch 'main' and you call `dolt_hashof_db('feature')`, the hash may be different
 than if you were connected to branch 'feature' and called `dolt_hashof_db()`. This happens if there exist changes to the working set on
 branch 'feature' that have not been committed. Calling `dolt_hashof_db('feature')` while on 'main' is equivalent to calling
 `dolt_hashof_db('HEAD')` while on branch 'feature'.
 
 The general recommendation when trying to look for changes to the database is to connect to the branch you want to use, then
-select `dolt_hashof_db()` without any arguments. Any change in the hash means that the database has changed.
+call `dolt_hashof_db()` without any arguments. Any change in the hash means that the database has changed.
 
 ## `DOLT_VERSION()`
 
@@ -264,7 +264,7 @@ Based on the schemas at the two revision above, the resulting schema from `DOLT_
 To calculate the diff and view the results, we run the following query:
 
 ```sql
-SELECT * FROM DOLT_DIFF("main", "feature_branch", "inventory")
+SELECT * FROM DOLT_DIFF('main', 'feature_branch', 'inventory')
 ```
 
 The results from `DOLT_DIFF()` show how the data has changed going from `main` to `feature_branch`:
@@ -441,8 +441,6 @@ With result of single row:
 ```
 
 ## `DOLT_DIFF_SUMMARY()`
-
-_The previous version of `dolt_diff_summary` was renamed to `dolt_diff_stat`._
 
 The `DOLT_DIFF_SUMMARY()` table function is a summary of what tables changed and how
 between any two commits in the database. Only changed tables will be listed in the result,
@@ -955,7 +953,7 @@ These are the tables on `feature_branch`: `inventory`, `photos`, `trips`.
 To figure out how these tables changed, we run the following query:
 
 ```sql
-SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch")
+SELECT * FROM DOLT_SCHEMA_DIFF('main', 'feature_branch')
 ```
 
 The results from `DOLT_SCHEMA_DIFF()` show how the schema for all tables has changed going from tip of `main` to tip of `feature_branch`:
@@ -1011,7 +1009,7 @@ We can scope `DOLT_SCHEMA_DIFF()` to a specific table simply by specifying it as
 Let's try this with the `inventory` table.
 
 ```sql
-SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "inventory")
+SELECT * FROM DOLT_SCHEMA_DIFF('main', 'feature_branch', 'inventory')
 ```
 
 We will see this set of results:
@@ -1032,8 +1030,8 @@ We will see this set of results:
 When a table is renamed, we can specify either the "old" table name, or the "new" table name, and we will receive the same results. The following two queries will provide the same results:
 
 ```sql
-SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "trips");
-SELECT * FROM DOLT_SCHEMA_DIFF("main", "feature_branch", "vacations");
+SELECT * FROM DOLT_SCHEMA_DIFF('main', 'feature_branch', 'trips');
+SELECT * FROM DOLT_SCHEMA_DIFF('main', 'feature_branch', 'vacations');
 ```
 
 Here are the results:

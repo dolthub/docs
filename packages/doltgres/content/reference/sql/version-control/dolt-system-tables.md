@@ -193,7 +193,7 @@ CREATE PROCEDURE simple_proc2() SELECT name FROM category;
 ## `dolt_remotes`
 
 `dolt_remotes` returns the remote subcontents of the `repo_state.json`, similar
-to running `dolt remote -v` from the command line.
+to running `dolt remote -v` from the Dolt command line.
 
 The `dolt_remotes` table is currently read only. Use the [`dolt_remote()` procedure](./dolt-sql-procedures.md#dolt_remote) to add, update or delete remotes.
 
@@ -821,7 +821,7 @@ yet to be committed to HEAD. It is often useful to use the
 [`HASHOF()`](dolt-sql-functions.md#hashof)
 function to get the commit hash of a branch, or an ancestor
 commit. For example, to get the differences between the last commit and its parent
-you could use `to_commit=HASHOF("HEAD") and from_commit=HASHOF("HEAD^")`
+you could use `to_commit=HASHOF('HEAD') and from_commit=HASHOF('HEAD^')`
 
 For each row the field `diff_type` will be one of the values `added`,
 `modified`, or `removed`. You can filter which rows appear in the
@@ -977,23 +977,20 @@ CREATE TABLE `dolt_merge_status` (
 
 Let's create a simple conflict:
 
-```bash
-dolt sql -q "CREATE TABLE t (a INT PRIMARY KEY, b INT);"
-dolt add .
-dolt commit -am "base"
+```sql
+CREATE TABLE t (a INT PRIMARY KEY, b INT);
+SELECT DOLT_COMMIT('-Am', 'base');
 
-dolt checkout -b right
-dolt sql <<SQL
+SELECT DOLT_CHECKOUT('-b', 'right');
 ALTER TABLE t ADD c INT;
 INSERT INTO t VALUES (1, 2, 1);
-SQL
-dolt commit -am "right"
+SELECT DOLT_COMMIT('-Am', 'right');
 
-dolt checkout main
-dolt sql -q "INSERT INTO t values (1, 3);"
-dolt commit -am "left"
+SELECT DOLT_CHECKOUT('main');
+INSERT INTO t values (1, 3);
+SELECT DOLT_COMMIT('-Am', 'left');
 
-dolt merge right
+SELECT DOLT_MERGE('right');
 ```
 
 Output of `SELECT * from dolt_merge_status;`:
@@ -1096,7 +1093,7 @@ For a hypothetical table `a` with the following schema:
 Each row in the table represents a row in the primary table that is in violation of one or more constraint violations.
 The `violation_info` field is a JSON payload describing the violation.
 
-As with `dolt_conflicts`, delete rows from the corresponding `dolt_constraint_violations` table to signal to dolt that
+As with `dolt_conflicts`, delete rows from the corresponding `dolt_constraint_violations` table to signal to Doltgres that
 you have resolved any such violations before committing.
 
 # Configuration Tables
@@ -1130,18 +1127,18 @@ The format of patterns is a simplified version of gitignore’s patterns:
 
 If a table name matches multiple patterns with different values for `ignored`, the most specific pattern is chosen (a pattern A is more specific than a pattern B if all names that match A also match pattern B, but not vice versa.) If no pattern is most specific, then attempting to stage that table will result in an error.
 
-Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `dolt add` or `SELECT dolt_add`.
+Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `SELECT dolt_add`.
 
-`dolt diff` won't display ignored tables, and `dolt show` won't display ignored tables unless the additional `--ignored` flag is passed.
+`dolt_diff` won't display ignored tables unless the additional `--ignored` flag is passed.
 
 ### Example Query
 
 ```sql
-INSERT INTO dolt_ignore VALUES ("generated_*", true), ("generated_exception", false);
+INSERT INTO dolt_ignore VALUES ('generated_*', true), ('generated_exception', false);
 CREATE TABLE foo (pk int);
 CREATE TABLE generated_foo (pk int);
 CREATE TABLE generated_exception (pk int);
-SELECT dolt_add("-A");
+SELECT dolt_add('-A');
 SELECT *
 FROM dolt_status
 WHERE staged=true;

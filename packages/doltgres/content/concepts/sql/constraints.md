@@ -66,7 +66,7 @@ create table pay (id int,
 ```sql
 insert into employees values (0, 'Smith', 'Ella', 34), (1, 'Baker', 'Jack', 27);
 insert into pay values (0, 50000);
-select dolt_commit('-am', "Data for foreign key doc");
+select dolt_commit('-am', 'Data for foreign key doc');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -79,7 +79,7 @@ select dolt_checkout('-b', 'delete-parent');
 | 0      |
 +--------+
 delete from employees where id=1;
-select dolt_commit('-am', "Deleted Jack Baker, id=1");
+select dolt_commit('-am', 'Deleted Jack Baker, id=1');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -92,7 +92,7 @@ select dolt_checkout('main');
 | 0      |
 +--------+
 insert into pay values (1, 48000);
-select dolt_commit('-am', "Added salary for Jack Baker id=1");
+select dolt_commit('-am', 'Added salary for Jack Baker id=1');
 +----------------------------------+
 | hash                             |
 +----------------------------------+

@@ -24,7 +24,7 @@ Each column is composed of a string that represents a pattern-matching expressio
 | branch      | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
 | user        | VARCHAR(16383)                | utf8mb4_0900_bin   |
 | host        | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
-| permissions | SET("admin", "write", "read") | utf8mb4_0900_ai_ci |
+| permissions | SET('admin', 'write', 'read') | utf8mb4_0900_ai_ci |
 
 ### `dolt_branch_namespace_control`
 
