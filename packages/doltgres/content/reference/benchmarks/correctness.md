@@ -6,14 +6,17 @@ Correctness is measured using a standard suite of test called [`sqllogictest`](h
 
 Correctness is benchmarked for Doltgres release 0.4.0.
 
-| Results |  Count  |
-|---------|---------|
-| not ok  |  767635 |
-| ok      | 4912120 |
+| Results     | Count   |
+| ----------- | ------- |
+| did not run | 91270   |
+| not ok      | 464029  |
+| ok          | 5135990 |
+| timeout     | 16      |
 
-| Total Tests | 5679755 |
-|-------------|---------|
+| Total Tests | 5691305 |
+| ----------- | ------- |
 
-| Correctness Percentage | 86.484716 |
-|------------------------|-----------|
+| Correctness Percentage | 90.242747 |
+| ---------------------- | --------- |
+
 <br/>
