@@ -8,7 +8,7 @@ To merge a branch into your current branch, use the [`DOLT_MERGE()`
 procedure](dolt-sql-procedures.md#doltmerge):
 
 ```sql
-CALL DOLT_MERGE('feature-branch');
+SELECT DOLT_MERGE('feature-branch');
 ```
 
 Usually, you will want to start a transaction before calling the procedure:
@@ -261,22 +261,22 @@ exists:
 
 ```sql
 INSERT INTO parent values (1);
-CALL DOLT_COMMIT('-Am', 'setup');
+SELECT DOLT_COMMIT('-Am', 'setup');
 
-CALL DOLT_CHECKOUT('-b', 'branch_to_merge');
+SELECT DOLT_CHECKOUT('-b', 'branch_to_merge');
 INSERT INTO child values (1, 1);
-CALL DOLT_COMMIT('-Am', 'add a child of parent 1');
+SELECT DOLT_COMMIT('-Am', 'add a child of parent 1');
 
-CALL DOLT_CHECKOUT('main');
+SELECT DOLT_CHECKOUT('main');
 DELETE from parent where pk = 1;
-CALL DOLT_COMMIT('-Am', 'delete parent 1');
+SELECT DOLT_COMMIT('-Am', 'delete parent 1');
 ```
 
 When we merge, we see the `conflict` column has been set:
 
 ```sql
 > START TRANSACTION;
-> CALL DOLT_MERGE('branch_to_merge');
+> SELECT DOLT_MERGE('branch_to_merge');
 +--------------+-----------+
 | fast_forward | conflicts |
 +--------------+-----------+
@@ -310,5 +310,5 @@ Then we can fix the violation, clear it, and complete the merge:
 DELETE from child where pk = 1;
 DELETE from dolt_constraint_violations_child;
 
-CALL DOLT_COMMIT('-Am', 'merge branch_to_merge into main');
+SELECT DOLT_COMMIT('-Am', 'merge branch_to_merge into main');
 ```

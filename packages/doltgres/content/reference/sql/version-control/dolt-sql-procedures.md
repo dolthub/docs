@@ -39,7 +39,7 @@ For example, `dolt checkout -b feature-branch` is equivalent to
 executing the following SQL statement:
 
 ```sql
-CALL DOLT_CHECKOUT('-b', 'feature-branch');
+SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 ```
 
 SQL procedures are provided for all imperative version control operations. For operations that
@@ -54,9 +54,9 @@ After adding tables to the staged area, they can be committed with
 `DOLT_COMMIT()`.
 
 ```sql
-CALL DOLT_ADD('-A');
-CALL DOLT_ADD('.');
-CALL DOLT_ADD('table1', 'table2');
+SELECT DOLT_ADD('-A');
+SELECT DOLT_ADD('.');
+SELECT DOLT_ADD('table1', 'table2');
 ```
 
 ### Options
@@ -88,10 +88,10 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage all changes.
-CALL DOLT_ADD('-A');
+SELECT DOLT_ADD('-A');
 
 -- Commit the changes.
-CALL DOLT_COMMIT('-m', 'committing all changes');
+SELECT DOLT_COMMIT('-m', 'committing all changes');
 ```
 
 ## `DOLT_BACKUP()`
@@ -100,7 +100,7 @@ Sync with a configured backup. Other backup commands not supported
 via SQL yet.
 
 ```sql
-CALL DOLT_BACKUP('sync', 'name');
+SELECT DOLT_BACKUP('sync', 'name');
 ```
 
 ### Output Schema
@@ -120,7 +120,7 @@ CALL DOLT_BACKUP('sync', 'name');
 USE mydb;
 
 -- Upload the current database contents to the named backup
-CALL dolt_backup('sync', 'my-backup')
+SELECT dolt_backup('sync', 'my-backup')
 ```
 
 ## `DOLT_BRANCH()`
@@ -135,24 +135,24 @@ WARNING: In a multi-session server environment, Dolt will prevent you from delet
 
 ```sql
 -- Create a new branch from the current HEAD
-CALL DOLT_BRANCH('myNewBranch');
+SELECT DOLT_BRANCH('myNewBranch');
 
 -- Create a new branch from start point of tip of feature1 branch.
-CALL DOLT_BRANCH('myNewBranch', 'feature1');
+SELECT DOLT_BRANCH('myNewBranch', 'feature1');
 
 -- Create a new branch by copying an existing branch
 -- Will fail if feature1 branch already exists
-CALL DOLT_BRANCH('-c', 'main', 'feature1');
+SELECT DOLT_BRANCH('-c', 'main', 'feature1');
 
 -- Create or replace a branch by copying an existing branch
 -- '-f' forces the copy, even if feature1 branch already exists
-CALL DOLT_BRANCH('-c', '-f', 'main', 'feature1');
+SELECT DOLT_BRANCH('-c', '-f', 'main', 'feature1');
 
 -- Delete a branch
-CALL DOLT_BRANCH('-d', 'branchToDelete');
+SELECT DOLT_BRANCH('-d', 'branchToDelete');
 
 -- Rename a branch
-CALL DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
+SELECT DOLT_BRANCH('-m', 'currentBranchName', 'newBranchName')
 ```
 
 {% hint style="info" %}
@@ -212,8 +212,8 @@ SELECT * FROM DOLT_BRANCHES;
 +--------+----------------------------------+
 
 -- Create a new branch for development work from the tip of head and switch to it
-CALL DOLT_BRANCH('myNewFeature');
-CALL DOLT_CHECKOUT('myNewFeature');
+SELECT DOLT_BRANCH('myNewFeature');
+SELECT DOLT_CHECKOUT('myNewFeature');
 
 -- View your current branch
 select active_branch();
@@ -224,13 +224,13 @@ select active_branch();
 +----------------+
 
 -- Create a new branch from an existing branch
-CALL DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
+SELECT DOLT_BRANCH('-c', 'backup', 'bugfix-3482');
 
 -- Rename a branch
-CALL DOLT_BRANCH('-m', 'bugfix-3482', 'critical-bugfix-3482');
+SELECT DOLT_BRANCH('-m', 'bugfix-3482', 'critical-bugfix-3482');
 
 -- Delete a branch
-CALL DOLT_BRANCH('-d', 'old-unused-branch');
+SELECT DOLT_BRANCH('-d', 'old-unused-branch');
 ```
 
 ## `DOLT_CHECKOUT()`
@@ -248,9 +248,9 @@ from various other branches with them when they switch branches is too disruptiv
 multi-tenant SQL context.
 
 ```sql
-CALL DOLT_CHECKOUT('-b', 'my-new-branch');
-CALL DOLT_CHECKOUT('my-existing-branch');
-CALL DOLT_CHECKOUT('my-table');
+SELECT DOLT_CHECKOUT('-b', 'my-new-branch');
+SELECT DOLT_CHECKOUT('my-existing-branch');
+SELECT DOLT_CHECKOUT('my-table');
 ```
 
 {% hint style="info" %}
@@ -273,7 +273,7 @@ Branches](./branches.md)
 set autocommit = on;
 use mydb/branch1; -- current db is now `mydb/branch1`
 insert into t1 values (1); -- modifying the `branch1` branch
-call dolt_checkout('branch2'); -- current db is now `mydb`
+select dolt_checkout('branch2'); -- current db is now `mydb`
 insert into t1 values (2); -- modifying the `branch2` branch
 use mydb/branch3; -- current db is now `mydb/branch3`
 insert into mydb.t1 values (3); -- modifying the `branch2` branch
@@ -305,7 +305,7 @@ insert into mydb.t1 values (3); -- modifying the `branch2` branch
 USE mydb;
 
 -- Create and checkout to a new branch.
-CALL DOLT_CHECKOUT('-b', 'feature-branch');
+SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 -- Make modifications
 UPDATE table
@@ -313,10 +313,10 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage and commit all  changes.
-CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
+SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
-CALL DOLT_CHECKOUT('main');
+SELECT DOLT_CHECKOUT('main');
 ```
 
 ## `DOLT_CHERRY_PICK()`
@@ -326,8 +326,8 @@ Apply the changes introduced by an existing commit.
 Apply changes from existing commit and creates a new commit from the current HEAD.
 
 ```sql
-CALL DOLT_CHERRY_PICK('my-existing-branch~2');
-CALL DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');
+SELECT DOLT_CHERRY_PICK('my-existing-branch~2');
+SELECT DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');
 ```
 
 ### Options
@@ -353,7 +353,7 @@ For the below example consider the following set up of `main` and `mybranch` bra
 
 ```sql
 -- Checkout main branch
-CALL DOLT_CHECKOUT('main');
+SELECT DOLT_CHECKOUT('main');
 
 -- View a log of commits
 SELECT commit_hash, message FROM dolt_log;
@@ -370,7 +370,7 @@ SELECT * FROM mytable;
 Empty set (0.00 sec)
 
 -- Checkout new branch
-CALL DOLT_CHECKOUT('mybranch');
+SELECT DOLT_CHECKOUT('mybranch');
 
 -- View a log of commits
 SELECT commit_hash, message FROM dolt_log;
@@ -402,10 +402,10 @@ We want to cherry-pick only the change introduced in commit hash `'k318tpmqn4l97
 
 ```sql
 -- Checkout main branch
-CALL DOLT_CHECKOUT('main');
+SELECT DOLT_CHECKOUT('main');
 
 -- Cherry-pick the commit
-CALL DOLT_CHERRY_PICK('k318tpmqn4l97ofpaerato9c3m70lc14');
+SELECT DOLT_CHERRY_PICK('k318tpmqn4l97ofpaerato9c3m70lc14');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -444,9 +444,9 @@ With `--dry-run` flag, tests whether removing untracked tables will
 return with zero status.
 
 ```sql
-CALL DOLT_CLEAN();
-CALL DOLT_CLEAN('untracked-table');
-CALL DOLT_CLEAN('--dry-run');
+SELECT DOLT_CLEAN();
+SELECT DOLT_CLEAN('untracked-table');
+SELECT DOLT_CLEAN('--dry-run');
 ```
 
 ### Options
@@ -472,8 +472,8 @@ create table committed (x int primary key);
 create table untracked (x int primary key);
 
 -- Commit the first table
-call dolt_add('committed');
-call dolt_commit('-m', 'commit a table');
+select dolt_add('committed');
+select dolt_commit('-m', 'commit a table');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -481,7 +481,7 @@ call dolt_commit('-m', 'commit a table');
 +----------------------------------+
 
 -- Track the second table
-call dolt_add('tracked');
+select dolt_add('tracked');
 
 -- Observe database status
 select * from dolt_status;
@@ -493,7 +493,7 @@ select * from dolt_status;
 +------------+--------+-----------+
 
 -- Clear untracked tables
-call dolt_clean('untracked');
+select dolt_clean('untracked');
 
 -- Observe final status
 select * from dolt_status;
@@ -520,8 +520,8 @@ Clones an existing Dolt database into a new database within the current Dolt env
 NOTE: When cloning from a file URL, you must currently include the `.dolt/noms` subdirectories. For more details see the GitHub tracking issue, [dolt#1860](https://github.com/dolthub/dolt/issues/1860).
 
 ```sql
-CALL DOLT_CLONE('file:///myDatabasesDir/database/.dolt/noms');
-CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
+SELECT DOLT_CLONE('file:///myDatabasesDir/database/.dolt/noms');
+SELECT DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 ```
 
 ### Options
@@ -546,7 +546,7 @@ CALL DOLT_CLONE('dolthub/us-jails', 'myCustomDbName');
 
 ```sql
 -- Clone the dolthub/us-jails database from DoltHub using the <org>/<database> notation.
-CALL DOLT_CLONE('dolthub/us-jails');
+SELECT DOLT_CLONE('dolthub/us-jails');
 -- Use the new, cloned database
 -- NOTE: backticks are required for database names with hyphens
 USE `us-jails`;
@@ -561,7 +561,7 @@ SHOW TABLES;
 
 -- Clone the dolthub/museum-collections database, this time using a doltremoteapi URL, cloning
 -- only a single branch, customizing the remote name, and providing a custom database name.
-CALL DOLT_CLONE('-branch', 'prod', '-remote', 'dolthub',
+SELECT DOLT_CLONE('-branch', 'prod', '-remote', 'dolthub',
                 'https://doltremoteapi.dolthub.com/dolthub/ge-taxi-demo', 'taxis');
 
 -- Verify that only the prod branch was cloned
@@ -591,9 +591,9 @@ each value directly following the flag.
 `DOLT_COMMIT()` also commits the current transaction.
 
 ```sql
-CALL DOLT_COMMIT('-a', '-m', 'This is a commit');
-CALL DOLT_COMMIT('-m', 'This is a commit');
-CALL DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
+SELECT DOLT_COMMIT('-a', '-m', 'This is a commit');
+SELECT DOLT_COMMIT('-m', 'This is a commit');
+SELECT DOLT_COMMIT('-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 ### Options
@@ -638,7 +638,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage all changes and commit.
-CALL DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
+SELECT DOLT_COMMIT('-a', '-m', 'This is a commit', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 ## `DOLT_CONFLICTS_RESOLVE()`
@@ -650,8 +650,8 @@ A conflict is between two versions: ours (the rows at the destination branch hea
 the ours or theirs versions for each row.
 
 ```sql
-CALL DOLT_CONFLICTS_RESOLVE('--ours', <table>);
-CALL DOLT_CONFLICTS_RESOLVE('--theirs', <table>);
+SELECT DOLT_CONFLICTS_RESOLVE('--ours', <table>);
+SELECT DOLT_CONFLICTS_RESOLVE('--theirs', <table>);
 ```
 
 ### Options
@@ -679,13 +679,13 @@ CALL DOLT_CONFLICTS_RESOLVE('--theirs', <table>);
 USE mydb;
 
 -- Attempt merge
-CALL DOLT_MERGE('feature-branch');
+SELECT DOLT_MERGE('feature-branch');
 
 -- Check for conflicts
 SELECT * FROM dolt_conflicts;
 
 -- Resolve conflicts for tables t1 and t2 with rows from our branch.
-CALL DOLT_CONFLICTS_RESOLVE('--ours', 't1', 't2');
+SELECT DOLT_CONFLICTS_RESOLVE('--ours', 't1', 't2');
 ```
 
 ## `DOLT_FETCH()`
@@ -694,11 +694,11 @@ Fetch refs, along with the objects necessary to complete their histories
 and update remote-tracking branches..
 
 ```sql
-CALL DOLT_FETCH('origin', 'main');
-CALL DOLT_FETCH('origin', 'feature-branch');
-CALL DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
-CALL DOLT_FETCH('origin', NULL);
-CALL DOLT_FETCH('origin');
+SELECT DOLT_FETCH('origin', 'main');
+SELECT DOLT_FETCH('origin', 'feature-branch');
+SELECT DOLT_FETCH('origin', 'refs/heads/main:refs/remotes/origin/main');
+SELECT DOLT_FETCH('origin', NULL);
+SELECT DOLT_FETCH('origin');
 ```
 
 ### Options
@@ -719,16 +719,17 @@ No options for this procedure.
 
 ```sql
 -- Get remote main
-CALL DOLT_FETCH('origin', 'main');
+SELECT DOLT_FETCH('origin', 'main');
 
 -- Inspect the hash of the fetched remote branch
 SELECT HASHOF('origin/main');
 
 -- Merge remote main with current branch
-CALL DOLT_MERGE('origin/main');
+SELECT DOLT_MERGE('origin/main');
 ```
 
 ### Notes
+
 Dropping the second argument, or passing NULL, will result is using the default refspec.
 
 ## `DOLT_GC()`
@@ -737,8 +738,8 @@ Cleans up unreferenced data from the database. Running the `dolt_gc` procedure o
 sql-server will block all writes while garbage collection is in progress.
 
 ```sql
-CALL DOLT_GC();
-CALL DOLT_GC('--shallow');
+SELECT DOLT_GC();
+SELECT DOLT_GC('--shallow');
 ```
 
 ### Options
@@ -758,11 +759,11 @@ CALL DOLT_GC('--shallow');
 ### Notes
 
 To prevent concurrent writes potentially referencing garbage collected chunks, running
-`call dolt_gc()` will break all open connections to the running server. In flight
+`select dolt_gc()` will break all open connections to the running server. In flight
 queries on those connections may fail and must be retried. Re-establishing connections
 after they are broken is safe.
 
-At the end of the run, the connection which ran call dolt_gc() will be left open in order
+At the end of the run, the connection which ran select dolt_gc() will be left open in order
 to deliver the results of the operation itself. The connection will be left in a terminally
 broken state where any attempt to run a query on it will result in the following error:
 
@@ -772,7 +773,7 @@ garbage collection. this connection can no longer be used. please reconnect.
 ```
 
 The connection should be closed. In some connection pools it can be awkward to cause a
-single connection to actually close. If you need to run call dolt_gc() programmatically,
+single connection to actually close. If you need to run select dolt_gc() programmatically,
 one work around is to use a separate connection pool with a size of 1 which can be
 closed after the run is successful.
 
@@ -788,9 +789,9 @@ a new commit for any successful merge with auto-generated commit
 message if not defined.
 
 ```sql
-CALL DOLT_MERGE('feature-branch'); -- Optional --squash parameter
-CALL DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast forward merge');
-CALL DOLT_MERGE('--abort');
+SELECT DOLT_MERGE('feature-branch'); -- Optional --squash parameter
+SELECT DOLT_MERGE('feature-branch', '--no-ff', '-m', 'This is a msg for a non fast forward merge');
+SELECT DOLT_MERGE('--abort');
 ```
 
 {% hint style="info" %}
@@ -847,7 +848,7 @@ details.
 USE mydb;
 
 -- Create and checkout to a new branch.
-CALL DOLT_CHECKOUT('-b', 'feature-branch');
+SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 -- Make modifications
 UPDATE table
@@ -855,10 +856,10 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage and commit all  changes.
-CALL DOLT_COMMIT('-a', '-m', 'committing all changes');
+SELECT DOLT_COMMIT('-a', '-m', 'committing all changes');
 
 -- Go back to main
-CALL DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
+SELECT DOLT_MERGE('feature-branch', '--author', 'John Doe <johndoe@example.com>');
 ```
 
 ## `DOLT_PULL()`
@@ -871,9 +872,9 @@ Any resulting merge conflicts must be resolved before the transaction
 can be committed or a new Dolt commit created.
 
 ```sql
-CALL DOLT_PULL('origin');
-CALL DOLT_PULL('origin', 'some-branch');
-CALL DOLT_PULL('feature-branch', '--force');
+SELECT DOLT_PULL('origin');
+SELECT DOLT_PULL('origin', 'some-branch');
+SELECT DOLT_PULL('feature-branch', '--force');
 ```
 
 ### Options
@@ -913,10 +914,10 @@ details.
 -- Update local working set with remote changes
 -- Note: this requires upstream tracking information to be set in order for
 --       Dolt to know what remote branch to merge
-CALL DOLT_PULL('origin');
+SELECT DOLT_PULL('origin');
 
 -- Update local working set with remote changes from an explicit branch
-CALL DOLT_PULL('origin', 'some-branch');
+SELECT DOLT_PULL('origin', 'some-branch');
 
 -- View a log of new commits
 SELECT * FROM dolt_log LIMIT 5;
@@ -944,7 +945,7 @@ DROP DATABASE database1;
 
 -- At this point, the database can be restored by calling dolt_undrop('database1'), but
 -- instead, we permanently delete it by calling dolt_purge_dropped_databases().
-CALL dolt_purge_dropped_databases();
+SELECT dolt_purge_dropped_databases();
 ```
 
 ## `DOLT_PUSH()`
@@ -953,8 +954,8 @@ Updates remote refs using local refs, while sending objects necessary to
 complete the given refs.
 
 ```sql
-CALL DOLT_PUSH('origin', 'main');
-CALL DOLT_PUSH('--force', 'origin', 'main');
+SELECT DOLT_PUSH('origin', 'main');
+SELECT DOLT_PUSH('--force', 'origin', 'main');
 ```
 
 ### Options
@@ -976,16 +977,16 @@ CALL DOLT_PUSH('--force', 'origin', 'main');
 
 ```sql
 -- Checkout new branch
-CALL DOLT_CHECKOUT('-b', 'feature-branch');
+SELECT DOLT_CHECKOUT('-b', 'feature-branch');
 
 -- Add a table
 CREATE TABLE test (a int primary key);
 
 -- Create commit
-CALL DOLT_COMMIT('-a', '-m', 'create table test');
+SELECT DOLT_COMMIT('-a', '-m', 'create table test');
 
 -- Push to remote
-CALL DOLT_PUSH('origin', 'feature-branch');
+SELECT DOLT_PUSH('origin', 'feature-branch');
 ```
 
 ## `DOLT_REBASE()`
@@ -1011,10 +1012,10 @@ A → B → C → D → E → F  main
 Rebasing is useful to clean and organize your commit history, especially before merging a feature branch back to a shared branch. For example, you can drop commits that contain debugging or test changes, or squash or fixup small commits into a single commit, or reorder commits so that related changes are adjacent in the new commit history.
 
 ```sql
-CALL DOLT_REBASE('--interactive', 'main');
-CALL DOLT_REBASE('-i', 'main');
-CALL DOLT_REBASE('--continue');
-CALL DOLT_REBASE('--abort');
+SELECT DOLT_REBASE('--interactive', 'main');
+SELECT DOLT_REBASE('-i', 'main');
+SELECT DOLT_REBASE('--continue');
+SELECT DOLT_REBASE('--abort');
 ```
 
 ### Limitations
@@ -1045,23 +1046,23 @@ Currently only interactive rebases are supported, and there is no support for re
 ```sql
 -- create a simple table
 create table t (pk int primary key);
-call dolt_commit('-Am', 'creating table t');
+select dolt_commit('-Am', 'creating table t');
 
 -- create a new branch that we'll add more commits to later
-call dolt_branch('branch1');
+select dolt_branch('branch1');
 
 -- create another commit on the main branch, right after where branch1 branched off
 insert into t values (0);
-call dolt_commit('-am', 'inserting row 0');
+select dolt_commit('-am', 'inserting row 0');
 
 -- switch to branch1 and create three more commits that each insert one row
-call dolt_checkout('branch1');
+select dolt_checkout('branch1');
 insert into t values (1);
-call dolt_commit('-am', 'inserting row 1');
+select dolt_commit('-am', 'inserting row 1');
 insert into t values (2);
-call dolt_commit('-am', 'inserting row 2');
+select dolt_commit('-am', 'inserting row 2');
 insert into t values (3);
-call dolt_commit('-am', 'inserting row 3');
+select dolt_commit('-am', 'inserting row 3');
 
 -- check out what our commit history on branch1 looks like before we rebase
 select commit_hash, message from dolt_log;
@@ -1077,7 +1078,7 @@ select commit_hash, message from dolt_log;
 
 -- start an interactive rebase and check out the default rebase plan; this will rebase
 -- all the new commits on this branch and move them to the tip of the main branch
-call dolt_rebase('-i', 'main');
+select dolt_rebase('-i', 'main');
 select * from dolt_rebase order by rebase_order;
 +--------------+--------+----------------------------------+-----------------+
 | rebase_order | action | commit_hash                      | commit_message  |
@@ -1094,7 +1095,7 @@ update dolt_rebase set action='drop' where rebase_order=2;
 update dolt_rebase set action='fixup' where rebase_order=3;
 
 -- continue rebasing now that we've adjusted the rebase plan
-call dolt_rebase('--continue');
+select dolt_rebase('--continue');
 
 -- check out the history
 select commit_hash, message from dolt_log;
@@ -1115,8 +1116,8 @@ branches and configuration settings. To list existing remotes, use the [`dolt_re
 table](./dolt-system-tables.md#dolt_remotes).
 
 ```sql
-CALL DOLT_REMOTE('add','remote_name','remote_url');
-CALL DOLT_REMOTE('remove','existing_remote_name');
+SELECT DOLT_REMOTE('add','remote_name','remote_url');
+SELECT DOLT_REMOTE('remove','existing_remote_name');
 ```
 
 ### Output Schema
@@ -1133,13 +1134,13 @@ CALL DOLT_REMOTE('remove','existing_remote_name');
 
 ```sql
 -- Add a HTTP remote
-CALL DOLT_REMOTE('add','origin','https://doltremoteapi.dolthub.com/Dolthub/museum-collections');
+SELECT DOLT_REMOTE('add','origin','https://doltremoteapi.dolthub.com/Dolthub/museum-collections');
 
 -- Add a HTTP remote with shorthand notation for the URL
-CALL DOLT_REMOTE('add','origin1','Dolthub/museum-collections');
+SELECT DOLT_REMOTE('add','origin1','Dolthub/museum-collections');
 
 -- Add a filesystem based remote
-CALL DOLT_REMOTE('add','origin2','file:///Users/jennifer/datasets/museum-collections');
+SELECT DOLT_REMOTE('add','origin2','file:///Users/jennifer/datasets/museum-collections');
 
 -- List remotes to check.
 SELECT * FROM dolt_remotes;
@@ -1152,7 +1153,7 @@ SELECT * FROM dolt_remotes;
 +---------+--------------------------------------------------------------+-----------------------------------------+--------+
 
 -- Remove a remote
-CALL DOLT_REMOTE('remove','origin1');
+SELECT DOLT_REMOTE('remove','origin1');
 
 -- List remotes to check.
 SELECT * FROM dolt_remotes;
@@ -1174,9 +1175,9 @@ transaction for any changes to affected tables to be visible to other
 clients.
 
 ```sql
-CALL DOLT_RESET('--hard', 'featureBranch');
-CALL DOLT_RESET('--hard', 'commitHash123abc');
-CALL DOLT_RESET('myTable'); -- soft reset
+SELECT DOLT_RESET('--hard', 'featureBranch');
+SELECT DOLT_RESET('--hard', 'commitHash123abc');
+SELECT DOLT_RESET('myTable'); -- soft reset
 ```
 
 {% hint style="info" %}
@@ -1218,7 +1219,7 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Reset the changes permanently.
-CALL DOLT_RESET('--hard');
+SELECT DOLT_RESET('--hard');
 
 -- Makes some more changes.
 UPDATE table
@@ -1226,10 +1227,10 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage the table.
-CALL DOLT_ADD('table')
+SELECT DOLT_ADD('table')
 
 -- Unstage the table.
-CALL DOLT_RESET('table')
+SELECT DOLT_RESET('table')
 ```
 
 ## `DOLT_REVERT()`
@@ -1238,9 +1239,9 @@ Reverts the changes introduced in a commit, or set of commits. Creates a new com
 the changes in all the specified commits. If multiple commits are given, they are applied in the order given.
 
 ```sql
-CALL DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');
-CALL DOLT_REVERT('HEAD~2');
-CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
+SELECT DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');
+SELECT DOLT_REVERT('HEAD~2');
+SELECT DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ```
 
 ### Options
@@ -1262,12 +1263,12 @@ CALL DOLT_REVERT('HEAD', '--author=reverter@rev.ert');
 ```sql
 -- Create a table and add data in multiple commits
 CREATE TABLE t1(pk INT PRIMARY KEY, c VARCHAR(255));
-CALL dolt_add("t1")
-CALL dolt_commit("-m", "Creating table t1");
+SELECT dolt_add("t1")
+SELECT dolt_commit("-m", "Creating table t1");
 INSERT INTO t1 VALUES(1, "a"), (2, "b"), (3, "c");
-CALL dolt_commit("-am", "Adding some data");
+SELECT dolt_commit("-am", "Adding some data");
 insert into t1 VALUES(10, "aa"), (20, "bb"), (30, "cc");
-CALL dolt_commit("-am", "Adding some more data");
+SELECT dolt_commit("-am", "Adding some more data");
 
 -- Examine the changes made in the commit immediately before the current HEAD commit
 SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hashof("HEAD~1");
@@ -1280,7 +1281,7 @@ SELECT to_pk, to_c, to_commit, diff_type FROM dolt_diff_t1 WHERE to_commit=hasho
 +-------+------+----------------------------------+-----------+
 
 -- Revert the commit immediately before the current HEAD commit
-CALL dolt_revert("HEAD~1");
+SELECT dolt_revert("HEAD~1");
 
 -- Check out the new commit created by dolt_revert
 SELECT commit_hash, message FROM dolt_log limit 1;
@@ -1307,10 +1308,10 @@ Creates a new tag that points at specified commit ref, or deletes an existing ta
 tags, use [`dolt_tags` system table](./dolt-system-tables.md#dolt_tags).
 
 ```sql
-CALL DOLT_TAG('tag_name', 'commit_ref');
-CALL DOLT_TAG('-m', 'message', 'tag_name', 'commit_ref');
-CALL DOLT_TAG('-m', 'message', '--author', 'John Doe <johndoe@example.com>', 'tag_name', 'commit_ref');
-CALL DOLT_TAG('-d', 'tag_name');
+SELECT DOLT_TAG('tag_name', 'commit_ref');
+SELECT DOLT_TAG('-m', 'message', 'tag_name', 'commit_ref');
+SELECT DOLT_TAG('-m', 'message', '--author', 'John Doe <johndoe@example.com>', 'tag_name', 'commit_ref');
+SELECT DOLT_TAG('-d', 'tag_name');
 ```
 
 ### Options
@@ -1344,10 +1345,10 @@ SET column = "new value"
 WHERE pk = "key";
 
 -- Stage and commit all changes.
-CALL DOLT_COMMIT('-am', 'committing all changes');
+SELECT DOLT_COMMIT('-am', 'committing all changes');
 
 -- Create a tag for the HEAD commit.
-CALL DOLT_TAG('v1','head','-m','creating v1 tag');
+SELECT DOLT_TAG('v1','head','-m','creating v1 tag');
 ```
 
 ## `DOLT_UNDROP()`
@@ -1355,7 +1356,7 @@ CALL DOLT_TAG('v1','head','-m','creating v1 tag');
 Restores a dropped database. See the [`dolt_purge_dropped_databases()` stored procedure](#dolt_purge_dropped_databases) for info on how to permanently remove dropped databases.
 
 ```sql
-CALL DOLT_UNDROP(<database_name>);
+SELECT DOLT_UNDROP(<database_name>);
 ```
 
 ### Options
@@ -1376,10 +1377,10 @@ DROP DATABASE database1;
 
 -- calling dolt_undrop() with no arguments will return an error message that
 -- lists the dropped database that are available to be restored
-CALL dolt_undrop();
+SELECT dolt_undrop();
 
 -- Use dolt_undrop() to restore it
-CALL dolt_undrop('database1');
+SELECT dolt_undrop('database1');
 SELECT * FROM database1.t;
 ```
 
@@ -1444,7 +1445,7 @@ INSERT INTO PARENT VALUES (1);
 -- Violates child's foreign key constraint
 INSERT INTO CHILD VALUES (1, -1);
 
-CALL DOLT_VERIFY_CONSTRAINTS();
+SELECT DOLT_VERIFY_CONSTRAINTS();
 /*
 +------------+
 | violations |
@@ -1479,9 +1480,9 @@ SET DOLT_FORCE_TRANSACTION_COMMIT = ON;
 SET FOREIGN_KEY_CHECKS = OFF;
 INSERT INTO PARENT VALUES (1);
 INSERT INTO CHILD VALUES (1, -1);
-CALL DOLT_COMMIT('-am', 'violating rows');
+SELECT DOLT_COMMIT('-am', 'violating rows');
 
-CALL DOLT_VERIFY_CONSTRAINTS();
+SELECT DOLT_VERIFY_CONSTRAINTS();
 /*
 No violations are returned since there are no changes in the working set.
 
@@ -1500,7 +1501,7 @@ SELECT * from dolt_constraints_violations_child;
 +----------------+----+-----------+----------------+
 */
 
-CALL DOLT_VERIFY_CONSTRAINTS('--all');
+SELECT DOLT_VERIFY_CONSTRAINTS('--all');
 /*
 When all rows are considered, constraint violations are found.
 
@@ -1529,7 +1530,7 @@ SET FOREIGN_KEY_CHECKS = OFF;
 INSERT INTO PARENT VALUES (1);
 INSERT INTO CHILD VALUES (1, -1);
 
-CALL DOLT_VERIFY_CONSTRAINTS('parent');
+SELECT DOLT_VERIFY_CONSTRAINTS('parent');
 /*
 +------------+
 | violations |
@@ -1538,7 +1539,7 @@ CALL DOLT_VERIFY_CONSTRAINTS('parent');
 +------------+
 */
 
-CALL DOLT_VERIFY_CONSTRAINTS('child');
+SELECT DOLT_VERIFY_CONSTRAINTS('child');
 /*
 +------------+
 | violations |
@@ -1602,4 +1603,4 @@ database> GRANT EXECUTE ON PROCEDURE mydb.dolt_gc TO service_account@localhost
 
 `dolt_push()`, `dolt_fetch()`, and `dolt_pull()` are considered administrative operations currently because they all use a shared credential to talk to remote servers. User level access to remotes, and the ability to store user level credentials for them is on our [roadmap](https://github.com/dolthub/dolt/issues/6639).
 
-The root user, or any other user with super privileges is allowed to call all procedures.
+The root user, or any other user with super privileges is allowed to select all procedures.

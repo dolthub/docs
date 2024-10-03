@@ -82,7 +82,7 @@ SELECT dolt_hashof_table('color');
 The `DOLT_HASHOF_DB()` function returns the value hash of the entire versioned database. The hash is the hash of all tables
 (schema and data) in the database, and includes additional versioned items such as stored procedures and triggers. The hash
 does not include unversioned items such as tables which have been [ignored](dolt-system-tables.md#dolt_ignore). The function
-takes an optional argument to specify a branch or one of the values of 'STAGED', 'WORKING', or 'HEAD' (default no argument call
+takes an optional argument to specify a branch or one of the values of 'STAGED', 'WORKING', or 'HEAD' (default no argument select
 is equivalent to 'WORKING').
 
 This function can be used to watch for changes in the database by storing previous hashes in your application and comparing them
@@ -97,13 +97,13 @@ mysql> SELECT dolt_hashof_db();
 +----------------------------------+
 ```
 
-It should be noted that if you are connected to branch 'main' and you call `dolt_hashof_db('feature')`, the hash may be different
+It should be noted that if you are connected to branch 'main' and you select `dolt_hashof_db('feature')`, the hash may be different
 than if you were connected to branch 'feature' and called `dolt_hashof_db()`. This happens if there exist changes to the working set on
-branch 'feature' that have not been committed.  Calling `dolt_hashof_db('feature')` while on 'main' is equivalent to calling
+branch 'feature' that have not been committed. Calling `dolt_hashof_db('feature')` while on 'main' is equivalent to calling
 `dolt_hashof_db('HEAD')` while on branch 'feature'.
 
 The general recommendation when trying to look for changes to the database is to connect to the branch you want to use, then
-call `dolt_hashof_db()` without any arguments.  Any change in the hash means that the database has changed.
+select `dolt_hashof_db()` without any arguments. Any change in the hash means that the database has changed.
 
 ## `DOLT_VERSION()`
 
@@ -887,7 +887,7 @@ The example below shows how to recreate a branch that was deleted by finding the
 
 ```sql
 -- Someone accidentally deletes the wrong branch!
-call dolt_branch('-D', 'prodBranch');
+select dolt_branch('-D', 'prodBranch');
 
 -- After we realize the wrong branch has been deleted, we query the Dolt reflog on the same Dolt database instance
 -- where the branch was deleted to see what commits the prodBranch branch has referenced. Using the same Dolt
@@ -904,7 +904,7 @@ select * from dolt_reflog('prodBranch');
 
 -- The last commit prodBranch pointed to was v531ptpmv2tquig8v591tsjghtj84ksg, so to restore our branch, we
 -- just need to create a branch with the same name, pointing to that last commit.
-call dolt_branch('prodBranch', 'v531ptpmv2tquig8v591tsjghtj84ksg');
+select dolt_branch('prodBranch', 'v531ptpmv2tquig8v591tsjghtj84ksg');
 ```
 
 ## `DOLT_SCHEMA_DIFF()`
@@ -1090,7 +1090,7 @@ The above query will produce this output:
 +-----------------+---------------+-------------------------------------------------------------------+-------------------------------------------------------------------+
 ```
 
-Note the difference between this call and the previous `dolt_schema_diff('main', 'feature_branch')` invocation:
+Note the difference between this select and the previous `dolt_schema_diff('main', 'feature_branch')` invocation:
 
 1. First row shows that the table `photos` was deleted
 2. Second row show the creation of `employees` table

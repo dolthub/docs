@@ -68,7 +68,7 @@ create table keyless (c1 int, c2 int, c3 int, c4 int);
 ```sql
 insert into keyed values (0,0,0,0), (1,1,1,1), (2,2,2,2);
 insert into keyless values (0,0,0,0), (1,1,1,1), (2,2,2,2);
-call dolt_commit('-am', "Inserted values");
+select dolt_commit('-am', "Inserted values");
 +----------------------------------+
 | hash                             |
 +----------------------------------+

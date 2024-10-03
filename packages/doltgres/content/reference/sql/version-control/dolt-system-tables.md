@@ -266,7 +266,7 @@ The values in this table are partly implementation details associated with the i
 CREATE VIEW four AS SELECT 2+2 FROM dual;
 CREATE TABLE mytable (x INT PRIMARY KEY);
 CREATE TRIGGER inc_insert BEFORE INSERT ON mytable FOR EACH ROW SET NEW.x = NEW.x + 1;
-CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO CALL DOLT_GC();
+CREATE EVENT monthly_gc ON SCHEDULE EVERY 1 MONTH DO SELECT DOLT_GC();
 ```
 
 Then you can view them in `dolt_schemas`:
@@ -330,7 +330,7 @@ commit graph and is not subject to versioning semantics.
 Create a tag using dolt_tag() stored procedure.
 
 ```sql
-CALL DOLT_TAG('_migrationtest','head','-m','savepoint for migration testing');
+SELECT DOLT_TAG('_migrationtest','head','-m','savepoint for migration testing');
 ```
 
 ```text
@@ -1130,7 +1130,7 @@ The format of patterns is a simplified version of gitignore’s patterns:
 
 If a table name matches multiple patterns with different values for `ignored`, the most specific pattern is chosen (a pattern A is more specific than a pattern B if all names that match A also match pattern B, but not vice versa.) If no pattern is most specific, then attempting to stage that table will result in an error.
 
-Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `dolt add` or `CALL dolt_add`.
+Tables that match patterns in `dolt_ignore` can be force-committed by passing the `--force` flag to `dolt add` or `SELECT dolt_add`.
 
 `dolt diff` won't display ignored tables, and `dolt show` won't display ignored tables unless the additional `--ignored` flag is passed.
 
@@ -1141,7 +1141,7 @@ INSERT INTO dolt_ignore VALUES ("generated_*", true), ("generated_exception", fa
 CREATE TABLE foo (pk int);
 CREATE TABLE generated_foo (pk int);
 CREATE TABLE generated_exception (pk int);
-CALL dolt_add("-A");
+SELECT dolt_add("-A");
 SELECT *
 FROM dolt_status
 WHERE staged=true;

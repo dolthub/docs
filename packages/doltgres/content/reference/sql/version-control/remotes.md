@@ -25,7 +25,7 @@ this example, we'll use the running Doltgres server we created in the [Getting S
 First, we need to add a new remote:
 
 ```sql
-call dolt_remote('add', 'origin', 'file:///var/share/remotes');
+select dolt_remote('add', 'origin', 'file:///var/share/remotes');
 +--------+
 | status |
 +--------+
@@ -37,7 +37,7 @@ call dolt_remote('add', 'origin', 'file:///var/share/remotes');
 And then we can push:
 
 ```sql
-call dolt_push('origin', 'main');
+select dolt_push('origin', 'main');
 +--------+
 | status |
 +--------+
@@ -67,13 +67,13 @@ mounted to the filesystem. To add a filesystem based remote use a URL with the `
 - Adding a remote
 
 ```sql
-call dolt_remote('add', 'origin', 'file:///Users/brian/datasets/menus')
+select dolt_remote('add', 'origin', 'file:///Users/brian/datasets/menus')
 ```
 
 - Cloning
 
 ```sql
-call dolt_clone('file:///Users/brian/datasets/menus')
+select dolt_clone('file:///Users/brian/datasets/menus')
 ```
 
 **Windows Examples**
@@ -81,13 +81,13 @@ call dolt_clone('file:///Users/brian/datasets/menus')
 - Adding a remote
 
 ```sql
-call dolt_remote('add', 'origin', 'file:///c:/Users/brian/datasets/menus')
+select dolt_remote('add', 'origin', 'file:///c:/Users/brian/datasets/menus')
 ```
 
 - Cloning
 
 ```sql
-call dolt_clone('file:///c:/Users/brian/datasets/menus')
+select dolt_clone('file:///c:/Users/brian/datasets/menus')
 ```
 
 It's important to note that a directory-based remote is not the same as a workspace for a dolt clone, and the directory listed above as a remote file URL is not a Doltgres database created or cloned with Doltgres. Similarly, a Doltgres database directory's file URL [cannot be used as a remote directly](https://github.com/dolthub/dolt/issues/1860).
@@ -102,13 +102,13 @@ must have a primary key with the name "db".
 This single DynamoDB table can be used for multiple unrelated remote repositories. Once you have a DynamoDB table, and an S3 bucket setup you can add an AWS remote using a URL with the protocol `aws://`. To add a remote named "origin" to my "menus" repository using an S3 bucket named `dolt_remotes_s3_storage` and a DynamoDB table named `dolt_dynamo_table` you would run:
 
 ```sql
-call dolt_remote('add', 'origin', 'aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus')
+select dolt_remote('add', 'origin', 'aws://[dolt_dynamo_table:dolt_remotes_s3_storage]/menus')
 ```
 
 This same URL can then be used to clone this database by another user.
 
 ```sql
-call dolt_clone('aws://[dolt_remotes:dolt_remotes_storage]/menus')
+select dolt_clone('aws://[dolt_remotes:dolt_remotes_storage]/menus')
 ```
 
 ## GCS
@@ -116,7 +116,7 @@ call dolt_clone('aws://[dolt_remotes:dolt_remotes_storage]/menus')
 Google Cloud Platform remotes use Google Cloud Storage (GCS). You can create or use an existing GCS bucket to host one or more Doltgres remotes. To add a GCP remote provide a URL with the `gs://` protocol like so:
 
 ```sql
-call dolt_remote('add', 'origin', 'gs://BUCKET/path/for/remote')
+select dolt_remote('add', 'origin', 'gs://BUCKET/path/for/remote')
 ```
 
 In order to initialize Doltgres to use your GCP credentials you will need to install the `gcloud` command line tool and run `gcloud auth login`. See the [Google document](https://cloud.google.com/sdk/gcloud/reference/auth/login) for details.
@@ -126,7 +126,7 @@ In order to initialize Doltgres to use your GCP credentials you will need to ins
 Oracle Cloud Infrastructure (OCI) remotes use Oracle Cloud Object Storage. You can create or use an existing OCI bucket to host one or more Doltgres remotes. To add an OCI remote provide a URL with the `oci://` protocol like so:
 
 ```sql
-call dolt_remote('add', 'origin', 'oci://BUCKET/path/for/remote')
+select dolt_remote('add', 'origin', 'oci://BUCKET/path/for/remote')
 ```
 
 In order to initialize Doltgres to use your OCI credentials you will need to install the `oci` command line tool and run `oci session authenticate`. See the [Oracle document](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/clitoken.htm) for details.
@@ -184,7 +184,7 @@ This configuration stanza causes the `doltgres` server to open a remotesapi endp
 `8080`. We can clone `exampledb` from another server:
 
 ```sql
-call dolt_clone('--user', 'exampleuser', 'https://localhost:8080/exampledb',  'exampledb');
+select dolt_clone('--user', 'exampleuser', 'https://localhost:8080/exampledb',  'exampledb');
 \c exampledb;
 select * from dolt_log;
 ```

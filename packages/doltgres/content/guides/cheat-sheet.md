@@ -11,30 +11,30 @@ Click links in the comments section to read docs for the feature.
 
 ## Setup and init
 
-| SQL                                              | Comments                                                                                                                            |
-| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `CREATE DATABASE mydb;`                          | Creates a new Dolt database                                                                                                         |
-| `CALL DOLT_CLONE('post-no-preference/options');` | [Clones the `post-no-preference/options` database from DoltHub](../reference/sql/version-control/dolt-sql-procedures.md#dolt_clone) |
+| SQL                                                | Comments                                                                                                                            |
+| -------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `CREATE DATABASE mydb;`                            | Creates a new Dolt database                                                                                                         |
+| `SELECT DOLT_CLONE('post-no-preference/options');` | [Clones the `post-no-preference/options` database from DoltHub](../reference/sql/version-control/dolt-sql-procedures.md#dolt_clone) |
 
 ## Stage and snapshot
 
-| SQL                                    | Comments                                                                                                            |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `CALL DOLT_ADD('myTable');`            | [Adds a table to the staging area](../reference/sql/version-control/dolt-sql-procedures.md#dolt_add)                |
-| `CALL DOLT_RESET();`                   | [Removes staged tables, keeps working changes](../reference/sql/version-control/dolt-sql-procedures.md#dolt_reset)  |
-| `CALL DOLT_RESET('--hard');`           | [Resets all staged and working changes to HEAD](../reference/sql/version-control/dolt-sql-procedures.md#dolt_reset) |
-| `CALL DOLT_COMMIT('-m', 'a commit');`  | [Commits staged tables as a new snapshot](../reference/sql/version-control/dolt-sql-procedures.md#dolt_commit)      |
-| `CALL DOLT_COMMIT('-Am', 'a commit');` | [Stages and commits all tables](../reference/sql/version-control/dolt-sql-procedures.md#dolt_commit)                |
+| SQL                                      | Comments                                                                                                            |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `SELECT DOLT_ADD('myTable');`            | [Adds a table to the staging area](../reference/sql/version-control/dolt-sql-procedures.md#dolt_add)                |
+| `SELECT DOLT_RESET();`                   | [Removes staged tables, keeps working changes](../reference/sql/version-control/dolt-sql-procedures.md#dolt_reset)  |
+| `SELECT DOLT_RESET('--hard');`           | [Resets all staged and working changes to HEAD](../reference/sql/version-control/dolt-sql-procedures.md#dolt_reset) |
+| `SELECT DOLT_COMMIT('-m', 'a commit');`  | [Commits staged tables as a new snapshot](../reference/sql/version-control/dolt-sql-procedures.md#dolt_commit)      |
+| `SELECT DOLT_COMMIT('-Am', 'a commit');` | [Stages and commits all tables](../reference/sql/version-control/dolt-sql-procedures.md#dolt_commit)                |
 
 ## Branch and merge
 
-| SQL                                     | Comments                                                                                                          |
-| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `SELECT * FROM dolt_branches;`          | [Lists all branches](../reference/sql/version-control/dolt-system-tables.md#dolt_branches)                        |
-| `CALL DOLT_BRANCH('myBranch');`         | [Creates a new branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_branch)                       |
-| `CALL DOLT_CHECKOUT('myBranch');`       | [Switches to another branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_checkout)               |
-| `CALL DOLT_CHECKOUT('-b', 'myBranch');` | [Creates a new branch and switches to it](../reference/sql/version-control/dolt-sql-procedures.md#dolt_checkout)  |
-| `CALL DOLT_MERGE('myBranch');`          | [Merges a branch into the checked out branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_merge) |
+| SQL                                       | Comments                                                                                                          |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `SELECT * FROM dolt_branches;`            | [Lists all branches](../reference/sql/version-control/dolt-system-tables.md#dolt_branches)                        |
+| `SELECT DOLT_BRANCH('myBranch');`         | [Creates a new branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_branch)                       |
+| `SELECT DOLT_CHECKOUT('myBranch');`       | [Switches to another branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_checkout)               |
+| `SELECT DOLT_CHECKOUT('-b', 'myBranch');` | [Creates a new branch and switches to it](../reference/sql/version-control/dolt-sql-procedures.md#dolt_checkout)  |
+| `SELECT DOLT_MERGE('myBranch');`          | [Merges a branch into the checked out branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_merge) |
 
 ## Diffing
 
@@ -67,14 +67,14 @@ Click links in the comments section to read docs for the feature.
 
 ## Working with remotes
 
-| SQL                                                    | Comments                                                                                                                        |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `CALL DOLT_REMOTE('add', 'myRemote', 'myOrg/myRepo');` | [Adds a new DoltHub remote](../reference/sql/version-control/dolt-sql-procedures.md#dolt_remote)                                |
-| `SELECT * FROM dolt_remotes;`                          | [Lists remotes](../reference/sql/version-control/dolt-system-tables.md#dolt_remotes)                                            |
-| `CALL DOLT_FETCH();`                                   | [Fetches all branches from the remote](../reference/sql/version-control/dolt-sql-procedures.md#dolt_fetch)                      |
-| `CALL DOLT_PULL();`                                    | [Fetch and merge commits from the remote tracking branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_pull)    |
-| `CALL DOLT_PUSH('origin', 'myBranch');`                | [Push local commits of branch `myBranch` to remote `origin`](../reference/sql/version-control/dolt-sql-procedures.md#dolt_push) |
-| `CALL DOLT_PUSH();`                                    | [Push local commits to the remote tracking branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_push)           |
+| SQL                                                      | Comments                                                                                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `SELECT DOLT_REMOTE('add', 'myRemote', 'myOrg/myRepo');` | [Adds a new DoltHub remote](../reference/sql/version-control/dolt-sql-procedures.md#dolt_remote)                                |
+| `SELECT * FROM dolt_remotes;`                            | [Lists remotes](../reference/sql/version-control/dolt-system-tables.md#dolt_remotes)                                            |
+| `SELECT DOLT_FETCH();`                                   | [Fetches all branches from the remote](../reference/sql/version-control/dolt-sql-procedures.md#dolt_fetch)                      |
+| `SELECT DOLT_PULL();`                                    | [Fetch and merge commits from the remote tracking branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_pull)    |
+| `SELECT DOLT_PUSH('origin', 'myBranch');`                | [Push local commits of branch `myBranch` to remote `origin`](../reference/sql/version-control/dolt-sql-procedures.md#dolt_push) |
+| `SELECT DOLT_PUSH();`                                    | [Push local commits to the remote tracking branch](../reference/sql/version-control/dolt-sql-procedures.md#dolt_push)           |
 
 ## Advanced use cases
 
@@ -83,17 +83,17 @@ Click links in the comments section to read docs for the feature.
 | `SELECT HASHOF('main');`                                                  | [Shows the commit hash of a ref](../reference/sql/version-control/dolt-sql-functions.md#hashof)                                                           |
 | `SELECT * from dolt_blame_mytable;`                                       | [Shows who last updated every row of a table](../reference/sql/version-control/dolt-system-tables.md#dolt_blame_usdtablename)                             |
 | `SELECT * FROM dolt_diff('branch1...branch2');`                           | [Shows a three-dot diff](../reference/sql/version-control/dolt-sql-functions.md#dolt_diff)                                                                |
-| `CALL DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');`                   | [Creates a new commit which reverts the changes in a prior commit](../reference/sql/version-control/dolt-sql-procedures.md#dolt_revert)                   |
+| `SELECT DOLT_REVERT('gtfv1qhr5le61njimcbses9oom0de41e');`                 | [Creates a new commit which reverts the changes in a prior commit](../reference/sql/version-control/dolt-sql-procedures.md#dolt_revert)                   |
 | `SELECT * FROM DOLT_PATCH('main', 'WORKING');`                            | [Creates SQL statements to apply a diff between two revisions](../reference/sql/version-control/dolt-sql-functions.md#dolt_patch)                         |
 | `SELECT * FROM dolt_conflicts;`                                           | [Lists which tables have conflicts after a merge](../reference/sql/version-control/dolt-system-tables.md#dolt_conflicts)                                  |
 | `SELECT * FROM [dolt_conflicts_mytable];`                                 | [Lists the rows in conflict for `mytable`](../reference/sql/version-control/dolt-system-tables.md#dolt_conflicts_usdtablename)                            |
-| `CALL DOLT_CONFLICTS_RESOLVE('--theirs', 'mytable');`                     | [Resolves conflicts in `mytable` by taking their changes](../reference/sql/version-control/dolt-sql-procedures.md#dolt_conflicts_resolve)                 |
-| `CALL DOLT_TAG('tag1', 'myBranch');`                                      | [Creates a new tag at the HEAD of `mybranch`](../reference/sql/version-control/dolt-sql-procedures.md#dolt_tag)                                           |
-| `CALL DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');`              | [Applies the changes in a commit to the current branch HEAD](../reference/sql/version-control/dolt-sql-procedures.md#dolt_cherry_pick)                    |
+| `SELECT DOLT_CONFLICTS_RESOLVE('--theirs', 'mytable');`                   | [Resolves conflicts in `mytable` by taking their changes](../reference/sql/version-control/dolt-sql-procedures.md#dolt_conflicts_resolve)                 |
+| `SELECT DOLT_TAG('tag1', 'myBranch');`                                    | [Creates a new tag at the HEAD of `mybranch`](../reference/sql/version-control/dolt-sql-procedures.md#dolt_tag)                                           |
+| `SELECT DOLT_CHERRY_PICK('qj6ouhjvtrnp1rgbvajaohmthoru2772');`            | [Applies the changes in a commit to the current branch HEAD](../reference/sql/version-control/dolt-sql-procedures.md#dolt_cherry_pick)                    |
 | `SELECT * FROM dolt_schema_diff('main', 'branch1', 'mytable');`           | [Shows schema differences for a table between two commits](../reference/sql/version-control/dolt-sql-functions.md#dolt_schema_diff)                       |
-| `CALL DOLT_VERIFY_CONSTRAINTS();`                                         | [Checks for constraint violations (e.g. after checks had been disabled)](../reference/sql/version-control/dolt-sql-procedures.md#dolt_verify_constraints) |
-| `CALL DOLT_GC();`                                                         | [Runs garbage collection to compact the size of the database on disk](../reference/sql/version-control/dolt-sql-procedures.md#dolt_gc)                    |
-| `CALL DOLT_REBASE('--interactive', 'main');`                              | [Begins an interactive rebase session](../reference/sql/version-control/dolt-sql-procedures.md#dolt_rebase)                                               |
+| `SELECT DOLT_VERIFY_CONSTRAINTS();`                                       | [Checks for constraint violations (e.g. after checks had been disabled)](../reference/sql/version-control/dolt-sql-procedures.md#dolt_verify_constraints) |
+| `SELECT DOLT_GC();`                                                       | [Runs garbage collection to compact the size of the database on disk](../reference/sql/version-control/dolt-sql-procedures.md#dolt_gc)                    |
+| `SELECT DOLT_REBASE('--interactive', 'main');`                            | [Begins an interactive rebase session](../reference/sql/version-control/dolt-sql-procedures.md#dolt_rebase)                                               |
 | `SELECT * FROM dolt_reflog('mybranch');`                                  | [Shows the history of a ref, included deleted refs](../reference/sql/version-control/dolt-sql-functions.md#dolt_reflog)                                   |
 | `SELECT * FROM dolt_commit_ancestors where commit_hash = HASHOF('main');` | [Shows the parent commit(s) of a commit](../reference/sql/version-control/dolt-system-tables.md#dolt_commit_ancestors)                                    |
 | `SELECT DOLT_MERGE_BASE('main', 'feature');`                              | [Shows the common ancestor of two commits](../reference/sql/version-control/dolt-sql-functions.md#dolt_merge_base)                                        |

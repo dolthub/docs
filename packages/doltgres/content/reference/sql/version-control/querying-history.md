@@ -41,7 +41,7 @@ DESCRIBE myTable AS OF 'HEAD~';
 ```
 
 Note that `AS OF` always names a revision at a specific Dolt commit. Changes on a branch's [working
-set](../../../concepts/git/working-set.md) that have not been committed to that head via `call
+set](../../../concepts/git/working-set.md) that have not been committed to that head via `select
 dolt_commit()` or similar are not visible via this syntax.
 
 ## Specifying a revision in the database name
@@ -121,7 +121,7 @@ database at a particular commit. You can do this by [changing your
 branch](./branches.md), e.g.:
 
 ```sql
-call dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
+select dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
 ```
 
 You can also do this without changing your session's branch by using a
@@ -178,7 +178,7 @@ view_test> select * from `view_test/81223g1cpmib215gmov8686b6310p37d`.v1;
 | 2 | 2 |
 +---+---+
 -- Select past data using past view definition by checking out a new branch
-view_test> call dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
+view_test> select dolt_checkout('-b', 'old-view-def', '81223g1cpmib215gmov8686b6310p37d');
 view_test> select * from v1;
 +---+---+
 | a | b |

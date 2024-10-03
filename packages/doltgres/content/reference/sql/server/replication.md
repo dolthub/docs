@@ -78,7 +78,7 @@ replication.
 Set the appropriate server variables:
 
 ```sql
-call dolt_remote('add', 'origin', 'file:///var/share/myremote/');
+select dolt_remote('add', 'origin', 'file:///var/share/myremote/');
 ALTER SYSTEM SET dolt_replicate_to_remote 'origin';
 ```
 
@@ -96,7 +96,7 @@ The next time you create a Dolt commit, Doltgres will attempt to push the change
 ```sql
 create table test (pk int, c1 int, primary key(pk));
 insert into test values (0,0);
-call dolt_commit('-Am', 'trigger replication');
+select dolt_commit('-Am', 'trigger replication');
 ```
 
 After a `DOLT_COMMIT()`, changes are pushed to the configured remote.
@@ -150,11 +150,11 @@ ALTER SYSTEM SET dolt_async_replication TO 1
 
 ### Configuring a Replica
 
-To start a replica, you first need a clone. I'm going to call my clone
+To start a replica, you first need a clone. I'm going to select my clone
 `read_replica`.
 
 ```sql
-call dolt_clone('file:///var/share/remote/replication_example', 'read_replica');
+select dolt_clone('file:///var/share/remote/replication_example', 'read_replica');
 ```
 
 Now, I'm going to configure my read replica to "pull on read" from
@@ -185,7 +185,7 @@ Now back on the primary:
 
 ```sql
 insert into test values (2,2);
-call dolt_commit('-am', 'Inserted (2,2)');
+select dolt_commit('-am', 'Inserted (2,2)');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -223,15 +223,15 @@ ALTER SYSTEM SET dolt_replicate_all_heads TO 1"
 Now I'm going to make a new branch on the primary and insert a new value on it.
 
 ```sql
-call dolt_checkout('-b', 'branch1');
+select dolt_checkout('-b', 'branch1');
 insert into test values (3,3);
-call dolt_commit('-am', 'Inserted (3,3)');
+select dolt_commit('-am', 'Inserted (3,3)');
 ```
 
 The read replica now has the change when I try and read the new branch.
 
 ```sql
-call dolt_checkout('branch1');
+select dolt_checkout('branch1');
 select * from test;"
 +----+----+
 | pk | c1 |
@@ -376,7 +376,7 @@ remotes as well. For example, on `dolt-1.db` above, I could run:
 ```sql
 CREATE DATABASE appdb;
 \c appdb;
-CALL dolt_remote('add', 'standby', 'http://dolt-2.db:50051/appdb');
+SELECT dolt_remote('add', 'standby', 'http://dolt-2.db:50051/appdb');
 ```
 
 ## Replication Behavior
@@ -419,7 +419,7 @@ guaranteed to be lossless.
 To make the current primary become a standby, run the following:
 
 ```sql
-CALL dolt_assume_cluster_role('standby', 2)
+SELECT dolt_assume_cluster_role('standby', 2)
 ```
 
 where `2` is the new configuration epoch and must be higher than the current
@@ -427,11 +427,11 @@ epoch. The behavior will be the following:
 
 1. The server will be put into read-only mode.
 
-2. Every running SQL connection, except for the `CALL dolt_assume_cluster_role`
-   call itself, will be canceled and the connection for the queries will be
+2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role`
+   select itself, will be canceled and the connection for the queries will be
    terminated.
 
-3. The call will block until replication of every database to each
+3. The select will block until replication of every database to each
    `standby_replica` is completed.
 
 4. If the final replications complete successfully, the new role and new
@@ -439,13 +439,13 @@ epoch. The behavior will be the following:
    the new role is not assumed &mdash; the database is placed back into read-write
    mode and remains a `primary` at the old epoch.
 
-5. If the call is successful, the connection over which it was made will be
+5. If the select is successful, the connection over which it was made will be
    tainted. It will fail all queries with an error asking the user to reconnect.
 
 To make a current standby become a primary, run the following:
 
 ```sql
-CALL dolt_assume_cluster_role('primary', 2)
+SELECT dolt_assume_cluster_role('primary', 2)
 ```
 
 where `2` is the new configuration epoch and must be higher than the current
@@ -453,13 +453,13 @@ epoch. The behavior will be the following:
 
 1. The server will be put into read-write mode.
 
-2. Every running SQL connection, except for the `CALL dolt_assume_cluster_role`
-   call itself, will be canceled and the connection for the queries will be
+2. Every running SQL connection, except for the `SELECT dolt_assume_cluster_role`
+   select itself, will be canceled and the connection for the queries will be
    terminated.
 
 3. The new role and epoch will be applied on the server.
 
-4. The connection over which the call was made will be tainted. It will fail
+4. The connection over which the select was made will be tainted. It will fail
    all queries with an error asking the user to reconnect.
 
 In the configured example, if you run the first statement on `dolt-1.db` and
@@ -501,7 +501,7 @@ communicate with these servers and see the `detected_broken_config` role at the
 same epoch, those servers will also transition to `detected_broken_config`. A
 server which is in `detected_broken_config` will become a `standby` if it
 receives a replication request from a primary at a higher configuration epoch.
-It can also change its role based on a call to `dolt_assume_cluster_role`.
+It can also change its role based on a select to `dolt_assume_cluster_role`.
 
 A server never automatically transitions to be a primary.
 
@@ -640,7 +640,7 @@ things to consider when choosing how to configure replication.
 
 1. Direct replication is designed to allow for controlled failover from a
    primary to a standby. Some inflight requests will fail, but all commited writes
-   will be present on the standby after `CALL dolt_assume_cluster_role('standby',
+   will be present on the standby after `SELECT dolt_assume_cluster_role('standby',
 ...)` succeeds on the primary. After that the standby can be promoted to
    primary. On the other hand, replication through a remote does not currently
    have a way to promote a read replica in a way that makes it look exactly like
