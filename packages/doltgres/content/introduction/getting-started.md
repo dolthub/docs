@@ -3,10 +3,10 @@ title: "Getting started"
 ---
 
 1. Download the [latest release](https://github.com/dolthub/doltgresql/releases) of `doltgres`
-   
 2. Put `doltgres` on your `PATH`
 
 3. Run `doltgres`. This will create a `doltgres` user and a `doltgres` database in `~/doltgres/databases` (add the `--data-dir` argument or change the `DOLTGRES_DATA_DIR` environment variable to use a different directory).
+
 ```bash
 $ doltgres
 Successfully initialized dolt data repository.
@@ -14,13 +14,15 @@ Starting server with Config HP="localhost:5432"|T="28800000"|R="false"|L="info"|
 ```
 
 4. Make sure you have Postgres version 15 or higher installed. I used Homebrew to install Postgres on my Mac.
-This requires I manually add `/opt/homebrew/opt/postgresql@15/bin` to my path. On Postgres version 14 or lower,
-`\` commands (ie. `\d`, `\l`) do not yet work with Doltgres. 
+   This requires I manually add `/opt/homebrew/opt/postgresql@15/bin` to my path. On Postgres version 14 or lower,
+   `\` commands (ie. `\d`, `\l`) do not yet work with Doltgres.
+
 ```
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 ```
 
 5. Open a new terminal. Connect with the following command: `psql -h localhost -U doltgres`. This will connect to the `doltgres` database with the `doltgres` user.
+
 ```bash
 $ psql -h 127.0.0.1 -U doltgres
 psql (15.4 (Homebrew), server 15.0)
@@ -30,6 +32,7 @@ doltgres=>
 ```
 
 6. Create a `getting_started` database. Create the `getting_started` example tables.
+
 ```sql
 doltgres=> create database getting_started;
 --
@@ -64,7 +67,7 @@ getting_started=> create table employees_teams(
 
 getting_started=> \d
               List of relations
- Schema |      Name       | Type  |  Owner   
+ Schema |      Name       | Type  |  Owner
 --------+-----------------+-------+----------
  public | employees       | table | postgres
  public | employees_teams | table | postgres
@@ -73,44 +76,46 @@ getting_started=> \d
 ```
 
 7. Make a Dolt Commit.
+
 ```sql
 getting_started=> select * from dolt_status;
-   table_name    | staged |  status   
------------------+--------+-----------
- employees       | 0      | new table
- employees_teams | 0      | new table
- teams           | 0      | new table
+   table_name           | staged |  status
+------------------------+--------+-----------
+ public.employees       | 0      | new table
+ public.employees_teams | 0      | new table
+ public.teams           | 0      | new table
 (3 rows)
 
-getting_started=> call dolt_add('teams', 'employees', 'employees_teams');
- status 
+getting_started=> select dolt_add('teams', 'employees', 'employees_teams');
+ status
 --------
       0
 (1 row)
-getting_started=> select * from dolt_status; 
-   table_name    | staged |  status   
------------------+--------+-----------
- employees       | 1      | new table
- employees_teams | 1      | new table
- teams           | 1      | new table
+getting_started=> select * from dolt_status;
+   table_name           | staged |  status
+------------------------+--------+-----------
+ public.employees       | 1      | new table
+ public.employees_teams | 1      | new table
+ public.teams           | 1      | new table
 (3 rows)
 
-getting_started=> call dolt_commit('-m', 'Created initial schema');
-               hash               
+getting_started=> select dolt_commit('-m', 'Created initial schema');
+               hash
 ----------------------------------
  peqq98e2dl5gscvfvic71e7j6ne34533
 (1 row)
 ```
 
 8. View the Dolt log.
+
 ```
 getting_started=> select * from dolt_log;
-           commit_hash            | committer |       email        |        date         |          message           
+           commit_hash            | committer |       email        |        date         |          message
 ----------------------------------+-----------+--------------------+---------------------+----------------------------
  peqq98e2dl5gscvfvic71e7j6ne34533 | doltgres  | doltgres@127.0.0.1 | 2023-11-01 22:08:04 | Created initial schema
  in7bk735qa6p6rv6i3s797jjem2pg4ru | timsehn   | tim@dolthub.com    | 2023-11-01 22:04:03 | Initialize data repository
 (2 rows)
 ```
 
-9. Continue with [Dolt Getting Started](https://docs.dolthub.com/introduction/getting-started/database#insert-some-data) 
-to test out more Doltgres versioning functionality.
+9. Continue with [Dolt Getting Started](https://docs.dolthub.com/introduction/getting-started/database#insert-some-data)
+   to test out more Doltgres versioning functionality.

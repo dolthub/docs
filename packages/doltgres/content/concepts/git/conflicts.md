@@ -11,7 +11,7 @@ further action. The merge algorithm could not infer the state of the database ba
 rules after the merge. Further input is required to tell Doltgres what the resulting merged database
 should contain.
 
-In Doltgres, conflicts can occur on data and schema. 
+In Doltgres, conflicts can occur on data and schema.
 
 ### Data
 
@@ -39,63 +39,63 @@ the following tables for conflict detection.
 
 #### Tables
 
-| Left Branch | Right Branch | Caveat                                       | Mergeable       |
-| ----------- | ------------ | -------------------------------------------- | --------------- |
-| Add t1      | Add t1       | Same Schema                                  | Yes             |
-| Add t1      | Add t1       | Different Schema                             | Schema Conflict |
-| Delete t1   | Delete t1    |                                              | Yes             |
-| Modify t1   | Delete t1    |                                              | Schema Conflict |
-| Modify t1   | Modify t1    | Same Schema                                  | Yes             |
-| Modify t1   | Modify t1    | Different Schema                             | Schema Conflict |
+| Left Branch | Right Branch | Caveat           | Mergeable       |
+| ----------- | ------------ | ---------------- | --------------- |
+| Add t1      | Add t1       | Same Schema      | Yes             |
+| Add t1      | Add t1       | Different Schema | Schema Conflict |
+| Delete t1   | Delete t1    |                  | Yes             |
+| Modify t1   | Delete t1    |                  | Schema Conflict |
+| Modify t1   | Modify t1    | Same Schema      | Yes             |
+| Modify t1   | Modify t1    | Different Schema | Schema Conflict |
 
 #### Columns
 
-| Left Branch | Right Branch | Caveat                                       | Mergeable       |
-| ----------- | ------------ | -------------------------------------------- | --------------- |
-| Delete c1   | Delete c1    |                                              | Yes             |
-| Modify c1   | Delete c1    |                                              | Schema Conflict |
-| Add c1      | Add c1       | Same Type, Same Constraints, Same Data       | Yes             |
-| Add c1      | Add c1       | Different Type                               | Schema Conflict |
-| Add c1      | Add c1       | Same Type, Different Constraints             | Schema Conflict |
-| Add c1      | Add c1       | Same Type, Same Constraints, Different Data  | Data Conflict   |
-| Modify c1   | Modify c1    | Same Type, Same Constraints, Same Data       | Yes             |
-| Modify c1   | Modify c1    | Incompatible Type Change                     | Schema Conflict |
-| Modify c1   | Modify c1    | Compatible Type Change                       | Yes             |
-| Modify c1   | Modify c1    | Same Type, Different Constraints             | Schema Conflict |
-| Modify c1   | Modify c1    | Same Type, Same Constraints, Different Data  | Data Conflict   |
+| Left Branch | Right Branch | Caveat                                      | Mergeable       |
+| ----------- | ------------ | ------------------------------------------- | --------------- |
+| Delete c1   | Delete c1    |                                             | Yes             |
+| Modify c1   | Delete c1    |                                             | Schema Conflict |
+| Add c1      | Add c1       | Same Type, Same Constraints, Same Data      | Yes             |
+| Add c1      | Add c1       | Different Type                              | Schema Conflict |
+| Add c1      | Add c1       | Same Type, Different Constraints            | Schema Conflict |
+| Add c1      | Add c1       | Same Type, Same Constraints, Different Data | Data Conflict   |
+| Modify c1   | Modify c1    | Same Type, Same Constraints, Same Data      | Yes             |
+| Modify c1   | Modify c1    | Incompatible Type Change                    | Schema Conflict |
+| Modify c1   | Modify c1    | Compatible Type Change                      | Yes             |
+| Modify c1   | Modify c1    | Same Type, Different Constraints            | Schema Conflict |
+| Modify c1   | Modify c1    | Same Type, Same Constraints, Different Data | Data Conflict   |
 
 #### Foreign Keys
 
-| Left Branch | Right Branch | Caveat                                       | Mergeable       |
-| ----------- | ------------ | -------------------------------------------- | --------------- |
-| Add fk1     | Add fk1      | Same definition                              | Yes             |
-| Add fk1     | Add fk1      | Different definition                         | Schema Conflict |
-| Delete t1   | Delete t1    |                                              | Yes             |
-| Modify fk1  | Delete fk1   |                                              | Schema Conflict |
-| Modify fk1  | Modify fk1   | Same definition                              | Yes             |
-| Modify fk1  | Modify fk1   | Different definition                         | Schema Conflict |
+| Left Branch | Right Branch | Caveat               | Mergeable       |
+| ----------- | ------------ | -------------------- | --------------- |
+| Add fk1     | Add fk1      | Same definition      | Yes             |
+| Add fk1     | Add fk1      | Different definition | Schema Conflict |
+| Delete t1   | Delete t1    |                      | Yes             |
+| Modify fk1  | Delete fk1   |                      | Schema Conflict |
+| Modify fk1  | Modify fk1   | Same definition      | Yes             |
+| Modify fk1  | Modify fk1   | Different definition | Schema Conflict |
 
 #### Indexes
 
-| Left Branch | Right Branch | Caveat                                       | Mergeable       |
-| ----------- | ------------ | -------------------------------------------- | --------------- |
-| Add i1      | Add i1       | Same definition                              | Yes             |
-| Add i1      | Add i1       | Different definition                         | Schema Conflict |
-| Delete i1   | Delete i1    |                                              | Yes             |
-| Modify i1   | Delete i1    |                                              | Schema Conflict |
-| Modify i1   | Modify i1    | Same definition                              | Yes             |
-| Modify i1   | Modify i1    | Different definition                         | Schema Conflict |
+| Left Branch | Right Branch | Caveat               | Mergeable       |
+| ----------- | ------------ | -------------------- | --------------- |
+| Add i1      | Add i1       | Same definition      | Yes             |
+| Add i1      | Add i1       | Different definition | Schema Conflict |
+| Delete i1   | Delete i1    |                      | Yes             |
+| Modify i1   | Delete i1    |                      | Schema Conflict |
+| Modify i1   | Modify i1    | Same definition      | Yes             |
+| Modify i1   | Modify i1    | Different definition | Schema Conflict |
 
 #### Check Constraints
 
-| Left Branch | Right Branch | Caveat                                       | Mergeable       |
-| ----------- | ------------ | -------------------------------------------- | --------------- |
-| Add ck1     | Add ck1      | Same definition                              | Yes             |
-| Add ck1     | Add ck1      | Different definition                         | Schema Conflict |
-| Delete ck1  | Delete ck1   |                                              | Yes             |
-| Modify ck1  | Delete ck1   |                                              | Schema Conflict |
-| Modify ck1  | Modify ck1   | Same definition                              | Yes             |
-| Modify ck1  | Modify ck1   | Different definition                         | Schema Conflict |
+| Left Branch | Right Branch | Caveat               | Mergeable       |
+| ----------- | ------------ | -------------------- | --------------- |
+| Add ck1     | Add ck1      | Same definition      | Yes             |
+| Add ck1     | Add ck1      | Different definition | Schema Conflict |
+| Delete ck1  | Delete ck1   |                      | Yes             |
+| Modify ck1  | Delete ck1   |                      | Schema Conflict |
+| Modify ck1  | Modify ck1   | Same definition      | Yes             |
+| Modify ck1  | Modify ck1   | Different definition | Schema Conflict |
 
 ## How to use Conflicts
 
@@ -142,7 +142,7 @@ select * from docs;
 | 1  | 1  |
 | 2  | 2  |
 +----+----+
-call dolt_branch('make-conflicts');
+select dolt_branch('make-conflicts');
 update docs set c1=10 where pk=1;
 select * from docs;
 +----+----+
@@ -152,8 +152,8 @@ select * from docs;
 | 1  | 10 |
 | 2  | 2  |
 +----+----+
-call dolt_commit('-Am', 'Made pk=1, c1=10');
-call dolt_checkout('make-conflicts');
+select dolt_commit('-Am', 'Made pk=1, c1=10');
+select dolt_checkout('make-conflicts');
 select * from docs;
 +----+----+
 | pk | c1 |
@@ -171,9 +171,9 @@ select * from docs;
 | 1  | 0  |
 | 2  | 2  |
 +----+----+
-call dolt_commit('-m', 'Made pk=1, c1=0');
-call dolt_checkout('main');
-call dolt_merge('make-conflicts'); -- conflict created
+select dolt_commit('-m', 'Made pk=1, c1=0');
+select dolt_checkout('main');
+select dolt_merge('make-conflicts'); -- conflict created
 ```
 
 ### Resolving a Conflict
@@ -188,5 +188,5 @@ select * from docs;
 | 1  | 10 |
 | 2  | 2  |
 +----+----+
-call dolt_commit('-m', 'Resolved conflict');
+select dolt_commit('-m', 'Resolved conflict');
 ```

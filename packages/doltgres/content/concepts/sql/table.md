@@ -35,7 +35,7 @@ control capabilities.
 ## Interaction with Dolt Version Control
 
 Dolt versions table schema and data. A table in Dolt is akin to a file in Git, it is the unit of
-change. Tables are the target of `call dolt_add()`.
+change. Tables are the target of `select dolt_add()`.
 
 ## Example
 

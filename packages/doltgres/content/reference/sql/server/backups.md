@@ -58,7 +58,7 @@ This example uses DoltHub as a remote, but you can use Doltgres with [other remo
 filesystem, AWS S3, and GCS](https://www.dolthub.com/blog/2021-07-19-remotes/).
 
 ```sql
-call dolt_remote('add', 'backup', 'file:///var/share/backup/');
+select dolt_remote('add', 'backup', 'file:///var/share/backup/');
 ```
 
 ### Backup by Pushing a Branch
@@ -67,14 +67,14 @@ call dolt_remote('add', 'backup', 'file:///var/share/backup/');
 use backup_example;
 create table test (pk int, c1 int, primary key(pk));
 insert into test values (0,0);
-call dolt_add('test');
-call dolt_commit('-m', "Created table and inserted values to be backed up");
+select dolt_add('test');
+select dolt_commit('-m', 'Created table and inserted values to be backed up');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
 | slm5cql6ri8l4vd7uemvqhj6p2e2g98k |
 +----------------------------------+
-call dolt_push('backup', 'main');
+select dolt_push('backup', 'main');
 +---------+
 | success |
 +---------+

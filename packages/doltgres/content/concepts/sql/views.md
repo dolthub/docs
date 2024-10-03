@@ -14,8 +14,7 @@ reference not the view itself.
 
 Views allow you to derive tables using SQL instead of storing a copy of all the data you might want
 to derive. As a simple example, in a table of employee's salaries, you may store yearly salary but
-when using the table to calculate monthly salary, you use a view that divides the yearly salary by
-12.
+when using the table to calculate monthly salary, you use a view that divides the yearly salary by 12.
 
 Note, accessing views is be slower than accessing a table itself because the database must compute
 the values returned.
@@ -26,14 +25,14 @@ There is no difference between Postgres and Doltgres views. They are functionall
 
 ## Interaction with Doltgres Version Control
 
-Doltgres view definitions are versioned in the `dolt_schemas` system table. 
+Doltgres view definitions are versioned in the `dolt_schemas` system table.
 
 ## Example
 
 ```sql
 create table salaries (name varchar(255), salary int, primary key(name));
 insert into salaries values ('Jim', 120000), ('Bob', 240000), ('Sally', 360000);
-create view monthly_salaries as select name, salary/12 as monthly_pay from salaries; 
+create view monthly_salaries as select name, salary/12 as monthly_pay from salaries;
 select * from monthly_salaries order by monthly_pay asc;
 +-------+-------------+
 | name  | monthly_pay |
@@ -45,9 +44,10 @@ select * from monthly_salaries order by monthly_pay asc;
 ```
 
 ### Using `as of` with Views
+
 ```
-call dolt_add('-A');
-call dolt_commit('-am', 'Created table and view');
+select dolt_add('-A');
+select dolt_commit('-am', 'Created table and view');
 +----------------------------------+
 | hash                             |
 +----------------------------------+
@@ -72,4 +72,3 @@ select * from monthly_salaries as of 'HEAD' order by monthly_pay asc;
 | Sally | 30000       |
 +-------+-------------+
 ```
-

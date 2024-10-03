@@ -24,7 +24,7 @@ Each column is composed of a string that represents a pattern-matching expressio
 | branch      | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
 | user        | VARCHAR(16383)                | utf8mb4_0900_bin   |
 | host        | VARCHAR(16383)                | utf8mb4_0900_ai_ci |
-| permissions | SET("admin", "write", "read") | utf8mb4_0900_ai_ci |
+| permissions | SET('admin', 'write', 'read') | utf8mb4_0900_ai_ci |
 
 ### `dolt_branch_namespace_control`
 
@@ -270,16 +270,16 @@ match](#longest-match), and therefore takes precedence over the `main%` entry. C
 USE example;
 INSERT INTO dolt_branch_namespace_control VALUES ('%', 'main%', 'testuser', '%');
 INSERT INTO dolt_branch_namespace_control VALUES ('%', 'mainroot%', 'root', '%');
-CALL DOLT_BRANCH('does_not_start_with_main');
+SELECT DOLT_BRANCH('does_not_start_with_main');
 +--------+
 | status |
 +--------+
 | 0      |
 +--------+
 
-CALL DOLT_BRANCH('main1');
+SELECT DOLT_BRANCH('main1');
 Error 1105: `root`@`%` cannot create a branch named `main1`
-CALL DOLT_BRANCH('mainroot');
+SELECT DOLT_BRANCH('mainroot');
 +--------+
 | status |
 +--------+
@@ -290,7 +290,7 @@ CALL DOLT_BRANCH('mainroot');
 example=# exit;
 
 $ psql --user=testuser
-CALL DOLT_BRANCH('main1');
+SELECT DOLT_BRANCH('main1');
 +--------+
 | status |
 +--------+
@@ -298,7 +298,7 @@ CALL DOLT_BRANCH('main1');
 +--------+
 1 row in set (0.00 sec)
 
-CALL DOLT_BRANCH('mainroot1');
+SELECT DOLT_BRANCH('mainroot1');
 Error 1105: `testuser`@`localhost` cannot create a branch named `mainroot1`
 ```
 

@@ -47,7 +47,7 @@ Git commits and Doltgres commits are very similar in purpose and practice.
 
 ```sql
 create table docs_sql (pk int, primary key(pk));
-call dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add');
+select dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add');
 +-------------------------------------------------------------------------------------------------------------------+
 | dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all changes for commit ie. skip dolt add') |
 +-------------------------------------------------------------------------------------------------------------------+
@@ -58,7 +58,7 @@ call dolt_commit('-a', '-m', 'Added docs_sql example table. Use -a to stage all 
 ### Creating an empty commit
 
 ```sql
-call dolt_commit('--allow-empty', '-m', 'This is a commit');
+select dolt_commit('--allow-empty', '-m', 'This is a commit');
 +--------------------------------------------------------------+
 | dolt_commit('-a', '--allow-empty', '-m', 'This is a commit') |
 +--------------------------------------------------------------+

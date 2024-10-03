@@ -47,8 +47,8 @@ branches.
 ## Example
 
 ```sql
-CALL dolt_branch('new-branch');
-CALL dolt_checkout('-b', 'check-out-new-branch');
+SELECT dolt_branch('new-branch');
+SELECT dolt_checkout('-b', 'check-out-new-branch');
 select * from dolt_branches;
 +----------------------+----------------------------------+------------------+------------------------+-----------------------------------+------------------------------+
 | name                 | hash                             | latest_committer | latest_committer_email | latest_commit_date                | latest_commit_message        |
@@ -58,4 +58,3 @@ select * from dolt_branches;
 | new-branch           | f0ga78jrh4llc0uus8h2refopp6n870m | Tim Sehn         | tim@dolthub.com        | 2021-12-06 13:39:57.705 -0800 PST | Removed row from no_pk table |
 +----------------------+----------------------------------+------------------+------------------------+-----------------------------------+------------------------------+
 ```
-
