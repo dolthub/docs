@@ -550,9 +550,9 @@ SELECT DOLT_CLONE('dolthub/us-jails');
 -- Use the new, cloned database
 -- NOTE: backticks are required for database names with hyphens
 USE `us-jails`;
-SHOW TABLES;
+select tablename from pg_tables;
 +-----------------------------+
-| Tables_in_us-jails          |
+| tablename                   |
 +-----------------------------+
 | incidents                   |
 | inmate_population_snapshots |
