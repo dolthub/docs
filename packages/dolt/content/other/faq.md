@@ -93,7 +93,7 @@ Dolt generates a lot of garbage during some writes, especially during initial im
 unusual to get a local storage size of 20x the actual data size after an import. Running `dolt gc`
 will remove the garbage and reclaim local storage. See the [docs on `dolt
 gc`](../reference/cli/cli.md#dolt-gc) and the [`dolt_gc` stored
-procedure](../reference/sql/version-control/dolt-sql-procedures.md#dolt_gc] for details.
+procedure](../reference/sql/version-control/dolt-sql-procedures.md#dolt_gc) for details.
 
 ## How do I squash the history of a Dolt database? I only want the latest.
 
