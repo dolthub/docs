@@ -114,15 +114,20 @@ dolt config --global --add metrics.disabled true
 
 ## How to silence `stats failure` logs?
 
-Running `call dolt_stats_drop()` is the quickest way to reset 
-the ephemeral statistics cache.
+Statistic warnings appear infrequently between dolt version upgrades
+and do not impact the correctness of database operations.
+If the error is reproducible please [report the
+issue](https://github.com/dolthub/dolt/issues/new).
 
-Statistic errors appear infrequently between dolt version upgrades,
-have no impact the correctness of database operations, and can be safely
-recollected to improve join and indexing execution performance. If the
-error is reproducible please [report the
-issue](https://github.com/dolthub/dolt/issues/new) so that we can fix.
+The statistics cache can be removed from the filesystem to silence warnings
+with `dolt_stats_purge()`:
 
+```sql
+call dolt_stats_purge();
+```
+
+Statistics can be recollected at any time to improve join and indexing
+execution performance.
 See
 [the stats docs](../reference/sql/sql-support/miscellaneous#stats-controller-functions)
 for more details.
