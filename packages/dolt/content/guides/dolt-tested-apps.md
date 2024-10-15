@@ -8,6 +8,12 @@ Dolt is the world's first version controlled SQL database. Dolt is designed to b
 
 Let us know what else you'd like to see tested by sending us [email](mailto:interest@dolthub.com) or come by our [Discord](https://discord.gg/gqr7K4VNKe).
 
+## Connector Libraries and APIs
+
+| Connector                                                            | Language | Blog                                                                           | Sample Code                                                                  |
+|----------------------------------------------------------------------|----------| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| [JDBC](https://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/) | Java     | [Blog](https://www.dolthub.com/blog/2024-10-11-dolt-with-jdbc/)   | [Code](https://github.com/dolthub/dolt-jdbc-sample)               |
+
 ## Frameworks/ORMs
 
 | ORM                                                                                       | Language   | Blog                                                                           | Sample Code                                                                  |
