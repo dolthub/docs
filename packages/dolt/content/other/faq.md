@@ -87,8 +87,6 @@ us know with an issue](https://github.com/dolthub/dolt/issues) or in
 [our Discord](https://discord.gg/s8uVgc3) and we'll [fix it in 24 hours](https://www.dolthub.com/blog/2024-05-15-24-hour-bug-fixes/). 
 Our goal is to be a 100% drop-in replacement for MySQL.
 
-## Why is my Dolt database so big on disk?
-
 Dolt generates a lot of garbage during some writes, especially during initial import. It's not
 unusual to get a local storage size of 20x the actual data size after an import. Running `dolt gc`
 will remove the garbage and reclaim local storage. See the [docs on `dolt
@@ -113,3 +111,23 @@ personally identifiable information is collected. You can disable this behavior 
 ```bash
 dolt config --global --add metrics.disabled true
 ```
+
+## How to silence `stats failure` logs?
+
+Statistic warnings appear infrequently between dolt version upgrades
+and do not impact the correctness of database operations.
+If the error is reproducible please [report the
+issue](https://github.com/dolthub/dolt/issues/new).
+
+The statistics cache can be removed from the filesystem to silence warnings
+with `dolt_stats_purge()`:
+
+```sql
+call dolt_stats_purge();
+```
+
+Statistics can be recollected at any time to improve join and indexing
+execution performance.
+See
+[the stats docs](../reference/sql/sql-support/miscellaneous#stats-controller-functions)
+for more details.
