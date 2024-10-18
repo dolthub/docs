@@ -163,6 +163,14 @@ Dolt exposes a set of helper functions for managing statistics collection and us
 
 - `dolt_stats_status()`: Returns the latest update to statistics for the current database.
 
+- `dolt_stats_prune()`: Garbage collects the statistics cache storage, retaining only
+    the most recent statistic updates.
+
+- `dolt_stats_purge()`: Deletes the old statistics cache from the
+    filesystem. This can be used to silence warnings from backwards
+    incompatible upgrades. Statistics will need
+    to be recollected, which can be time consuming.
+
 ### Performance
 
 Lowering check intervals and update thresholds increases the refresh read and write load. Refreshing statistics uses shortcuts to avoid reading from disk when possible, but in most cases at least needs to read the target fanout level of the tree from disk to compare previous and current chunk sets. Exceeding the refresh threshold reads all data from disk associated with the new chunk ranges, which will be the most expensive impact of auto-refresh. Dolt uses ordinal offsets to avoid reading unnecessary data, but the tree growing or shrinking by a level forces a full tablescan.
