@@ -735,5 +735,5 @@ If you want to run Dolt as your primary database server, you can still replicate
 This is often useful for change data capture (CDC) or data warehouse use cases that require pulling data via
 MySQL's replication protocol.
 For example, you can [use Debezium to monitor changes in a Dolt database](https://www.dolthub.com/blog/2024-07-19-debezium-works-with-dolt/) for CDC use cases.
-See our [blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2023-02-17-binlog-replication-preview/) for
+See our [blog post on Dolt-to-MySQL replication](https://www.dolthub.com/blog/2024-07-05-binlog-source-preview/) for
 more details on setting up Dolt to MySQL replication.
