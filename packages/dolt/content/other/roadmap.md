@@ -14,25 +14,23 @@ know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
 Our next major goal is getting the Postgres version of Dolt, [Doltgres](https://www.doltgres.com/),
-to a [production quality Beta release](https://www.dolthub.com/blog/2024-08-06-doltgres-beta/). Doltgres Beta will ship in Q1 2025, with hosted
-deployment available.
+to a [production quality Beta
+release](https://www.dolthub.com/blog/2024-08-06-doltgres-beta/). Doltgres Beta will ship in Q1
+2025, with hosted deployment available.
 
 Roadmap last updated Oct 2024, next update Jan 2025.
 
 ## Upcoming features
 
+Work to improve the performance and availability of Dolt is a constant theme and not called out
+explicitly unless it's a major separable effort.
+
+### Dolt
+
 | Feature                                                                                  | Estimate    |
 |------------------------------------------------------------------------------------------|-------------|
-| Doltgres: user defined types                                                             | Q4 2024     |
-| Doltgres: users and auth                                                                 | Q4 2024     |
-| Doltgres: user defined functions                                                         | Q4 2024     |
-| Doltgres: 50% most common function coverage                                              | Q4 2024     |
-| Hosted Doltgres                                                                          | Q4 2024     |
-| Doltgres: 90% correctness                                                                | Q4 2024     |
 | Vector support                                                                           | Q4 2024     |
 | Virtual private cloud for Google Cloud in hosted deployments                             | Q4 2024     |
-| Doltgres: 99% correctness                                                                | Jan 2025    |
-| Doltgres beta (production ready)                                                         | Jan 2025    |
 | Update multiple branches in a transaction                                                | 2025        |
 | Row-level locking (`SELECT FOR UPDATE`)                                                  | 2025        |
 | [Automatic garbage collection](https://github.com/dolthub/dolt/issues/1987)              | 2025        |
@@ -52,6 +50,20 @@ Roadmap last updated Oct 2024, next update Jan 2025.
 | Better stored procedure support                                                          | Unscheduled |
 | Other database frontends (e.g. Mongo, SQL Server)                                        | Unscheduled |
 
+### Doltgres
+
+Dolt and Doltgres share an engine, so most features on the Dolt roadmap also apply to Doltgres.
+
+| Feature                           | Estimate |
+|-----------------------------------|----------|
+| User defined types                | Q4 2024  |
+| User defined functions            | Q4 2024  |
+| Users and auth                    | Q4 2024  |
+| 50% most common function coverage | Q4 2024  |
+| Hosted Doltgres                   | Q1 2025  |
+| Doltges Beta release              | Q1 2025  |
+| Stored procedures                 | Q1 2025  |
+
 ## Selection of recent feature launches
 
 | Feature                                                                                                                  | Launch Date |
@@ -60,6 +72,7 @@ Roadmap last updated Oct 2024, next update Jan 2025.
 | [Doltgres support for workbench](https://www.dolthub.com/blog/2024-10-17-dolt-workbench-supports-doltgres/)              | Oct 2024    |
 | [Data conflict resolution for dolt rebase](https://www.dolthub.com/blog/2024-09-05-rebase-conflict-resolution/)          | Sep 2024    |
 | [Doltgres: COPY support](https://www.dolthub.com/blog/2024-09-17-tabular-data-imports/)                                  | Sep 2024    |
+| Doltgres: 90% correctness                                                                                                | Sep 2024    |
 | [Signed commits](https://www.dolthub.com/blog/2024-09-16-signed-commits/)                                                | Sep 2024    |
 | [Improved JSON performance](https://www.dolthub.com/blog/2024-07-15-json-prolly-trees/)                                  | Jul 2024    |
 | [Postgres function support](https://www.dolthub.com/blog/2024-07-30-re-introducing-dolt-functions/)                      | Jul 2024    |
