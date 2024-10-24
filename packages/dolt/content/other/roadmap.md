@@ -13,66 +13,67 @@ see what you need on here? [Let us
 know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
-Roadmap last updated May 2024, next update July 2024.
+Our next major goal is getting the Postgres version of Dolt, [Doltgres](https://www.doltgres.com/),
+to a production quality Beta release. Doltgres Beta will ship in January 2025, with hosted
+deployment available.
+
+Roadmap last updated Oct 2024, next update Jan 2025.
 
 ## Upcoming features
 
-| Feature                                                                           | Estimate    |
-|-----------------------------------------------------------------------------------|-------------|
-| Postgres function support                                                         | Q2 2024     |
-| Improved JSON performance                                                         | Q2 2024     |
-| Zstd dictionary compression                                                       | Q2 2024     |
-| Doltgres 90% correctness                                                          | Q2 2024     |
-| [Dolt to MySQL binlog replication](https://github.com/dolthub/dolt/issues/7512)   | Q2 2024     |
-| Automatic table statistics                                                        | Q3 2024     |
-| [Rebase conflict resolution support](https://github.com/dolthub/dolt/issues/7820) | Q3 2024     |
-| Doltgres 99% correctness                                                          | Q3 2024     |
-| [Customized merge rules](https://github.com/dolthub/dolt/issues/7680)             | Q3 2024     |
-| Update multiple branches in a transaction                                         | 2024        |
-| Row-level locking (`SELECT FOR UPDATE`)                                           | 2024        |
-| [Transaction isolation levels](https://github.com/dolthub/dolt/issues/2007)       | 2024        |
-| [Multiple DBs in one repo](https://github.com/dolthub/dolt/issues/3043)           | 2024        |
-| More function coverage                                                            | Ongoing     |
-| Images / video types                                                              | Unscheduled |
-| [History compression](https://github.com/dolthub/dolt/issues/5355)                | Unscheduled |
-| Embedded Dolt                                                                     | Unscheduled |
-| [Signed commits](https://github.com/dolthub/dolt/issues/628)                      | Unscheduled |
-| Lock / unlock tables                                                              | Unscheduled |
-| Updateable views                                                                  | Unscheduled |
-| Encryption at rest                                                                | Unscheduled |
-| Pipeline query processing                                                         | Unscheduled |
-| [Automatic garbage collection](https://github.com/dolthub/dolt/issues/1987)       | Unscheduled |
-| [User-defined functions](https://github.com/dolthub/dolt/issues/6193)             | Unscheduled |
-| Better stored procedure support                                                   | Unscheduled |
+| Feature                                                                                  | Estimate    |
+|------------------------------------------------------------------------------------------|-------------|
+| Doltgres: user defined types                                                             | Q4 2024     |
+| Doltgres: users and auth                                                                 | Q4 2024     |
+| Doltgres: user defined functions                                                         | Q4 2024     |
+| Doltgres: 50% most common function coverage                                              | Q4 2024     |
+| Hosted Doltgres                                                                          | Q4 2024     |
+| Doltgres: 90% correctness                                                                | Q4 2024     |
+| Vector support                                                                           | Q4 2024     |
+| Virtual private cloud for Google Cloud in hosted deployments                             | Q4 2024     |
+| Doltgres: 99% correctness                                                                | Jan 2025    |
+| Doltgres beta (production ready)                                                         | Jan 2025    |
+| Update multiple branches in a transaction                                                | 2025        |
+| Row-level locking (`SELECT FOR UPDATE`)                                                  | 2025        |
+| [Automatic garbage collection](https://github.com/dolthub/dolt/issues/1987)              | 2025        |
+| [Transaction isolation levels](https://github.com/dolthub/dolt/issues/2007)              | 2025        |
+| More function coverage                                                                   | Ongoing     |
+| [Rebase schema conflict resolution support](https://github.com/dolthub/dolt/issues/7820) | Unscheduled |
+| [Multiple DBs in one repo](https://github.com/dolthub/dolt/issues/3043)                  | Unscheduled |
+| [Customized merge rules](https://github.com/dolthub/dolt/issues/7680)                    | Unscheduled |
+| Images / video types                                                                     | Unscheduled |
+| [History compression](https://github.com/dolthub/dolt/issues/5355)                       | Unscheduled |
+| Embedded Dolt                                                                            | Unscheduled |
+| Lock / unlock tables                                                                     | Unscheduled |
+| Updateable views                                                                         | Unscheduled |
+| Encryption at rest                                                                       | Unscheduled |
+| Pipeline query processing                                                                | Unscheduled |
+| [User-defined functions](https://github.com/dolthub/dolt/issues/6193)                    | Unscheduled |
+| Better stored procedure support                                                          | Unscheduled |
+| Other database frontends (e.g. Mongo, SQL Server)                                        | Unscheduled |
 
 ## Selection of recent feature launches
 
-| Feature                                                                                                                  | Launch Date   |
-|--------------------------------------------------------------------------------------------------------------------------|---------------|
-| [Doltgres to Postgres replication](https://www.dolthub.com/blog/2024-04-23-announcing-postgres-to-doltgres-replication/) | Apr 2024      |
-| [Doltgres prepared statements](https://www.dolthub.com/blog/2024-04-01-prepared-statements-postgres/)                    | Apr 2024      |
-| [Postgres type support](https://www.dolthub.com/blog/2024-02-14-adding-types-to-doltgresql/)                             | Feb 2024      |
-| [Shallow clones](https://www.dolthub.com/blog/2024-02-21-shallow-clone/)                                                 | Feb 2024      |
-| [Statistics in joins](https://www.dolthub.com/blog/2024-01-22-join-statistics/)                                          | Jan 2024      |
-| [Automatic JSON column merge](https://www.dolthub.com/blog/2024-01-16-announcing-json-merge/)                            | Jan 2024      |
-| [Rebase](https://www.dolthub.com/blog/2024-01-03-announcing-dolt-rebase/)                                                | Jan 2024      |
-| [Push to running SQL server](https://www.dolthub.com/blog/2023-12-29-sql-server-push-support/)                           | Dec 2023      |
-| [Reflog](https://www.dolthub.com/blog/2023-11-17-dolt-reflog/)                                                           | Nov 2023      |
-| [Virtual columns and json indexing](https://www.dolthub.com/blog/2023-11-03-virtual-columns/)                            | Nov 2023      |
-| Postgres alpha                                                                                                           | Nov 2023      |
-| Better table statistics support                                                                                          | Nov 2023      |
-| 99.99% SQL correctness                                                                                                   | Oct 2023      |
-| Event execution                                                                                                          | Oct 2023      |
-| CLI profiles                                                                                                             | Sep 2023      |
-| Hosted replication failover                                                                                              | Sep 2023      |
-| Full text indexes                                                                                                        | Aug 2023      |
-| Server / CLI compatibility                                                                                               | Jul 2023      |
-| Cross-database joins with indexes                                                                                        | Jul 2023      |
-| Hosted replication                                                                                                       | Jun 2023      |
-| dolt_schema_diff table                                                                                                   | Jun 2023      |
-| Better branch transaction support                                                                                        | Jun 2023      |
-| Many new collations                                                                                                      | Jun 2023      |
-| Collation regex support                                                                                                  | Jun 2023      |
-| Better schema merging                                                                                                    | May 2023      |
-| dolt_ignore table                                                                                                        | May 2023      |
-| dolt show command                                                                                                        | May 2023      |
+| Feature                                                                                                                  | Launch Date |
+|--------------------------------------------------------------------------------------------------------------------------|-------------|
+| [dolt fsck](https://www.dolthub.com/blog/2024-10-09-fsck-announce/)                                                      | Oct 2024    |
+| [Doltgres support for workbench](https://www.dolthub.com/blog/2024-10-17-dolt-workbench-supports-doltgres/)              | Oct 2024    |
+| [Data conflict resolution for dolt rebase](https://www.dolthub.com/blog/2024-09-05-rebase-conflict-resolution/)          | Sep 2024    |
+| [Doltgres: COPY support](https://www.dolthub.com/blog/2024-09-17-tabular-data-imports/)                                  | Sep 2024    |
+| [Signed commits](https://www.dolthub.com/blog/2024-09-16-signed-commits/)                                                | Sep 2024    |
+| [Improved JSON performance](https://www.dolthub.com/blog/2024-07-15-json-prolly-trees/)                                  | Jul 2024    |
+| [Postgres function support](https://www.dolthub.com/blog/2024-07-30-re-introducing-dolt-functions/)                      | Jul 2024    |
+| [Dolt to MySQL binlog replication](https://www.dolthub.com/blog/2024-07-05-binlog-source-preview/)                       | Jul 2024    |
+| [pg_catalog support](https://www.dolthub.com/blog/2024-07-02-pg-catalog-update/)                                         | Jul 2024    |
+| [Doltgres schema support](https://www.dolthub.com/blog/2024-05-07-understanding-postgres-schemas/)                       | May 2024    |
+| [Storage archives](https://www.dolthub.com/blog/2024-04-29-dolt-storage-v2/)                                             | Apr 2024    |
+| [Zstd dictionary compression](https://www.dolthub.com/blog/2024-04-22-dolt-storage-dictionaries/)                        | Apr 2024    |
+| [Postgres to Doltgres replication](https://www.dolthub.com/blog/2024-04-23-announcing-postgres-to-doltgres-replication/) | Apr 2024    |
+| [Doltgres prepared statements](https://www.dolthub.com/blog/2024-04-01-prepared-statements-postgres/)                    | Apr 2024    |
+| [Automatic table statistics](https://www.dolthub.com/blog/2024-02-16-stats-refresh/)                                     | Mar 2024    |
+| [Postgres type support](https://www.dolthub.com/blog/2024-02-14-adding-types-to-doltgresql/)                             | Feb 2024    |
+| [100% sql correctness](https://www.dolthub.com/blog/2024-02-26-100-percent-correctness/)                                 | Feb 2024    |
+| [Shallow clones](https://www.dolthub.com/blog/2024-02-21-shallow-clone/)                                                 | Feb 2024    |
+| [Statistics in joins](https://www.dolthub.com/blog/2024-01-22-join-statistics/)                                          | Jan 2024    |
+| [Automatic JSON column merge](https://www.dolthub.com/blog/2024-01-16-announcing-json-merge/)                            | Jan 2024    |
+| [Rebase](https://www.dolthub.com/blog/2024-01-03-announcing-dolt-rebase/)                                                | Jan 2024    |
