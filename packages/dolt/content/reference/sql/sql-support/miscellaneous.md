@@ -72,7 +72,7 @@ Additional notes:
 
 Dolt currently supports table statistics for index and join costing.
 
-Statistics are collected by running `ANALYZE TABLE <table, ...>`.
+Statistics are auto-collected by default for servers, but cab be manually collected by running `ANALYZE TABLE <table, ...>`.
 
 Here is an example of how to initialize and observe statistics:
 
@@ -162,6 +162,14 @@ Dolt exposes a set of helper functions for managing statistics collection and us
 - `dolt_stats_restart()`: Stops and restarts a refresh thread for the current database with the current session's interval and threshold variables.
 
 - `dolt_stats_status()`: Returns the latest update to statistics for the current database.
+
+- `dolt_stats_prune()`: Garbage collects the statistics cache storage, retaining only
+    the most recent statistic updates.
+
+- `dolt_stats_purge()`: Deletes the old statistics cache from the
+    filesystem. This can be used to silence warnings from backwards
+    incompatible upgrades. Statistics will need
+    to be recollected, which can be time consuming.
 
 ### Performance
 

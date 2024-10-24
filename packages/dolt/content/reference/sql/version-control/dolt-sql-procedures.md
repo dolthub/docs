@@ -1624,6 +1624,19 @@ Returns the latest update to statistics for the current database.
 Deletes the stats ref on disk and wipes the database stats held in memory for the current database.
 Stops update thread if active.
 
+## `dolt_stats_prune()`
+
+Garbage collect the statistics cache storage, retaining only
+the most recent statistic updates. Background threads need to be
+restarted after this operation.
+
+## `dolt_stats_purge()`
+
+Delete the old statistics cache from the
+filesystem. This can be used to silence warnings from backwards
+incompatible upgrades. Statistics will need
+to be recollected, which can be time consuming.
+
 # Access Control
 Dolt stored procedures are access controlled using the GRANT permissions system. MySQL database permissions trickle down to tables and procedures, someone who has Execute permission on a database would have Execute permission on all procedures related to that database. Dolt deviates moderately from this behavior for sensitive operations. See [Administrative Procedures](#administrative-procedures) below.
 
