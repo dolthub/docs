@@ -14,7 +14,7 @@ know!](https://github.com/dolthub/dolt/issues) Paying customers get
 their feature requests implemented first.
 
 Our next major goal is getting the Postgres version of Dolt, [Doltgres](https://www.doltgres.com/),
-to a production quality Beta release. Doltgres Beta will ship in January 2025, with hosted
+to a [production quality Beta release](https://www.dolthub.com/blog/2024-08-06-doltgres-beta/). Doltgres Beta will ship in Q1 2025, with hosted
 deployment available.
 
 Roadmap last updated Oct 2024, next update Jan 2025.
