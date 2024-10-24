@@ -119,15 +119,22 @@ and do not impact the correctness of database operations.
 If the error is reproducible please [report the
 issue](https://github.com/dolthub/dolt/issues/new).
 
-The statistics cache can be removed from the filesystem to silence warnings
+Statistics caches can be removed from the filesystem to silence warnings
 with `dolt_stats_purge()`:
 
 ```sql
 call dolt_stats_purge();
 ```
 
+Version incompatibilities should not hinder the purge command, but if
+manual intervention is desirable a specific database's
+stats cache can be removed from the filestystem:
+
+```bash
+rm -rf .dolt/stats
+```
+
 Statistics can be recollected at any time to improve join and indexing
-execution performance.
-See
+execution performance. See
 [the stats docs](../reference/sql/sql-support/miscellaneous#stats-controller-functions)
 for more details.

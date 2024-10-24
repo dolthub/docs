@@ -72,7 +72,7 @@ Additional notes:
 
 Dolt currently supports table statistics for index and join costing.
 
-Statistics are collected by running `ANALYZE TABLE <table, ...>`.
+Statistics are auto-collected by default for servers, but cab be manually collected by running `ANALYZE TABLE <table, ...>`.
 
 Here is an example of how to initialize and observe statistics:
 
